@@ -10,7 +10,7 @@
 
 **Estimated total time:** ~160–215 hours over 4–6 months at a steady pace.
 
-> 📊 **NEW: [Interactive Curriculum Dashboard]([https://kaxitron.github.io/research_plan/curriculum-dashboard.html])** — Visual dependency map, time estimates, concept checks, failure mode warnings, and project tracker in one navigable interface. Open this alongside your studies.
+> 📊 **NEW: [Interactive Curriculum Dashboard](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)** — Visual dependency map, time estimates, concept checks, failure mode warnings, and project tracker in one navigable interface. Open this alongside your studies.
 
 ---
 
