@@ -177,10 +177,17 @@
   }
 
   .nav-item .status-dot {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .nav-item .status-dot:hover {
+    transform: scale(1.6);
+    box-shadow: 0 0 6px currentColor;
   }
 
   .nav-item .lesson-time {
@@ -1530,6 +1537,72 @@ const LAYOUT = {
 let currentView = 'dependency';
 let selectedLesson = null;
 
+// ═══════════════════════════════════════════════
+// STATUS PERSISTENCE (localStorage)
+// ═══════════════════════════════════════════════
+
+const STATUS_KEY = 'alignment-curriculum-statuses';
+const STATUS_CYCLE = ['not-started', 'in-progress', 'complete'];
+
+function loadStatuses() {
+  try {
+    const saved = localStorage.getItem(STATUS_KEY);
+    if (saved) {
+      const statuses = JSON.parse(saved);
+      LESSONS.forEach(l => {
+        if (statuses[l.id]) l.status = statuses[l.id];
+      });
+    }
+  } catch(e) { /* ignore parse errors */ }
+}
+
+function saveStatuses() {
+  const statuses = {};
+  LESSONS.forEach(l => { statuses[l.id] = l.status; });
+  localStorage.setItem(STATUS_KEY, JSON.stringify(statuses));
+}
+
+function cycleStatus(id, ev) {
+  ev.stopPropagation(); // don't trigger lesson select
+  const lesson = LESSONS.find(l => l.id === id);
+  const idx = STATUS_CYCLE.indexOf(lesson.status);
+  lesson.status = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+  saveStatuses();
+  refreshAll();
+  // re-show detail if this lesson is selected
+  if (selectedLesson === id) selectLesson(id);
+}
+
+function updateStats() {
+  const complete = LESSONS.filter(l => l.status === 'complete').length;
+  const total = LESSONS.length;
+  document.getElementById('stat-complete').textContent = complete;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('progress-fill').style.width = ((complete / total) * 100) + '%';
+
+  // Estimate hours
+  function parseHours(h) {
+    const m = h.match(/(\d+)–(\d+)/);
+    return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
+  }
+  let done = 0, remaining = 0;
+  LESSONS.forEach(l => {
+    const h = parseHours(l.hours);
+    if (l.status === 'complete') done += h;
+    else remaining += h;
+  });
+  document.getElementById('stat-hours-done').textContent = Math.round(done);
+  document.getElementById('stat-hours-left').textContent = Math.round(remaining);
+}
+
+function refreshAll() {
+  renderSidebar();
+  updateStats();
+  if (currentView === 'dependency') renderGraph();
+  else if (currentView === 'timeline') renderTimeline();
+  else if (currentView === 'projects') renderProjectTracker();
+}
+
 function getPhaseColor(phaseId) {
   const p = PHASES.find(ph => ph.id === phaseId);
   return p ? p.color : '#888';
@@ -1557,7 +1630,7 @@ function renderSidebar() {
     html += `<div class="nav-items" id="nav-${phase.id}">`;
     phaseLessons.forEach(lesson => {
       html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
-        <div class="status-dot" style="background:${getStatusColor(lesson.status)}"></div>
+        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to change status"></div>
         <span>${lesson.id}. ${lesson.title}</span>
         <span class="lesson-time">${lesson.hours}</span>
       </div>`;
@@ -1697,7 +1770,7 @@ function selectLesson(id) {
     <div class="detail-title">Lesson ${lesson.id}: ${lesson.title}</div>
     <div class="detail-meta">
       <div class="detail-meta-item">⏱ <strong>${lesson.hours}</strong></div>
-      <div class="detail-meta-item">Status: <strong style="color:${getStatusColor(lesson.status)}">${lesson.status.replace('-', ' ')}</strong></div>
+      <div class="detail-meta-item">Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
     </div>
   </div>`;
 
@@ -1922,8 +1995,10 @@ function renderProjectTracker() {
 // ═══════════════════════════════════════════════
 
 function init() {
+  loadStatuses();
   renderSidebar();
   renderGraph();
+  updateStats();
   window.addEventListener('resize', () => {
     if (currentView === 'dependency') renderGraph();
     else if (currentView === 'timeline') renderTimeline();
