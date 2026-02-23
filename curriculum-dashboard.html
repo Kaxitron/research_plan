@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Path to AI Alignment — Curriculum Navigator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-raised: #12121a;
+    --bg-panel: #16161f;
+    --bg-hover: #1e1e2a;
+    --border: #2a2a3a;
+    --border-bright: #3a3a5a;
+    --text: #e0e0ec;
+    --text-dim: #8888a0;
+    --text-bright: #ffffff;
+    --accent-1: #6ee7b7; /* mint green - linear algebra */
+    --accent-2: #818cf8; /* indigo - calculus */
+    --accent-3: #f9a8d4; /* pink - probability */
+    --accent-4: #fbbf24; /* amber - neural nets */
+    --accent-5: #38bdf8; /* sky - interpretability */
+    --accent-6: #c084fc; /* purple - alignment theory */
+    --accent-7: #fb923c; /* orange - research */
+    --complete: #34d399;
+    --in-progress: #fbbf24;
+    --not-started: #4a4a6a;
+    --danger: #f87171;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .app {
+    display: grid;
+    grid-template-columns: 320px 1fr 400px;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    grid-column: 1 / -1;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-raised);
+  }
+
+  .header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-bright);
+    letter-spacing: -0.3px;
+  }
+
+  .header h1 span {
+    color: var(--accent-1);
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .header-stats .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .progress-bar-container {
+    width: 200px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-5));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* ── Left Sidebar ── */
+  .sidebar {
+    background: var(--bg-raised);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-section-header {
+    padding: 14px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .nav-section-header:hover {
+    background: var(--bg-hover);
+  }
+
+  .nav-section-header .phase-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav-section-header .phase-time {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-dim);
+  }
+
+  .nav-items {
+    padding: 0 0 8px 0;
+  }
+
+  .nav-item {
+    padding: 8px 18px 8px 34px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s;
+    color: var(--text-dim);
+    line-height: 1.3;
+  }
+
+  .nav-item:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+
+  .nav-item.active {
+    background: var(--bg-hover);
+    color: var(--text-bright);
+    border-left: 2px solid var(--accent-1);
+    padding-left: 32px;
+  }
+
+  .nav-item .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav-item .lesson-time {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    flex-shrink: 0;
+    color: var(--text-dim);
+  }
+
+  .nav-item-checkpoint {
+    padding: 10px 18px 10px 28px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-style: italic;
+    border-left: 2px dashed var(--border-bright);
+    margin-left: 16px;
+    transition: all 0.15s;
+  }
+
+  .nav-item-checkpoint:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+
+  /* ── Main Canvas ── */
+  .main-canvas {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(110, 231, 183, 0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(129, 140, 248, 0.03) 0%, transparent 60%),
+      var(--bg);
+  }
+
+  .canvas-controls {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+  }
+
+  .canvas-btn {
+    padding: 6px 12px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+
+  .canvas-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+
+  .canvas-btn.active {
+    background: var(--bg-hover);
+    color: var(--text-bright);
+    border-color: var(--border-bright);
+  }
+
+  .canvas-legend {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 16px;
+    z-index: 10;
+    font-size: 11px;
+    color: var(--text-dim);
+    background: rgba(10, 10, 15, 0.8);
+    padding: 8px 14px;
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  svg.graph {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Graph node styling */
+  .node-group { cursor: pointer; }
+  .node-group:hover .node-circle { filter: brightness(1.3); }
+
+  .node-circle {
+    transition: all 0.2s;
+    stroke-width: 2;
+  }
+
+  .node-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    fill: var(--text);
+    text-anchor: middle;
+    pointer-events: none;
+  }
+
+  .node-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--bg);
+    text-anchor: middle;
+    pointer-events: none;
+  }
+
+  .edge {
+    stroke: var(--border);
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.4;
+  }
+
+  .edge.highlighted {
+    opacity: 0.9;
+    stroke-width: 2;
+  }
+
+  .edge-cross-phase {
+    stroke-dasharray: 4 3;
+    opacity: 0.25;
+  }
+
+  .edge-cross-phase.highlighted {
+    opacity: 0.7;
+  }
+
+  .checkpoint-node {
+    cursor: pointer;
+  }
+
+  /* ── Right Detail Panel ── */
+  .detail-panel {
+    background: var(--bg-raised);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .detail-panel::-webkit-scrollbar { width: 4px; }
+  .detail-panel::-webkit-scrollbar-track { background: transparent; }
+  .detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .detail-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 40px;
+  }
+
+  .detail-empty .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .detail-empty p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .detail-header {
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-phase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .detail-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--text-bright);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .detail-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .detail-meta-item {
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .detail-meta-item strong {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  .detail-section {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .detail-section-title .icon {
+    font-size: 13px;
+  }
+
+  .prereq-list, .concept-check-list, .failure-list, .mvl-list, .project-list {
+    list-style: none;
+  }
+
+  .prereq-list li, .concept-check-list li, .failure-list li, .mvl-list li, .project-list li {
+    padding: 6px 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+  }
+
+  .prereq-list li:last-child, .concept-check-list li:last-child,
+  .failure-list li:last-child, .mvl-list li:last-child, .project-list li:last-child {
+    border-bottom: none;
+  }
+
+  .prereq-link {
+    color: var(--accent-1);
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent-1);
+    transition: opacity 0.15s;
+  }
+
+  .prereq-link:hover {
+    opacity: 0.7;
+  }
+
+  .concept-check-list li {
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .concept-check-list li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--accent-2);
+    font-size: 12px;
+  }
+
+  .failure-list li {
+    padding-left: 20px;
+    position: relative;
+    color: var(--danger);
+  }
+
+  .failure-list li::before {
+    content: '⚠';
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+  }
+
+  .mvl-resource {
+    font-size: 13px;
+    padding: 8px 12px;
+    background: rgba(110, 231, 183, 0.06);
+    border: 1px solid rgba(110, 231, 183, 0.15);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .mvl-resource .res-type {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-1);
+    margin-bottom: 2px;
+  }
+
+  .project-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .project-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .project-badge.new { background: rgba(52, 211, 153, 0.15); color: var(--accent-1); }
+  .project-badge.extends { background: rgba(251, 191, 36, 0.15); color: var(--in-progress); }
+
+  /* Checkpoint detail style */
+  .checkpoint-detail {
+    padding: 22px;
+  }
+
+  .checkpoint-detail h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--text-bright);
+    margin-bottom: 14px;
+  }
+
+  .checkpoint-exercises {
+    list-style: none;
+  }
+
+  .checkpoint-exercises li {
+    padding: 10px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+  }
+
+  .checkpoint-exercises li:last-child { border-bottom: none; }
+
+  .checkpoint-exercises li strong {
+    color: var(--text-bright);
+  }
+
+  /* ── View switching ── */
+  .view-hidden { display: none !important; }
+
+  /* Responsive fallback */
+  @media (max-width: 1100px) {
+    .app {
+      grid-template-columns: 260px 1fr 340px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .app {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+    }
+    .sidebar, .detail-panel { display: none; }
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-section {
+    animation: fadeIn 0.25s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Header -->
+  <div class="header">
+    <h1>The Path to <span>AI Alignment</span></h1>
+    <div class="header-stats">
+      <div>
+        <span class="stat-value" id="stat-complete">7</span> / <span id="stat-total">33</span> lessons
+      </div>
+      <div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 21%"></div>
+        </div>
+      </div>
+      <div>
+        ~<span class="stat-value" id="stat-hours-done">38</span>h done · ~<span class="stat-value" id="stat-hours-left">175</span>h remaining
+      </div>
+    </div>
+  </div>
+
+  <!-- Left Sidebar -->
+  <div class="sidebar" id="sidebar"></div>
+
+  <!-- Main Canvas -->
+  <div class="main-canvas" id="main-canvas">
+    <div class="canvas-controls">
+      <button class="canvas-btn active" onclick="setView('dependency')">Dependency Map</button>
+      <button class="canvas-btn" onclick="setView('timeline')">Timeline</button>
+      <button class="canvas-btn" onclick="setView('projects')">Project Tracker</button>
+    </div>
+    <div class="canvas-legend" id="canvas-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--complete)"></div> Complete</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--in-progress)"></div> In Progress</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--not-started)"></div> Not Started</div>
+      <div class="legend-item" style="color:var(--text-dim)">— prerequisite</div>
+      <div class="legend-item" style="color:var(--text-dim)">┄ cross-phase link</div>
+    </div>
+    <svg class="graph" id="graph-svg"></svg>
+  </div>
+
+  <!-- Right Detail Panel -->
+  <div class="detail-panel" id="detail-panel">
+    <div class="detail-empty" id="detail-empty">
+      <div class="empty-icon">◇</div>
+      <p>Click any lesson node or sidebar item to view details, concept checks, failure modes, and prerequisites.</p>
+    </div>
+    <div id="detail-content" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA: All lessons with full metadata
+// ═══════════════════════════════════════════════
+
+const PHASES = [
+  { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '22–30h' },
+  { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
+  { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
+  { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '30–40h' },
+  { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '15–20h' },
+  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
+  { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
+];
+
+const LESSONS = [
+  // ─── Phase 1: Linear Algebra ───
+  {
+    id: 1, phase: 'p1', title: 'Vectors — What They Actually Are',
+    status: 'complete', hours: '2–3h',
+    prereqs: [],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What\'s the difference between a vector as an arrow vs. a list of numbers?',
+      'If you change the basis, do the coordinates change? Does the arrow change?',
+      'What does it mean geometrically to multiply a vector by -2?',
+    ],
+    failureModes: [
+      'Thinking coordinates ARE the vector rather than a description relative to a basis',
+      'Confusing scalar multiplication with matrix-vector multiplication',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 1 — "Vectors, what even are they?"' },
+      { type: 'Do', text: 'Plot v, 2v, -v, and v + [1,2] in matplotlib' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Vector plotting toolkit (matplotlib)' },
+    ],
+  },
+  {
+    id: 2, phase: 'p1', title: 'Linear Combinations, Span, and Basis',
+    status: 'complete', hours: '3–4h',
+    prereqs: [1],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'If two vectors are parallel, what is their span?',
+      'How many vectors do you need to span ℝ³?',
+      'Can 3 vectors in ℝ² be linearly independent? Why not?',
+      'What does it mean for a set of vectors to be a basis?',
+    ],
+    failureModes: [
+      'Confusing "span" (the set of all reachable vectors) with "spanning set" (the vectors doing the spanning)',
+      'Thinking you always need exactly n vectors for ℝⁿ — you need n linearly independent vectors',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 2 — "Linear combinations, span, and basis vectors"' },
+      { type: 'Do', text: 'Show any 2D point as a linear combination of 2 random non-parallel vectors' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add span visualization to vector toolkit' },
+    ],
+  },
+  {
+    id: 3, phase: 'p1', title: 'Linear Transformations and Matrices',
+    status: 'complete', hours: '3–5h',
+    prereqs: [2],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does "the columns of a matrix are where the basis vectors land" mean?',
+      'If a matrix\'s columns are parallel, what happens to 2D space?',
+      'Why do lines stay lines under a linear transformation?',
+      'Given a specific matrix, can you visualize what it does before computing anything?',
+    ],
+    failureModes: [
+      'Thinking of a matrix as "just a grid of numbers" rather than a transformation',
+      'Forgetting that matrix-vector multiplication IS applying a transformation',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 3 — "Linear transformations and matrices" (THE key video)' },
+      { type: 'Do', text: 'Plot a grid before and after transformation by various 2×2 matrices' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add transformation visualization (grid before/after)' },
+    ],
+  },
+  {
+    id: 4, phase: 'p1', title: 'Matrix Operations Deep Dive',
+    status: 'complete', hours: '3–4h',
+    prereqs: [3],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Explain both the row-dot-product and column-linear-combination views of Ax',
+      'Why is AB ≠ BA in general? Give a geometric reason.',
+      'What does (AB)ᵀ = BᵀAᵀ mean about the order of composed operations?',
+    ],
+    failureModes: [
+      'Only knowing one view of matrix multiplication — you need BOTH (row and column) to read interp papers',
+      'Assuming matrix multiplication is commutative like scalar multiplication',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 3–4 (re-watch with both multiplication views in mind)' },
+      { type: 'Do', text: 'Implement matrix multiply two ways: row-dot and column-combination' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Matrix multiplication from scratch (Python, no NumPy)' },
+    ],
+  },
+  {
+    id: 5, phase: 'p1', title: 'Rank, Null Space, and Column Space',
+    status: 'complete', hours: '4–5h',
+    prereqs: [3, 4],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'If a 3×3 matrix has rank 2, what dimension does it map 3D space onto?',
+      'State the rank-nullity theorem and explain what it means about information.',
+      'If Ax = 0 has only the trivial solution, what is the rank?',
+    ],
+    failureModes: [
+      'Confusing column space (set of outputs) with null space (inputs that map to zero)',
+      'Forgetting that rank-deficient means information is lost PERMANENTLY',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 7 — "Inverse matrices, column space, null space"' },
+      { type: 'Do', text: 'Create a rank-2 matrix in ℝ³, visualize the squished plane' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add rank/nullspace visualization to transformation toolkit' },
+    ],
+  },
+  {
+    id: 6, phase: 'p1', title: 'The Determinant',
+    status: 'complete', hours: '2–3h',
+    prereqs: [3, 5],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does det(A) = 0 tell you geometrically? Algebraically? About invertibility?',
+      'If det(A) = -3, what happened to area AND orientation?',
+      'Why does det(AB) = det(A)·det(B) make geometric sense?',
+    ],
+    failureModes: [
+      'Memorizing the formula without understanding it as area/volume scaling',
+      'Forgetting that det=0, rank-deficient, non-invertible, and non-trivial null space are ALL the same thing',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 6 — "The determinant"' },
+      { type: 'Do', text: 'Visualize unit square deformation and measure area vs determinant' },
+    ],
+    projects: [],
+  },
+  {
+    id: 7, phase: 'p1', title: 'Eigenvalues and Eigenvectors',
+    status: 'complete', hours: '4–6h',
+    prereqs: [5, 6],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What is special about an eigenvector geometrically?',
+      'If λ = 0, what does that tell you about the matrix?',
+      'What does A = PDP⁻¹ mean in words? (Three steps)',
+      'Why does diagonalization make computing Aⁿ trivial?',
+    ],
+    failureModes: [
+      'Confusing eigenvectors (directions that only scale) with singular vectors (SVD directions) — they are NOT the same for non-symmetric matrices',
+      'Thinking all matrices can be diagonalized — some can\'t (defective matrices)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 14 — "Eigenvectors and eigenvalues"' },
+      { type: 'Do', text: 'Find eigenvalues/vectors of 2×2 matrices, visualize invariant directions' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add eigenvector visualization to transformation toolkit' },
+    ],
+  },
+  {
+    id: 8, phase: 'p1', title: 'Singular Value Decomposition (SVD)',
+    status: 'in-progress', hours: '5–7h',
+    prereqs: [7],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does A = UΣVᵀ mean as three geometric steps?',
+      'How is SVD different from eigendecomposition? When do they coincide?',
+      'What does keeping only the top-k singular values do geometrically?',
+      'How is rank related to singular values?',
+    ],
+    failureModes: [
+      'Confusing U and V — V rotates the INPUT space, U rotates the OUTPUT space',
+      'Thinking SVD and eigendecomposition are the same thing (they agree only for symmetric matrices)',
+      'Forgetting singular values are always non-negative (unlike eigenvalues)',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Steve Brunton — "SVD: Overview" + "Matrix Approximation"' },
+      { type: 'Do', text: 'Image compression: reconstruct image with k=1,5,10,50 singular values' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Image compression via SVD project' },
+    ],
+  },
+  {
+    id: 9, phase: 'p1', title: 'Dot Products, Orthogonality, and Projections',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [4, 8],
+    crossPhaseLinks: [25],
+    conceptChecks: [
+      'Give both the algebraic AND geometric formulas for the dot product. Why are they equal?',
+      'What does a·b = 0 mean geometrically?',
+      'What is the projection of u onto v, and why is the residual perpendicular to v?',
+      'Why is cosine similarity better than raw dot product for comparing word embeddings?',
+    ],
+    failureModes: [
+      'Confusing "orthogonal" (perpendicular, dot product = 0) with "orthonormal" (orthogonal AND unit length)',
+      'Thinking the projection formula proj_v(u) = (u·v/v·v)v gives a scalar — it gives a VECTOR',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 9 — "Dot products and duality"' },
+      { type: 'Do', text: 'Cosine similarity on GloVe/Word2Vec word pairs' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Word embedding similarity explorer' },
+    ],
+  },
+  {
+    id: 10, phase: 'p1', title: 'Change of Basis, Norms, and Special Matrices',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [7, 8, 9],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does B⁻¹AB represent? Why is it the "same" transformation?',
+      'Why does eigendecomposition A = PDP⁻¹ equal "view in eigenbasis, scale, view back"?',
+      'Draw the unit balls for L1, L2, and L∞ norms. Why does L1 encourage sparsity?',
+      'What does "positive definite" mean geometrically (think bowl shape)?',
+    ],
+    failureModes: [
+      'Mixing up the direction of basis change: B⁻¹v converts TO the new basis, not from it',
+      'Confusing norms: L1 (diamond), L2 (circle), L∞ (square) — draw them!',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B Ch. 13 — "Change of basis"' },
+      { type: 'Do', text: 'Diagonalize A = PDP⁻¹ and verify; plot all three norm balls in 2D' },
+    ],
+    projects: [],
+  },
+  {
+    id: 11, phase: 'p1', title: 'Linear Algebra Capstone',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [9, 10],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'For a given 3×3 matrix, explain rank, determinant, eigenvalues, SVD, and condition number geometrically.',
+      'How does the neuron basis vs feature basis distinction relate to change of basis?',
+      'Trace the path: vectors → transformations → rank → eigenvalues → SVD. How does each build on the last?',
+    ],
+    failureModes: [
+      'Treating concepts as isolated — the capstone is about seeing them as ONE story',
+      'Skipping the 3B1B full playlist re-watch. It hits differently after studying each piece.',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B full Essence of Linear Algebra playlist (re-watch)' },
+      { type: 'Do', text: '30-minute comprehensive test + capstone visualization (SVD decomposition step by step)' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Final capstone: SVD step-by-step visualization on unit circle' },
+    ],
+  },
+  // ─── Phase 2: Calculus ───
+  {
+    id: 12, phase: 'p2', title: 'Matrix Calculus — Bridging to Backprop',
+    status: 'not-started', hours: '3–5h',
+    prereqs: [4],
+    crossPhaseLinks: [11],
+    conceptChecks: [
+      'What is a partial derivative geometrically?',
+      'What is the gradient vector and which direction does it point?',
+      'What is the Jacobian and when do you need it (vs just a gradient)?',
+    ],
+    failureModes: [
+      'Confusing the gradient (a vector) with the Jacobian (a matrix)',
+      'Forgetting that the gradient points UPHILL — gradient DESCENT goes in the negative gradient direction',
+    ],
+    mvl: [
+      { type: 'Read', text: '"The Matrix Calculus You Need for Deep Learning" by Parr & Howard' },
+      { type: 'Do', text: 'Compute gradient of f(x,y) = x²y + sin(xy) by hand; verify numerically' },
+    ],
+    projects: [],
+  },
+  {
+    id: 13, phase: 'p2', title: 'Partial Derivatives and Gradients — Going Deeper',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [12],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Why is the gradient perpendicular to contour lines?',
+      'What is a directional derivative and how does it relate to the gradient?',
+      'If you walk in the gradient direction, are you going uphill or downhill?',
+    ],
+    failureModes: [
+      'Thinking gradient descent finds the global minimum — it finds A minimum, not THE minimum',
+      'Confusing contour lines (constant value) with gradient arrows (direction of steepest ascent)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Gradient descent, how neural networks learn" (DL Ch. 2)' },
+      { type: 'Read', text: 'colah — "Calculus on Computational Graphs: Backpropagation"' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Gradient field visualizer (2D contour plots with arrows)' },
+    ],
+  },
+  {
+    id: 14, phase: 'p2', title: 'The Chain Rule — This IS Backpropagation',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [13],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Draw a computation graph for L = (wx+b-y)². Trace gradients backward through it.',
+      'Why is reverse-mode autodiff (backprop) cheaper than forward-mode for neural networks?',
+      'What is the chain rule in one sentence?',
+    ],
+    failureModes: [
+      'Thinking backprop is a separate algorithm from the chain rule — it IS the chain rule on a computation graph',
+      'Confusing the forward pass (compute values) with the backward pass (compute gradients)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Backpropagation, intuitively" (DL Ch. 3) + "Backpropagation calculus" (Ch. 4)' },
+      { type: 'Do', text: 'Draw and manually trace backward through L = (wx+b-y)²' },
+    ],
+    projects: [],
+  },
+  {
+    id: 15, phase: 'p2', title: 'Optimization and Gradient Descent',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [14],
+    crossPhaseLinks: [7],
+    conceptChecks: [
+      'What happens when the learning rate is too big? Too small?',
+      'What does momentum do and why is it helpful?',
+      'Why does Adam work better than vanilla SGD in practice?',
+      'What does "convex" mean and why does it make optimization easy?',
+    ],
+    failureModes: [
+      'Thinking SGD always converges — it depends on learning rate, landscape shape, and luck',
+      'Confusing batch gradient descent (all data) with SGD (random mini-batches) with full-batch',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Building micrograd" (Lecture 1, ~2.5h)' },
+      { type: 'Do', text: 'Complete micrograd: Value class with autodiff, train on simple 2D data' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'micrograd — autograd engine from scratch' },
+    ],
+  },
+  {
+    id: 16, phase: 'p2', title: 'Loss Landscapes and Local Minima',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [15],
+    crossPhaseLinks: [7, 10],
+    conceptChecks: [
+      'Why are saddle points more common than local minima in high-dimensional spaces?',
+      'What is the double descent phenomenon?',
+      'What does the Hessian being positive definite at a point tell you?',
+    ],
+    failureModes: [
+      'Assuming local minima are the main obstacle in neural network optimization — in high dimensions, saddle points dominate',
+      'Confusing training loss (how well you fit data) with generalization (how well you perform on new data)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "But what is a neural network?" (DL Ch. 1)' },
+      { type: 'Read', text: 'colah — "Neural Networks, Manifolds, and Topology"' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add 2-parameter loss landscape visualization to micrograd project' },
+    ],
+  },
+  // ─── Phase 3: Probability ───
+  {
+    id: 17, phase: 'p3', title: 'Probability Distributions and Bayes\' Theorem',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [],
+    crossPhaseLinks: [16],
+    conceptChecks: [
+      'What is the difference between a PDF and a PMF?',
+      'State Bayes\' theorem and explain what prior, likelihood, and posterior mean.',
+      'What distribution does a softmax output represent?',
+    ],
+    failureModes: [
+      'Confusing P(A|B) with P(B|A) — the "prosecutor\'s fallacy"',
+      'Thinking Bayesian and frequentist probability are incompatible rather than different frameworks',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Bayes theorem, the geometry of changing beliefs"' },
+      { type: 'Do', text: 'Implement Bayes\' theorem for a spam filter' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Bayesian spam filter from scratch' },
+    ],
+  },
+  {
+    id: 18, phase: 'p3', title: 'Expectation, Variance, and Covariance',
+    status: 'not-started', hours: '3–5h',
+    prereqs: [17],
+    crossPhaseLinks: [7, 8],
+    conceptChecks: [
+      'What is expected value geometrically (center of mass)?',
+      'What does the covariance matrix being positive semi-definite mean?',
+      'How is PCA related to eigendecomposition of the covariance matrix?',
+    ],
+    failureModes: [
+      'Confusing covariance (can be any real number) with correlation (normalized to [-1,1])',
+      'Forgetting that covariance matrices are always symmetric and PSD — connecting back to Lesson 10',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'StatQuest — "Covariance, Clearly Explained" + "PCA, Step by Step"' },
+      { type: 'Do', text: 'Generate correlated 2D data, compute covariance matrix, find PCA directions' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'PCA from covariance eigenvectors (ties SVD ↔ statistics)' },
+    ],
+  },
+  {
+    id: 19, phase: 'p3', title: 'Maximum Likelihood Estimation',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [17, 18],
+    crossPhaseLinks: [15],
+    conceptChecks: [
+      'What does "maximum likelihood" mean in plain English?',
+      'Why do we maximize log-likelihood instead of likelihood?',
+      'How is minimizing cross-entropy loss the same as maximizing likelihood?',
+    ],
+    failureModes: [
+      'Confusing likelihood (function of parameters given data) with probability (function of data given parameters)',
+      'Missing the critical connection: LLM training objective = maximum likelihood estimation',
+    ],
+    mvl: [
+      { type: 'Read', text: 'MML Book, Chapter 8.3' },
+      { type: 'Do', text: 'MLE for a Gaussian: find best μ and σ from data' },
+    ],
+    projects: [],
+  },
+  {
+    id: 20, phase: 'p3', title: 'Information Theory — Entropy, KL, Cross-Entropy',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [19],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does entropy measure? When is it maximized?',
+      'What does KL divergence measure? Is it symmetric?',
+      'Write the relationship: cross-entropy = entropy + KL divergence. What does this mean for training?',
+      'What does temperature do in softmax?',
+    ],
+    failureModes: [
+      'Thinking KL divergence is a distance metric — it\'s not symmetric! KL(P||Q) ≠ KL(Q||P)',
+      'Confusing entropy (uncertainty of a distribution) with cross-entropy (using wrong distribution to encode)',
+    ],
+    mvl: [
+      { type: 'Read', text: 'colah — "Visual Information Theory"' },
+      { type: 'Do', text: 'Implement cross-entropy loss from scratch; show it decreases as model improves' },
+    ],
+    projects: [],
+  },
+  {
+    id: 21, phase: 'p3', title: 'Bayesian Reasoning and Inference',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [17, 19, 20],
+    crossPhaseLinks: [10],
+    conceptChecks: [
+      'How is L2 regularization equivalent to a Gaussian prior on weights?',
+      'What is the difference between MLE and MAP estimation?',
+      'What is a likelihood ratio and why is it more intuitive than raw Bayes?',
+      'What is Solomonoff induction and why is it uncomputable?',
+    ],
+    failureModes: [
+      'Thinking Bayesian inference = just using Bayes\' theorem — it\'s a whole framework for reasoning under uncertainty',
+      'Missing the stunning regularization = Bayesian prior connection (L2 = Gaussian prior, L1 = Laplace prior)',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Yudkowsky — "An Intuitive Explanation of Bayes\' Theorem"' },
+      { type: 'Do', text: 'Sequential updating: coin bias posterior converging with more flips' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Bayesian sequential updating visualizer' },
+    ],
+  },
+  // ─── Phase 4: Neural Networks ───
+  {
+    id: 22, phase: 'p4', title: 'How a Single Neuron Works',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [9],
+    crossPhaseLinks: [14, 15],
+    conceptChecks: [
+      'What are the three steps a single neuron computes?',
+      'Why can\'t a single neuron learn XOR?',
+      'Why did ReLU largely replace sigmoid/tanh?',
+      'What is the universal approximation theorem? What doesn\'t it tell you?',
+    ],
+    failureModes: [
+      'Thinking "universal approximation" means any network can learn anything — it says nothing about LEARNING, only representation',
+      'Forgetting that a neuron IS a dot product + nonlinearity — you already know both pieces from Lessons 9 + calculus',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "But what is a neural network?" (DL Ch. 1)' },
+      { type: 'Do', text: 'Implement a single neuron, train on AND/OR/XOR, discover XOR fails' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Single neuron trainer (AND, OR, XOR discovery)' },
+    ],
+  },
+  {
+    id: 23, phase: 'p4', title: 'The Forward Pass as Matrix Multiplications',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [22],
+    crossPhaseLinks: [3, 4, 5],
+    conceptChecks: [
+      'How is a layer of neurons the same as a matrix multiplication?',
+      'What does the forward pass f₃(f₂(f₁(x))) look like in terms of matrices?',
+      'What does softmax do and why do we need it?',
+    ],
+    failureModes: [
+      'Losing the connection to linear algebra: each layer IS Lesson 3 (a linear transformation) + a nonlinearity',
+      'Thinking each neuron is independent — they share inputs, and the matrix captures ALL neurons in a layer simultaneously',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Building makemore" (Lecture 2)' },
+      { type: 'Do', text: 'Implement 2-layer MLP from scratch in NumPy, train on MNIST' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Build MLP on top of micrograd engine; train on MNIST' },
+    ],
+  },
+  {
+    id: 24, phase: 'p4', title: 'Backpropagation Through the Full Network',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [23],
+    crossPhaseLinks: [14, 15],
+    conceptChecks: [
+      'Why do vanishing gradients happen? How do residual connections fix them?',
+      'What does batch normalization do to activations?',
+      'Why does weight initialization matter?',
+    ],
+    failureModes: [
+      'Thinking residual connections are optional tricks — they are THE reason deep networks work, and THE backbone of transformers',
+      'Not doing the backprop ninja exercise manually — mechanical understanding of gradient flow is irreplaceable',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Becoming a Backprop Ninja" (Lecture 5)' },
+      { type: 'Do', text: 'Manually backprop through cross-entropy → linear → tanh → batchnorm' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add residual connections + batchnorm to MLP' },
+    ],
+  },
+  {
+    id: 25, phase: 'p4', title: 'Attention — Dot Products in Action',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [24],
+    crossPhaseLinks: [5, 9],
+    conceptChecks: [
+      'What are Q, K, V and where do they come from?',
+      'Why is the attention score a dot product? What does it measure?',
+      'What is the difference between attention scores (pre-softmax) and attention weights (post-softmax)?',
+      'What do the QK and OV circuits compute?',
+    ],
+    failureModes: [
+      'Confusing attention scores (raw dot products) with attention weights (after softmax) — this matters for interpretability',
+      'Thinking each head does the same thing — different heads learn different patterns (syntax, coreference, etc.)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Attention in transformers, step-by-step" (DL Ch. 6)' },
+      { type: 'Do', text: 'Implement single-head attention from scratch in NumPy, visualize attention matrix' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Attention mechanism from scratch + heatmap visualization' },
+    ],
+  },
+  {
+    id: 26, phase: 'p4', title: 'Building a Transformer from Scratch',
+    status: 'not-started', hours: '10–15h',
+    prereqs: [25],
+    crossPhaseLinks: [10, 20],
+    conceptChecks: [
+      'What is the residual stream and why is it the backbone of the transformer?',
+      'What does causal masking do and why is it necessary for language modeling?',
+      'What is the full transformer block? (attention → add&norm → MLP → add&norm)',
+      'How does positional encoding give the model a sense of order?',
+    ],
+    failureModes: [
+      'Not typing every line of Karpathy\'s GPT build — watching is not the same as doing',
+      'Missing that the residual stream IS the central communication channel for all interpretability work',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Let\'s build GPT" (Lecture 7, ~2h)' },
+      { type: 'Do', text: 'Build a working GPT from scratch, generate text' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Full GPT build — the culminating coding project' },
+    ],
+  },
+  // ─── Phase 5: Interpretability ───
+  {
+    id: 27, phase: 'p5', title: 'What Interpretability Researchers Actually Do',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [26],
+    crossPhaseLinks: [2, 5, 9, 10],
+    conceptChecks: [
+      'What is the superposition hypothesis?',
+      'What is the difference between a feature and a neuron?',
+      'Name four key mechanistic interpretability techniques.',
+      'What does a sparse autoencoder do?',
+    ],
+    failureModes: [
+      'Thinking neurons = features. The entire point of modern interp is that they\'re NOT the same.',
+      'Starting interp work without strong linear algebra — you cannot read these papers without Lessons 1–11.',
+    ],
+    mvl: [
+      { type: 'Read', text: '"A Mathematical Framework for Transformer Circuits" (Elhage et al.)' },
+      { type: 'Do', text: 'Install TransformerLens, load GPT-2, extract and visualize attention patterns' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'TransformerLens setup + GPT-2 attention visualization' },
+    ],
+  },
+  {
+    id: 28, phase: 'p5', title: 'Circuits and Features in Practice',
+    status: 'not-started', hours: '8–12h',
+    prereqs: [27],
+    crossPhaseLinks: [8],
+    conceptChecks: [
+      'What is an induction head and what does it do?',
+      'What is the residual stream in terms of how components read and write?',
+      'How does a sparse autoencoder decompose activations into features?',
+      'What did "Scaling Monosemanticity" find?',
+    ],
+    failureModes: [
+      'Trying to replicate induction heads without first understanding 2-layer attention mechanics (read the Circuits paper first)',
+      'Getting lost in code without understanding the linear algebra of what activation patching does',
+    ],
+    mvl: [
+      { type: 'Read', text: '"In-context Learning and Induction Heads" (Olsson et al.)' },
+      { type: 'Do (scaffolded)', text: '1) Load 2-layer model in TransformerLens. 2) Identify induction heads by attention pattern. 3) Run activation patching on a simple copying task. 4) Then try full replication.' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Induction head finding + activation patching in TransformerLens' },
+    ],
+  },
+  // ─── Phase 6: Alignment Theory ───
+  {
+    id: 29, phase: 'p6', title: 'Game Theory Foundations',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [],
+    crossPhaseLinks: [4],
+    conceptChecks: [
+      'What is a Nash equilibrium? Is it always the best outcome?',
+      'In the Prisoner\'s Dilemma, why is mutual defection the Nash equilibrium despite mutual cooperation being better?',
+      'What is mechanism design and how does it relate to designing reward functions?',
+      'Model the AI safety race as a payoff matrix. What\'s the equilibrium?',
+    ],
+    failureModes: [
+      'Thinking Nash equilibrium means "optimal" — it means stable, which can be terrible (mutual defection)',
+      'Treating game theory as pure philosophy — the payoff matrices ARE systems of equations from linear algebra',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Yale Game Theory Course (Ben Polak) — Lectures 1–3' },
+      { type: 'Read', text: 'Scott Alexander — "Meditations on Moloch"' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Prisoner\'s Dilemma tournament simulator (tit-for-tat etc.)' },
+    ],
+  },
+  {
+    id: 30, phase: 'p6', title: 'Decision Theory — CDT, EDT, and FDT',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [29],
+    crossPhaseLinks: [17, 21],
+    conceptChecks: [
+      'Explain CDT, EDT, and FDT each in one sentence.',
+      'What does each decision theory say about Newcomb\'s Problem? Why?',
+      'Why might FDT be the right decision theory for aligned AI?',
+      'What is reflective stability and why does CDT fail it?',
+    ],
+    failureModes: [
+      'Treating decision theory as armchair philosophy — it determines how an AI actually makes choices',
+      'Not computing expected utilities numerically for each thought experiment — do the math, don\'t just argue verbally',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Robert Miles — "Newcomb\'s Problem"' },
+      { type: 'Read', text: 'Yudkowsky & Soares — "Functional Decision Theory" (2018)' },
+    ],
+    projects: [
+      { label: 'EXTENDS', text: 'Add Newcomb simulator + DT comparison to game theory project' },
+    ],
+  },
+  {
+    id: 31, phase: 'p6', title: 'Anthropics and Self-Locating Beliefs',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [30],
+    crossPhaseLinks: [17, 21],
+    conceptChecks: [
+      'What is the Sleeping Beauty problem? What do thirders and halfers believe, and why?',
+      'State Bostrom\'s Simulation Argument\'s three propositions.',
+      'How does anthropic reasoning connect to deceptive alignment?',
+      'What is SSA vs SIA?',
+    ],
+    failureModes: [
+      'Confusing Anthropic (the company) with anthropics (the philosophical discipline)',
+      'Taking the Doomsday Argument too literally — it illustrates a reasoning pattern, not a firm prediction',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Numberphile — "Sleeping Beauty Paradox"' },
+      { type: 'Do', text: 'Sleeping Beauty simulator: run 10,000 trials from both perspectives' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Sleeping Beauty + Doomsday Argument simulators' },
+    ],
+  },
+  {
+    id: 32, phase: 'p6', title: 'The Alignment Problem — Technical Foundations',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [29, 30, 31],
+    crossPhaseLinks: [27, 28, 15, 20],
+    conceptChecks: [
+      'What is the difference between outer alignment and inner alignment?',
+      'What is a mesa-optimizer and why is it dangerous?',
+      'Explain deceptive alignment in two sentences.',
+      'What are the theoretical limitations of RLHF?',
+    ],
+    failureModes: [
+      'Thinking alignment is "just make the reward function right" — that\'s outer alignment only; inner alignment is the harder problem',
+      'Not connecting mesa-optimization to everything you learned about training dynamics (loss landscapes, optimization)',
+    ],
+    mvl: [
+      { type: 'Read', text: '"Risks from Learned Optimization" (Hubinger et al., 2019)' },
+      { type: 'Read', text: '"Concrete Problems in AI Safety" (Amodei et al., 2016)' },
+    ],
+    projects: [],
+  },
+  {
+    id: 33, phase: 'p6', title: 'Open Problems and Research Frontiers',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [32],
+    crossPhaseLinks: [27, 28, 7],
+    conceptChecks: [
+      'What is scalable oversight and why is it hard?',
+      'What is ELK (Eliciting Latent Knowledge)?',
+      'What does Singular Learning Theory study?',
+      'Name three open problems in mechanistic interpretability.',
+    ],
+    failureModes: [
+      'Getting overwhelmed by the number of open problems — pick ONE that excites you and go deep',
+      'Skipping empirical work in favor of only reading theory — alignment needs both',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Neel Nanda — "200 Concrete Open Problems in Mechanistic Interpretability"' },
+      { type: 'Do', text: 'Pick one open problem. Write a 1-page plan for how you\'d approach it.' },
+    ],
+    projects: [],
+  },
+];
+
+// Review checkpoints
+const CHECKPOINTS = [
+  {
+    id: 'cp1', afterLesson: 11, phase: 'p1', title: 'Phase 1 Review: LA → ML Bridge',
+    exercises: [
+      '<strong>Matrix decomposition relay:</strong> Take a 4×4 matrix. Compute rank, determinant, eigenvalues, SVD. For each, state one thing an ML researcher would care about.',
+      '<strong>Attention from scratch:</strong> Using ONLY linear algebra (no neural network framing), compute Q·Kᵀ for two 3-dimensional query and key vectors. Explain what the resulting scalar means geometrically.',
+      '<strong>Superposition puzzle:</strong> You have 5 features to represent in 3 dimensions. Show that you can\'t make all pairs orthogonal. Find an arrangement that minimizes maximum dot product between any pair.',
+    ],
+  },
+  {
+    id: 'cp2', afterLesson: 16, phase: 'p2', title: 'Phase 2 Review: Calculus → Training Bridge',
+    exercises: [
+      '<strong>Full backprop trace:</strong> Given a 2-layer MLP with specific weights, compute the forward pass AND backward pass by hand for one data point. Verify your gradients numerically.',
+      '<strong>Loss landscape connection:</strong> Create a 2-parameter loss function. Visualize gradient descent with different learning rates. Connect to eigenvalues of the Hessian.',
+      '<strong>Chain rule to circuits:</strong> Draw the computation graph for attention (QK dot product → softmax → weighted sum of V). Label every edge with what gradient flows through it.',
+    ],
+  },
+  {
+    id: 'cp3', afterLesson: 21, phase: 'p3', title: 'Phase 3 Review: Probability → LLM Training Bridge',
+    exercises: [
+      '<strong>Full training loop explained:</strong> Starting from MLE, derive why cross-entropy is the loss function for next-token prediction. Connect entropy, KL divergence, and the training objective.',
+      '<strong>Regularization unification:</strong> Show that L2 weight decay = Gaussian prior = MAP estimation. Compute the MAP estimate for a simple 1-parameter model.',
+      '<strong>Covariance → PCA → SVD:</strong> Generate 3D data with structure. Compute covariance matrix, find eigenvectors (PCA), compare with SVD of the centered data matrix. Show they give the same principal directions.',
+    ],
+  },
+  {
+    id: 'cp4', afterLesson: 26, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer Bridge',
+    exercises: [
+      '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix multiplication, state: the input/output dimensions, the rank of the weight matrix, what information bottleneck it creates.',
+      '<strong>Attention as projection:</strong> Show that attention is a form of weighted projection. Connect attention weights → linear combinations (Lesson 2) → projections (Lesson 9).',
+      '<strong>End-to-end information flow:</strong> Trace a token from embedding through 2 transformer blocks to output logits. At each step, name the linear algebra operation and its geometric meaning.',
+    ],
+  },
+  {
+    id: 'cp5', afterLesson: 28, phase: 'p5', title: 'Phase 5 Review: Interp → Alignment Bridge',
+    exercises: [
+      '<strong>Feature geometry:</strong> In TransformerLens, extract residual stream activations for 100 inputs. Run PCA. Interpret the top 3 components. Connect to eigenvectors (Lesson 7) and change of basis (Lesson 10).',
+      '<strong>Superposition quantification:</strong> For a set of feature directions found by an SAE, compute pairwise cosine similarities. Visualize as a heatmap. How orthogonal are they?',
+    ],
+  },
+  {
+    id: 'cp6', afterLesson: 33, phase: 'p6', title: 'Phase 6 Review: Full Integration',
+    exercises: [
+      '<strong>Alignment scenario analysis:</strong> A model trained with RLHF shows unexpected behavior in deployment. Using game theory (what strategies are at play?), decision theory (what decision procedure is the model using?), Bayesian reasoning (what\'s your posterior that it\'s deceptive?), and interpretability (what would you look for internally?) — write a full analysis.',
+      '<strong>Mathematical connections map:</strong> Create a concept map connecting at least 15 specific concepts from across all 6 phases. Each connection should be a concrete statement, not just "related to."',
+    ],
+  },
+];
+
+// Project tracker (cumulative)
+const PROJECT_CHAIN = [
+  { lesson: 1, name: 'Vector Plotting Toolkit', type: 'new', desc: 'matplotlib vectors, addition, scaling' },
+  { lesson: 2, name: '→ Add Span Visualization', type: 'extends', desc: 'Show span of 2 vectors covering plane' },
+  { lesson: 3, name: '→ Add Grid Transformation', type: 'extends', desc: 'Before/after grid under 2×2 matrix' },
+  { lesson: 5, name: '→ Add Rank/Nullspace Viz', type: 'extends', desc: 'Show squishing to lower dimensions' },
+  { lesson: 7, name: '→ Add Eigenvector Overlay', type: 'extends', desc: 'Highlight invariant directions' },
+  { lesson: 8, name: 'SVD Image Compressor', type: 'new', desc: 'Compress/reconstruct images with k singular values' },
+  { lesson: 9, name: 'Word Embedding Explorer', type: 'new', desc: 'Cosine similarity on GloVe vectors' },
+  { lesson: 11, name: '→ Capstone: Full SVD Viz', type: 'extends', desc: 'Animated Vᵀ → Σ → U on unit circle' },
+  { lesson: 13, name: 'Gradient Field Visualizer', type: 'new', desc: '2D contour plots with gradient arrows' },
+  { lesson: 15, name: 'micrograd', type: 'new', desc: 'Autograd engine from scratch (Karpathy)' },
+  { lesson: 16, name: '→ Loss Landscape Viz', type: 'extends', desc: '2-parameter landscape on micrograd' },
+  { lesson: 17, name: 'Bayesian Spam Filter', type: 'new', desc: 'P(spam|words) from scratch' },
+  { lesson: 18, name: 'PCA from Covariance', type: 'new', desc: 'Eigenvectors of covariance = PCA directions' },
+  { lesson: 21, name: 'Bayesian Sequential Updater', type: 'new', desc: 'Watch posterior converge with evidence' },
+  { lesson: 22, name: 'Single Neuron Trainer', type: 'new', desc: 'AND, OR, XOR discovery' },
+  { lesson: 23, name: '→ MLP on MNIST', type: 'extends', desc: 'Full MLP built on micrograd, trained on digits' },
+  { lesson: 24, name: '→ Add ResNet + BatchNorm', type: 'extends', desc: 'Residual connections to MLP' },
+  { lesson: 25, name: 'Attention From Scratch', type: 'new', desc: 'NumPy attention + heatmap visualization' },
+  { lesson: 26, name: '→ Full GPT Build', type: 'extends', desc: 'Working transformer, generates text' },
+  { lesson: 27, name: 'TransformerLens Setup', type: 'new', desc: 'GPT-2 attention pattern visualization' },
+  { lesson: 28, name: '→ Induction Head Replication', type: 'extends', desc: 'Activation patching on copying task' },
+  { lesson: 29, name: 'PD Tournament', type: 'new', desc: 'Prisoner\'s Dilemma strategy tournament' },
+  { lesson: 30, name: '→ Decision Theory Sims', type: 'extends', desc: 'Newcomb\'s + DT comparison' },
+  { lesson: 31, name: 'Sleeping Beauty Sim', type: 'new', desc: '10,000 trial anthropic simulator' },
+];
+
+
+// ═══════════════════════════════════════════════
+// GRAPH LAYOUT: Manually positioned nodes
+// ═══════════════════════════════════════════════
+
+const LAYOUT = {
+  width: 1200,
+  height: 900,
+  nodes: {
+    // Phase 1 - left area
+    1:  { x: 80,  y: 80 },
+    2:  { x: 80,  y: 160 },
+    3:  { x: 80,  y: 250 },
+    4:  { x: 190, y: 250 },
+    5:  { x: 135, y: 340 },
+    6:  { x: 30,  y: 340 },
+    7:  { x: 80,  y: 430 },
+    8:  { x: 80,  y: 520 },
+    9:  { x: 200, y: 520 },
+    10: { x: 140, y: 610 },
+    11: { x: 80,  y: 700 },
+    // Phase 2 - center-left
+    12: { x: 340, y: 250 },
+    13: { x: 340, y: 340 },
+    14: { x: 340, y: 430 },
+    15: { x: 340, y: 530 },
+    16: { x: 340, y: 630 },
+    // Phase 3 - center
+    17: { x: 530, y: 80 },
+    18: { x: 530, y: 180 },
+    19: { x: 530, y: 280 },
+    20: { x: 530, y: 380 },
+    21: { x: 530, y: 490 },
+    // Phase 4 - center-right
+    22: { x: 720, y: 200 },
+    23: { x: 720, y: 310 },
+    24: { x: 720, y: 420 },
+    25: { x: 720, y: 530 },
+    26: { x: 720, y: 650 },
+    // Phase 5 - right
+    27: { x: 910, y: 440 },
+    28: { x: 910, y: 560 },
+    // Phase 6 - far right
+    29: { x: 1040, y: 80 },
+    30: { x: 1100, y: 190 },
+    31: { x: 1100, y: 300 },
+    32: { x: 1060, y: 420 },
+    33: { x: 1060, y: 540 },
+  },
+};
+
+
+// ═══════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════
+
+let currentView = 'dependency';
+let selectedLesson = null;
+
+function getPhaseColor(phaseId) {
+  const p = PHASES.find(ph => ph.id === phaseId);
+  return p ? p.color : '#888';
+}
+
+function getStatusColor(status) {
+  if (status === 'complete') return 'var(--complete)';
+  if (status === 'in-progress') return 'var(--in-progress)';
+  return 'var(--not-started)';
+}
+
+// Build sidebar
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  let html = '';
+  PHASES.forEach(phase => {
+    const phaseLessons = LESSONS.filter(l => l.phase === phase.id);
+    const checkpoint = CHECKPOINTS.find(c => c.phase === phase.id);
+    html += `<div class="nav-section">`;
+    html += `<div class="nav-section-header" onclick="toggleSection('${phase.id}')">
+      <div class="phase-dot" style="background:${phase.color}"></div>
+      ${phase.name}
+      <span class="phase-time">${phase.hours}</span>
+    </div>`;
+    html += `<div class="nav-items" id="nav-${phase.id}">`;
+    phaseLessons.forEach(lesson => {
+      html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
+        <div class="status-dot" style="background:${getStatusColor(lesson.status)}"></div>
+        <span>${lesson.id}. ${lesson.title}</span>
+        <span class="lesson-time">${lesson.hours}</span>
+      </div>`;
+    });
+    if (checkpoint) {
+      html += `<div class="nav-item-checkpoint" onclick="selectCheckpoint('${checkpoint.id}')">
+        ✎ ${checkpoint.title}
+      </div>`;
+    }
+    html += `</div></div>`;
+  });
+  sidebar.innerHTML = html;
+}
+
+function toggleSection(phaseId) {
+  const el = document.getElementById(`nav-${phaseId}`);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// Render dependency graph
+function renderGraph() {
+  const svg = document.getElementById('graph-svg');
+  const rect = svg.parentElement.getBoundingClientRect();
+  const w = rect.width;
+  const h = rect.height;
+
+  const scaleX = w / LAYOUT.width;
+  const scaleY = h / LAYOUT.height;
+  const scale = Math.min(scaleX, scaleY) * 0.88;
+  const offsetX = (w - LAYOUT.width * scale) / 2 + 20;
+  const offsetY = (h - LAYOUT.height * scale) / 2 + 10;
+
+  function tx(x) { return x * scale + offsetX; }
+  function ty(y) { return y * scale + offsetY; }
+
+  let edgesHtml = '';
+  let nodesHtml = '';
+
+  // Draw edges
+  LESSONS.forEach(lesson => {
+    const to = LAYOUT.nodes[lesson.id];
+    // Prerequisite edges
+    lesson.prereqs.forEach(prereqId => {
+      const from = LAYOUT.nodes[prereqId];
+      edgesHtml += `<line class="edge" id="edge-${prereqId}-${lesson.id}"
+        x1="${tx(from.x)}" y1="${ty(from.y)}"
+        x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
+    });
+    // Cross-phase edges
+    lesson.crossPhaseLinks.forEach(linkId => {
+      const from = LAYOUT.nodes[linkId];
+      if (from) {
+        edgesHtml += `<line class="edge edge-cross-phase" id="xedge-${linkId}-${lesson.id}"
+          x1="${tx(from.x)}" y1="${ty(from.y)}"
+          x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
+      }
+    });
+  });
+
+  // Draw nodes
+  LESSONS.forEach(lesson => {
+    const pos = LAYOUT.nodes[lesson.id];
+    const color = getPhaseColor(lesson.phase);
+    const r = 18;
+    const statusColor = getStatusColor(lesson.status);
+    const fillOpacity = lesson.status === 'complete' ? 0.25 : lesson.status === 'in-progress' ? 0.15 : 0.08;
+
+    nodesHtml += `<g class="node-group" onclick="selectLesson(${lesson.id})" id="node-${lesson.id}">
+      <circle class="node-circle" cx="${tx(pos.x)}" cy="${ty(pos.y)}" r="${r}"
+        fill="${color}" fill-opacity="${fillOpacity}"
+        stroke="${statusColor}" />
+      <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}"
+        fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.id}</text>
+    </g>`;
+  });
+
+  // Phase labels
+  const phaseLabels = [
+    { label: 'LINEAR ALGEBRA', x: 80, y: 30, color: '#6ee7b7' },
+    { label: 'CALCULUS', x: 340, y: 200, color: '#818cf8' },
+    { label: 'PROBABILITY', x: 530, y: 30, color: '#f9a8d4' },
+    { label: 'NEURAL NETS', x: 720, y: 140, color: '#fbbf24' },
+    { label: 'INTERP', x: 910, y: 390, color: '#38bdf8' },
+    { label: 'ALIGNMENT', x: 1060, y: 30, color: '#c084fc' },
+  ];
+
+  let labelsHtml = '';
+  phaseLabels.forEach(pl => {
+    labelsHtml += `<text x="${tx(pl.x)}" y="${ty(pl.y)}"
+      fill="${pl.color}" opacity="0.3"
+      font-family="JetBrains Mono, monospace" font-size="10" font-weight="700"
+      letter-spacing="2" text-anchor="middle">${pl.label}</text>`;
+  });
+
+  svg.innerHTML = labelsHtml + edgesHtml + nodesHtml;
+}
+
+// Select lesson and show detail panel
+function selectLesson(id) {
+  selectedLesson = id;
+  const lesson = LESSONS.find(l => l.id === id);
+  if (!lesson) return;
+
+  // Update sidebar active state
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const navItem = document.getElementById(`nav-item-${id}`);
+  if (navItem) navItem.classList.add('active');
+
+  // Highlight edges
+  document.querySelectorAll('.edge').forEach(el => el.classList.remove('highlighted'));
+  lesson.prereqs.forEach(pid => {
+    const edge = document.getElementById(`edge-${pid}-${id}`);
+    if (edge) edge.classList.add('highlighted');
+  });
+  lesson.crossPhaseLinks.forEach(lid => {
+    const edge = document.getElementById(`xedge-${lid}-${id}`);
+    if (edge) edge.classList.add('highlighted');
+  });
+  // Also highlight edges where this lesson is a prereq
+  LESSONS.forEach(other => {
+    if (other.prereqs.includes(id)) {
+      const edge = document.getElementById(`edge-${id}-${other.id}`);
+      if (edge) edge.classList.add('highlighted');
+    }
+  });
+
+  // Build detail panel
+  const phase = PHASES.find(p => p.id === lesson.phase);
+  let html = '';
+
+  // Header
+  html += `<div class="detail-header">
+    <div class="detail-phase-tag" style="color:${phase.color}">
+      <div class="phase-dot" style="background:${phase.color};width:6px;height:6px;border-radius:50%"></div>
+      Phase ${PHASES.indexOf(phase) + 1} · ${phase.name}
+    </div>
+    <div class="detail-title">Lesson ${lesson.id}: ${lesson.title}</div>
+    <div class="detail-meta">
+      <div class="detail-meta-item">⏱ <strong>${lesson.hours}</strong></div>
+      <div class="detail-meta-item">Status: <strong style="color:${getStatusColor(lesson.status)}">${lesson.status.replace('-', ' ')}</strong></div>
+    </div>
+  </div>`;
+
+  // Prerequisites
+  html += `<div class="detail-section">
+    <div class="detail-section-title"><span class="icon">⬆</span> Prerequisites</div>`;
+  if (lesson.prereqs.length === 0 && lesson.crossPhaseLinks.length === 0) {
+    html += `<p style="font-size:13px;color:var(--text-dim)">None — entry point</p>`;
+  } else {
+    html += `<ul class="prereq-list">`;
+    lesson.prereqs.forEach(pid => {
+      const p = LESSONS.find(l => l.id === pid);
+      html += `<li><span class="prereq-link" onclick="selectLesson(${pid})">Lesson ${pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
+    });
+    lesson.crossPhaseLinks.forEach(lid => {
+      const l = LESSONS.find(ls => ls.id === lid);
+      if (l) {
+        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${lid})">Lesson ${lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
+      }
+    });
+    html += `</ul>`;
+  }
+  html += `</div>`;
+
+  // Minimum Viable Lesson
+  html += `<div class="detail-section">
+    <div class="detail-section-title"><span class="icon">⚡</span> Minimum Viable Lesson</div>`;
+  lesson.mvl.forEach(r => {
+    html += `<div class="mvl-resource"><div class="res-type">${r.type}</div>${r.text}</div>`;
+  });
+  html += `</div>`;
+
+  // Concept Checks
+  html += `<div class="detail-section">
+    <div class="detail-section-title"><span class="icon">✓</span> Concept Checks — Can You Answer These?</div>
+    <ul class="concept-check-list">`;
+  lesson.conceptChecks.forEach(q => {
+    html += `<li>${q}</li>`;
+  });
+  html += `</ul></div>`;
+
+  // Failure Modes
+  html += `<div class="detail-section">
+    <div class="detail-section-title"><span class="icon">⚠</span> Common Failure Modes</div>
+    <ul class="failure-list">`;
+  lesson.failureModes.forEach(f => {
+    html += `<li>${f}</li>`;
+  });
+  html += `</ul></div>`;
+
+  // Projects
+  if (lesson.projects.length > 0) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title"><span class="icon">🔨</span> Coding Projects</div>
+      <ul class="project-list">`;
+    lesson.projects.forEach(p => {
+      html += `<li class="project-item">
+        <span class="project-badge ${p.label.toLowerCase()}">${p.label}</span>
+        <span>${p.text}</span>
+      </li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  document.getElementById('detail-empty').style.display = 'none';
+  document.getElementById('detail-content').style.display = 'block';
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+function selectCheckpoint(cpId) {
+  const cp = CHECKPOINTS.find(c => c.id === cpId);
+  if (!cp) return;
+
+  let html = `<div class="checkpoint-detail">
+    <div class="detail-phase-tag" style="color:${getPhaseColor(cp.phase)}">
+      <div class="phase-dot" style="background:${getPhaseColor(cp.phase)};width:6px;height:6px;border-radius:50%"></div>
+      Review Checkpoint
+    </div>
+    <h2>${cp.title}</h2>
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">
+      Complete these integration exercises after finishing Lesson ${cp.afterLesson} to connect concepts across lessons.
+    </p>
+    <ul class="checkpoint-exercises">`;
+  cp.exercises.forEach(ex => {
+    html += `<li>${ex}</li>`;
+  });
+  html += `</ul></div>`;
+
+  document.getElementById('detail-empty').style.display = 'none';
+  document.getElementById('detail-content').style.display = 'block';
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+// View switching
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.canvas-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (view === 'dependency') {
+    renderGraph();
+    document.getElementById('canvas-legend').style.display = 'flex';
+  } else if (view === 'timeline') {
+    renderTimeline();
+    document.getElementById('canvas-legend').style.display = 'none';
+  } else if (view === 'projects') {
+    renderProjectTracker();
+    document.getElementById('canvas-legend').style.display = 'none';
+  }
+}
+
+function renderTimeline() {
+  const svg = document.getElementById('graph-svg');
+  const rect = svg.parentElement.getBoundingClientRect();
+  const w = rect.width;
+  const h = rect.height;
+
+  let html = '';
+  const margin = { top: 60, left: 60, right: 40, bottom: 40 };
+  const usableW = w - margin.left - margin.right;
+  const usableH = h - margin.top - margin.bottom;
+
+  // Timeline: lessons on x-axis, grouped by phase
+  const barW = Math.min(20, usableW / LESSONS.length - 2);
+  const gap = (usableW - barW * LESSONS.length) / LESSONS.length;
+
+  // Parse hours to get midpoint
+  function parseHours(h) {
+    const match = h.match(/(\d+)–(\d+)/);
+    if (match) return (parseInt(match[1]) + parseInt(match[2])) / 2;
+    return 5;
+  }
+
+  const maxH = Math.max(...LESSONS.map(l => parseHours(l.hours)));
+
+  // Axis
+  html += `<text x="${margin.left}" y="${margin.top - 25}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">ESTIMATED HOURS PER LESSON</text>`;
+  html += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
+  html += `<line x1="${margin.left}" y1="${h - margin.bottom}" x2="${w - margin.right}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
+
+  // Y-axis labels
+  for (let i = 0; i <= maxH; i += 5) {
+    const y = h - margin.bottom - (i / maxH) * usableH;
+    html += `<text x="${margin.left - 8}" y="${y + 4}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">${i}h</text>`;
+    html += `<line x1="${margin.left}" y1="${y}" x2="${w - margin.right}" y2="${y}" stroke="var(--border)" stroke-width="0.5" opacity="0.3" />`;
+  }
+
+  LESSONS.forEach((lesson, i) => {
+    const x = margin.left + i * (barW + gap) + gap / 2;
+    const hrs = parseHours(lesson.hours);
+    const barH = (hrs / maxH) * usableH;
+    const y = h - margin.bottom - barH;
+    const color = getPhaseColor(lesson.phase);
+
+    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}"
+      fill="${color}" opacity="${lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2}"
+      rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
+    html += `<text x="${x + barW/2}" y="${h - margin.bottom + 14}" fill="var(--text-dim)"
+      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.id}</text>`;
+    html += `<text x="${x + barW/2}" y="${y - 5}" fill="${color}"
+      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" opacity="0.7">${hrs}h</text>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+function renderProjectTracker() {
+  const svg = document.getElementById('graph-svg');
+  const rect = svg.parentElement.getBoundingClientRect();
+  const w = rect.width;
+  const h = rect.height;
+
+  let html = '';
+  const margin = { top: 50, left: 30, right: 30, bottom: 30 };
+  const rowH = 28;
+  const startY = margin.top;
+
+  html += `<text x="${margin.left}" y="${startY - 15}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">CUMULATIVE PROJECT TRACKER</text>`;
+
+  // Two columns of chain indicators
+  let prevY = null;
+  PROJECT_CHAIN.forEach((proj, i) => {
+    const y = startY + i * rowH;
+    const lesson = LESSONS.find(l => l.id === proj.lesson);
+    const color = getPhaseColor(lesson.phase);
+    const isDone = lesson.status === 'complete';
+    const isActive = lesson.status === 'in-progress';
+    const opacity = isDone ? 1 : isActive ? 0.6 : 0.25;
+
+    // Connector line
+    if (prevY !== null && proj.type === 'extends') {
+      html += `<line x1="${margin.left + 10}" y1="${prevY + 6}" x2="${margin.left + 10}" y2="${y + 2}" stroke="${color}" stroke-width="1.5" opacity="${opacity * 0.5}" />`;
+    }
+
+    // Dot
+    html += `<circle cx="${margin.left + 10}" cy="${y + 4}" r="4" fill="${color}" opacity="${opacity}" />`;
+
+    // Lesson number
+    html += `<text x="${margin.left + 24}" y="${y + 8}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" opacity="${opacity}">L${proj.lesson}</text>`;
+
+    // Project name
+    const isExtend = proj.type === 'extends';
+    html += `<text x="${margin.left + 52}" y="${y + 8}" fill="${isExtend ? color : 'var(--text)'}" font-family="DM Sans, sans-serif" font-size="12" opacity="${opacity}" font-weight="${isExtend ? 400 : 500}">${proj.name}</text>`;
+
+    // Description
+    html += `<text x="${margin.left + 52}" y="${y + 21}" fill="var(--text-dim)" font-family="DM Sans, sans-serif" font-size="10" opacity="${opacity * 0.7}">${proj.desc}</text>`;
+
+    // Badge
+    if (proj.type === 'new') {
+      html += `<rect x="${w - margin.right - 40}" y="${y - 4}" width="32" height="16" rx="3" fill="${color}" opacity="${opacity * 0.15}" />`;
+      html += `<text x="${w - margin.right - 24}" y="${y + 7}" fill="${color}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle" opacity="${opacity}">NEW</text>`;
+    }
+
+    prevY = y;
+  });
+
+  svg.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+
+function init() {
+  renderSidebar();
+  renderGraph();
+  window.addEventListener('resize', () => {
+    if (currentView === 'dependency') renderGraph();
+    else if (currentView === 'timeline') renderTimeline();
+    else if (currentView === 'projects') renderProjectTracker();
+  });
+}
+
+init();
+</script>
+</body>
+</html>
