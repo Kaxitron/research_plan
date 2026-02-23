@@ -1,6 +1,6 @@
 # The Path to AI Alignment
 
-## A Complete Self-Study Curriculum: Mathematics → Neural Networks → Mechanistic Interpretability
+## A Complete Self-Study Curriculum: Mathematics → Neural Networks → Alignment
 
 ---
 
