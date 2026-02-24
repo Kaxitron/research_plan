@@ -13,13 +13,25 @@
 - Batch normalization: keeping activations well-behaved
 - Weight initialization: random but scaled correctly
 
-## 📺 Watch
+## 📺 Watch — Primary
 
-- **Karpathy — "Becoming a Backprop Ninja" (Lecture 5)**
-  - https://www.youtube.com/watch?v=q8SA3rM6ckI
-  - *You manually backpropagate through an entire MLP. Painful and transformative.*
-- **Karpathy — "Activations & Gradients, BatchNorm" (Lecture 4)**
-  - https://www.youtube.com/watch?v=P6sfmUTpUmc
+1. **Welch Labs — "The F=ma of Artificial Intelligence [Backpropagation, How Models Learn Part 2]"**
+   - https://www.youtube.com/@WelchLabs (search "How Models Learn Part 2")
+   - *30 minutes. Welch frames backprop as the fundamental law of deep learning — the way F=ma is the fundamental law of classical mechanics. The geometric treatment of gradients flowing backward through the folded-space picture from Part 1 is exceptional.*
+
+2. **Karpathy — "Becoming a Backprop Ninja" (Lecture 5)**
+   - https://www.youtube.com/watch?v=q8SA3rM6ckI
+   - *You manually backpropagate through an entire MLP. Painful and transformative.*
+
+3. **Karpathy — "Activations & Gradients, BatchNorm" (Lecture 4)**
+   - https://www.youtube.com/watch?v=P6sfmUTpUmc
+
+## 📺 Watch — Secondary
+
+4. **3Blue1Brown — "Backpropagation, intuitively" | Deep Learning Ch. 3**
+   - https://www.youtube.com/watch?v=Ilg3gGewQ5U
+5. **3Blue1Brown — "Backpropagation calculus" | Deep Learning Ch. 4**
+   - https://www.youtube.com/watch?v=tIeHLnjs5U8
 
 ## 📖 Read
 
