@@ -12,11 +12,19 @@
 - A single neuron as a linear classifier (it draws a hyperplane)
 - Universal approximation theorem: enough neurons can approximate any function (but can they *learn* to?)
 
-## 📺 Watch
+## 📺 Watch — Primary
 
-- **3Blue1Brown — "But what is a neural network?" | Deep Learning Ch. 1**
-  - https://www.youtube.com/watch?v=aircAruvnKk
-- **Karpathy — Building micrograd** (review relevant sections)
+1. **Welch Labs — "ChatGPT is made from 100 million of these [The Perceptron]"**
+   - https://www.youtube.com/@WelchLabs (search "The Perceptron")
+   - *24 minutes. Welch Labs traces the perceptron from its 1950s origins through to modern neural networks — hardware demonstrations, historical narrative, and geometric intuition. Pairs perfectly with 3B1B's approach. Watch this FIRST for motivation.*
+
+2. **3Blue1Brown — "But what is a neural network?" | Deep Learning Ch. 1**
+   - https://www.youtube.com/watch?v=aircAruvnKk
+   - *The canonical visual explanation. After Welch's historical context, Grant gives you the mathematical structure.*
+
+## 📺 Watch — Secondary
+
+3. **Karpathy — Building micrograd** (review relevant sections on neurons)
 
 ## 📖 Read
 
