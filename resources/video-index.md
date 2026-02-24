@@ -34,6 +34,35 @@
 | 6 | Attention in transformers, step-by-step | 25 |
 | 7 | How might LLMs store facts | 26 |
 
+## Welch Labs — How Models Learn
+
+*The geometric trilogy on why deep learning works. Watch in order.*
+
+| # | Title | Lesson |
+|---|-------|--------|
+| 1 | The Misconception that Almost Stopped AI [How Models Learn Part 1] | 23 |
+| 2 | The F=ma of Artificial Intelligence [Backpropagation, How Models Learn Part 2] | 24 |
+| 3 | Why Deep Learning Works Unreasonably Well [How Models Learn Part 3] | 16 |
+
+## Welch Labs — Neural Networks & AI
+
+| # | Title | Lesson |
+|---|-------|--------|
+| — | ChatGPT is made from 100 million of these [The Perceptron] | 22 |
+| — | The Dark Matter of AI [Mechanistic Interpretability] | 27 |
+| — | How DeepSeek Rewrote the Transformer [MLA] | 26 |
+
+## Welch Labs — Alignment & Foundations
+
+| # | Title | Lesson |
+|---|-------|--------|
+| — | Can humans make AI any better? [The Bitter Lesson] | 32 |
+| — | These Numbers Can Make AI Dangerous [Subliminal Learning] | 32 |
+| — | What the Books Get Wrong about AI [Double Descent] | 16 |
+| — | The most complex model we actually understand [Grokking] | 16 |
+
+*All Welch Labs videos: https://www.youtube.com/@WelchLabs*
+
 ## Andrej Karpathy — Neural Networks: Zero to Hero
 
 | # | Title | Lesson |
