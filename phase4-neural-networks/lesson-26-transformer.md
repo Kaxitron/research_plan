@@ -13,14 +13,22 @@
 - MLP layers: what they do between attention (possibly store facts)
 - Causal masking: preventing the model from "seeing the future"
 - The complete GPT architecture from input to next-token prediction
+- **Modern variants:** Multi-head Latent Attention (MLA) as used in DeepSeek
 
-## 📺 Watch (capstone coding experience)
+## 📺 Watch — Primary
 
-- **Karpathy — "Let's build GPT: from scratch, in code, spelled out" (Lecture 7)**
-  - https://www.youtube.com/watch?v=kCc8FmEb1nY
-  - *~2 hours. You build a working GPT from scratch. Transformative.*
-- **3Blue1Brown — "How might LLMs store facts" | Deep Learning Ch. 7**
-  - https://www.youtube.com/watch?v=9-Jl0dxWQs8
+1. **Karpathy — "Let's build GPT: from scratch, in code, spelled out" (Lecture 7)**
+   - https://www.youtube.com/watch?v=kCc8FmEb1nY
+   - *~2 hours. You build a working GPT from scratch. Transformative.*
+
+2. **3Blue1Brown — "How might LLMs store facts" | Deep Learning Ch. 7**
+   - https://www.youtube.com/watch?v=9-Jl0dxWQs8
+
+## 📺 Watch — Secondary
+
+3. **Welch Labs — "How DeepSeek Rewrote the Transformer [MLA]"**
+   - https://www.youtube.com/@WelchLabs (search "DeepSeek MLA")
+   - *18 minutes. After building a standard GPT, this shows you a real frontier modification: Multi-head Latent Attention, the architectural innovation that made DeepSeek 57× more efficient. Watch AFTER Karpathy to appreciate what's being changed and why.*
 
 ## 📖 Read
 
