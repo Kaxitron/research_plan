@@ -15,11 +15,15 @@
   - Probing
   - Sparse autoencoders (SAEs) for finding features
 
-## 📺 Watch
+## 📺 Watch — Primary
 
-- **Neel Nanda's YouTube** — paper walkthroughs and research streams
-  - Start with "Implementing GPT-2 from Scratch"
-  - https://www.youtube.com/c/neaborius
+1. **Welch Labs — "The Dark Matter of AI [Mechanistic Interpretability]"**
+   - https://www.youtube.com/@WelchLabs (search "Dark Matter of AI")
+   - *24 minutes. The best accessible introduction to mechanistic interpretability that exists. Welch uses the "dark matter" framing — we can measure the effects of internal representations without being able to see them directly — and walks through superposition and sparse autoencoders with exceptional clarity. Watch this BEFORE any papers.*
+
+2. **Neel Nanda's YouTube** — paper walkthroughs and research streams
+   - Start with "Implementing GPT-2 from Scratch"
+   - https://www.youtube.com/c/neaborius
 
 ## 📖 Read (core interpretability papers, in order)
 
