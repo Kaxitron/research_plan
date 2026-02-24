@@ -6,7 +6,6 @@
 
 **Goal:** Develop deep intuitive understanding of the mathematics underlying neural networks, the architecture and philosophy of modern AI systems, and the tools of mechanistic interpretability — all in service of solving AI alignment.
 
-**Your profile:** Good mathematical intuition, intermediate C++/Python, refreshing math after a 6-year gap. You learn best through geometric intuition first, then mechanics. Pace: ~33% slower than typical technical presentation.
 
 **Estimated total time:** ~160–215 hours over 4–6 months at a steady pace.
 
