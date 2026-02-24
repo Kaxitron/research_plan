@@ -33,13 +33,24 @@
 - **Debate and amplification:** have AI systems argue with each other; humans judge. Scales human oversight.
 - **Limitations of all current techniques:** they work for current models but may not scale to superintelligent systems where the AI can out-think its oversight.
 
-## 📺 Watch
+## 📺 Watch — Primary
 
-- **Robert Miles' YouTube channel** — accessible explanations of all alignment concepts
-  - https://www.youtube.com/c/RobertMilesAI
-  - Start with "The Alignment Problem" overview videos
-- **Andrej Karpathy — "Deep Dive into LLMs like ChatGPT"**
-  - https://www.youtube.com/watch?v=7xTGNNLPyMI
+1. **Welch Labs — "Can humans make AI any better? [The Bitter Lesson]"**
+   - https://www.youtube.com/@WelchLabs (search "Bitter Lesson")
+   - *23 minutes. Richard Sutton's Bitter Lesson — that scale and compute always beats human domain knowledge — reframed through a clear historical narrative. Explains why alignment is urgent: if the lesson holds, we'll soon have systems far smarter than us, built without understanding them.*
+
+2. **Welch Labs — "These Numbers Can Make AI Dangerous [Subliminal Learning]"**
+   - https://www.youtube.com/@WelchLabs (search "Subliminal Learning")
+   - *33 minutes. How AI systems can learn unintended behaviors from training data — a concrete mechanistic demonstration of inner alignment failure. Watch this for a visceral sense of WHY alignment is hard.*
+
+3. **Robert Miles' YouTube channel** — accessible explanations of all alignment concepts
+   - https://www.youtube.com/c/RobertMilesAI
+   - Start with "The Alignment Problem" overview videos
+
+## 📺 Watch — Secondary
+
+4. **Andrej Karpathy — "Deep Dive into LLMs like ChatGPT"**
+   - https://www.youtube.com/watch?v=7xTGNNLPyMI
 
 ## 📖 Read — Primary
 
