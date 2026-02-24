@@ -8,6 +8,7 @@
 
 1. **Pick a concrete open problem** from Nanda's list
    - https://www.neelnanda.io/mechanistic-interpretability/favourite-problems
+   - fairly out of date, see his alignmentforum post
 2. **Start small:** 1-5 day mini-projects with fast feedback loops
 3. **Aim for a 1-2 week research sprint** on something that catches your interest
 4. **Write up your findings** — even negative results are valuable
