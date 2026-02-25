@@ -46,7 +46,7 @@
 | 11 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-11-capstone.md) | 4–6h | ⬜ Not Started |
 | — | *✎ Phase 1 Review: LA → ML Bridge* | 2–3h | ⬜ |
 
-### [PHASE 2: Calculus for ML](phase2-calculus/) · ~19–27h
+### [PHASE 2: Calculus for ML](phase2-calculus/) · ~22–32h
 *The mathematical engine of neural network learning*
 
 | # | Lesson | Est. Time | Status |
@@ -55,6 +55,7 @@
 | 13 | [Partial Derivatives and Gradients — Going Deeper](phase2-calculus/lesson-13-gradients.md) | 3–4h | ⬜ Not Started |
 | 14 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-14-chain-rule.md) | 4–6h | ⬜ Not Started |
 | 15 | [Optimization and Gradient Descent](phase2-calculus/lesson-15-optimization.md) | 6–8h | ⬜ Not Started |
+| 15b | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-15b-constrained-optimization.md) | 3–5h | ⬜ Not Started |
 | 16 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-16-loss-landscapes.md) | 3–4h | ⬜ Not Started |
 | — | *✎ Phase 2 Review: Calculus → Training Bridge* | 2–3h | ⬜ |
 

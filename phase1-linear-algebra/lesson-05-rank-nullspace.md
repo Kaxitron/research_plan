@@ -12,6 +12,20 @@
 - **Rank-nullity theorem:** rank + nullity = number of columns. Information preserved + information destroyed = total information.
 - **When rank < n:** the transformation squishes space down. Some information is irrecoverably lost.
 
+### Gaussian Elimination — The Computational Workhorse
+
+- **Row echelon form:** using three operations (swap rows, scale a row, add a multiple of one row to another), reduce any matrix to upper triangular form. The number of non-zero rows = rank.
+- **The algorithm:** work left-to-right, top-to-bottom. For each column, find a non-zero entry (the "pivot"), swap it to the current row, then eliminate all entries below it by subtracting multiples of the pivot row.
+- **Reduced row echelon form (RREF):** go further — eliminate entries ABOVE pivots too, and scale all pivots to 1. Now you can read off the solution directly.
+- **Why this matters:** this is how you *actually compute* rank, find null space vectors, solve Ax = b, and determine if a set of vectors is independent. The geometry (Lessons 1-4) tells you what these things *mean*; Gaussian elimination tells you how to *find* them.
+- **Reading the result:** after row reduction, pivot columns correspond to independent columns (basis for column space). Free columns correspond to null space directions. The rank equals the number of pivots.
+- **In practice:** NumPy/MATLAB do this for you (via LU decomposition, a dressed-up version of elimination). But doing it by hand on small matrices builds the intuition for when code gives unexpected results.
+
+### MML Reference
+
+- **MML Book, Chapter 2.1** covers systems of linear equations
+- **MML Book, Chapter 2.3** covers Gaussian elimination in full detail with worked examples
+
 ## 📺 Watch — Primary
 
 1. **3Blue1Brown — "Inverse matrices, column space, null space" (Ch. 7)**
@@ -32,14 +46,17 @@
 
 ## 📖 Read
 
+- **MML Book, Chapter 2.1–2.3** (systems of linear equations, Gaussian elimination — the computational foundation)
 - **MML Book, Chapter 2.8–2.9** (affine spaces, linear mappings, image/kernel)
 - **Interactive Linear Algebra (GT), Chapter 2.6–2.7**
 
 ## 🔨 Do
 
+- **Gaussian elimination by hand:** Take A = [[1, 2, 3], [2, 4, 7], [3, 6, 10]]. Row reduce to echelon form. Read off the rank (2). Identify the free variable. Find the null space vector. Verify Av = 0.
 - Compute rank and null space of several matrices by hand (via row reduction)
 - In Python: generate a rank-2 matrix in ℝ³, visualize that it maps 3D space onto a 2D plane
 - **Key exercise:** Create a 4×3 matrix with rank 2. Verify its null space is 1-dimensional. Find a null space vector and show Av = [0,0,0,0].
+- **Implement row reduction in Python:** write a function that takes a matrix and returns its RREF. Compare your output to `numpy.linalg.matrix_rank()` and `scipy.linalg.null_space()`.
 
 ## 🔗 ML Connection
 

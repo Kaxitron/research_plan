@@ -1,6 +1,6 @@
 # Lesson 15: Optimization and Gradient Descent
 
-[← Chain Rule](lesson-14-chain-rule.md) | [Back to TOC](../README.md) | [Next: Loss Landscapes →](lesson-16-loss-landscapes.md)
+[← Chain Rule](lesson-14-chain-rule.md) | [Back to TOC](../README.md) | [Next: Constrained Optimization →](lesson-15b-constrained-optimization.md)
 
 ---
 

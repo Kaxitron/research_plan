@@ -12,6 +12,14 @@
 - Lines stay lines, origin stays fixed — that's what "linear" means
 - Matrix-vector multiplication: "where does this vector land after the transformation?"
 
+### Linear vs. Affine — A Crucial Distinction
+
+- **Linear transformations** keep the origin fixed. Pure matrix multiplication y = Wx is linear.
+- **Affine transformations** = linear + translation: y = Wx + b. The bias vector b shifts the origin.
+- **Every neural network layer is actually *affine*, not linear.** When we say "linear layer," we mean affine — the bias term b slides the whole space over before the activation function squishes it.
+- **Why this matters:** a purely linear network (no bias, no activation) can only represent functions that pass through the origin. The bias term lets each layer shift its decision boundary anywhere. Without biases, a single neuron can only separate classes with a hyperplane through the origin — a severe limitation.
+- **MML Book, Chapter 2.8** covers affine spaces formally. For now, just remember: the +b in y = Wx + b is what makes neural networks *affine* transformations, and this is a feature, not a technicality.
+
 ## 📺 Watch — Primary (THE most important video in the series)
 
 1. **3Blue1Brown — "Linear transformations and matrices" (Ch. 3)**
@@ -31,6 +39,7 @@
 ## 📖 Read — Primary
 
 - **MML Book, Chapter 2.7** (linear mappings)
+- **MML Book, Chapter 2.8** (affine spaces — skim for the distinction between linear and affine)
 
 ## 📖 Read — Secondary
 

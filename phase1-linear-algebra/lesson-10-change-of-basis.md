@@ -48,6 +48,55 @@
   - ||A||²_F = tr(AᵀA) — Frobenius norm via trace
   - Shows up constantly in ML loss functions and gradient computations
 
+### Cholesky Decomposition
+
+- **For positive definite matrices:** A = LLᵀ, where L is lower triangular. Think of it as "taking the square root" of a matrix.
+- **Why it exists:** if A is positive definite (all eigenvalues > 0), it can always be factored this way. The factorization is unique.
+- **Why it matters:** Cholesky is ~2x faster than general matrix decomposition. It's the standard way to:
+  - Sample from multivariate Gaussians: if you want x ~ N(μ, Σ), compute L where Σ = LLᵀ, then x = μ + Lz where z ~ N(0, I). The matrix L "shapes" standard normal noise into the correct covariance structure.
+  - Solve systems involving covariance matrices efficiently (Bayesian inference, Gaussian processes).
+  - Test positive definiteness: if Cholesky succeeds, the matrix is positive definite. If it fails, it's not.
+- **MML Book, Chapter 4.3** covers this in one page — worth a quick read.
+
+### Inner Product of Functions
+
+- **Functions can be vectors too.** The 3B1B video on abstract vector spaces (Ch. 15) introduces this idea. Formally: the set of all continuous functions on [a, b] forms a vector space. You can add functions, scale them, and take linear combinations — just like regular vectors.
+- **The inner product of two functions:** ⟨f, g⟩ = ∫ₐᵇ f(x)g(x) dx — analogous to the dot product for finite vectors. It measures "how similar" two functions are.
+- **Orthogonal functions:** ⟨f, g⟩ = 0 means the functions are "perpendicular" — they have nothing in common. sin(x) and cos(x) are orthogonal on [0, 2π]. This is the basis of Fourier analysis.
+- **Why this matters for ML:** neural networks live in *function space* — the space of all possible input-output mappings. When researchers say "the loss landscape in function space," they mean this infinite-dimensional vector space where each "point" is a function. Inner products of functions let you measure distances and angles between different neural networks' behaviors.
+- **MML Book, Chapter 3.7** covers this briefly but clearly.
+
+### Matrix Phylogeny — The Family Tree
+
+How matrix types relate to each other:
+
+```
+All Matrices
+├── Square Matrices
+│   ├── Symmetric (A = Aᵀ)
+│   │   ├── Positive Semi-Definite (eigenvalues ≥ 0)
+│   │   │   └── Positive Definite (eigenvalues > 0)
+│   │   │       → Cholesky decomposition exists
+│   │   └── Indefinite (mixed eigenvalues)
+│   │       → Saddle points in loss landscape
+│   ├── Orthogonal (QᵀQ = I)
+│   │   → Pure rotations/reflections, preserve lengths
+│   │   → SVD's U and V are orthogonal
+│   ├── Diagonal
+│   │   → Eigendecomposition's D, SVD's Σ
+│   ├── Triangular (upper or lower)
+│   │   → Cholesky's L, Gaussian elimination result
+│   └── Invertible (det ≠ 0, full rank)
+├── Non-Square Matrices
+│   → Most weight matrices in neural networks
+│   → SVD works on these; eigendecomposition doesn't
+└── Special Products
+    ├── AᵀA → always symmetric PSD (Gram matrix)
+    └── AAᵀ → always symmetric PSD
+```
+
+This hierarchy matters because knowing what TYPE a matrix is tells you what tools you can use and what properties are guaranteed.
+
 ## 📺 Watch — Primary
 
 1. **3Blue1Brown — "Change of basis" (Ch. 13)**
@@ -69,7 +118,10 @@
 ## 📖 Read — Primary
 
 - **MML Book, Chapter 3.1–3.3** (norms, inner products, distances)
+- **MML Book, Chapter 3.7** (inner product of functions — brief but important bridge to function spaces)
 - **MML Book, Chapter 4.1** (determinant and trace)
+- **MML Book, Chapter 4.3** (Cholesky decomposition — one-page treatment, quick read)
+- **MML Book, Chapter 4.7** (matrix phylogeny — the family tree of matrix types, beautiful reference diagram)
 - **MML Book, Chapter 2.7.2** (basis change)
 
 ## 📖 Read — Secondary

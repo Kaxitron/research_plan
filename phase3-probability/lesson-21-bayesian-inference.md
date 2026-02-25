@@ -43,6 +43,39 @@
 - **Proper scoring rules:** scoring rules that incentivize honest probability reports. Log loss (cross-entropy!) is a proper scoring rule. This connects information theory to Bayesian honesty.
 - **Epistemic vs. aleatoric uncertainty:** epistemic uncertainty = uncertainty from lack of knowledge (reducible with more data). Aleatoric uncertainty = inherent randomness (irreducible). A well-calibrated model should know which is which.
 
+### The Exponential Family — One Framework to Rule Them All
+
+- **The exponential family** is a class of distributions that includes: Gaussian, Bernoulli, Poisson, categorical, exponential, gamma, beta, and many more. They all share the form: p(x|θ) = h(x) · exp(θᵀT(x) - A(θ))
+- **Why it matters:** if your data comes from an exponential family distribution, everything becomes tractable:
+  - **Sufficient statistics** T(x) capture all the information in the data (you don't need the raw data, just the statistics!)
+  - **Maximum likelihood** has a clean closed-form solution
+  - **Conjugate priors** exist (see below), making Bayesian inference tractable
+- **The softmax output** of a neural network is a categorical distribution — an exponential family member. Cross-entropy loss IS the negative log-likelihood of this exponential family distribution.
+- **MML Book, Chapter 6.6** covers the exponential family with examples showing how common distributions are special cases.
+
+### Conjugate Priors — Making Bayesian Inference Tractable
+
+- **The problem:** full Bayesian inference requires computing the posterior P(θ|data) ∝ P(data|θ)·P(θ). For arbitrary choices of prior and likelihood, this integral is intractable.
+- **The solution:** for each exponential family likelihood, there's a "natural" prior (the **conjugate prior**) such that the posterior has the same form as the prior. You just update the parameters.
+- **Key examples:**
+  - Gaussian likelihood + Gaussian prior → Gaussian posterior (just update mean and variance!)
+  - Bernoulli likelihood + Beta prior → Beta posterior
+  - Categorical likelihood + Dirichlet prior → Dirichlet posterior
+- **The Gaussian case in detail:** if your data is x ~ N(μ, σ²) and your prior is μ ~ N(m₀, s₀²), then after observing n data points, the posterior is μ ~ N(m_n, s_n²) where the new mean is a weighted average of the prior mean and the data mean, weighted by their precisions (1/variance). More data → posterior concentrates around the data mean. Less data → prior dominates. This IS learning, mathematically.
+- **MML Book, Chapter 6.6.1** covers conjugate priors with worked examples.
+
+### Directed Graphical Models (Bayesian Networks)
+
+- **The idea:** represent probabilistic dependencies as a directed graph. Nodes = random variables. Arrows = direct dependencies. An arrow from A to B means "A influences B" or "B depends on A."
+- **Factorization:** the joint distribution factors according to the graph: P(X₁, ..., Xₙ) = Π P(Xᵢ | parents(Xᵢ)). Each variable only depends on its direct parents, not everything else.
+- **Example — a simple chain:** Weather → Sprinkler → Wet Grass. P(W, S, G) = P(W) · P(S|W) · P(G|S). The grass being wet depends on the sprinkler, which depends on weather. You don't need to model every pairwise interaction.
+- **Conditional independence:** the graph tells you which variables are independent given others. This is encoded by **d-separation** — a graph algorithm for reading off conditional independences.
+- **Why this matters for ML/alignment:**
+  - **Causal reasoning:** graphical models distinguish "X causes Y" (arrow from X to Y) from "X and Y share a common cause" (arrows from Z to both). This matters for alignment: does the model's behavior *cause* good outcomes, or is it merely *correlated* with good training signal?
+  - **Generative models:** VAEs, diffusion models, and many Bayesian ML methods are defined as graphical models. The latent variables are unobserved nodes.
+  - **Training pipelines:** you can draw the training process as a graphical model: data → model parameters → predictions → loss → gradient → updated parameters. Reasoning about what depends on what is graphical model reasoning.
+- **MML Book, Chapter 8.5** introduces directed graphical models with examples.
+
 ## 📺 Watch — Primary
 
 1. **3Blue1Brown — "Bayes theorem" + "The medical test paradox"**
@@ -70,7 +103,9 @@
 
 ## 📖 Read — Secondary
 
+- **MML Book, Chapter 6.6** — exponential family and conjugate priors (the unified framework for tractable Bayesian inference)
 - **MML Book, Chapter 8.4–8.6** — Bayesian inference, MAP estimation, Bayesian model comparison
+- **MML Book, Chapter 8.5** — directed graphical models (Bayesian networks)
 - **"Bayesian Reasoning for Intelligent People" by Simon DeDeo**
   - https://santafe.edu/~simon/br.pdf
   - Concise, well-written introduction with good examples

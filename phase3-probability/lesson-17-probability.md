@@ -13,6 +13,18 @@
 - Bayes' theorem: updating beliefs with evidence
 - Prior → Evidence → Posterior: the fundamental pattern of learning
 
+### Change of Variables — How Transformations Affect Probability
+
+- **The problem:** if x has distribution p(x), and you apply a transformation y = f(x), what is the distribution of y?
+- **The key formula (1D):** p(y) = p(x) · |dx/dy| = p(f⁻¹(y)) · |df⁻¹/dy|. The Jacobian factor accounts for how the transformation stretches or compresses space.
+- **Intuition:** if f stretches a region, the probability there must decrease (same probability mass over more space = lower density). If f compresses, density increases. The |det(J)| factor measures exactly this stretching.
+- **Multivariate version:** p(y) = p(f⁻¹(y)) · |det(J_f⁻¹)|, where J is the Jacobian matrix.
+- **Where this matters in ML:**
+  - **Normalizing flows:** neural networks that learn invertible transformations. They start with a simple distribution (Gaussian) and apply learned transformations. The change of variables formula tells you the resulting probability density — and the training uses log |det(J)| explicitly. This is why determinants (Lesson 6) matter for generative models!
+  - **Reparameterization trick** in VAEs: transform a simple z ~ N(0,1) into the desired distribution by learning the right transformation.
+  - **Log-normal, chi-squared, etc.:** many common distributions are just Gaussians passed through transformations.
+- **MML Book, Chapter 6.7** covers this with clear worked examples.
+
 ## 📺 Watch
 
 - **3Blue1Brown — "Bayes theorem, the geometry of changing beliefs"**
