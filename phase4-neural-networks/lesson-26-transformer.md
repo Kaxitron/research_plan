@@ -1,6 +1,6 @@
 # Lesson 26: Building a Transformer from Scratch
 
-[← Attention](lesson-25-attention.md) | [Back to TOC](../README.md) | [Next: Interpretability →](../phase5-interpretability/lesson-27-intro-interp.md)
+[← Attention](lesson-25-attention.md) | [Back to TOC](../README.md) | [Next: RL Foundations →](lesson-26b-rl-foundations.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Lesson 27: What Interpretability Researchers Actually Do
 
-[← Transformer](../phase4-neural-networks/lesson-26-transformer.md) | [Back to TOC](../README.md) | [Next: Circuits →](lesson-28-circuits.md)
+[← LLM Training Pipeline](../phase4-neural-networks/lesson-26c-llm-pipeline.md) | [Back to TOC](../README.md) | [Next: Circuits →](lesson-28-circuits.md)
 
 ---
 

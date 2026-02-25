@@ -1,6 +1,6 @@
 # Lesson 28: Circuits and Features in Practice
 
-[← Intro to Interp](lesson-27-intro-interp.md) | [Back to TOC](../README.md) | [Next: Game Theory →](../phase6-alignment-theory/lesson-29-game-theory.md)
+[← Intro to Interp](lesson-27-intro-interp.md) | [Back to TOC](../README.md) | [Next: Scaling Laws & Emergence →](lesson-28b-scaling-emergence.md)
 
 ---
 

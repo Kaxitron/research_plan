@@ -1,6 +1,6 @@
 # Lesson 29: Game Theory Foundations
 
-[← Circuits](../phase5-interpretability/lesson-28-circuits.md) | [Back to TOC](../README.md) | [Next: Decision Theory →](lesson-30-decision-theory.md)
+[← Singular Learning Theory](../phase5-interpretability/lesson-28c-slt.md) | [Back to TOC](../README.md) | [Next: Decision Theory →](lesson-30-decision-theory.md)
 
 ---
 

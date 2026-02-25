@@ -22,3 +22,20 @@
 ## Anthropics
 12. "Are We Living in a Simulation?" (Bostrom, 2003)
 13. "Sleeping Beauty and Self-Locating Belief" (Elga, 2000)
+
+## Scaling Laws & Emergence
+14. "Scaling Laws for Neural Language Models" (Kaplan et al., 2020)
+15. "Training Compute-Optimal Large Language Models" [Chinchilla] (Hoffmann et al., 2022)
+16. "Are Emergent Abilities of Large Language Models a Mirage?" (Schaeffer et al., 2023)
+
+## LLM Training & RLHF
+17. "Training language models to follow instructions with human feedback" [InstructGPT] (Ouyang et al., 2022)
+18. "Constitutional AI: Harmlessness from AI Feedback" (Bai et al., 2022)
+19. "Proximal Policy Optimization Algorithms" (Schulman et al., 2017)
+20. "Direct Preference Optimization" (Rafailov et al., 2023)
+21. "Sleeper Agents: Training Deceptive LLMs" (Anthropic, 2024)
+
+## Singular Learning Theory
+22. "Algebraic Geometry and Statistical Learning Theory" (Watanabe, 2009) — the foundational textbook
+23. "Quantifying Degeneracy in Singular Models via the Learning Coefficient" (Lau et al., 2023)
+24. "Birth of a Transformer: A Memory Viewpoint" (Edelman et al., 2023)

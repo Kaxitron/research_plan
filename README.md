@@ -28,6 +28,15 @@
 
 ## Table of Contents
 
+### [PHASE 0: Setup](phase0-setup/) · ~2–4h
+*Get your tools ready*
+
+| # | Lesson | Est. Time | Status |
+|---|--------|-----------|--------|
+| 0 | [Python and NumPy for Machine Learning](phase0-setup/lesson-00-python-numpy.md) | 2–4h | ⬜ Not Started |
+
+> *Skip this if you're already comfortable with NumPy, Matplotlib, and Jupyter notebooks.*
+
 ### [PHASE 1: Linear Algebra Foundations](phase1-linear-algebra/) · ~32–47h
 *The language that transformers speak*
 
@@ -71,7 +80,7 @@
 | 21 | [Bayesian Reasoning and Inference](phase3-probability/lesson-21-bayesian-inference.md) | 5–7h | ⬜ Not Started |
 | — | *✎ Phase 3 Review: Probability → LLM Training Bridge* | 2–3h | ⬜ |
 
-### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/) · ~30–42h
+### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/) · ~42–58h
 *Building the machine, piece by piece*
 
 | # | Lesson | Est. Time | Status |
@@ -81,17 +90,21 @@
 | 24 | [Backpropagation Through the Full Network](phase4-neural-networks/lesson-24-backprop.md) | 6–8h | ⬜ Not Started |
 | 25 | [Attention — Dot Products in Action](phase4-neural-networks/lesson-25-attention.md) | 5–7h | ⬜ Not Started |
 | 26 | [Building a Transformer from Scratch](phase4-neural-networks/lesson-26-transformer.md) | 10–15h | ⬜ Not Started |
+| 26b | [Reinforcement Learning Foundations](phase4-neural-networks/lesson-26b-rl-foundations.md) | 5–7h | ⬜ Not Started |
+| 26c | [The LLM Training Pipeline](phase4-neural-networks/lesson-26c-llm-pipeline.md) | 4–6h | ⬜ Not Started |
 | — | *✎ Phase 4 Review: Everything → Transformer Bridge* | 3–4h | ⬜ |
 
 > 📖 **Start reading papers here.** See the [Reading Papers Guide](resources/reading-papers.md).
 
-### [PHASE 5: Mechanistic Interpretability](phase5-interpretability/) · ~14–20h
+### [PHASE 5: Mechanistic Interpretability](phase5-interpretability/) · ~26–38h
 *Using everything you've learned to open the black box*
 
 | # | Lesson | Est. Time | Status |
 |---|--------|-----------|--------|
 | 27 | [What Interpretability Researchers Actually Do](phase5-interpretability/lesson-27-intro-interp.md) | 6–8h | ⬜ Not Started |
 | 28 | [Circuits and Features in Practice](phase5-interpretability/lesson-28-circuits.md) | 8–12h | ⬜ Not Started |
+| 28b | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase5-interpretability/lesson-28b-scaling-emergence.md) | 5–7h | ⬜ Not Started |
+| 28c | [Singular Learning Theory — The Geometry of Learning](phase5-interpretability/lesson-28c-slt.md) | 5–8h | ⬜ Not Started |
 | — | *✎ Phase 5 Review: Interp → Alignment Bridge* | 2–3h | ⬜ |
 
 ### [PHASE 6: Alignment Theory and Foundations](phase6-alignment-theory/) · ~25–35h
