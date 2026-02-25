@@ -603,7 +603,7 @@
     <h1>The Path to <span>AI Alignment</span></h1>
     <div class="header-stats">
       <div>
-        <span class="stat-value" id="stat-complete">7</span> / <span id="stat-total">33</span> lessons
+        <span class="stat-value" id="stat-complete">7</span> / <span id="stat-total">39</span> lessons
       </div>
       <div>
         <div class="progress-bar-container">
@@ -652,16 +652,38 @@
 // ═══════════════════════════════════════════════
 
 const PHASES = [
+  { id: 'p0', name: 'Setup', color: '#94a3b8', hours: '2–4h' },
   { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '22–30h' },
   { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
   { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
-  { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '30–40h' },
-  { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '15–20h' },
+  { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
+  { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
   { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
   { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
 ];
 
 const LESSONS = [
+  // ─── Phase 0: Setup ───
+  {
+    id: 0, phase: 'p0', title: 'Python and NumPy for Machine Learning',
+    status: 'not-started', hours: '2–4h',
+    prereqs: [],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Can you create a matrix in NumPy and multiply it by a vector with @?',
+      'Can you plot vectors as arrows with matplotlib?',
+      'Do you understand NumPy broadcasting?',
+    ],
+    failureModes: [
+      'Writing Python for-loops when NumPy vectorized operations exist — always think "whole array at once"',
+      'Spending too long here if you already know NumPy — skim and move on',
+    ],
+    mvl: [
+      { type: 'Do', text: 'Multiply two 1000×1000 matrices: for-loops vs A @ B. Feel the 100x speedup.' },
+      { type: 'Do', text: 'Plot the unit circle, apply a 2×2 matrix, see the ellipse' },
+    ],
+    projects: [],
+  },
   // ─── Phase 1: Linear Algebra ───
   {
     id: 1, phase: 'p1', title: 'Vectors — What They Actually Are',
@@ -995,9 +1017,30 @@ const LESSONS = [
     ],
   },
   {
+    id: 1501, label: '15b', phase: 'p2', title: 'Constrained Optimization and Lagrange Multipliers',
+    status: 'not-started', hours: '3–5h',
+    prereqs: [15],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What do Lagrange multipliers do geometrically? (Gradients are parallel at the optimum)',
+      'What are KKT conditions and when do you need them?',
+      'How is L2 regularization equivalent to a Lagrange constraint on weight magnitude?',
+      'What is duality and why do SVMs use the dual formulation?',
+    ],
+    failureModes: [
+      'Memorizing Lagrange multiplier formulas without the geometric insight (gradients must be parallel)',
+      'Not seeing that alignment IS constrained optimization: maximize capability SUBJECT TO safety constraints',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Khan Academy — "Lagrange multipliers, using tangency to solve constrained optimization"' },
+      { type: 'Do', text: 'Solve a constrained optimization problem by hand; verify with code' },
+    ],
+    projects: [],
+  },
+  {
     id: 16, phase: 'p2', title: 'Loss Landscapes and Local Minima',
     status: 'not-started', hours: '3–4h',
-    prereqs: [15],
+    prereqs: [1501],
     crossPhaseLinks: [7, 10],
     conceptChecks: [
       'Why are saddle points more common than local minima in high-dimensional spaces?',
@@ -1239,11 +1282,55 @@ const LESSONS = [
       { label: 'EXTENDS', text: 'Full GPT build — the culminating coding project' },
     ],
   },
+  {
+    id: 2601, label: '26b', phase: 'p4', title: 'Reinforcement Learning Foundations',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [26],
+    crossPhaseLinks: [15, 20],
+    conceptChecks: [
+      'What are the components of an MDP (states, actions, rewards, transitions)?',
+      'What does a policy gradient update do intuitively?',
+      'Why does PPO clip the update? What goes wrong without it?',
+      'Walk through the RLHF pipeline: what happens at each of the 4 stages?',
+    ],
+    failureModes: [
+      'Trying to learn all of RL — you only need MDPs, policy gradients, PPO, and reward hacking for alignment',
+      'Not connecting RL to the math: policy gradient = gradient ascent (L15), KL penalty = constrained optimization (L15b)',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Deep Dive into LLMs like ChatGPT" (RLHF section)' },
+      { type: 'Read', text: 'Hugging Face — "Illustrating RLHF"' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'GridWorld policy gradient + reward hacking demo' },
+    ],
+  },
+  {
+    id: 2602, label: '26c', phase: 'p4', title: 'The LLM Training Pipeline',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [2601],
+    crossPhaseLinks: [19, 21],
+    conceptChecks: [
+      'Name the 4 stages of the LLM pipeline and what each one optimizes.',
+      'What math from your curriculum appears at each stage?',
+      'Why does SFT alone not produce an aligned model?',
+      'What are the alignment failure points at each stage?',
+    ],
+    failureModes: [
+      'Thinking RLHF "solves" alignment — it reduces one type of misalignment but introduces others (reward hacking, sycophancy)',
+      'Not watching Karpathy\'s full Deep Dive — it\'s the single best resource for this lesson',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Karpathy — "Deep Dive into LLMs" (full ~3.5h)' },
+      { type: 'Do', text: 'For each pipeline stage, write which curriculum lesson covers the math' },
+    ],
+    projects: [],
+  },
   // ─── Phase 5: Interpretability ───
   {
     id: 27, phase: 'p5', title: 'What Interpretability Researchers Actually Do',
     status: 'not-started', hours: '6–8h',
-    prereqs: [26],
+    prereqs: [2602],
     crossPhaseLinks: [2, 5, 9, 10],
     conceptChecks: [
       'What is the superposition hypothesis?',
@@ -1284,6 +1371,52 @@ const LESSONS = [
     ],
     projects: [
       { label: 'EXTENDS', text: 'Induction head finding + activation patching in TransformerLens' },
+    ],
+  },
+  {
+    id: 2801, label: '28b', phase: 'p5', title: 'Scaling Laws, Emergent Capabilities, and Phase Transitions',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [28],
+    crossPhaseLinks: [16],
+    conceptChecks: [
+      'What is a scaling law and what three variables does it relate?',
+      'What did the Chinchilla paper change about how labs train models?',
+      'Are emergent capabilities real or a measurement artifact? Explain both sides.',
+      'Why does the "bitter lesson" worry alignment researchers?',
+    ],
+    failureModes: [
+      'Assuming smooth scaling means smooth capability improvement — practical usefulness can have sharp thresholds',
+      'Taking the bitter lesson as gospel — clever methods AND scale both matter',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Kaplan et al. — "Scaling Laws for Neural Language Models"' },
+      { type: 'Read', text: 'Rich Sutton — "The Bitter Lesson" (1 page)' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Plot scaling laws from published benchmarks (log-log)' },
+    ],
+  },
+  {
+    id: 2802, label: '28c', phase: 'p5', title: 'Singular Learning Theory — The Geometry of Learning',
+    status: 'not-started', hours: '5–8h',
+    prereqs: [2801],
+    crossPhaseLinks: [7, 16],
+    conceptChecks: [
+      'Why do standard statistics (AIC, BIC) give wrong answers for neural networks?',
+      'What is the RLCT and how does it replace parameter count as a complexity measure?',
+      'What does "singular" mean in the context of the loss landscape?',
+      'How do phase transitions during training connect to changes in the RLCT?',
+    ],
+    failureModes: [
+      'Thinking you need full algebraic geometry — the conceptual framework is accessible with eigenvalues and Hessians you already know',
+      'Getting intimidated by the math — focus on geometric intuition: singularities = flat directions = symmetries = lower effective complexity',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Jesse Hoogland — "Neural Networks are Singular" (LessWrong)' },
+      { type: 'Do', text: 'Plot f(w₁,w₂) = (w₁w₂)². See the cross-shaped valley. Compute the Hessian at origin — it\'s zero.' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Singularity visualization + parameter symmetry demo' },
     ],
   },
   // ─── Phase 6: Alignment Theory ───
@@ -1427,18 +1560,19 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp4', afterLesson: 26, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer Bridge',
+    id: 'cp4', afterLesson: 2602, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer Bridge',
     exercises: [
       '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix multiplication, state: the input/output dimensions, the rank of the weight matrix, what information bottleneck it creates.',
       '<strong>Attention as projection:</strong> Show that attention is a form of weighted projection. Connect attention weights → linear combinations (Lesson 2) → projections (Lesson 9).',
-      '<strong>End-to-end information flow:</strong> Trace a token from embedding through 2 transformer blocks to output logits. At each step, name the linear algebra operation and its geometric meaning.',
+      '<strong>End-to-end pipeline:</strong> Trace a model from pre-training (MLE, cross-entropy) through SFT (distribution shift) to RLHF (policy gradient + KL penalty). For each stage, name the math concepts and which lesson covers them.',
     ],
   },
   {
-    id: 'cp5', afterLesson: 28, phase: 'p5', title: 'Phase 5 Review: Interp → Alignment Bridge',
+    id: 'cp5', afterLesson: 2802, phase: 'p5', title: 'Phase 5 Review: Interp → Alignment Bridge',
     exercises: [
       '<strong>Feature geometry:</strong> In TransformerLens, extract residual stream activations for 100 inputs. Run PCA. Interpret the top 3 components. Connect to eigenvectors (Lesson 7) and change of basis (Lesson 10).',
       '<strong>Superposition quantification:</strong> For a set of feature directions found by an SAE, compute pairwise cosine similarities. Visualize as a heatmap. How orthogonal are they?',
+      '<strong>Scaling + SLT connection:</strong> How would you use the Local Learning Coefficient (LLC) to detect when a model acquires a new capability during training? What would a phase transition look like in an LLC plot?',
     ],
   },
   {
@@ -1471,8 +1605,11 @@ const PROJECT_CHAIN = [
   { lesson: 24, name: '→ Add ResNet + BatchNorm', type: 'extends', desc: 'Residual connections to MLP' },
   { lesson: 25, name: 'Attention From Scratch', type: 'new', desc: 'NumPy attention + heatmap visualization' },
   { lesson: 26, name: '→ Full GPT Build', type: 'extends', desc: 'Working transformer, generates text' },
+  { lesson: 2601, name: 'RL GridWorld', type: 'new', desc: 'Policy gradient + reward hacking demo' },
   { lesson: 27, name: 'TransformerLens Setup', type: 'new', desc: 'GPT-2 attention pattern visualization' },
   { lesson: 28, name: '→ Induction Head Replication', type: 'extends', desc: 'Activation patching on copying task' },
+  { lesson: 2801, name: 'Scaling Law Plots', type: 'new', desc: 'Log-log plots from published benchmarks' },
+  { lesson: 2802, name: 'Singularity Visualization', type: 'new', desc: 'Parameter symmetry + SLT geometry' },
   { lesson: 29, name: 'PD Tournament', type: 'new', desc: 'Prisoner\'s Dilemma strategy tournament' },
   { lesson: 30, name: '→ Decision Theory Sims', type: 'extends', desc: 'Newcomb\'s + DT comparison' },
   { lesson: 31, name: 'Sleeping Beauty Sim', type: 'new', desc: '10,000 trial anthropic simulator' },
@@ -1485,47 +1622,54 @@ const PROJECT_CHAIN = [
 
 const LAYOUT = {
   width: 1200,
-  height: 900,
+  height: 1000,
   nodes: {
+    // Phase 0 - setup
+    0:  { x: 80,  y: 30 },
     // Phase 1 - left area
-    1:  { x: 80,  y: 80 },
-    2:  { x: 80,  y: 160 },
-    3:  { x: 80,  y: 250 },
-    4:  { x: 190, y: 250 },
-    5:  { x: 135, y: 340 },
-    6:  { x: 30,  y: 340 },
-    7:  { x: 80,  y: 430 },
-    8:  { x: 80,  y: 520 },
-    9:  { x: 200, y: 520 },
-    10: { x: 140, y: 610 },
-    11: { x: 80,  y: 700 },
+    1:  { x: 80,  y: 110 },
+    2:  { x: 80,  y: 190 },
+    3:  { x: 80,  y: 280 },
+    4:  { x: 190, y: 280 },
+    5:  { x: 135, y: 370 },
+    6:  { x: 30,  y: 370 },
+    7:  { x: 80,  y: 460 },
+    8:  { x: 80,  y: 550 },
+    9:  { x: 200, y: 550 },
+    10: { x: 140, y: 640 },
+    11: { x: 80,  y: 730 },
     // Phase 2 - center-left
-    12: { x: 340, y: 250 },
-    13: { x: 340, y: 340 },
-    14: { x: 340, y: 430 },
-    15: { x: 340, y: 530 },
-    16: { x: 340, y: 630 },
+    12: { x: 340, y: 280 },
+    13: { x: 340, y: 370 },
+    14: { x: 340, y: 460 },
+    15: { x: 340, y: 560 },
+    1501: { x: 340, y: 650 },
+    16: { x: 340, y: 740 },
     // Phase 3 - center
-    17: { x: 530, y: 80 },
-    18: { x: 530, y: 180 },
-    19: { x: 530, y: 280 },
-    20: { x: 530, y: 380 },
-    21: { x: 530, y: 490 },
+    17: { x: 530, y: 110 },
+    18: { x: 530, y: 210 },
+    19: { x: 530, y: 310 },
+    20: { x: 530, y: 410 },
+    21: { x: 530, y: 520 },
     // Phase 4 - center-right
-    22: { x: 720, y: 200 },
+    22: { x: 720, y: 210 },
     23: { x: 720, y: 310 },
-    24: { x: 720, y: 420 },
-    25: { x: 720, y: 530 },
-    26: { x: 720, y: 650 },
+    24: { x: 720, y: 410 },
+    25: { x: 720, y: 510 },
+    26: { x: 720, y: 610 },
+    2601: { x: 720, y: 720 },
+    2602: { x: 720, y: 830 },
     // Phase 5 - right
-    27: { x: 910, y: 440 },
-    28: { x: 910, y: 560 },
+    27: { x: 910, y: 460 },
+    28: { x: 910, y: 570 },
+    2801: { x: 910, y: 690 },
+    2802: { x: 910, y: 810 },
     // Phase 6 - far right
-    29: { x: 1040, y: 80 },
-    30: { x: 1100, y: 190 },
-    31: { x: 1100, y: 300 },
-    32: { x: 1060, y: 420 },
-    33: { x: 1060, y: 540 },
+    29: { x: 1060, y: 100 },
+    30: { x: 1120, y: 220 },
+    31: { x: 1120, y: 340 },
+    32: { x: 1080, y: 460 },
+    33: { x: 1080, y: 580 },
   },
 };
 
@@ -1631,7 +1775,7 @@ function renderSidebar() {
     phaseLessons.forEach(lesson => {
       html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
         <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to change status"></div>
-        <span>${lesson.id}. ${lesson.title}</span>
+        <span>${lesson.label || lesson.id}. ${lesson.title}</span>
         <span class="lesson-time">${lesson.hours}</span>
       </div>`;
     });
@@ -1703,18 +1847,19 @@ function renderGraph() {
         fill="${color}" fill-opacity="${fillOpacity}"
         stroke="${statusColor}" />
       <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}"
-        fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.id}</text>
+        fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.label || lesson.id}</text>
     </g>`;
   });
 
   // Phase labels
   const phaseLabels = [
-    { label: 'LINEAR ALGEBRA', x: 80, y: 30, color: '#6ee7b7' },
-    { label: 'CALCULUS', x: 340, y: 200, color: '#818cf8' },
-    { label: 'PROBABILITY', x: 530, y: 30, color: '#f9a8d4' },
-    { label: 'NEURAL NETS', x: 720, y: 140, color: '#fbbf24' },
-    { label: 'INTERP', x: 910, y: 390, color: '#38bdf8' },
-    { label: 'ALIGNMENT', x: 1060, y: 30, color: '#c084fc' },
+    { label: 'SETUP', x: 30, y: 12, color: '#94a3b8' },
+    { label: 'LINEAR ALGEBRA', x: 80, y: 60, color: '#6ee7b7' },
+    { label: 'CALCULUS', x: 340, y: 230, color: '#818cf8' },
+    { label: 'PROBABILITY', x: 530, y: 60, color: '#f9a8d4' },
+    { label: 'NEURAL NETS', x: 720, y: 155, color: '#fbbf24' },
+    { label: 'INTERP', x: 910, y: 410, color: '#38bdf8' },
+    { label: 'ALIGNMENT', x: 1080, y: 50, color: '#c084fc' },
   ];
 
   let labelsHtml = '';
@@ -1765,9 +1910,9 @@ function selectLesson(id) {
   html += `<div class="detail-header">
     <div class="detail-phase-tag" style="color:${phase.color}">
       <div class="phase-dot" style="background:${phase.color};width:6px;height:6px;border-radius:50%"></div>
-      Phase ${PHASES.indexOf(phase) + 1} · ${phase.name}
+      Phase ${phase.id.replace('p','')} · ${phase.name}
     </div>
-    <div class="detail-title">Lesson ${lesson.id}: ${lesson.title}</div>
+    <div class="detail-title">Lesson ${lesson.label || lesson.id}: ${lesson.title}</div>
     <div class="detail-meta">
       <div class="detail-meta-item">⏱ <strong>${lesson.hours}</strong></div>
       <div class="detail-meta-item">Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
@@ -1783,12 +1928,12 @@ function selectLesson(id) {
     html += `<ul class="prereq-list">`;
     lesson.prereqs.forEach(pid => {
       const p = LESSONS.find(l => l.id === pid);
-      html += `<li><span class="prereq-link" onclick="selectLesson(${pid})">Lesson ${pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
+      html += `<li><span class="prereq-link" onclick="selectLesson(${pid})">Lesson ${p.label || pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
     });
     lesson.crossPhaseLinks.forEach(lid => {
       const l = LESSONS.find(ls => ls.id === lid);
       if (l) {
-        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${lid})">Lesson ${lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
+        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${lid})">Lesson ${l.label || lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
       }
     });
     html += `</ul>`;
@@ -1929,7 +2074,7 @@ function renderTimeline() {
       fill="${color}" opacity="${lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2}"
       rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
     html += `<text x="${x + barW/2}" y="${h - margin.bottom + 14}" fill="var(--text-dim)"
-      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.id}</text>`;
+      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.label || lesson.id}</text>`;
     html += `<text x="${x + barW/2}" y="${y - 5}" fill="${color}"
       font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" opacity="0.7">${hrs}h</text>`;
   });
@@ -1969,7 +2114,7 @@ function renderProjectTracker() {
     html += `<circle cx="${margin.left + 10}" cy="${y + 4}" r="4" fill="${color}" opacity="${opacity}" />`;
 
     // Lesson number
-    html += `<text x="${margin.left + 24}" y="${y + 8}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" opacity="${opacity}">L${proj.lesson}</text>`;
+    html += `<text x="${margin.left + 24}" y="${y + 8}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" opacity="${opacity}">L${lesson.label || proj.lesson}</text>`;
 
     // Project name
     const isExtend = proj.type === 'extends';
