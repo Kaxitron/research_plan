@@ -98,3 +98,43 @@
 | 22 | Diagonalization | 7 |
 | 25 | Symmetric Matrices and Positive Definiteness | 10 |
 | 29 | Singular Value Decomposition | 8 |
+
+## StatQuest (Josh Starmer) — Statistics & ML
+
+| Title | Lesson |
+|-------|--------|
+| Expected Values | 18 |
+| Covariance, Clearly Explained | 18 |
+| PCA, Step by Step | 18 |
+| Probability vs Likelihood | 19 |
+| Maximum Likelihood, clearly explained!!! | 19 |
+| Maximum Likelihood For the Normal Distribution | 19 |
+| Gaussian Mixture Models | 19 |
+| Entropy, Clearly Explained! | 20 |
+| Bayesian Inference | 21 |
+| Regularization Part 1: Ridge (L2) Regression | 15b |
+| Support Vector Machines Part 1: Main Ideas | 15b |
+| The Polynomial Kernel (SVM Part 2) | 15b |
+| The Radial (RBF) Kernel (SVM Part 3) | 15b |
+
+*All StatQuest videos: https://www.youtube.com/c/joshstarmer*
+
+## Neel Nanda — Mechanistic Interpretability
+
+| Title | Lesson |
+|-------|--------|
+| Walkthrough of Mathematical Framework for Transformer Circuits | 28 |
+| Research stream videos (various) | 27–28 |
+| Paper walkthroughs (various) | 27–28 |
+
+*Neel Nanda's channel: https://www.youtube.com/@neelnanda2469*
+
+## Podcasts — Deep Dives
+
+| Title | Lesson |
+|-------|--------|
+| AXRP Ep. 19 — Mechanistic Interpretability with Neel Nanda | 28 |
+| 80,000 Hours — Neel Nanda on the race to read AI minds | 33 |
+| The Inside View — Neel Nanda on superposition and grokking | 28 |
+
+*AXRP: https://axrp.net/ · 80K Hours: https://80000hours.org/podcast/*

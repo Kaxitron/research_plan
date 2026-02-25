@@ -13,10 +13,23 @@
 - **Cross-entropy loss = entropy + KL divergence:** minimizing cross-entropy pushes model toward truth
 - Temperature in softmax: controlling "sharpness" of predictions
 
-## 📺 Watch
+## 📺 Watch — Primary
 
-- **Aurélien Géron — "A Short Introduction to Entropy, Cross-Entropy and KL-Divergence"** (YouTube)
-- **Luis Serrano — "A Friendly Introduction to Cross-Entropy Loss"** (YouTube)
+1. **Aurélien Géron — "A Short Introduction to Entropy, Cross-Entropy and KL-Divergence"**
+   - https://www.youtube.com/watch?v=ErfnhcEV1O8
+   - *15 minutes. Covers all three concepts with clean visuals.*
+2. **Luis Serrano — "A Friendly Introduction to Cross-Entropy Loss"**
+   - https://www.youtube.com/watch?v=tRsSi_sqXjI
+   - *Builds up cross-entropy from information theory with great intuition.*
+
+## 📺 Watch — Secondary
+
+3. **StatQuest — "Entropy, Clearly Explained!"**
+   - https://www.youtube.com/results?search_query=statquest+entropy+clearly+explained
+   - *StatQuest's trademark style applied to information theory.*
+4. **Mutual Information (YouTube channel) — "Information Theory" playlist**
+   - https://www.youtube.com/results?search_query=mutual+information+information+theory+entropy
+   - *Deeper mathematical treatment with ML applications.*
 
 ## 📖 Read
 

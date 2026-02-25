@@ -12,6 +12,27 @@
 - Sparse autoencoders: training a separate network to decompose activations into interpretable features
 - Anthropic's "Scaling Monosemanticity" — finding millions of features in Claude
 
+## 📺 Watch — Primary
+
+1. **Neel Nanda — "Walkthrough of A Mathematical Framework for Transformer Circuits"**
+   - https://www.youtube.com/@neelnanda2469
+   - *Stream-of-consciousness video walkthrough of the foundational Transformer Circuits paper. Neel explains every equation and connects them to real model behavior.*
+2. **Neel Nanda — YouTube channel (paper walkthroughs and research streams)**
+   - https://www.youtube.com/@neelnanda2469
+   - *Browse his research stream videos — he walks through his actual research process, which is invaluable for learning how mech interp is done in practice.*
+
+## 📺 Watch — Secondary
+
+3. **AXRP Episode 19 — "Mechanistic Interpretability with Neel Nanda"**
+   - https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html
+   - *2.5-hour deep dive into transformer circuits, induction heads, and grokking. Technical but extremely informative. Listen to the induction heads section (starts ~1:59:42) at minimum.*
+4. **The Inside View — "Neel Nanda on mechanistic interpretability, superposition and grokking"**
+   - Search YouTube for "The Inside View Neel Nanda"
+   - *Covers the mindset of a mech interp researcher, the linear representation hypothesis, and superposition.*
+5. **3Blue1Brown — "How might LLMs store facts" | Deep Learning Ch. 7**
+   - https://www.youtube.com/watch?v=9-Jl0dxWQs8
+   - *Visualizes how MLP layers might store factual knowledge — connects to the circuits perspective.*
+
 ## 📖 Read
 
 - **"Scaling Monosemanticity" (Anthropic, 2024)**

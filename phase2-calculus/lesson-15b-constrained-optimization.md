@@ -120,3 +120,41 @@ Imagine a topographic map (contour lines of f) with a trail drawn on it (the con
 - **Corrigibility:** optimize for the objective subject to remaining shutdownable — a constraint on the agent's own behavior.
 
 Understanding Lagrange multipliers gives you the vocabulary for the central tradeoff in alignment: **the alignment tax** — how much capability do you sacrifice for each unit of safety? That tradeoff IS λ.
+
+---
+
+## 📎 Appendix: Support Vector Machines — Constrained Optimization in Action
+
+> This section covers SVMs as the canonical *application* of everything above. It's optional but demonstrates that Lagrange multipliers aren't abstract — they're the mathematical engine behind a major ML algorithm.
+
+### SVMs — Maximum Margin Classification
+
+- **The idea:** given two classes of data that can be separated by a hyperplane, find the hyperplane with the *maximum margin* — the widest gap between the classes. Wider margin → more robust to noise.
+- **The math:** minimize ||w||² (keep the weight vector small → wide margin) subject to yᵢ(wᵀxᵢ + b) ≥ 1 for all data points (all points correctly classified with at least margin 1). This is EXACTLY a constrained optimization problem.
+- **The Lagrangian:** L = ½||w||² - Σᵢ αᵢ[yᵢ(wᵀxᵢ + b) - 1] where αᵢ ≥ 0 are Lagrange multipliers.
+- **KKT conditions tell you:** most αᵢ = 0 (most data points don't matter for the decision boundary). The points with αᵢ > 0 are the **support vectors** — the critical data points closest to the boundary. The entire model depends only on these few points.
+- **The dual problem** (solving for αᵢ instead of w) reveals: the solution only depends on **dot products** xᵢᵀxⱼ between data points. This opens the door to the kernel trick.
+
+### The Kernel Trick — Implicit High-Dimensional Mapping
+
+- **The problem:** some data isn't linearly separable in its original space (imagine two concentric circles — no line separates them).
+- **The solution:** map data to a higher-dimensional space where it IS separable. Two concentric circles in 2D become separable by a plane in 3D if you add a feature z = x² + y².
+- **The kernel trick:** you never actually compute the high-dimensional mapping! Since SVMs only use dot products, you replace every dot product xᵢᵀxⱼ with a kernel function K(xᵢ, xⱼ) that *implicitly* computes the dot product in the high-dimensional space.
+- **Common kernels:**
+  - **Linear:** K(x,y) = xᵀy (no mapping, just standard dot product)
+  - **Polynomial:** K(x,y) = (xᵀy + c)^d (implicitly maps to space of all degree-d polynomial features)
+  - **RBF/Gaussian:** K(x,y) = exp(-||x-y||²/2σ²) (implicitly maps to *infinite*-dimensional space!)
+- **Why the kernel trick matters for alignment thinking:** it demonstrates that the right *representation* can make hard problems easy. This is exactly what neural network layers do — they learn to transform data into a space where the task becomes (nearly) linear. Understanding kernels gives you the vocabulary to talk about representation learning.
+- **MML Book, Chapter 12** covers SVMs from the primal formulation through duality to kernels.
+
+### 📺 SVM Videos
+
+- **StatQuest — "Support Vector Machines, Main Ideas"**
+  - https://www.youtube.com/watch?v=efR1C6CvhmE
+  - *Clear visual explanation of maximum margin and support vectors.*
+- **StatQuest — "The Polynomial Kernel" and "The RBF Kernel"**
+  - Parts 2 and 3 of the SVM series. Shows how kernels transform data.
+
+### 📖 SVM Reading
+
+- **MML Book, Chapter 12.1–12.4** (separating hyperplanes → primal → dual → kernels)
