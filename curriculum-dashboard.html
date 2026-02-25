@@ -581,8 +581,68 @@
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr;
     }
-    .sidebar, .detail-panel { display: none; }
+    .sidebar { display: none; }
+    .header h1 { font-size: 16px; }
+    .header-stats { gap: 12px; font-size: 11px; }
+    .header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+    .main-canvas { overflow: auto; -webkit-overflow-scrolling: touch; }
+    svg.graph { min-width: 900px; min-height: 700px; }
+
+    .detail-panel {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1000;
+      border-left: none;
+      border-radius: 0;
+      padding: 0;
+      animation: slideUp 0.25s ease;
+    }
+    .detail-panel.mobile-open {
+      display: block;
+    }
+
+    .mobile-close-btn {
+      display: flex !important;
+    }
+
+    .detail-backdrop {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+    }
+    .detail-backdrop.open {
+      display: block;
+    }
   }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mobile-close-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    color: var(--text-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: center;
+  }
+  .mobile-close-btn:hover { color: var(--text); background: var(--bg-hover); }
 
   /* ── Animations ── */
   @keyframes fadeIn {
@@ -636,8 +696,12 @@
     <svg class="graph" id="graph-svg"></svg>
   </div>
 
+  <!-- Mobile Backdrop -->
+  <div class="detail-backdrop" id="detail-backdrop" onclick="closeMobileDetail()"></div>
+
   <!-- Right Detail Panel -->
   <div class="detail-panel" id="detail-panel">
+    <button class="mobile-close-btn" onclick="closeMobileDetail()">✕ Close</button>
     <div class="detail-empty" id="detail-empty">
       <div class="empty-icon">◇</div>
       <p>Click any lesson node or sidebar item to view details, concept checks, failure modes, and prerequisites.</p>
@@ -1983,6 +2047,12 @@ function selectLesson(id) {
   document.getElementById('detail-empty').style.display = 'none';
   document.getElementById('detail-content').style.display = 'block';
   document.getElementById('detail-content').innerHTML = html;
+
+  // Open mobile overlay if on small screen
+  if (window.innerWidth <= 900) {
+    document.getElementById('detail-panel').classList.add('mobile-open');
+    document.getElementById('detail-backdrop').classList.add('open');
+  }
 }
 
 function selectCheckpoint(cpId) {
@@ -1996,7 +2066,7 @@ function selectCheckpoint(cpId) {
     </div>
     <h2>${cp.title}</h2>
     <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">
-      Complete these integration exercises after finishing Lesson ${cp.afterLesson} to connect concepts across lessons.
+      Complete these integration exercises after finishing Lesson ${(LESSONS.find(l => l.id === cp.afterLesson) || {}).label || cp.afterLesson} to connect concepts across lessons.
     </p>
     <ul class="checkpoint-exercises">`;
   cp.exercises.forEach(ex => {
@@ -2007,6 +2077,17 @@ function selectCheckpoint(cpId) {
   document.getElementById('detail-empty').style.display = 'none';
   document.getElementById('detail-content').style.display = 'block';
   document.getElementById('detail-content').innerHTML = html;
+
+  // Open mobile overlay if on small screen
+  if (window.innerWidth <= 900) {
+    document.getElementById('detail-panel').classList.add('mobile-open');
+    document.getElementById('detail-backdrop').classList.add('open');
+  }
+}
+
+function closeMobileDetail() {
+  document.getElementById('detail-panel').classList.remove('mobile-open');
+  document.getElementById('detail-backdrop').classList.remove('open');
 }
 
 // View switching
