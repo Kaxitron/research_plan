@@ -7,7 +7,7 @@
 **Goal:** Develop deep intuitive understanding of the mathematics underlying neural networks, the architecture and philosophy of modern AI systems, and the tools of mechanistic interpretability — all in service of solving AI alignment.
 
 
-**Estimated total time:** ~185–260 hours over 5–7 months at a steady pace.
+**Estimated total time:** ~210–295 hours over 6–8 months at a steady pace.
 
 > 📊 **NEW: [Interactive Curriculum Dashboard](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)** — Visual dependency map, time estimates, concept checks, failure mode warnings, and project tracker in one navigable interface. Open this alongside your studies.
 
@@ -80,6 +80,19 @@
 | 20 | [Information Theory — Entropy, KL Divergence, Cross-Entropy](phase3-probability/lesson-20-information-theory.md) | 4–6h | ⬜ Not Started |
 | 21 | [Bayesian Reasoning and Inference](phase3-probability/lesson-21-bayesian-inference.md) | 5–7h | ⬜ Not Started |
 | — | *✎ Phase 3 Review: Probability → LLM Training Bridge* | 2–3h | ⬜ |
+
+### [PHASE 3b: Applied Statistics and Causal Reasoning](phase3b-statistics/) · ~25–35h
+*The tools to adjudicate real-world statistical claims*
+
+> **New phase:** Covers the classical statistics and causal inference gap — hypothesis testing, experimental design, regression, causal DAGs, and applied topics (genetics, epidemiology). Essential for evaluating empirical claims in alignment research and scientific debates.
+
+| # | Lesson | Est. Time | Status |
+|---|--------|-----------|--------|
+| 21b | [Hypothesis Testing, P-Values, and What They Actually Mean](phase3b-statistics/lesson-21b-hypothesis-testing.md) | 5–7h | ⬜ Not Started |
+| 21c | [Experimental Design and Common Statistical Fallacies](phase3b-statistics/lesson-21c-experimental-design.md) | 4–6h | ⬜ Not Started |
+| 21d | [Regression — From Linear to Logistic and Beyond](phase3b-statistics/lesson-21d-regression.md) | 5–7h | ⬜ Not Started |
+| 21e | [Causal Inference — From Correlation to Causation](phase3b-statistics/lesson-21e-causal-inference.md) | 6–8h | ⬜ Not Started |
+| 21f | [Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates](phase3b-statistics/lesson-21f-applied-statistics.md) | 5–7h | ⬜ Not Started |
 
 ### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/) · ~42–58h
 *Building the machine, piece by piece*
