@@ -151,6 +151,7 @@
 | [Essential Blogs](resources/blogs.md) | colah, Neel Nanda, Jay Alammar, etc. |
 | [Key Papers](resources/papers.md) | Reading list in order |
 | [Courses & Programs](resources/courses.md) | MIT OCW, ARENA, Stanford, etc. |
+| [Intuition Notebook](resources/intuition-notebook.md) | Running collection of deep "aha" moments |
 | [Practice Problem Sources](resources/practice-problems.md) | MIT OCW, Khan Academy, Axler, Paul's Notes |
 | [Mathematics Cheat Sheet](resources/cheat-sheet.md) | Formulas, identities, key insights |
 | [📝 Phase 1 Final Exam](assessments/phase1-linear-algebra-final-exam.md) | 60min comprehensive exam + PCA capstone project |
