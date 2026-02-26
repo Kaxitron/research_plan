@@ -43,7 +43,7 @@ Any matrix transformation = align input with natural directions → scale each d
 
 ## 📝 Phase 1 Final Exam + PCA Project
 
-**[Phase 1 Final Exam](../assessments/phase1-linear-algebra-final-exam.docx)** — 60-minute, 100-point comprehensive exam covering all of Lessons 1–10, plus an ungraded take-home PCA implementation project.
+**[Phase 1 Final Exam](../assessments/phase1-linear-algebra-final-exam.md)** — 60-minute, 100-point comprehensive exam covering all of Lessons 1–10, plus an ungraded take-home PCA implementation project.
 
 The exam has five sections:
 - **Part A:** Geometric intuition (can you *see* what matrices do?)
