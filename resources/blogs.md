@@ -13,3 +13,5 @@
 - **Bentham's Bulldog** — https://benthams.substack.com/ — opinionated philosophy (anthropics, decision theory, SIA vs SSA)
 - **Alignment Forum** — https://www.alignmentforum.org/ — technical alignment research
 - **Slate Star Codex / Astral Codex Ten** — https://www.astralcodexten.com/ — Scott Alexander
+- **Andrew Gelman — Statistical Modeling** — https://statmodeling.stat.columbia.edu/ — statistical criticism and methodology
+- **Calling Bullshit** — https://www.callingbullshit.org/ — UW course on evaluating statistical claims
