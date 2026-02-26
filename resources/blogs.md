@@ -10,5 +10,6 @@
 - **BetterExplained** — https://betterexplained.com/ — intuition-first math
 - **Gregory Gundersen** — https://gregorygundersen.com/blog/ — clear mathematical posts (SVD)
 - **LessWrong** — https://www.lesswrong.com/ — rationalist community, decision theory, alignment
+- **Bentham's Bulldog** — https://benthams.substack.com/ — opinionated philosophy (anthropics, decision theory, SIA vs SSA)
 - **Alignment Forum** — https://www.alignmentforum.org/ — technical alignment research
 - **Slate Star Codex / Astral Codex Ten** — https://www.astralcodexten.com/ — Scott Alexander
