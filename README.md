@@ -54,6 +54,7 @@
 | 10 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-10-change-of-basis.md) | 4–5h | ⬜ Not Started |
 | 11 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-11-capstone.md) | 4–6h | ⬜ Not Started |
 | — | *✎ Phase 1 Review: LA → ML Bridge* | 2–3h | ⬜ |
+| 📝 | [**Phase 1 Final Exam**](assessments/phase1-linear-algebra-final-exam.docx) | 1h exam + PCA project | ⬜ |
 
 ### [PHASE 2: Calculus for ML](phase2-calculus/) · ~22–32h
 *The mathematical engine of neural network learning*
@@ -138,6 +139,7 @@
 | [Key Papers](resources/papers.md) | Reading list in order |
 | [Courses & Programs](resources/courses.md) | MIT OCW, ARENA, Stanford, etc. |
 | [Practice Problem Sources](resources/practice-problems.md) | MIT OCW, Khan Academy, Axler, Paul's Notes |
+| [📝 Phase 1 Final Exam](assessments/phase1-linear-algebra-final-exam.docx) | 60min comprehensive exam + PCA capstone project |
 
 ---
 
