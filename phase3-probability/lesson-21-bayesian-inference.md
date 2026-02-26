@@ -29,6 +29,39 @@
 - **Full Bayesian inference:** don't just find the best θ — compute the entire posterior P(θ|data). This gives you uncertainty estimates, not just point predictions.
 - **Bayesian model comparison:** compare models by their marginal likelihood P(data|model) = ∫P(data|θ,model)P(θ|model)dθ. This naturally penalizes complex models (Occam's razor emerges from the math!).
 
+### Bayes Factors — The Bayesian Alternative to P-Values
+
+- **The Bayes factor** is the ratio of marginal likelihoods for two competing hypotheses:
+  - BF₁₀ = P(data | H₁) / P(data | H₀)
+  - It answers: "How much more likely is the data under H₁ than under H₀?" This is a fundamentally different question from the p-value's "How surprising is the data if H₀ is true?"
+- **Interpreting Bayes factors (Jeffreys' scale):**
+
+  | BF₁₀ | Evidence for H₁ |
+  |-------|----------------|
+  | 1–3 | Anecdotal / barely worth mentioning |
+  | 3–10 | Moderate |
+  | 10–30 | Strong |
+  | 30–100 | Very strong |
+  | > 100 | Decisive |
+
+  BF₁₀ < 1 means evidence FAVORS H₀. BF₁₀ = 0.1 is the same as BF₀₁ = 10 — strong evidence for the null.
+- **Bayes factors vs. p-values — the key differences:**
+  - P-values can only reject H₀. Bayes factors can support EITHER hypothesis — including evidence FOR the null. This is huge. With p-values, "not significant" is ambiguous between "no effect" and "not enough data." With Bayes factors, BF₁₀ = 0.05 is positive evidence for no effect.
+  - P-values depend on the stopping rule (when you decided to stop collecting data). Bayes factors don't — you can peek at your data as much as you want without inflating false positives. This is called the **optional stopping** advantage.
+  - P-values require no prior. Bayes factors require specifying the alternative hypothesis precisely (what distribution of effect sizes does H₁ predict?). This prior sensitivity is both a strength (forces you to be specific) and a weakness (different priors → different Bayes factors).
+- **The connection to posterior odds:** Posterior odds = Prior odds × Bayes factor. If your prior probability for H₁ is 10% (odds = 1:9), and BF₁₀ = 20, your posterior odds are 20:9, giving P(H₁|data) ≈ 69%. This is the FULL Bayesian hypothesis test — it incorporates both prior knowledge and evidence.
+- **Where you'll see Bayes factors:**
+  - Psychology's "replication crisis" response: many journals now request Bayes factors alongside p-values
+  - Bayesian A/B testing in industry — no need to pre-specify sample size
+  - Genetics: Bayes factors are used in linkage analysis and fine-mapping
+
+### Credible Intervals vs. Confidence Intervals
+
+- **Bayesian credible interval:** given the data and prior, there's a 95% probability the parameter is in this range. This IS the intuitive interpretation everyone wants.
+- **Frequentist confidence interval:** if we repeated the experiment many times, 95% of the intervals would contain the true value. The probability the TRUE value is in THIS specific interval is either 0 or 1 — we just don't know which. (This is confusing because it IS confusing.)
+- **In practice:** with flat priors and well-behaved data, credible intervals and confidence intervals are often numerically similar. The philosophical difference matters most at the edges — small samples, strong priors, or when you genuinely have prior information that should inform your inference.
+- **Highest Posterior Density (HPD) intervals:** the narrowest credible interval. These can be asymmetric, which is appropriate when the posterior is skewed.
+
 ### Solomonoff Induction — The Theoretical Ideal
 
 - **Solomonoff induction:** the theoretically optimal prediction method. Your prior assigns higher probability to simpler hypotheses (shorter programs that generate the data). This is Occam's razor made mathematically precise.
