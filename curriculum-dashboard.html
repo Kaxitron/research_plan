@@ -17,17 +17,16 @@
     --text: #e0e0ec;
     --text-dim: #8888a0;
     --text-bright: #ffffff;
-    --accent-1: #6ee7b7; /* mint green - linear algebra */
-    --accent-2: #818cf8; /* indigo - calculus */
-    --accent-3: #f9a8d4; /* pink - probability */
-    --accent-4: #fbbf24; /* amber - neural nets */
-    --accent-5: #38bdf8; /* sky - interpretability */
-    --accent-6: #c084fc; /* purple - alignment theory */
-    --accent-7: #fb923c; /* orange - research */
+    --accent-1: #6ee7b7;
+    --accent-2: #818cf8;
+    --accent-3: #f9a8d4;
+    --accent-4: #fbbf24;
+    --accent-5: #38bdf8;
+    --accent-6: #c084fc;
+    --accent-7: #fb923c;
     --complete: #34d399;
     --in-progress: #fbbf24;
     --not-started: #4a4a6a;
-    --danger: #f87171;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,58 +39,48 @@
     height: 100vh;
   }
 
-  /* ── Layout ── */
   .app {
     display: grid;
-    grid-template-columns: 320px 1fr 400px;
+    grid-template-columns: 280px 1fr 380px;
     grid-template-rows: auto 1fr;
     height: 100vh;
   }
 
-  /* ── Header ── */
+  /* Header */
   .header {
     grid-column: 1 / -1;
-    padding: 16px 28px;
+    padding: 14px 24px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: var(--bg-raised);
   }
-
   .header h1 {
     font-family: 'Instrument Serif', serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     color: var(--text-bright);
-    letter-spacing: -0.3px;
   }
-
-  .header h1 span {
-    color: var(--accent-1);
-  }
-
+  .header h1 span { color: var(--accent-1); }
   .header-stats {
     display: flex;
-    gap: 24px;
-    font-size: 13px;
+    gap: 20px;
+    font-size: 12px;
     color: var(--text-dim);
   }
-
   .header-stats .stat-value {
     font-family: 'JetBrains Mono', monospace;
     color: var(--text);
     font-weight: 600;
   }
-
   .progress-bar-container {
-    width: 200px;
+    width: 180px;
     height: 4px;
     background: var(--border);
     border-radius: 2px;
     overflow: hidden;
   }
-
   .progress-bar-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent-1), var(--accent-5));
@@ -99,481 +88,293 @@
     transition: width 0.5s ease;
   }
 
-  /* ── Left Sidebar ── */
+  /* Sidebar */
   .sidebar {
     background: var(--bg-raised);
     border-right: 1px solid var(--border);
     overflow-y: auto;
-    padding: 0;
+    padding: 12px 0;
   }
-
   .sidebar::-webkit-scrollbar { width: 4px; }
   .sidebar::-webkit-scrollbar-track { background: transparent; }
   .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-  .nav-section {
-    border-bottom: 1px solid var(--border);
-  }
-
   .nav-section-header {
-    padding: 14px 18px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.15s;
-  }
-
-  .nav-section-header:hover {
-    background: var(--bg-hover);
-  }
-
-  .nav-section-header .phase-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .nav-section-header .phase-time {
-    margin-left: auto;
+    padding: 10px 16px 6px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 400;
-    color: var(--text-dim);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
   }
-
-  .nav-items {
-    padding: 0 0 8px 0;
+  .nav-section-header:hover { background: var(--bg-hover); }
+  .nav-section-header .chevron {
+    transition: transform 0.2s;
+    font-size: 8px;
   }
+  .nav-section-header .chevron.collapsed { transform: rotate(-90deg); }
 
   .nav-item {
-    padding: 8px 18px 8px 34px;
+    padding: 6px 16px 6px 24px;
     font-size: 13px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.15s;
     color: var(--text-dim);
-    line-height: 1.3;
+    transition: all 0.15s;
   }
+  .nav-item:hover { background: var(--bg-hover); color: var(--text); }
+  .nav-item.active { background: var(--bg-hover); color: var(--text-bright); }
 
-  .nav-item:hover {
-    background: var(--bg-hover);
-    color: var(--text);
-  }
-
-  .nav-item.active {
-    background: var(--bg-hover);
-    color: var(--text-bright);
-    border-left: 2px solid var(--accent-1);
-    padding-left: 32px;
-  }
-
-  .nav-item .status-dot {
+  .status-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
     cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition: transform 0.15s;
   }
-
-  .nav-item .status-dot:hover {
-    transform: scale(1.6);
-    box-shadow: 0 0 6px currentColor;
-  }
-
-  .nav-item .lesson-time {
-    margin-left: auto;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    flex-shrink: 0;
-    color: var(--text-dim);
-  }
+  .status-dot:hover { transform: scale(1.4); }
 
   .nav-item-checkpoint {
-    padding: 10px 18px 10px 28px;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    padding: 5px 16px 5px 32px;
+    font-size: 11px;
     color: var(--text-dim);
+    cursor: pointer;
     font-style: italic;
-    border-left: 2px dashed var(--border-bright);
-    margin-left: 16px;
-    transition: all 0.15s;
+    opacity: 0.7;
   }
+  .nav-item-checkpoint:hover { opacity: 1; background: var(--bg-hover); }
 
-  .nav-item-checkpoint:hover {
-    background: var(--bg-hover);
-    color: var(--text);
-  }
-
-  /* ── Main Canvas ── */
+  /* Main Canvas */
   .main-canvas {
     position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse at 30% 50%, rgba(110, 231, 183, 0.03) 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 30%, rgba(129, 140, 248, 0.03) 0%, transparent 60%),
-      var(--bg);
+    background: var(--bg);
   }
-
   .canvas-controls {
     position: absolute;
     top: 12px;
     left: 12px;
+    z-index: 10;
     display: flex;
     gap: 4px;
-    z-index: 10;
-  }
-
-  .canvas-btn {
-    padding: 6px 12px;
-    background: var(--bg-panel);
+    background: var(--bg-raised);
     border: 1px solid var(--border);
-    color: var(--text-dim);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .canvas-btn {
+    padding: 5px 12px;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
+    background: transparent;
+    color: var(--text-dim);
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
     transition: all 0.15s;
   }
-
-  .canvas-btn:hover {
-    background: var(--bg-hover);
-    color: var(--text);
-  }
-
-  .canvas-btn.active {
-    background: var(--bg-hover);
-    color: var(--text-bright);
-    border-color: var(--border-bright);
-  }
+  .canvas-btn:hover { color: var(--text); background: var(--bg-hover); }
+  .canvas-btn.active { color: var(--text-bright); background: var(--bg-hover); }
 
   .canvas-legend {
     position: absolute;
     bottom: 12px;
     left: 12px;
     display: flex;
-    gap: 16px;
-    z-index: 10;
+    gap: 14px;
     font-size: 11px;
     color: var(--text-dim);
-    background: rgba(10, 10, 15, 0.8);
-    padding: 8px 14px;
-    border-radius: 6px;
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
+    z-index: 10;
   }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  svg.graph { width: 100%; height: 100%; }
+
+  .edge {
+    stroke: var(--border);
+    stroke-width: 1.2;
+    opacity: 0.4;
+    transition: all 0.3s;
   }
-
-  .legend-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+  .edge.highlighted { stroke: var(--accent-5); opacity: 0.9; stroke-width: 2; }
+  .edge-cross-phase {
+    stroke-dasharray: 6 4;
+    opacity: 0.2;
   }
+  .edge-cross-phase.highlighted { opacity: 0.6; stroke: var(--accent-6); }
 
-  svg.graph {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Graph node styling */
   .node-group { cursor: pointer; }
-  .node-group:hover .node-circle { filter: brightness(1.3); }
-
   .node-circle {
-    transition: all 0.2s;
     stroke-width: 2;
+    transition: all 0.2s;
   }
-
-  .node-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    fill: var(--text);
-    text-anchor: middle;
-    pointer-events: none;
-  }
-
+  .node-group:hover .node-circle { stroke-width: 3; filter: brightness(1.3); }
   .node-number {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 600;
-    fill: var(--bg);
     text-anchor: middle;
     pointer-events: none;
   }
 
-  .edge {
-    stroke: var(--border);
-    stroke-width: 1.5;
-    fill: none;
-    opacity: 0.4;
-  }
-
-  .edge.highlighted {
-    opacity: 0.9;
-    stroke-width: 2;
-  }
-
-  .edge-cross-phase {
-    stroke-dasharray: 4 3;
-    opacity: 0.25;
-  }
-
-  .edge-cross-phase.highlighted {
-    opacity: 0.7;
-  }
-
-  .checkpoint-node {
-    cursor: pointer;
-  }
-
-  /* ── Right Detail Panel ── */
+  /* Detail Panel */
   .detail-panel {
-    background: var(--bg-raised);
+    background: var(--bg-panel);
     border-left: 1px solid var(--border);
     overflow-y: auto;
-    padding: 0;
+    padding: 20px;
   }
-
   .detail-panel::-webkit-scrollbar { width: 4px; }
   .detail-panel::-webkit-scrollbar-track { background: transparent; }
   .detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
   .detail-empty {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    color: var(--text-dim);
     text-align: center;
-    padding: 40px;
+    color: var(--text-dim);
+    font-size: 13px;
+    padding: 20px;
   }
+  .empty-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.3; }
 
-  .detail-empty .empty-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.3;
-  }
-
-  .detail-empty p {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .detail-header {
-    padding: 20px 22px;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .detail-header { margin-bottom: 16px; }
   .detail-phase-tag {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .detail-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .detail-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .detail-section {
+    margin-bottom: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .detail-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 6px;
   }
+  .detail-section-title .icon { font-size: 13px; }
 
-  .detail-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 22px;
-    color: var(--text-bright);
-    line-height: 1.3;
-    margin-bottom: 12px;
-  }
-
-  .detail-meta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .detail-meta-item {
-    font-size: 12px;
-    color: var(--text-dim);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .detail-meta-item strong {
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-  }
-
-  .detail-section {
-    padding: 16px 22px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .detail-section-title {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--text-dim);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .detail-section-title .icon {
-    font-size: 13px;
-  }
-
-  .prereq-list, .concept-check-list, .failure-list, .mvl-list, .project-list {
+  .prereq-list, .concept-check-list, .failure-list, .project-list {
     list-style: none;
+    padding: 0;
   }
-
-  .prereq-list li, .concept-check-list li, .failure-list li, .mvl-list li, .project-list li {
-    padding: 6px 0;
-    font-size: 13px;
+  .prereq-list li, .concept-check-list li, .failure-list li {
+    font-size: 12px;
+    padding: 4px 0;
     line-height: 1.5;
     color: var(--text);
-    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
   }
-
-  .prereq-list li:last-child, .concept-check-list li:last-child,
-  .failure-list li:last-child, .mvl-list li:last-child, .project-list li:last-child {
-    border-bottom: none;
-  }
+  .concept-check-list li::before { content: "□ "; color: var(--accent-5); font-weight: bold; }
+  .failure-list li::before { content: "⚠ "; }
 
   .prereq-link {
-    color: var(--accent-1);
+    color: var(--accent-5);
     cursor: pointer;
-    text-decoration: none;
-    border-bottom: 1px dotted var(--accent-1);
-    transition: opacity 0.15s;
+    font-weight: 500;
+    border-bottom: 1px dashed var(--accent-5);
   }
-
-  .prereq-link:hover {
-    opacity: 0.7;
-  }
-
-  .concept-check-list li {
-    padding-left: 20px;
-    position: relative;
-  }
-
-  .concept-check-list li::before {
-    content: '?';
-    position: absolute;
-    left: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    color: var(--accent-2);
-    font-size: 12px;
-  }
-
-  .failure-list li {
-    padding-left: 20px;
-    position: relative;
-    color: var(--danger);
-  }
-
-  .failure-list li::before {
-    content: '⚠';
-    position: absolute;
-    left: 0;
-    font-size: 12px;
-  }
+  .prereq-link:hover { color: var(--text-bright); }
 
   .mvl-resource {
-    font-size: 13px;
-    padding: 8px 12px;
-    background: rgba(110, 231, 183, 0.06);
-    border: 1px solid rgba(110, 231, 183, 0.15);
-    border-radius: 6px;
-    margin-bottom: 6px;
+    font-size: 12px;
+    padding: 6px 0;
     line-height: 1.5;
   }
-
-  .mvl-resource .res-type {
-    font-size: 10px;
+  .res-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--accent-1);
-    margin-bottom: 2px;
+    color: var(--accent-4);
+    display: inline;
+    margin-right: 6px;
   }
 
   .project-item {
+    font-size: 12px;
+    padding: 4px 0;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
+    gap: 6px;
   }
-
   .project-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    padding: 2px 6px;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 1px 5px;
     border-radius: 3px;
-    font-weight: 600;
     flex-shrink: 0;
     margin-top: 2px;
   }
+  .project-badge.new { background: rgba(56,189,248,0.15); color: var(--accent-5); }
+  .project-badge.extends { background: rgba(192,132,252,0.15); color: var(--accent-6); }
 
-  .project-badge.new { background: rgba(52, 211, 153, 0.15); color: var(--accent-1); }
-  .project-badge.extends { background: rgba(251, 191, 36, 0.15); color: var(--in-progress); }
-
-  /* Checkpoint detail style */
-  .checkpoint-detail {
-    padding: 22px;
-  }
-
-  .checkpoint-detail h2 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 20px;
-    color: var(--text-bright);
-    margin-bottom: 14px;
-  }
-
-  .checkpoint-exercises {
-    list-style: none;
-  }
-
-  .checkpoint-exercises li {
-    padding: 10px 0;
+  .mobile-close-btn {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    line-height: 1.6;
-    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+    margin-bottom: 12px;
+    width: 100%;
   }
+  .mobile-close-btn:hover { color: var(--text); background: var(--bg-hover); }
 
-  .checkpoint-exercises li:last-child { border-bottom: none; }
-
-  .checkpoint-exercises li strong {
-    color: var(--text-bright);
+  .detail-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
   }
+  .detail-backdrop.open { display: block; }
 
-  /* ── View switching ── */
-  .view-hidden { display: none !important; }
-
-  /* Responsive fallback */
+  /* Responsive */
   @media (max-width: 1100px) {
-    .app {
-      grid-template-columns: 260px 1fr 340px;
-    }
+    .app { grid-template-columns: 240px 1fr 320px; }
   }
 
   @media (max-width: 900px) {
@@ -583,128 +384,131 @@
     }
     .sidebar { display: none; }
     .header h1 { font-size: 16px; }
-    .header-stats { gap: 12px; font-size: 11px; }
-    .header { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+    .header-stats { gap: 10px; font-size: 11px; }
+    .header { padding: 10px 14px; flex-wrap: wrap; gap: 6px; }
     .main-canvas { overflow: auto; -webkit-overflow-scrolling: touch; }
     svg.graph { min-width: 900px; min-height: 700px; }
 
     .detail-panel {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 1000;
+      bottom: 0; left: 0; right: 0;
+      max-height: 55vh;
+      z-index: 100;
       border-left: none;
-      border-radius: 0;
-      padding: 0;
+      border-top: 2px solid var(--accent-5);
+      border-radius: 12px 12px 0 0;
+      padding: 12px 16px;
       animation: slideUp 0.25s ease;
+      overflow-y: auto;
     }
-    .detail-panel.mobile-open {
-      display: block;
-    }
-
-    .mobile-close-btn {
-      display: flex !important;
-    }
-
-    .detail-backdrop {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 999;
-    }
-    .detail-backdrop.open {
-      display: block;
-    }
+    .detail-panel.mobile-open { display: block; }
+    .mobile-close-btn { display: flex; align-items: center; justify-content: center; }
   }
 
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
   }
 
-  .mobile-close-btn {
-    display: none;
+  /* Schedule specific styles */
+  .schedule-container {
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+  }
+  .schedule-week {
+    margin-bottom: 2px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .schedule-week-header {
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: var(--bg-panel);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 16px;
-    color: var(--text-dim);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
     cursor: pointer;
-    width: 100%;
-    border: none;
+    transition: background 0.15s;
+  }
+  .schedule-week-header:hover { filter: brightness(1.2); }
+  .schedule-week-lessons {
+    padding: 4px 14px 10px;
+    background: var(--bg-raised);
+    border-left: 3px solid var(--border);
+  }
+  .schedule-lesson-row {
+    padding: 4px 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .schedule-lesson-row:hover { color: var(--text-bright); }
+  .schedule-lesson-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    width: 28px;
     text-align: center;
+    flex-shrink: 0;
   }
-  .mobile-close-btn:hover { color: var(--text); background: var(--bg-hover); }
-
-  /* ── Animations ── */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .detail-section {
-    animation: fadeIn 0.25s ease;
+  .schedule-hours {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-left: auto;
+    flex-shrink: 0;
   }
 </style>
 </head>
 <body>
-
 <div class="app">
-  <!-- Header -->
   <div class="header">
     <h1>The Path to <span>AI Alignment</span></h1>
     <div class="header-stats">
       <div>
-        <span class="stat-value" id="stat-complete">7</span> / <span id="stat-total">39</span> lessons
-      </div>
-      <div>
+        <span class="stat-value" id="stat-complete">0</span>/<span class="stat-value" id="stat-total">0</span> lessons
         <div class="progress-bar-container">
-          <div class="progress-bar-fill" id="progress-fill" style="width: 21%"></div>
+          <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
         </div>
       </div>
       <div>
-        ~<span class="stat-value" id="stat-hours-done">38</span>h done · ~<span class="stat-value" id="stat-hours-left">175</span>h remaining
+        ~<span class="stat-value" id="stat-hours-done">0</span>h done · ~<span class="stat-value" id="stat-hours-left">0</span>h remaining
       </div>
     </div>
   </div>
 
-  <!-- Left Sidebar -->
   <div class="sidebar" id="sidebar"></div>
 
-  <!-- Main Canvas -->
   <div class="main-canvas" id="main-canvas">
     <div class="canvas-controls">
       <button class="canvas-btn active" onclick="setView('dependency')">Dependency Map</button>
       <button class="canvas-btn" onclick="setView('timeline')">Timeline</button>
-      <button class="canvas-btn" onclick="setView('projects')">Project Tracker</button>
+      <button class="canvas-btn" onclick="setView('schedule')">Schedule</button>
     </div>
     <div class="canvas-legend" id="canvas-legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--complete)"></div> Complete</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--in-progress)"></div> In Progress</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--not-started)"></div> Not Started</div>
       <div class="legend-item" style="color:var(--text-dim)">— prerequisite</div>
-      <div class="legend-item" style="color:var(--text-dim)">┄ cross-phase link</div>
+      <div class="legend-item" style="color:var(--text-dim)">┄ cross-phase</div>
     </div>
     <svg class="graph" id="graph-svg"></svg>
+    <div id="schedule-view" style="display:none;position:absolute;inset:0;overflow-y:auto;background:var(--bg)"></div>
   </div>
 
-  <!-- Mobile Backdrop -->
   <div class="detail-backdrop" id="detail-backdrop" onclick="closeMobileDetail()"></div>
 
-  <!-- Right Detail Panel -->
   <div class="detail-panel" id="detail-panel">
     <button class="mobile-close-btn" onclick="closeMobileDetail()">✕ Close</button>
     <div class="detail-empty" id="detail-empty">
       <div class="empty-icon">◇</div>
-      <p>Click any lesson node or sidebar item to view details, concept checks, failure modes, and prerequisites.</p>
+      <p>Click any lesson node to view details, concept checks, failure modes, and prerequisites.</p>
     </div>
     <div id="detail-content" style="display:none"></div>
   </div>
@@ -712,7 +516,7 @@
 
 <script>
 // ═══════════════════════════════════════════════
-// DATA: All lessons with full metadata
+// DATA
 // ═══════════════════════════════════════════════
 
 const PHASES = [
@@ -1648,42 +1452,6 @@ const CHECKPOINTS = [
   },
 ];
 
-// Project tracker (cumulative)
-const PROJECT_CHAIN = [
-  { lesson: 1, name: 'Vector Plotting Toolkit', type: 'new', desc: 'matplotlib vectors, addition, scaling' },
-  { lesson: 2, name: '→ Add Span Visualization', type: 'extends', desc: 'Show span of 2 vectors covering plane' },
-  { lesson: 3, name: '→ Add Grid Transformation', type: 'extends', desc: 'Before/after grid under 2×2 matrix' },
-  { lesson: 5, name: '→ Add Rank/Nullspace Viz', type: 'extends', desc: 'Show squishing to lower dimensions' },
-  { lesson: 7, name: '→ Add Eigenvector Overlay', type: 'extends', desc: 'Highlight invariant directions' },
-  { lesson: 8, name: 'SVD Image Compressor', type: 'new', desc: 'Compress/reconstruct images with k singular values' },
-  { lesson: 9, name: 'Word Embedding Explorer', type: 'new', desc: 'Cosine similarity on GloVe vectors' },
-  { lesson: 11, name: '→ Capstone: Full SVD Viz', type: 'extends', desc: 'Animated Vᵀ → Σ → U on unit circle' },
-  { lesson: 13, name: 'Gradient Field Visualizer', type: 'new', desc: '2D contour plots with gradient arrows' },
-  { lesson: 15, name: 'micrograd', type: 'new', desc: 'Autograd engine from scratch (Karpathy)' },
-  { lesson: 16, name: '→ Loss Landscape Viz', type: 'extends', desc: '2-parameter landscape on micrograd' },
-  { lesson: 17, name: 'Bayesian Spam Filter', type: 'new', desc: 'P(spam|words) from scratch' },
-  { lesson: 18, name: 'PCA from Covariance', type: 'new', desc: 'Eigenvectors of covariance = PCA directions' },
-  { lesson: 21, name: 'Bayesian Sequential Updater', type: 'new', desc: 'Watch posterior converge with evidence' },
-  { lesson: 22, name: 'Single Neuron Trainer', type: 'new', desc: 'AND, OR, XOR discovery' },
-  { lesson: 23, name: '→ MLP on MNIST', type: 'extends', desc: 'Full MLP built on micrograd, trained on digits' },
-  { lesson: 24, name: '→ Add ResNet + BatchNorm', type: 'extends', desc: 'Residual connections to MLP' },
-  { lesson: 25, name: 'Attention From Scratch', type: 'new', desc: 'NumPy attention + heatmap visualization' },
-  { lesson: 26, name: '→ Full GPT Build', type: 'extends', desc: 'Working transformer, generates text' },
-  { lesson: 2601, name: 'RL GridWorld', type: 'new', desc: 'Policy gradient + reward hacking demo' },
-  { lesson: 27, name: 'TransformerLens Setup', type: 'new', desc: 'GPT-2 attention pattern visualization' },
-  { lesson: 28, name: '→ Induction Head Replication', type: 'extends', desc: 'Activation patching on copying task' },
-  { lesson: 2801, name: 'Scaling Law Plots', type: 'new', desc: 'Log-log plots from published benchmarks' },
-  { lesson: 2802, name: 'Singularity Visualization', type: 'new', desc: 'Parameter symmetry + SLT geometry' },
-  { lesson: 29, name: 'PD Tournament', type: 'new', desc: 'Prisoner\'s Dilemma strategy tournament' },
-  { lesson: 30, name: '→ Decision Theory Sims', type: 'extends', desc: 'Newcomb\'s + DT comparison' },
-  { lesson: 31, name: 'Sleeping Beauty Sim', type: 'new', desc: '10,000 trial anthropic simulator' },
-];
-
-
-// ═══════════════════════════════════════════════
-// GRAPH LAYOUT: Manually positioned nodes
-// ═══════════════════════════════════════════════
-
 const LAYOUT = {
   width: 1200,
   height: 1000,
@@ -1739,56 +1507,73 @@ const LAYOUT = {
 
 
 // ═══════════════════════════════════════════════
-// RENDERING
+// SCHEDULE DATA
+// ═══════════════════════════════════════════════
+
+const SCHEDULE = [
+  { week: 1, title: 'Foundations: Vectors & Span', lessons: [0, 1, 2], note: 'Setup Python/NumPy, then dive into geometric intuition' },
+  { week: 2, title: 'Transformations & Operations', lessons: [3, 4], note: 'THE key insight: matrices are transformations of space' },
+  { week: 3, title: 'Subspaces & Structure', lessons: [5, 6, 7], note: 'Rank, determinants, eigenvalues — what survives, what changes, what stays' },
+  { week: 4, title: 'SVD & Dot Products', lessons: [8, 9], note: 'The complete decomposition + the atomic operation of attention' },
+  { week: 5, title: 'LA Capstone & Exam', lessons: [10, 11], note: 'Change of basis, norms, capstone + Phase 1 Final Exam + PCA project' },
+  { week: 6, title: 'Calculus Foundations', lessons: [12, 13, 14], note: 'Gradients, chain rule — this IS backpropagation' },
+  { week: 7, title: 'Optimization', lessons: [15, 1501], note: 'Gradient descent, micrograd build, constrained optimization' },
+  { week: 8, title: 'Loss Landscapes & Probability', lessons: [16, 17], note: 'Bridge from calculus to probability' },
+  { week: 9, title: 'Statistics & Information', lessons: [18, 19, 20], note: 'Covariance, MLE, entropy, KL divergence, cross-entropy' },
+  { week: 10, title: 'Bayesian Reasoning', lessons: [21], note: 'Deep dive: priors, posteriors, regularization = Bayesian inference' },
+  { week: 11, title: 'Neurons & Forward Pass', lessons: [22, 23], note: 'Single neuron → full MLP. This IS linear algebra in action.' },
+  { week: 12, title: 'Backprop & Attention', lessons: [24, 25], note: 'Gradient flow through networks, then the attention mechanism' },
+  { week: 13, title: 'Build a Transformer', lessons: [26], note: 'Karpathy\'s GPT build — the culminating coding experience' },
+  { week: 14, title: 'RL & LLM Pipeline', lessons: [2601, 2602], note: 'RLHF, training pipeline, alignment failure points' },
+  { week: 15, title: 'Interpretability', lessons: [27, 28], note: 'Circuits, features, sparse autoencoders — opening the black box' },
+  { week: 16, title: 'Scaling & SLT', lessons: [2801, 2802], note: 'Scaling laws, phase transitions, singular learning theory' },
+  { week: 17, title: 'Game & Decision Theory', lessons: [29, 30], note: 'Strategic interaction, cooperation, CDT/EDT/FDT' },
+  { week: 18, title: 'Anthropics & Alignment', lessons: [31, 32], note: 'Self-locating beliefs, the alignment problem itself' },
+  { week: 19, title: 'Open Problems', lessons: [33], note: 'Research frontiers, picking your first project' },
+];
+
+
+// ═══════════════════════════════════════════════
+// RENDERING ENGINE
 // ═══════════════════════════════════════════════
 
 let currentView = 'dependency';
 let selectedLesson = null;
-
-// ═══════════════════════════════════════════════
-// STATUS PERSISTENCE (localStorage)
-// ═══════════════════════════════════════════════
 
 const STATUS_KEY = 'alignment-curriculum-statuses';
 const STATUS_CYCLE = ['not-started', 'in-progress', 'complete'];
 
 function loadStatuses() {
   try {
-    const saved = localStorage.getItem(STATUS_KEY);
-    if (saved) {
-      const statuses = JSON.parse(saved);
-      LESSONS.forEach(l => {
-        if (statuses[l.id]) l.status = statuses[l.id];
-      });
-    }
-  } catch(e) { /* ignore parse errors */ }
+    const saved = JSON.parse(localStorage.getItem(STATUS_KEY));
+    if (saved) LESSONS.forEach(l => { if (saved[l.id] !== undefined) l.status = saved[l.id]; });
+  } catch(e) {}
 }
 
 function saveStatuses() {
-  const statuses = {};
-  LESSONS.forEach(l => { statuses[l.id] = l.status; });
-  localStorage.setItem(STATUS_KEY, JSON.stringify(statuses));
+  const obj = {};
+  LESSONS.forEach(l => obj[l.id] = l.status);
+  localStorage.setItem(STATUS_KEY, JSON.stringify(obj));
 }
 
 function cycleStatus(id, ev) {
-  ev.stopPropagation(); // don't trigger lesson select
+  if (ev) ev.stopPropagation();
   const lesson = LESSONS.find(l => l.id === id);
   const idx = STATUS_CYCLE.indexOf(lesson.status);
-  lesson.status = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+  lesson.status = STATUS_CYCLE[(idx + 1) % 3];
   saveStatuses();
   refreshAll();
-  // re-show detail if this lesson is selected
   if (selectedLesson === id) selectLesson(id);
 }
 
 function updateStats() {
-  const complete = LESSONS.filter(l => l.status === 'complete').length;
   const total = LESSONS.length;
+  const complete = LESSONS.filter(l => l.status === 'complete').length;
+  const inProgress = LESSONS.filter(l => l.status === 'in-progress').length;
   document.getElementById('stat-complete').textContent = complete;
   document.getElementById('stat-total').textContent = total;
-  document.getElementById('progress-fill').style.width = ((complete / total) * 100) + '%';
+  document.getElementById('progress-fill').style.width = `${(complete / total) * 100}%`;
 
-  // Estimate hours
   function parseHours(h) {
     const m = h.match(/(\d+)–(\d+)/);
     return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
@@ -1805,10 +1590,10 @@ function updateStats() {
 
 function refreshAll() {
   renderSidebar();
-  updateStats();
   if (currentView === 'dependency') renderGraph();
   else if (currentView === 'timeline') renderTimeline();
-  else if (currentView === 'projects') renderProjectTracker();
+  else if (currentView === 'schedule') renderSchedule();
+  updateStats();
 }
 
 function getPhaseColor(phaseId) {
@@ -1822,43 +1607,42 @@ function getStatusColor(status) {
   return 'var(--not-started)';
 }
 
-// Build sidebar
+// ── Sidebar ──
 function renderSidebar() {
   const sidebar = document.getElementById('sidebar');
   let html = '';
   PHASES.forEach(phase => {
     const phaseLessons = LESSONS.filter(l => l.phase === phase.id);
-    const checkpoint = CHECKPOINTS.find(c => c.phase === phase.id);
-    html += `<div class="nav-section">`;
-    html += `<div class="nav-section-header" onclick="toggleSection('${phase.id}')">
-      <div class="phase-dot" style="background:${phase.color}"></div>
-      ${phase.name}
-      <span class="phase-time">${phase.hours}</span>
+    html += `<div class="nav-section-header" onclick="toggleSection('${phase.id}')" style="color:${phase.color}">
+      <span class="chevron" id="chev-${phase.id}">▾</span> ${phase.name.toUpperCase()}
     </div>`;
-    html += `<div class="nav-items" id="nav-${phase.id}">`;
+    html += `<div id="section-${phase.id}">`;
     phaseLessons.forEach(lesson => {
       html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
-        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to change status"></div>
-        <span>${lesson.label || lesson.id}. ${lesson.title}</span>
-        <span class="lesson-time">${lesson.hours}</span>
+        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to cycle status"></div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.5;width:22px">${lesson.label || lesson.id}</span>
+        ${lesson.title}
       </div>`;
     });
-    if (checkpoint) {
-      html += `<div class="nav-item-checkpoint" onclick="selectCheckpoint('${checkpoint.id}')">
-        ✎ ${checkpoint.title}
-      </div>`;
+    // Checkpoint
+    const cp = CHECKPOINTS.find(c => c.phase === phase.id);
+    if (cp) {
+      html += `<div class="nav-item-checkpoint" onclick="selectCheckpoint('${cp.id}')">✎ ${cp.title}</div>`;
     }
-    html += `</div></div>`;
+    html += `</div>`;
   });
   sidebar.innerHTML = html;
 }
 
 function toggleSection(phaseId) {
-  const el = document.getElementById(`nav-${phaseId}`);
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  const section = document.getElementById(`section-${phaseId}`);
+  const chev = document.getElementById(`chev-${phaseId}`);
+  const hidden = section.style.display === 'none';
+  section.style.display = hidden ? '' : 'none';
+  chev.classList.toggle('collapsed', !hidden);
 }
 
-// Render dependency graph
+// ── Dependency Map ──
 function renderGraph() {
   const svg = document.getElementById('graph-svg');
   const rect = svg.parentElement.getBoundingClientRect();
@@ -1877,28 +1661,20 @@ function renderGraph() {
   let edgesHtml = '';
   let nodesHtml = '';
 
-  // Draw edges
   LESSONS.forEach(lesson => {
     const to = LAYOUT.nodes[lesson.id];
-    // Prerequisite edges
     lesson.prereqs.forEach(prereqId => {
       const from = LAYOUT.nodes[prereqId];
-      edgesHtml += `<line class="edge" id="edge-${prereqId}-${lesson.id}"
-        x1="${tx(from.x)}" y1="${ty(from.y)}"
-        x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
+      edgesHtml += `<line class="edge" id="edge-${prereqId}-${lesson.id}" x1="${tx(from.x)}" y1="${ty(from.y)}" x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
     });
-    // Cross-phase edges
     lesson.crossPhaseLinks.forEach(linkId => {
       const from = LAYOUT.nodes[linkId];
       if (from) {
-        edgesHtml += `<line class="edge edge-cross-phase" id="xedge-${linkId}-${lesson.id}"
-          x1="${tx(from.x)}" y1="${ty(from.y)}"
-          x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
+        edgesHtml += `<line class="edge edge-cross-phase" id="xedge-${linkId}-${lesson.id}" x1="${tx(from.x)}" y1="${ty(from.y)}" x2="${tx(to.x)}" y2="${ty(to.y)}" />`;
       }
     });
   });
 
-  // Draw nodes
   LESSONS.forEach(lesson => {
     const pos = LAYOUT.nodes[lesson.id];
     const color = getPhaseColor(lesson.phase);
@@ -1907,15 +1683,11 @@ function renderGraph() {
     const fillOpacity = lesson.status === 'complete' ? 0.25 : lesson.status === 'in-progress' ? 0.15 : 0.08;
 
     nodesHtml += `<g class="node-group" onclick="selectLesson(${lesson.id})" id="node-${lesson.id}">
-      <circle class="node-circle" cx="${tx(pos.x)}" cy="${ty(pos.y)}" r="${r}"
-        fill="${color}" fill-opacity="${fillOpacity}"
-        stroke="${statusColor}" />
-      <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}"
-        fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.label || lesson.id}</text>
+      <circle class="node-circle" cx="${tx(pos.x)}" cy="${ty(pos.y)}" r="${r}" fill="${color}" fill-opacity="${fillOpacity}" stroke="${statusColor}" />
+      <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}" fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.label || lesson.id}</text>
     </g>`;
   });
 
-  // Phase labels
   const phaseLabels = [
     { label: 'SETUP', x: 30, y: 12, color: '#94a3b8' },
     { label: 'LINEAR ALGEBRA', x: 80, y: 60, color: '#6ee7b7' },
@@ -1928,64 +1700,60 @@ function renderGraph() {
 
   let labelsHtml = '';
   phaseLabels.forEach(pl => {
-    labelsHtml += `<text x="${tx(pl.x)}" y="${ty(pl.y)}"
-      fill="${pl.color}" opacity="0.3"
-      font-family="JetBrains Mono, monospace" font-size="10" font-weight="700"
-      letter-spacing="2" text-anchor="middle">${pl.label}</text>`;
+    labelsHtml += `<text x="${tx(pl.x)}" y="${ty(pl.y)}" fill="${pl.color}" opacity="0.3" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" letter-spacing="2" text-anchor="middle">${pl.label}</text>`;
   });
 
   svg.innerHTML = labelsHtml + edgesHtml + nodesHtml;
 }
 
-// Select lesson and show detail panel
+// ── Select Lesson ──
 function selectLesson(id) {
   selectedLesson = id;
   const lesson = LESSONS.find(l => l.id === id);
   if (!lesson) return;
 
-  // Update sidebar active state
+  // Sidebar highlight
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   const navItem = document.getElementById(`nav-item-${id}`);
   if (navItem) navItem.classList.add('active');
 
-  // Highlight edges
-  document.querySelectorAll('.edge').forEach(el => el.classList.remove('highlighted'));
-  lesson.prereqs.forEach(pid => {
-    const edge = document.getElementById(`edge-${pid}-${id}`);
-    if (edge) edge.classList.add('highlighted');
-  });
-  lesson.crossPhaseLinks.forEach(lid => {
-    const edge = document.getElementById(`xedge-${lid}-${id}`);
-    if (edge) edge.classList.add('highlighted');
-  });
-  // Also highlight edges where this lesson is a prereq
-  LESSONS.forEach(other => {
-    if (other.prereqs.includes(id)) {
-      const edge = document.getElementById(`edge-${id}-${other.id}`);
+  // Edge highlighting (only in dependency view)
+  if (currentView === 'dependency') {
+    document.querySelectorAll('.edge').forEach(el => el.classList.remove('highlighted'));
+    lesson.prereqs.forEach(pid => {
+      const edge = document.getElementById(`edge-${pid}-${id}`);
       if (edge) edge.classList.add('highlighted');
-    }
-  });
+    });
+    lesson.crossPhaseLinks.forEach(lid => {
+      const edge = document.getElementById(`xedge-${lid}-${id}`);
+      if (edge) edge.classList.add('highlighted');
+    });
+    LESSONS.forEach(other => {
+      if (other.prereqs.includes(id)) {
+        const edge = document.getElementById(`edge-${id}-${other.id}`);
+        if (edge) edge.classList.add('highlighted');
+      }
+    });
+  }
 
   // Build detail panel
   const phase = PHASES.find(p => p.id === lesson.phase);
   let html = '';
 
-  // Header
   html += `<div class="detail-header">
     <div class="detail-phase-tag" style="color:${phase.color}">
-      <div class="phase-dot" style="background:${phase.color};width:6px;height:6px;border-radius:50%"></div>
+      <div style="background:${phase.color};width:6px;height:6px;border-radius:50%"></div>
       Phase ${phase.id.replace('p','')} · ${phase.name}
     </div>
     <div class="detail-title">Lesson ${lesson.label || lesson.id}: ${lesson.title}</div>
     <div class="detail-meta">
-      <div class="detail-meta-item">⏱ <strong>${lesson.hours}</strong></div>
-      <div class="detail-meta-item">Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
+      <div>⏱ <strong>${lesson.hours}</strong></div>
+      <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
     </div>
   </div>`;
 
   // Prerequisites
-  html += `<div class="detail-section">
-    <div class="detail-section-title"><span class="icon">⬆</span> Prerequisites</div>`;
+  html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">⬆</span> Prerequisites</div>`;
   if (lesson.prereqs.length === 0 && lesson.crossPhaseLinks.length === 0) {
     html += `<p style="font-size:13px;color:var(--text-dim)">None — entry point</p>`;
   } else {
@@ -2004,42 +1772,28 @@ function selectLesson(id) {
   }
   html += `</div>`;
 
-  // Minimum Viable Lesson
-  html += `<div class="detail-section">
-    <div class="detail-section-title"><span class="icon">⚡</span> Minimum Viable Lesson</div>`;
+  // MVL
+  html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">⚡</span> Minimum Viable Lesson</div>`;
   lesson.mvl.forEach(r => {
     html += `<div class="mvl-resource"><div class="res-type">${r.type}</div>${r.text}</div>`;
   });
   html += `</div>`;
 
-  // Concept Checks
-  html += `<div class="detail-section">
-    <div class="detail-section-title"><span class="icon">✓</span> Concept Checks — Can You Answer These?</div>
-    <ul class="concept-check-list">`;
-  lesson.conceptChecks.forEach(q => {
-    html += `<li>${q}</li>`;
-  });
+  // Concept checks
+  html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">✓</span> Concept Checks</div><ul class="concept-check-list">`;
+  lesson.conceptChecks.forEach(q => { html += `<li>${q}</li>`; });
   html += `</ul></div>`;
 
-  // Failure Modes
-  html += `<div class="detail-section">
-    <div class="detail-section-title"><span class="icon">⚠</span> Common Failure Modes</div>
-    <ul class="failure-list">`;
-  lesson.failureModes.forEach(f => {
-    html += `<li>${f}</li>`;
-  });
+  // Failure modes
+  html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">⚠</span> Common Failure Modes</div><ul class="failure-list">`;
+  lesson.failureModes.forEach(f => { html += `<li>${f}</li>`; });
   html += `</ul></div>`;
 
   // Projects
   if (lesson.projects.length > 0) {
-    html += `<div class="detail-section">
-      <div class="detail-section-title"><span class="icon">🔨</span> Coding Projects</div>
-      <ul class="project-list">`;
+    html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔨</span> Coding Projects</div><ul class="project-list">`;
     lesson.projects.forEach(p => {
-      html += `<li class="project-item">
-        <span class="project-badge ${p.label.toLowerCase()}">${p.label}</span>
-        <span>${p.text}</span>
-      </li>`;
+      html += `<li class="project-item"><span class="project-badge ${p.label.toLowerCase()}">${p.label}</span><span>${p.text}</span></li>`;
     });
     html += `</ul></div>`;
   }
@@ -2048,7 +1802,7 @@ function selectLesson(id) {
   document.getElementById('detail-content').style.display = 'block';
   document.getElementById('detail-content').innerHTML = html;
 
-  // Open mobile overlay if on small screen
+  // Mobile: show as bottom sheet
   if (window.innerWidth <= 900) {
     document.getElementById('detail-panel').classList.add('mobile-open');
     document.getElementById('detail-backdrop').classList.add('open');
@@ -2059,26 +1813,21 @@ function selectCheckpoint(cpId) {
   const cp = CHECKPOINTS.find(c => c.id === cpId);
   if (!cp) return;
 
-  let html = `<div class="checkpoint-detail">
+  let html = `<div class="detail-header">
     <div class="detail-phase-tag" style="color:${getPhaseColor(cp.phase)}">
-      <div class="phase-dot" style="background:${getPhaseColor(cp.phase)};width:6px;height:6px;border-radius:50%"></div>
+      <div style="background:${getPhaseColor(cp.phase)};width:6px;height:6px;border-radius:50%"></div>
       Review Checkpoint
     </div>
-    <h2>${cp.title}</h2>
-    <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">
-      Complete these integration exercises after finishing Lesson ${(LESSONS.find(l => l.id === cp.afterLesson) || {}).label || cp.afterLesson} to connect concepts across lessons.
-    </p>
-    <ul class="checkpoint-exercises">`;
-  cp.exercises.forEach(ex => {
-    html += `<li>${ex}</li>`;
-  });
+    <div class="detail-title">${cp.title}</div>
+  </div>
+  <div class="detail-section"><div class="detail-section-title"><span class="icon">🔗</span> Integration Exercises</div><ul class="concept-check-list">`;
+  cp.exercises.forEach(ex => { html += `<li>${ex}</li>`; });
   html += `</ul></div>`;
 
   document.getElementById('detail-empty').style.display = 'none';
   document.getElementById('detail-content').style.display = 'block';
   document.getElementById('detail-content').innerHTML = html;
 
-  // Open mobile overlay if on small screen
   if (window.innerWidth <= 900) {
     document.getElementById('detail-panel').classList.add('mobile-open');
     document.getElementById('detail-backdrop').classList.add('open');
@@ -2090,24 +1839,35 @@ function closeMobileDetail() {
   document.getElementById('detail-backdrop').classList.remove('open');
 }
 
-// View switching
+// ── View Switching ──
 function setView(view) {
   currentView = view;
   document.querySelectorAll('.canvas-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
 
+  const svg = document.getElementById('graph-svg');
+  const schedView = document.getElementById('schedule-view');
+  const legend = document.getElementById('canvas-legend');
+
   if (view === 'dependency') {
+    svg.style.display = '';
+    schedView.style.display = 'none';
+    legend.style.display = 'flex';
     renderGraph();
-    document.getElementById('canvas-legend').style.display = 'flex';
   } else if (view === 'timeline') {
+    svg.style.display = '';
+    schedView.style.display = 'none';
+    legend.style.display = 'none';
     renderTimeline();
-    document.getElementById('canvas-legend').style.display = 'none';
-  } else if (view === 'projects') {
-    renderProjectTracker();
-    document.getElementById('canvas-legend').style.display = 'none';
+  } else if (view === 'schedule') {
+    svg.style.display = 'none';
+    schedView.style.display = '';
+    legend.style.display = 'none';
+    renderSchedule();
   }
 }
 
+// ── Timeline ──
 function renderTimeline() {
   const svg = document.getElementById('graph-svg');
   const rect = svg.parentElement.getBoundingClientRect();
@@ -2119,11 +1879,9 @@ function renderTimeline() {
   const usableW = w - margin.left - margin.right;
   const usableH = h - margin.top - margin.bottom;
 
-  // Timeline: lessons on x-axis, grouped by phase
   const barW = Math.min(20, usableW / LESSONS.length - 2);
   const gap = (usableW - barW * LESSONS.length) / LESSONS.length;
 
-  // Parse hours to get midpoint
   function parseHours(h) {
     const match = h.match(/(\d+)–(\d+)/);
     if (match) return (parseInt(match[1]) + parseInt(match[2])) / 2;
@@ -2132,12 +1890,10 @@ function renderTimeline() {
 
   const maxH = Math.max(...LESSONS.map(l => parseHours(l.hours)));
 
-  // Axis
   html += `<text x="${margin.left}" y="${margin.top - 25}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">ESTIMATED HOURS PER LESSON</text>`;
   html += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
   html += `<line x1="${margin.left}" y1="${h - margin.bottom}" x2="${w - margin.right}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
 
-  // Y-axis labels
   for (let i = 0; i <= maxH; i += 5) {
     const y = h - margin.bottom - (i / maxH) * usableH;
     html += `<text x="${margin.left - 8}" y="${y + 4}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">${i}h</text>`;
@@ -2151,70 +1907,114 @@ function renderTimeline() {
     const y = h - margin.bottom - barH;
     const color = getPhaseColor(lesson.phase);
 
-    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}"
-      fill="${color}" opacity="${lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2}"
-      rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
-    html += `<text x="${x + barW/2}" y="${h - margin.bottom + 14}" fill="var(--text-dim)"
-      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.label || lesson.id}</text>`;
-    html += `<text x="${x + barW/2}" y="${y - 5}" fill="${color}"
-      font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" opacity="0.7">${hrs}h</text>`;
+    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${color}" opacity="${lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2}" rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
+    html += `<text x="${x + barW/2}" y="${h - margin.bottom + 14}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.label || lesson.id}</text>`;
+    html += `<text x="${x + barW/2}" y="${y - 5}" fill="${color}" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" opacity="0.7">${hrs}h</text>`;
   });
 
   svg.innerHTML = html;
 }
 
-function renderProjectTracker() {
-  const svg = document.getElementById('graph-svg');
-  const rect = svg.parentElement.getBoundingClientRect();
-  const w = rect.width;
-  const h = rect.height;
+// ── Schedule ──
+function renderSchedule() {
+  const container = document.getElementById('schedule-view');
 
-  let html = '';
-  const margin = { top: 50, left: 30, right: 30, bottom: 30 };
-  const rowH = 28;
-  const startY = margin.top;
+  function parseHours(h) {
+    const m = h.match(/(\d+)–(\d+)/);
+    return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
+  }
 
-  html += `<text x="${margin.left}" y="${startY - 15}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">CUMULATIVE PROJECT TRACKER</text>`;
+  // Determine current week based on progress
+  let currentWeekIdx = 0;
+  for (let i = 0; i < SCHEDULE.length; i++) {
+    const weekLessons = SCHEDULE[i].lessons.map(lid => LESSONS.find(l => l.id === lid)).filter(Boolean);
+    const allDone = weekLessons.every(l => l.status === 'complete');
+    if (allDone && i < SCHEDULE.length - 1) currentWeekIdx = i + 1;
+    else if (!allDone) { currentWeekIdx = i; break; }
+  }
 
-  // Two columns of chain indicators
-  let prevY = null;
-  PROJECT_CHAIN.forEach((proj, i) => {
-    const y = startY + i * rowH;
-    const lesson = LESSONS.find(l => l.id === proj.lesson);
-    const color = getPhaseColor(lesson.phase);
-    const isDone = lesson.status === 'complete';
-    const isActive = lesson.status === 'in-progress';
-    const opacity = isDone ? 1 : isActive ? 0.6 : 0.25;
+  let html = `<div style="padding:20px">`;
+  html += `<div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:16px">19-WEEK STUDY SCHEDULE</div>`;
 
-    // Connector line
-    if (prevY !== null && proj.type === 'extends') {
-      html += `<line x1="${margin.left + 10}" y1="${prevY + 6}" x2="${margin.left + 10}" y2="${y + 2}" stroke="${color}" stroke-width="1.5" opacity="${opacity * 0.5}" />`;
-    }
+  SCHEDULE.forEach((week, wi) => {
+    const weekLessons = week.lessons.map(lid => LESSONS.find(l => l.id === lid)).filter(Boolean);
+    const totalHrs = weekLessons.reduce((sum, l) => sum + parseHours(l.hours), 0);
+    const doneCount = weekLessons.filter(l => l.status === 'complete').length;
+    const allDone = doneCount === weekLessons.length;
+    const anyStarted = weekLessons.some(l => l.status !== 'not-started');
+    const isCurrent = wi === currentWeekIdx;
 
-    // Dot
-    html += `<circle cx="${margin.left + 10}" cy="${y + 4}" r="4" fill="${color}" opacity="${opacity}" />`;
+    // Determine week phase color (dominant phase)
+    const phases = weekLessons.map(l => l.phase);
+    const dominant = phases.sort((a,b) => phases.filter(v => v===b).length - phases.filter(v => v===a).length)[0];
+    const color = getPhaseColor(dominant);
 
-    // Lesson number
-    html += `<text x="${margin.left + 24}" y="${y + 8}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" opacity="${opacity}">L${lesson.label || proj.lesson}</text>`;
+    const bgColor = isCurrent ? 'rgba(56,189,248,0.08)' : allDone ? 'rgba(52,211,153,0.05)' : 'var(--bg-raised)';
+    const borderColor = isCurrent ? 'var(--accent-5)' : allDone ? 'var(--complete)' : 'var(--border)';
 
-    // Project name
-    const isExtend = proj.type === 'extends';
-    html += `<text x="${margin.left + 52}" y="${y + 8}" fill="${isExtend ? color : 'var(--text)'}" font-family="DM Sans, sans-serif" font-size="12" opacity="${opacity}" font-weight="${isExtend ? 400 : 500}">${proj.name}</text>`;
+    html += `<div class="schedule-week" style="border-left:3px solid ${borderColor};background:${bgColor};margin-bottom:8px;border-radius:4px">`;
+    html += `<div style="padding:10px 14px">`;
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">`;
+    html += `<div style="display:flex;align-items:center;gap:10px">`;
+    html += `<span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:${isCurrent ? 'var(--accent-5)' : 'var(--text-dim)'}">W${week.week}</span>`;
+    html += `<span style="font-size:14px;font-weight:600;color:${allDone ? 'var(--complete)' : 'var(--text-bright)'}">${week.title}</span>`;
+    if (isCurrent) html += `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;background:rgba(56,189,248,0.2);color:var(--accent-5);padding:2px 6px;border-radius:3px;font-weight:700">CURRENT</span>`;
+    if (allDone) html += `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;background:rgba(52,211,153,0.2);color:var(--complete);padding:2px 6px;border-radius:3px;font-weight:700">✓ DONE</span>`;
+    html += `</div>`;
+    html += `<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim)">~${Math.round(totalHrs)}h</span>`;
+    html += `</div>`;
 
-    // Description
-    html += `<text x="${margin.left + 52}" y="${y + 21}" fill="var(--text-dim)" font-family="DM Sans, sans-serif" font-size="10" opacity="${opacity * 0.7}">${proj.desc}</text>`;
+    // Note
+    html += `<div style="font-size:11px;color:var(--text-dim);margin-bottom:8px;font-style:italic">${week.note}</div>`;
 
-    // Badge
-    if (proj.type === 'new') {
-      html += `<rect x="${w - margin.right - 40}" y="${y - 4}" width="32" height="16" rx="3" fill="${color}" opacity="${opacity * 0.15}" />`;
-      html += `<text x="${w - margin.right - 24}" y="${y + 7}" fill="${color}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" text-anchor="middle" opacity="${opacity}">NEW</text>`;
-    }
+    // Lesson rows
+    weekLessons.forEach(lesson => {
+      const lColor = getPhaseColor(lesson.phase);
+      const statusIcon = lesson.status === 'complete' ? '●' : lesson.status === 'in-progress' ? '◐' : '○';
+      const statusClr = getStatusColor(lesson.status);
 
-    prevY = y;
+      html += `<div class="schedule-lesson-row" onclick="selectLesson(${lesson.id})">`;
+      html += `<span style="color:${statusClr};font-size:10px;cursor:pointer" onclick="event.stopPropagation();cycleStatus(${lesson.id})" title="Click to cycle">${statusIcon}</span>`;
+      html += `<span class="schedule-lesson-num" style="color:${lColor}">${lesson.label || lesson.id}</span>`;
+      html += `<span style="opacity:${lesson.status === 'complete' ? 0.5 : 1}">${lesson.title}</span>`;
+      html += `<span class="schedule-hours">${lesson.hours}</span>`;
+      html += `</div>`;
+    });
+
+    // Progress bar for the week
+    const pct = weekLessons.length > 0 ? (doneCount / weekLessons.length) * 100 : 0;
+    html += `<div style="margin-top:6px;height:2px;background:var(--border);border-radius:1px;overflow:hidden">`;
+    html += `<div style="height:100%;width:${pct}%;background:${allDone ? 'var(--complete)' : color};border-radius:1px;transition:width 0.3s"></div>`;
+    html += `</div>`;
+
+    html += `</div></div>`;
   });
 
-  svg.innerHTML = html;
+  // Summary at bottom
+  const totalHrs = LESSONS.reduce((s, l) => {
+    const m = l.hours.match(/(\d+)–(\d+)/);
+    return s + (m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5);
+  }, 0);
+  const doneHrs = LESSONS.filter(l => l.status === 'complete').reduce((s, l) => {
+    const m = l.hours.match(/(\d+)–(\d+)/);
+    return s + (m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5);
+  }, 0);
+
+  html += `<div style="margin-top:16px;padding:12px;background:var(--bg-raised);border-radius:6px;border:1px solid var(--border)">`;
+  html += `<div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;margin-bottom:6px">TOTAL PROGRESS</div>`;
+  html += `<div style="display:flex;justify-content:space-between;font-size:13px">`;
+  html += `<span>~${Math.round(doneHrs)}h of ~${Math.round(totalHrs)}h completed</span>`;
+  html += `<span style="color:var(--accent-1);font-weight:600">${Math.round(doneHrs/totalHrs*100)}%</span>`;
+  html += `</div>`;
+  html += `<div style="margin-top:6px;height:4px;background:var(--border);border-radius:2px;overflow:hidden">`;
+  html += `<div style="height:100%;width:${doneHrs/totalHrs*100}%;background:linear-gradient(90deg,var(--accent-1),var(--accent-5));border-radius:2px"></div>`;
+  html += `</div>`;
+  html += `</div>`;
+
+  html += `</div>`;
+  container.innerHTML = html;
 }
+
 
 // ═══════════════════════════════════════════════
 // INIT
@@ -2228,7 +2028,6 @@ function init() {
   window.addEventListener('resize', () => {
     if (currentView === 'dependency') renderGraph();
     else if (currentView === 'timeline') renderTimeline();
-    else if (currentView === 'projects') renderProjectTracker();
   });
 }
 
