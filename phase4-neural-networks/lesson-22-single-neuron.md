@@ -1,6 +1,6 @@
 # Lesson 22: How a Single Neuron Works
 
-[← Bayesian Inference](../phase3-probability/lesson-21-bayesian-inference.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-23-forward-pass.md)
+[← Applied Statistics](../phase3b-statistics/lesson-21f-applied-statistics.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-23-forward-pass.md)
 
 ---
 
