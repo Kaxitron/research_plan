@@ -1,6 +1,6 @@
 # Lesson 21: Bayesian Reasoning and Inference
 
-[← Information Theory](lesson-20-information-theory.md) | [Back to TOC](../README.md) | [Next: Single Neuron →](../phase4-neural-networks/lesson-22-single-neuron.md)
+[← Information Theory](lesson-20-information-theory.md) | [Back to TOC](../README.md) | [Next: Hypothesis Testing →](../phase3b-statistics/lesson-21b-hypothesis-testing.md)
 
 ---
 
