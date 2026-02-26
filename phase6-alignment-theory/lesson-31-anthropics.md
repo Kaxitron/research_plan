@@ -78,6 +78,62 @@
   - https://plato.stanford.edu/entries/self-locating-beliefs/
   - Balanced academic treatment of SSA vs. SIA
 
+## 📖 Read — Bentham's Bulldog on Anthropics (Substack Series)
+
+*A highly opinionated, entertaining, and thorough blog series arguing forcefully for SIA over SSA. Read these as a counterpoint to the more balanced academic treatments above — they'll sharpen your thinking about anthropic reasoning even if you don't agree with every conclusion. Recommended reading order below.*
+
+1. **"Speedrunning Anthropics"** *(Start here — accessible overview of the whole landscape)*
+   - https://benthams.substack.com/p/speedrunning-anthropics
+   - *Covers Sleeping Beauty, God's Coin Toss, SSA's reference class problem, and why he thinks SIA wins. Best single entry point.*
+
+2. **"SIA Is Just Being a Bayesian About the Fact That One Exists"**
+   - https://benthams.substack.com/p/sia-is-just-being-a-bayesian-about
+   - *Core argument: SIA is just standard Bayesian updating applied to your own existence. Includes the "Presumptuous Philosopher" and "Presumptuous Archaeologist" thought experiments.*
+
+3. **"Alternatives to SIA are Doomed!"**
+   - https://benthams.substack.com/p/alternatives-to-sia-are-doomed
+   - *Argues that every non-SIA theory implies the Doomsday Argument, Lazy Adam, and other absurdities. If you're tempted by SSA, read this first.*
+
+4. **"All Theories of Anthropics Are Presumptuous"**
+   - https://benthams.substack.com/p/all-theories-of-anthropics-are-presumptuous
+   - *Responds to the main objection to SIA (the "Presumptuous Philosopher") by showing SSA and halfer views have their own presumptuousness problems.*
+
+5. **"The Self-Indication Assumption's Narrative"**
+   - https://benthams.substack.com/p/the-self-indication-assumptions-narrative
+   - *A deeper look at SIA's internal logic and how it handles various thought experiments, including God's Extreme Coin Toss.*
+
+6. **"The Beauty of SIA"**
+   - https://benthams.substack.com/p/the-beauty-of-sia
+   - *Aesthetic/elegance argument: SIA produces the kind of clean, parsimonious solutions typical of true theories. Shows how SIA precisely cancels the Doomsday Argument.*
+
+7. **"The Closed Eyes Argument for Thirding"** *(on Sleeping Beauty specifically)*
+   - https://benthams.substack.com/p/the-closed-eyes-argument-for-thirding
+   - *A novel argument for the thirder position in Sleeping Beauty. Connects SIA to the broader halfer/thirder debate.*
+
+8. **"From The Failure Of The Failure Of Contraception To The Failure Of The Failure of SSA (And Other Alternatives To SIA)"**
+   - https://benthams.substack.com/p/from-the-failure-of-the-failure-of
+   - *Technical deep dive showing that denying SIA leads to the absurd conclusion that contraception doesn't work (in a specific probabilistic sense).*
+
+9. **"Contra Ćirković on SIA"**
+   - https://benthams.substack.com/p/contra-circovic-on-sia
+   - *Responds to academic objections to SIA regarding cosmological implications and observer density.*
+
+10. **"Breaking The Fourth Wall"** *(SIA and infinity)*
+    - https://benthams.substack.com/p/breaking-the-fourth-wall
+    - *Addresses the hardest challenge for SIA: what happens when you apply it to infinite cases? Honest about the difficulties while arguing they aren't unique to SIA.*
+
+11. **"Why Care About Anthropics?"**
+    - https://benthams.substack.com/p/why-care-about-anthropics
+    - *Meta-level motivation: why anthropics matters beyond armchair philosophy, and why the correct theory is clearer than most people think.*
+
+12. **"The Best Argument for God"** *(SIA applied to theism)*
+    - https://benthams.substack.com/p/the-best-argument-for-god
+    - *Comprehensive version of his anthropic argument for theism. Read for the SIA reasoning, regardless of your theological views — it's an impressive application of anthropic logic.*
+
+13. **"Contra Truth Teller on the Anthropic Argument for Theism"**
+    - https://benthams.substack.com/p/contra-truth-teller-on-the-anthropic
+    - *Response to detailed objections. Good for seeing how anthropic arguments hold up under sustained criticism.*
+
 ## 📖 Read — Going Deep
 
 - **"Anthropics" section on Arbital** (by Eliezer Yudkowsky)
