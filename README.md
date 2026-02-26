@@ -139,6 +139,7 @@
 | [Key Papers](resources/papers.md) | Reading list in order |
 | [Courses & Programs](resources/courses.md) | MIT OCW, ARENA, Stanford, etc. |
 | [Practice Problem Sources](resources/practice-problems.md) | MIT OCW, Khan Academy, Axler, Paul's Notes |
+| [Mathematics Cheat Sheet](resources/cheat-sheet.md) | Formulas, identities, key insights |
 | [📝 Phase 1 Final Exam](assessments/phase1-linear-algebra-final-exam.docx) | 60min comprehensive exam + PCA capstone project |
 
 ---
