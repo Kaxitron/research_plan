@@ -101,12 +101,9 @@ When you encounter a statistical claim online, run through this:
 
 ## 📺 Watch — Primary
 
-1. **Hbomberguy — "Vaccines, Lies, and the Bad Statistics Behind the Anti-Vax Movement"**
-   - https://www.youtube.com/results?search_query=hbomberguy+vaccines+statistics
-   - *Long but devastating walkthrough of how bad statistics create dangerous beliefs.*
-2. **StatQuest — "GWAS (Genome-Wide Association Studies), Clearly Explained"**
+1. **StatQuest — "GWAS (Genome-Wide Association Studies), Clearly Explained"**
    - https://www.youtube.com/results?search_query=statquest+gwas+clearly+explained
-3. **Numberphile — "Problems with Observational Studies"**
+2. **Numberphile — "Problems with Observational Studies"**
 
 ## 📺 Watch — Secondary
 
