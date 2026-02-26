@@ -641,6 +641,7 @@ const PHASES = [
   { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '22–30h' },
   { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
   { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
+  { id: 'p3b', name: 'Applied Statistics', color: '#f472b6', hours: '25–35h' },
   { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
   { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
   { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
@@ -1153,6 +1154,123 @@ const LESSONS = [
       { label: 'NEW', text: 'Bayesian sequential updating visualizer' },
     ],
   },
+  // ─── Phase 3b: Applied Statistics ───
+  {
+    id: 2101, label: '21b', phase: 'p3b', title: 'Hypothesis Testing, P-Values, and What They Actually Mean',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [21],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does a p-value of 0.03 actually mean? What does it NOT mean?',
+      'Why does testing 20 hypotheses guarantee a "significant" result by chance?',
+      'What is the difference between statistical significance and practical significance (effect size)?',
+      'How does a Bayes factor differ from a p-value?',
+    ],
+    failureModes: [
+      'Confusing P(data|H₀) with P(H₀|data) — the base rate fallacy',
+      'Treating p < 0.05 as a binary truth/false switch instead of a continuous measure',
+    ],
+    mvl: [
+      { type: 'Read', text: '"Statistics Done Wrong" — statisticsdonewrong.com' },
+      { type: 'Watch', text: 'StatQuest — "P-values, Clearly Explained"' },
+      { type: 'Do', text: 'P-value simulator: run 1000 t-tests, plot the distribution' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Multiple comparisons simulator showing Bonferroni correction' },
+    ],
+  },
+  {
+    id: 2102, label: '21c', phase: 'p3b', title: 'Experimental Design and Common Statistical Fallacies',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [2101],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Explain Simpson\'s Paradox with a concrete example.',
+      'Why can survivorship bias make successful people look like they had opposite traits?',
+      'What is the hierarchy of evidence and why do RCTs sit near the top?',
+    ],
+    failureModes: [
+      'Knowing "correlation ≠ causation" as a slogan without being able to identify specific confounders',
+      'Thinking observational studies are worthless — they\'re useful, just weaker for causal claims',
+    ],
+    mvl: [
+      { type: 'Read', text: '"Calling Bullshit" by Bergstrom & West — callingbullshit.org' },
+      { type: 'Watch', text: 'Veritasium — "Is Most Published Research Wrong?"' },
+      { type: 'Do', text: 'Simpson\'s Paradox generator: create data where a trend reverses in aggregate' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Survivorship bias + Berkson\'s paradox simulator' },
+    ],
+  },
+  {
+    id: 2103, label: '21d', phase: 'p3b', title: 'Regression — From Linear to Logistic and Beyond',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [2102],
+    crossPhaseLinks: [9],
+    conceptChecks: [
+      'What does "controlling for" a variable mean in a regression, and when can it go wrong?',
+      'How do you interpret an odds ratio of 1.15 from a logistic regression?',
+      'Why is a single neuron with sigmoid activation literally logistic regression?',
+    ],
+    failureModes: [
+      'Throwing every variable into a regression without thinking about causal structure',
+      'Confusing R² (model fit) with evidence of causation',
+    ],
+    mvl: [
+      { type: 'Read', text: 'ISLR Chapters 3–4 — statlearning.com (free)' },
+      { type: 'Watch', text: 'StatQuest — "Linear Regression" + "Logistic Regression"' },
+      { type: 'Do', text: 'Multiple regression on real data: interpret coefficients, find significance' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Regression table reading exercise: 3 papers from different fields' },
+    ],
+  },
+  {
+    id: 2104, label: '21e', phase: 'p3b', title: 'Causal Inference — From Correlation to Causation',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [2103],
+    crossPhaseLinks: [30],
+    conceptChecks: [
+      'Draw DAGs for fork (confounder), chain (mediator), and collider. When should you control for each?',
+      'Why does "controlling for a collider" CREATE bias rather than remove it?',
+      'What is an instrumental variable and when can it establish causation from observational data?',
+    ],
+    failureModes: [
+      'Thinking "control for everything" is always correct — it can introduce collider bias',
+      'Treating DAGs as just pictures rather than precise mathematical objects encoding independence assumptions',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Pearl — "The Book of Why" Chapters 1–4' },
+      { type: 'Watch', text: 'Brady Neal — "Introduction to Causal Inference" (first 3–4 lectures)' },
+      { type: 'Do', text: 'DAG practice: draw correct DAGs for 3 causal scenarios and determine what to control for' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Collider bias simulator + instrumental variables demo' },
+    ],
+  },
+  {
+    id: 2105, label: '21f', phase: 'p3b', title: 'Applied Statistics — Genetics, Epidemiology, Debates',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [2104],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does "heritability = 0.8" actually mean, and what does it NOT mean about individuals or group differences?',
+      'Why does GWAS use p < 5×10⁻⁸ instead of p < 0.05?',
+      'Walk through the 6-step adjudication framework for evaluating a statistical claim.',
+    ],
+    failureModes: [
+      'Confusing within-group heritability with between-group causation (Lewontin\'s fallacy)',
+      'Treating any single study as definitive — replication and meta-analysis matter more',
+    ],
+    mvl: [
+      { type: 'Read', text: '"Calling Bullshit" — full book' },
+      { type: 'Watch', text: 'StatQuest — "GWAS, Clearly Explained"' },
+      { type: 'Do', text: 'Adjudication practice: evaluate 5 real statistical claims from Twitter/Reddit' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'GWAS simulation: 10000 individuals, 1000 SNPs, Bonferroni correction' },
+    ],
+  },
   // ─── Phase 4: Neural Networks ───
   {
     id: 22, phase: 'p4', title: 'How a Single Neuron Works',
@@ -1545,6 +1663,14 @@ const CHECKPOINTS = [
     ],
   },
   {
+    id: 'cp3b', afterLesson: 2105, phase: 'p3b', title: 'Phase 3b Review: Statistics → Real-World Claims Bridge',
+    exercises: [
+      '<strong>Full adjudication:</strong> Take a real statistical claim from social media about genetics or health. Apply the 6-step framework: identify the claim, evidence type, effect size, potential confounders (draw the DAG), replication status, and incentive structure.',
+      '<strong>Bayesian vs. frequentist showdown:</strong> For a specific study result: compute the p-value, the Bayes factor, and the posterior probability (given a reasonable prior). Show why they can disagree and which is more informative.',
+      '<strong>Causal reasoning audit:</strong> Given 3 observational studies that "control for" different variables, identify which controls are confounders (correct), mediators (blocking the effect), or colliders (creating bias). Draw DAGs for each.',
+    ],
+  },
+  {
     id: 'cp4', afterLesson: 2602, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer Bridge',
     exercises: [
       '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix multiplication, state: the input/output dimensions, the rank of the weight matrix, what information bottleneck it creates.',
@@ -1600,6 +1726,12 @@ const LAYOUT = {
     19: { x: 530, y: 310 },
     20: { x: 530, y: 410 },
     21: { x: 530, y: 520 },
+    // Phase 3b - applied statistics (between P3 and P4)
+    2101: { x: 620, y: 110 },
+    2102: { x: 620, y: 220 },
+    2103: { x: 620, y: 330 },
+    2104: { x: 620, y: 440 },
+    2105: { x: 620, y: 550 },
     // Phase 4 - center-right
     22: { x: 720, y: 210 },
     23: { x: 720, y: 310 },
@@ -1807,6 +1939,7 @@ function renderGraph() {
     { label: 'LINEAR ALGEBRA', x: 80, y: 60, color: '#6ee7b7' },
     { label: 'CALCULUS', x: 340, y: 230, color: '#818cf8' },
     { label: 'PROBABILITY', x: 530, y: 60, color: '#f9a8d4' },
+    { label: 'STATISTICS', x: 620, y: 60, color: '#f472b6' },
     { label: 'NEURAL NETS', x: 720, y: 155, color: '#fbbf24' },
     { label: 'INTERP', x: 910, y: 410, color: '#38bdf8' },
     { label: 'ALIGNMENT', x: 1080, y: 50, color: '#c084fc' },
