@@ -19,6 +19,16 @@
 - **"Seeing Theory"** — Interactive probability — https://seeing-theory.brown.edu/
 - **"Bayesian Reasoning for Intelligent People"** — Simon DeDeo — https://santafe.edu/~simon/br.pdf
 
+## Statistics & Causal Inference
+- **"Statistics Done Wrong"** — Alex Reinhart — https://www.statisticsdonewrong.com/
+- **"An Introduction to Statistical Learning (ISLR)"** — James, Witten, Hastie, Tibshirani — https://www.statlearning.com/
+- **"Statistical Rethinking"** — Richard McElreath — https://xcelab.net/rm/statistical-rethinking/
+- **"Calling Bullshit"** — Bergstrom & West — https://www.callingbullshit.org/
+- **"The Book of Why"** — Judea Pearl — accessible causal inference
+- **"Causal Inference: The Mixtape"** — Scott Cunningham — https://mixtape.scunning.com/
+- **"Causal Inference: What If"** — Hernán & Robins — https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
+- **"Mostly Harmless Econometrics"** — Angrist & Pischke — the econometrics perspective
+
 ## Game Theory & Decision Theory
 - **"The Evolution of Cooperation"** — Robert Axelrod
 - **"Thinking Strategically"** — Dixit & Nalebuff
