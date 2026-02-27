@@ -1,6 +1,6 @@
 # Lesson 21f: Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates
 
-[← Causal Inference](lesson-21e-causal-inference.md) | [Back to TOC](../README.md) | [Next: Single Neuron →](../phase4-neural-networks/lesson-22-single-neuron.md)
+[← Causal Inference](lesson-21e-causal-inference.md) | [Back to TOC](../README.md) | [Next: Computability →](../phase3c-math-enrichment/lesson-21g-computability.md)
 
 ---
 
