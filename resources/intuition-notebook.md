@@ -17,6 +17,16 @@ No matter how complicated a matrix looks, it's doing three simple things in sequ
 ### Eigenvectors are the directions that "survive" a transformation
 Most vectors get knocked off their line by a matrix. Eigenvectors stay on their line — they just get stretched by λ. They're the "natural axes" of the transformation. This is why PCA works: the eigenvectors of the covariance matrix ARE the directions of maximum variance.
 
+### Projection matrix and linear regression
+Xw = y_hat
+y = y_hat + e (residual)
+Xt*e = 0 (e is perpendicular to the column space)
+The closest y_hat that you can make with a linear combination of the columns (using the weights, mx + b in higher dimensions) is when the residual is perpendicular, i.e. the projection. You need a 1s column for the intercept if you don't center the data around the mean. if your data has 2 parameters, you are finding the plane of best fit, if 3, the R^3 of best fit, etc. When you add in ridge/lasso regression, if you have some dimensions (columns of X) where there is no correlation, you can properly set those weights to zero.
+
+### Miscellaneous Thoughts
+Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.
+v*v is the same things as vtv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
+
 ---
 
 ## Calculus & Optimization
