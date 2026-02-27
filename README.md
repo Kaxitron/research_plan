@@ -39,7 +39,7 @@
 | 9 | [Singular Value Decomposition (SVD)](phase1-linear-algebra/lesson-09-svd.md) | ✅ Complete |
 | 10 | [Dot Products, Orthogonality, and Projections](phase1-linear-algebra/lesson-10-dot-products.md) | ✅ Complete |
 | 11 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-11-change-of-basis.md) | ✅ Complete |
-| 12 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-12-capstone.md) | ✅ Complete |
+| 12 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-12-capstone.md) | ⬜ Not Started |
 
 ### [PHASE 2: Calculus for ML](phase2-calculus/)
 *The mathematical engine of neural network learning*
