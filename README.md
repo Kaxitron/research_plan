@@ -10,7 +10,7 @@
 
 **Estimated total time:** 5–7 months at a steady pace.
 
-### 📊 [Interactive Curriculum Dashboard](curriculum-dashboard.html)
+### 📊 [Interactive Curriculum Dashboard](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
 
 ---
 
