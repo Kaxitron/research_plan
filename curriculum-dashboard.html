@@ -2611,22 +2611,31 @@ function getGhToken() {
   return token ? token.trim() : null;
 }
 
+// Cache the latest known SHA to avoid stale-SHA conflicts on rapid syncs
+let _lastKnownSha = null;
+let _syncInProgress = false;
+
 async function syncReadmeToGithub() {
   const btn = document.getElementById('sync-btn');
   const icon = document.getElementById('sync-icon');
+
+  // Prevent overlapping syncs
+  if (_syncInProgress) return;
+  _syncInProgress = true;
   btn.classList.add('syncing');
+  btn.style.pointerEvents = 'none';
   icon.textContent = '⟳';
 
   try {
     const token = getGhToken();
-    if (!token) { btn.classList.remove('syncing'); icon.textContent = '⬆'; return; }
+    if (!token) { _syncInProgress = false; btn.classList.remove('syncing'); btn.style.pointerEvents = ''; icon.textContent = '⬆'; return; }
 
-    // 1. Get current README from GitHub
-    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
-      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
+    // 1. Get current README — use cached SHA header to avoid redundant downloads
+    const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
     if (!getResp.ok) throw new Error(`GitHub GET failed: ${getResp.status}`);
     const fileData = await getResp.json();
+    const currentSha = fileData.sha;
     let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
 
     // 2. Build status map from current dashboard state
@@ -2637,7 +2646,7 @@ async function syncReadmeToGithub() {
       statusMap[l.id] = emoji;
     });
 
-    // 3. Replace status in each table row: "| {id} | [...] | {old status} |"
+    // 3. Replace status in each table row
     content = content.replace(
       /^\| (\d+) \| (.+?) \| (.+?) \|$/gm,
       (match, id, lessonCol, statusCol) => {
@@ -2649,23 +2658,38 @@ async function syncReadmeToGithub() {
       }
     );
 
-    // 4. Push updated README back to GitHub
-    const putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
+    // 4. Push updated README — use freshest SHA (cached from last success, or just fetched)
+    const shaToUse = _lastKnownSha || currentSha;
+    const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+    let putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
       method: 'PUT',
-      headers: {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: 'Update lesson progress from dashboard',
-        content: btoa(unescape(encodeURIComponent(content))),
-        sha: fileData.sha
-      })
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Update lesson progress from dashboard', content: encodedContent, sha: shaToUse })
     });
+
+    // 5. If 409 conflict (stale SHA), re-fetch the latest SHA and retry once
+    if (putResp.status === 409) {
+      console.log('SHA conflict — refetching and retrying...');
+      const retryGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
+      if (!retryGet.ok) throw new Error(`GitHub retry GET failed: ${retryGet.status}`);
+      const retryData = await retryGet.json();
+      putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
+        method: 'PUT',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Update lesson progress from dashboard', content: encodedContent, sha: retryData.sha })
+      });
+    }
+
     if (!putResp.ok) {
       const err = await putResp.json();
       throw new Error(err.message || `GitHub PUT failed: ${putResp.status}`);
+    }
+
+    // 6. Cache the new SHA from the successful response
+    const putData = await putResp.json();
+    if (putData.content && putData.content.sha) {
+      _lastKnownSha = putData.content.sha;
     }
 
     // Success
@@ -2676,10 +2700,10 @@ async function syncReadmeToGithub() {
 
   } catch (e) {
     console.error('Sync failed:', e);
+    _lastKnownSha = null; // Clear cached SHA on error so next attempt fetches fresh
     btn.classList.remove('syncing');
     btn.classList.add('error');
     icon.textContent = '✗';
-    // If auth failed, clear stored token so they can re-enter
     if (e.message.includes('401') || e.message.includes('403')) {
       localStorage.removeItem(GH_TOKEN_KEY);
       alert('Authentication failed — token cleared. Try again with a valid token.');
@@ -2687,6 +2711,9 @@ async function syncReadmeToGithub() {
       alert(`Sync failed: ${e.message}`);
     }
     setTimeout(() => { btn.classList.remove('error'); icon.textContent = '⬆'; }, 3000);
+  } finally {
+    _syncInProgress = false;
+    btn.style.pointerEvents = '';
   }
 }
 
