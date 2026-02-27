@@ -619,6 +619,8 @@ const PHASES = [
   { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '22–30h' },
   { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
   { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
+  { id: 'p3b', name: 'Applied Statistics', color: '#f472b6', hours: '18–26h' },
+  { id: 'p3c', name: 'Math Enrichment', color: '#e879f9', hours: '18–26h' },
   { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
   { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
   { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
@@ -646,6 +648,33 @@ const LESSONS = [
       { type: 'Do', text: 'Plot the unit circle, apply a 2×2 matrix, see the ellipse' },
     ],
     projects: [],
+  },
+  {
+    id: '0b', phase: 'p0', title: 'PyTorch — The Language of Alignment Research',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [0],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Can you create a tensor with requires_grad=True and compute gradients via backward()?',
+      'Do you understand the training loop pattern: zero_grad → forward → loss → backward → step?',
+      'Can you register a forward hook on a module and inspect activations?',
+      'Can you use torch.einsum for matrix multiplication and attention scores?',
+    ],
+    failureModes: [
+      'Forgetting torch.no_grad() during inference — causes memory leaks from graph accumulation',
+      'Mixing devices (CPU tensor + GPU tensor) — all operations must be on the same device',
+      'Using NumPy operations on data that needs gradients — breaks the computation graph',
+    ],
+    mvl: [
+      { type: 'Read', text: 'PyTorch 60-Minute Blitz tutorial' },
+      { type: 'Do', text: 'Port a Phase 1 NumPy exercise to PyTorch, verify identical results' },
+      { type: 'Do', text: 'Build a minimal training loop: 2-layer MLP on toy data' },
+      { type: 'Do', text: 'ARENA Chapter 0.0 einops/einsum exercises' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Autograd experiment: manual gradient verification' },
+      { label: 'NEW', text: 'Hook exercise: intercept intermediate activations in a pretrained model' },
+    ],
   },
   // ─── Phase 1: Linear Algebra ───
   {
@@ -1088,7 +1117,7 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 20, phase: 'p3', title: 'Information Theory — Entropy, KL, Cross-Entropy',
+    id: 20, phase: 'p3', title: 'Information Theory — Entropy, KL, Cross-Entropy, and Mutual Information',
     status: 'not-started', hours: '4–6h',
     prereqs: [19],
     crossPhaseLinks: [],
@@ -1129,6 +1158,229 @@ const LESSONS = [
     ],
     projects: [
       { label: 'NEW', text: 'Bayesian sequential updating visualizer' },
+    ],
+  },
+  // ─── Phase 3b: Applied Statistics ───
+  {
+    id: 2101, label: '21b', phase: 'p3b', title: 'Hypothesis Testing, P-Values, and What They Actually Mean',
+    status: 'not-started', hours: '3–5h',
+    prereqs: [21],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What does a p-value actually mean? What does it NOT mean?',
+      'What is the difference between statistical significance and practical significance?',
+      'Why is multiple testing a problem and how do corrections work?',
+    ],
+    failureModes: [
+      'Thinking p < 0.05 means "the result is true" — it means "this unlikely if H₀ were true"',
+      'Confusing Type I and Type II errors',
+    ],
+    mvl: [
+      { type: 'Read', text: 'ASA Statement on Statistical Significance and P-Values' },
+      { type: 'Do', text: 'Simulate p-hacking: run many t-tests, see false positives accumulate' },
+    ],
+    projects: [],
+  },
+  {
+    id: 2102, label: '21c', phase: 'p3b', title: 'Experimental Design and Common Statistical Fallacies',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [2101],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Why is random assignment important for causal claims?',
+      'What is Simpson\'s paradox and why does it matter?',
+      'How does sample size affect the reliability of conclusions?',
+    ],
+    failureModes: [
+      'Assuming observational studies establish causation',
+      'Ignoring confounders in natural experiments',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Examples of Simpson\'s paradox in real data' },
+      { type: 'Do', text: 'Design an experiment to test a specific ML hypothesis' },
+    ],
+    projects: [],
+  },
+  {
+    id: 2103, label: '21d', phase: 'p3b', title: 'Regression — From Linear to Logistic and Beyond',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [2101, 9],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'How does linear regression connect to projection (Lesson 9)?',
+      'What does logistic regression model and why is it used for classification?',
+      'What is regularization doing in the Bayesian interpretation?',
+    ],
+    failureModes: [
+      'Treating regression coefficients as causal effects without justification',
+      'Applying linear regression to fundamentally nonlinear relationships',
+    ],
+    mvl: [
+      { type: 'Do', text: 'Implement linear regression as projection: x̂ = (AᵀA)⁻¹Aᵀb' },
+      { type: 'Do', text: 'Compare L1 vs L2 regularization on a real dataset' },
+    ],
+    projects: [],
+  },
+  {
+    id: 2104, label: '21e', phase: 'p3b', title: 'Causal Inference — From Correlation to Causation',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [2102],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What is the difference between seeing and doing (Pearl\'s do-calculus)?',
+      'What is a DAG and how does it represent causal assumptions?',
+      'When can you infer causation from observational data?',
+    ],
+    failureModes: [
+      'Assuming causal direction from correlation alone',
+      'Ignoring unobserved confounders',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Pearl\'s "The Book of Why" — Chapters 1–3' },
+      { type: 'Do', text: 'Draw causal DAGs for 3 real-world scenarios, identify confounders' },
+    ],
+    projects: [],
+  },
+  {
+    id: 2105, label: '21f', phase: 'p3b', title: 'Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [2103, 2104],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'How do you evaluate competing statistical claims in a real controversy?',
+      'What makes a meta-analysis stronger than individual studies?',
+      'How does effect size complement p-values?',
+    ],
+    failureModes: [
+      'Cherry-picking studies that support a conclusion',
+      'Ignoring base rates when evaluating individual studies',
+    ],
+    mvl: [
+      { type: 'Do', text: 'Analyze a real statistical controversy using the tools from this phase' },
+    ],
+    projects: [],
+  },
+  // ─── Phase 3c: Extended Mathematical Foundations ───
+  {
+    id: 2106, label: '21g', phase: 'p3c', title: 'Computability and Complexity — The Limits of Knowledge',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [21],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Can you explain the halting problem proof (diagonal argument)?',
+      'What does Rice\'s theorem say you CANNOT do about programs in general?',
+      'What is Kolmogorov complexity and why is it uncomputable?',
+      'Why is AIXI uncomputable? What does it have to do with Solomonoff induction?',
+      'What is VC dimension and how does it relate to sample complexity?',
+    ],
+    failureModes: [
+      'Thinking Rice\'s theorem means you can\'t verify ANYTHING — it\'s about GENERAL verifiers, not specific proofs',
+      'Confusing computability (what\'s possible) with complexity (what\'s feasible)',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Computerphile — "Halting Problem" and "Turing Machines Explained"' },
+      { type: 'Read', text: 'Scott Aaronson — "Who Can Name the Bigger Number?"' },
+      { type: 'Do', text: 'Rice\'s theorem application: list 5 alignment properties, explain why each is undecidable in general' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Kolmogorov complexity estimation: shortest programs for 5 different strings' },
+    ],
+  },
+  {
+    id: 2107, label: '21h', phase: 'p3c', title: 'Abstract Algebra — Groups, Symmetry, and Neural Networks',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [7, 8],
+    crossPhaseLinks: [2802],
+    conceptChecks: [
+      'What are the four axioms of a group? Give three concrete examples.',
+      'Why does permuting hidden neurons give the same function? What group is this?',
+      'What is the orbit-stabilizer theorem and why do singularities occur when stabilizers are large?',
+      'How does weight space symmetry create the singularities that SLT studies?',
+    ],
+    failureModes: [
+      'Thinking groups are purely abstract — they literally describe neural network symmetry',
+      'Confusing the group (the symmetries) with the set being acted upon (the weight space)',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — groups and symmetry video' },
+      { type: 'Read', text: '"Visual Group Theory" by Nathan Carter — Chapters 1-4' },
+      { type: 'Do', text: 'Write out the multiplication table for S₃, find identity and inverses' },
+      { type: 'Do', text: 'Demonstrate neuron permutation invariance in a PyTorch network' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Orbit counting for networks with identical vs distinct neurons' },
+    ],
+  },
+  {
+    id: 2108, label: '21i', phase: 'p3c', title: 'Topology and Manifolds — The Shape of Data and Loss',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [16],
+    crossPhaseLinks: [2802],
+    conceptChecks: [
+      'What is the manifold hypothesis and why does it explain deep learning\'s success?',
+      'How does a ReLU layer divide space into flat regions?',
+      'What is a homeomorphism? Why is topology \"geometry without measurement\"?',
+      'What is resolution of singularities and why does SLT need it?',
+    ],
+    failureModes: [
+      'Thinking topology is too abstract to be useful — the manifold hypothesis is concretely testable',
+      'Confusing intrinsic dimension (of the manifold) with ambient dimension (of the embedding space)',
+    ],
+    mvl: [
+      { type: 'Read', text: 'colah\'s blog — "Neural Networks, Manifolds, and Topology"' },
+      { type: 'Do', text: 'Swiss roll: PCA fails, t-SNE succeeds — see the manifold structure' },
+      { type: 'Do', text: 'Train a classifier on concentric circles, visualize layer-by-layer untangling' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Intrinsic dimensionality estimation of MNIST / word embeddings' },
+    ],
+  },
+  {
+    id: 2109, label: '21j', phase: 'p3c', title: 'Differential Equations and Dynamical Systems — Training as Flow',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [13, 15],
+    crossPhaseLinks: [2802],
+    conceptChecks: [
+      'What is gradient flow and how does it relate to gradient descent?',
+      'What do eigenvalues of the Jacobian at a fixed point tell you about stability?',
+      'How is a ResNet related to an Euler discretization of a neural ODE?',
+      'What is a Lyapunov function and why is the loss function one for gradient flow?',
+    ],
+    failureModes: [
+      'Thinking differential equations are irrelevant to discrete gradient descent — they\'re the continuous limit',
+      'Confusing phase portraits (trajectories in state space) with loss landscape plots',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Differential equations, a tourist\'s guide"' },
+      { type: 'Do', text: 'Plot vector fields and solution trajectories for simple ODEs' },
+      { type: 'Do', text: 'Gradient flow on a 2-parameter loss: trace trajectories to minima' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Euler method instability: learning rate as step size' },
+    ],
+  },
+  {
+    id: 2110, label: '21k', phase: 'p3c', title: 'Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [2106],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'State Gödel\'s first incompleteness theorem informally. What does it say can\'t be done?',
+      'What is Löb\'s theorem and why does it obstruct AI self-trust?',
+      'How does the diagonal argument appear in both the halting problem and Gödel\'s theorem?',
+      'What is logical uncertainty and why is it different from empirical uncertainty?',
+    ],
+    failureModes: [
+      'Thinking incompleteness means math is broken — it means formal systems have inherent limits',
+      'Over-applying Gödel (it applies to formal systems strong enough for arithmetic, not to everything)',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Veritasium — "Math Has a Fatal Flaw"' },
+      { type: 'Read', text: '"Gödel\'s Proof" by Nagel & Newman (100 pages, very clear)' },
+      { type: 'Do', text: 'Write a Python quine — self-reference made concrete' },
+    ],
+    projects: [
+      { label: 'NEW', text: 'Löb\'s theorem thought exercise: why can\'t an AI prove its own alignment?' },
     ],
   },
   // ─── Phase 4: Neural Networks ───
@@ -1515,7 +1767,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp3', afterLesson: 21, phase: 'p3', title: 'Phase 3 Review: Probability → LLM Training Bridge',
+    id: 'cp3', afterLesson: 2110, phase: 'p3', title: 'Phase 3 Review: Probability + Math Foundations → LLM Training Bridge',
     exercises: [
       '<strong>Full training loop explained:</strong> Starting from MLE, derive why cross-entropy is the loss function for next-token prediction. Connect entropy, KL divergence, and the training objective.',
       '<strong>Regularization unification:</strong> Show that L2 weight decay = Gaussian prior = MAP estimation. Compute the MAP estimate for a simple 1-parameter model.',
