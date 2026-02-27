@@ -182,6 +182,16 @@
   }
   .canvas-btn:hover { color: var(--text); background: var(--bg-hover); }
   .canvas-btn.active { color: var(--text-bright); background: var(--bg-hover); }
+  .sync-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    padding: 4px 12px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .sync-btn:hover { color: var(--complete); border-color: var(--complete); }
+  .sync-btn.syncing { opacity: 0.5; pointer-events: none; }
+  .sync-btn.success { color: var(--complete); border-color: var(--complete); }
+  .sync-btn.error { color: #f87171; border-color: #f87171; }
 
   .canvas-legend {
     position: absolute;
@@ -575,6 +585,9 @@
       <div>
         ~<span class="stat-value" id="stat-hours-done">0</span>h done · ~<span class="stat-value" id="stat-hours-left">0</span>h remaining
       </div>
+      <button class="sync-btn" id="sync-btn" onclick="syncReadmeToGithub()" title="Update README.md on GitHub with current progress">
+        <span id="sync-icon">⬆</span> Sync README
+      </button>
     </div>
   </div>
 
@@ -2577,6 +2590,103 @@ function calDrop(ev, dk) {
     calDragLesson = null;
     renderCalendar();
     if (calSelectedDate === dk) showDayPicker(dk);
+  }
+}
+
+
+// ═══════════════════════════════════════════════
+// SYNC README TO GITHUB
+// ═══════════════════════════════════════════════
+
+const GH_REPO = 'Kaxitron/research_plan';
+const GH_README_PATH = 'README.md';
+const GH_TOKEN_KEY = 'alignment-curriculum-gh-token';
+
+function getGhToken() {
+  let token = localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) {
+    token = prompt('Enter your GitHub Personal Access Token (stored locally in your browser):');
+    if (token) localStorage.setItem(GH_TOKEN_KEY, token.trim());
+  }
+  return token ? token.trim() : null;
+}
+
+async function syncReadmeToGithub() {
+  const btn = document.getElementById('sync-btn');
+  const icon = document.getElementById('sync-icon');
+  btn.classList.add('syncing');
+  icon.textContent = '⟳';
+
+  try {
+    const token = getGhToken();
+    if (!token) { btn.classList.remove('syncing'); icon.textContent = '⬆'; return; }
+
+    // 1. Get current README from GitHub
+    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!getResp.ok) throw new Error(`GitHub GET failed: ${getResp.status}`);
+    const fileData = await getResp.json();
+    let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
+
+    // 2. Build status map from current dashboard state
+    const statusMap = {};
+    LESSONS.forEach(l => {
+      const emoji = l.status === 'complete' ? '✅ Complete' :
+                    l.status === 'in-progress' ? '🔄 In Progress' : '⬜ Not Started';
+      statusMap[l.id] = emoji;
+    });
+
+    // 3. Replace status in each table row: "| {id} | [...] | {old status} |"
+    content = content.replace(
+      /^\| (\d+) \| (.+?) \| (.+?) \|$/gm,
+      (match, id, lessonCol, statusCol) => {
+        const numId = parseInt(id);
+        if (statusMap.hasOwnProperty(numId)) {
+          return `| ${id} | ${lessonCol} | ${statusMap[numId]} |`;
+        }
+        return match;
+      }
+    );
+
+    // 4. Push updated README back to GitHub
+    const putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Update lesson progress from dashboard',
+        content: btoa(unescape(encodeURIComponent(content))),
+        sha: fileData.sha
+      })
+    });
+    if (!putResp.ok) {
+      const err = await putResp.json();
+      throw new Error(err.message || `GitHub PUT failed: ${putResp.status}`);
+    }
+
+    // Success
+    btn.classList.remove('syncing');
+    btn.classList.add('success');
+    icon.textContent = '✓';
+    setTimeout(() => { btn.classList.remove('success'); icon.textContent = '⬆'; }, 3000);
+
+  } catch (e) {
+    console.error('Sync failed:', e);
+    btn.classList.remove('syncing');
+    btn.classList.add('error');
+    icon.textContent = '✗';
+    // If auth failed, clear stored token so they can re-enter
+    if (e.message.includes('401') || e.message.includes('403')) {
+      localStorage.removeItem(GH_TOKEN_KEY);
+      alert('Authentication failed — token cleared. Try again with a valid token.');
+    } else {
+      alert(`Sync failed: ${e.message}`);
+    }
+    setTimeout(() => { btn.classList.remove('error'); icon.textContent = '⬆'; }, 3000);
   }
 }
 
