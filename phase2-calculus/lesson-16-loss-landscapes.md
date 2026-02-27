@@ -1,6 +1,6 @@
 # Lesson 16: Loss Landscapes and Local Minima
 
-[← Constrained Optimization](lesson-15b-constrained-optimization.md) | [Back to TOC](../README.md) | [Next: Differential Equations →](lesson-16b-diffeq.md)
+[← Constrained Optimization](lesson-15b-constrained-optimization.md) | [Back to TOC](../README.md) | [Next: Probability →](../phase3-probability/lesson-17-probability.md)
 
 ---
 
