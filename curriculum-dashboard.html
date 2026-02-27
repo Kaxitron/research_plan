@@ -1801,54 +1801,67 @@ const CHECKPOINTS = [
 
 const LAYOUT = {
   width: 1200,
-  height: 1000,
+  height: 1050,
   nodes: {
-    // Phase 0 - setup
-    0:  { x: 80,  y: 30 },
-    // Phase 1 - left area
-    1:  { x: 80,  y: 110 },
-    2:  { x: 80,  y: 190 },
-    3:  { x: 80,  y: 280 },
-    4:  { x: 190, y: 280 },
-    5:  { x: 135, y: 370 },
-    6:  { x: 30,  y: 370 },
-    7:  { x: 80,  y: 460 },
-    8:  { x: 80,  y: 550 },
-    9:  { x: 200, y: 550 },
-    10: { x: 140, y: 640 },
-    11: { x: 80,  y: 730 },
-    // Phase 2 - center-left
-    12: { x: 340, y: 280 },
-    13: { x: 340, y: 370 },
-    14: { x: 340, y: 460 },
-    15: { x: 340, y: 560 },
-    1501: { x: 340, y: 650 },
-    16: { x: 340, y: 740 },
-    // Phase 3 - center
-    17: { x: 530, y: 110 },
-    18: { x: 530, y: 210 },
-    19: { x: 530, y: 310 },
-    20: { x: 530, y: 410 },
-    21: { x: 530, y: 520 },
-    // Phase 4 - center-right
-    22: { x: 720, y: 210 },
-    23: { x: 720, y: 310 },
-    24: { x: 720, y: 410 },
-    25: { x: 720, y: 510 },
-    26: { x: 720, y: 610 },
-    2601: { x: 720, y: 720 },
-    2602: { x: 720, y: 830 },
-    // Phase 5 - right
-    27: { x: 910, y: 460 },
-    28: { x: 910, y: 570 },
-    2801: { x: 910, y: 690 },
-    2802: { x: 910, y: 810 },
-    // Phase 6 - far right
-    29: { x: 1060, y: 100 },
-    30: { x: 1120, y: 220 },
-    31: { x: 1120, y: 340 },
-    32: { x: 1080, y: 460 },
-    33: { x: 1080, y: 580 },
+    // Phase 0 - setup (top-left)
+    0:  { x: 60,  y: 30 },
+    1:  { x: 60,  y: 110 },
+    // Phase 1 - linear algebra (left column)
+    2:  { x: 60,  y: 210 },
+    3:  { x: 60,  y: 290 },
+    4:  { x: 60,  y: 370 },
+    5:  { x: 170, y: 370 },
+    6:  { x: 115, y: 460 },
+    7:  { x: 15,  y: 460 },
+    8:  { x: 60,  y: 550 },
+    9:  { x: 60,  y: 640 },
+    10: { x: 180, y: 640 },
+    11: { x: 120, y: 730 },
+    12: { x: 60,  y: 820 },
+    // Phase 2 - calculus (center-left)
+    13: { x: 300, y: 280 },
+    14: { x: 300, y: 370 },
+    15: { x: 300, y: 460 },
+    16: { x: 300, y: 550 },
+    17: { x: 300, y: 640 },
+    18: { x: 300, y: 730 },
+    // Phase 3 - probability (center)
+    19: { x: 470, y: 110 },
+    20: { x: 470, y: 210 },
+    21: { x: 470, y: 310 },
+    22: { x: 470, y: 410 },
+    23: { x: 470, y: 510 },
+    // Phase 4 - statistics (center, below P3)
+    24: { x: 470, y: 630 },
+    25: { x: 470, y: 710 },
+    26: { x: 470, y: 790 },
+    27: { x: 470, y: 870 },
+    28: { x: 470, y: 950 },
+    // Phase 5 - math enrichment (center-right)
+    29: { x: 640, y: 110 },
+    30: { x: 640, y: 210 },
+    31: { x: 640, y: 310 },
+    32: { x: 640, y: 410 },
+    33: { x: 640, y: 510 },
+    // Phase 6 - neural networks (right)
+    34: { x: 810, y: 110 },
+    35: { x: 810, y: 210 },
+    36: { x: 810, y: 310 },
+    37: { x: 810, y: 410 },
+    38: { x: 810, y: 510 },
+    39: { x: 810, y: 620 },
+    40: { x: 810, y: 730 },
+    // Phase 7 - interpretability (far right)
+    41: { x: 980, y: 370 },
+    42: { x: 980, y: 480 },
+    43: { x: 980, y: 590 },
+    44: { x: 980, y: 700 },
+    // Phase 8 - alignment theory (far right, top)
+    45: { x: 1120, y: 110 },
+    46: { x: 1120, y: 220 },
+    47: { x: 1120, y: 330 },
+    48: { x: 1120, y: 440 },
+    49: { x: 1120, y: 550 },
   },
 };
 
@@ -1920,7 +1933,7 @@ function updateStats() {
 
   function parseHours(h) {
     const m = h.match(/(\d+)–(\d+)/);
-    return m ? (parseInt(m[2]) + parseInt(m[3])) / 2 : 5;
+    return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
   }
   let done = 0, remaining = 0;
   LESSONS.forEach(l => {
@@ -2033,13 +2046,15 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { x: 30, y: 12, color: '#94a3b8' },
-    { x: 80, y: 60, color: '#6ee7b7' },
-    { x: 340, y: 230, color: '#818cf8' },
-    { x: 530, y: 60, color: '#f9a8d4' },
-    { x: 720, y: 155, color: '#fbbf24' },
-    { x: 910, y: 410, color: '#38bdf8' },
-    { x: 1080, y: 50, color: '#c084fc' },
+    { x: 60,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
+    { x: 100,  y: 180, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 300,  y: 250, color: '#818cf8', label: 'P2 CALCULUS' },
+    { x: 470,  y: 80,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
+    { x: 470,  y: 600, color: '#f472b6', label: 'P4 STATISTICS' },
+    { x: 640,  y: 80,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
+    { x: 810,  y: 80,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
+    { x: 980,  y: 340, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
+    { x: 1120, y: 80,  color: '#c084fc', label: 'P8 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
@@ -2218,42 +2233,102 @@ function renderTimeline() {
   const w = rect.width;
   const h = rect.height;
 
-  let html = '';
-  const margin = { top: 60, left: 60, right: 40, bottom: 40 };
-  const usableW = w - margin.left - margin.right;
-  const usableH = h - margin.top - margin.bottom;
-
-  const barW = Math.min(20, usableW / LESSONS.length - 2);
-  const gap = (usableW - barW * LESSONS.length) / LESSONS.length;
-
   function parseHours(h) {
     const match = h.match(/(\d+)–(\d+)/);
-    if (match) return (parseInt(match[2]) + parseInt(match[3])) / 2;
-    return 5;
+    if (match) return { lo: parseInt(match[1]), hi: parseInt(match[2]), avg: (parseInt(match[1]) + parseInt(match[2])) / 2 };
+    return { lo: 5, hi: 5, avg: 5 };
   }
 
-  const maxH = Math.max(...LESSONS.map(l => parseHours(l.hours)));
+  // Compute totals
+  let doneLo = 0, doneHi = 0, remainLo = 0, remainHi = 0, inProgLo = 0, inProgHi = 0;
+  LESSONS.forEach(l => {
+    const hrs = parseHours(l.hours);
+    if (l.status === 'complete') { doneLo += hrs.lo; doneHi += hrs.hi; }
+    else if (l.status === 'in-progress') { inProgLo += hrs.lo; inProgHi += hrs.hi; }
+    else { remainLo += hrs.lo; remainHi += hrs.hi; }
+  });
+  const totalRemainLo = remainLo + inProgLo;
+  const totalRemainHi = remainHi + inProgHi;
+  const totalLo = doneLo + inProgLo + remainLo;
+  const totalHi = doneHi + inProgHi + remainHi;
+  const pctDone = Math.round(((doneLo + doneHi) / 2) / ((totalLo + totalHi) / 2) * 100);
 
-  html += `<text x="${margin.left}" y="${margin.top - 25}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">ESTIMATED HOURS PER LESSON</text>`;
-  html += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
-  html += `<line x1="${margin.left}" y1="${h - margin.bottom}" x2="${w - margin.right}" y2="${h - margin.bottom}" stroke="var(--border)" stroke-width="1" />`;
+  let html = '';
 
-  for (let i = 0; i <= maxH; i += 5) {
-    const y = h - margin.bottom - (i / maxH) * usableH;
-    html += `<text x="${margin.left - 8}" y="${y + 4}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="end">${i}h</text>`;
-    html += `<line x1="${margin.left}" y1="${y}" x2="${w - margin.right}" y2="${y}" stroke="var(--border)" stroke-width="0.5" opacity="0.3" />`;
-  }
+  // ── Big summary at top ──
+  const cx = w / 2;
+  html += `<text x="${cx}" y="45" fill="var(--text-primary)" font-family="JetBrains Mono, monospace" font-size="28" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
+  html += `<text x="${cx}" y="72" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · ${totalLo}–${totalHi}h total</text>`;
+
+  // ── Phase breakdown ──
+  const margin = { top: 100, left: 60, right: 40 };
+  const phaseW = w - margin.left - margin.right;
+  const rowH = 52;
+
+  PHASES.filter(p => p.id !== 'p9').forEach((phase, i) => {
+    const pLessons = LESSONS.filter(l => l.phase === phase.id);
+    const complete = pLessons.filter(l => l.status === 'complete').length;
+    const inProg = pLessons.filter(l => l.status === 'in-progress').length;
+    const total = pLessons.length;
+    let pDoneLo = 0, pDoneHi = 0, pTotalLo = 0, pTotalHi = 0;
+    pLessons.forEach(l => {
+      const hrs = parseHours(l.hours);
+      pTotalLo += hrs.lo; pTotalHi += hrs.hi;
+      if (l.status === 'complete') { pDoneLo += hrs.lo; pDoneHi += hrs.hi; }
+    });
+    const pRemLo = pTotalLo - pDoneLo;
+    const pRemHi = pTotalHi - pDoneHi;
+    const pPct = total > 0 ? (complete / total) : 0;
+    const pPctInProg = total > 0 ? (inProg / total) : 0;
+
+    const y = margin.top + i * rowH;
+    const barX = margin.left + 200;
+    const barW = phaseW - 200 - 130;
+    const barH = 16;
+    const barY = y + 6;
+
+    // Phase name
+    html += `<text x="${margin.left}" y="${y + 18}" fill="${phase.color}" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">${phase.name}</text>`;
+    html += `<text x="${margin.left}" y="${y + 32}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${complete}/${total} lessons</text>`;
+
+    // Bar background
+    html += `<rect x="${barX}" y="${barY}" width="${barW}" height="${barH}" fill="var(--border)" rx="4" opacity="0.3" />`;
+    // Complete fill
+    if (pPct > 0) {
+      html += `<rect x="${barX}" y="${barY}" width="${barW * pPct}" height="${barH}" fill="${phase.color}" rx="4" opacity="0.7" />`;
+    }
+    // In-progress fill
+    if (pPctInProg > 0) {
+      html += `<rect x="${barX + barW * pPct}" y="${barY}" width="${barW * pPctInProg}" height="${barH}" fill="${phase.color}" rx="4" opacity="0.3" />`;
+    }
+
+    // Hours remaining for this phase
+    const hoursText = pRemLo === 0 && pRemHi === 0 ? '✓ done' : `${pRemLo}–${pRemHi}h left`;
+    html += `<text x="${barX + barW + 12}" y="${y + 20}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11">${hoursText}</text>`;
+  });
+
+  // ── Per-lesson bars at bottom ──
+  const bottomY = margin.top + PHASES.filter(p => p.id !== 'p9').length * rowH + 30;
+  html += `<text x="${margin.left}" y="${bottomY}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">HOURS PER LESSON</text>`;
+
+  const barAreaTop = bottomY + 15;
+  const barAreaH = h - barAreaTop - 40;
+  const barW = Math.min(16, (phaseW) / LESSONS.length - 1);
+  const gap = (phaseW - barW * LESSONS.length) / LESSONS.length;
+  const maxH = Math.max(...LESSONS.map(l => parseHours(l.hours).hi));
 
   LESSONS.forEach((lesson, i) => {
     const x = margin.left + i * (barW + gap) + gap / 2;
     const hrs = parseHours(lesson.hours);
-    const barH = (hrs / maxH) * usableH;
-    const y = h - margin.bottom - barH;
+    const barH = (hrs.avg / maxH) * barAreaH;
+    const y = barAreaTop + barAreaH - barH;
     const color = getPhaseColor(lesson.phase);
+    const opacity = lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2;
 
-    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${color}" opacity="${lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2}" rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
-    html += `<text x="${x + barW/2}" y="${h - margin.bottom + 14}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">${lesson.label || lesson.id}</text>`;
-    html += `<text x="${x + barW/2}" y="${y - 5}" fill="${color}" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" opacity="0.7">${hrs}h</text>`;
+    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${color}" opacity="${opacity}" rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
+    if (barW >= 10) {
+      html += `<text x="${x + barW/2}" y="${barAreaTop + barAreaH + 13}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">${lesson.id}</text>`;
+    }
   });
 
   svg.innerHTML = html;
