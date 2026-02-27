@@ -2270,7 +2270,7 @@ function renderTimeline() {
 
   // ── Big summary at top ──
   const cx = w / 2;
-  html += `<text x="${cx}" y="45" fill="var(--text-primary)" font-family="JetBrains Mono, monospace" font-size="28" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
+  html += `<text x="${cx}" y="45" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="28" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
   html += `<text x="${cx}" y="72" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · ${totalLo}–${totalHi}h total</text>`;
 
   // ── Phase breakdown ──
