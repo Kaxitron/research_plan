@@ -1,6 +1,6 @@
 # Lesson 22: How a Single Neuron Works
 
-[← Applied Statistics](../phase3b-statistics/lesson-21f-applied-statistics.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-23-forward-pass.md)
+[← Formal Logic](../phase3c-math-enrichment/lesson-21k-formal-logic.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-23-forward-pass.md)
 
 ---
 
