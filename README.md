@@ -134,6 +134,7 @@
 
 | Resource | Link |
 |----------|------|
+| [Curriculum Dashboard](curriculum-dashboard.html) | Interactive progress tracker |
 | [Linear Algebra Textbook Rankings](resources/textbook-rankings.md) | Comparison of all LA resources |
 | [Video Series Index](resources/video-index.md) | 3B1B, Karpathy, Strang, Brunton |
 | [Books & Textbooks](resources/books.md) | All free online resources |
