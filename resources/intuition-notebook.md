@@ -28,6 +28,20 @@ The deeper reason this works so cleanly: AᵀA is always symmetric, which means 
 
 In practice, real algorithms compute SVD directly on X using iterative methods (never forming XᵀX), which avoids squaring the condition number. But for hand computation, eigendecomposing XᵀX is the right approach.
 
+### Matrix type taxonomy: what each type "does" to space
+- **Symmetric** → stretches along perpendicular eigen-directions. No rotation. Eigenvalues real, eigenvectors orthogonal. Think: pure scaling in an orthogonal coordinate system.
+- **Orthogonal** → rotates or reflects without stretching. All singular values = 1, preserves lengths and angles. Qᵀ = Q⁻¹.
+- **Symmetric + orthogonal** → pure reflection. Eigenvalues must be real (symmetric) AND have |λ| = 1 (orthogonal), so every eigenvalue is +1 or -1. The +1 directions stay fixed, the -1 directions flip. Special case: all +1 = identity.
+- **General matrix** → does all three: rotates, scales non-uniformly, rotates again. That's SVD: A = UΣVᵀ.
+
+This taxonomy helps you instantly characterize what a matrix does just from knowing its type — before computing anything.
+
+### Eigenvectors are special because ONLY they survive without rotating
+Most vectors get both stretched AND rotated by a matrix. Eigenvectors ONLY get stretched (by λ). A generic vector like [1, 0] that isn't an eigenvector will end up pointing in a new direction after the transformation. This is what the exam Q1 tests: [1,1] (eigenvector) stays on its line, [1,0] (generic) gets warped in both magnitude and direction.
+
+### Every linear transformation maps the unit square to a parallelogram
+"Parallelogram" doesn't mean "shear." ALL matrices produce parallelograms from the unit square — that's just what "linear" means (lines stay lines, origin stays fixed). Scaling → rectangle (a special parallelogram). Rotation → rotated square (also a parallelogram). Shear → slanted parallelogram. The determinant tells you the area of that parallelogram relative to the original.
+
 ### Miscellaneous Thoughts
 1. Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.
 2. v*v is the same things as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
@@ -108,3 +122,4 @@ The p-value gives you the first thing. What you actually want is the second thin
 ---
 
 *Last updated: Feb 2026*
+
