@@ -388,11 +388,70 @@ Gets sparsity from L1 AND stability from L2. Useful when features are correlated
 ## Quick Reference: The Regression Family
 
 | Method | Penalty | Solution | Weights → 0? | Norm ball |
-|--------|---------|----------|--------------|-----------|
+|--------|---------|----------|--------------|-----------| 
 | OLS | None | (AᵀA)⁻¹Aᵀb | No | — |
 | Ridge | λ‖x‖₂² | (AᵀA + λI)⁻¹Aᵀb | Shrink, never zero | Circle |
 | Lasso | λ‖x‖₁ | Iterative (no closed form) | Yes, exact zeros | Diamond |
 | Elastic Net | λ₁‖x‖₁ + λ₂‖x‖₂² | Iterative | Yes, with grouping | Rounded diamond |
+
+---
+
+## Statistics — Correlation and Goodness of Fit
+
+*Placeholder section — will be expanded in Phase 3b (Applied Statistics & Causal Reasoning).*
+
+### Correlation Coefficient (r)
+
+**r is cosine similarity of centered data vectors.**
+
+Given data vectors x and y, center them by subtracting their means:
+
+$$\tilde{x} = x - \bar{x}, \quad \tilde{y} = y - \bar{y}$$
+
+Then:
+
+$$r = \frac{\tilde{x} \cdot \tilde{y}}{\|\tilde{x}\| \, \|\tilde{y}\|} = \cos\theta$$
+
+where θ is the angle between the centered data vectors in n-dimensional space.
+
+**What r tells you:**
+- r = +1 → perfect positive linear relationship (vectors perfectly aligned)
+- r = -1 → perfect negative linear relationship (vectors perfectly opposite)
+- r = 0 → no linear relationship (vectors perpendicular)
+- r only measures **linear** relationships — a perfect parabola can have r ≈ 0
+
+### Coefficient of Determination (r²)
+
+**r² is the fraction of total variance explained by the model.**
+
+From the projection decomposition (Lesson 9), the centered y vector splits into two perpendicular pieces:
+
+$$\tilde{y} = \hat{y} + e$$
+
+where ŷ = projection (predicted values) and e = residual (perpendicular to ŷ).
+
+By the Pythagorean theorem (they're perpendicular!):
+
+$$\|\tilde{y}\|^2 = \|\hat{y}\|^2 + \|e\|^2$$
+
+$$\text{SST} = \text{SSR} + \text{SSE}$$
+
+$$\text{Total variance} = \text{Explained variance} + \text{Unexplained variance}$$
+
+Then:
+
+$$r^2 = \frac{\|\hat{y}\|^2}{\|\tilde{y}\|^2} = \frac{SSR}{SST} = \frac{\text{explained variance}}{\text{total variance}}$$
+
+**What r² tells you:**
+- r² = 1 → residual has length 0, model captures everything
+- r² = 0 → projection has length 0, model explains nothing (just predicts the mean)
+- r² = 0.7 → 70% of variance explained, 30% unexplained
+
+**Key connections:**
+- r² is literally the ratio of squared projection length to total vector length
+- Pythagorean theorem works because ŷ ⊥ e (the orthogonality principle from Lesson 9)
+- Adding more predictors always increases R² (even nonsense ones) → use **adjusted R²** to penalize complexity
+- Adjusted R² is conceptually similar to regularization: prefer simpler explanations
 
 ---
 
@@ -411,7 +470,9 @@ Gets sparsity from L1 AND stability from L2. Useful when features are correlated
 | (AB)ᵀ = BᵀAᵀ | Transpose reverses order |
 | QᵀQ = I | Orthogonal matrix definition |
 | rank + nullity = n | Rank-nullity theorem |
+| r = cos(θ) of centered data | Correlation = cosine similarity |
+| r² = SSR/SST | Fraction of variance explained |
 
 ---
 
-*Last updated: February 2026 — Phase 1 (Linear Algebra) + early Lesson 9 extensions*
+*Last updated: February 2026 — Phase 1 (Linear Algebra) + early statistics preview*
