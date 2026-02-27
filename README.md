@@ -8,14 +8,14 @@
 
 **Your profile:** Good mathematical intuition, intermediate C++/Python, refreshing math after a 6-year gap. You learn best through geometric intuition first, then mechanics. Pace: ~33% slower than typical technical presentation.
 
-**Estimated total time:** 6–8 months at a steady pace.
+**Estimated total time:** 5–7 months at a steady pace.
 
 ---
 
 ## Table of Contents
 
 ### [PHASE 0: Prerequisites](phase0-prerequisites/)
-*Tools and foundations before the math begins*
+*Tools of the trade*
 
 | # | Lesson | Status |
 |---|--------|--------|
@@ -48,6 +48,7 @@
 | 14 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-14-chain-rule.md) | ⬜ Not Started |
 | 15 | [Optimization and Gradient Descent](phase2-calculus/lesson-15-optimization.md) | ⬜ Not Started |
 | 16 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-16-loss-landscapes.md) | ⬜ Not Started |
+| 16b | [Differential Equations and Dynamical Systems](phase2-calculus/lesson-16b-diffeq.md) | ⬜ Not Started |
 
 ### [PHASE 3: Probability, Information Theory, and Bayesian Thinking](phase3-probability/)
 *The language of uncertainty and learning*
@@ -60,31 +61,15 @@
 | 20 | [Information Theory — Entropy, KL Divergence, Cross-Entropy, and Mutual Information](phase3-probability/lesson-20-information-theory.md) | ⬜ Not Started |
 | 21 | [Bayesian Reasoning and Inference](phase3-probability/lesson-21-bayesian-inference.md) | ⬜ Not Started |
 
-### [PHASE 3b: Applied Statistics and Causal Reasoning](phase3b-statistics/) · ~25–35h
-*The tools to adjudicate real-world statistical claims*
-
-> **New phase:** Covers the classical statistics and causal inference gap — hypothesis testing, experimental design, regression, causal DAGs, and applied topics (genetics, epidemiology). Essential for evaluating empirical claims in alignment research and scientific debates.
-
-| # | Lesson | Est. Time | Status |
-|---|--------|-----------|--------|
-| 21b | [Hypothesis Testing, P-Values, and What They Actually Mean](phase3b-statistics/lesson-21b-hypothesis-testing.md) | 5–7h | ⬜ Not Started |
-| 21c | [Experimental Design and Common Statistical Fallacies](phase3b-statistics/lesson-21c-experimental-design.md) | 4–6h | ⬜ Not Started |
-| 21d | [Regression — From Linear to Logistic and Beyond](phase3b-statistics/lesson-21d-regression.md) | 5–7h | ⬜ Not Started |
-| 21e | [Causal Inference — From Correlation to Causation](phase3b-statistics/lesson-21e-causal-inference.md) | 6–8h | ⬜ Not Started |
-| 21f | [Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates](phase3b-statistics/lesson-21f-applied-statistics.md) | 5–7h | ⬜ Not Started |
-
-### [PHASE 3c: Mathematical Enrichment](phase3c-math-enrichment/)
-*Deeper foundations for cutting-edge alignment research*
-
-> **New phase:** Covers mathematical structures that undergird SLT (groups, topology), fundamental limits of verification (computability, formal logic), and the dynamical systems perspective on training. These topics are prerequisites for engaging deeply with singular learning theory, MIRI agent foundations, and geometric deep learning.
+### [PHASE 3b: Extended Mathematical Foundations](phase3b-math-foundations/)
+*The deeper structures underneath ML*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 21g | [Computability and Complexity — The Limits of Knowledge](phase3c-math-enrichment/lesson-21g-computability.md) | ⬜ Not Started |
-| 21h | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase3c-math-enrichment/lesson-21h-abstract-algebra.md) | ⬜ Not Started |
-| 21i | [Topology and Manifolds — The Shape of Data and Loss](phase3c-math-enrichment/lesson-21i-topology.md) | ⬜ Not Started |
-| 21j | [Differential Equations and Dynamical Systems — Training as Flow](phase3c-math-enrichment/lesson-21j-diff-equations.md) | ⬜ Not Started |
-| 21k | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase3c-math-enrichment/lesson-21k-formal-logic.md) | ⬜ Not Started |
+| 21b | [Computability and Complexity — The Limits of Knowledge](phase3b-math-foundations/lesson-21b-computability.md) | ⬜ Not Started |
+| 21c | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase3b-math-foundations/lesson-21c-abstract-algebra.md) | ⬜ Not Started |
+| 21d | [Topology and Manifolds — The Shape of Data and Loss](phase3b-math-foundations/lesson-21d-topology.md) | ⬜ Not Started |
+| 21e | [Formal Logic — Self-Reference, Limits, and AI Reasoning](phase3b-math-foundations/lesson-21e-formal-logic.md) | ⬜ Not Started |
 
 ### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/)
 *Building the machine, piece by piece*
@@ -133,7 +118,6 @@
 | [Key Papers](resources/papers.md) | Reading list in order |
 | [Courses & Programs](resources/courses.md) | MIT OCW, ARENA, Stanford, etc. |
 | [Practice Problem Sources](resources/practice-problems.md) | MIT OCW, Khan Academy, Axler, Paul's Notes |
-| [Intuition Notebook](resources/intuition-notebook.md) | Evolving collection of key insights |
 
 ---
 
