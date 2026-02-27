@@ -1,6 +1,6 @@
 # Lesson 17: Probability Distributions and Bayes' Theorem
 
-[← Differential Equations](../phase2-calculus/lesson-16b-diffeq.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-18-expectation.md)
+[← Loss Landscapes](../phase2-calculus/lesson-16-loss-landscapes.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-18-expectation.md)
 
 ---
 
