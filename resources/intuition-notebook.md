@@ -101,7 +101,7 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 **Column space vs Range vs Image:** Same thing, three names. The set of all possible outputs Ax.
 
-**Invertible vs Non-singular vs Full rank:** Same thing, three names. det ≠ 0, null space = {0}, all columns independent.
+**Invertible vs Non-singular vs Full rank:** Same thing, three names — but the matrix must be square. det ≠ 0, null space = {0}, all columns independent. Non-square matrices can't be invertible (they map between spaces of different dimension).
 
 **Positive definite vs Positive semi-definite:** PD = all eigenvalues > 0 (strict bowl, no flat directions). PSD = all eigenvalues ≥ 0 (bowl or flat, never saddle). Covariance matrices are always PSD. AᵀA is always PSD.
 
