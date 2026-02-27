@@ -75,7 +75,7 @@ where n̂ is the unit vector perpendicular to both a and b (right-hand rule).
 
 **Determinant formula:**
 
-$$a \times b = \det \begin{bmatrix} \hat{i} & \hat{j} & \hat{k} \\ a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \end{bmatrix}$$
+$$a \times b = \det \begin{bmatrix} \hat{i} & \hat{j} & \hat{k} \\\\ a_1 & a_2 & a_3 \\\\ b_1 & b_2 & b_3 \end{bmatrix}$$
 
 **Key property:** |a × b| = area of the parallelogram spanned by a and b
 
@@ -140,7 +140,7 @@ $$\det(A) = \text{signed scaling factor}$$
 
 **2×2 formula:**
 
-$$\det \begin{bmatrix} a & b \\ c & d \end{bmatrix} = ad - bc$$
+$$\det \begin{bmatrix} a & b \\\\ c & d \end{bmatrix} = ad - bc$$
 
 **Key properties:**
 - det(AB) = det(A) · det(B)
