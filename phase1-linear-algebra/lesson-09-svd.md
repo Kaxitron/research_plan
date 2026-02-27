@@ -57,3 +57,11 @@ SVD is *everywhere* in ML and alignment research:
 - **LoRA (Low-Rank Adaptation):** Fine-tuning via low-rank updates ΔW = BA. This IS the SVD insight.
 - **Probing in interpretability:** Finding directions that predict labels is SVD-adjacent.
 - **"Mathematical Framework for Transformer Circuits"** uses SVD-like decompositions extensively.
+
+### SVD and PCA: The Same Coin
+
+PCA asks you to find the eigenvectors of the covariance matrix C = (1/n)XᵀX. You could eigendecompose XᵀX directly — but notice what happens if you take the SVD of the data matrix X = UΣVᵀ instead:
+
+XᵀX = (UΣVᵀ)ᵀ(UΣVᵀ) = VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ
+
+Since UᵀU = I (U is orthogonal), the U drops out entirely. What remains is the eigendecomposition of XᵀX — with V as the eigenvectors and Σ² as the eigenvalues. So **the right singular vectors (V) from SVD of your data ARE the principal components**, and the squared singular values are proportional to the variance along each direction. You don't need to form XᵀX at all — SVD on X gives you PCA for free, and is more numerically stable because it avoids squaring the singular values.
