@@ -14,11 +14,12 @@
 
 ## Table of Contents
 
-### [PHASE 0: Prerequisites](phase0-prerequisites/)
+### [PHASE 0: Prerequisites](phase0-setup/)
 *Tools of the trade*
 
 | # | Lesson | Status |
 |---|--------|--------|
+| 0 | [Python and NumPy for Machine Learning](phase0-setup/lesson-00-python-numpy.md) | ✅ Complete |
 | 0b | [PyTorch — The Language of Alignment Research](phase0-prerequisites/lesson-00b-pytorch.md) | ⬜ Not Started |
 
 ### [PHASE 1: Linear Algebra Foundations](phase1-linear-algebra/)
@@ -47,8 +48,8 @@
 | 13 | [Partial Derivatives and Gradients — Going Deeper](phase2-calculus/lesson-13-gradients.md) | ⬜ Not Started |
 | 14 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-14-chain-rule.md) | ⬜ Not Started |
 | 15 | [Optimization and Gradient Descent](phase2-calculus/lesson-15-optimization.md) | ⬜ Not Started |
+| 15b | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-15b-constrained-optimization.md) | ⬜ Not Started |
 | 16 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-16-loss-landscapes.md) | ⬜ Not Started |
-| 16b | [Differential Equations and Dynamical Systems](phase2-calculus/lesson-16b-diffeq.md) | ⬜ Not Started |
 
 ### [PHASE 3: Probability, Information Theory, and Bayesian Thinking](phase3-probability/)
 *The language of uncertainty and learning*
@@ -61,15 +62,27 @@
 | 20 | [Information Theory — Entropy, KL Divergence, Cross-Entropy, and Mutual Information](phase3-probability/lesson-20-information-theory.md) | ⬜ Not Started |
 | 21 | [Bayesian Reasoning and Inference](phase3-probability/lesson-21-bayesian-inference.md) | ⬜ Not Started |
 
-### [PHASE 3b: Extended Mathematical Foundations](phase3b-math-foundations/)
+### [PHASE 3b: Applied Statistics](phase3b-statistics/)
+*Connecting theory to empirical practice*
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 21b | [Hypothesis Testing, P-Values, and What They Actually Mean](phase3b-statistics/lesson-21b-hypothesis-testing.md) | ⬜ Not Started |
+| 21c | [Experimental Design and Common Statistical Fallacies](phase3b-statistics/lesson-21c-experimental-design.md) | ⬜ Not Started |
+| 21d | [Regression — From Linear to Logistic and Beyond](phase3b-statistics/lesson-21d-regression.md) | ⬜ Not Started |
+| 21e | [Causal Inference — From Correlation to Causation](phase3b-statistics/lesson-21e-causal-inference.md) | ⬜ Not Started |
+| 21f | [Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates](phase3b-statistics/lesson-21f-applied-statistics.md) | ⬜ Not Started |
+
+### [PHASE 3c: Extended Mathematical Foundations](phase3c-math-enrichment/)
 *The deeper structures underneath ML*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 21b | [Computability and Complexity — The Limits of Knowledge](phase3b-math-foundations/lesson-21b-computability.md) | ⬜ Not Started |
-| 21c | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase3b-math-foundations/lesson-21c-abstract-algebra.md) | ⬜ Not Started |
-| 21d | [Topology and Manifolds — The Shape of Data and Loss](phase3b-math-foundations/lesson-21d-topology.md) | ⬜ Not Started |
-| 21e | [Formal Logic — Self-Reference, Limits, and AI Reasoning](phase3b-math-foundations/lesson-21e-formal-logic.md) | ⬜ Not Started |
+| 21g | [Computability and Complexity — The Limits of Knowledge](phase3c-math-enrichment/lesson-21g-computability.md) | ⬜ Not Started |
+| 21h | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase3c-math-enrichment/lesson-21h-abstract-algebra.md) | ⬜ Not Started |
+| 21i | [Topology and Manifolds — The Shape of Data and Loss](phase3c-math-enrichment/lesson-21i-topology.md) | ⬜ Not Started |
+| 21j | [Differential Equations and Dynamical Systems — Training as Flow](phase3c-math-enrichment/lesson-21j-diff-equations.md) | ⬜ Not Started |
+| 21k | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase3c-math-enrichment/lesson-21k-formal-logic.md) | ⬜ Not Started |
 
 ### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/)
 *Building the machine, piece by piece*
@@ -81,6 +94,8 @@
 | 24 | [Backpropagation Through the Full Network](phase4-neural-networks/lesson-24-backprop.md) | ⬜ Not Started |
 | 25 | [Attention — Dot Products in Action](phase4-neural-networks/lesson-25-attention.md) | ⬜ Not Started |
 | 26 | [Building a Transformer from Scratch](phase4-neural-networks/lesson-26-transformer.md) | ⬜ Not Started |
+| 26b | [Reinforcement Learning Foundations](phase4-neural-networks/lesson-26b-rl-foundations.md) | ⬜ Not Started |
+| 26c | [The LLM Training Pipeline — From Raw Text to Aligned AI](phase4-neural-networks/lesson-26c-llm-pipeline.md) | ⬜ Not Started |
 
 ### [PHASE 5: Mechanistic Interpretability](phase5-interpretability/)
 *Using everything you've learned to open the black box*
@@ -89,6 +104,8 @@
 |---|--------|--------|
 | 27 | [What Interpretability Researchers Actually Do](phase5-interpretability/lesson-27-intro-interp.md) | ⬜ Not Started |
 | 28 | [Circuits and Features in Practice](phase5-interpretability/lesson-28-circuits.md) | ⬜ Not Started |
+| 28b | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase5-interpretability/lesson-28b-scaling-emergence.md) | ⬜ Not Started |
+| 28c | [Singular Learning Theory — The Geometry of Learning](phase5-interpretability/lesson-28c-slt.md) | ⬜ Not Started |
 
 ### [PHASE 6: Alignment Theory and Foundations](phase6-alignment-theory/)
 *The philosophical and strategic landscape*
@@ -107,6 +124,12 @@
 |---|--------|--------|
 | — | [Your First Research Project](phase7-research/research-guide.md) | ⬜ Not Started |
 
+### [Assessments](assessments/)
+
+| Assessment | Link |
+|------------|------|
+| [Phase 1 Linear Algebra Final Exam](assessments/phase1-linear-algebra-final-exam.md) | Comprehensive LA assessment |
+
 ### [Resource Index](resources/)
 
 | Resource | Link |
@@ -118,6 +141,9 @@
 | [Key Papers](resources/papers.md) | Reading list in order |
 | [Courses & Programs](resources/courses.md) | MIT OCW, ARENA, Stanford, etc. |
 | [Practice Problem Sources](resources/practice-problems.md) | MIT OCW, Khan Academy, Axler, Paul's Notes |
+| [LA Cheat Sheet](resources/cheat-sheet.md) | Quick reference for linear algebra concepts |
+| [Intuition Notebook](resources/intuition-notebook.md) | Core geometric intuitions |
+| [How to Read Research Papers](resources/reading-papers.md) | Paper reading methodology |
 
 ---
 
