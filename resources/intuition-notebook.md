@@ -18,8 +18,12 @@ No matter how complicated a matrix looks, it's doing three simple things in sequ
 Most vectors get knocked off their line by a matrix. Eigenvectors stay on their line — they just get stretched by λ. They're the "natural axes" of the transformation. This is why PCA works: the eigenvectors of the covariance matrix ARE the directions of maximum variance.
 
 
-### PCA's eigenvectors are just SVD's right singular vectors
-We have our covariance matrix C = (1/n)XᵀX, and we were going to find its eigenvectors. But if we take X = UΣVᵀ and expand XᵀX, we get VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ (since UᵀU = I). That's already the eigendecomposition of XᵀX — V contains the eigenvectors and Σ² gives the eigenvalues. So the principal components are just the right singular vectors of X. You don't *need* to form XᵀX at all. (In practice, real algorithms exploit this by computing SVD directly on X, which avoids squaring the condition number — but for hand computation, eigendecomposing XᵀX is fine.)
+### PCA's eigenvectors are just SVD's right singular vectors — and symmetry is why
+We have our covariance matrix C = (1/n)XᵀX, and we were going to take its eigenvectors. But if we take X = UΣVᵀ and expand XᵀX, we get (UΣVᵀ)ᵀ(UΣVᵀ) = VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ (since UᵀU = I). So the eigenvectors of XᵀX are just V — the right singular vectors of X — and the eigenvalues are Σ².
+
+The deeper reason this works so cleanly: AᵀA is always symmetric, which means its eigenvectors are orthogonal. In the eigenbasis, it's pure scaling — no rotation. So when SVD decomposes X into rotate → scale → rotate, the two rotations in AᵀA must cancel each other out, leaving only the scaling (Σ²) expressed in the V basis.
+
+In practice, real algorithms compute SVD directly on X using iterative methods (never forming XᵀX), which avoids squaring the condition number. But for hand computation, eigendecomposing XᵀX is the right approach.
 
 ### Miscellaneous Thoughts
 1. Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.

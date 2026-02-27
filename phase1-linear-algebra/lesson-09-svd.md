@@ -60,8 +60,8 @@ SVD is *everywhere* in ML and alignment research:
 
 ### SVD and PCA: The Same Coin
 
-PCA asks you to find the eigenvectors of the covariance matrix C = (1/n)XᵀX. You could eigendecompose XᵀX directly — but notice what happens if you take the SVD of the data matrix X = UΣVᵀ instead:
+PCA asks you to find the eigenvectors of the covariance matrix C = (1/n)XᵀX. But if you take the SVD of the data matrix X = UΣVᵀ and expand XᵀX, you get (UΣVᵀ)ᵀ(UΣVᵀ) = VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ (since UᵀU = I). So the eigendecomposition of XᵀX is just VΣ²Vᵀ — the columns of V are the eigenvectors (principal components) and Σ² gives the eigenvalues (variances).
 
-XᵀX = (UΣVᵀ)ᵀ(UΣVᵀ) = VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ
+The deeper reason this simplifies so cleanly: AᵀA is always symmetric, which guarantees an orthogonal eigenbasis — meaning pure scaling with no rotation. So when SVD decomposes X into rotate → scale → rotate, the two rotations in AᵀA cancel each other out, leaving only the scaling (Σ²) expressed in the V basis.
 
-Since UᵀU = I (U is orthogonal), the U drops out entirely. What remains is the eigendecomposition of XᵀX — with V as the eigenvectors and Σ² as the eigenvalues. So **the right singular vectors (V) from SVD of your data ARE the principal components**, and the squared singular values are proportional to the variance along each direction. You don't need to form XᵀX at all — SVD on X gives you PCA for free, and is more numerically stable because it avoids squaring the singular values.
+In practice, real algorithms compute SVD directly on X using iterative methods (never forming XᵀX), which avoids squaring the condition number. But for hand computation, eigendecomposing XᵀX is the right approach.

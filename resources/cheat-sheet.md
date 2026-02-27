@@ -198,6 +198,24 @@ $$A = U \Sigma V^T$$
 
 ---
 
+## 11b. PCA and the SVD Connection
+
+**PCA = eigenvectors of the covariance matrix C = (1/n)XᵀX**
+
+**Why SVD gives you PCA directly:**
+
+$$X^T X = (U\Sigma V^T)^T (U\Sigma V^T) = V\Sigma^T U^T U \Sigma V^T = V\Sigma^2 V^T$$
+
+UᵀU = I cancels the rotation, leaving VΣ²Vᵀ — which is already the eigendecomposition of XᵀX. So:
+- **Eigenvectors of XᵀX = columns of V** (the right singular vectors of X)
+- **Eigenvalues of XᵀX = σ²** (squared singular values)
+
+**Why U disappears:** AᵀA is always symmetric → orthogonal eigenbasis → pure scaling in that basis → the two rotations in AᵀA cancel, leaving only Σ² in the V basis.
+
+**In practice:** real algorithms compute SVD directly on X (never forming XᵀX), avoiding squaring the condition number. For hand computation, eigendecompose XᵀX directly.
+
+---
+
 ## 12. Orthogonality and Projections
 
 **Orthogonal:** a · b = 0 (perpendicular, completely independent directions)
