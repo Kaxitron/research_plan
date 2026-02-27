@@ -21,7 +21,7 @@
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 0 | [Python and NumPy for Machine Learning](phase0-setup/lesson-00-python-numpy.md) | ✅ Complete |
+| 0 | [Python and NumPy for Machine Learning](phase0-setup/lesson-00-python-numpy.md) | ⬜ Not Started |
 | 1 | [PyTorch — The Language of Alignment Research](phase0-setup/lesson-01-pytorch.md) | ⬜ Not Started |
 
 ### [PHASE 1: Linear Algebra Foundations](phase1-linear-algebra/)
@@ -36,9 +36,9 @@
 | 6 | [Rank, Null Space, and Column Space](phase1-linear-algebra/lesson-06-rank-nullspace.md) | ✅ Complete |
 | 7 | [The Determinant](phase1-linear-algebra/lesson-07-determinant.md) | ✅ Complete |
 | 8 | [Eigenvalues and Eigenvectors](phase1-linear-algebra/lesson-08-eigenvalues.md) | ✅ Complete |
-| 9 | [Singular Value Decomposition (SVD)](phase1-linear-algebra/lesson-09-svd.md) | 🔄 In Progress |
-| 10 | [Dot Products, Orthogonality, and Projections](phase1-linear-algebra/lesson-10-dot-products.md) | ⬜ Not Started |
-| 11 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-11-change-of-basis.md) | ⬜ Not Started |
+| 9 | [Singular Value Decomposition (SVD)](phase1-linear-algebra/lesson-09-svd.md) | ✅ Complete |
+| 10 | [Dot Products, Orthogonality, and Projections](phase1-linear-algebra/lesson-10-dot-products.md) | ✅ Complete |
+| 11 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-11-change-of-basis.md) | ✅ Complete |
 | 12 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-12-capstone.md) | ⬜ Not Started |
 
 ### [PHASE 2: Calculus for ML](phase2-calculus/)
