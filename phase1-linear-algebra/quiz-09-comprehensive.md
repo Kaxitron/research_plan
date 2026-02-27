@@ -1,6 +1,6 @@
-# Quiz: Lessons 7–9 Comprehensive Exam
+# Quiz: Lessons 8–9 Comprehensive Exam
 
-[← Dot Products](lesson-09-dot-products.md) | [Back to TOC](../README.md) | [Next: Change of Basis →](lesson-10-change-of-basis.md)
+[← Dot Products](lesson-10-dot-products.md) | [Back to TOC](../README.md) | [Next: Change of Basis →](lesson-11-change-of-basis.md)
 
 ---
 
@@ -224,4 +224,4 @@ The residual from a projection is perpendicular to *whatever you projected onto*
 
 ---
 
-*Quiz designed for Lesson 9 of the AI Alignment Research Curriculum.*
+*Quiz designed for Lesson 10 of the AI Alignment Research Curriculum.*

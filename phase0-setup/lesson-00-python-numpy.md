@@ -1,6 +1,6 @@
 # Lesson 0: Python and NumPy for Machine Learning
 
-[Back to TOC](../README.md) | [Next: Vectors →](../phase1-linear-algebra/lesson-01-vectors.md)
+[Back to TOC](../README.md) | [Next: Vectors →](../phase1-linear-algebra/lesson-02-vectors.md)
 
 ---
 
@@ -55,7 +55,7 @@
 ## 📺 Watch
 
 1. **Karpathy — "The spelled-out intro to neural networks and backpropagation"**
-   - This is the micrograd lecture. You'll revisit it in Lesson 15, but the first 30 minutes are a good Python warm-up.
+   - This is the micrograd lecture. You'll revisit it in Lesson 16, but the first 30 minutes are a good Python warm-up.
 2. **NumPy in 10 Minutes (various YouTube channels)**
    - Search "NumPy tutorial 10 minutes" — any top result will do
 3. **Corey Schafer — "Matplotlib Tutorial"**
@@ -71,7 +71,7 @@
 
 - **Setup:** install Python, NumPy, Matplotlib, Jupyter (or just open Google Colab)
 - **NumPy speed test:** multiply two 1000×1000 matrices using (a) nested Python for-loops and (b) `A @ B`. Time both. See the 100x+ speedup. This is why NumPy exists — and why GPUs are matrix multiplication accelerators.
-- **Visualization starter:** plot the unit circle, then apply a 2×2 matrix to it. See the circle become an ellipse. You'll do this in Lesson 3 for real.
+- **Visualization starter:** plot the unit circle, then apply a 2×2 matrix to it. See the circle become an ellipse. You'll do this in Lesson 4 for real.
 - **Linear algebra warm-up:** create a random 3×3 matrix. Compute its determinant, eigenvalues, SVD, and inverse using NumPy. Print them. You don't need to understand these yet — just verify the tools work.
 
 ## 🔗 ML Connection

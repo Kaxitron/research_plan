@@ -20,109 +20,109 @@
 | # | Lesson | Status |
 |---|--------|--------|
 | 0 | [Python and NumPy for Machine Learning](phase0-setup/lesson-00-python-numpy.md) | ✅ Complete |
-| 0b | [PyTorch — The Language of Alignment Research](phase0-prerequisites/lesson-00b-pytorch.md) | ⬜ Not Started |
+| 1 | [PyTorch — The Language of Alignment Research](phase0-setup/lesson-01-pytorch.md) | ⬜ Not Started |
 
 ### [PHASE 1: Linear Algebra Foundations](phase1-linear-algebra/)
 *The language that transformers speak*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 1 | [Vectors — What They Actually Are](phase1-linear-algebra/lesson-01-vectors.md) | ✅ Complete |
-| 2 | [Linear Combinations, Span, and Basis](phase1-linear-algebra/lesson-02-span-basis.md) | ✅ Complete |
-| 3 | [Linear Transformations and Matrices](phase1-linear-algebra/lesson-03-transformations.md) | ✅ Complete |
-| 4 | [Matrix Operations Deep Dive](phase1-linear-algebra/lesson-04-matrix-operations.md) | ✅ Complete |
-| 5 | [Rank, Null Space, and Column Space](phase1-linear-algebra/lesson-05-rank-nullspace.md) | ✅ Complete |
-| 6 | [The Determinant](phase1-linear-algebra/lesson-06-determinant.md) | ✅ Complete |
-| 7 | [Eigenvalues and Eigenvectors](phase1-linear-algebra/lesson-07-eigenvalues.md) | ✅ Complete |
-| 8 | [Singular Value Decomposition (SVD)](phase1-linear-algebra/lesson-08-svd.md) | 🔄 In Progress |
-| 9 | [Dot Products, Orthogonality, and Projections](phase1-linear-algebra/lesson-09-dot-products.md) | ⬜ Not Started |
-| 10 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-10-change-of-basis.md) | ⬜ Not Started |
-| 11 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-11-capstone.md) | ⬜ Not Started |
+| 2 | [Vectors — What They Actually Are](phase1-linear-algebra/lesson-02-vectors.md) | ✅ Complete |
+| 3 | [Linear Combinations, Span, and Basis](phase1-linear-algebra/lesson-03-span-basis.md) | ✅ Complete |
+| 4 | [Linear Transformations and Matrices](phase1-linear-algebra/lesson-04-transformations.md) | ✅ Complete |
+| 5 | [Matrix Operations Deep Dive](phase1-linear-algebra/lesson-05-matrix-operations.md) | ✅ Complete |
+| 6 | [Rank, Null Space, and Column Space](phase1-linear-algebra/lesson-06-rank-nullspace.md) | ✅ Complete |
+| 7 | [The Determinant](phase1-linear-algebra/lesson-07-determinant.md) | ✅ Complete |
+| 8 | [Eigenvalues and Eigenvectors](phase1-linear-algebra/lesson-08-eigenvalues.md) | ✅ Complete |
+| 9 | [Singular Value Decomposition (SVD)](phase1-linear-algebra/lesson-09-svd.md) | 🔄 In Progress |
+| 10 | [Dot Products, Orthogonality, and Projections](phase1-linear-algebra/lesson-10-dot-products.md) | ⬜ Not Started |
+| 11 | [Change of Basis, Norms, and Special Matrices](phase1-linear-algebra/lesson-11-change-of-basis.md) | ⬜ Not Started |
+| 12 | [Linear Algebra Capstone](phase1-linear-algebra/lesson-12-capstone.md) | ⬜ Not Started |
 
 ### [PHASE 2: Calculus for ML](phase2-calculus/)
 *The mathematical engine of neural network learning*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 12 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-12-matrix-calculus.md) | ⬜ Not Started |
-| 13 | [Partial Derivatives and Gradients — Going Deeper](phase2-calculus/lesson-13-gradients.md) | ⬜ Not Started |
-| 14 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-14-chain-rule.md) | ⬜ Not Started |
-| 15 | [Optimization and Gradient Descent](phase2-calculus/lesson-15-optimization.md) | ⬜ Not Started |
-| 15b | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-15b-constrained-optimization.md) | ⬜ Not Started |
-| 16 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-16-loss-landscapes.md) | ⬜ Not Started |
+| 13 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-13-matrix-calculus.md) | ⬜ Not Started |
+| 14 | [Partial Derivatives and Gradients — Going Deeper](phase2-calculus/lesson-14-gradients.md) | ⬜ Not Started |
+| 15 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-15-chain-rule.md) | ⬜ Not Started |
+| 16 | [Optimization and Gradient Descent](phase2-calculus/lesson-16-optimization.md) | ⬜ Not Started |
+| 17 | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-17-constrained-optimization.md) | ⬜ Not Started |
+| 18 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-18-loss-landscapes.md) | ⬜ Not Started |
 
 ### [PHASE 3: Probability, Information Theory, and Bayesian Thinking](phase3-probability/)
 *The language of uncertainty and learning*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 17 | [Probability Distributions and Bayes' Theorem](phase3-probability/lesson-17-probability.md) | ⬜ Not Started |
-| 18 | [Expectation, Variance, and Covariance](phase3-probability/lesson-18-expectation.md) | ⬜ Not Started |
-| 19 | [Maximum Likelihood Estimation](phase3-probability/lesson-19-mle.md) | ⬜ Not Started |
-| 20 | [Information Theory — Entropy, KL Divergence, Cross-Entropy, and Mutual Information](phase3-probability/lesson-20-information-theory.md) | ⬜ Not Started |
-| 21 | [Bayesian Reasoning and Inference](phase3-probability/lesson-21-bayesian-inference.md) | ⬜ Not Started |
+| 19 | [Probability Distributions and Bayes' Theorem](phase3-probability/lesson-19-probability.md) | ⬜ Not Started |
+| 20 | [Expectation, Variance, and Covariance](phase3-probability/lesson-20-expectation.md) | ⬜ Not Started |
+| 21 | [Maximum Likelihood Estimation](phase3-probability/lesson-21-mle.md) | ⬜ Not Started |
+| 22 | [Information Theory — Entropy, KL Divergence, Cross-Entropy, and Mutual Information](phase3-probability/lesson-22-information-theory.md) | ⬜ Not Started |
+| 23 | [Bayesian Reasoning and Inference](phase3-probability/lesson-23-bayesian-inference.md) | ⬜ Not Started |
 
-### [PHASE 3b: Applied Statistics](phase3b-statistics/)
+### [PHASE 4: Applied Statistics](phase4-statistics/)
 *Connecting theory to empirical practice*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 21b | [Hypothesis Testing, P-Values, and What They Actually Mean](phase3b-statistics/lesson-21b-hypothesis-testing.md) | ⬜ Not Started |
-| 21c | [Experimental Design and Common Statistical Fallacies](phase3b-statistics/lesson-21c-experimental-design.md) | ⬜ Not Started |
-| 21d | [Regression — From Linear to Logistic and Beyond](phase3b-statistics/lesson-21d-regression.md) | ⬜ Not Started |
-| 21e | [Causal Inference — From Correlation to Causation](phase3b-statistics/lesson-21e-causal-inference.md) | ⬜ Not Started |
-| 21f | [Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates](phase3b-statistics/lesson-21f-applied-statistics.md) | ⬜ Not Started |
+| 24 | [Hypothesis Testing, P-Values, and What They Actually Mean](phase4-statistics/lesson-24-hypothesis-testing.md) | ⬜ Not Started |
+| 25 | [Experimental Design and Common Statistical Fallacies](phase4-statistics/lesson-25-experimental-design.md) | ⬜ Not Started |
+| 26 | [Regression — From Linear to Logistic and Beyond](phase4-statistics/lesson-26-regression.md) | ⬜ Not Started |
+| 27 | [Causal Inference — From Correlation to Causation](phase4-statistics/lesson-27-causal-inference.md) | ⬜ Not Started |
+| 28 | [Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates](phase4-statistics/lesson-28-applied-statistics.md) | ⬜ Not Started |
 
-### [PHASE 3c: Extended Mathematical Foundations](phase3c-math-enrichment/)
+### [PHASE 5: Extended Mathematical Foundations](phase5-math-enrichment/)
 *The deeper structures underneath ML*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 21g | [Computability and Complexity — The Limits of Knowledge](phase3c-math-enrichment/lesson-21g-computability.md) | ⬜ Not Started |
-| 21h | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase3c-math-enrichment/lesson-21h-abstract-algebra.md) | ⬜ Not Started |
-| 21i | [Topology and Manifolds — The Shape of Data and Loss](phase3c-math-enrichment/lesson-21i-topology.md) | ⬜ Not Started |
-| 21j | [Differential Equations and Dynamical Systems — Training as Flow](phase3c-math-enrichment/lesson-21j-diff-equations.md) | ⬜ Not Started |
-| 21k | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase3c-math-enrichment/lesson-21k-formal-logic.md) | ⬜ Not Started |
+| 29 | [Computability and Complexity — The Limits of Knowledge](phase5-math-enrichment/lesson-29-computability.md) | ⬜ Not Started |
+| 30 | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase5-math-enrichment/lesson-30-abstract-algebra.md) | ⬜ Not Started |
+| 31 | [Topology and Manifolds — The Shape of Data and Loss](phase5-math-enrichment/lesson-31-topology.md) | ⬜ Not Started |
+| 32 | [Differential Equations and Dynamical Systems — Training as Flow](phase5-math-enrichment/lesson-32-diff-equations.md) | ⬜ Not Started |
+| 33 | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase5-math-enrichment/lesson-33-formal-logic.md) | ⬜ Not Started |
 
-### [PHASE 4: Neural Networks — From Neurons to Transformers](phase4-neural-networks/)
+### [PHASE 6: Neural Networks — From Neurons to Transformers](phase6-neural-networks/)
 *Building the machine, piece by piece*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 22 | [How a Single Neuron Works](phase4-neural-networks/lesson-22-single-neuron.md) | ⬜ Not Started |
-| 23 | [The Forward Pass as Matrix Multiplications](phase4-neural-networks/lesson-23-forward-pass.md) | ⬜ Not Started |
-| 24 | [Backpropagation Through the Full Network](phase4-neural-networks/lesson-24-backprop.md) | ⬜ Not Started |
-| 25 | [Attention — Dot Products in Action](phase4-neural-networks/lesson-25-attention.md) | ⬜ Not Started |
-| 26 | [Building a Transformer from Scratch](phase4-neural-networks/lesson-26-transformer.md) | ⬜ Not Started |
-| 26b | [Reinforcement Learning Foundations](phase4-neural-networks/lesson-26b-rl-foundations.md) | ⬜ Not Started |
-| 26c | [The LLM Training Pipeline — From Raw Text to Aligned AI](phase4-neural-networks/lesson-26c-llm-pipeline.md) | ⬜ Not Started |
+| 34 | [How a Single Neuron Works](phase6-neural-networks/lesson-34-single-neuron.md) | ⬜ Not Started |
+| 35 | [The Forward Pass as Matrix Multiplications](phase6-neural-networks/lesson-35-forward-pass.md) | ⬜ Not Started |
+| 36 | [Backpropagation Through the Full Network](phase6-neural-networks/lesson-36-backprop.md) | ⬜ Not Started |
+| 37 | [Attention — Dot Products in Action](phase6-neural-networks/lesson-37-attention.md) | ⬜ Not Started |
+| 38 | [Building a Transformer from Scratch](phase6-neural-networks/lesson-38-transformer.md) | ⬜ Not Started |
+| 39 | [Reinforcement Learning Foundations](phase6-neural-networks/lesson-39-rl-foundations.md) | ⬜ Not Started |
+| 40 | [The LLM Training Pipeline — From Raw Text to Aligned AI](phase6-neural-networks/lesson-40-llm-pipeline.md) | ⬜ Not Started |
 
-### [PHASE 5: Mechanistic Interpretability](phase5-interpretability/)
+### [PHASE 7: Mechanistic Interpretability](phase7-interpretability/)
 *Using everything you've learned to open the black box*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 27 | [What Interpretability Researchers Actually Do](phase5-interpretability/lesson-27-intro-interp.md) | ⬜ Not Started |
-| 28 | [Circuits and Features in Practice](phase5-interpretability/lesson-28-circuits.md) | ⬜ Not Started |
-| 28b | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase5-interpretability/lesson-28b-scaling-emergence.md) | ⬜ Not Started |
-| 28c | [Singular Learning Theory — The Geometry of Learning](phase5-interpretability/lesson-28c-slt.md) | ⬜ Not Started |
+| 41 | [What Interpretability Researchers Actually Do](phase7-interpretability/lesson-41-intro-interp.md) | ⬜ Not Started |
+| 42 | [Circuits and Features in Practice](phase7-interpretability/lesson-42-circuits.md) | ⬜ Not Started |
+| 43 | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase7-interpretability/lesson-43-scaling-emergence.md) | ⬜ Not Started |
+| 44 | [Singular Learning Theory — The Geometry of Learning](phase7-interpretability/lesson-44-slt.md) | ⬜ Not Started |
 
-### [PHASE 6: Alignment Theory and Foundations](phase6-alignment-theory/)
+### [PHASE 8: Alignment Theory and Foundations](phase8-alignment-theory/)
 *The philosophical and strategic landscape*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 29 | [Game Theory Foundations](phase6-alignment-theory/lesson-29-game-theory.md) | ⬜ Not Started |
-| 30 | [Decision Theory — CDT, EDT, and FDT](phase6-alignment-theory/lesson-30-decision-theory.md) | ⬜ Not Started |
-| 31 | [Anthropics and Self-Locating Beliefs](phase6-alignment-theory/lesson-31-anthropics.md) | ⬜ Not Started |
-| 32 | [The Alignment Problem — Technical Foundations](phase6-alignment-theory/lesson-32-alignment-problem.md) | ⬜ Not Started |
-| 33 | [Open Problems and Research Frontiers](phase6-alignment-theory/lesson-33-open-problems.md) | ⬜ Not Started |
+| 45 | [Game Theory Foundations](phase8-alignment-theory/lesson-45-game-theory.md) | ⬜ Not Started |
+| 46 | [Decision Theory — CDT, EDT, and FDT](phase8-alignment-theory/lesson-46-decision-theory.md) | ⬜ Not Started |
+| 47 | [Anthropics and Self-Locating Beliefs](phase8-alignment-theory/lesson-47-anthropics.md) | ⬜ Not Started |
+| 48 | [The Alignment Problem — Technical Foundations](phase8-alignment-theory/lesson-48-alignment-problem.md) | ⬜ Not Started |
+| 49 | [Open Problems and Research Frontiers](phase8-alignment-theory/lesson-49-open-problems.md) | ⬜ Not Started |
 
-### [PHASE 7: Independent Research](phase7-research/)
+### [PHASE 9: Independent Research](phase9-research/)
 
 | # | Lesson | Status |
 |---|--------|--------|
-| — | [Your First Research Project](phase7-research/research-guide.md) | ⬜ Not Started |
+| — | [Your First Research Project](phase9-research/research-guide.md) | ⬜ Not Started |
 
 ### [Assessments](assessments/)
 

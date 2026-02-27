@@ -619,12 +619,12 @@ const PHASES = [
   { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '22–30h' },
   { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
   { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
-  { id: 'p3b', name: 'Applied Statistics', color: '#f472b6', hours: '18–26h' },
-  { id: 'p3c', name: 'Math Enrichment', color: '#e879f9', hours: '18–26h' },
-  { id: 'p4', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
-  { id: 'p5', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
-  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
-  { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
+  { id: 'p4', name: 'Applied Statistics', color: '#f472b6', hours: '18–26h' },
+  { id: 'p5', name: 'Math Enrichment', color: '#e879f9', hours: '18–26h' },
+  { id: 'p6', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
+  { id: 'p7', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
+  { id: 'p8', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
+  { id: 'p9', name: 'Research', color: '#fb923c', hours: '∞' },
 ];
 
 const LESSONS = [
@@ -650,7 +650,7 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: '0b', phase: 'p0', title: 'PyTorch — The Language of Alignment Research',
+    id: 1, phase: 'p0', title: 'PyTorch — The Language of Alignment Research',
     status: 'not-started', hours: '4–6h',
     prereqs: [0],
     crossPhaseLinks: [],
@@ -672,13 +672,13 @@ const LESSONS = [
       { type: 'Do', text: 'ARENA Chapter 0.0 einops/einsum exercises' },
     ],
     projects: [
-      { label: 'NEW', text: 'Autograd experiment: manual gradient verification' },
-      { label: 'NEW', text: 'Hook exercise: intercept intermediate activations in a pretrained model' },
+      { text: 'Autograd experiment: manual gradient verification' },
+      { text: 'Hook exercise: intercept intermediate activations in a pretrained model' },
     ],
   },
   // ─── Phase 1: Linear Algebra ───
   {
-    id: 1, phase: 'p1', title: 'Vectors — What They Actually Are',
+    id: 2, phase: 'p1', title: 'Vectors — What They Actually Are',
     status: 'complete', hours: '2–3h',
     prereqs: [],
     crossPhaseLinks: [],
@@ -693,16 +693,16 @@ const LESSONS = [
     ],
     mvl: [
       { type: 'Watch', text: '3B1B Ch. 1 — "Vectors, what even are they?"' },
-      { type: 'Do', text: 'Plot v, 2v, -v, and v + [1,2] in matplotlib' },
+      { type: 'Do', text: 'Plot v, 2v, -v, and v + [2,2] in matplotlib' },
     ],
     projects: [
-      { label: 'NEW', text: 'Vector plotting toolkit (matplotlib)' },
+      { text: 'Vector plotting toolkit (matplotlib)' },
     ],
   },
   {
-    id: 2, phase: 'p1', title: 'Linear Combinations, Span, and Basis',
+    id: 3, phase: 'p1', title: 'Linear Combinations, Span, and Basis',
     status: 'complete', hours: '3–4h',
-    prereqs: [1],
+    prereqs: [2],
     crossPhaseLinks: [],
     conceptChecks: [
       'If two vectors are parallel, what is their span?',
@@ -719,13 +719,13 @@ const LESSONS = [
       { type: 'Do', text: 'Show any 2D point as a linear combination of 2 random non-parallel vectors' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add span visualization to vector toolkit' },
+      { text: 'Add span visualization to vector toolkit' },
     ],
   },
   {
-    id: 3, phase: 'p1', title: 'Linear Transformations and Matrices',
+    id: 4, phase: 'p1', title: 'Linear Transformations and Matrices',
     status: 'complete', hours: '3–5h',
-    prereqs: [2],
+    prereqs: [3],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does "the columns of a matrix are where the basis vectors land" mean?',
@@ -742,13 +742,13 @@ const LESSONS = [
       { type: 'Do', text: 'Plot a grid before and after transformation by various 2×2 matrices' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add transformation visualization (grid before/after)' },
+      { text: 'Add transformation visualization (grid before/after)' },
     ],
   },
   {
-    id: 4, phase: 'p1', title: 'Matrix Operations Deep Dive',
+    id: 5, phase: 'p1', title: 'Matrix Operations Deep Dive',
     status: 'complete', hours: '3–4h',
-    prereqs: [3],
+    prereqs: [4],
     crossPhaseLinks: [],
     conceptChecks: [
       'Explain both the row-dot-product and column-linear-combination views of Ax',
@@ -764,13 +764,13 @@ const LESSONS = [
       { type: 'Do', text: 'Implement matrix multiply two ways: row-dot and column-combination' },
     ],
     projects: [
-      { label: 'NEW', text: 'Matrix multiplication from scratch (Python, no NumPy)' },
+      { text: 'Matrix multiplication from scratch (Python, no NumPy)' },
     ],
   },
   {
-    id: 5, phase: 'p1', title: 'Rank, Null Space, and Column Space',
+    id: 6, phase: 'p1', title: 'Rank, Null Space, and Column Space',
     status: 'complete', hours: '4–5h',
-    prereqs: [3, 4],
+    prereqs: [4, 5],
     crossPhaseLinks: [],
     conceptChecks: [
       'If a 3×3 matrix has rank 2, what dimension does it map 3D space onto?',
@@ -786,13 +786,13 @@ const LESSONS = [
       { type: 'Do', text: 'Create a rank-2 matrix in ℝ³, visualize the squished plane' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add rank/nullspace visualization to transformation toolkit' },
+      { text: 'Add rank/nullspace visualization to transformation toolkit' },
     ],
   },
   {
-    id: 6, phase: 'p1', title: 'The Determinant',
+    id: 7, phase: 'p1', title: 'The Determinant',
     status: 'complete', hours: '2–3h',
-    prereqs: [3, 5],
+    prereqs: [4, 6],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does det(A) = 0 tell you geometrically? Algebraically? About invertibility?',
@@ -810,9 +810,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 7, phase: 'p1', title: 'Eigenvalues and Eigenvectors',
+    id: 8, phase: 'p1', title: 'Eigenvalues and Eigenvectors',
     status: 'complete', hours: '4–6h',
-    prereqs: [5, 6],
+    prereqs: [6, 7],
     crossPhaseLinks: [],
     conceptChecks: [
       'What is special about an eigenvector geometrically?',
@@ -829,13 +829,13 @@ const LESSONS = [
       { type: 'Do', text: 'Find eigenvalues/vectors of 2×2 matrices, visualize invariant directions' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add eigenvector visualization to transformation toolkit' },
+      { text: 'Add eigenvector visualization to transformation toolkit' },
     ],
   },
   {
-    id: 8, phase: 'p1', title: 'Singular Value Decomposition (SVD)',
+    id: 9, phase: 'p1', title: 'Singular Value Decomposition (SVD)',
     status: 'in-progress', hours: '5–7h',
-    prereqs: [7],
+    prereqs: [8],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does A = UΣVᵀ mean as three geometric steps?',
@@ -853,14 +853,14 @@ const LESSONS = [
       { type: 'Do', text: 'Image compression: reconstruct image with k=1,5,10,50 singular values' },
     ],
     projects: [
-      { label: 'NEW', text: 'Image compression via SVD project' },
+      { text: 'Image compression via SVD project' },
     ],
   },
   {
-    id: 9, phase: 'p1', title: 'Dot Products, Orthogonality, and Projections',
+    id: 10, phase: 'p1', title: 'Dot Products, Orthogonality, and Projections',
     status: 'not-started', hours: '4–6h',
-    prereqs: [4, 8],
-    crossPhaseLinks: [25],
+    prereqs: [5, 9],
+    crossPhaseLinks: [37],
     conceptChecks: [
       'Give both the algebraic AND geometric formulas for the dot product. Why are they equal?',
       'What does a·b = 0 mean geometrically?',
@@ -876,13 +876,13 @@ const LESSONS = [
       { type: 'Do', text: 'Cosine similarity on GloVe/Word2Vec word pairs' },
     ],
     projects: [
-      { label: 'NEW', text: 'Word embedding similarity explorer' },
+      { text: 'Word embedding similarity explorer' },
     ],
   },
   {
-    id: 10, phase: 'p1', title: 'Change of Basis, Norms, and Special Matrices',
+    id: 11, phase: 'p1', title: 'Change of Basis, Norms, and Special Matrices',
     status: 'not-started', hours: '4–5h',
-    prereqs: [7, 8, 9],
+    prereqs: [8, 9, 10],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does B⁻¹AB represent? Why is it the "same" transformation?',
@@ -901,9 +901,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 11, phase: 'p1', title: 'Linear Algebra Capstone',
+    id: 12, phase: 'p1', title: 'Linear Algebra Capstone',
     status: 'not-started', hours: '4–6h',
-    prereqs: [9, 10],
+    prereqs: [10, 11],
     crossPhaseLinks: [],
     conceptChecks: [
       'For a given 3×3 matrix, explain rank, determinant, eigenvalues, SVD, and condition number geometrically.',
@@ -919,15 +919,15 @@ const LESSONS = [
       { type: 'Do', text: '30-minute comprehensive test + capstone visualization (SVD decomposition step by step)' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Final capstone: SVD step-by-step visualization on unit circle' },
+      { text: 'Final capstone: SVD step-by-step visualization on unit circle' },
     ],
   },
   // ─── Phase 2: Calculus ───
   {
-    id: 12, phase: 'p2', title: 'Matrix Calculus — Bridging to Backprop',
+    id: 13, phase: 'p2', title: 'Matrix Calculus — Bridging to Backprop',
     status: 'not-started', hours: '3–5h',
-    prereqs: [4],
-    crossPhaseLinks: [11],
+    prereqs: [5],
+    crossPhaseLinks: [12],
     conceptChecks: [
       'What is a partial derivative geometrically?',
       'What is the gradient vector and which direction does it point?',
@@ -944,9 +944,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 13, phase: 'p2', title: 'Partial Derivatives and Gradients — Going Deeper',
+    id: 14, phase: 'p2', title: 'Partial Derivatives and Gradients — Going Deeper',
     status: 'not-started', hours: '3–4h',
-    prereqs: [12],
+    prereqs: [13],
     crossPhaseLinks: [],
     conceptChecks: [
       'Why is the gradient perpendicular to contour lines?',
@@ -962,13 +962,13 @@ const LESSONS = [
       { type: 'Read', text: 'colah — "Calculus on Computational Graphs: Backpropagation"' },
     ],
     projects: [
-      { label: 'NEW', text: 'Gradient field visualizer (2D contour plots with arrows)' },
+      { text: 'Gradient field visualizer (2D contour plots with arrows)' },
     ],
   },
   {
-    id: 14, phase: 'p2', title: 'The Chain Rule — This IS Backpropagation',
+    id: 15, phase: 'p2', title: 'The Chain Rule — This IS Backpropagation',
     status: 'not-started', hours: '4–6h',
-    prereqs: [13],
+    prereqs: [14],
     crossPhaseLinks: [],
     conceptChecks: [
       'Draw a computation graph for L = (wx+b-y)². Trace gradients backward through it.',
@@ -986,10 +986,10 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 15, phase: 'p2', title: 'Optimization and Gradient Descent',
+    id: 16, phase: 'p2', title: 'Optimization and Gradient Descent',
     status: 'not-started', hours: '6–8h',
-    prereqs: [14],
-    crossPhaseLinks: [7],
+    prereqs: [15],
+    crossPhaseLinks: [8],
     conceptChecks: [
       'What happens when the learning rate is too big? Too small?',
       'What does momentum do and why is it helpful?',
@@ -1005,13 +1005,13 @@ const LESSONS = [
       { type: 'Do', text: 'Complete micrograd: Value class with autodiff, train on simple 2D data' },
     ],
     projects: [
-      { label: 'NEW', text: 'micrograd — autograd engine from scratch' },
+      { text: 'micrograd — autograd engine from scratch' },
     ],
   },
   {
-    id: 1501, label: '15b', phase: 'p2', title: 'Constrained Optimization and Lagrange Multipliers',
+    id: 17, phase: 'p2', title: 'Constrained Optimization and Lagrange Multipliers',
     status: 'not-started', hours: '3–5h',
-    prereqs: [15],
+    prereqs: [16],
     crossPhaseLinks: [],
     conceptChecks: [
       'What do Lagrange multipliers do geometrically? (Gradients are parallel at the optimum)',
@@ -1030,10 +1030,10 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 16, phase: 'p2', title: 'Loss Landscapes and Local Minima',
+    id: 18, phase: 'p2', title: 'Loss Landscapes and Local Minima',
     status: 'not-started', hours: '3–4h',
-    prereqs: [1501],
-    crossPhaseLinks: [7, 10],
+    prereqs: [17],
+    crossPhaseLinks: [8, 11],
     conceptChecks: [
       'Why are saddle points more common than local minima in high-dimensional spaces?',
       'What is the double descent phenomenon?',
@@ -1048,15 +1048,15 @@ const LESSONS = [
       { type: 'Read', text: 'colah — "Neural Networks, Manifolds, and Topology"' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add 2-parameter loss landscape visualization to micrograd project' },
+      { text: 'Add 2-parameter loss landscape visualization to micrograd project' },
     ],
   },
   // ─── Phase 3: Probability ───
   {
-    id: 17, phase: 'p3', title: 'Probability Distributions and Bayes\' Theorem',
+    id: 19, phase: 'p3', title: 'Probability Distributions and Bayes\' Theorem',
     status: 'not-started', hours: '4–5h',
     prereqs: [],
-    crossPhaseLinks: [16],
+    crossPhaseLinks: [18],
     conceptChecks: [
       'What is the difference between a PDF and a PMF?',
       'State Bayes\' theorem and explain what prior, likelihood, and posterior mean.',
@@ -1071,14 +1071,14 @@ const LESSONS = [
       { type: 'Do', text: 'Implement Bayes\' theorem for a spam filter' },
     ],
     projects: [
-      { label: 'NEW', text: 'Bayesian spam filter from scratch' },
+      { text: 'Bayesian spam filter from scratch' },
     ],
   },
   {
-    id: 18, phase: 'p3', title: 'Expectation, Variance, and Covariance',
+    id: 20, phase: 'p3', title: 'Expectation, Variance, and Covariance',
     status: 'not-started', hours: '3–5h',
-    prereqs: [17],
-    crossPhaseLinks: [7, 8],
+    prereqs: [19],
+    crossPhaseLinks: [8, 9],
     conceptChecks: [
       'What is expected value geometrically (center of mass)?',
       'What does the covariance matrix being positive semi-definite mean?',
@@ -1093,14 +1093,14 @@ const LESSONS = [
       { type: 'Do', text: 'Generate correlated 2D data, compute covariance matrix, find PCA directions' },
     ],
     projects: [
-      { label: 'NEW', text: 'PCA from covariance eigenvectors (ties SVD ↔ statistics)' },
+      { text: 'PCA from covariance eigenvectors (ties SVD ↔ statistics)' },
     ],
   },
   {
-    id: 19, phase: 'p3', title: 'Maximum Likelihood Estimation',
+    id: 21, phase: 'p3', title: 'Maximum Likelihood Estimation',
     status: 'not-started', hours: '3–4h',
-    prereqs: [17, 18],
-    crossPhaseLinks: [15],
+    prereqs: [19, 20],
+    crossPhaseLinks: [16],
     conceptChecks: [
       'What does "maximum likelihood" mean in plain English?',
       'Why do we maximize log-likelihood instead of likelihood?',
@@ -1117,9 +1117,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 20, phase: 'p3', title: 'Information Theory — Entropy, KL, Cross-Entropy, and Mutual Information',
+    id: 22, phase: 'p3', title: 'Information Theory — Entropy, KL, Cross-Entropy, and Mutual Information',
     status: 'not-started', hours: '4–6h',
-    prereqs: [19],
+    prereqs: [21],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does entropy measure? When is it maximized?',
@@ -1138,10 +1138,10 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 21, phase: 'p3', title: 'Bayesian Reasoning and Inference',
+    id: 23, phase: 'p3', title: 'Bayesian Reasoning and Inference',
     status: 'not-started', hours: '5–7h',
-    prereqs: [17, 19, 20],
-    crossPhaseLinks: [10],
+    prereqs: [19, 21, 22],
+    crossPhaseLinks: [11],
     conceptChecks: [
       'How is L2 regularization equivalent to a Gaussian prior on weights?',
       'What is the difference between MLE and MAP estimation?',
@@ -1157,14 +1157,14 @@ const LESSONS = [
       { type: 'Do', text: 'Sequential updating: coin bias posterior converging with more flips' },
     ],
     projects: [
-      { label: 'NEW', text: 'Bayesian sequential updating visualizer' },
+      { text: 'Bayesian sequential updating visualizer' },
     ],
   },
   // ─── Phase 3b: Applied Statistics ───
   {
-    id: 2101, label: '21b', phase: 'p3b', title: 'Hypothesis Testing, P-Values, and What They Actually Mean',
+    id: 24, phase: 'p4', title: 'Hypothesis Testing, P-Values, and What They Actually Mean',
     status: 'not-started', hours: '3–5h',
-    prereqs: [21],
+    prereqs: [23],
     crossPhaseLinks: [],
     conceptChecks: [
       'What does a p-value actually mean? What does it NOT mean?',
@@ -1182,9 +1182,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 2102, label: '21c', phase: 'p3b', title: 'Experimental Design and Common Statistical Fallacies',
+    id: 25, phase: 'p4', title: 'Experimental Design and Common Statistical Fallacies',
     status: 'not-started', hours: '3–4h',
-    prereqs: [2101],
+    prereqs: [24],
     crossPhaseLinks: [],
     conceptChecks: [
       'Why is random assignment important for causal claims?',
@@ -1202,12 +1202,12 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 2103, label: '21d', phase: 'p3b', title: 'Regression — From Linear to Logistic and Beyond',
+    id: 26, phase: 'p4', title: 'Regression — From Linear to Logistic and Beyond',
     status: 'not-started', hours: '4–6h',
-    prereqs: [2101, 9],
+    prereqs: [24, 10],
     crossPhaseLinks: [],
     conceptChecks: [
-      'How does linear regression connect to projection (Lesson 9)?',
+      'How does linear regression connect to projection (Lesson 10)?',
       'What does logistic regression model and why is it used for classification?',
       'What is regularization doing in the Bayesian interpretation?',
     ],
@@ -1222,9 +1222,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 2104, label: '21e', phase: 'p3b', title: 'Causal Inference — From Correlation to Causation',
+    id: 27, phase: 'p4', title: 'Causal Inference — From Correlation to Causation',
     status: 'not-started', hours: '4–5h',
-    prereqs: [2102],
+    prereqs: [25],
     crossPhaseLinks: [],
     conceptChecks: [
       'What is the difference between seeing and doing (Pearl\'s do-calculus)?',
@@ -1242,9 +1242,9 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 2105, label: '21f', phase: 'p3b', title: 'Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates',
+    id: 28, phase: 'p4', title: 'Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates',
     status: 'not-started', hours: '3–4h',
-    prereqs: [2103, 2104],
+    prereqs: [26, 27],
     crossPhaseLinks: [],
     conceptChecks: [
       'How do you evaluate competing statistical claims in a real controversy?',
@@ -1262,9 +1262,9 @@ const LESSONS = [
   },
   // ─── Phase 3c: Extended Mathematical Foundations ───
   {
-    id: 2106, label: '21g', phase: 'p3c', title: 'Computability and Complexity — The Limits of Knowledge',
+    id: 29, phase: 'p5', title: 'Computability and Complexity — The Limits of Knowledge',
     status: 'not-started', hours: '4–6h',
-    prereqs: [21],
+    prereqs: [23],
     crossPhaseLinks: [],
     conceptChecks: [
       'Can you explain the halting problem proof (diagonal argument)?',
@@ -1283,14 +1283,14 @@ const LESSONS = [
       { type: 'Do', text: 'Rice\'s theorem application: list 5 alignment properties, explain why each is undecidable in general' },
     ],
     projects: [
-      { label: 'NEW', text: 'Kolmogorov complexity estimation: shortest programs for 5 different strings' },
+      { text: 'Kolmogorov complexity estimation: shortest programs for 5 different strings' },
     ],
   },
   {
-    id: 2107, label: '21h', phase: 'p3c', title: 'Abstract Algebra — Groups, Symmetry, and Neural Networks',
+    id: 30, phase: 'p5', title: 'Abstract Algebra — Groups, Symmetry, and Neural Networks',
     status: 'not-started', hours: '4–6h',
-    prereqs: [7, 8],
-    crossPhaseLinks: [2802],
+    prereqs: [8, 9],
+    crossPhaseLinks: [44],
     conceptChecks: [
       'What are the four axioms of a group? Give three concrete examples.',
       'Why does permuting hidden neurons give the same function? What group is this?',
@@ -1308,14 +1308,14 @@ const LESSONS = [
       { type: 'Do', text: 'Demonstrate neuron permutation invariance in a PyTorch network' },
     ],
     projects: [
-      { label: 'NEW', text: 'Orbit counting for networks with identical vs distinct neurons' },
+      { text: 'Orbit counting for networks with identical vs distinct neurons' },
     ],
   },
   {
-    id: 2108, label: '21i', phase: 'p3c', title: 'Topology and Manifolds — The Shape of Data and Loss',
+    id: 31, phase: 'p5', title: 'Topology and Manifolds — The Shape of Data and Loss',
     status: 'not-started', hours: '4–6h',
-    prereqs: [16],
-    crossPhaseLinks: [2802],
+    prereqs: [18],
+    crossPhaseLinks: [44],
     conceptChecks: [
       'What is the manifold hypothesis and why does it explain deep learning\'s success?',
       'How does a ReLU layer divide space into flat regions?',
@@ -1332,14 +1332,14 @@ const LESSONS = [
       { type: 'Do', text: 'Train a classifier on concentric circles, visualize layer-by-layer untangling' },
     ],
     projects: [
-      { label: 'NEW', text: 'Intrinsic dimensionality estimation of MNIST / word embeddings' },
+      { text: 'Intrinsic dimensionality estimation of MNIST / word embeddings' },
     ],
   },
   {
-    id: 2109, label: '21j', phase: 'p3c', title: 'Differential Equations and Dynamical Systems — Training as Flow',
+    id: 32, phase: 'p5', title: 'Differential Equations and Dynamical Systems — Training as Flow',
     status: 'not-started', hours: '4–5h',
-    prereqs: [13, 15],
-    crossPhaseLinks: [2802],
+    prereqs: [14, 16],
+    crossPhaseLinks: [44],
     conceptChecks: [
       'What is gradient flow and how does it relate to gradient descent?',
       'What do eigenvalues of the Jacobian at a fixed point tell you about stability?',
@@ -1356,13 +1356,13 @@ const LESSONS = [
       { type: 'Do', text: 'Gradient flow on a 2-parameter loss: trace trajectories to minima' },
     ],
     projects: [
-      { label: 'NEW', text: 'Euler method instability: learning rate as step size' },
+      { text: 'Euler method instability: learning rate as step size' },
     ],
   },
   {
-    id: 2110, label: '21k', phase: 'p3c', title: 'Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason',
+    id: 33, phase: 'p5', title: 'Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason',
     status: 'not-started', hours: '4–5h',
-    prereqs: [2106],
+    prereqs: [29],
     crossPhaseLinks: [],
     conceptChecks: [
       'State Gödel\'s first incompleteness theorem informally. What does it say can\'t be done?',
@@ -1380,15 +1380,15 @@ const LESSONS = [
       { type: 'Do', text: 'Write a Python quine — self-reference made concrete' },
     ],
     projects: [
-      { label: 'NEW', text: 'Löb\'s theorem thought exercise: why can\'t an AI prove its own alignment?' },
+      { text: 'Löb\'s theorem thought exercise: why can\'t an AI prove its own alignment?' },
     ],
   },
   // ─── Phase 4: Neural Networks ───
   {
-    id: 22, phase: 'p4', title: 'How a Single Neuron Works',
+    id: 34, phase: 'p6', title: 'How a Single Neuron Works',
     status: 'not-started', hours: '3–4h',
-    prereqs: [9],
-    crossPhaseLinks: [14, 15],
+    prereqs: [10],
+    crossPhaseLinks: [15, 16],
     conceptChecks: [
       'What are the three steps a single neuron computes?',
       'Why can\'t a single neuron learn XOR?',
@@ -1404,21 +1404,21 @@ const LESSONS = [
       { type: 'Do', text: 'Implement a single neuron, train on AND/OR/XOR, discover XOR fails' },
     ],
     projects: [
-      { label: 'NEW', text: 'Single neuron trainer (AND, OR, XOR discovery)' },
+      { text: 'Single neuron trainer (AND, OR, XOR discovery)' },
     ],
   },
   {
-    id: 23, phase: 'p4', title: 'The Forward Pass as Matrix Multiplications',
+    id: 35, phase: 'p6', title: 'The Forward Pass as Matrix Multiplications',
     status: 'not-started', hours: '6–8h',
-    prereqs: [22],
-    crossPhaseLinks: [3, 4, 5],
+    prereqs: [34],
+    crossPhaseLinks: [4, 5, 6],
     conceptChecks: [
       'How is a layer of neurons the same as a matrix multiplication?',
       'What does the forward pass f₃(f₂(f₁(x))) look like in terms of matrices?',
       'What does softmax do and why do we need it?',
     ],
     failureModes: [
-      'Losing the connection to linear algebra: each layer IS Lesson 3 (a linear transformation) + a nonlinearity',
+      'Losing the connection to linear algebra: each layer IS Lesson 4 (a linear transformation) + a nonlinearity',
       'Thinking each neuron is independent — they share inputs, and the matrix captures ALL neurons in a layer simultaneously',
     ],
     mvl: [
@@ -1426,14 +1426,14 @@ const LESSONS = [
       { type: 'Do', text: 'Implement 2-layer MLP from scratch in NumPy, train on MNIST' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Build MLP on top of micrograd engine; train on MNIST' },
+      { text: 'Build MLP on top of micrograd engine; train on MNIST' },
     ],
   },
   {
-    id: 24, phase: 'p4', title: 'Backpropagation Through the Full Network',
+    id: 36, phase: 'p6', title: 'Backpropagation Through the Full Network',
     status: 'not-started', hours: '6–8h',
-    prereqs: [23],
-    crossPhaseLinks: [14, 15],
+    prereqs: [35],
+    crossPhaseLinks: [15, 16],
     conceptChecks: [
       'Why do vanishing gradients happen? How do residual connections fix them?',
       'What does batch normalization do to activations?',
@@ -1448,14 +1448,14 @@ const LESSONS = [
       { type: 'Do', text: 'Manually backprop through cross-entropy → linear → tanh → batchnorm' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add residual connections + batchnorm to MLP' },
+      { text: 'Add residual connections + batchnorm to MLP' },
     ],
   },
   {
-    id: 25, phase: 'p4', title: 'Attention — Dot Products in Action',
+    id: 37, phase: 'p6', title: 'Attention — Dot Products in Action',
     status: 'not-started', hours: '5–7h',
-    prereqs: [24],
-    crossPhaseLinks: [5, 9],
+    prereqs: [36],
+    crossPhaseLinks: [6, 10],
     conceptChecks: [
       'What are Q, K, V and where do they come from?',
       'Why is the attention score a dot product? What does it measure?',
@@ -1471,14 +1471,14 @@ const LESSONS = [
       { type: 'Do', text: 'Implement single-head attention from scratch in NumPy, visualize attention matrix' },
     ],
     projects: [
-      { label: 'NEW', text: 'Attention mechanism from scratch + heatmap visualization' },
+      { text: 'Attention mechanism from scratch + heatmap visualization' },
     ],
   },
   {
-    id: 26, phase: 'p4', title: 'Building a Transformer from Scratch',
+    id: 38, phase: 'p6', title: 'Building a Transformer from Scratch',
     status: 'not-started', hours: '10–15h',
-    prereqs: [25],
-    crossPhaseLinks: [10, 20],
+    prereqs: [37],
+    crossPhaseLinks: [11, 22],
     conceptChecks: [
       'What is the residual stream and why is it the backbone of the transformer?',
       'What does causal masking do and why is it necessary for language modeling?',
@@ -1494,14 +1494,14 @@ const LESSONS = [
       { type: 'Do', text: 'Build a working GPT from scratch, generate text' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Full GPT build — the culminating coding project' },
+      { text: 'Full GPT build — the culminating coding project' },
     ],
   },
   {
-    id: 2601, label: '26b', phase: 'p4', title: 'Reinforcement Learning Foundations',
+    id: 39, phase: 'p6', title: 'Reinforcement Learning Foundations',
     status: 'not-started', hours: '5–7h',
-    prereqs: [26],
-    crossPhaseLinks: [15, 20],
+    prereqs: [38],
+    crossPhaseLinks: [16, 22],
     conceptChecks: [
       'What are the components of an MDP (states, actions, rewards, transitions)?',
       'What does a policy gradient update do intuitively?',
@@ -1517,14 +1517,14 @@ const LESSONS = [
       { type: 'Read', text: 'Hugging Face — "Illustrating RLHF"' },
     ],
     projects: [
-      { label: 'NEW', text: 'GridWorld policy gradient + reward hacking demo' },
+      { text: 'GridWorld policy gradient + reward hacking demo' },
     ],
   },
   {
-    id: 2602, label: '26c', phase: 'p4', title: 'The LLM Training Pipeline',
+    id: 40, phase: 'p6', title: 'The LLM Training Pipeline',
     status: 'not-started', hours: '4–6h',
-    prereqs: [2601],
-    crossPhaseLinks: [19, 21],
+    prereqs: [39],
+    crossPhaseLinks: [21, 23],
     conceptChecks: [
       'Name the 4 stages of the LLM pipeline and what each one optimizes.',
       'What math from your curriculum appears at each stage?',
@@ -1543,10 +1543,10 @@ const LESSONS = [
   },
   // ─── Phase 5: Interpretability ───
   {
-    id: 27, phase: 'p5', title: 'What Interpretability Researchers Actually Do',
+    id: 41, phase: 'p7', title: 'What Interpretability Researchers Actually Do',
     status: 'not-started', hours: '6–8h',
-    prereqs: [2602],
-    crossPhaseLinks: [2, 5, 9, 10],
+    prereqs: [40],
+    crossPhaseLinks: [3, 6, 10, 11],
     conceptChecks: [
       'What is the superposition hypothesis?',
       'What is the difference between a feature and a neuron?',
@@ -1562,14 +1562,14 @@ const LESSONS = [
       { type: 'Do', text: 'Install TransformerLens, load GPT-2, extract and visualize attention patterns' },
     ],
     projects: [
-      { label: 'NEW', text: 'TransformerLens setup + GPT-2 attention visualization' },
+      { text: 'TransformerLens setup + GPT-2 attention visualization' },
     ],
   },
   {
-    id: 28, phase: 'p5', title: 'Circuits and Features in Practice',
+    id: 42, phase: 'p7', title: 'Circuits and Features in Practice',
     status: 'not-started', hours: '8–12h',
-    prereqs: [27],
-    crossPhaseLinks: [8],
+    prereqs: [41],
+    crossPhaseLinks: [9],
     conceptChecks: [
       'What is an induction head and what does it do?',
       'What is the residual stream in terms of how components read and write?',
@@ -1585,14 +1585,14 @@ const LESSONS = [
       { type: 'Do (scaffolded)', text: '1) Load 2-layer model in TransformerLens. 2) Identify induction heads by attention pattern. 3) Run activation patching on a simple copying task. 4) Then try full replication.' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Induction head finding + activation patching in TransformerLens' },
+      { text: 'Induction head finding + activation patching in TransformerLens' },
     ],
   },
   {
-    id: 2801, label: '28b', phase: 'p5', title: 'Scaling Laws, Emergent Capabilities, and Phase Transitions',
+    id: 43, phase: 'p7', title: 'Scaling Laws, Emergent Capabilities, and Phase Transitions',
     status: 'not-started', hours: '5–7h',
-    prereqs: [28],
-    crossPhaseLinks: [16],
+    prereqs: [42],
+    crossPhaseLinks: [18],
     conceptChecks: [
       'What is a scaling law and what three variables does it relate?',
       'What did the Chinchilla paper change about how labs train models?',
@@ -1608,14 +1608,14 @@ const LESSONS = [
       { type: 'Read', text: 'Rich Sutton — "The Bitter Lesson" (1 page)' },
     ],
     projects: [
-      { label: 'NEW', text: 'Plot scaling laws from published benchmarks (log-log)' },
+      { text: 'Plot scaling laws from published benchmarks (log-log)' },
     ],
   },
   {
-    id: 2802, label: '28c', phase: 'p5', title: 'Singular Learning Theory — The Geometry of Learning',
+    id: 44, phase: 'p7', title: 'Singular Learning Theory — The Geometry of Learning',
     status: 'not-started', hours: '5–8h',
-    prereqs: [2801],
-    crossPhaseLinks: [7, 16],
+    prereqs: [43],
+    crossPhaseLinks: [8, 18],
     conceptChecks: [
       'Why do standard statistics (AIC, BIC) give wrong answers for neural networks?',
       'What is the RLCT and how does it replace parameter count as a complexity measure?',
@@ -1631,15 +1631,15 @@ const LESSONS = [
       { type: 'Do', text: 'Plot f(w₁,w₂) = (w₁w₂)². See the cross-shaped valley. Compute the Hessian at origin — it\'s zero.' },
     ],
     projects: [
-      { label: 'NEW', text: 'Singularity visualization + parameter symmetry demo' },
+      { text: 'Singularity visualization + parameter symmetry demo' },
     ],
   },
   // ─── Phase 6: Alignment Theory ───
   {
-    id: 29, phase: 'p6', title: 'Game Theory Foundations',
+    id: 45, phase: 'p8', title: 'Game Theory Foundations',
     status: 'not-started', hours: '6–8h',
     prereqs: [],
-    crossPhaseLinks: [4],
+    crossPhaseLinks: [5],
     conceptChecks: [
       'What is a Nash equilibrium? Is it always the best outcome?',
       'In the Prisoner\'s Dilemma, why is mutual defection the Nash equilibrium despite mutual cooperation being better?',
@@ -1655,14 +1655,14 @@ const LESSONS = [
       { type: 'Read', text: 'Scott Alexander — "Meditations on Moloch"' },
     ],
     projects: [
-      { label: 'NEW', text: 'Prisoner\'s Dilemma tournament simulator (tit-for-tat etc.)' },
+      { text: 'Prisoner\'s Dilemma tournament simulator (tit-for-tat etc.)' },
     ],
   },
   {
-    id: 30, phase: 'p6', title: 'Decision Theory — CDT, EDT, and FDT',
+    id: 46, phase: 'p8', title: 'Decision Theory — CDT, EDT, and FDT',
     status: 'not-started', hours: '5–7h',
-    prereqs: [29],
-    crossPhaseLinks: [17, 21],
+    prereqs: [45],
+    crossPhaseLinks: [19, 23],
     conceptChecks: [
       'Explain CDT, EDT, and FDT each in one sentence.',
       'What does each decision theory say about Newcomb\'s Problem? Why?',
@@ -1678,14 +1678,14 @@ const LESSONS = [
       { type: 'Read', text: 'Yudkowsky & Soares — "Functional Decision Theory" (2018)' },
     ],
     projects: [
-      { label: 'EXTENDS', text: 'Add Newcomb simulator + DT comparison to game theory project' },
+      { text: 'Add Newcomb simulator + DT comparison to game theory project' },
     ],
   },
   {
-    id: 31, phase: 'p6', title: 'Anthropics and Self-Locating Beliefs',
+    id: 47, phase: 'p8', title: 'Anthropics and Self-Locating Beliefs',
     status: 'not-started', hours: '4–6h',
-    prereqs: [30],
-    crossPhaseLinks: [17, 21],
+    prereqs: [46],
+    crossPhaseLinks: [19, 23],
     conceptChecks: [
       'What is the Sleeping Beauty problem? What do thirders and halfers believe, and why?',
       'State Bostrom\'s Simulation Argument\'s three propositions.',
@@ -1701,14 +1701,14 @@ const LESSONS = [
       { type: 'Do', text: 'Sleeping Beauty simulator: run 10,000 trials from both perspectives' },
     ],
     projects: [
-      { label: 'NEW', text: 'Sleeping Beauty + Doomsday Argument simulators' },
+      { text: 'Sleeping Beauty + Doomsday Argument simulators' },
     ],
   },
   {
-    id: 32, phase: 'p6', title: 'The Alignment Problem — Technical Foundations',
+    id: 48, phase: 'p8', title: 'The Alignment Problem — Technical Foundations',
     status: 'not-started', hours: '6–8h',
-    prereqs: [29, 30, 31],
-    crossPhaseLinks: [27, 28, 15, 20],
+    prereqs: [45, 46, 47],
+    crossPhaseLinks: [41, 42, 16, 22],
     conceptChecks: [
       'What is the difference between outer alignment and inner alignment?',
       'What is a mesa-optimizer and why is it dangerous?',
@@ -1726,10 +1726,10 @@ const LESSONS = [
     projects: [],
   },
   {
-    id: 33, phase: 'p6', title: 'Open Problems and Research Frontiers',
+    id: 49, phase: 'p8', title: 'Open Problems and Research Frontiers',
     status: 'not-started', hours: '4–6h',
-    prereqs: [32],
-    crossPhaseLinks: [27, 28, 7],
+    prereqs: [48],
+    crossPhaseLinks: [41, 42, 8],
     conceptChecks: [
       'What is scalable oversight and why is it hard?',
       'What is ELK (Eliciting Latent Knowledge)?',
@@ -1751,7 +1751,7 @@ const LESSONS = [
 // Review checkpoints
 const CHECKPOINTS = [
   {
-    id: 'cp1', afterLesson: 11, phase: 'p1', title: 'Phase 1 Review: LA → ML Bridge',
+    id: 'cp1', afterLesson: 12, phase: 'p1', title: 'Phase 1 Review: LA → ML Bridge',
     exercises: [
       '<strong>Matrix decomposition relay:</strong> Take a 4×4 matrix. Compute rank, determinant, eigenvalues, SVD. For each, state one thing an ML researcher would care about.',
       '<strong>Attention from scratch:</strong> Using ONLY linear algebra (no neural network framing), compute Q·Kᵀ for two 3-dimensional query and key vectors. Explain what the resulting scalar means geometrically.',
@@ -1759,7 +1759,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp2', afterLesson: 16, phase: 'p2', title: 'Phase 2 Review: Calculus → Training Bridge',
+    id: 'cp2', afterLesson: 18, phase: 'p2', title: 'Phase 2 Review: Calculus → Training Bridge',
     exercises: [
       '<strong>Full backprop trace:</strong> Given a 2-layer MLP with specific weights, compute the forward pass AND backward pass by hand for one data point. Verify your gradients numerically.',
       '<strong>Loss landscape connection:</strong> Create a 2-parameter loss function. Visualize gradient descent with different learning rates. Connect to eigenvalues of the Hessian.',
@@ -1767,7 +1767,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp3', afterLesson: 2110, phase: 'p3', title: 'Phase 3 Review: Probability + Math Foundations → LLM Training Bridge',
+    id: 'cp3', afterLesson: 33, phase: 'p3', title: 'Phase 3 Review: Probability + Math Foundations → LLM Training Bridge',
     exercises: [
       '<strong>Full training loop explained:</strong> Starting from MLE, derive why cross-entropy is the loss function for next-token prediction. Connect entropy, KL divergence, and the training objective.',
       '<strong>Regularization unification:</strong> Show that L2 weight decay = Gaussian prior = MAP estimation. Compute the MAP estimate for a simple 1-parameter model.',
@@ -1775,23 +1775,23 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp4', afterLesson: 2602, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer Bridge',
+    id: 'cp4', afterLesson: 40, phase: 'p6', title: 'Phase 4 Review: Everything → Transformer Bridge',
     exercises: [
       '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix multiplication, state: the input/output dimensions, the rank of the weight matrix, what information bottleneck it creates.',
-      '<strong>Attention as projection:</strong> Show that attention is a form of weighted projection. Connect attention weights → linear combinations (Lesson 2) → projections (Lesson 9).',
+      '<strong>Attention as projection:</strong> Show that attention is a form of weighted projection. Connect attention weights → linear combinations (Lesson 3) → projections (Lesson 10).',
       '<strong>End-to-end pipeline:</strong> Trace a model from pre-training (MLE, cross-entropy) through SFT (distribution shift) to RLHF (policy gradient + KL penalty). For each stage, name the math concepts and which lesson covers them.',
     ],
   },
   {
-    id: 'cp5', afterLesson: 2802, phase: 'p5', title: 'Phase 5 Review: Interp → Alignment Bridge',
+    id: 'cp5', afterLesson: 44, phase: 'p7', title: 'Phase 5 Review: Interp → Alignment Bridge',
     exercises: [
-      '<strong>Feature geometry:</strong> In TransformerLens, extract residual stream activations for 100 inputs. Run PCA. Interpret the top 3 components. Connect to eigenvectors (Lesson 7) and change of basis (Lesson 10).',
+      '<strong>Feature geometry:</strong> In TransformerLens, extract residual stream activations for 100 inputs. Run PCA. Interpret the top 3 components. Connect to eigenvectors (Lesson 8) and change of basis (Lesson 11).',
       '<strong>Superposition quantification:</strong> For a set of feature directions found by an SAE, compute pairwise cosine similarities. Visualize as a heatmap. How orthogonal are they?',
       '<strong>Scaling + SLT connection:</strong> How would you use the Local Learning Coefficient (LLC) to detect when a model acquires a new capability during training? What would a phase transition look like in an LLC plot?',
     ],
   },
   {
-    id: 'cp6', afterLesson: 33, phase: 'p6', title: 'Phase 6 Review: Full Integration',
+    id: 'cp6', afterLesson: 49, phase: 'p8', title: 'Phase 6 Review: Full Integration',
     exercises: [
       '<strong>Alignment scenario analysis:</strong> A model trained with RLHF shows unexpected behavior in deployment. Using game theory (what strategies are at play?), decision theory (what decision procedure is the model using?), Bayesian reasoning (what\'s your posterior that it\'s deceptive?), and interpretability (what would you look for internally?) — write a full analysis.',
       '<strong>Mathematical connections map:</strong> Create a concept map connecting at least 15 specific concepts from across all 6 phases. Each connection should be a concrete statement, not just "related to."',
@@ -1920,7 +1920,7 @@ function updateStats() {
 
   function parseHours(h) {
     const m = h.match(/(\d+)–(\d+)/);
-    return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
+    return m ? (parseInt(m[2]) + parseInt(m[3])) / 2 : 5;
   }
   let done = 0, remaining = 0;
   LESSONS.forEach(l => {
@@ -2033,13 +2033,13 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { label: 'SETUP', x: 30, y: 12, color: '#94a3b8' },
-    { label: 'LINEAR ALGEBRA', x: 80, y: 60, color: '#6ee7b7' },
-    { label: 'CALCULUS', x: 340, y: 230, color: '#818cf8' },
-    { label: 'PROBABILITY', x: 530, y: 60, color: '#f9a8d4' },
-    { label: 'NEURAL NETS', x: 720, y: 155, color: '#fbbf24' },
-    { label: 'INTERP', x: 910, y: 410, color: '#38bdf8' },
-    { label: 'ALIGNMENT', x: 1080, y: 50, color: '#c084fc' },
+    { x: 30, y: 12, color: '#94a3b8' },
+    { x: 80, y: 60, color: '#6ee7b7' },
+    { x: 340, y: 230, color: '#818cf8' },
+    { x: 530, y: 60, color: '#f9a8d4' },
+    { x: 720, y: 155, color: '#fbbf24' },
+    { x: 910, y: 410, color: '#38bdf8' },
+    { x: 1080, y: 50, color: '#c084fc' },
   ];
 
   let labelsHtml = '';
@@ -2228,7 +2228,7 @@ function renderTimeline() {
 
   function parseHours(h) {
     const match = h.match(/(\d+)–(\d+)/);
-    if (match) return (parseInt(match[1]) + parseInt(match[2])) / 2;
+    if (match) return (parseInt(match[2]) + parseInt(match[3])) / 2;
     return 5;
   }
 
@@ -2387,7 +2387,7 @@ function showDayPicker(dk) {
   const dayCounts = getScheduledDayCounts();
 
   const parts = dk.split('-');
-  const dateStr = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]))
+  const dateStr = new Date(parseInt(parts[0]), parseInt(parts[2])-1, parseInt(parts[3]))
     .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   let html = `<div class="detail-header">

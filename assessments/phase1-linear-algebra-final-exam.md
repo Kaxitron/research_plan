@@ -1,6 +1,6 @@
 # Phase 1: Linear Algebra Final Examination
 
-**The Path to AI Alignment — Lessons 1–10 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 2–10 Comprehensive Assessment**
 
 ---
 
@@ -296,12 +296,12 @@ Principal Component Analysis finds the directions of maximum variance in your da
 The mathematical pipeline connects nearly every lesson:
 
 1. **Center the data** (subtract the mean) — makes the covariance matrix meaningful
-2. **Compute the covariance matrix** C = (1/n) XᵀX — this is symmetric and PSD (Lesson 10)
-3. **Find the eigenvalues and eigenvectors of C** — the eigenvectors ARE the principal components (Lesson 7)
+2. **Compute the covariance matrix** C = (1/n) XᵀX — this is symmetric and PSD (Lesson 11)
+3. **Find the eigenvalues and eigenvectors of C** — the eigenvectors ARE the principal components (Lesson 8)
 4. **Sort by eigenvalue** (largest = most variance) — the eigenvalues tell you how much variance each direction captures
-5. **Project data onto the top-k eigenvectors** — this is a change of basis + rank-k approximation (Lessons 9, 10, 8)
+5. **Project data onto the top-k eigenvectors** — this is a change of basis + rank-k approximation (Lessons 10, 11, 9)
 
-**Equivalently:** compute the SVD of the centered data matrix X = UΣVᵀ. The columns of V are the principal components, and the singular values encode the variance. SVD and eigendecomposition of the covariance matrix give the same answer. (Lesson 8)
+**Equivalently:** compute the SVD of the centered data matrix X = UΣVᵀ. The columns of V are the principal components, and the singular values encode the variance. SVD and eigendecomposition of the covariance matrix give the same answer. (Lesson 9)
 
 ### Part 1: PCA on 2D Synthetic Data
 
@@ -330,11 +330,11 @@ The mathematical pipeline connects nearly every lesson:
 
 **Q1.** Why is PCA a change of basis? What are the old coordinates and new coordinates? In the new coordinate system, what special property does the data have? *(Hint: the covariance matrix becomes diagonal.)*
 
-**Q2.** The rank-k PCA reconstruction is the best rank-k approximation in the Frobenius norm sense (Eckart–Young theorem). Explain this connection to SVD's low-rank approximation from Lesson 8.
+**Q2.** The rank-k PCA reconstruction is the best rank-k approximation in the Frobenius norm sense (Eckart–Young theorem). Explain this connection to SVD's low-rank approximation from Lesson 9.
 
 **Q3.** When interpretability researchers run PCA on transformer activations, they're looking for "important directions" in the residual stream. Using your PCA intuition: what does a large eigenvalue mean for a direction in activation space? What would it mean if most variance concentrated in very few components?
 
-**Q4.** PCA finds orthogonal directions. But the superposition hypothesis (Lesson 2) says features in neural networks are almost-orthogonal, not exactly orthogonal. Why might PCA miss features that sparse autoencoders can find?
+**Q4.** PCA finds orthogonal directions. But the superposition hypothesis (Lesson 3) says features in neural networks are almost-orthogonal, not exactly orthogonal. Why might PCA miss features that sparse autoencoders can find?
 
 ### Constraints & Requirements
 
@@ -347,15 +347,15 @@ The mathematical pipeline connects nearly every lesson:
 
 | Lesson | How It Appears in PCA |
 |--------|----------------------|
-| **Lesson 1: Vectors** | Each data point is a vector; each image is a 784-dim vector |
-| **Lesson 2: Span & Basis** | Principal components form a new basis; PCA subspace is their span |
-| **Lesson 3: Transformations** | Projecting onto PCA subspace is a linear transformation |
-| **Lesson 5: Rank** | Rank-k approximation discards the least important dimensions |
-| **Lesson 6: Determinant** | det(covariance) = product of eigenvalues = generalized variance |
-| **Lesson 7: Eigenvalues** | PCA directions ARE eigenvectors of the covariance matrix |
-| **Lesson 8: SVD** | SVD of the data matrix gives PCA directly; low-rank = compression |
-| **Lesson 9: Dot Products** | Projection onto components uses dot products; orthogonality of PCs |
-| **Lesson 10: Change of Basis** | PCA IS a change of basis to decorrelated coordinates; norms measure reconstruction error |
+| **Lesson 2: Vectors** | Each data point is a vector; each image is a 784-dim vector |
+| **Lesson 3: Span & Basis** | Principal components form a new basis; PCA subspace is their span |
+| **Lesson 4: Transformations** | Projecting onto PCA subspace is a linear transformation |
+| **Lesson 6: Rank** | Rank-k approximation discards the least important dimensions |
+| **Lesson 7: Determinant** | det(covariance) = product of eigenvalues = generalized variance |
+| **Lesson 8: Eigenvalues** | PCA directions ARE eigenvectors of the covariance matrix |
+| **Lesson 9: SVD** | SVD of the data matrix gives PCA directly; low-rank = compression |
+| **Lesson 10: Dot Products** | Projection onto components uses dot products; orthogonality of PCs |
+| **Lesson 11: Change of Basis** | PCA IS a change of basis to decorrelated coordinates; norms measure reconstruction error |
 
 ---
 
