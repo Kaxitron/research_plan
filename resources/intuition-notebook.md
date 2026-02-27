@@ -18,6 +18,9 @@ No matter how complicated a matrix looks, it's doing three simple things in sequ
 Most vectors get knocked off their line by a matrix. Eigenvectors stay on their line — they just get stretched by λ. They're the "natural axes" of the transformation. This is why PCA works: the eigenvectors of the covariance matrix ARE the directions of maximum variance.
 
 
+### PCA's eigenvectors are just SVD's right singular vectors
+We have our covariance matrix C = (1/n)XᵀX, and we were going to find its eigenvectors. But if we take X = UΣVᵀ and expand XᵀX, we get VΣᵀUᵀUΣVᵀ = VΣ²Vᵀ (since UᵀU = I). That's already the eigendecomposition of XᵀX — V contains the eigenvectors and Σ² gives the eigenvalues. So the principal components are just the right singular vectors of X. You don't *need* to form XᵀX at all. (In practice, real algorithms exploit this by computing SVD directly on X, which avoids squaring the condition number — but for hand computation, eigendecomposing XᵀX is fine.)
+
 ### Miscellaneous Thoughts
 1. Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.
 2. v*v is the same things as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
