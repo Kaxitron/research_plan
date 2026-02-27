@@ -19,8 +19,9 @@ Most vectors get knocked off their line by a matrix. Eigenvectors stay on their 
 
 
 ### Miscellaneous Thoughts
-Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.
-v*v is the same things as vtv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
+1. Qᵀ = Q⁻¹ only true when columns are orthonormal and matrix is square.
+2. v*v is the same things as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
+3. The diagonal entries of XᵀX are the variance of the features, whereas the off-diagonal values are the correlation of the features.  
 
 ---
 
