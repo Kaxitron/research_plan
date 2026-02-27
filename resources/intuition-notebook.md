@@ -29,14 +29,18 @@ The deeper reason this works so cleanly: AᵀA is always symmetric, which means 
 In practice, real algorithms compute SVD directly on X using iterative methods (never forming XᵀX), which avoids squaring the condition number. But for hand computation, eigendecomposing XᵀX is the right approach.
 
 ### Matrix type taxonomy: what each type "does" to space
-- **Symmetric** → stretches along perpendicular eigen-directions. No rotation. Eigenvalues real, eigenvectors orthogonal. Think: pure scaling in an orthogonal coordinate system.
-- **Orthogonal** → rotates or reflects without stretching. All singular values = 1, preserves lengths and angles. Qᵀ = Q⁻¹.
+- **Symmetric** (Aᵀ = A) → stretches along perpendicular eigen-directions. No rotation. Eigenvalues real, eigenvectors orthogonal. Think: pure scaling in an orthogonal coordinate system.
+- **Orthogonal** (AᵀA = I, equivalently Aᵀ = A⁻¹) → rotates or reflects without stretching. All singular values = 1, preserves lengths and angles. Qᵀ = Q⁻¹.
 - **Symmetric + orthogonal** → pure reflection. Eigenvalues must be real (symmetric) AND have |λ| = 1 (orthogonal), so every eigenvalue is +1 or -1. The +1 directions stay fixed, the -1 directions flip. Special case: all +1 = identity.
 - **General matrix** → does all three: rotates, scales non-uniformly, rotates again. That's SVD: A = UΣVᵀ.
 
 This taxonomy helps you instantly characterize what a matrix does just from knowing its type — before computing anything.
 
 **Don't confuse "symmetric" with "orthogonal"** — the word "orthogonal" does double duty. A **symmetric matrix** has eigenvectors that are orthogonal *to each other*, but the matrix itself stretches space (changes lengths). An **orthogonal matrix** satisfies QᵀQ = I — the matrix *itself* preserves all lengths and angles (no stretching), but its eigenvectors aren't necessarily orthogonal. Concrete example: S = [[3,0],[0,1]] is symmetric (orthogonal eigenvectors [1,0] and [0,1], but stretches x by 3 — circle → ellipse). Q = [[0,-1],[1,0]] is orthogonal (90° rotation, circle → circle, but eigenvectors are complex). "Symmetric" describes the matrix's *eigenvector geometry*. "Orthogonal" describes the matrix's *action on space*.
+
+**Why symmetric can't rotate — the SVD explanation:** Symmetry forces U = V, so SVD becomes A = VΣVᵀ: rotate into eigenbasis (Vᵀ), scale (Σ), rotate back by the exact same amount (V). Steps 1 and 3 cancel → pure stretch, zero net rotation. For a general matrix, U ≠ V and the mismatch between input and output rotations is where rotation comes from.
+
+**Non-uniform scaling looks like rotation on individual vectors:** A symmetric matrix like [[1,-1],[-1,1]] maps [1,0] → [1,-1] — the vector changed direction! But it's not rotation. The vector's eigenvector components got scaled by different amounts (one crushed to 0, the other doubled), warping its direction as a side effect. The test: rotation preserves the unit circle. Symmetric matrices send it to an ellipse. That's scaling, not rotation.
 
 ### Eigenvectors are special because ONLY they survive without rotating
 Most vectors get both stretched AND rotated by a matrix. Eigenvectors ONLY get stretched (by λ). A generic vector like [1, 0] that isn't an eigenvector will end up pointing in a new direction after the transformation. This is what the exam Q1 tests: [1,1] (eigenvector) stays on its line, [1,0] (generic) gets warped in both magnitude and direction.
@@ -124,5 +128,6 @@ The p-value gives you the first thing. What you actually want is the second thin
 ---
 
 *Last updated: Feb 2026*
+
 
 
