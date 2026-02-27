@@ -36,6 +36,8 @@ In practice, real algorithms compute SVD directly on X using iterative methods (
 
 This taxonomy helps you instantly characterize what a matrix does just from knowing its type — before computing anything.
 
+**Don't confuse "symmetric" with "orthogonal"** — the word "orthogonal" does double duty. A **symmetric matrix** has eigenvectors that are orthogonal *to each other*, but the matrix itself stretches space (changes lengths). An **orthogonal matrix** satisfies QᵀQ = I — the matrix *itself* preserves all lengths and angles (no stretching), but its eigenvectors aren't necessarily orthogonal. Concrete example: S = [[3,0],[0,1]] is symmetric (orthogonal eigenvectors [1,0] and [0,1], but stretches x by 3 — circle → ellipse). Q = [[0,-1],[1,0]] is orthogonal (90° rotation, circle → circle, but eigenvectors are complex). "Symmetric" describes the matrix's *eigenvector geometry*. "Orthogonal" describes the matrix's *action on space*.
+
 ### Eigenvectors are special because ONLY they survive without rotating
 Most vectors get both stretched AND rotated by a matrix. Eigenvectors ONLY get stretched (by λ). A generic vector like [1, 0] that isn't an eigenvector will end up pointing in a new direction after the transformation. This is what the exam Q1 tests: [1,1] (eigenvector) stays on its line, [1,0] (generic) gets warped in both magnitude and direction.
 
@@ -122,4 +124,5 @@ The p-value gives you the first thing. What you actually want is the second thin
 ---
 
 *Last updated: Feb 2026*
+
 
