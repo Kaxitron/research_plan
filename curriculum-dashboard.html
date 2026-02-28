@@ -518,10 +518,10 @@
   .mt-lesson {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 5px 0;
+    gap: 10px;
+    padding: 10px 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
   }
@@ -530,7 +530,7 @@
     width: 24px;
     text-align: center;
     font-weight: 600;
-    font-size: 10px;
+    font-size: 11px;
     flex-shrink: 0;
   }
   .mt-lesson-title {
@@ -546,21 +546,21 @@
     flex-shrink: 0;
   }
   .mt-lesson-status {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
   }
 
   /* Mobile Dependency View */
   .md-phase {
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
   .md-phase-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: 14px 16px;
     background: var(--bg-raised);
     border: 1px solid var(--border);
     border-radius: 8px 8px 0 0;
@@ -571,7 +571,7 @@
   .md-phase-header.collapsed { border-radius: 8px; }
   .md-phase-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
   }
   .md-phase-right {
@@ -600,8 +600,8 @@
   .md-lesson-card {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 12px;
+    padding: 12px 14px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background 0.15s;
@@ -609,8 +609,8 @@
   .md-lesson-card:last-child { border-bottom: none; }
   .md-lesson-card:active { background: var(--bg-hover); }
   .md-status-btn {
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: 2px solid;
     background: transparent;
@@ -619,7 +619,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 12px;
     transition: all 0.15s;
     padding: 0;
   }
@@ -636,7 +636,7 @@
   }
   .md-lesson-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text);
     display: block;
     overflow: hidden;
@@ -847,9 +847,9 @@
 
   <div class="main-canvas" id="main-canvas">
     <div class="canvas-controls">
-      <button class="canvas-btn active" onclick="setView('dependency')">Dependency Map</button>
-      <button class="canvas-btn" onclick="setView('timeline')">Timeline</button>
-      <button class="canvas-btn" onclick="setView('calendar')">Calendar</button>
+      <button class="canvas-btn active" onclick="setView('dependency', event)">Dependency Map</button>
+      <button class="canvas-btn" onclick="setView('timeline', event)">Timeline</button>
+      <button class="canvas-btn" onclick="setView('calendar', event)">Calendar</button>
     </div>
     <div class="canvas-legend" id="canvas-legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--complete)"></div> Complete</div>
@@ -1774,6 +1774,9 @@ function refreshAll() {
   updateStats();
 }
 
+// Helper: properly quote string IDs for onclick handlers
+function fmtId(id) { return typeof id === 'string' ? "'" + id + "'" : id; }
+
 function getPhaseColor(phaseId) {
   const p = PHASES.find(ph => ph.id === phaseId);
   return p ? p.color : '#888';
@@ -1796,8 +1799,8 @@ function renderSidebar() {
     </div>`;
     html += `<div id="section-${phase.id}">`;
     phaseLessons.forEach(lesson => {
-      html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
-        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to cycle status"></div>
+      html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${fmtId(lesson.id)})">
+        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${fmtId(lesson.id)}, event)" title="Click to cycle status"></div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.5;width:22px">${lesson.label || lesson.id}</span>
         ${lesson.title}
       </div>`;
@@ -1860,22 +1863,22 @@ function renderGraph() {
     const statusColor = getStatusColor(lesson.status);
     const fillOpacity = lesson.status === 'complete' ? 0.25 : lesson.status === 'in-progress' ? 0.15 : 0.08;
 
-    nodesHtml += `<g class="node-group" onclick="selectLesson(${lesson.id})" id="node-${lesson.id}">
+    nodesHtml += `<g class="node-group" onclick="selectLesson(${fmtId(lesson.id)})" id="node-${lesson.id}">
       <circle class="node-circle" cx="${tx(pos.x)}" cy="${ty(pos.y)}" r="${r}" fill="${color}" fill-opacity="${fillOpacity}" stroke="${statusColor}" />
       <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}" fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.label || lesson.id}</text>
     </g>`;
   });
 
   const phaseLabels = [
-    { x: 60,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
-    { x: 100,  y: 180, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 300,  y: 170, color: '#818cf8', label: 'P2 CALCULUS' },
-    { x: 470,  y: 80,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
-    { x: 470,  y: 600, color: '#f472b6', label: 'P4 STATISTICS' },
-    { x: 640,  y: 80,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
-    { x: 830,  y: 80,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
-    { x: 1000, y: 340, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
-    { x: 1170, y: 80,  color: '#c084fc', label: 'P8 ALIGNMENT' },
+    { x: 70,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
+    { x: 120,  y: 210, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 340,  y: 210, color: '#818cf8', label: 'P2 CALCULUS' },
+    { x: 540,  y: 90,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
+    { x: 540,  y: 730, color: '#f472b6', label: 'P4 STATISTICS' },
+    { x: 740,  y: 90,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
+    { x: 960,  y: 90,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
+    { x: 1160, y: 390, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
+    { x: 1360, y: 90,  color: '#c084fc', label: 'P8 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
@@ -1928,7 +1931,7 @@ function selectLesson(id) {
     <div class="detail-title">Lesson ${lesson.label || lesson.id}: ${lesson.title}</div>
     <div class="detail-meta">
       <div>⏱ <strong>${lesson.hours}</strong></div>
-      <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
+      <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${fmtId(lesson.id)}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
     </div>
   </div>`;
 
@@ -1940,12 +1943,12 @@ function selectLesson(id) {
     html += `<ul class="prereq-list">`;
     lesson.prereqs.forEach(pid => {
       const p = LESSONS.find(l => l.id === pid);
-      html += `<li><span class="prereq-link" onclick="selectLesson(${pid})">Lesson ${p.label || pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
+      html += `<li><span class="prereq-link" onclick="selectLesson(${fmtId(pid)})">Lesson ${p.label || pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
     });
     lesson.crossPhaseLinks.forEach(lid => {
       const l = LESSONS.find(ls => ls.id === lid);
       if (l) {
-        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${lid})">Lesson ${l.label || lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
+        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${fmtId(lid)})">Lesson ${l.label || lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
       }
     });
     html += `</ul>`;
@@ -1973,7 +1976,8 @@ function selectLesson(id) {
   if (lesson.projects.length > 0) {
     html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔨</span> Coding Projects</div><ul class="project-list">`;
     lesson.projects.forEach(p => {
-      html += `<li class="project-item"><span class="project-badge ${p.label.toLowerCase()}">${p.label}</span><span>${p.text}</span></li>`;
+      const label = p.label || 'Project';
+      html += `<li class="project-item"><span class="project-badge ${label.toLowerCase()}">${label}</span><span>${p.text}</span></li>`;
     });
     html += `</ul></div>`;
   }
@@ -2023,10 +2027,21 @@ function closeMobileDetail() {
 }
 
 // ── View Switching ──
-function setView(view) {
+function setView(view, ev) {
   currentView = view;
   document.querySelectorAll('.canvas-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  // Find the correct button even if click target is a child node
+  if (ev && ev.target) {
+    const btn = ev.target.closest('.canvas-btn');
+    if (btn) btn.classList.add('active');
+  } else {
+    // Fallback: mark the button whose text matches
+    document.querySelectorAll('.canvas-btn').forEach(b => {
+      if (view === 'dependency' && b.textContent.includes('Dependency')) b.classList.add('active');
+      else if (view === 'timeline' && b.textContent.includes('Timeline')) b.classList.add('active');
+      else if (view === 'calendar' && b.textContent.includes('Calendar')) b.classList.add('active');
+    });
+  }
 
   const svg = document.getElementById('graph-svg');
   const calView = document.getElementById('calendar-view');
@@ -2041,6 +2056,12 @@ function setView(view) {
   legend.style.display = 'none';
   mobileDep.style.display = 'none';
   mobileTl.style.display = 'none';
+
+  // Reset detail panel when leaving calendar view (don't leave stale day-picker content)
+  if (view !== 'calendar') {
+    calSelectedDate = null;
+    resetDetailPanel();
+  }
 
   if (view === 'dependency') {
     if (isMobile) {
@@ -2063,6 +2084,16 @@ function setView(view) {
     calView.style.display = '';
     renderCalendar();
   }
+}
+
+// Reset detail panel to empty state
+function resetDetailPanel() {
+  selectedLesson = null;
+  document.getElementById('detail-empty').style.display = '';
+  document.getElementById('detail-content').style.display = 'none';
+  document.getElementById('detail-content').innerHTML = '';
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  closeMobileDetail();
 }
 
 // ── Pace Tracker State ──
@@ -2467,7 +2498,7 @@ function renderCalendar() {
 
     dayLessons.forEach(lesson => {
       const color = getPhaseColor(lesson.phase);
-      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();calChipClick(${lesson.id},'${dk}')" title="${lesson.title} — click to view, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${lesson.id},'${dk}')">`;
+      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();calChipClick(${fmtId(lesson.id)},'${dk}')" title="${lesson.title} — click to view, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
       html += `<span class="cal-chip-num">${lesson.label || lesson.id}</span>`;
       html += `<span class="cal-chip-title">${lesson.title}</span>`;
       html += `</div>`;
@@ -2497,7 +2528,7 @@ function renderCalendar() {
     const statusIcon = lesson.status === 'complete' ? '●' : lesson.status === 'in-progress' ? '◐' : '○';
     const days = dayCounts[lesson.id] || 0;
     const dimmed = days > 0 ? 'opacity:0.55;' : '';
-    html += `<div class="cal-pool-chip" style="background:${color}15;color:${color};${dimmed}" draggable="true" ondragstart="calDragStart(event,${lesson.id})" onclick="calPoolClick(${lesson.id})" title="${lesson.title} (${lesson.hours})${days ? ' — scheduled on ' + days + ' day' + (days>1?'s':'') : ''}">`;
+    html += `<div class="cal-pool-chip" style="background:${color}15;color:${color};${dimmed}" draggable="true" ondragstart="calDragStart(event,${fmtId(lesson.id)})" onclick="calPoolClick(${fmtId(lesson.id)})" title="${lesson.title} (${lesson.hours})${days ? ' — scheduled on ' + days + ' day' + (days>1?'s':'') : ''}">`;
     html += `<span style="font-size:9px">${statusIcon}</span>`;
     html += `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700">${lesson.label || lesson.id}</span>`;
     html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">${lesson.title}</span>`;
@@ -2565,9 +2596,9 @@ function showDayPicker(dk) {
       const otherNote = otherDays > 0 ? ` <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">+${otherDays} other day${otherDays>1?'s':''}</span>` : '';
       html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 0">
         <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:${color}">${lesson.label || lesson.id}</span>
-        <span style="font-size:12px;flex:1;cursor:pointer" onclick="selectLesson(${lesson.id})">${lesson.title}${otherNote}</span>
+        <span style="font-size:12px;flex:1;cursor:pointer" onclick="selectLesson(${fmtId(lesson.id)})">${lesson.title}${otherNote}</span>
         <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)">${lesson.hours}</span>
-        <button onclick="calRemoveLesson(${lesson.id},'${dk}')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove from this day">✕</button>
+        <button onclick="calRemoveLesson(${fmtId(lesson.id)},'${dk}')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove from this day">✕</button>
       </div>`;
     });
     html += `</div>`;
@@ -2586,7 +2617,7 @@ function showDayPicker(dk) {
         const color = getPhaseColor(lesson.phase);
         const days = dayCounts[lesson.id] || 0;
         const daysBadge = days > 0 ? `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);margin-left:4px">${days}d</span>` : '';
-        html += `<div class="picker-lesson" onclick="calAddLesson(${lesson.id},'${dk}')">
+        html += `<div class="picker-lesson" onclick="calAddLesson(${fmtId(lesson.id)},'${dk}')">
           <span class="picker-lesson-num" style="color:${color}">${lesson.label || lesson.id}</span>
           <span>${lesson.title}${daysBadge}</span>
           <span class="picker-hours">${lesson.hours}</span>
