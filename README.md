@@ -46,6 +46,7 @@
 
 | # | Lesson | Status |
 |---|--------|--------|
+| 12b | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-12b-calculus-fundamentals.md) | ⬜ Not Started |
 | 13 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-13-matrix-calculus.md) | ⬜ Not Started |
 | 14 | [Partial Derivatives and Gradients — Going Deeper](phase2-calculus/lesson-14-gradients.md) | ⬜ Not Started |
 | 15 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-15-chain-rule.md) | ⬜ Not Started |
