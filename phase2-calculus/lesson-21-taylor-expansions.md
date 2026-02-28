@@ -58,3 +58,7 @@
 - **Second-order optimizers** (Newton, natural gradient, K-FAC) use the Hessian or its approximation to take better steps. They're minimizing the second-order Taylor expansion rather than following the linear approximation.
 - **Learning rate and curvature:** the optimal learning rate for a quadratic loss is 1/λ_max (inverse of largest Hessian eigenvalue). This comes directly from the Taylor expansion.
 - **Scaling laws as asymptotic analysis:** when we write L(N) ~ N^{-α}, that's an asymptotic statement. Understanding Big-O lets you interpret these claims precisely.
+
+## 🧠 Alignment Connection
+
+Taylor expansions underpin two key alignment concepts. First, **scaling laws** — the empirical finding that loss scales as L(N) ~ N^{-α} — are asymptotic statements that Taylor/power-series analysis helps you interpret rigorously. Understanding when these power laws break down (phase transitions, emergent capabilities) is critical for predicting when models might suddenly become dangerous. Second, **second-order optimization** methods that use the Hessian are increasingly important for fine-tuning aligned models efficiently, and these methods are literally minimizing the second-order Taylor expansion of the loss.

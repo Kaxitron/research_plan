@@ -435,3 +435,7 @@ This lesson gives you the single-variable foundations. Here's how each subsequen
 | **18: Loss Landscapes** | The geometry of high-dimensional critical points — why saddle points dominate |
 
 Every concept in Lessons 13–18 is a multivariable generalization of something in this lesson. If this lesson is solid, the rest of Phase 2 will feel like natural extensions rather than new territory.
+
+## 🧠 Alignment Connection
+
+The chain rule is backpropagation, and backpropagation is how models learn *everything* — including alignment-relevant behaviors. When we train a model with RLHF (Reinforcement Learning from Human Feedback), the gradient signal flowing backward through the chain rule is what teaches the model to be helpful, harmless, and honest. Understanding *how* that signal propagates — where it's strong, where it vanishes, where it might be gamed — is essential for understanding whether alignment training actually works. The vanishing gradient problem isn't just a training issue; it's an alignment issue: if gradients vanish for safety-relevant behaviors, the model won't learn them.

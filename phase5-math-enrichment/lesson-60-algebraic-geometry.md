@@ -73,3 +73,7 @@
 - Compute the RLCT of f(w) = w⁴ in 1D. Compute the integral ∫₀¹ w^{-4t} dw and find the pole.
 - Numerical RLCT estimation: for a 1-hidden-unit ReLU network trained to learn y=0, sample the loss near the singular minimizers and fit the power-law behavior to estimate λ. Compare with the theoretical λ = 1/4.
 - Read one section of Watanabe's book or the Carroll et al. tutorial and write a one-paragraph summary of the main theorem in your own words.
+
+## 🧠 Alignment Connection
+
+This lesson is the mathematical culmination of the SLT thread. **The RLCT is an algebraic-geometric invariant that predicts generalization better than parameter count.** For alignment, this matters enormously: if we can compute the RLCT for different model behaviors (aligned vs misaligned), we can predict which behavior the model will generalize to. This is the deepest mathematical framework currently available for understanding *why* models learn what they learn, and it may eventually tell us whether alignment training generalizes to out-of-distribution situations.

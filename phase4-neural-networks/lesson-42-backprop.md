@@ -45,3 +45,7 @@
 ## 🔗 ML Connection
 
 Residual connections create "information highways" central to how transformers work. The residual stream IS the backbone of transformer architecture. Understanding gradient flow explains *why* transformers have the structure they do.
+
+## 🧠 Alignment Connection
+
+**Gradient flow through residual connections** is why transformers are interpretable at all. Without residual connections, the gradient (and information) must pass sequentially through every layer, making the computation opaque and gradient-starved. With residual connections, each layer can directly contribute to the output, and the gradient flows directly back — making it possible to attribute specific behaviors to specific components. This architectural choice is what makes mechanistic interpretability of transformers feasible, and it's why alignment researchers focus on transformers rather than other architectures.

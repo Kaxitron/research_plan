@@ -56,3 +56,7 @@
 ## 🔗 ML Connection
 
 Every layer in a neural network is a matrix multiplication (linear transformation) followed by a nonlinearity. The weight matrix W literally transforms the input vector to a new position in space. An attention head's QK circuit computes a bilinear form — two matrix transformations combined with a dot product. Understanding what a matrix "does to space" is the prerequisite for understanding what an attention head "does to representations."
+
+## 🧠 Alignment Connection
+
+Every layer in a transformer IS a linear transformation (plus nonlinearity). When alignment researchers say "the OV circuit maps from the residual stream to the output," they mean a specific matrix transforms one vector space to another. The key insight for interpretability: if you can understand *what* transformation each matrix performs geometrically — what it stretches, compresses, rotates — you can understand what the model is *doing* at each step. This is the foundation of the "Mathematical Framework for Transformer Circuits" and all mechanistic interpretability work that follows.

@@ -77,3 +77,7 @@
 - Formalize the "shutdown problem": an agent A reasons about whether it should allow shutdown. Using provability logic, show that A cannot prove "if I prove shutdown is good, then shutdown is good" (by Löb, this would require A to prove shutdown is good, which requires verification it can't complete).
 - Read the Yudkowsky & Herreshoff "Tiling Agents" paper. Write a one-page summary of the main impossibility result and its implications for recursive self-improvement.
 - Essay: Compare the halting problem (Lesson 51), Rice's theorem, Gödel's incompleteness, and Löb's theorem. What's the common thread? How do these four impossibility results collectively constrain the alignment research program?
+
+## 🧠 Alignment Connection
+
+Löb's theorem has direct, devastating implications for self-improving AI. An agent that can modify its own code cannot, in general, prove that its successor will maintain alignment — because Löb's theorem says "if I can prove my successor is aligned, then I am aligned" requires *already being aligned* to conclude. This creates a fundamental barrier to verified recursive self-improvement. The Yudkowsky & Herreshoff "Tiling Agents" paper formalizes this: provably aligned AI that improves itself may be impossible using standard proof-theoretic methods. This is one of the deepest known impossibility results in alignment theory.

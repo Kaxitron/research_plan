@@ -61,3 +61,7 @@
 - Visualize covering spaces: implement the covering map ℝ → S¹ via t ↦ (cos 2πt, sin 2πt). Plot several "sheets" of the covering.
 - Morse theory exercise: for f(x,y) = x² - y², trace the level sets as c goes from -1 to 1. Watch the topology change at c = 0 (the saddle point).
 - For a neural network loss landscape: compute the loss at many random weight vectors. Estimate the Betti numbers (number of connected components, number of loops) of the sublevel set L ≤ c for various c using persistent homology (use the ripser or giotto-tda library).
+
+## 🧠 Alignment Connection
+
+**Persistent homology** (computational algebraic topology) is increasingly used to study neural network loss landscapes and representation spaces. By tracking how topological features (connected components, loops, voids) appear and disappear as you vary a threshold, you get a "fingerprint" of the landscape's structure. For alignment, this could help answer: does the low-loss region for aligned behavior have the same topology as the region for misaligned behavior? Are there topological barriers between them?

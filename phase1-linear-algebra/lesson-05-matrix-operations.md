@@ -44,3 +44,7 @@
 ## 🔗 ML Connection
 
 The forward pass through a neural network IS a sequence of matrix multiplications. When interpretability researchers decompose attention into QK and OV circuits, they're factoring matrix products. Understanding that Wₒ · Wᵥ can be treated as a single matrix (the OV circuit) — that's composition of transformations. The "Mathematical Framework for Transformer Circuits" paper leans heavily on this.
+
+## 🧠 Alignment Connection
+
+Mechanistic interpretability decomposes transformer behavior by factoring matrix products. The QK circuit (W_Q^T W_K) determines *what* a head attends to; the OV circuit (W_O W_V) determines *what information moves*. These are compositions of transformations — exactly what matrix multiplication means geometrically. When researchers discover that a head implements "induction" or "copy suppression," they're reading the geometry of these composed matrices. Understanding matrix composition is understanding how transformers think.

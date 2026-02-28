@@ -58,3 +58,7 @@
 - Implement the orbit-stabilizer theorem numerically: for each weight vector in a discretized space, compute its orbit size and stabilizer size. Verify they multiply to |G|.
 - Show that a convolutional layer IS an equivariant layer: verify that conv(shift(x)) = shift(conv(x)) numerically in PyTorch.
 - Representation decomposition: write the 6×6 permutation matrices for S₃ acting on ℝ³. Find the trivial sub-representation (the all-ones direction, invariant under all permutations) and the standard representation (the orthogonal complement).
+
+## 🧠 Alignment Connection
+
+**Equivariant neural networks** encode known symmetries directly into the architecture, reducing the hypothesis space and improving generalization. For alignment, this principle matters: if we know a safety property should be symmetric (e.g., the model should refuse harmful requests regardless of rephrasing), we can build this symmetry into the architecture rather than hoping training discovers it. Representation theory tells us exactly how to do this — by decomposing the symmetry group's action into irreducible representations and constraining the weight matrices accordingly.

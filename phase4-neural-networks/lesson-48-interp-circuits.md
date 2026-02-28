@@ -47,3 +47,7 @@
 - Replicate induction head finding in a 2-layer transformer using TransformerLens
 - Run activation patching on a simple task
 - Explore Anthropic's Neuronpedia or similar feature visualization tools
+
+## 🧠 Alignment Connection
+
+**Circuits** are the mechanistic interpretability researcher's unit of analysis — small subnetworks that implement specific, interpretable computations. Finding and understanding circuits is how we answer questions like: "Does this model have a deception circuit?" "Where does refusal behavior originate?" "Can we surgically remove dangerous capabilities while preserving useful ones?" The induction head circuit (this lesson's main focus) proved that transformers learn interpretable algorithms, not just statistical patterns. This is what makes the alignment research program via interpretability viable.

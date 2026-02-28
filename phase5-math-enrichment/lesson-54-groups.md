@@ -62,3 +62,7 @@
 - Prove that the set of n×n orthogonal matrices forms a group under multiplication. What's the identity? What's the inverse of an element?
 - Implement a permutation group in Python: represent permutations as lists, implement composition and inversion. Verify the group axioms computationally for S₄.
 - Show that for a 2-hidden-unit neural network, swapping the two hidden units (a specific element of S₂) gives the same function. Write this as a group action on weight space.
+
+## 🧠 Alignment Connection
+
+**Permutation symmetries** in neural networks (swapping neurons gives the same function) create degenerate regions in the loss landscape. These symmetries mean many different weight configurations compute the same function — making it harder to verify whether a model has learned "safe" vs "unsafe" behavior by inspecting weights alone. In Singular Learning Theory, these symmetries create the singularities that determine generalization. Understanding group theory is prerequisite to understanding *why* neural networks generalize the way they do.

@@ -41,3 +41,7 @@
 ## 🔗 ML Connection
 
 Every neuron in every AI system — GPT, Claude, image classifiers — does exactly this: dot product + nonlinearity. The entire edifice of modern AI is this atomic operation repeated billions of times.
+
+## 🧠 Alignment Connection
+
+The choice of activation function has alignment implications. Sigmoid's vanishing gradients mean safety-relevant signals can be lost in deep networks. ReLU's "dead neurons" mean some capacity is permanently wasted. Modern alignment research explores whether specific activation patterns correspond to safety-relevant behaviors — for instance, whether "refusal" behavior in a language model is mediated by specific neurons with specific activation patterns. Understanding the atomic unit (the single neuron) is prerequisite to understanding how alignment-relevant circuits are built from these units.

@@ -45,3 +45,7 @@
 ## 🔗 ML Connection
 
 Batch normalization controls mean and variance of activations. The covariance structure of internal representations is crucial for understanding what networks learn. PCA on activations is a basic interpretability tool.
+
+## 🧠 Alignment Connection
+
+**Covariance structure of internal representations** is a primary tool in mechanistic interpretability. PCA on activations reveals the principal directions of variation — which often correspond to interpretable features. Understanding which features are correlated (and which are independent) in a model's internal representations tells you how the model organizes information. This is directly used in **probing classifiers** that test whether safety-relevant concepts (deception, honesty, harmfulness) are linearly represented in activation space.

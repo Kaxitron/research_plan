@@ -45,3 +45,7 @@
 ## 🔗 ML Connection
 
 This IS alignment work. You're learning the tools used by researchers at Anthropic, DeepMind, and elsewhere to understand what models are doing internally.
+
+## 🧠 Alignment Connection
+
+Mechanistic interpretability IS alignment research. The bet: if we can understand *what* models are computing internally — not just their input-output behavior — we can detect deceptive alignment, verify safety properties, and build more trustworthy systems. This lesson marks the transition from "learning the prerequisites" to "doing the actual work." The tools you learn here (TransformerLens, activation analysis, attention visualization) are the same tools used by researchers at Anthropic, DeepMind, and elsewhere to study whether frontier models are safe to deploy.

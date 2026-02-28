@@ -61,3 +61,7 @@
 - Formalize in predicate logic: "Every student who studies passes the exam." "There exists a model that is both accurate and interpretable." "No alignment technique works for all possible objective functions."
 - Implement resolution (a proof method for propositional logic): given a set of clauses, derive new clauses until you find a contradiction (unsatisfiable) or exhaust possibilities (satisfiable).
 - Write a formal specification for a simple AI behavior: "the chatbot never reveals personal information and always responds to greetings." Discuss what the specification misses.
+
+## 🧠 Alignment Connection
+
+**Formal specification of alignment properties** is a long-term goal. If we could write "this model never produces harmful output" as a logical formula and then verify it — that would be a solution to alignment. Logic tells us both the promise and the limits of this approach: formal verification works for specific properties (Lesson 52 shows the complexity constraints), but Goodhart's law means any formal specification probably misses what we *actually* want. The tension between formal specification and true alignment is one of the deepest challenges in the field.
