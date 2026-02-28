@@ -518,10 +518,10 @@
   .mt-lesson {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 0;
+    gap: 8px;
+    padding: 5px 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
   }
@@ -530,7 +530,7 @@
     width: 24px;
     text-align: center;
     font-weight: 600;
-    font-size: 11px;
+    font-size: 10px;
     flex-shrink: 0;
   }
   .mt-lesson-title {
@@ -546,21 +546,21 @@
     flex-shrink: 0;
   }
   .mt-lesson-status {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
 
   /* Mobile Dependency View */
   .md-phase {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .md-phase-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px;
+    padding: 10px 12px;
     background: var(--bg-raised);
     border: 1px solid var(--border);
     border-radius: 8px 8px 0 0;
@@ -571,7 +571,7 @@
   .md-phase-header.collapsed { border-radius: 8px; }
   .md-phase-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
   }
   .md-phase-right {
@@ -600,8 +600,8 @@
   .md-lesson-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
+    gap: 10px;
+    padding: 10px 12px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background 0.15s;
@@ -609,8 +609,8 @@
   .md-lesson-card:last-child { border-bottom: none; }
   .md-lesson-card:active { background: var(--bg-hover); }
   .md-status-btn {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     border: 2px solid;
     background: transparent;
@@ -619,7 +619,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 10px;
     transition: all 0.15s;
     padding: 0;
   }
@@ -636,7 +636,7 @@
   }
   .md-lesson-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text);
     display: block;
     overflow: hidden;
@@ -2187,74 +2187,74 @@ const CHECKPOINTS = [
 ];
 
 const LAYOUT = {
-  width: 1500,
-  height: 1500,
+  width: 1300,
+  height: 1200,
   nodes: {
     // Phase 0 - setup (top-left)
-    0:  { x: 70,  y: 40 },
-    1:  { x: 70,  y: 130 },
+    0:  { x: 60,  y: 30 },
+    1:  { x: 60,  y: 110 },
     // Phase 1 - linear algebra (left column)
-    2:  { x: 70,  y: 260 },
-    3:  { x: 70,  y: 360 },
-    4:  { x: 70,  y: 460 },
-    5:  { x: 200, y: 460 },
-    6:  { x: 135, y: 560 },
-    7:  { x: 5,   y: 560 },
-    8:  { x: 70,  y: 670 },
-    9:  { x: 70,  y: 780 },
-    10: { x: 210, y: 780 },
-    11: { x: 140, y: 890 },
-    12: { x: 70,  y: 1000 },
+    2:  { x: 60,  y: 210 },
+    3:  { x: 60,  y: 290 },
+    4:  { x: 60,  y: 370 },
+    5:  { x: 170, y: 370 },
+    6:  { x: 115, y: 460 },
+    7:  { x: 15,  y: 460 },
+    8:  { x: 60,  y: 550 },
+    9:  { x: 60,  y: 640 },
+    10: { x: 180, y: 640 },
+    11: { x: 120, y: 730 },
+    12: { x: 60,  y: 820 },
     // Phase 2 - calculus (center-left)
-    'p2-0': { x: 340, y: 260 },
-    13: { x: 340, y: 370 },
-    14: { x: 340, y: 480 },
-    15: { x: 340, y: 590 },
-    16: { x: 340, y: 700 },
-    17: { x: 340, y: 810 },
-    18: { x: 340, y: 920 },
+    'p2-0': { x: 300, y: 200 },
+    13: { x: 300, y: 280 },
+    14: { x: 300, y: 370 },
+    15: { x: 300, y: 460 },
+    16: { x: 300, y: 550 },
+    17: { x: 300, y: 640 },
+    18: { x: 300, y: 730 },
     // Phase 3 - probability (center)
-    19: { x: 540, y: 140 },
-    20: { x: 540, y: 260 },
-    21: { x: 540, y: 380 },
-    22: { x: 540, y: 500 },
-    23: { x: 540, y: 620 },
+    19: { x: 470, y: 110 },
+    20: { x: 470, y: 210 },
+    21: { x: 470, y: 310 },
+    22: { x: 470, y: 410 },
+    23: { x: 470, y: 510 },
     // Phase 4 - statistics (center, below P3)
-    24: { x: 540, y: 780 },
-    25: { x: 540, y: 880 },
-    26: { x: 540, y: 980 },
-    27: { x: 540, y: 1080 },
-    28: { x: 540, y: 1180 },
+    24: { x: 470, y: 630 },
+    25: { x: 470, y: 710 },
+    26: { x: 470, y: 790 },
+    27: { x: 470, y: 870 },
+    28: { x: 470, y: 950 },
     // Phase 5a - diff eq & dynamical systems (center-right, top)
-    29: { x: 740, y: 140 },
-    30: { x: 740, y: 260 },
-    31: { x: 740, y: 380 },
-    32: { x: 740, y: 500 },
-    33: { x: 740, y: 620 },
+    29: { x: 640, y: 110 },
+    30: { x: 640, y: 200 },
+    31: { x: 640, y: 290 },
+    32: { x: 640, y: 380 },
+    33: { x: 640, y: 470 },
     // Phase 5b - additional foundations (center-right, bottom)
-    34: { x: 740, y: 780 },
-    35: { x: 740, y: 880 },
-    36: { x: 740, y: 980 },
-    37: { x: 740, y: 1080 },
+    34: { x: 640, y: 590 },
+    35: { x: 640, y: 680 },
+    36: { x: 640, y: 770 },
+    37: { x: 640, y: 860 },
     // Phase 6 - neural networks (right)
-    38: { x: 960, y: 140 },
-    39: { x: 960, y: 270 },
-    40: { x: 960, y: 400 },
-    41: { x: 960, y: 540 },
-    42: { x: 960, y: 680 },
-    43: { x: 960, y: 820 },
-    44: { x: 960, y: 960 },
+    38: { x: 830, y: 110 },
+    39: { x: 830, y: 210 },
+    40: { x: 830, y: 310 },
+    41: { x: 830, y: 420 },
+    42: { x: 830, y: 530 },
+    43: { x: 830, y: 640 },
+    44: { x: 830, y: 750 },
     // Phase 7 - interpretability (far right)
-    45: { x: 1160, y: 440 },
-    46: { x: 1160, y: 590 },
-    47: { x: 1160, y: 740 },
-    48: { x: 1160, y: 890 },
+    45: { x: 1000, y: 370 },
+    46: { x: 1000, y: 490 },
+    47: { x: 1000, y: 610 },
+    48: { x: 1000, y: 730 },
     // Phase 8 - alignment theory (far right, top)
-    49: { x: 1360, y: 140 },
-    50: { x: 1360, y: 280 },
-    51: { x: 1360, y: 420 },
-    52: { x: 1360, y: 560 },
-    53: { x: 1360, y: 700 },
+    49: { x: 1170, y: 110 },
+    50: { x: 1170, y: 220 },
+    51: { x: 1170, y: 330 },
+    52: { x: 1170, y: 440 },
+    53: { x: 1170, y: 550 },
   },
 };
 
@@ -2346,9 +2346,6 @@ function refreshAll() {
   updateStats();
 }
 
-// Helper: properly quote string IDs for onclick handlers
-function fmtId(id) { return typeof id === 'string' ? "'" + id + "'" : id; }
-
 function getPhaseColor(phaseId) {
   const p = PHASES.find(ph => ph.id === phaseId);
   return p ? p.color : '#888';
@@ -2371,8 +2368,8 @@ function renderSidebar() {
     </div>`;
     html += `<div id="section-${phase.id}">`;
     phaseLessons.forEach(lesson => {
-      html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${fmtId(lesson.id)})">
-        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${fmtId(lesson.id)}, event)" title="Click to cycle status"></div>
+      html += `<div class="nav-item" id="nav-item-${lesson.id}" onclick="selectLesson(${lesson.id})">
+        <div class="status-dot" style="background:${getStatusColor(lesson.status)}" onclick="cycleStatus(${lesson.id}, event)" title="Click to cycle status"></div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.5;width:22px">${lesson.label || lesson.id}</span>
         ${lesson.title}
       </div>`;
@@ -2435,22 +2432,22 @@ function renderGraph() {
     const statusColor = getStatusColor(lesson.status);
     const fillOpacity = lesson.status === 'complete' ? 0.25 : lesson.status === 'in-progress' ? 0.15 : 0.08;
 
-    nodesHtml += `<g class="node-group" onclick="selectLesson(${fmtId(lesson.id)})" id="node-${lesson.id}">
+    nodesHtml += `<g class="node-group" onclick="selectLesson(${lesson.id})" id="node-${lesson.id}">
       <circle class="node-circle" cx="${tx(pos.x)}" cy="${ty(pos.y)}" r="${r}" fill="${color}" fill-opacity="${fillOpacity}" stroke="${statusColor}" />
       <text class="node-number" x="${tx(pos.x)}" y="${ty(pos.y) + 4}" fill="${lesson.status === 'not-started' ? color : statusColor}">${lesson.label || lesson.id}</text>
     </g>`;
   });
 
   const phaseLabels = [
-    { x: 70,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
-    { x: 120,  y: 210, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 340,  y: 210, color: '#818cf8', label: 'P2 CALCULUS' },
-    { x: 540,  y: 90,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
-    { x: 540,  y: 730, color: '#f472b6', label: 'P4 STATISTICS' },
-    { x: 740,  y: 90,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
-    { x: 960,  y: 90,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
-    { x: 1160, y: 390, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
-    { x: 1360, y: 90,  color: '#c084fc', label: 'P8 ALIGNMENT' },
+    { x: 60,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
+    { x: 100,  y: 180, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 300,  y: 170, color: '#818cf8', label: 'P2 CALCULUS' },
+    { x: 470,  y: 80,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
+    { x: 470,  y: 600, color: '#f472b6', label: 'P4 STATISTICS' },
+    { x: 640,  y: 80,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
+    { x: 830,  y: 80,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
+    { x: 1000, y: 340, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
+    { x: 1170, y: 80,  color: '#c084fc', label: 'P8 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
@@ -2503,7 +2500,7 @@ function selectLesson(id) {
     <div class="detail-title">Lesson ${lesson.label || lesson.id}: ${lesson.title}</div>
     <div class="detail-meta">
       <div>⏱ <strong>${lesson.hours}</strong></div>
-      <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${fmtId(lesson.id)}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
+      <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${lesson.id}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
     </div>
   </div>`;
 
@@ -2515,12 +2512,12 @@ function selectLesson(id) {
     html += `<ul class="prereq-list">`;
     lesson.prereqs.forEach(pid => {
       const p = LESSONS.find(l => l.id === pid);
-      html += `<li><span class="prereq-link" onclick="selectLesson(${fmtId(pid)})">Lesson ${p.label || pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
+      html += `<li><span class="prereq-link" onclick="selectLesson(${pid})">Lesson ${p.label || pid}</span>: ${p.title} <span style="color:${getStatusColor(p.status)};font-size:11px">(${p.status.replace('-',' ')})</span></li>`;
     });
     lesson.crossPhaseLinks.forEach(lid => {
       const l = LESSONS.find(ls => ls.id === lid);
       if (l) {
-        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${fmtId(lid)})">Lesson ${l.label || lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
+        html += `<li style="opacity:0.7"><span class="prereq-link" onclick="selectLesson(${lid})">Lesson ${l.label || lid}</span>: ${l.title} <span style="font-size:11px;color:var(--text-dim)">(cross-phase)</span></li>`;
       }
     });
     html += `</ul>`;
@@ -3042,7 +3039,7 @@ function renderCalendar() {
 
     dayLessons.forEach(lesson => {
       const color = getPhaseColor(lesson.phase);
-      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();calChipClick(${fmtId(lesson.id)},'${dk}')" title="${lesson.title} — click to view, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
+      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();calChipClick(${lesson.id},'${dk}')" title="${lesson.title} — click to view, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${lesson.id},'${dk}')">`;
       html += `<span class="cal-chip-num">${lesson.label || lesson.id}</span>`;
       html += `<span class="cal-chip-title">${lesson.title}</span>`;
       html += `</div>`;
@@ -3072,7 +3069,7 @@ function renderCalendar() {
     const statusIcon = lesson.status === 'complete' ? '●' : lesson.status === 'in-progress' ? '◐' : '○';
     const days = dayCounts[lesson.id] || 0;
     const dimmed = days > 0 ? 'opacity:0.55;' : '';
-    html += `<div class="cal-pool-chip" style="background:${color}15;color:${color};${dimmed}" draggable="true" ondragstart="calDragStart(event,${fmtId(lesson.id)})" onclick="calPoolClick(${fmtId(lesson.id)})" title="${lesson.title} (${lesson.hours})${days ? ' — scheduled on ' + days + ' day' + (days>1?'s':'') : ''}">`;
+    html += `<div class="cal-pool-chip" style="background:${color}15;color:${color};${dimmed}" draggable="true" ondragstart="calDragStart(event,${lesson.id})" onclick="calPoolClick(${lesson.id})" title="${lesson.title} (${lesson.hours})${days ? ' — scheduled on ' + days + ' day' + (days>1?'s':'') : ''}">`;
     html += `<span style="font-size:9px">${statusIcon}</span>`;
     html += `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700">${lesson.label || lesson.id}</span>`;
     html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">${lesson.title}</span>`;
@@ -3140,9 +3137,9 @@ function showDayPicker(dk) {
       const otherNote = otherDays > 0 ? ` <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">+${otherDays} other day${otherDays>1?'s':''}</span>` : '';
       html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 0">
         <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:${color}">${lesson.label || lesson.id}</span>
-        <span style="font-size:12px;flex:1;cursor:pointer" onclick="selectLesson(${fmtId(lesson.id)})">${lesson.title}${otherNote}</span>
+        <span style="font-size:12px;flex:1;cursor:pointer" onclick="selectLesson(${lesson.id})">${lesson.title}${otherNote}</span>
         <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)">${lesson.hours}</span>
-        <button onclick="calRemoveLesson(${fmtId(lesson.id)},'${dk}')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove from this day">✕</button>
+        <button onclick="calRemoveLesson(${lesson.id},'${dk}')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove from this day">✕</button>
       </div>`;
     });
     html += `</div>`;
@@ -3161,7 +3158,7 @@ function showDayPicker(dk) {
         const color = getPhaseColor(lesson.phase);
         const days = dayCounts[lesson.id] || 0;
         const daysBadge = days > 0 ? `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim);margin-left:4px">${days}d</span>` : '';
-        html += `<div class="picker-lesson" onclick="calAddLesson(${fmtId(lesson.id)},'${dk}')">
+        html += `<div class="picker-lesson" onclick="calAddLesson(${lesson.id},'${dk}')">
           <span class="picker-lesson-num" style="color:${color}">${lesson.label || lesson.id}</span>
           <span>${lesson.title}${daysBadge}</span>
           <span class="picker-hours">${lesson.hours}</span>
