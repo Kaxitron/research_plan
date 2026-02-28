@@ -1604,84 +1604,103 @@ const CHECKPOINTS = [
 ];
 
 const LAYOUT = {
-  width: 1500,
-  height: 1300,
+  width: 1420,
+  height: 1150,
   nodes: {
-    // Phase 0 - setup (far left, top)
-    0:  { x: 40,  y: 30 },
-    1:  { x: 40,  y: 110 },
-    // Phase 1 - linear algebra (left column)
-    2:  { x: 40,  y: 210 },
-    3:  { x: 40,  y: 290 },
-    4:  { x: 40,  y: 370 },
-    5:  { x: 150, y: 370 },
-    6:  { x: 95,  y: 460 },
-    7:  { x: 0,   y: 460 },
-    8:  { x: 40,  y: 550 },
-    9:  { x: 40,  y: 640 },
-    10: { x: 160, y: 640 },
-    11: { x: 100, y: 730 },
-    12: { x: 40,  y: 820 },
-    // Phase 2 - calculus (center-left column)
-    13: { x: 260, y: 110 },
-    14: { x: 260, y: 200 },
-    15: { x: 260, y: 280 },
-    16: { x: 260, y: 360 },
-    17: { x: 260, y: 440 },
-    18: { x: 260, y: 520 },
-    19: { x: 260, y: 600 },
-    20: { x: 260, y: 680 },
-    21: { x: 260, y: 760 },
-    22: { x: 260, y: 840 },
-    23: { x: 260, y: 920 },
-    24: { x: 260, y: 1000 },
-    25: { x: 260, y: 1080 },
-    26: { x: 260, y: 1160 },
-    27: { x: 370, y: 1160 },
-    // Phase 3 - probability & statistics (center column)
-    28: { x: 500, y: 30 },
-    29: { x: 500, y: 110 },
-    30: { x: 500, y: 190 },
-    31: { x: 500, y: 270 },
-    32: { x: 500, y: 350 },
-    33: { x: 500, y: 430 },
-    34: { x: 500, y: 510 },
-    35: { x: 500, y: 600 },
-    36: { x: 500, y: 690 },
-    37: { x: 500, y: 780 },
-    38: { x: 500, y: 870 },
-    39: { x: 500, y: 960 },
-    // Phase 4 - neural networks + interp (center-right column)
-    40: { x: 720, y: 30 },
-    41: { x: 720, y: 120 },
-    42: { x: 720, y: 210 },
-    43: { x: 720, y: 300 },
-    44: { x: 720, y: 390 },
-    45: { x: 720, y: 480 },
+    // ── Phase 0: Setup (far left, top) ──
+    0:  { x: 50,  y: 30 },
+    1:  { x: 50,  y: 110 },
+
+    // ── Phase 1: Linear Algebra (left column, tree shape) ──
+    2:  { x: 50,  y: 210 },
+    3:  { x: 50,  y: 290 },
+    4:  { x: 50,  y: 370 },
+    5:  { x: 155, y: 370 },
+    6:  { x: 100, y: 455 },
+    7:  { x: 5,   y: 455 },
+    8:  { x: 50,  y: 540 },
+    9:  { x: 50,  y: 625 },
+    10: { x: 155, y: 625 },
+    11: { x: 100, y: 710 },
+    12: { x: 50,  y: 795 },
+
+    // ── Phase 2: Calculus (two sub-columns) ──
+    // Single-variable & matrix calc (left sub-col)
+    13: { x: 255, y: 100 },
+    14: { x: 255, y: 185 },
+    15: { x: 255, y: 270 },
+    16: { x: 255, y: 355 },
+    17: { x: 255, y: 440 },
+    18: { x: 255, y: 525 },
+    19: { x: 255, y: 610 },
+    // Multivariable calc (continuing)
+    20: { x: 255, y: 710 },
+    21: { x: 255, y: 795 },
+    // Diff eq & dynamical systems (right sub-col, branching from 21)
+    22: { x: 380, y: 610 },
+    23: { x: 380, y: 695 },
+    24: { x: 380, y: 780 },
+    25: { x: 380, y: 865 },
+    26: { x: 380, y: 950 },
+    27: { x: 380, y: 1040 },
+
+    // ── Phase 3: Probability & Statistics (center column) ──
+    // Core probability
+    28: { x: 540, y: 60 },
+    29: { x: 540, y: 145 },
+    30: { x: 540, y: 230 },
+    31: { x: 540, y: 315 },
+    // Frequentist methods
+    32: { x: 540, y: 415 },
+    33: { x: 540, y: 500 },
+    34: { x: 540, y: 585 },
+    // Bayesian deep dive
+    35: { x: 540, y: 685 },
+    36: { x: 540, y: 770 },
+    37: { x: 540, y: 855 },
+    // Applied
+    38: { x: 540, y: 955 },
+    39: { x: 540, y: 1040 },
+
+    // ── Phase 4: Neural Networks & Interpretability (center-right) ──
+    // NN foundations
+    40: { x: 720, y: 60 },
+    41: { x: 720, y: 145 },
+    42: { x: 720, y: 230 },
+    43: { x: 720, y: 315 },
+    44: { x: 720, y: 400 },
+    45: { x: 720, y: 485 },
     46: { x: 720, y: 570 },
+    // Interpretability
     47: { x: 720, y: 680 },
-    48: { x: 720, y: 770 },
-    49: { x: 720, y: 860 },
-    50: { x: 720, y: 950 },
-    // Phase 5 - extended math (right column, split into 4 subsections)
-    51: { x: 940, y: 30 },
-    52: { x: 940, y: 120 },
-    53: { x: 940, y: 210 },
-    54: { x: 940, y: 320 },
-    55: { x: 940, y: 410 },
-    56: { x: 940, y: 500 },
-    57: { x: 940, y: 610 },
-    58: { x: 940, y: 700 },
-    59: { x: 940, y: 790 },
-    60: { x: 940, y: 880 },
-    61: { x: 940, y: 990 },
-    62: { x: 940, y: 1080 },
-    // Phase 6 - alignment (far right)
-    63: { x: 1160, y: 110 },
-    64: { x: 1160, y: 220 },
-    65: { x: 1160, y: 330 },
-    66: { x: 1160, y: 440 },
-    67: { x: 1160, y: 550 },
+    48: { x: 720, y: 765 },
+    49: { x: 720, y: 850 },
+    50: { x: 720, y: 935 },
+
+    // ── Phase 5: Extended Math (right column, subsection groups) ──
+    // Computability & complexity
+    51: { x: 920, y: 60 },
+    52: { x: 920, y: 145 },
+    53: { x: 920, y: 230 },
+    // Abstract algebra
+    54: { x: 920, y: 340 },
+    55: { x: 920, y: 425 },
+    56: { x: 920, y: 510 },
+    // Topology & geometry
+    57: { x: 920, y: 620 },
+    58: { x: 920, y: 705 },
+    59: { x: 920, y: 790 },
+    60: { x: 920, y: 875 },
+    // Formal logic
+    61: { x: 920, y: 985 },
+    62: { x: 920, y: 1070 },
+
+    // ── Phase 6: Alignment Theory (far right) ──
+    63: { x: 1120, y: 145 },
+    64: { x: 1120, y: 260 },
+    65: { x: 1120, y: 375 },
+    66: { x: 1120, y: 490 },
+    67: { x: 1120, y: 605 },
   },
 };
 
@@ -1870,15 +1889,13 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { x: 70,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
-    { x: 120,  y: 210, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 340,  y: 210, color: '#818cf8', label: 'P2 CALCULUS' },
-    { x: 540,  y: 90,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
-    { x: 540,  y: 730, color: '#f472b6', label: 'P4 STATISTICS' },
-    { x: 740,  y: 90,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
-    { x: 960,  y: 90,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
-    { x: 1160, y: 390, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
-    { x: 1360, y: 90,  color: '#c084fc', label: 'P8 ALIGNMENT' },
+    { x: 50,   y: 8,    color: '#94a3b8', label: 'P0 SETUP' },
+    { x: 80,   y: 188,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 310,  y: 78,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
+    { x: 540,  y: 38,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
+    { x: 720,  y: 38,   color: '#fbbf24', label: 'P4 NN & INTERP' },
+    { x: 920,  y: 38,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
+    { x: 1120, y: 118,  color: '#c084fc', label: 'P6 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
