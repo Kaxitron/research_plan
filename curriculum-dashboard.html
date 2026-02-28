@@ -393,17 +393,29 @@
       grid-template-rows: auto 1fr;
     }
     .sidebar { display: none; }
-    .header h1 { font-size: 16px; }
-    .header-stats { gap: 10px; font-size: 11px; }
-    .header { padding: 10px 14px; flex-wrap: wrap; gap: 6px; }
-    .main-canvas { overflow: auto; -webkit-overflow-scrolling: touch; }
-    svg.graph { min-width: 900px; min-height: 700px; }
+    .header h1 { font-size: 15px; }
+    .header-stats { gap: 8px; font-size: 10px; }
+    .header { padding: 8px 12px; flex-wrap: wrap; gap: 4px; }
+    .progress-bar-container { width: 120px; }
+    .main-canvas { overflow: hidden; position: relative; }
+    /* Hide SVG on mobile — we use HTML views instead */
+    svg.graph { display: none; }
+    .canvas-legend { display: none !important; }
+    .canvas-controls {
+      position: relative;
+      top: 0; left: 0;
+      margin: 8px;
+      width: calc(100% - 16px);
+      justify-content: center;
+      z-index: 10;
+    }
+    .canvas-controls .canvas-btn { padding: 8px 14px; font-size: 11px; flex: 1; text-align: center; }
 
     .detail-panel {
       display: none;
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      max-height: 55vh;
+      max-height: 60vh;
       z-index: 100;
       border-left: none;
       border-top: 2px solid var(--accent-5);
@@ -414,6 +426,246 @@
     }
     .detail-panel.mobile-open { display: block; }
     .mobile-close-btn { display: flex; align-items: center; justify-content: center; }
+    .detail-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+    .detail-backdrop.visible { display: block; }
+  }
+
+  /* Mobile HTML view containers (dependency + timeline) */
+  .mobile-view {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--bg);
+    padding: 60px 14px 20px;
+  }
+  .mobile-view.active { display: block; }
+
+  /* Legacy alias */
+  .mobile-timeline {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--bg);
+    padding: 60px 14px 20px;
+  }
+  .mt-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .mt-header h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+  .mt-header .mt-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-1);
+    margin-bottom: 2px;
+  }
+  .mt-header .mt-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .mt-phase {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .mt-phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--bg-raised);
+  }
+  .mt-phase-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .mt-phase-stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .mt-phase-bar {
+    height: 4px;
+    background: var(--border);
+  }
+  .mt-phase-bar-fill {
+    height: 100%;
+    border-radius: 0 2px 2px 0;
+    transition: width 0.3s ease;
+  }
+  .mt-phase-lessons {
+    padding: 6px 12px;
+  }
+  .mt-lesson {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .mt-lesson:last-child { border-bottom: none; }
+  .mt-lesson-num {
+    width: 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .mt-lesson-title {
+    flex: 1;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mt-lesson-hours {
+    font-size: 9px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .mt-lesson-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Mobile Dependency View */
+  .md-phase {
+    margin-bottom: 12px;
+  }
+  .md-phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .md-phase-header.collapsed { border-radius: 8px; }
+  .md-phase-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .md-phase-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .md-phase-progress {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .md-phase-chevron {
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+  }
+  .md-phase-header.collapsed .md-phase-chevron { transform: rotate(-90deg); }
+  .md-phase-body {
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+  }
+  .md-phase-body.collapsed { display: none; }
+  .md-lesson-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .md-lesson-card:last-child { border-bottom: none; }
+  .md-lesson-card:active { background: var(--bg-hover); }
+  .md-status-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+    padding: 0;
+  }
+  .md-status-btn:active { transform: scale(0.9); }
+  .md-lesson-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .md-lesson-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .md-lesson-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .md-lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px;
+  }
+  .md-lesson-hours {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+  }
+  .md-lesson-prereqs {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    opacity: 0.7;
+  }
+  .md-prereq-met { color: var(--complete); opacity: 1; }
+  .md-lesson-chevron {
+    color: var(--text-dim);
+    font-size: 12px;
+    flex-shrink: 0;
+    opacity: 0.4;
   }
 
   @keyframes slideUp {
@@ -607,6 +859,8 @@
       <div class="legend-item" style="color:var(--text-dim)">┄ cross-phase</div>
     </div>
     <svg class="graph" id="graph-svg"></svg>
+    <div class="mobile-view" id="mobile-dependency" style="display:none"></div>
+    <div class="mobile-view" id="mobile-timeline" style="display:none"></div>
     <div id="calendar-view" style="display:none;position:absolute;inset:0;overflow-y:auto;background:var(--bg)"></div>
   </div>
 
@@ -2303,6 +2557,7 @@ function selectLesson(id) {
   // Mobile: show as bottom sheet
   if (window.innerWidth <= 900) {
     document.getElementById('detail-panel').classList.add('mobile-open');
+    document.getElementById('detail-backdrop').classList.add('visible');
     document.getElementById('detail-backdrop').classList.add('open');
   }
 }
@@ -2328,12 +2583,14 @@ function selectCheckpoint(cpId) {
 
   if (window.innerWidth <= 900) {
     document.getElementById('detail-panel').classList.add('mobile-open');
+    document.getElementById('detail-backdrop').classList.add('visible');
     document.getElementById('detail-backdrop').classList.add('open');
   }
 }
 
 function closeMobileDetail() {
   document.getElementById('detail-panel').classList.remove('mobile-open');
+  document.getElementById('detail-backdrop').classList.remove('visible');
   document.getElementById('detail-backdrop').classList.remove('open');
 }
 
@@ -2346,21 +2603,36 @@ function setView(view) {
   const svg = document.getElementById('graph-svg');
   const calView = document.getElementById('calendar-view');
   const legend = document.getElementById('canvas-legend');
+  const mobileDep = document.getElementById('mobile-dependency');
+  const mobileTl = document.getElementById('mobile-timeline');
+  const isMobile = window.innerWidth <= 900;
+
+  // Hide everything first
+  svg.style.display = 'none';
+  calView.style.display = 'none';
+  legend.style.display = 'none';
+  mobileDep.style.display = 'none';
+  mobileTl.style.display = 'none';
 
   if (view === 'dependency') {
-    svg.style.display = '';
-    calView.style.display = 'none';
-    legend.style.display = 'flex';
-    renderGraph();
+    if (isMobile) {
+      mobileDep.style.display = 'block';
+      renderMobileDependency();
+    } else {
+      svg.style.display = '';
+      legend.style.display = 'flex';
+      renderGraph();
+    }
   } else if (view === 'timeline') {
-    svg.style.display = '';
-    calView.style.display = 'none';
-    legend.style.display = 'none';
-    renderTimeline();
+    if (isMobile) {
+      mobileTl.style.display = 'block';
+      renderMobileTimeline();
+    } else {
+      svg.style.display = '';
+      renderTimeline();
+    }
   } else if (view === 'calendar') {
-    svg.style.display = 'none';
     calView.style.display = '';
-    legend.style.display = 'none';
     renderCalendar();
   }
 }
@@ -2570,6 +2842,149 @@ function renderTimeline() {
   });
 
   svg.innerHTML = html;
+}
+
+// ── Mobile Dependency View ──
+function renderMobileDependency() {
+  const container = document.getElementById('mobile-dependency');
+
+  // Track which phases are collapsed
+  if (!window._mdCollapsed) window._mdCollapsed = {};
+
+  const completedIds = new Set(LESSONS.filter(l => l.status === 'complete').map(l => l.id));
+
+  let html = '';
+
+  PHASES.filter(p => p.id !== 'p9').forEach(phase => {
+    const pLessons = LESSONS.filter(l => l.phase === phase.id);
+    const complete = pLessons.filter(l => l.status === 'complete').length;
+    const total = pLessons.length;
+    const isCollapsed = window._mdCollapsed[phase.id] || false;
+    const allDone = complete === total;
+
+    html += `<div class="md-phase">`;
+    html += `<div class="md-phase-header${isCollapsed ? ' collapsed' : ''}" onclick="toggleMdPhase('${phase.id}')">
+      <span class="md-phase-name" style="color:${phase.color}">${phase.name}</span>
+      <div class="md-phase-right">
+        <span class="md-phase-progress">${allDone ? '✓' : complete + '/' + total}</span>
+        <span class="md-phase-chevron">▼</span>
+      </div>
+    </div>`;
+
+    html += `<div class="md-phase-body${isCollapsed ? ' collapsed' : ''}">`;
+    pLessons.forEach(l => {
+      const statusColor = getStatusColor(l.status);
+      const statusIcon = l.status === 'complete' ? '✓' : l.status === 'in-progress' ? '◐' : '';
+      const statusIconColor = l.status === 'complete' ? '#000' : l.status === 'in-progress' ? '#000' : 'transparent';
+
+      // Check prereqs
+      const prereqsMet = l.prereqs.every(p => completedIds.has(p));
+      const prereqLabels = l.prereqs.length > 0
+        ? l.prereqs.map(p => {
+            const pl = LESSONS.find(x => x.id === p);
+            return (pl ? (pl.label || pl.id) : p);
+          }).join(', ')
+        : '';
+
+      html += `<div class="md-lesson-card" onclick="selectLesson(${typeof l.id === 'string' ? '\'' + l.id + '\'' : l.id})">`;
+
+      // Status toggle button
+      html += `<button class="md-status-btn" style="border-color:${statusColor};background:${l.status !== 'not-started' ? statusColor : 'transparent'};color:${statusIconColor}" onclick="event.stopPropagation();cycleStatus(${typeof l.id === 'string' ? '\'' + l.id + '\'' : l.id});renderMobileDependency()">${statusIcon}</button>`;
+
+      // Lesson info
+      html += `<div class="md-lesson-info">`;
+      html += `<span class="md-lesson-name"><span class="md-lesson-num" style="color:${phase.color}">${l.label || l.id}</span>${l.title}</span>`;
+      html += `<div class="md-lesson-meta">`;
+      html += `<span class="md-lesson-hours">${l.hours}</span>`;
+      if (prereqLabels) {
+        html += `<span class="md-lesson-prereqs ${prereqsMet ? 'md-prereq-met' : ''}">needs: ${prereqLabels}</span>`;
+      }
+      html += `</div></div>`;
+
+      html += `<span class="md-lesson-chevron">›</span>`;
+      html += `</div>`;
+    });
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function toggleMdPhase(phaseId) {
+  if (!window._mdCollapsed) window._mdCollapsed = {};
+  window._mdCollapsed[phaseId] = !window._mdCollapsed[phaseId];
+  renderMobileDependency();
+}
+
+// ── Mobile Timeline ──
+function renderMobileTimeline() {
+  const container = document.getElementById('mobile-timeline');
+
+  function parseHours(h) {
+    const match = String(h).match(/(\d+)–(\d+)/);
+    if (match) return { lo: parseInt(match[1]), hi: parseInt(match[2]), avg: (parseInt(match[1]) + parseInt(match[2])) / 2 };
+    return { lo: 5, hi: 5, avg: 5 };
+  }
+
+  // Totals
+  let doneLo = 0, doneHi = 0, remainLo = 0, remainHi = 0;
+  LESSONS.forEach(l => {
+    const hrs = parseHours(l.hours);
+    if (l.status === 'complete') { doneLo += hrs.lo; doneHi += hrs.hi; }
+    else { remainLo += hrs.lo; remainHi += hrs.hi; }
+  });
+  const totalLo = doneLo + remainLo;
+  const totalHi = doneHi + remainHi;
+  const pctDone = Math.round(((doneLo + doneHi) / 2) / ((totalLo + totalHi) / 2) * 100);
+  const pace = computePace();
+
+  let html = '<div class="mt-header">';
+  if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
+    html += `<h2>${pace.weightedRemainLo}–${pace.weightedRemainHi}h left</h2>`;
+    html += `<div class="mt-subtitle">Est. ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</div>`;
+    html += `<div class="mt-meta">${pace.completedContentHours}h in ${pace.daysSinceStart}d · ${pace.paceHoursPerDay}h/day · ${pctDone}%</div>`;
+  } else {
+    html += `<h2>${remainLo}–${remainHi}h remaining</h2>`;
+    html += `<div class="mt-meta">${doneLo}–${doneHi}h done · ${pctDone}% complete</div>`;
+  }
+  html += '</div>';
+
+  PHASES.filter(p => p.id !== 'p9').forEach(phase => {
+    const pLessons = LESSONS.filter(l => l.phase === phase.id);
+    const complete = pLessons.filter(l => l.status === 'complete').length;
+    const total = pLessons.length;
+    const pPct = total > 0 ? (complete / total) : 0;
+    let pRemLo = 0, pRemHi = 0;
+    pLessons.forEach(l => {
+      if (l.status !== 'complete') {
+        const hrs = parseHours(l.hours);
+        const w = DIFFICULTY_WEIGHT[phase.id] || 1.0;
+        pRemLo += Math.round(hrs.lo * w);
+        pRemHi += Math.round(hrs.hi * w);
+      }
+    });
+    const hoursText = pRemLo === 0 ? '✓' : `${pRemLo}–${pRemHi}h`;
+
+    html += `<div class="mt-phase">`;
+    html += `<div class="mt-phase-header">
+      <span class="mt-phase-name" style="color:${phase.color}">${phase.name}</span>
+      <span class="mt-phase-stats">${complete}/${total} · ${hoursText}</span>
+    </div>`;
+    html += `<div class="mt-phase-bar"><div class="mt-phase-bar-fill" style="width:${pPct * 100}%;background:${phase.color};opacity:0.7"></div></div>`;
+    html += `<div class="mt-phase-lessons">`;
+    pLessons.forEach(l => {
+      const statusColor = getStatusColor(l.status);
+      html += `<div class="mt-lesson" onclick="selectLesson(${typeof l.id === 'string' ? '\'' + l.id + '\'' : l.id})">
+        <span class="mt-lesson-status" style="background:${statusColor}"></span>
+        <span class="mt-lesson-num" style="color:${phase.color}">${l.label || l.id}</span>
+        <span class="mt-lesson-title">${l.title}</span>
+        <span class="mt-lesson-hours">${l.hours}</span>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
 }
 
 // ── Calendar ──
@@ -2949,14 +3364,41 @@ async function syncReadmeToGithub() {
 // INIT
 // ═══════════════════════════════════════════════
 
+function refreshCurrentView() {
+  const svg = document.getElementById('graph-svg');
+  const calView = document.getElementById('calendar-view');
+  const legend = document.getElementById('canvas-legend');
+  const mobileDep = document.getElementById('mobile-dependency');
+  const mobileTl = document.getElementById('mobile-timeline');
+  const isMobile = window.innerWidth <= 900;
+
+  svg.style.display = 'none';
+  calView.style.display = 'none';
+  legend.style.display = 'none';
+  mobileDep.style.display = 'none';
+  mobileTl.style.display = 'none';
+
+  if (currentView === 'dependency') {
+    if (isMobile) { mobileDep.style.display = 'block'; renderMobileDependency(); }
+    else { svg.style.display = ''; legend.style.display = 'flex'; renderGraph(); }
+  } else if (currentView === 'timeline') {
+    if (isMobile) { mobileTl.style.display = 'block'; renderMobileTimeline(); }
+    else { svg.style.display = ''; renderTimeline(); }
+  } else if (currentView === 'calendar') {
+    calView.style.display = '';
+    renderCalendar();
+  }
+}
+
 function init() {
   loadStatuses();
   renderSidebar();
-  renderGraph();
-  updateStats();
   window.addEventListener('resize', () => {
-    if (currentView === 'dependency') renderGraph();
-    else if (currentView === 'timeline') renderTimeline();
+    // Re-trigger current view on resize to handle mobile <-> desktop transitions
+    const fakeEvent = { target: document.querySelector('.canvas-btn.active') };
+    const savedView = currentView;
+    // Use a small helper instead of setView to avoid event.target issues
+    refreshCurrentView();
   });
 }
 
