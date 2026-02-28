@@ -847,9 +847,9 @@
 
   <div class="main-canvas" id="main-canvas">
     <div class="canvas-controls">
-      <button class="canvas-btn active" onclick="setView('dependency')">Dependency Map</button>
-      <button class="canvas-btn" onclick="setView('timeline')">Timeline</button>
-      <button class="canvas-btn" onclick="setView('calendar')">Calendar</button>
+      <button class="canvas-btn active" onclick="setView('dependency', event)">Dependency Map</button>
+      <button class="canvas-btn" onclick="setView('timeline', event)">Timeline</button>
+      <button class="canvas-btn" onclick="setView('calendar', event)">Calendar</button>
     </div>
     <div class="canvas-legend" id="canvas-legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--complete)"></div> Complete</div>
@@ -2548,7 +2548,8 @@ function selectLesson(id) {
   if (lesson.projects.length > 0) {
     html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔨</span> Coding Projects</div><ul class="project-list">`;
     lesson.projects.forEach(p => {
-      html += `<li class="project-item"><span class="project-badge ${p.label.toLowerCase()}">${p.label}</span><span>${p.text}</span></li>`;
+      const label = p.label || 'Project';
+      html += `<li class="project-item"><span class="project-badge ${label.toLowerCase()}">${label}</span><span>${p.text}</span></li>`;
     });
     html += `</ul></div>`;
   }
@@ -2598,10 +2599,21 @@ function closeMobileDetail() {
 }
 
 // ── View Switching ──
-function setView(view) {
+function setView(view, ev) {
   currentView = view;
   document.querySelectorAll('.canvas-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  // Find the correct button even if click target is a child node
+  if (ev && ev.target) {
+    const btn = ev.target.closest('.canvas-btn');
+    if (btn) btn.classList.add('active');
+  } else {
+    // Fallback: mark the button whose text matches
+    document.querySelectorAll('.canvas-btn').forEach(b => {
+      if (view === 'dependency' && b.textContent.includes('Dependency')) b.classList.add('active');
+      else if (view === 'timeline' && b.textContent.includes('Timeline')) b.classList.add('active');
+      else if (view === 'calendar' && b.textContent.includes('Calendar')) b.classList.add('active');
+    });
+  }
 
   const svg = document.getElementById('graph-svg');
   const calView = document.getElementById('calendar-view');
@@ -2616,6 +2628,12 @@ function setView(view) {
   legend.style.display = 'none';
   mobileDep.style.display = 'none';
   mobileTl.style.display = 'none';
+
+  // Reset detail panel when leaving calendar view (don't leave stale day-picker content)
+  if (view !== 'calendar') {
+    calSelectedDate = null;
+    resetDetailPanel();
+  }
 
   if (view === 'dependency') {
     if (isMobile) {
@@ -2638,6 +2656,16 @@ function setView(view) {
     calView.style.display = '';
     renderCalendar();
   }
+}
+
+// Reset detail panel to empty state
+function resetDetailPanel() {
+  selectedLesson = null;
+  document.getElementById('detail-empty').style.display = '';
+  document.getElementById('detail-content').style.display = 'none';
+  document.getElementById('detail-content').innerHTML = '';
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  closeMobileDetail();
 }
 
 // ── Pace Tracker State ──
