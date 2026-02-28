@@ -53,7 +53,7 @@ The null space of an m×n matrix is a subspace of ℝⁿ (the column count = inp
 ### Miscellaneous Thoughts
 1. v*v is the same thing as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
 2. The diagonal entries of XᵀX are the variance of the features, whereas the off-diagonal values are the correlation of the features.  
-3. Eigendecomposition works when a matrix is square and non-defective
+3. Eigendecomposition works when a matrix is square and non-defective (full set of linearly independent EIGENVECTORS (not columns))
 ---
 
 ## Calculus & Optimization
