@@ -1,6 +1,6 @@
 # Lesson 13: Matrix Calculus — Bridging to Backpropagation
 
-[← LA Capstone](../phase1-linear-algebra/lesson-12-capstone.md) | [Back to TOC](../README.md) | [Next: Gradients →](lesson-14-gradients.md)
+[← Calculus Fundamentals](lesson-12b-calculus-fundamentals.md) | [Back to TOC](../README.md) | [Next: Gradients →](lesson-14-gradients.md)
 
 ---
 
