@@ -935,11 +935,34 @@ const LESSONS = [
       { text: 'Final capstone: SVD step-by-step visualization on unit circle' },
     ],
   },
+  {
+    id: 'p2-0', phase: 'p2', title: 'Calculus Fundamentals — Rebuilding Intuition',
+    status: 'not-started', hours: '6–10h',
+    prereqs: [12],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'Can you differentiate any polynomial, exponential, or trig function confidently?',
+      'Can you apply the chain rule to 2–3 nested functions?',
+      'Can you derive σ\'(x) = σ(x)(1 - σ(x)) from scratch?',
+      'Can you explain geometrically why "zooming in" makes gradient descent work?',
+    ],
+    failureModes: [
+      'Rushing through drill problems — speed and confidence with basic rules is critical before matrix calculus',
+      'Skipping the 3B1B Essence of Calculus playlist — it rebuilds intuition that textbooks alone cannot',
+      'Memorizing rules without geometric understanding — always know what the derivative MEANS',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — Essence of Calculus full playlist (12 videos)' },
+      { type: 'Do', text: 'All four drill sets + sigmoid derivative derivation' },
+      { type: 'Do', text: 'Learning rate visualization: gradient descent on x⁴ - 2x² + 1' },
+    ],
+    projects: [],
+  },
   // ─── Phase 2: Calculus ───
   {
     id: 13, phase: 'p2', title: 'Matrix Calculus — Bridging to Backprop',
     status: 'not-started', hours: '3–5h',
-    prereqs: [5],
+    prereqs: [5, 'p2-0'],
     crossPhaseLinks: [12],
     conceptChecks: [
       'What is a partial derivative geometrically?',
