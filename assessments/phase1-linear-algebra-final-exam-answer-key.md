@@ -177,7 +177,7 @@ D = [[5, 0], [0, 2]] (eigenvalues on diagonal)
 
 **A = PDP⁻¹**
 
-Geometrically, P represents the **change of basis to the eigenbasis**. In the eigenbasis, the transformation is trivially simple — just scaling by 5 in one direction and 2 in the other. P⁻¹ converts a vector to eigenbasis coordinates, D scales each eigendirection independently, and P converts back to standard coordinates.
+Geometrically, P converts **from the eigenbasis to the standard basis** (its columns are the eigenvectors written in standard coordinates — same logic as any change-of-basis matrix). Reading A = PDP⁻¹ right to left: P⁻¹ converts a vector from standard coordinates to the eigenbasis, D scales each eigendirection independently (5 in one direction, 2 in the other — trivially simple!), and P converts the result back to standard coordinates.
 
 ---
 
