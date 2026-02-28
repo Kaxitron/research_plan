@@ -120,6 +120,31 @@ AB means "apply B first, then A" (function composition).
 
 **Rank** = dimension of column space = number of linearly independent columns
 
+### Row Echelon Form
+
+The result of Gaussian elimination. A matrix is in **row echelon form** when:
+1. All zero rows are at the bottom
+2. Each row's **pivot** (first nonzero entry) is to the right of the pivot above it
+3. Everything below each pivot is zero
+
+**Example:**
+
+```
+[1  2  1]        [1  2  1]
+[2  4  3]   →    [0  0  1]    ← echelon form
+[3  6  4]        [0  0  0]
+```
+
+**How to get there:** subtract multiples of earlier rows from later rows to zero out entries below pivots (row reduction / Gaussian elimination).
+
+**What it tells you:**
+- **Rank** = number of pivots (nonzero rows)
+- **Pivot columns** = linearly independent columns (basis for column space)
+- **Free variables** = columns without pivots → these parameterize the null space
+- **Null space:** set free variables to arbitrary values, solve backwards for pivot variables
+
+**Reduced row echelon form (RREF):** additionally requires pivots = 1 and zeros above each pivot too. Gives the unique simplest form of the system.
+
 **Rank-Nullity Theorem:**
 
 $$\text{rank}(A) + \text{nullity}(A) = n \quad \text{(number of columns)}$$
@@ -476,3 +501,4 @@ $$r^2 = \frac{\|\hat{y}\|^2}{\|\tilde{y}\|^2} = \frac{SSR}{SST} = \frac{\text{ex
 ---
 
 *Last updated: February 2026 — Phase 1 (Linear Algebra) + early statistics preview*
+
