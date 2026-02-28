@@ -1605,7 +1605,7 @@ const CHECKPOINTS = [
 
 const LAYOUT = {
   width: 1420,
-  height: 1150,
+  height: 1180,
   nodes: {
     // ── Phase 0: Setup (far left, top) ──
     0:  { x: 50,  y: 30 },
@@ -1646,61 +1646,61 @@ const LAYOUT = {
 
     // ── Phase 3: Probability & Statistics (center column) ──
     // Core probability
-    28: { x: 540, y: 60 },
-    29: { x: 540, y: 145 },
-    30: { x: 540, y: 230 },
-    31: { x: 540, y: 315 },
+    28: { x: 540, y: 80 },
+    29: { x: 540, y: 165 },
+    30: { x: 540, y: 250 },
+    31: { x: 540, y: 335 },
     // Frequentist methods
-    32: { x: 540, y: 415 },
-    33: { x: 540, y: 500 },
-    34: { x: 540, y: 585 },
+    32: { x: 540, y: 435 },
+    33: { x: 540, y: 520 },
+    34: { x: 540, y: 605 },
     // Bayesian deep dive
-    35: { x: 540, y: 685 },
-    36: { x: 540, y: 770 },
-    37: { x: 540, y: 855 },
+    35: { x: 540, y: 705 },
+    36: { x: 540, y: 790 },
+    37: { x: 540, y: 875 },
     // Applied
-    38: { x: 540, y: 955 },
-    39: { x: 540, y: 1040 },
+    38: { x: 540, y: 975 },
+    39: { x: 540, y: 1060 },
 
     // ── Phase 4: Neural Networks & Interpretability (center-right) ──
     // NN foundations
-    40: { x: 720, y: 60 },
-    41: { x: 720, y: 145 },
-    42: { x: 720, y: 230 },
-    43: { x: 720, y: 315 },
-    44: { x: 720, y: 400 },
-    45: { x: 720, y: 485 },
-    46: { x: 720, y: 570 },
+    40: { x: 720, y: 80 },
+    41: { x: 720, y: 165 },
+    42: { x: 720, y: 250 },
+    43: { x: 720, y: 335 },
+    44: { x: 720, y: 420 },
+    45: { x: 720, y: 505 },
+    46: { x: 720, y: 590 },
     // Interpretability
-    47: { x: 720, y: 680 },
-    48: { x: 720, y: 765 },
-    49: { x: 720, y: 850 },
-    50: { x: 720, y: 935 },
+    47: { x: 720, y: 700 },
+    48: { x: 720, y: 785 },
+    49: { x: 720, y: 870 },
+    50: { x: 720, y: 955 },
 
     // ── Phase 5: Extended Math (right column, subsection groups) ──
     // Computability & complexity
-    51: { x: 920, y: 60 },
-    52: { x: 920, y: 145 },
-    53: { x: 920, y: 230 },
+    51: { x: 920, y: 80 },
+    52: { x: 920, y: 165 },
+    53: { x: 920, y: 250 },
     // Abstract algebra
-    54: { x: 920, y: 340 },
-    55: { x: 920, y: 425 },
-    56: { x: 920, y: 510 },
+    54: { x: 920, y: 360 },
+    55: { x: 920, y: 445 },
+    56: { x: 920, y: 530 },
     // Topology & geometry
-    57: { x: 920, y: 620 },
-    58: { x: 920, y: 705 },
-    59: { x: 920, y: 790 },
-    60: { x: 920, y: 875 },
+    57: { x: 920, y: 640 },
+    58: { x: 920, y: 725 },
+    59: { x: 920, y: 810 },
+    60: { x: 920, y: 895 },
     // Formal logic
-    61: { x: 920, y: 985 },
-    62: { x: 920, y: 1070 },
+    61: { x: 920, y: 1005 },
+    62: { x: 920, y: 1090 },
 
     // ── Phase 6: Alignment Theory (far right) ──
-    63: { x: 1120, y: 145 },
-    64: { x: 1120, y: 260 },
-    65: { x: 1120, y: 375 },
-    66: { x: 1120, y: 490 },
-    67: { x: 1120, y: 605 },
+    63: { x: 1120, y: 160 },
+    64: { x: 1120, y: 275 },
+    65: { x: 1120, y: 390 },
+    66: { x: 1120, y: 505 },
+    67: { x: 1120, y: 620 },
   },
 };
 
@@ -1889,13 +1889,13 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { x: 50,   y: 8,    color: '#94a3b8', label: 'P0 SETUP' },
-    { x: 80,   y: 188,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 310,  y: 78,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
-    { x: 540,  y: 38,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
-    { x: 720,  y: 38,   color: '#fbbf24', label: 'P4 NN & INTERP' },
-    { x: 920,  y: 38,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
-    { x: 1120, y: 118,  color: '#c084fc', label: 'P6 ALIGNMENT' },
+    { x: 50,   y: -12,  color: '#94a3b8', label: 'P0 SETUP' },
+    { x: 80,   y: 178,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 310,  y: 65,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
+    { x: 540,  y: 25,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
+    { x: 720,  y: 25,   color: '#fbbf24', label: 'P4 NN & INTERP' },
+    { x: 920,  y: 25,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
+    { x: 1120, y: 108,  color: '#c084fc', label: 'P6 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
