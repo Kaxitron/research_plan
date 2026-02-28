@@ -1,6 +1,6 @@
-# Lesson 31: Topology and Manifolds — The Shape of Data and Loss
+# Lesson 36: Topology and Manifolds — The Shape of Data and Loss
 
-[← Abstract Algebra](lesson-30-abstract-algebra.md) | [Back to TOC](../README.md) | [Next: Differential Equations →](lesson-32-diff-equations.md)
+[← Abstract Algebra](lesson-35-abstract-algebra.md) | [Back to TOC](../README.md) | [Next: Formal Logic →](lesson-37-formal-logic.md)
 
 ---
 

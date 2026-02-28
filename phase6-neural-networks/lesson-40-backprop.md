@@ -1,6 +1,6 @@
-# Lesson 36: Backpropagation Through the Full Network
+# Lesson 40: Backpropagation Through the Full Network
 
-[← Forward Pass](lesson-35-forward-pass.md) | [Back to TOC](../README.md) | [Next: Attention →](lesson-37-attention.md)
+[← Forward Pass](lesson-39-forward-pass.md) | [Back to TOC](../README.md) | [Next: Attention →](lesson-41-attention.md)
 
 ---
 

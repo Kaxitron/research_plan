@@ -1,6 +1,6 @@
-# Lesson 42: Circuits and Features in Practice
+# Lesson 46: Circuits and Features in Practice
 
-[← Intro to Interp](lesson-41-intro-interp.md) | [Back to TOC](../README.md) | [Next: Scaling Laws & Emergence →](lesson-43-scaling-emergence.md)
+[← Intro to Interp](lesson-45-intro-interp.md) | [Back to TOC](../README.md) | [Next: Scaling Laws & Emergence →](lesson-47-scaling-emergence.md)
 
 ---
 

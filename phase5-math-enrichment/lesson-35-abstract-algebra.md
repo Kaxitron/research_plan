@@ -1,6 +1,6 @@
-# Lesson 30: Abstract Algebra — Groups, Symmetry, and Neural Networks
+# Lesson 35: Abstract Algebra — Groups, Symmetry, and Neural Networks
 
-[← Computability](lesson-29-computability.md) | [Back to TOC](../README.md) | [Next: Topology →](lesson-31-topology.md)
+[← Computability](lesson-34-computability.md) | [Back to TOC](../README.md) | [Next: Topology →](lesson-36-topology.md)
 
 ---
 

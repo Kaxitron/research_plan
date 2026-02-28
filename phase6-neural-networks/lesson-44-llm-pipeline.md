@@ -1,6 +1,6 @@
-# Lesson 40: The LLM Training Pipeline — From Raw Text to Aligned AI
+# Lesson 44: The LLM Training Pipeline — From Raw Text to Aligned AI
 
-[← RL Foundations](lesson-39-rl-foundations.md) | [Back to TOC](../README.md) | [Next: What Interpretability Researchers Do →](../phase7-interpretability/lesson-41-intro-interp.md)
+[← RL Foundations](lesson-43-rl-foundations.md) | [Back to TOC](../README.md) | [Next: What Interpretability Researchers Do →](../phase7-interpretability/lesson-45-intro-interp.md)
 
 ---
 

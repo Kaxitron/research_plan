@@ -1,6 +1,6 @@
-# Lesson 39: Reinforcement Learning Foundations
+# Lesson 43: Reinforcement Learning Foundations
 
-[← Transformer](lesson-38-transformer.md) | [Back to TOC](../README.md) | [Next: The LLM Training Pipeline →](lesson-40-llm-pipeline.md)
+[← Transformer](lesson-42-transformer.md) | [Back to TOC](../README.md) | [Next: The LLM Training Pipeline →](lesson-44-llm-pipeline.md)
 
 ---
 

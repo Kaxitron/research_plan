@@ -1,6 +1,6 @@
-# Lesson 35: The Forward Pass as Matrix Multiplications
+# Lesson 39: The Forward Pass as Matrix Multiplications
 
-[← Single Neuron](lesson-34-single-neuron.md) | [Back to TOC](../README.md) | [Next: Backpropagation →](lesson-36-backprop.md)
+[← Single Neuron](lesson-38-single-neuron.md) | [Back to TOC](../README.md) | [Next: Backpropagation →](lesson-40-backprop.md)
 
 ---
 

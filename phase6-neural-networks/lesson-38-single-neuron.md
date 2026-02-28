@@ -1,6 +1,6 @@
-# Lesson 34: How a Single Neuron Works
+# Lesson 38: How a Single Neuron Works
 
-[← Formal Logic](../phase5-math-enrichment/lesson-33-formal-logic.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-35-forward-pass.md)
+[← Formal Logic](../phase5-math-enrichment/lesson-37-formal-logic.md) | [Back to TOC](../README.md) | [Next: Forward Pass →](lesson-39-forward-pass.md)
 
 ---
 

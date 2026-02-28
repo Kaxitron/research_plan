@@ -1,6 +1,6 @@
-# Lesson 41: What Interpretability Researchers Actually Do
+# Lesson 45: What Interpretability Researchers Actually Do
 
-[← LLM Training Pipeline](../phase6-neural-networks/lesson-40-llm-pipeline.md) | [Back to TOC](../README.md) | [Next: Circuits →](lesson-42-circuits.md)
+[← LLM Training Pipeline](../phase6-neural-networks/lesson-44-llm-pipeline.md) | [Back to TOC](../README.md) | [Next: Circuits →](lesson-46-circuits.md)
 
 ---
 

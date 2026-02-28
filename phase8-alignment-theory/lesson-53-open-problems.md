@@ -1,6 +1,6 @@
-# Lesson 49: Open Problems and Research Frontiers
+# Lesson 53: Open Problems and Research Frontiers
 
-[← Alignment Problem](lesson-48-alignment-problem.md) | [Back to TOC](../README.md) | [Next: Independent Research →](../phase9-research/research-guide.md)
+[← Alignment Problem](lesson-52-alignment-problem.md) | [Back to TOC](../README.md) | [Next: Independent Research →](../phase9-research/research-guide.md)
 
 ---
 

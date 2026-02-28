@@ -1,6 +1,6 @@
-# Lesson 45: Game Theory Foundations
+# Lesson 49: Game Theory Foundations
 
-[← Singular Learning Theory](../phase7-interpretability/lesson-44-slt.md) | [Back to TOC](../README.md) | [Next: Decision Theory →](lesson-46-decision-theory.md)
+[← Singular Learning Theory](../phase7-interpretability/lesson-48-slt.md) | [Back to TOC](../README.md) | [Next: Decision Theory →](lesson-50-decision-theory.md)
 
 ---
 

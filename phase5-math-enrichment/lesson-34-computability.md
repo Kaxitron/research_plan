@@ -1,6 +1,6 @@
-# Lesson 29: Computability and Complexity — The Limits of Knowledge
+# Lesson 34: Computability and Complexity — The Limits of Knowledge
 
-[← Applied Statistics](../phase4-statistics/lesson-28-applied-statistics.md) | [Back to TOC](../README.md) | [Next: Abstract Algebra →](lesson-30-abstract-algebra.md)
+[← Neural ODEs](lesson-33-neural-odes.md) | [Back to TOC](../README.md) | [Next: Abstract Algebra →](lesson-35-abstract-algebra.md)
 
 ---
 

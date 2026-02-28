@@ -1,6 +1,6 @@
-# Lesson 43: Scaling Laws, Emergent Capabilities, and Phase Transitions
+# Lesson 47: Scaling Laws, Emergent Capabilities, and Phase Transitions
 
-[← Circuits](lesson-42-circuits.md) | [Back to TOC](../README.md) | [Next: Singular Learning Theory →](lesson-44-slt.md)
+[← Circuits](lesson-46-circuits.md) | [Back to TOC](../README.md) | [Next: Singular Learning Theory →](lesson-48-slt.md)
 
 ---
 

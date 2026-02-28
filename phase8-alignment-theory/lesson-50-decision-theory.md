@@ -1,6 +1,6 @@
-# Lesson 46: Decision Theory — CDT, EDT, and FDT
+# Lesson 50: Decision Theory — CDT, EDT, and FDT
 
-[← Game Theory](lesson-45-game-theory.md) | [Back to TOC](../README.md) | [Next: Anthropics →](lesson-47-anthropics.md)
+[← Game Theory](lesson-49-game-theory.md) | [Back to TOC](../README.md) | [Next: Anthropics →](lesson-51-anthropics.md)
 
 ---
 

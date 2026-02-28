@@ -633,7 +633,7 @@ const PHASES = [
   { id: 'p2', name: 'Calculus for ML', color: '#818cf8', hours: '20–28h' },
   { id: 'p3', name: 'Probability & Info Theory', color: '#f9a8d4', hours: '22–30h' },
   { id: 'p4', name: 'Applied Statistics', color: '#f472b6', hours: '18–26h' },
-  { id: 'p5', name: 'Math Enrichment', color: '#e879f9', hours: '18–26h' },
+  { id: 'p5', name: 'Math Enrichment', color: '#e879f9', hours: '34–48h' },
   { id: 'p6', name: 'Neural Networks', color: '#fbbf24', hours: '42–58h' },
   { id: 'p7', name: 'Interpretability', color: '#38bdf8', hours: '26–38h' },
   { id: 'p8', name: 'Alignment Theory', color: '#c084fc', hours: '25–35h' },
@@ -1296,9 +1296,138 @@ const LESSONS = [
     ],
     projects: [],
   },
-  // ─── Phase 3c: Extended Mathematical Foundations ───
+  // ─── Phase 5a: Differential Equations & Dynamical Systems ───
   {
-    id: 29, phase: 'p5', title: 'Computability and Complexity — The Limits of Knowledge',
+    id: 29, phase: 'p5', title: 'Introduction to ODEs — Rates of Change as Vector Fields',
+    status: 'not-started', hours: '3–4h',
+    prereqs: [14],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What is the geometric meaning of dx/dt = f(x)? Draw it.',
+      'What is a fixed point and how do you classify stability in 1D?',
+      'How is Euler\'s method the same as gradient descent?',
+      'What is a vector field and what does it mean to "follow the flow"?',
+    ],
+    failureModes: [
+      'Thinking you need to solve ODEs analytically — the geometric/qualitative approach is what matters',
+      'Missing the gradient descent connection — every training step IS an Euler step on an ODE',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Differential equations, studying the unsolvable"' },
+      { type: 'Read', text: 'Strogatz "Nonlinear Dynamics and Chaos" — Chapters 1–2' },
+      { type: 'Do', text: 'Plot vector fields for 1D and 2D ODEs with matplotlib quiver' },
+      { type: 'Do', text: 'Euler\'s method by hand: compare step sizes, relate to learning rate' },
+    ],
+    projects: [
+      { text: 'Vector field plotter for arbitrary 2D systems' },
+    ],
+  },
+  {
+    id: 30, phase: 'p5', title: 'Linear Systems and Phase Portraits — Eigenvalues Determine Everything',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [29, 8],
+    crossPhaseLinks: [11],
+    conceptChecks: [
+      'Given a 2×2 matrix A, classify the phase portrait from its eigenvalues.',
+      'What does the condition number κ mean for gradient flow trajectories?',
+      'What is the Jacobian and why does it give you local dynamics?',
+      'Draw phase portraits for: stable node, saddle, stable spiral, center.',
+    ],
+    failureModes: [
+      'Memorizing the classification without seeing why eigenvalues determine it — always connect to e^{λt}',
+      'Confusing Jacobian (linear approximation) with Hessian (second derivatives of loss) — related but distinct',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Steve Brunton — "Phase Portraits" and "Stability and Eigenvalues" (Dynamical Systems playlist)' },
+      { type: 'Read', text: 'Strogatz — Chapter 5 (Linear Systems) and 6.1–6.3 (Phase Plane)' },
+      { type: 'Do', text: 'Build the full eigenvalue classification: 5 matrices → predict → simulate → verify' },
+      { type: 'Do', text: 'Condition number visualization: gradient flow on L = x² + κy² for κ = 1, 10, 100' },
+    ],
+    projects: [
+      { text: 'Interactive phase portrait classifier: input matrix → eigenvalues → portrait type → animation' },
+    ],
+  },
+  {
+    id: 31, phase: 'p5', title: 'Gradient Flow and Training Dynamics — Training as a River',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [30, 16],
+    crossPhaseLinks: [18],
+    conceptChecks: [
+      'Write the gradient flow ODE. Why does the loss never increase along it?',
+      'What is the Euler stability bound for learning rate? Derive it.',
+      'Why does momentum help with bad conditioning? Write the second-order ODE.',
+      'What is implicit regularization and why does gradient descent find min-norm solutions?',
+    ],
+    failureModes: [
+      'Thinking gradient flow guarantees finding the global minimum — it finds A minimum, determined by initialization',
+      'Forgetting that SGD ≠ gradient flow — the stochasticity matters and breaks some continuous-time guarantees',
+    ],
+    mvl: [
+      { type: 'Watch', text: '3B1B — "Gradient descent, how neural networks learn" (re-watch with ODE eyes)' },
+      { type: 'Watch', text: 'Steve Brunton — "Gradient Systems and Lyapunov Functions"' },
+      { type: 'Read', text: 'Gabriel Goh — "Why Momentum Really Works" (Distill)' },
+      { type: 'Do', text: 'Gradient flow vs discrete GD on 2D losses: round bowl, elongated bowl, double well' },
+      { type: 'Do', text: 'Learning rate stability experiment: find the divergence boundary' },
+    ],
+    projects: [
+      { text: 'Momentum visualization: vanilla GD vs momentum on elongated loss' },
+    ],
+  },
+  {
+    id: 32, phase: 'p5', title: 'Stability, Lyapunov Functions, and Phase Transitions',
+    status: 'not-started', hours: '4–5h',
+    prereqs: [31],
+    crossPhaseLinks: [48],
+    conceptChecks: [
+      'What is a Lyapunov function and how does it prove stability without solving the ODE?',
+      'Name the three major 1D bifurcation types and sketch their diagrams.',
+      'What is grokking and how is it a phase transition in training dynamics?',
+      'Could a Lyapunov function prove AI safety? What would it need to satisfy?',
+    ],
+    failureModes: [
+      'Thinking bifurcations are exotic — learning rate as bifurcation parameter is immediate and practical',
+      'Confusing phase transitions (qualitative change) with gradual improvement (quantitative change)',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Steve Brunton — "Stability and Lyapunov Functions" and "Bifurcations"' },
+      { type: 'Watch', text: 'Veritasium — "The Logistic Map and the Route to Chaos"' },
+      { type: 'Read', text: 'Strogatz — Chapter 3 (Bifurcations) and Chapter 8.1–8.2 (Lyapunov)' },
+      { type: 'Read', text: 'Power et al. — "Grokking: Generalization Beyond Overfitting"' },
+      { type: 'Do', text: 'Bifurcation diagrams for saddle-node and pitchfork bifurcations' },
+    ],
+    projects: [
+      { text: 'Grokking dynamics: train on modular arithmetic, plot the phase transition' },
+    ],
+  },
+  {
+    id: 33, phase: 'p5', title: 'Neural ODEs and Stochastic Dynamics',
+    status: 'not-started', hours: '3–5h',
+    prereqs: [32],
+    crossPhaseLinks: [42],
+    conceptChecks: [
+      'How is a ResNet related to Euler discretization of an ODE?',
+      'What is the adjoint method and why does it save memory?',
+      'What SDE approximates SGD? What role does noise play?',
+      'Why does large learning rate favor flat minima?',
+    ],
+    failureModes: [
+      'Thinking neural ODEs replaced transformers — they\'re conceptually important but not dominant in practice',
+      'Treating SGD noise as purely harmful — it\'s a feature that helps find generalizing solutions',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Yannic Kilcher — "Neural Ordinary Differential Equations" (paper review)' },
+      { type: 'Watch', text: 'Steve Brunton — "Neural ODEs" (Data-Driven Dynamical Systems)' },
+      { type: 'Read', text: 'Chen et al. — "Neural Ordinary Differential Equations" (2018)' },
+      { type: 'Do', text: 'Neural ODE toy implementation on spiral dataset with torchdiffeq' },
+      { type: 'Do', text: 'SDE simulation: Euler-Maruyama on double-well potential, vary noise' },
+    ],
+    projects: [
+      { text: 'Flat vs sharp minima: demonstrate learning rate selects minimum type' },
+    ],
+  },
+  // ─── Phase 5b: Additional Foundations ───
+  {
+    id: 34, phase: 'p5', title: 'Computability and Complexity — The Limits of Knowledge',
     status: 'not-started', hours: '4–6h',
     prereqs: [23],
     crossPhaseLinks: [],
@@ -1323,10 +1452,10 @@ const LESSONS = [
     ],
   },
   {
-    id: 30, phase: 'p5', title: 'Abstract Algebra — Groups, Symmetry, and Neural Networks',
+    id: 35, phase: 'p5', title: 'Abstract Algebra — Groups, Symmetry, and Neural Networks',
     status: 'not-started', hours: '4–6h',
     prereqs: [8, 9],
-    crossPhaseLinks: [44],
+    crossPhaseLinks: [48],
     conceptChecks: [
       'What are the four axioms of a group? Give three concrete examples.',
       'Why does permuting hidden neurons give the same function? What group is this?',
@@ -1348,14 +1477,14 @@ const LESSONS = [
     ],
   },
   {
-    id: 31, phase: 'p5', title: 'Topology and Manifolds — The Shape of Data and Loss',
+    id: 36, phase: 'p5', title: 'Topology and Manifolds — The Shape of Data and Loss',
     status: 'not-started', hours: '4–6h',
     prereqs: [18],
-    crossPhaseLinks: [44],
+    crossPhaseLinks: [48],
     conceptChecks: [
       'What is the manifold hypothesis and why does it explain deep learning\'s success?',
       'How does a ReLU layer divide space into flat regions?',
-      'What is a homeomorphism? Why is topology \"geometry without measurement\"?',
+      'What is a homeomorphism? Why is topology "geometry without measurement"?',
       'What is resolution of singularities and why does SLT need it?',
     ],
     failureModes: [
@@ -1372,33 +1501,9 @@ const LESSONS = [
     ],
   },
   {
-    id: 32, phase: 'p5', title: 'Differential Equations and Dynamical Systems — Training as Flow',
+    id: 37, phase: 'p5', title: 'Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason',
     status: 'not-started', hours: '4–5h',
-    prereqs: [14, 16],
-    crossPhaseLinks: [44],
-    conceptChecks: [
-      'What is gradient flow and how does it relate to gradient descent?',
-      'What do eigenvalues of the Jacobian at a fixed point tell you about stability?',
-      'How is a ResNet related to an Euler discretization of a neural ODE?',
-      'What is a Lyapunov function and why is the loss function one for gradient flow?',
-    ],
-    failureModes: [
-      'Thinking differential equations are irrelevant to discrete gradient descent — they\'re the continuous limit',
-      'Confusing phase portraits (trajectories in state space) with loss landscape plots',
-    ],
-    mvl: [
-      { type: 'Watch', text: '3B1B — "Differential equations, a tourist\'s guide"' },
-      { type: 'Do', text: 'Plot vector fields and solution trajectories for simple ODEs' },
-      { type: 'Do', text: 'Gradient flow on a 2-parameter loss: trace trajectories to minima' },
-    ],
-    projects: [
-      { text: 'Euler method instability: learning rate as step size' },
-    ],
-  },
-  {
-    id: 33, phase: 'p5', title: 'Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason',
-    status: 'not-started', hours: '4–5h',
-    prereqs: [29],
+    prereqs: [34],
     crossPhaseLinks: [],
     conceptChecks: [
       'State Gödel\'s first incompleteness theorem informally. What does it say can\'t be done?',
@@ -1419,9 +1524,9 @@ const LESSONS = [
       { text: 'Löb\'s theorem thought exercise: why can\'t an AI prove its own alignment?' },
     ],
   },
-  // ─── Phase 4: Neural Networks ───
+  // ─── Phase 6: Neural Networks ───
   {
-    id: 34, phase: 'p6', title: 'How a Single Neuron Works',
+    id: 38, phase: 'p6', title: 'How a Single Neuron Works',
     status: 'not-started', hours: '3–4h',
     prereqs: [10],
     crossPhaseLinks: [15, 16],
@@ -1433,339 +1538,331 @@ const LESSONS = [
     ],
     failureModes: [
       'Thinking "universal approximation" means any network can learn anything — it says nothing about LEARNING, only representation',
-      'Forgetting that a neuron IS a dot product + nonlinearity — you already know both pieces from Lessons 9 + calculus',
+      'Forgetting that a neuron IS a dot product + nonlinearity — you already know both pieces from Lessons 10 + calculus',
     ],
     mvl: [
       { type: 'Watch', text: '3B1B — "But what is a neural network?" (DL Ch. 1)' },
-      { type: 'Do', text: 'Implement a single neuron, train on AND/OR/XOR, discover XOR fails' },
+      { type: 'Do', text: 'Single neuron classification on 2D data: see the decision boundary' },
     ],
     projects: [
-      { text: 'Single neuron trainer (AND, OR, XOR discovery)' },
+      { text: 'Activation function explorer: visualize sigmoid, tanh, ReLU, GELU' },
     ],
   },
   {
-    id: 35, phase: 'p6', title: 'The Forward Pass as Matrix Multiplications',
-    status: 'not-started', hours: '6–8h',
-    prereqs: [34],
-    crossPhaseLinks: [4, 5, 6],
-    conceptChecks: [
-      'How is a layer of neurons the same as a matrix multiplication?',
-      'What does the forward pass f₃(f₂(f₁(x))) look like in terms of matrices?',
-      'What does softmax do and why do we need it?',
-    ],
-    failureModes: [
-      'Losing the connection to linear algebra: each layer IS Lesson 4 (a linear transformation) + a nonlinearity',
-      'Thinking each neuron is independent — they share inputs, and the matrix captures ALL neurons in a layer simultaneously',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Karpathy — "Building makemore" (Lecture 2)' },
-      { type: 'Do', text: 'Implement 2-layer MLP from scratch in NumPy, train on MNIST' },
-    ],
-    projects: [
-      { text: 'Build MLP on top of micrograd engine; train on MNIST' },
-    ],
-  },
-  {
-    id: 36, phase: 'p6', title: 'Backpropagation Through the Full Network',
-    status: 'not-started', hours: '6–8h',
-    prereqs: [35],
-    crossPhaseLinks: [15, 16],
-    conceptChecks: [
-      'Why do vanishing gradients happen? How do residual connections fix them?',
-      'What does batch normalization do to activations?',
-      'Why does weight initialization matter?',
-    ],
-    failureModes: [
-      'Thinking residual connections are optional tricks — they are THE reason deep networks work, and THE backbone of transformers',
-      'Not doing the backprop ninja exercise manually — mechanical understanding of gradient flow is irreplaceable',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Karpathy — "Becoming a Backprop Ninja" (Lecture 5)' },
-      { type: 'Do', text: 'Manually backprop through cross-entropy → linear → tanh → batchnorm' },
-    ],
-    projects: [
-      { text: 'Add residual connections + batchnorm to MLP' },
-    ],
-  },
-  {
-    id: 37, phase: 'p6', title: 'Attention — Dot Products in Action',
-    status: 'not-started', hours: '5–7h',
-    prereqs: [36],
-    crossPhaseLinks: [6, 10],
-    conceptChecks: [
-      'What are Q, K, V and where do they come from?',
-      'Why is the attention score a dot product? What does it measure?',
-      'What is the difference between attention scores (pre-softmax) and attention weights (post-softmax)?',
-      'What do the QK and OV circuits compute?',
-    ],
-    failureModes: [
-      'Confusing attention scores (raw dot products) with attention weights (after softmax) — this matters for interpretability',
-      'Thinking each head does the same thing — different heads learn different patterns (syntax, coreference, etc.)',
-    ],
-    mvl: [
-      { type: 'Watch', text: '3B1B — "Attention in transformers, step-by-step" (DL Ch. 6)' },
-      { type: 'Do', text: 'Implement single-head attention from scratch in NumPy, visualize attention matrix' },
-    ],
-    projects: [
-      { text: 'Attention mechanism from scratch + heatmap visualization' },
-    ],
-  },
-  {
-    id: 38, phase: 'p6', title: 'Building a Transformer from Scratch',
-    status: 'not-started', hours: '10–15h',
-    prereqs: [37],
-    crossPhaseLinks: [11, 22],
-    conceptChecks: [
-      'What is the residual stream and why is it the backbone of the transformer?',
-      'What does causal masking do and why is it necessary for language modeling?',
-      'What is the full transformer block? (attention → add&norm → MLP → add&norm)',
-      'How does positional encoding give the model a sense of order?',
-    ],
-    failureModes: [
-      'Not typing every line of Karpathy\'s GPT build — watching is not the same as doing',
-      'Missing that the residual stream IS the central communication channel for all interpretability work',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Karpathy — "Let\'s build GPT" (Lecture 7, ~2h)' },
-      { type: 'Do', text: 'Build a working GPT from scratch, generate text' },
-    ],
-    projects: [
-      { text: 'Full GPT build — the culminating coding project' },
-    ],
-  },
-  {
-    id: 39, phase: 'p6', title: 'Reinforcement Learning Foundations',
-    status: 'not-started', hours: '5–7h',
-    prereqs: [38],
-    crossPhaseLinks: [16, 22],
-    conceptChecks: [
-      'What are the components of an MDP (states, actions, rewards, transitions)?',
-      'What does a policy gradient update do intuitively?',
-      'Why does PPO clip the update? What goes wrong without it?',
-      'Walk through the RLHF pipeline: what happens at each of the 4 stages?',
-    ],
-    failureModes: [
-      'Trying to learn all of RL — you only need MDPs, policy gradients, PPO, and reward hacking for alignment',
-      'Not connecting RL to the math: policy gradient = gradient ascent (L15), KL penalty = constrained optimization (L15b)',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Karpathy — "Deep Dive into LLMs like ChatGPT" (RLHF section)' },
-      { type: 'Read', text: 'Hugging Face — "Illustrating RLHF"' },
-    ],
-    projects: [
-      { text: 'GridWorld policy gradient + reward hacking demo' },
-    ],
-  },
-  {
-    id: 40, phase: 'p6', title: 'The LLM Training Pipeline',
+    id: 39, phase: 'p6', title: 'The Forward Pass as Matrix Multiplications',
     status: 'not-started', hours: '4–6h',
-    prereqs: [39],
-    crossPhaseLinks: [21, 23],
+    prereqs: [38],
+    crossPhaseLinks: [4, 5],
     conceptChecks: [
-      'Name the 4 stages of the LLM pipeline and what each one optimizes.',
-      'What math from your curriculum appears at each stage?',
-      'Why does SFT alone not produce an aligned model?',
-      'What are the alignment failure points at each stage?',
+      'Write the forward pass of a 3-layer MLP as a sequence of matrix operations.',
+      'What is a hidden representation? How does each layer transform it?',
+      'Why do we need nonlinearities between layers?',
     ],
     failureModes: [
-      'Thinking RLHF "solves" alignment — it reduces one type of misalignment but introduces others (reward hacking, sycophancy)',
-      'Not watching Karpathy\'s full Deep Dive — it\'s the single best resource for this lesson',
+      'Losing track of dimensions — always write shapes explicitly: (batch, features) × (features, hidden)',
+      'Treating the forward pass as a black box — you should be able to compute any output by hand for a tiny network',
     ],
     mvl: [
-      { type: 'Watch', text: 'Karpathy — "Deep Dive into LLMs" (full ~3.5h)' },
-      { type: 'Do', text: 'For each pipeline stage, write which curriculum lesson covers the math' },
+      { type: 'Watch', text: '3B1B — "But what is a neural network?" (DL Ch. 1, re-watch matrix section)' },
+      { type: 'Do', text: 'Build a 3-layer MLP in NumPy (no framework), manually trace dimensions' },
     ],
     projects: [],
   },
-  // ─── Phase 5: Interpretability ───
   {
-    id: 41, phase: 'p7', title: 'What Interpretability Researchers Actually Do',
+    id: 40, phase: 'p6', title: 'Backpropagation Through the Full Network',
     status: 'not-started', hours: '6–8h',
-    prereqs: [40],
-    crossPhaseLinks: [3, 6, 10, 11],
+    prereqs: [39, 15],
+    crossPhaseLinks: [],
     conceptChecks: [
-      'What is the superposition hypothesis?',
-      'What is the difference between a feature and a neuron?',
-      'Name four key mechanistic interpretability techniques.',
-      'What does a sparse autoencoder do?',
+      'Draw the computation graph for a 2-layer MLP and trace gradients backward.',
+      'Why is reverse-mode AD (backprop) cheaper than forward-mode for neural networks?',
+      'What is the vanishing gradient problem and how do skip connections help?',
     ],
     failureModes: [
-      'Thinking neurons = features. The entire point of modern interp is that they\'re NOT the same.',
-      'Starting interp work without strong linear algebra — you cannot read these papers without Lessons 1–11.',
+      'Thinking backprop is mysterious — it\'s just the chain rule applied to a computation graph',
+      'Confusing the forward pass (compute values) with the backward pass (compute gradients)',
     ],
     mvl: [
-      { type: 'Read', text: '"A Mathematical Framework for Transformer Circuits" (Elhage et al.)' },
-      { type: 'Do', text: 'Install TransformerLens, load GPT-2, extract and visualize attention patterns' },
+      { type: 'Watch', text: '3B1B — "Backpropagation" (DL Ch. 3) + "Backpropagation calculus" (Ch. 4)' },
+      { type: 'Watch', text: 'Andrej Karpathy — "micrograd" (builds autograd from scratch)' },
+      { type: 'Do', text: 'Full backprop by hand on a 2-layer MLP for one data point, verify with PyTorch' },
     ],
     projects: [
-      { text: 'TransformerLens setup + GPT-2 attention visualization' },
+      { text: 'Build micrograd: minimal autograd engine from scratch' },
     ],
   },
   {
-    id: 42, phase: 'p7', title: 'Circuits and Features in Practice',
-    status: 'not-started', hours: '8–12h',
-    prereqs: [41],
+    id: 41, phase: 'p6', title: 'Attention — Dot Products in Action',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [40, 10],
     crossPhaseLinks: [9],
     conceptChecks: [
-      'What is an induction head and what does it do?',
-      'What is the residual stream in terms of how components read and write?',
-      'How does a sparse autoencoder decompose activations into features?',
-      'What did "Scaling Monosemanticity" find?',
+      'Write the attention equation. What is Q, K, V and what does each do?',
+      'Why divide by √d_k? What goes wrong if you don\'t?',
+      'How is attention like a soft dictionary lookup?',
+      'What is multi-head attention and why does it help?',
     ],
     failureModes: [
-      'Trying to replicate induction heads without first understanding 2-layer attention mechanics (read the Circuits paper first)',
-      'Getting lost in code without understanding the linear algebra of what activation patching does',
+      'Memorizing the attention formula without understanding that QK^T computes similarity scores',
+      'Forgetting that attention weights are just softmaxed dot products — you learned dot products in Lesson 10',
     ],
     mvl: [
-      { type: 'Read', text: '"In-context Learning and Induction Heads" (Olsson et al.)' },
-      { type: 'Do (scaffolded)', text: '1) Load 2-layer model in TransformerLens. 2) Identify induction heads by attention pattern. 3) Run activation patching on a simple copying task. 4) Then try full replication.' },
+      { type: 'Watch', text: '3B1B — "Attention in transformers, visually explained"' },
+      { type: 'Read', text: 'Jay Alammar — "The Illustrated Transformer"' },
+      { type: 'Do', text: 'Implement single-head attention from scratch in PyTorch, visualize attention patterns' },
     ],
     projects: [
-      { text: 'Induction head finding + activation patching in TransformerLens' },
+      { text: 'Attention pattern visualizer for a small trained model' },
     ],
   },
   {
-    id: 43, phase: 'p7', title: 'Scaling Laws, Emergent Capabilities, and Phase Transitions',
-    status: 'not-started', hours: '5–7h',
-    prereqs: [42],
-    crossPhaseLinks: [18],
+    id: 42, phase: 'p6', title: 'Building a Transformer from Scratch',
+    status: 'not-started', hours: '8–10h',
+    prereqs: [41],
+    crossPhaseLinks: [],
     conceptChecks: [
-      'What is a scaling law and what three variables does it relate?',
-      'What did the Chinchilla paper change about how labs train models?',
-      'Are emergent capabilities real or a measurement artifact? Explain both sides.',
-      'Why does the "bitter lesson" worry alignment researchers?',
+      'What are the components of a transformer block (in order)?',
+      'What does layer normalization do and why is it needed?',
+      'What is the residual stream and why does it matter for interpretability?',
+      'What are positional encodings and why does the transformer need them?',
     ],
     failureModes: [
-      'Assuming smooth scaling means smooth capability improvement — practical usefulness can have sharp thresholds',
-      'Taking the bitter lesson as gospel — clever methods AND scale both matter',
+      'Building a transformer without understanding each piece — trace data flow through every component',
+      'Treating the residual stream as incidental — it\'s the central communication channel and the key interpretability concept',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Andrej Karpathy — "Let\'s build GPT from scratch"' },
+      { type: 'Do', text: 'Build a character-level GPT from scratch, train on Shakespeare' },
+    ],
+    projects: [
+      { text: 'Working GPT trained on a text corpus with interpretable attention patterns' },
+    ],
+  },
+  {
+    id: 43, phase: 'p6', title: 'Reinforcement Learning Foundations',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [40],
+    crossPhaseLinks: [19, 20],
+    conceptChecks: [
+      'What is a Markov Decision Process? Define states, actions, rewards, transitions.',
+      'What is the Bellman equation and why is it recursive?',
+      'What is a policy gradient and how does REINFORCE work?',
+      'What is PPO and why is it used in RLHF?',
+    ],
+    failureModes: [
+      'Getting lost in RL taxonomy — focus on policy gradients since that\'s what RLHF uses',
+      'Thinking RLHF is just RL — the "HF" (human feedback) part changes the reward structure fundamentally',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Mutual Information — "RLHF Explained"' },
+      { type: 'Read', text: 'Spinning Up in Deep RL (OpenAI) — core concepts' },
+      { type: 'Do', text: 'Implement REINFORCE on CartPole from scratch' },
+    ],
+    projects: [
+      { text: 'Policy gradient on a simple environment with reward visualization' },
+    ],
+  },
+  {
+    id: 44, phase: 'p6', title: 'The LLM Training Pipeline — From Raw Text to Aligned AI',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [42, 43],
+    crossPhaseLinks: [21, 22],
+    conceptChecks: [
+      'What are the three stages of LLM training and what does each optimize?',
+      'Why is cross-entropy the right loss for next-token prediction? (Connect to MLE + info theory)',
+      'What is the KL penalty in RLHF and why is it there?',
+      'What is Constitutional AI and how does it differ from standard RLHF?',
+    ],
+    failureModes: [
+      'Treating the pipeline as three disconnected steps — each builds on the previous and the math connects',
+      'Underestimating how much the training pipeline IS alignment — RLHF is an alignment technique',
+    ],
+    mvl: [
+      { type: 'Watch', text: 'Andrej Karpathy — "State of GPT" talk' },
+      { type: 'Read', text: 'Anthropic — "Constitutional AI" paper' },
+      { type: 'Do', text: 'Trace the full pipeline: what mathematical concept from which lesson is used at each stage?' },
+    ],
+    projects: [
+      { text: 'End-to-end pipeline diagram with mathematical annotations' },
+    ],
+  },
+  // ─── Phase 7: Interpretability ───
+  {
+    id: 45, phase: 'p7', title: 'What Interpretability Researchers Actually Do',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [42],
+    crossPhaseLinks: [11, 9],
+    conceptChecks: [
+      'What is the residual stream hypothesis?',
+      'What is a feature direction in activation space?',
+      'What is the superposition hypothesis? Why does it make interp hard?',
+      'What is a sparse autoencoder and how does it find features?',
+    ],
+    failureModes: [
+      'Thinking interp is just "looking at attention patterns" — it\'s much deeper and more mathematical',
+      'Forgetting that you already know the math: features = directions (Lesson 2), superposition = overcomplete basis (Lesson 3), SAEs = projections (Lesson 10)',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Neel Nanda — "A Comprehensive Mechanistic Interpretability Explainer"' },
+      { type: 'Read', text: 'Anthropic — "Toy Models of Superposition"' },
+      { type: 'Do', text: 'Use TransformerLens to extract residual stream activations and run PCA' },
+    ],
+    projects: [],
+  },
+  {
+    id: 46, phase: 'p7', title: 'Circuits and Features in Practice',
+    status: 'not-started', hours: '8–10h',
+    prereqs: [45],
+    crossPhaseLinks: [4, 8],
+    conceptChecks: [
+      'What is an induction head and how does it implement in-context learning?',
+      'How do QK and OV circuits compose across layers?',
+      'What does it mean to "read off" a feature from the residual stream?',
+    ],
+    failureModes: [
+      'Getting overwhelmed by the mechanistic details — start with induction heads, the simplest complete circuit',
+      'Thinking circuits are fixed — they\'re descriptions of behavior patterns, not hardwired structures',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Elhage et al. — "A Mathematical Framework for Transformer Circuits"' },
+      { type: 'Read', text: 'Olsson et al. — "In-context Learning and Induction Heads"' },
+      { type: 'Do', text: 'Find and verify an induction head in a small transformer using TransformerLens' },
+    ],
+    projects: [
+      { text: 'Induction head detector and visualizer' },
+    ],
+  },
+  {
+    id: 47, phase: 'p7', title: 'Scaling Laws, Emergent Capabilities, and Phase Transitions',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [46],
+    crossPhaseLinks: [32],
+    conceptChecks: [
+      'What are Chinchilla scaling laws and what do they predict?',
+      'What are emergent capabilities and why are they controversial?',
+      'How do phase transitions in training relate to scaling?',
+    ],
+    failureModes: [
+      'Treating emergent capabilities as magical — they may be measurement artifacts or genuine phase transitions',
+      'Ignoring that scaling laws are empirical fits — they could break at any point',
     ],
     mvl: [
       { type: 'Read', text: 'Kaplan et al. — "Scaling Laws for Neural Language Models"' },
-      { type: 'Read', text: 'Rich Sutton — "The Bitter Lesson" (1 page)' },
-    ],
-    projects: [
-      { text: 'Plot scaling laws from published benchmarks (log-log)' },
-    ],
-  },
-  {
-    id: 44, phase: 'p7', title: 'Singular Learning Theory — The Geometry of Learning',
-    status: 'not-started', hours: '5–8h',
-    prereqs: [43],
-    crossPhaseLinks: [8, 18],
-    conceptChecks: [
-      'Why do standard statistics (AIC, BIC) give wrong answers for neural networks?',
-      'What is the RLCT and how does it replace parameter count as a complexity measure?',
-      'What does "singular" mean in the context of the loss landscape?',
-      'How do phase transitions during training connect to changes in the RLCT?',
-    ],
-    failureModes: [
-      'Thinking you need full algebraic geometry — the conceptual framework is accessible with eigenvalues and Hessians you already know',
-      'Getting intimidated by the math — focus on geometric intuition: singularities = flat directions = symmetries = lower effective complexity',
-    ],
-    mvl: [
-      { type: 'Read', text: 'Jesse Hoogland — "Neural Networks are Singular" (LessWrong)' },
-      { type: 'Do', text: 'Plot f(w₁,w₂) = (w₁w₂)². See the cross-shaped valley. Compute the Hessian at origin — it\'s zero.' },
-    ],
-    projects: [
-      { text: 'Singularity visualization + parameter symmetry demo' },
-    ],
-  },
-  // ─── Phase 6: Alignment Theory ───
-  {
-    id: 45, phase: 'p8', title: 'Game Theory Foundations',
-    status: 'not-started', hours: '6–8h',
-    prereqs: [],
-    crossPhaseLinks: [5],
-    conceptChecks: [
-      'What is a Nash equilibrium? Is it always the best outcome?',
-      'In the Prisoner\'s Dilemma, why is mutual defection the Nash equilibrium despite mutual cooperation being better?',
-      'What is mechanism design and how does it relate to designing reward functions?',
-      'Model the AI safety race as a payoff matrix. What\'s the equilibrium?',
-    ],
-    failureModes: [
-      'Thinking Nash equilibrium means "optimal" — it means stable, which can be terrible (mutual defection)',
-      'Treating game theory as pure philosophy — the payoff matrices ARE systems of equations from linear algebra',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Yale Game Theory Course (Ben Polak) — Lectures 1–3' },
-      { type: 'Read', text: 'Scott Alexander — "Meditations on Moloch"' },
-    ],
-    projects: [
-      { text: 'Prisoner\'s Dilemma tournament simulator (tit-for-tat etc.)' },
-    ],
-  },
-  {
-    id: 46, phase: 'p8', title: 'Decision Theory — CDT, EDT, and FDT',
-    status: 'not-started', hours: '5–7h',
-    prereqs: [45],
-    crossPhaseLinks: [19, 23],
-    conceptChecks: [
-      'Explain CDT, EDT, and FDT each in one sentence.',
-      'What does each decision theory say about Newcomb\'s Problem? Why?',
-      'Why might FDT be the right decision theory for aligned AI?',
-      'What is reflective stability and why does CDT fail it?',
-    ],
-    failureModes: [
-      'Treating decision theory as armchair philosophy — it determines how an AI actually makes choices',
-      'Not computing expected utilities numerically for each thought experiment — do the math, don\'t just argue verbally',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Robert Miles — "Newcomb\'s Problem"' },
-      { type: 'Read', text: 'Yudkowsky & Soares — "Functional Decision Theory" (2018)' },
-    ],
-    projects: [
-      { text: 'Add Newcomb simulator + DT comparison to game theory project' },
-    ],
-  },
-  {
-    id: 47, phase: 'p8', title: 'Anthropics and Self-Locating Beliefs',
-    status: 'not-started', hours: '4–6h',
-    prereqs: [46],
-    crossPhaseLinks: [19, 23],
-    conceptChecks: [
-      'What is the Sleeping Beauty problem? What do thirders and halfers believe, and why?',
-      'State Bostrom\'s Simulation Argument\'s three propositions.',
-      'How does anthropic reasoning connect to deceptive alignment?',
-      'What is SSA vs SIA?',
-    ],
-    failureModes: [
-      'Confusing Anthropic (the company) with anthropics (the philosophical discipline)',
-      'Taking the Doomsday Argument too literally — it illustrates a reasoning pattern, not a firm prediction',
-    ],
-    mvl: [
-      { type: 'Watch', text: 'Numberphile — "Sleeping Beauty Paradox"' },
-      { type: 'Do', text: 'Sleeping Beauty simulator: run 10,000 trials from both perspectives' },
-    ],
-    projects: [
-      { text: 'Sleeping Beauty + Doomsday Argument simulators' },
-    ],
-  },
-  {
-    id: 48, phase: 'p8', title: 'The Alignment Problem — Technical Foundations',
-    status: 'not-started', hours: '6–8h',
-    prereqs: [45, 46, 47],
-    crossPhaseLinks: [41, 42, 16, 22],
-    conceptChecks: [
-      'What is the difference between outer alignment and inner alignment?',
-      'What is a mesa-optimizer and why is it dangerous?',
-      'Explain deceptive alignment in two sentences.',
-      'What are the theoretical limitations of RLHF?',
-    ],
-    failureModes: [
-      'Thinking alignment is "just make the reward function right" — that\'s outer alignment only; inner alignment is the harder problem',
-      'Not connecting mesa-optimization to everything you learned about training dynamics (loss landscapes, optimization)',
-    ],
-    mvl: [
-      { type: 'Read', text: '"Risks from Learned Optimization" (Hubinger et al., 2019)' },
-      { type: 'Read', text: '"Concrete Problems in AI Safety" (Amodei et al., 2016)' },
+      { type: 'Read', text: 'Wei et al. — "Emergent Abilities of Large Language Models"' },
+      { type: 'Do', text: 'Plot known scaling law data. Extrapolate. Where does the fit break?' },
     ],
     projects: [],
   },
   {
-    id: 49, phase: 'p8', title: 'Open Problems and Research Frontiers',
+    id: 48, phase: 'p7', title: 'Singular Learning Theory — The Geometry of Learning',
+    status: 'not-started', hours: '8–12h',
+    prereqs: [47, 35, 36],
+    crossPhaseLinks: [32],
+    conceptChecks: [
+      'What is a singularity in weight space? Give an example in a simple neural network.',
+      'What is the RLCT (λ) and how does it generalize the number of parameters?',
+      'How does the Local Learning Coefficient (LLC) track phase transitions during training?',
+      'Why does SLT say Bayesian model comparison works differently for neural networks vs regular models?',
+    ],
+    failureModes: [
+      'Trying to learn SLT without the prerequisites — it synthesizes algebra (symmetry), topology (singularities), calculus (integration), and dynamics (phase transitions)',
+      'Getting lost in the algebraic geometry details — focus on the RLCT as "effective dimension" and its implications',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Jesse Hoogland & others — "The Developmental Landscape of In-Context Learning"' },
+      { type: 'Watch', text: 'Neel Nanda — SLT research streams (YouTube)' },
+      { type: 'Do', text: 'Estimate the LLC for a small model during training, identify phase transitions' },
+    ],
+    projects: [
+      { text: 'LLC tracking during grokking: visualize the phase transition via RLCT' },
+    ],
+  },
+  // ─── Phase 8: Alignment Theory ───
+  {
+    id: 49, phase: 'p8', title: 'Game Theory Foundations',
     status: 'not-started', hours: '4–6h',
-    prereqs: [48],
-    crossPhaseLinks: [41, 42, 8],
+    prereqs: [23],
+    crossPhaseLinks: [],
+    conceptChecks: [
+      'What is a Nash equilibrium? Give an example where it\'s bad for everyone.',
+      'What is the prisoner\'s dilemma and why is it relevant to AI alignment?',
+      'What are correlated equilibria and mechanism design?',
+    ],
+    failureModes: [
+      'Treating game theory as purely theoretical — it directly models AI-human and AI-AI strategic interactions',
+      'Assuming Nash equilibria are "optimal" — they\'re stable, which is different',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Nisan et al. — "Algorithmic Game Theory" (selected chapters)' },
+      { type: 'Do', text: 'Implement iterated prisoner\'s dilemma tournament with different strategies' },
+    ],
+    projects: [],
+  },
+  {
+    id: 50, phase: 'p8', title: 'Decision Theory — CDT, EDT, and FDT',
+    status: 'not-started', hours: '5–7h',
+    prereqs: [49],
+    crossPhaseLinks: [23],
+    conceptChecks: [
+      'What is Newcomb\'s problem and why do CDT and EDT disagree?',
+      'What is Functional Decision Theory and what does it get right?',
+      'Why does decision theory matter for AI alignment?',
+    ],
+    failureModes: [
+      'Getting lost in philosophical edge cases — focus on why the decision theory an AI uses matters for safety',
+      'Treating this as purely philosophical — decision theory determines agent behavior in concrete scenarios',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Soares & Fallenstein — "Agent Foundations for Aligning Machine Intelligence"' },
+      { type: 'Read', text: 'Yudkowsky & Soares — "Functional Decision Theory"' },
+    ],
+    projects: [],
+  },
+  {
+    id: 51, phase: 'p8', title: 'Anthropics and Self-Locating Beliefs',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [50],
+    crossPhaseLinks: [23],
+    conceptChecks: [
+      'What is the Sleeping Beauty problem and why does it matter?',
+      'What is the Doomsday Argument?',
+      'How do anthropic considerations affect AI forecasting?',
+    ],
+    failureModes: [
+      'Dismissing anthropics as navel-gazing — it has concrete implications for AI safety forecasting',
+      'Getting stuck on "which is the right answer" — focus on understanding why reasonable people disagree',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Bostrom — "Anthropic Bias" (selected chapters)' },
+    ],
+    projects: [],
+  },
+  {
+    id: 52, phase: 'p8', title: 'The Alignment Problem — Technical Foundations',
+    status: 'not-started', hours: '6–8h',
+    prereqs: [51, 45],
+    crossPhaseLinks: [44],
+    conceptChecks: [
+      'What is the difference between outer and inner alignment?',
+      'What is a mesa-optimizer and why is it dangerous?',
+      'What is deceptive alignment? Under what conditions might it arise?',
+      'What is scalable oversight and why is it hard?',
+    ],
+    failureModes: [
+      'Treating alignment as a single problem — it\'s a cluster of related problems requiring different approaches',
+      'Being so pessimistic that you don\'t engage with the technical details — the math matters',
+    ],
+    mvl: [
+      { type: 'Read', text: 'Hubinger et al. — "Risks from Learned Optimization"' },
+      { type: 'Read', text: 'Amodei et al. — "Concrete Problems in AI Safety"' },
+    ],
+    projects: [],
+  },
+  {
+    id: 53, phase: 'p8', title: 'Open Problems and Research Frontiers',
+    status: 'not-started', hours: '4–6h',
+    prereqs: [52],
+    crossPhaseLinks: [45, 46, 8],
     conceptChecks: [
       'What is scalable oversight and why is it hard?',
       'What is ELK (Eliciting Latent Knowledge)?',
@@ -1803,7 +1900,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp3', afterLesson: 33, phase: 'p3', title: 'Phase 3 Review: Probability + Math Foundations → LLM Training Bridge',
+    id: 'cp3', afterLesson: 37, phase: 'p3', title: 'Phase 3 Review: Probability + Math Foundations → LLM Training Bridge',
     exercises: [
       '<strong>Full training loop explained:</strong> Starting from MLE, derive why cross-entropy is the loss function for next-token prediction. Connect entropy, KL divergence, and the training objective.',
       '<strong>Regularization unification:</strong> Show that L2 weight decay = Gaussian prior = MAP estimation. Compute the MAP estimate for a simple 1-parameter model.',
@@ -1811,7 +1908,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp4', afterLesson: 40, phase: 'p6', title: 'Phase 4 Review: Everything → Transformer Bridge',
+    id: 'cp4', afterLesson: 44, phase: 'p6', title: 'Phase 4 Review: Everything → Transformer Bridge',
     exercises: [
       '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix multiplication, state: the input/output dimensions, the rank of the weight matrix, what information bottleneck it creates.',
       '<strong>Attention as projection:</strong> Show that attention is a form of weighted projection. Connect attention weights → linear combinations (Lesson 3) → projections (Lesson 10).',
@@ -1819,7 +1916,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp5', afterLesson: 44, phase: 'p7', title: 'Phase 5 Review: Interp → Alignment Bridge',
+    id: 'cp5', afterLesson: 48, phase: 'p7', title: 'Phase 5 Review: Interp → Alignment Bridge',
     exercises: [
       '<strong>Feature geometry:</strong> In TransformerLens, extract residual stream activations for 100 inputs. Run PCA. Interpret the top 3 components. Connect to eigenvectors (Lesson 8) and change of basis (Lesson 11).',
       '<strong>Superposition quantification:</strong> For a set of feature directions found by an SAE, compute pairwise cosine similarities. Visualize as a heatmap. How orthogonal are they?',
@@ -1827,7 +1924,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp6', afterLesson: 49, phase: 'p8', title: 'Phase 6 Review: Full Integration',
+    id: 'cp6', afterLesson: 53, phase: 'p8', title: 'Phase 6 Review: Full Integration',
     exercises: [
       '<strong>Alignment scenario analysis:</strong> A model trained with RLHF shows unexpected behavior in deployment. Using game theory (what strategies are at play?), decision theory (what decision procedure is the model using?), Bayesian reasoning (what\'s your posterior that it\'s deceptive?), and interpretability (what would you look for internally?) — write a full analysis.',
       '<strong>Mathematical connections map:</strong> Create a concept map connecting at least 15 specific concepts from across all 6 phases. Each connection should be a concrete statement, not just "related to."',
@@ -1836,8 +1933,8 @@ const CHECKPOINTS = [
 ];
 
 const LAYOUT = {
-  width: 1200,
-  height: 1050,
+  width: 1300,
+  height: 1200,
   nodes: {
     // Phase 0 - setup (top-left)
     0:  { x: 60,  y: 30 },
@@ -1855,6 +1952,7 @@ const LAYOUT = {
     11: { x: 120, y: 730 },
     12: { x: 60,  y: 820 },
     // Phase 2 - calculus (center-left)
+    'p2-0': { x: 300, y: 200 },
     13: { x: 300, y: 280 },
     14: { x: 300, y: 370 },
     15: { x: 300, y: 460 },
@@ -1873,31 +1971,36 @@ const LAYOUT = {
     26: { x: 470, y: 790 },
     27: { x: 470, y: 870 },
     28: { x: 470, y: 950 },
-    // Phase 5 - math enrichment (center-right)
+    // Phase 5a - diff eq & dynamical systems (center-right, top)
     29: { x: 640, y: 110 },
-    30: { x: 640, y: 210 },
-    31: { x: 640, y: 310 },
-    32: { x: 640, y: 410 },
-    33: { x: 640, y: 510 },
+    30: { x: 640, y: 200 },
+    31: { x: 640, y: 290 },
+    32: { x: 640, y: 380 },
+    33: { x: 640, y: 470 },
+    // Phase 5b - additional foundations (center-right, bottom)
+    34: { x: 640, y: 590 },
+    35: { x: 640, y: 680 },
+    36: { x: 640, y: 770 },
+    37: { x: 640, y: 860 },
     // Phase 6 - neural networks (right)
-    34: { x: 810, y: 110 },
-    35: { x: 810, y: 210 },
-    36: { x: 810, y: 310 },
-    37: { x: 810, y: 410 },
-    38: { x: 810, y: 510 },
-    39: { x: 810, y: 620 },
-    40: { x: 810, y: 730 },
+    38: { x: 830, y: 110 },
+    39: { x: 830, y: 210 },
+    40: { x: 830, y: 310 },
+    41: { x: 830, y: 420 },
+    42: { x: 830, y: 530 },
+    43: { x: 830, y: 640 },
+    44: { x: 830, y: 750 },
     // Phase 7 - interpretability (far right)
-    41: { x: 980, y: 370 },
-    42: { x: 980, y: 480 },
-    43: { x: 980, y: 590 },
-    44: { x: 980, y: 700 },
+    45: { x: 1000, y: 370 },
+    46: { x: 1000, y: 490 },
+    47: { x: 1000, y: 610 },
+    48: { x: 1000, y: 730 },
     // Phase 8 - alignment theory (far right, top)
-    45: { x: 1120, y: 110 },
-    46: { x: 1120, y: 220 },
-    47: { x: 1120, y: 330 },
-    48: { x: 1120, y: 440 },
-    49: { x: 1120, y: 550 },
+    49: { x: 1170, y: 110 },
+    50: { x: 1170, y: 220 },
+    51: { x: 1170, y: 330 },
+    52: { x: 1170, y: 440 },
+    53: { x: 1170, y: 550 },
   },
 };
 
@@ -2084,13 +2187,13 @@ function renderGraph() {
   const phaseLabels = [
     { x: 60,   y: 5,   color: '#94a3b8', label: 'P0 SETUP' },
     { x: 100,  y: 180, color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 300,  y: 250, color: '#818cf8', label: 'P2 CALCULUS' },
+    { x: 300,  y: 170, color: '#818cf8', label: 'P2 CALCULUS' },
     { x: 470,  y: 80,  color: '#f9a8d4', label: 'P3 PROBABILITY' },
     { x: 470,  y: 600, color: '#f472b6', label: 'P4 STATISTICS' },
     { x: 640,  y: 80,  color: '#e879f9', label: 'P5 MATH ENRICHMENT' },
-    { x: 810,  y: 80,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
-    { x: 980,  y: 340, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
-    { x: 1120, y: 80,  color: '#c084fc', label: 'P8 ALIGNMENT' },
+    { x: 830,  y: 80,  color: '#fbbf24', label: 'P6 NEURAL NETWORKS' },
+    { x: 1000, y: 340, color: '#38bdf8', label: 'P7 INTERPRETABILITY' },
+    { x: 1170, y: 80,  color: '#c084fc', label: 'P8 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
@@ -2262,6 +2365,90 @@ function setView(view) {
   }
 }
 
+// ── Pace Tracker State ──
+const PACE_KEY = 'alignment-curriculum-pace';
+const CURRICULUM_START = '2026-02-21'; // First lesson date
+
+// Difficulty weights by phase (relative to Phase 1 baseline)
+// Based on: 6-year math gap, strong intuition, rusty mechanics
+const DIFFICULTY_WEIGHT = {
+  p0: 0.8, p1: 1.0, p2: 1.2, p3: 1.3, p4: 1.3,
+  p5: 1.5, p6: 1.4, p7: 1.6, p8: 1.4
+};
+
+function loadPaceData() {
+  try { return JSON.parse(localStorage.getItem(PACE_KEY)) || { completions: {}, startDate: CURRICULUM_START }; }
+  catch(e) { return { completions: {}, startDate: CURRICULUM_START }; }
+}
+function savePaceData(data) { localStorage.setItem(PACE_KEY, JSON.stringify(data)); }
+
+function recordCompletion(lessonId) {
+  const data = loadPaceData();
+  if (!data.completions[lessonId]) {
+    data.completions[lessonId] = new Date().toISOString();
+    savePaceData(data);
+  }
+}
+
+function computePace() {
+  const data = loadPaceData();
+  const start = new Date(data.startDate);
+  const now = new Date();
+  const daysSinceStart = Math.max(1, (now - start) / (1000 * 60 * 60 * 24));
+
+  // Sum content hours completed (using avg of lo-hi range)
+  let completedContentHours = 0;
+  LESSONS.forEach(l => {
+    if (l.status === 'complete') {
+      const hrs = parseHoursGlobal(l.hours);
+      completedContentHours += hrs.avg;
+    }
+  });
+
+  // Your actual pace: content hours per calendar day
+  const paceHoursPerDay = completedContentHours / daysSinceStart;
+
+  // Compute weighted remaining hours
+  let weightedRemainLo = 0, weightedRemainHi = 0;
+  LESSONS.forEach(l => {
+    if (l.status !== 'complete') {
+      const hrs = parseHoursGlobal(l.hours);
+      const weight = DIFFICULTY_WEIGHT[l.phase] || 1.3;
+      weightedRemainLo += hrs.lo * weight;
+      weightedRemainHi += hrs.hi * weight;
+    }
+  });
+
+  // Estimated days remaining
+  const daysRemainLo = paceHoursPerDay > 0 ? Math.round(weightedRemainLo / paceHoursPerDay) : Infinity;
+  const daysRemainHi = paceHoursPerDay > 0 ? Math.round(weightedRemainHi / paceHoursPerDay) : Infinity;
+
+  // Projected completion dates
+  const projLo = new Date(now.getTime() + daysRemainLo * 24 * 60 * 60 * 1000);
+  const projHi = new Date(now.getTime() + daysRemainHi * 24 * 60 * 60 * 1000);
+
+  return {
+    daysSinceStart: Math.round(daysSinceStart),
+    completedContentHours: Math.round(completedContentHours),
+    paceHoursPerDay: paceHoursPerDay.toFixed(1),
+    weightedRemainLo: Math.round(weightedRemainLo),
+    weightedRemainHi: Math.round(weightedRemainHi),
+    daysRemainLo, daysRemainHi,
+    projLo, projHi
+  };
+}
+
+function parseHoursGlobal(h) {
+  const match = String(h).match(/(\d+)–(\d+)/);
+  if (match) return { lo: parseInt(match[1]), hi: parseInt(match[2]), avg: (parseInt(match[1]) + parseInt(match[2])) / 2 };
+  return { lo: 5, hi: 5, avg: 5 };
+}
+
+function formatDate(d) {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
 // ── Timeline ──
 function renderTimeline() {
   const svg = document.getElementById('graph-svg');
@@ -2270,7 +2457,7 @@ function renderTimeline() {
   const h = rect.height;
 
   function parseHours(h) {
-    const match = h.match(/(\d+)–(\d+)/);
+    const match = String(h).match(/(\d+)–(\d+)/);
     if (match) return { lo: parseInt(match[1]), hi: parseInt(match[2]), avg: (parseInt(match[1]) + parseInt(match[2])) / 2 };
     return { lo: 5, hi: 5, avg: 5 };
   }
@@ -2289,15 +2476,24 @@ function renderTimeline() {
   const totalHi = doneHi + inProgHi + remainHi;
   const pctDone = Math.round(((doneLo + doneHi) / 2) / ((totalLo + totalHi) / 2) * 100);
 
-  let html = '';
+  // Dynamic pace calculation
+  const pace = computePace();
 
-  // ── Big summary at top ──
+  let html = '';
   const cx = w / 2;
-  html += `<text x="${cx}" y="45" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="28" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
-  html += `<text x="${cx}" y="72" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · ${totalLo}–${totalHi}h total</text>`;
+
+  // ── Big summary at top with pace data ──
+  if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
+    html += `<text x="${cx}" y="35" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${pace.weightedRemainLo}–${pace.weightedRemainHi} weighted hours remaining</text>`;
+    html += `<text x="${cx}" y="58" fill="var(--accent-1)" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">Est. completion: ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</text>`;
+    html += `<text x="${cx}" y="78" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h done in ${pace.daysSinceStart} days · ${pace.paceHoursPerDay}h/day pace · ${pctDone}% complete · difficulty-adjusted</text>`;
+  } else {
+    html += `<text x="${cx}" y="40" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
+    html += `<text x="${cx}" y="68" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
+  }
 
   // ── Phase breakdown ──
-  const margin = { top: 100, left: 60, right: 40 };
+  const margin = { top: 105, left: 60, right: 40 };
   const phaseW = w - margin.left - margin.right;
   const rowH = 52;
 
@@ -2314,38 +2510,44 @@ function renderTimeline() {
     });
     const pRemLo = pTotalLo - pDoneLo;
     const pRemHi = pTotalHi - pDoneHi;
+    const weight = DIFFICULTY_WEIGHT[phase.id] || 1.0;
+    const pWeightedRemLo = Math.round(pRemLo * weight);
+    const pWeightedRemHi = Math.round(pRemHi * weight);
     const pPct = total > 0 ? (complete / total) : 0;
     const pPctInProg = total > 0 ? (inProg / total) : 0;
 
     const y = margin.top + i * rowH;
     const barX = margin.left + 200;
-    const barW = phaseW - 200 - 130;
+    const barW = phaseW - 200 - 180;
     const barH = 16;
     const barY = y + 6;
 
-    // Phase name
+    // Phase name with difficulty weight
     html += `<text x="${margin.left}" y="${y + 18}" fill="${phase.color}" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">${phase.name}</text>`;
-    html += `<text x="${margin.left}" y="${y + 32}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${complete}/${total} lessons</text>`;
+    html += `<text x="${margin.left}" y="${y + 32}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${complete}/${total} lessons · ${weight}× difficulty</text>`;
 
     // Bar background
     html += `<rect x="${barX}" y="${barY}" width="${barW}" height="${barH}" fill="var(--border)" rx="4" opacity="0.3" />`;
-    // Complete fill
     if (pPct > 0) {
       html += `<rect x="${barX}" y="${barY}" width="${barW * pPct}" height="${barH}" fill="${phase.color}" rx="4" opacity="0.7" />`;
     }
-    // In-progress fill
     if (pPctInProg > 0) {
       html += `<rect x="${barX + barW * pPct}" y="${barY}" width="${barW * pPctInProg}" height="${barH}" fill="${phase.color}" rx="4" opacity="0.3" />`;
     }
 
-    // Hours remaining for this phase
-    const hoursText = pRemLo === 0 && pRemHi === 0 ? '✓ done' : `${pRemLo}–${pRemHi}h left`;
-    html += `<text x="${barX + barW + 12}" y="${y + 20}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11">${hoursText}</text>`;
+    // Hours remaining with weighted estimate
+    let hoursText;
+    if (pRemLo === 0 && pRemHi === 0) {
+      hoursText = '✓ done';
+    } else {
+      hoursText = `${pWeightedRemLo}–${pWeightedRemHi}h (adj.)`;
+    }
+    html += `<text x="${barX + barW + 12}" y="${y + 20}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${hoursText}</text>`;
   });
 
   // ── Per-lesson bars at bottom ──
   const bottomY = margin.top + PHASES.filter(p => p.id !== 'p9').length * rowH + 30;
-  html += `<text x="${margin.left}" y="${bottomY}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">HOURS PER LESSON</text>`;
+  html += `<text x="${margin.left}" y="${bottomY}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">HOURS PER LESSON (colored by phase)</text>`;
 
   const barAreaTop = bottomY + 15;
   const barAreaH = h - barAreaTop - 40;
@@ -2361,9 +2563,9 @@ function renderTimeline() {
     const color = getPhaseColor(lesson.phase);
     const opacity = lesson.status === 'complete' ? 0.8 : lesson.status === 'in-progress' ? 0.5 : 0.2;
 
-    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${color}" opacity="${opacity}" rx="2" cursor="pointer" onclick="selectLesson(${lesson.id})" />`;
+    html += `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${color}" opacity="${opacity}" rx="2" cursor="pointer" onclick="selectLesson(${typeof lesson.id === 'string' ? '\'' + lesson.id + '\'' : lesson.id})" />`;
     if (barW >= 10) {
-      html += `<text x="${x + barW/2}" y="${barAreaTop + barAreaH + 13}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">${lesson.id}</text>`;
+      html += `<text x="${x + barW/2}" y="${barAreaTop + barAreaH + 13}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">${lesson.label || lesson.id}</text>`;
     }
   });
 

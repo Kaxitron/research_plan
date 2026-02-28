@@ -1,6 +1,6 @@
-# Lesson 47: Anthropics and Self-Locating Beliefs
+# Lesson 51: Anthropics and Self-Locating Beliefs
 
-[← Decision Theory](lesson-46-decision-theory.md) | [Back to TOC](../README.md) | [Next: The Alignment Problem →](lesson-48-alignment-problem.md)
+[← Decision Theory](lesson-50-decision-theory.md) | [Back to TOC](../README.md) | [Next: The Alignment Problem →](lesson-52-alignment-problem.md)
 
 ---
 

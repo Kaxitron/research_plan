@@ -1,6 +1,6 @@
-# Lesson 33: Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason
+# Lesson 37: Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason
 
-[← Differential Equations](lesson-32-diff-equations.md) | [Back to TOC](../README.md) | [Next: How a Single Neuron Works →](../phase6-neural-networks/lesson-34-single-neuron.md)
+[← Topology](lesson-36-topology.md) | [Back to TOC](../README.md) | [Next: How a Single Neuron Works →](../phase6-neural-networks/lesson-38-single-neuron.md)
 
 ---
 

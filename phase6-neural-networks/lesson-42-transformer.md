@@ -1,6 +1,6 @@
-# Lesson 38: Building a Transformer from Scratch
+# Lesson 42: Building a Transformer from Scratch
 
-[← Attention](lesson-37-attention.md) | [Back to TOC](../README.md) | [Next: RL Foundations →](lesson-39-rl-foundations.md)
+[← Attention](lesson-41-attention.md) | [Back to TOC](../README.md) | [Next: RL Foundations →](lesson-43-rl-foundations.md)
 
 ---
 

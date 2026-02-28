@@ -8,7 +8,7 @@
 
 **Your profile:** Good mathematical intuition, intermediate C++/Python, refreshing math after a 6-year gap. You learn best through geometric intuition first, then mechanics. Pace: ~33% slower than typical technical presentation.
 
-**Estimated total time:** 5–7 months at a steady pace.
+**Estimated total time:** 6–8 months at a steady pace.
 
 ### 📊 [Interactive Curriculum Dashboard](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
 
@@ -79,47 +79,58 @@
 ### [PHASE 5: Extended Mathematical Foundations](phase5-math-enrichment/)
 *The deeper structures underneath ML*
 
+#### Differential Equations & Dynamical Systems
+
 | # | Lesson | Status |
 |---|--------|--------|
-| 29 | [Computability and Complexity — The Limits of Knowledge](phase5-math-enrichment/lesson-29-computability.md) | ⬜ Not Started |
-| 30 | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase5-math-enrichment/lesson-30-abstract-algebra.md) | ⬜ Not Started |
-| 31 | [Topology and Manifolds — The Shape of Data and Loss](phase5-math-enrichment/lesson-31-topology.md) | ⬜ Not Started |
-| 32 | [Differential Equations and Dynamical Systems — Training as Flow](phase5-math-enrichment/lesson-32-diff-equations.md) | ⬜ Not Started |
-| 33 | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase5-math-enrichment/lesson-33-formal-logic.md) | ⬜ Not Started |
+| 29 | [Introduction to ODEs — Rates of Change as Vector Fields](phase5-math-enrichment/lesson-29-intro-odes.md) | ⬜ Not Started |
+| 30 | [Linear Systems and Phase Portraits — Eigenvalues Determine Everything](phase5-math-enrichment/lesson-30-linear-systems.md) | ⬜ Not Started |
+| 31 | [Gradient Flow and Training Dynamics — Training as a River](phase5-math-enrichment/lesson-31-gradient-flow.md) | ⬜ Not Started |
+| 32 | [Stability, Lyapunov Functions, and Phase Transitions](phase5-math-enrichment/lesson-32-stability.md) | ⬜ Not Started |
+| 33 | [Neural ODEs and Stochastic Dynamics](phase5-math-enrichment/lesson-33-neural-odes.md) | ⬜ Not Started |
+
+#### Additional Foundations
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 34 | [Computability and Complexity — The Limits of Knowledge](phase5-math-enrichment/lesson-34-computability.md) | ⬜ Not Started |
+| 35 | [Abstract Algebra — Groups, Symmetry, and Neural Networks](phase5-math-enrichment/lesson-35-abstract-algebra.md) | ⬜ Not Started |
+| 36 | [Topology and Manifolds — The Shape of Data and Loss](phase5-math-enrichment/lesson-36-topology.md) | ⬜ Not Started |
+| 37 | [Formal Logic — Self-Reference, Incompleteness, and the Limits of Reason](phase5-math-enrichment/lesson-37-formal-logic.md) | ⬜ Not Started |
 
 ### [PHASE 6: Neural Networks — From Neurons to Transformers](phase6-neural-networks/)
 *Building the machine, piece by piece*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 34 | [How a Single Neuron Works](phase6-neural-networks/lesson-34-single-neuron.md) | ⬜ Not Started |
-| 35 | [The Forward Pass as Matrix Multiplications](phase6-neural-networks/lesson-35-forward-pass.md) | ⬜ Not Started |
-| 36 | [Backpropagation Through the Full Network](phase6-neural-networks/lesson-36-backprop.md) | ⬜ Not Started |
-| 37 | [Attention — Dot Products in Action](phase6-neural-networks/lesson-37-attention.md) | ⬜ Not Started |
-| 38 | [Building a Transformer from Scratch](phase6-neural-networks/lesson-38-transformer.md) | ⬜ Not Started |
-| 39 | [Reinforcement Learning Foundations](phase6-neural-networks/lesson-39-rl-foundations.md) | ⬜ Not Started |
-| 40 | [The LLM Training Pipeline — From Raw Text to Aligned AI](phase6-neural-networks/lesson-40-llm-pipeline.md) | ⬜ Not Started |
+| 38 | [How a Single Neuron Works](phase6-neural-networks/lesson-38-single-neuron.md) | ⬜ Not Started |
+| 39 | [The Forward Pass as Matrix Multiplications](phase6-neural-networks/lesson-39-forward-pass.md) | ⬜ Not Started |
+| 40 | [Backpropagation Through the Full Network](phase6-neural-networks/lesson-40-backprop.md) | ⬜ Not Started |
+| 41 | [Attention — Dot Products in Action](phase6-neural-networks/lesson-41-attention.md) | ⬜ Not Started |
+| 42 | [Building a Transformer from Scratch](phase6-neural-networks/lesson-42-transformer.md) | ⬜ Not Started |
+| 43 | [Reinforcement Learning Foundations](phase6-neural-networks/lesson-43-rl-foundations.md) | ⬜ Not Started |
+| 44 | [The LLM Training Pipeline — From Raw Text to Aligned AI](phase6-neural-networks/lesson-44-llm-pipeline.md) | ⬜ Not Started |
 
 ### [PHASE 7: Mechanistic Interpretability](phase7-interpretability/)
 *Using everything you've learned to open the black box*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 41 | [What Interpretability Researchers Actually Do](phase7-interpretability/lesson-41-intro-interp.md) | ⬜ Not Started |
-| 42 | [Circuits and Features in Practice](phase7-interpretability/lesson-42-circuits.md) | ⬜ Not Started |
-| 43 | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase7-interpretability/lesson-43-scaling-emergence.md) | ⬜ Not Started |
-| 44 | [Singular Learning Theory — The Geometry of Learning](phase7-interpretability/lesson-44-slt.md) | ⬜ Not Started |
+| 45 | [What Interpretability Researchers Actually Do](phase7-interpretability/lesson-45-intro-interp.md) | ⬜ Not Started |
+| 46 | [Circuits and Features in Practice](phase7-interpretability/lesson-46-circuits.md) | ⬜ Not Started |
+| 47 | [Scaling Laws, Emergent Capabilities, and Phase Transitions](phase7-interpretability/lesson-47-scaling-emergence.md) | ⬜ Not Started |
+| 48 | [Singular Learning Theory — The Geometry of Learning](phase7-interpretability/lesson-48-slt.md) | ⬜ Not Started |
 
 ### [PHASE 8: Alignment Theory and Foundations](phase8-alignment-theory/)
 *The philosophical and strategic landscape*
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 45 | [Game Theory Foundations](phase8-alignment-theory/lesson-45-game-theory.md) | ⬜ Not Started |
-| 46 | [Decision Theory — CDT, EDT, and FDT](phase8-alignment-theory/lesson-46-decision-theory.md) | ⬜ Not Started |
-| 47 | [Anthropics and Self-Locating Beliefs](phase8-alignment-theory/lesson-47-anthropics.md) | ⬜ Not Started |
-| 48 | [The Alignment Problem — Technical Foundations](phase8-alignment-theory/lesson-48-alignment-problem.md) | ⬜ Not Started |
-| 49 | [Open Problems and Research Frontiers](phase8-alignment-theory/lesson-49-open-problems.md) | ⬜ Not Started |
+| 49 | [Game Theory Foundations](phase8-alignment-theory/lesson-49-game-theory.md) | ⬜ Not Started |
+| 50 | [Decision Theory — CDT, EDT, and FDT](phase8-alignment-theory/lesson-50-decision-theory.md) | ⬜ Not Started |
+| 51 | [Anthropics and Self-Locating Beliefs](phase8-alignment-theory/lesson-51-anthropics.md) | ⬜ Not Started |
+| 52 | [The Alignment Problem — Technical Foundations](phase8-alignment-theory/lesson-52-alignment-problem.md) | ⬜ Not Started |
+| 53 | [Open Problems and Research Frontiers](phase8-alignment-theory/lesson-53-open-problems.md) | ⬜ Not Started |
 
 ### [PHASE 9: Independent Research](phase9-research/)
 

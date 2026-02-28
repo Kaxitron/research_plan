@@ -1,6 +1,6 @@
-# Lesson 48: The Alignment Problem — Technical Foundations
+# Lesson 52: The Alignment Problem — Technical Foundations
 
-[← Anthropics](lesson-47-anthropics.md) | [Back to TOC](../README.md) | [Next: Open Problems →](lesson-49-open-problems.md)
+[← Anthropics](lesson-51-anthropics.md) | [Back to TOC](../README.md) | [Next: Open Problems →](lesson-53-open-problems.md)
 
 ---
 

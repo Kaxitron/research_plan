@@ -1,6 +1,6 @@
-# Lesson 44: Singular Learning Theory — The Geometry of Learning
+# Lesson 48: Singular Learning Theory — The Geometry of Learning
 
-[← Scaling & Emergence](lesson-43-scaling-emergence.md) | [Back to TOC](../README.md) | [Next: Game Theory →](../phase8-alignment-theory/lesson-45-game-theory.md)
+[← Scaling & Emergence](lesson-47-scaling-emergence.md) | [Back to TOC](../README.md) | [Next: Game Theory →](../phase8-alignment-theory/lesson-49-game-theory.md)
 
 ---
 

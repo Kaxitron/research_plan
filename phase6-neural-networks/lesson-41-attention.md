@@ -1,6 +1,6 @@
-# Lesson 37: Attention — Dot Products in Action
+# Lesson 41: Attention — Dot Products in Action
 
-[← Backpropagation](lesson-36-backprop.md) | [Back to TOC](../README.md) | [Next: Building a Transformer →](lesson-38-transformer.md)
+[← Backpropagation](lesson-40-backprop.md) | [Back to TOC](../README.md) | [Next: Building a Transformer →](lesson-42-transformer.md)
 
 ---
 
