@@ -2362,12 +2362,14 @@ function renderCalendar() {
 
   // Header with nav
   html += `<div class="cal-header">
-    <button class="cal-nav" onclick="calPrev()">&larr;</button>
     <div>
       <span class="cal-month-label">${monthNames[calMonth]} ${calYear}</span>
       <button onclick="calToday()" style="background:none;border:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;cursor:pointer;margin-left:10px;vertical-align:middle">today</button>
     </div>
-    <button class="cal-nav" onclick="calNext()">&rarr;</button>
+    <div style="display:flex;gap:4px">
+      <button class="cal-nav" onclick="calPrev()">&larr;</button>
+      <button class="cal-nav" onclick="calNext()">&rarr;</button>
+    </div>
   </div>`;
 
   // Day-of-week headers
