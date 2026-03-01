@@ -882,7 +882,8 @@
 // ═══════════════════════════════════════════════
 
 const PHASES = [
-  { id: 'p0', name: 'Setup', color: '#94a3b8', hours: '4–6h' },
+  { id: 'p0cs', name: 'CS Foundations', color: '#64748b', hours: '30–45h' },
+  { id: 'p0', name: 'ML Tools', color: '#94a3b8', hours: '4–6h' },
   { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '35–50h' },
   { id: 'p2', name: 'Calculus & Diff Eq', color: '#818cf8', hours: '55–80h' },
   { id: 'p3', name: 'Probability & Statistics', color: '#f9a8d4', hours: '45–65h' },
@@ -893,12 +894,113 @@ const PHASES = [
 ];
 
 const LESSONS = [
-  // ─── Phase 0: Setup ───
+  // ─── Phase 0: CS Foundations ───
   {
-    id: 0, phase: 'p0', title: 'Python and NumPy for Machine Learning',
-    status: 'not-started', hours: '2–3h', label: '0',
+    id: 'cs01', phase: 'p0cs', title: 'Python Refresher',
+    status: 'not-started', hours: '3–4h', label: 'C1',
     prereqs: [],
     crossPhaseLinks: [],
+    conceptChecks: ['Variables, types, and dynamic typing', 'Control flow and functions', 'List/dict/set comprehensions', 'File I/O patterns'],
+    failureModes: ['Relying on IDE autocomplete instead of knowing syntax'],
+    mvl: [{ type: 'Watch', text: 'NeetCode — Python for Coding Interviews' }, { type: 'Do', text: 'Solve Two Sum (LC #1) from a blank file' }],
+    projects: [],
+  },
+  {
+    id: 'cs02', phase: 'p0cs', title: 'C++ Refresher',
+    status: 'not-started', hours: '3–4h', label: 'C2',
+    prereqs: ['cs01'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Pointers vs references', 'Stack vs heap', 'STL containers: vector, unordered_map, stack, queue'],
+    failureModes: ['Confusing pointer syntax with reference syntax'],
+    mvl: [{ type: 'Do', text: 'Implement a linked list from scratch with insert, delete, reverse' }],
+    projects: [],
+  },
+  {
+    id: 'cs03', phase: 'p0cs', title: 'OOP — Classes in Python & C++',
+    status: 'not-started', hours: '2–3h', label: 'C3',
+    prereqs: ['cs02'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Inheritance and super()', 'Encapsulation and access specifiers', 'The PyTorch nn.Module pattern'],
+    failureModes: ['Not connecting OOP to how PyTorch models are structured'],
+    mvl: [{ type: 'Do', text: 'Implement MinStack (LC #155) as a class' }],
+    projects: [],
+  },
+  {
+    id: 'cs04', phase: 'p0cs', title: 'Arrays, Strings & Hashing',
+    status: 'not-started', hours: '4–5h', label: 'C4',
+    prereqs: ['cs03'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Two pointers pattern', 'Sliding window pattern', 'Hash map for O(1) lookup', 'Prefix sum technique'],
+    failureModes: ['Defaulting to brute force O(n²) when hash map gives O(n)'],
+    mvl: [{ type: 'Do', text: 'Solve Group Anagrams (LC #49) and Best Time to Buy/Sell Stock (LC #121)' }],
+    projects: [],
+  },
+  {
+    id: 'cs05', phase: 'p0cs', title: 'Linked Lists, Stacks & Queues',
+    status: 'not-started', hours: '3–4h', label: 'C5',
+    prereqs: ['cs04'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Reverse a linked list iteratively', 'Fast/slow pointer for cycle detection', 'Monotonic stack pattern'],
+    failureModes: ['Not using the dummy head trick for edge cases'],
+    mvl: [{ type: 'Do', text: 'Reverse Linked List (LC #206) + Valid Parentheses (LC #20)' }],
+    projects: [],
+  },
+  {
+    id: 'cs06', phase: 'p0cs', title: 'Trees & Graphs',
+    status: 'not-started', hours: '4–5h', label: 'C6',
+    prereqs: ['cs05'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Inorder/preorder/postorder traversals', 'BFS vs DFS and when to use each', 'Topological sort for DAGs'],
+    failureModes: ['Not seeing that postorder traversal IS backpropagation'],
+    mvl: [{ type: 'Do', text: 'Number of Islands (LC #200) + Course Schedule (LC #207)' }],
+    projects: [],
+  },
+  {
+    id: 'cs07', phase: 'p0cs', title: 'Sorting & Searching',
+    status: 'not-started', hours: '3–4h', label: 'C7',
+    prereqs: ['cs06'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Merge sort implementation', 'Binary search on sorted array AND on answer', 'Big-O intuition for 10^5 vs 10^8'],
+    failureModes: ['Off-by-one errors in binary search boundaries'],
+    mvl: [{ type: 'Do', text: 'Implement merge sort from scratch + Koko Eating Bananas (LC #875)' }],
+    projects: [],
+  },
+  {
+    id: 'cs08', phase: 'p0cs', title: 'Recursion & Dynamic Programming',
+    status: 'not-started', hours: '4–6h', label: 'C8',
+    prereqs: ['cs07'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Memoization with @lru_cache', 'Bottom-up tabulation', '1D vs 2D DP patterns'],
+    failureModes: ['Not identifying overlapping subproblems — trying brute force'],
+    mvl: [{ type: 'Do', text: 'Climbing Stairs (LC #70) + Coin Change (LC #322)' }],
+    projects: [],
+  },
+  {
+    id: 'cs09', phase: 'p0cs', title: 'Discrete Math Essentials',
+    status: 'not-started', hours: '3–4h', label: 'C9',
+    prereqs: ['cs08'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Proof by induction', 'Counting: permutations vs combinations', 'Graph theory basics: degree, trees, bipartite'],
+    failureModes: ['Memorizing formulas without understanding the counting argument'],
+    mvl: [{ type: 'Do', text: 'Prove 1+2+...+n = n(n+1)/2 by induction' }],
+    projects: [],
+  },
+  {
+    id: 'cs10', phase: 'p0cs', title: 'Computer Organization',
+    status: 'not-started', hours: '2–3h', label: 'C10',
+    prereqs: ['cs09'],
+    crossPhaseLinks: [],
+    conceptChecks: ['Binary/hex conversions', 'Memory hierarchy: registers → cache → RAM → disk', 'Why GPUs are good at matrix multiplication'],
+    failureModes: ['Not connecting hardware to why transformers beat RNNs (parallelism)'],
+    mvl: [{ type: 'Do', text: 'Single Number (LC #136) with XOR + floating point exploration in Python' }],
+    projects: [],
+  },
+  // ─── Phase 0: ML Tools ───
+  {
+    id: 0, phase: 'p0', title: 'Python & NumPy for ML',
+    status: 'not-started', hours: '2–3h', label: '0',
+    prereqs: [],
+    crossPhaseLinks: ['cs10'],
     conceptChecks: ['Create and manipulate arrays', 'Broadcasting rules', 'Vectorized operations'],
     failureModes: ['Writing Python loops instead of vectorized NumPy'],
     mvl: [{ type: 'Do', text: 'Matrix multiply two random matrices using np.dot, @, np.matmul. Verify all three give the same result.' }],
@@ -1604,103 +1706,102 @@ const CHECKPOINTS = [
 ];
 
 const LAYOUT = {
-  width: 1420,
+  width: 1580,
   height: 1180,
   nodes: {
-    // ── Phase 0: Setup (far left, top) ──
-    0:  { x: 50,  y: 30 },
-    1:  { x: 50,  y: 110 },
+    // ── Phase 0cs: CS Foundations (far left, two columns flowing down) ──
+    'cs01': { x: 30,  y: 30 },
+    'cs02': { x: 30,  y: 120 },
+    'cs03': { x: 30,  y: 210 },
+    'cs04': { x: 30,  y: 300 },
+    'cs05': { x: 30,  y: 390 },
+    'cs06': { x: 115, y: 390 },
+    'cs07': { x: 115, y: 480 },
+    'cs08': { x: 115, y: 570 },
+    'cs09': { x: 115, y: 660 },
+    'cs10': { x: 115, y: 750 },
+
+    // ── Phase 0: ML Tools (shifted right) ──
+    0:  { x: 210,  y: 30 },
+    1:  { x: 210,  y: 110 },
 
     // ── Phase 1: Linear Algebra (left column, tree shape) ──
-    2:  { x: 50,  y: 210 },
-    3:  { x: 50,  y: 290 },
-    4:  { x: 50,  y: 370 },
-    5:  { x: 155, y: 370 },
-    6:  { x: 100, y: 455 },
-    7:  { x: 5,   y: 455 },
-    8:  { x: 50,  y: 540 },
-    9:  { x: 50,  y: 625 },
-    10: { x: 155, y: 625 },
-    11: { x: 100, y: 710 },
-    12: { x: 50,  y: 795 },
+    2:  { x: 210,  y: 210 },
+    3:  { x: 210,  y: 290 },
+    4:  { x: 210,  y: 370 },
+    5:  { x: 315, y: 370 },
+    6:  { x: 260, y: 455 },
+    7:  { x: 165,   y: 455 },
+    8:  { x: 210,  y: 540 },
+    9:  { x: 210,  y: 625 },
+    10: { x: 315, y: 625 },
+    11: { x: 260, y: 710 },
+    12: { x: 210,  y: 795 },
 
     // ── Phase 2: Calculus (two sub-columns) ──
-    // Single-variable & matrix calc (left sub-col)
-    13: { x: 255, y: 100 },
-    14: { x: 255, y: 185 },
-    15: { x: 255, y: 270 },
-    16: { x: 255, y: 355 },
-    17: { x: 255, y: 440 },
-    18: { x: 255, y: 525 },
-    19: { x: 255, y: 610 },
-    // Multivariable calc (continuing)
-    20: { x: 255, y: 710 },
-    21: { x: 255, y: 795 },
-    // Diff eq & dynamical systems (right sub-col, branching from 21)
-    22: { x: 380, y: 610 },
-    23: { x: 380, y: 695 },
-    24: { x: 380, y: 780 },
-    25: { x: 380, y: 865 },
-    26: { x: 380, y: 950 },
-    27: { x: 380, y: 1040 },
+    13: { x: 415, y: 100 },
+    14: { x: 415, y: 185 },
+    15: { x: 415, y: 270 },
+    16: { x: 415, y: 355 },
+    17: { x: 415, y: 440 },
+    18: { x: 415, y: 525 },
+    19: { x: 415, y: 610 },
+    20: { x: 415, y: 710 },
+    21: { x: 415, y: 795 },
+    22: { x: 540, y: 610 },
+    23: { x: 540, y: 695 },
+    24: { x: 540, y: 780 },
+    25: { x: 540, y: 865 },
+    26: { x: 540, y: 950 },
+    27: { x: 540, y: 1040 },
 
-    // ── Phase 3: Probability & Statistics (center column) ──
-    // Core probability
-    28: { x: 540, y: 80 },
-    29: { x: 540, y: 165 },
-    30: { x: 540, y: 250 },
-    31: { x: 540, y: 335 },
-    // Frequentist methods
-    32: { x: 540, y: 435 },
-    33: { x: 540, y: 520 },
-    34: { x: 540, y: 605 },
-    // Bayesian deep dive
-    35: { x: 540, y: 705 },
-    36: { x: 540, y: 790 },
-    37: { x: 540, y: 875 },
-    // Applied
-    38: { x: 540, y: 975 },
-    39: { x: 540, y: 1060 },
+    // ── Phase 3: Probability & Statistics ──
+    28: { x: 700, y: 80 },
+    29: { x: 700, y: 165 },
+    30: { x: 700, y: 250 },
+    31: { x: 700, y: 335 },
+    32: { x: 700, y: 435 },
+    33: { x: 700, y: 520 },
+    34: { x: 700, y: 605 },
+    35: { x: 700, y: 705 },
+    36: { x: 700, y: 790 },
+    37: { x: 700, y: 875 },
+    38: { x: 700, y: 975 },
+    39: { x: 700, y: 1060 },
 
-    // ── Phase 4: Machine Learning & Interpretability (center-right) ──
-    // NN foundations
-    40: { x: 720, y: 80 },
-    41: { x: 720, y: 165 },
-    42: { x: 720, y: 250 },
-    43: { x: 720, y: 335 },
-    44: { x: 720, y: 420 },
-    45: { x: 720, y: 505 },
-    46: { x: 720, y: 590 },
-    // Interpretability
-    47: { x: 720, y: 700 },
-    48: { x: 720, y: 785 },
-    49: { x: 720, y: 870 },
-    50: { x: 720, y: 955 },
+    // ── Phase 4: ML & Interpretability ──
+    40: { x: 880, y: 80 },
+    41: { x: 880, y: 165 },
+    42: { x: 880, y: 250 },
+    43: { x: 880, y: 335 },
+    44: { x: 880, y: 420 },
+    45: { x: 880, y: 505 },
+    46: { x: 880, y: 590 },
+    47: { x: 880, y: 700 },
+    48: { x: 880, y: 785 },
+    49: { x: 880, y: 870 },
+    50: { x: 880, y: 955 },
 
-    // ── Phase 5: Extended Math (right column, subsection groups) ──
-    // Computability & complexity
-    51: { x: 920, y: 80 },
-    52: { x: 920, y: 165 },
-    53: { x: 920, y: 250 },
-    // Abstract algebra
-    54: { x: 920, y: 360 },
-    55: { x: 920, y: 445 },
-    56: { x: 920, y: 530 },
-    // Topology & geometry
-    57: { x: 920, y: 640 },
-    58: { x: 920, y: 725 },
-    59: { x: 920, y: 810 },
-    60: { x: 920, y: 895 },
-    // Formal logic
-    61: { x: 920, y: 1005 },
-    62: { x: 920, y: 1090 },
+    // ── Phase 5: Extended Math ──
+    51: { x: 1080, y: 80 },
+    52: { x: 1080, y: 165 },
+    53: { x: 1080, y: 250 },
+    54: { x: 1080, y: 360 },
+    55: { x: 1080, y: 445 },
+    56: { x: 1080, y: 530 },
+    57: { x: 1080, y: 640 },
+    58: { x: 1080, y: 725 },
+    59: { x: 1080, y: 810 },
+    60: { x: 1080, y: 895 },
+    61: { x: 1080, y: 1005 },
+    62: { x: 1080, y: 1090 },
 
-    // ── Phase 6: Alignment Theory (far right) ──
-    63: { x: 1120, y: 160 },
-    64: { x: 1120, y: 275 },
-    65: { x: 1120, y: 390 },
-    66: { x: 1120, y: 505 },
-    67: { x: 1120, y: 620 },
+    // ── Phase 6: Alignment Theory ──
+    63: { x: 1280, y: 160 },
+    64: { x: 1280, y: 275 },
+    65: { x: 1280, y: 390 },
+    66: { x: 1280, y: 505 },
+    67: { x: 1280, y: 620 },
   },
 };
 
@@ -1889,13 +1990,14 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { x: 50,   y: -12,  color: '#94a3b8', label: 'P0 SETUP' },
-    { x: 80,   y: 178,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 310,  y: 65,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
-    { x: 540,  y: 25,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
-    { x: 720,  y: 25,   color: '#fbbf24', label: 'P4 NN & INTERP' },
-    { x: 920,  y: 25,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
-    { x: 1120, y: 108,  color: '#c084fc', label: 'P6 ALIGNMENT' },
+    { x: 70,   y: -12,  color: '#64748b', label: 'CS FOUNDATIONS' },
+    { x: 210,   y: -12,  color: '#94a3b8', label: 'P0 ML TOOLS' },
+    { x: 240,   y: 178,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
+    { x: 470,  y: 65,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
+    { x: 700,  y: 25,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
+    { x: 880,  y: 25,   color: '#fbbf24', label: 'P4 NN & INTERP' },
+    { x: 1080,  y: 25,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
+    { x: 1280, y: 108,  color: '#c084fc', label: 'P6 ALIGNMENT' },
   ];
 
   let labelsHtml = '';
@@ -2120,7 +2222,7 @@ const CURRICULUM_START = '2026-02-21'; // First lesson date
 // Difficulty weights by phase (relative to Phase 1 baseline)
 // Based on: 6-year math gap, strong intuition, rusty mechanics
 const DIFFICULTY_WEIGHT = {
-  p0: 0.8, p1: 1.0, p2: 1.3, p3: 1.3,
+  p0cs: 0.7, p0: 0.8, p1: 1.0, p2: 1.3, p3: 1.3,
   p4: 1.4, p5: 1.6, p6: 1.4, p7: 1.0
 };
 
