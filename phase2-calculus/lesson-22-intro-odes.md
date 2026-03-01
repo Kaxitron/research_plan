@@ -78,6 +78,36 @@
 - **Euler's method by hand:** for dx/dt = -x with x(0) = 1, compute x(0.5) using step sizes h = 0.5, 0.25, 0.1. Compare with the exact solution x(t) = e^{-t}. See the accuracy improve as h shrinks. Relate to learning rate.
 - **Key exercise:** for the 1D ODE dx/dt = x(1-x)(x-2), find all fixed points. Classify each as stable or unstable by checking the sign of f'(x*). Sketch the flow on the number line. This is a "bifurcation" preview — the dynamics partition the line into basins of attraction.
 
+### 💻 Coding Mini-Project: ODE Solver Toolkit (~60 lines)
+
+Build your own ODE solver with multiple methods and compare their accuracy:
+
+```python
+def euler_step(f, y, t, dt):
+    """Single Euler step."""
+    ...
+
+def rk4_step(f, y, t, dt):
+    """Single Runge-Kutta 4 step (the classic 4-evaluation method)."""
+    ...
+
+def solve_ode(f, y0, t_span, n_steps, method='rk4'):
+    """
+    Solve dy/dt = f(y, t) from t_span[0] to t_span[1].
+    Returns: (t_array, y_array)
+    """
+    ...
+```
+
+**Your tasks:**
+1. Implement `euler_step` and `rk4_step`. Look up the RK4 formula — it uses 4 intermediate evaluations.
+2. Implement `solve_ode` that uses either method (pass as string argument)
+3. Test on `dy/dt = -y, y(0) = 1` — exact solution is `e^(-t)`. Plot both methods vs exact.
+4. Measure error at `t = 5` for step counts `n = 10, 50, 100, 500`. Plot error vs n on a log-log plot. Verify Euler is O(h) and RK4 is O(h⁴).
+5. Use your solver on the 2D system from the lesson: `dx/dt = -x, dy/dt = -2y`. Plot phase portrait trajectories from 6 starting points.
+
+**Programming skills practiced:** numerical methods, function dispatch (method selection), error analysis, log-log plotting
+
 ## 🔗 ML & Alignment Connection
 
 - **Gradient descent IS Euler's method** on the gradient flow ODE. The learning rate IS the step size. This isn't an analogy — it's literally the same algorithm. Everything you learn about Euler's method stability directly predicts when training will diverge.

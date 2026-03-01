@@ -31,7 +31,32 @@
 ## 🔨 Do
 
 - Draw a computation graph for L = (wx + b - y)² and manually trace gradients backward
-- **Build micrograd (Part 1):** Start Karpathy's Lecture 1 and implement a tiny autograd engine
+
+### 💻 Coding Mini-Project: Tiny Backprop Engine (~50 lines)
+
+Build a `Scalar` class that tracks computation and can backpropagate gradients. Much smaller than a full autograd engine — just the core idea:
+
+```python
+class Scalar:
+    def __init__(self, value, _children=(), _op=''):
+        self.value = value
+        self.grad = 0.0
+        self._backward = lambda: None
+        self._children = set(_children)
+        self._op = _op
+
+    def __add__(self, other): ...   # return new Scalar, define _backward
+    def __mul__(self, other): ...   # return new Scalar, define _backward
+    def backward(self): ...         # topological sort, then call _backward in reverse
+```
+
+**Your tasks:**
+1. Implement `__add__`, `__mul__`, and `backward()` (hint: topological sort using DFS)
+2. Test on: `a=2, b=3, c=4` → compute `f = (a + b) * c` → call `f.backward()` → verify `a.grad=4, b.grad=4, c.grad=5`
+3. Test on: `w=0.5, x=2.0, b=0.1, y=1.0` → compute `L = ((w*x + b) - y)**2` (you'll need `__sub__` and `__pow__`)
+4. Compare your gradients to hand-computed values from the drill above
+
+**Programming skills practiced:** operator overloading, recursive algorithms, graph traversal (topological sort), testing
 
 ## 🔗 ML & Alignment Connection
 

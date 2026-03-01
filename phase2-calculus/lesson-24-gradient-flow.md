@@ -126,6 +126,39 @@
   Plot both trajectories. Count iterations to reach within 0.01 of the minimum.
 - **Implicit regularization demo:** create a linear regression problem with d=20 features and n=5 data points (underdetermined). Run gradient descent from W=0. Compare the solution to the minimum-norm solution (computed as A⁺b via pseudoinverse). They should match.
 
+### 💻 Coding Mini-Project: Training Dynamics Dashboard (~60 lines)
+
+Build a function that trains gradient descent and tracks everything, combining your gradient toolkit (L15), optimizers (L17), and ODE intuition (L22):
+
+```python
+def training_dashboard(loss_fn, grad_fn, x0, optimizers, lr=0.01, n_steps=500):
+    """
+    Run multiple optimizers on the same loss and return full training logs.
+    Args:
+        optimizers: dict like {'SGD': sgd_step, 'Momentum': momentum_step}
+    Returns: dict of {name: {'trajectory': [...], 'losses': [...], 'grad_norms': [...]}}
+    """
+    ...
+
+def plot_dashboard(loss_fn, results, xlim, ylim):
+    """4-panel figure: contour+trajectories, loss curves, gradient norms, distance to optimum."""
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    ...
+```
+
+**Your tasks:**
+1. Implement `training_dashboard` — track position, loss value, and gradient norm at each step
+2. Implement `plot_dashboard` with 4 panels:
+   - Top-left: contour plot with all optimizer trajectories overlaid
+   - Top-right: loss vs iteration for each optimizer
+   - Bottom-left: gradient norm vs iteration (reveals oscillation and convergence rate)
+   - Bottom-right: distance to known optimum vs iteration (log scale)
+3. Race SGD, Momentum, and RMSProp (from L17) on the elongated bowl `L(x,y) = x² + 25y²`
+4. Race them again on the double-well `L(x,y) = (x²-1)² + y²` from starting point `(0, 0.5)`. Which optimizer escapes the saddle fastest?
+5. Add a dashed line on the loss plot showing the continuous gradient flow solution (from your ODE solver in L22). See how discrete steps approximate the continuous flow.
+
+**Programming skills practiced:** multi-panel matplotlib, dictionary-based data logging, code reuse across lessons, comparing algorithms
+
 ## 🔗 ML & Alignment Connection
 
 - **Everything about optimizer design** — learning rate schedules, warmup, Adam vs SGD, batch size effects — is a statement about the dynamical system of training. This lesson gives you the framework to reason about all of it.

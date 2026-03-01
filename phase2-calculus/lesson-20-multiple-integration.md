@@ -62,6 +62,34 @@
 - Implement Monte Carlo estimation of π by sampling random points in [0,1]² and counting those inside the unit circle. Plot convergence vs sample size.
 - Compute the normalization constant of a 2D Gaussian with covariance Σ = [[2,1],[1,3]] by diagonalizing Σ and using the change-of-variables formula.
 
+### 💻 Coding Mini-Project: Monte Carlo Integration Library (~50 lines)
+
+Build a reusable Monte Carlo integrator that works on arbitrary functions and dimensions:
+
+```python
+def mc_integrate(f, bounds, n_samples=100000):
+    """
+    Estimate ∫f(x)dx over a rectangular region.
+    Args:
+        f: callable that takes an (n_samples, d) array → (n_samples,) array
+        bounds: list of (low, high) tuples, one per dimension
+        n_samples: number of random points
+    Returns: (estimate, standard_error)
+    """
+    ...
+```
+
+**Your tasks:**
+1. Implement the function (hint: volume × mean of f over random uniform samples)
+2. Return both the estimate AND the standard error (so you get confidence intervals)
+3. Test on known integrals:
+   - `∫₀¹ x² dx = 1/3` (1D sanity check)
+   - `∫∫ over unit disk of 1 dA = π` (2D — you'll need rejection sampling or polar trick)
+   - `∫₀¹ ∫₀¹ ∫₀¹ e^(xyz) dx dy dz` (3D — check against scipy)
+4. Plot: estimate vs n_samples (log scale) for the π example. Verify the error shrinks as 1/√n. Add error bars using your standard error.
+
+**Programming skills practiced:** vectorized numpy, function as argument (higher-order functions), error estimation, log-scale plotting
+
 ## 🔗 ML & Alignment Connection
 
 - **Normalizing flows** are literally a chain of change-of-variables transformations, each with a tractable Jacobian determinant. The whole architecture is designed to make this integral formula efficient.

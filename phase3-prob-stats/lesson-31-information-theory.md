@@ -133,6 +133,40 @@
 - **Temperature experiment:** take a trained language model (or a simple softmax classifier). Vary temperature from 0.1 to 5.0. For each temperature, compute the entropy of the output distribution and sample outputs. See diversity increase with temperature.
 - **Key exercise:** you're training a language model. The cross-entropy loss plateaus at 3.2 nats. What does this number mean? (It means the model's predictions have an average surprise of 3.2 nats — equivalently, the model assigns, on average, e^(-3.2) ≈ 4% probability to the correct next token.) If the entropy of English text is estimated at ~1.0 nat per character, how much room for improvement remains?
 
+### 💻 Coding Mini-Project: Huffman Encoder (~60 lines)
+
+Build a Huffman coder to see the Shannon source coding theorem in action — entropy IS the minimum average code length:
+
+```python
+class HuffmanCoder:
+    def build_tree(self, freq_dict):
+        """Build Huffman tree from character frequencies. Use a min-heap."""
+        ...
+
+    def build_codes(self):
+        """Walk the tree to assign binary codes to each character."""
+        ...
+
+    def encode(self, text):
+        """Encode text → binary string."""
+        ...
+
+    def decode(self, bits):
+        """Decode binary string → text."""
+        ...
+```
+
+**Your tasks:**
+1. Implement using Python's `heapq` module for the priority queue
+2. Encode the string `"hello world"`. Print each character's code. Verify that frequent characters get shorter codes.
+3. Verify encode→decode roundtrip: `decode(encode(text)) == text`
+4. Compute the **average code length** (weighted by character frequency). Compare to the **entropy** of the character distribution. The average code length should be within 1 bit of entropy — that's Shannon's theorem!
+5. Test on a paragraph of English text. Compare compression ratio to entropy.
+
+**Why this matters for ML:** when a language model achieves cross-entropy loss H, it's saying "I can compress text to H bits per token on average." Huffman coding makes this connection concrete — better probability models → better compression → lower cross-entropy.
+
+**Programming skills practiced:** heaps/priority queues, tree data structures, recursion, bit manipulation
+
 ## 🔗 ML & Alignment Connection
 
 - **Cross-entropy** is THE loss function for language modeling. Minimizing cross-entropy = maximizing likelihood (Lesson 21) = minimizing KL divergence from the true distribution. These are all the same optimization.

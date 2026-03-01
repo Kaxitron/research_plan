@@ -78,6 +78,37 @@
 - **Grokking demo:** Train a small network on modular addition. Watch the train loss drop, validation stay high, then suddenly both collapse to near zero.
 - **Bias-variance visualization:** Generate noisy data from y = sin(x) + noise. Fit polynomials of degree 1, 3, 5, 10, 20. For each, train on 20 different random datasets and plot ALL fits. See that degree-2 has high bias (always wrong in the same way) and low variance (fits look similar). Degree-22 has low bias (passes through data) but high variance (fits look wildly different).
 - **Cross-validation implementation:** Implement 5-fold cross-validation for polynomial regression. Plot train error and validation error vs. polynomial degree. Find the "elbow" where validation error is minimized.
+
+### 💻 Coding Mini-Project: K-Fold Cross-Validation from Scratch (~55 lines)
+
+Build a reusable cross-validation tool — the standard way ML practitioners choose model complexity:
+
+```python
+def k_fold_split(X, y, k=5, shuffle=True):
+    """
+    Yield (X_train, y_train, X_val, y_val) for each fold.
+    """
+    ...
+
+def cross_validate(model_fn, X, y, k=5):
+    """
+    Args: model_fn(degree) returns a fitted model with .fit(X,y) and .predict(X)
+    Returns: (mean_train_error, mean_val_error) per fold
+    """
+    ...
+```
+
+**Your tasks:**
+1. Implement `k_fold_split` using index shuffling and slicing (no sklearn)
+2. Implement `cross_validate` that trains and evaluates on each fold
+3. Generate noisy data from `y = sin(2πx) + noise` with 50 points
+4. Run cross-validation for polynomial degrees 1 through 15. Plot train error and val error vs degree on the same axes.
+5. Find the "elbow" — the degree where val error is minimized. This is the bias-variance sweet spot.
+6. On a second plot, show the actual polynomial fits for degree 2 (underfitting), the optimal degree, and degree 15 (overfitting) overlaid on the data
+
+**Connection to ML:** every hyperparameter choice in deep learning (layer count, width, regularization strength, learning rate) is the same bias-variance tradeoff. Cross-validation is how you navigate it without cheating.
+
+**Programming skills practiced:** array slicing, generator functions (yield), train/test split logic, multi-panel plots
 - **Hessian eigenvalue analysis:** For a 2-parameter network, compute the Hessian at several critical points. Classify each as minimum, maximum, or saddle by checking eigenvalue signs. Visualize the loss surface with critical points marked.
 
 ## 🔗 ML & Alignment Connection

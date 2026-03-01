@@ -26,9 +26,35 @@
 
 ## 🔨 Do
 
-- Complete Karpathy's micrograd: implement `Value` class with automatic differentiation
+### 💻 Coding Mini-Project: Optimizer Showdown (~60 lines)
+
+Implement three optimizers from scratch as pure functions — no frameworks:
+
+```python
+def sgd_step(params, grads, lr):
+    """Vanilla gradient descent."""
+    ...
+
+def momentum_step(params, grads, velocity, lr, beta=0.9):
+    """SGD with momentum. Returns updated params AND velocity."""
+    ...
+
+def rmsprop_step(params, grads, cache, lr, decay=0.99, eps=1e-8):
+    """RMSProp. Returns updated params AND cache."""
+    ...
+```
+
+**Your tasks:**
+1. Implement all three optimizers (just numpy, no PyTorch)
+2. Test on the Rosenbrock function: `f(x,y) = (1-x)² + 100(y-x²)²` (a classic hard optimization surface)
+3. Race all three from starting point `(-1, -1)` for 5000 steps. Plot trajectories overlaid on contour plot
+4. Print final positions and iteration count to reach within 0.01 of the minimum at `(1, 1)`
+5. Experiment: what learning rate works best for each? Why does momentum help on Rosenbrock?
+
 - Train a small neural network on simple 2D data
 - Experiment: learning rate 0.001 vs 0.1 vs 10 — what happens?
+
+**Programming skills practiced:** numerical computing with numpy, function design, matplotlib visualization, parameter tuning
 
 ## 🔗 ML & Alignment Connection
 

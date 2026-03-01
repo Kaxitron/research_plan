@@ -71,6 +71,42 @@ These identities are what you'd use to derive gradient updates by hand. In pract
 - Compute the gradient of f(x,y) = x²y + sin(xy) by hand
 - Compute the Jacobian of a simple 2→2 function
 - Write Python code that numerically approximates gradients and compares to analytical results
+
+### 💻 Coding Mini-Project: Gradient Checker (~45 lines)
+
+Build a reusable numerical gradient checker — the exact tool ML engineers use to verify backprop implementations:
+
+```python
+def numerical_gradient(f, x, eps=1e-5):
+    """
+    Compute gradient of f at point x using central differences.
+    Args: f (callable: np.array → scalar), x (np.array)
+    Returns: np.array of same shape as x
+    """
+    grad = np.zeros_like(x)
+    for i in range(len(x)):
+        # Perturb dimension i up and down by eps
+        ...
+    return grad
+
+def gradient_check(f, grad_f, x, eps=1e-5):
+    """
+    Compare analytical gradient to numerical gradient.
+    Returns: relative error (should be < 1e-5 for correct implementations)
+    """
+    ...
+```
+
+**Your tasks:**
+1. Implement both functions using the central difference formula: `∂f/∂xᵢ ≈ (f(x + εeᵢ) - f(x - εeᵢ)) / 2ε`
+2. Test on `f(x,y) = x²y + sin(xy)` — compute analytical gradient by hand, then verify
+3. Test on `f(w) = ||Xw - y||²` (linear regression loss) for a random 5×3 matrix X
+4. Test on the sigmoid cross-entropy: `f(w) = -ln(σ(wᵀx))` for random w and x
+5. Try different values of `eps` (1e-2 through 1e-10). Plot relative error vs eps. See the sweet spot around 1e-5 (too large = truncation error, too small = floating point noise)
+
+**Why this matters:** this is standard practice in ML. When you implement backprop for a new layer, you always check against numerical gradients first. PyTorch has `torch.autograd.gradcheck` built in.
+
+**Programming skills practiced:** numpy indexing, function composition, numerical stability, floating point awareness
 - **Taylor approximation visualization:** Plot f(x) = sin(x) alongside its 1st, 3rd, and 5th order Taylor approximations. See how each term adds precision. Then do the same for f(x,y) = sin(x)cos(y) — visualize the tangent plane (1st order) vs the original surface.
 - **Matrix gradient exercise:** For the linear regression loss L(w) = ||Xw - y||², derive ∂L/∂w by hand using the matrix identities above. Verify: ∂L/∂w = 2Xᵀ(Xw - y). Then verify numerically in Python.
 - **Hessian exercise:** Compute the Hessian of f(x,y) = x³ - 3xy² (monkey saddle). Find eigenvalues at the origin. Verify it's a saddle point (mixed eigenvalue signs). Visualize the surface and see the saddle.
