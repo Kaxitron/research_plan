@@ -8,8 +8,16 @@
 
 ## Linear Algebra
 
-### Matrix-vector multiplication is BOTH row dot products AND linear combination of columns
-Both are true simultaneously. The row view tells you "each output is a pattern match." The column view tells you "the output is a weighted mix of the matrix's columns, where the input vector provides the weights." Being able to flip between these perspectives is a superpower — the column view is what makes attention interpretable (the output is a weighted combination of value vectors).
+### Matrix × Vector: Two Complementary Views
+
+**Column View (Linear Combination):**
+The columns of the matrix are your new basis vectors. The entries of your input vector are *weights* — they tell you how much of each column/basis vector to combine. The first entry scales the first column, the second entry scales the second column, and you add them all up.
+
+**Row View (Dot Product / Measurement):**
+The rows of the matrix are vectors living in the same space as your input. To get each output entry, you take the dot product of that row with your input vector. The dot product captures both *directional alignment* (how much they point the same way) and *magnitude* (how large both vectors are). It's not just a "shadow" — a pure shadow would ignore the row's length. The dot product only becomes pure alignment when the row is a unit vector, which is why normalization shows up everywhere in ML.
+
+**Why both are true simultaneously:**
+These aren't different operations — they're two lenses on the exact same arithmetic. The column view asks "what am I building?" The row view asks "what am I measuring?" In ML, each row acts as a feature detector — asking "how much does this input match my pattern?"
 
 ### SVD means every matrix is rotate → scale → rotate
 No matter how complicated a matrix looks, it's doing three simple things in sequence. Vᵀ aligns the input with natural axes, Σ stretches along those axes, U rotates the output. The singular values tell you HOW MUCH stretching happens in each direction. If some singular values are zero, dimensions get crushed — that's rank deficiency.
