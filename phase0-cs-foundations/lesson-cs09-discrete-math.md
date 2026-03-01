@@ -42,6 +42,12 @@
 - **Stars and bars:** distributing k identical items into n bins = C(n+k−1, k).
 - **Binomial theorem:** (a + b)^n = Σ C(n,k) a^(n−k) b^k
 
+#### Additional Combinatorial Identities and Techniques
+
+- **Hockey stick identity:** C(r,r) + C(r+1,r) + C(r+2,r) + ... + C(n,r) = C(n+1,r+1). Visually, the entries along a diagonal of Pascal's triangle sum to the entry one row below and one position over (forming a "hockey stick" shape). Useful for summing binomial coefficients and counting cumulative combinations. Also known as the Christmas stocking identity.
+- **Falling factorial (Pochhammer symbol):** x^{(n)} = x(x−1)(x−2)···(x−n+1), also written (x)_n. The number of permutations P(n,k) = n^{(k)} IS a falling factorial. Falling factorials connect permutations to polynomial expressions: C(x,n) = x^{(n)}/n!, and they are the natural basis for finite difference calculus (the discrete analog of Taylor series, where the falling factorial plays the role that x^n plays in continuous calculus). Falling factorial decomposition rewrites polynomials in terms of falling factorials, enabling clean closed-form summation identities.
+- **Organizing a double sum by its larger index:** When you have a double sum Σ_{i=1}^{n} Σ_{j=1}^{n} f(i,j), you can rearrange by grouping terms according to max(i,j) = k, sweeping through k = 1 to n. Each "shell" at level k collects the L-shaped border of new (i,j) pairs where at least one index equals k. This reindexing technique simplifies many combinatorial sums and appears when analyzing nested loops, bounding series, or computing expectations of order statistics. The same idea generalizes to organizing by min(i,j) or other functions of the indices.
+
 ### Graph Theory
 
 - **Graph:** vertices (nodes) + edges (connections). G = (V, E).
@@ -82,3 +88,4 @@
 ## 🔗 ML Connection
 
 Combinatorics tells you the size of a model's hypothesis space — how many possible functions a network with n parameters can represent. Graph theory describes neural architectures (layers = nodes, connections = edges) and knowledge graphs used in reasoning systems. Logic underpins formal verification approaches to alignment. Modular arithmetic connects to grokking — one of the most striking phenomena in modern ML, where networks suddenly learn modular addition after massive overfitting.
+
