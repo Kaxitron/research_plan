@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometric Understanding of the Derivative</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1b1b2f;
+    color: #e8e8e8;
+    font-family: 'Lora', 'Georgia', serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    text-align: center;
+    color: #6ecbf5;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-style: italic;
+    color: #8a8aaa;
+    font-size: 1rem;
+    margin-bottom: 50px;
+  }
+
+  .diagram-section {
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #f4c542;
+    margin-bottom: 6px;
+  }
+
+  .section-question {
+    font-style: italic;
+    color: #b0b0cc;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+
+  .diagram-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .diagram-box { flex: 0 0 auto; }
+
+  .explanation {
+    flex: 1;
+    min-width: 280px;
+    padding-top: 10px;
+  }
+
+  .explanation p {
+    line-height: 1.75;
+    margin-bottom: 14px;
+    font-size: 0.98rem;
+    color: #d0d0e0;
+  }
+
+  .math {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: #6ecbf5;
+  }
+
+  .highlight {
+    color: #f4c542;
+    font-weight: 600;
+  }
+
+  .equation-box {
+    background: rgba(110, 203, 245, 0.07);
+    border-left: 3px solid #6ecbf5;
+    padding: 14px 20px;
+    margin: 18px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .result-box {
+    background: rgba(244, 197, 66, 0.1);
+    border-left: 3px solid #f4c542;
+    padding: 14px 20px;
+    margin: 18px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .result-box .math {
+    color: #f4c542;
+  }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #3a3a5c, transparent);
+    margin: 50px 0;
+  }
+
+  svg text {
+    font-family: 'Lora', 'Georgia', serif;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #5a5a7a;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .insight-box {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .insight-box p {
+    line-height: 1.8;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>The Geometric Derivative</h1>
+  <p class="subtitle">Inspired by 3Blue1Brown's Essence of Calculus</p>
+
+  <!-- ==================== PART 1: x² ==================== -->
+  <div class="diagram-section">
+    <div class="section-title">Part 1 &nbsp;·&nbsp; The derivative of x²</div>
+    <p class="section-question">If x² is the area of a square… what happens when x grows by a tiny amount dx?</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box">
+        <svg width="420" height="420" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+          <!-- Main square -->
+          <rect x="60" y="60" width="260" height="260" fill="#2d5f8a" stroke="#6ecbf5" stroke-width="2" opacity="0.85"/>
+          <text x="190" y="200" text-anchor="middle" fill="#6ecbf5" font-size="28" font-style="italic" opacity="0.9">x²</text>
+
+          <!-- Right strip -->
+          <rect x="320" y="60" width="40" height="260" fill="#e0724a" stroke="#f09070" stroke-width="1.5" opacity="0.85"/>
+          <text x="340" y="200" text-anchor="middle" fill="#fff" font-size="14" font-style="italic">x·dx</text>
+
+          <!-- Top strip -->
+          <rect x="60" y="20" width="260" height="40" fill="#e0724a" stroke="#f09070" stroke-width="1.5" opacity="0.85"/>
+          <text x="190" y="46" text-anchor="middle" fill="#fff" font-size="14" font-style="italic">x·dx</text>
+
+          <!-- Corner -->
+          <rect x="320" y="20" width="40" height="40" fill="#f4c542" stroke="#f4c542" stroke-width="1.5" opacity="0.7"/>
+          <text x="340" y="44" text-anchor="middle" fill="#1b1b2f" font-size="11" font-style="italic">dx²</text>
+
+          <!-- Bottom: x -->
+          <line x1="60" y1="340" x2="320" y2="340" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <line x1="60" y1="335" x2="60" y2="345" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <line x1="320" y1="335" x2="320" y2="345" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <text x="190" y="360" text-anchor="middle" fill="#6ecbf5" font-size="18" font-style="italic">x</text>
+
+          <!-- Bottom: dx -->
+          <line x1="320" y1="340" x2="360" y2="340" stroke="#f09070" stroke-width="1" opacity="0.7"/>
+          <line x1="360" y1="335" x2="360" y2="345" stroke="#f09070" stroke-width="1" opacity="0.7"/>
+          <text x="340" y="360" text-anchor="middle" fill="#f09070" font-size="15" font-style="italic">dx</text>
+
+          <!-- Left: x -->
+          <line x1="40" y1="60" x2="40" y2="320" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <line x1="35" y1="60" x2="45" y2="60" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <line x1="35" y1="320" x2="45" y2="320" stroke="#6ecbf5" stroke-width="1" opacity="0.6"/>
+          <text x="28" y="196" text-anchor="middle" fill="#6ecbf5" font-size="18" font-style="italic">x</text>
+
+          <!-- Left: dx -->
+          <line x1="40" y1="20" x2="40" y2="60" stroke="#f09070" stroke-width="1" opacity="0.7"/>
+          <line x1="35" y1="20" x2="45" y2="20" stroke="#f09070" stroke-width="1" opacity="0.7"/>
+          <text x="28" y="46" text-anchor="middle" fill="#f09070" font-size="15" font-style="italic">dx</text>
+
+          <!-- Full side -->
+          <line x1="60" y1="385" x2="360" y2="385" stroke="#d0d0e0" stroke-width="1" opacity="0.4"/>
+          <line x1="60" y1="380" x2="60" y2="390" stroke="#d0d0e0" stroke-width="1" opacity="0.4"/>
+          <line x1="360" y1="380" x2="360" y2="390" stroke="#d0d0e0" stroke-width="1" opacity="0.4"/>
+          <text x="210" y="407" text-anchor="middle" fill="#d0d0e0" font-size="16" font-style="italic" opacity="0.7">x + dx</text>
+        </svg>
+      </div>
+
+      <div class="explanation">
+        <p>Think of <span class="math">x²</span> not as "x times x" but as the <span class="highlight">area of a square</span> with side length <span class="math">x</span>.</p>
+        <p>Now nudge <span class="math">x</span> by a tiny amount <span class="math">dx</span>. The side grows from <span class="math">x</span> to <span class="math">x + dx</span>. Three new regions appear:</p>
+        <div class="equation-box">
+          <span style="color:#e0724a;">■</span> Right strip: &nbsp; <span class="math">x · dx</span><br>
+          <span style="color:#e0724a;">■</span> Top strip: &nbsp;&nbsp; <span class="math">x · dx</span><br>
+          <span style="color:#f4c542;">■</span> Corner: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="math">(dx)²</span> &nbsp; ← negligible
+        </div>
+        <p>Total new area: &nbsp; <span class="math">d(x²) = 2x · dx + (dx)²</span></p>
+        <p>But <span class="math">(dx)²</span> is infinitesimally small — the square of a tiny number. Drop it.</p>
+        <div class="result-box">
+          <span class="math">d(x²) = 2x · dx</span> &nbsp; ⟹ &nbsp; <span class="math" style="font-size:1.15rem;">d(x²)/dx = 2x</span> &nbsp; ✓
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== PART 2: 1/x ==================== -->
+  <div class="diagram-section">
+    <div class="section-title">Part 2 &nbsp;·&nbsp; The derivative of 1/x</div>
+    <p class="section-question">A rectangle has constant area = 1, with width x and height 1/x. When x grows by dx… what must happen to 1/x?</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box">
+        <svg width="460" height="380" viewBox="0 0 460 380" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- Main rectangle: width=x, height=1/x, area=1 -->
+          <rect x="70" y="80" width="260" height="200" fill="#2a7a8a" stroke="#58c6d6" stroke-width="2" opacity="0.82"/>
+          <text x="200" y="180" text-anchor="middle" fill="#58c6d6" font-size="22" font-style="italic" opacity="0.85">area = 1</text>
+
+          <!-- AREA GAINED: right green strip -->
+          <rect x="330" y="80" width="35" height="200" fill="#4aad6a" stroke="#6ada8a" stroke-width="1.5" opacity="0.82"/>
+          <text x="347" y="175" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Area</text>
+          <text x="347" y="190" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">gained</text>
+
+          <!-- AREA LOST: top red strip -->
+          <rect x="70" y="55" width="260" height="25" fill="#d95050" stroke="#f07070" stroke-width="1.5" opacity="0.82"/>
+          <text x="200" y="73" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Area lost</text>
+
+          <!-- Corner (negligible) -->
+          <rect x="330" y="55" width="35" height="25" fill="#333" stroke="#666" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+          <text x="347" y="72" text-anchor="middle" fill="#999" font-size="9" font-style="italic">≈ 0</text>
+
+          <!-- DIMENSION: bottom x -->
+          <line x1="70" y1="300" x2="330" y2="300" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <line x1="70" y1="295" x2="70" y2="305" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <line x1="330" y1="295" x2="330" y2="305" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <text x="200" y="322" text-anchor="middle" fill="#58c6d6" font-size="18" font-style="italic">x</text>
+
+          <!-- DIMENSION: bottom dx -->
+          <line x1="330" y1="300" x2="365" y2="300" stroke="#6ada8a" stroke-width="1" opacity="0.7"/>
+          <line x1="365" y1="295" x2="365" y2="305" stroke="#6ada8a" stroke-width="1" opacity="0.7"/>
+          <text x="347" y="322" text-anchor="middle" fill="#6ada8a" font-size="15" font-style="italic">dx</text>
+
+          <!-- DIMENSION: right side 1/x -->
+          <line x1="385" y1="80" x2="385" y2="280" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <line x1="380" y1="80" x2="390" y2="80" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <line x1="380" y1="280" x2="390" y2="280" stroke="#58c6d6" stroke-width="1" opacity="0.6"/>
+          <text x="415" y="186" text-anchor="middle" fill="#58c6d6" font-size="17" font-style="italic">1/x</text>
+
+          <!-- DIMENSION: left side d(1/x) with label cleanly to the left -->
+          <line x1="50" y1="55" x2="50" y2="80" stroke="#f07070" stroke-width="1.5" opacity="0.7"/>
+          <line x1="45" y1="55" x2="55" y2="55" stroke="#f07070" stroke-width="1.5" opacity="0.7"/>
+          <line x1="45" y1="80" x2="55" y2="80" stroke="#f07070" stroke-width="1.5" opacity="0.7"/>
+
+          <!-- d(1/x) label — positioned clearly to the left, no overlap -->
+          <text x="42" y="50" text-anchor="end" fill="#f07070" font-size="14" font-style="italic">d(1/x)</text>
+
+          <!-- "Negative!" annotation below -->
+          <text x="42" y="100" text-anchor="end" fill="#f07070" font-size="12" font-style="italic" opacity="0.8">← negative!</text>
+
+        </svg>
+      </div>
+
+      <div class="explanation">
+        <p>A <span class="highlight">rectangle</span> whose area is <em>always</em> <span class="math" style="color:#58c6d6;">1</span>. Width = <span class="math" style="color:#58c6d6;">x</span>, height = <span class="math" style="color:#58c6d6;">1/x</span>.</p>
+        <p>When <span class="math">x</span> grows by <span class="math">dx</span>, the rectangle gets wider. A thin <span style="color:#6ada8a; font-weight:600;">green strip</span> of area appears on the right:</p>
+        <div class="equation-box">
+          <span style="color:#6ada8a;">■</span> Area gained: &nbsp; <span class="math" style="color:#6ada8a;">(1/x) · dx</span>
+        </div>
+        <p>But the area must <em>stay at 1</em>. So the height shrinks, creating a <span style="color:#d95050; font-weight:600;">red strip</span> of lost area along the top:</p>
+        <div class="equation-box">
+          <span style="color:#d95050;">■</span> Area lost: &nbsp; <span class="math" style="color:#d95050;">x · |d(1/x)|</span>
+        </div>
+        <p>These must cancel exactly:</p>
+        <div class="equation-box">
+          <span class="math">(1/x) · dx + x · d(1/x) = 0</span>
+        </div>
+        <p>Solve for <span class="math">d(1/x)</span>:</p>
+        <div class="equation-box">
+          <span class="math">d(1/x) = −dx / x²</span>
+        </div>
+        <div class="result-box">
+          <span class="math" style="font-size:1.15rem;">d(1/x)/dx = −1/x²</span> &nbsp; ✓<br>
+          <span style="color:#f07070; font-size:0.92rem;">The negative sign is geometric necessity — a wider rectangle with the same area <em>must</em> get shorter.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== PART 3: PRODUCT RULE ==================== -->
+  <div class="diagram-section">
+    <div class="section-title">Part 3 &nbsp;·&nbsp; The Product Rule</div>
+    <p class="section-question">If f(x) = sin(x) · x², think of it as the area of a rectangle with sides sin(x) and x². What happens when x nudges by dx?</p>
+
+    <div class="diagram-row">
+      <div class="diagram-box">
+        <svg width="440" height="400" viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- Main rectangle: sin(x) × x² -->
+          <rect x="70" y="105" width="240" height="250" fill="#8a8a2d" stroke="#c8c840" stroke-width="2" opacity="0.75"/>
+          <text x="190" y="230" text-anchor="middle" fill="#e8e860" font-size="20" font-style="italic" opacity="0.9">sin(x) · x²</text>
+          <text x="190" y="255" text-anchor="middle" fill="#c8c840" font-size="15" opacity="0.6">= Area</text>
+
+          <!-- TOP strip: sin(x) · d(x²) — green, sits on top of x² -->
+          <rect x="70" y="70" width="240" height="35" fill="#4a8a4a" stroke="#6aba6a" stroke-width="1.5" opacity="0.82"/>
+          <text x="190" y="93" text-anchor="middle" fill="#b0f0b0" font-size="12" font-style="italic">sin(x) · d(x²)</text>
+
+          <!-- RIGHT strip: x² · d(sin(x)) — teal -->
+          <rect x="310" y="105" width="35" height="250" fill="#2a6a5a" stroke="#48b898" stroke-width="1.5" opacity="0.82"/>
+          <text x="327" y="230" text-anchor="middle" fill="#90e8c8" font-size="11" font-style="italic" transform="rotate(-90, 327, 230)">x² · d(sin(x))</text>
+
+          <!-- Corner: negligible — top-right -->
+          <rect x="310" y="70" width="35" height="35" fill="#f4c542" stroke="#f4c542" stroke-width="1" opacity="0.4"/>
+          <text x="327" y="92" text-anchor="middle" fill="#f4c542" font-size="9" font-style="italic" opacity="0.7">≈ 0</text>
+
+          <!-- DIMENSION: top — sin(x) -->
+          <line x1="70" y1="55" x2="310" y2="55" stroke="#c8c840" stroke-width="1" opacity="0.5"/>
+          <line x1="70" y1="50" x2="70" y2="60" stroke="#c8c840" stroke-width="1" opacity="0.5"/>
+          <line x1="310" y1="50" x2="310" y2="60" stroke="#c8c840" stroke-width="1" opacity="0.5"/>
+          <text x="190" y="47" text-anchor="middle" fill="#c8c840" font-size="16" font-style="italic">sin(x)</text>
+
+          <!-- DIMENSION: top — d(sin(x)) -->
+          <line x1="310" y1="55" x2="345" y2="55" stroke="#48b898" stroke-width="1" opacity="0.6"/>
+          <line x1="345" y1="50" x2="345" y2="60" stroke="#48b898" stroke-width="1" opacity="0.6"/>
+          <text x="327" y="47" text-anchor="middle" fill="#48b898" font-size="11" font-style="italic">d(sin)</text>
+
+          <!-- DIMENSION: right — d(x²) on TOP of x² -->
+          <line x1="365" y1="70" x2="365" y2="105" stroke="#6aba6a" stroke-width="1" opacity="0.6"/>
+          <line x1="360" y1="70" x2="370" y2="70" stroke="#6aba6a" stroke-width="1" opacity="0.6"/>
+          <line x1="360" y1="105" x2="370" y2="105" stroke="#6aba6a" stroke-width="1" opacity="0.6"/>
+          <text x="395" y="93" text-anchor="middle" fill="#6aba6a" font-size="12" font-style="italic">d(x²)</text>
+
+          <!-- DIMENSION: right — x² below d(x²) -->
+          <line x1="365" y1="105" x2="365" y2="355" stroke="#c8c840" stroke-width="1" opacity="0.5"/>
+          <line x1="360" y1="355" x2="370" y2="355" stroke="#c8c840" stroke-width="1" opacity="0.5"/>
+          <text x="390" y="235" text-anchor="middle" fill="#c8c840" font-size="16" font-style="italic">x²</text>
+
+        </svg>
+      </div>
+
+      <div class="explanation">
+        <p>Think of <span class="math" style="color:#e8e860;">f(x) = sin(x) · x²</span> as the <span class="highlight">area of a rectangle</span> with width <span class="math" style="color:#c8c840;">sin(x)</span> and height <span class="math" style="color:#c8c840;">x²</span>.</p>
+
+        <p>When <span class="math">x</span> nudges by <span class="math">dx</span>, <em>both</em> sides change independently. <span class="math" style="color:#c8c840;">sin(x)</span> changes by <span class="math" style="color:#48b898;">d(sin(x))</span> and <span class="math" style="color:#c8c840;">x²</span> changes by <span class="math" style="color:#6aba6a;">d(x²)</span>. This creates two new strips:</p>
+
+        <div class="equation-box">
+          <span style="color:#6aba6a;">■</span> Top strip: &nbsp;&nbsp;&nbsp; <span class="math" style="color:#6aba6a;">sin(x) · d(x²)</span><br>
+          <span style="color:#48b898;">■</span> Right strip: &nbsp; <span class="math" style="color:#48b898;">x² · d(sin(x))</span><br>
+          <span style="color:#f4c542;">■</span> Corner: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; negligible
+        </div>
+
+        <p>So the total change in area is:</p>
+
+        <div class="equation-box">
+          <span class="math">df = sin(x) · d(x²) + x² · d(sin(x))</span>
+        </div>
+
+        <p>We already know <span class="math">d(x²) = 2x · dx</span> and <span class="math">d(sin(x)) = cos(x) · dx</span>. Substitute:</p>
+
+        <div class="result-box">
+          <span class="math" style="font-size:1.1rem;">df/dx = sin(x) · 2x + x² · cos(x)</span> &nbsp; ✓<br><br>
+          <span style="color:#d0d0e0; font-size:0.92rem;">In general: &nbsp; <span class="math" style="color:#f4c542;">(fg)' = f · g' + g · f'</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== PART 4: CHAIN RULE ==================== -->
+  <div class="diagram-section">
+    <div class="section-title">Part 4 &nbsp;·&nbsp; The Chain Rule</div>
+    <p class="section-question">For f(g(x)), think of three number lines: x feeds into g, and g feeds into f. A nudge to x ripples through.</p>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <svg width="820" height="350" viewBox="0 0 820 350" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- ===== NUMBER LINE 1: x ===== -->
+        <text x="30" y="62" text-anchor="middle" fill="#6ecbf5" font-size="20" font-style="italic">x</text>
+        <line x1="60" y1="60" x2="760" y2="60" stroke="#555" stroke-width="1.5"/>
+        <!-- Ticks -->
+        <line x1="160" y1="52" x2="160" y2="68" stroke="#666" stroke-width="1"/>
+        <line x1="360" y1="52" x2="360" y2="68" stroke="#666" stroke-width="1"/>
+        <line x1="560" y1="52" x2="560" y2="68" stroke="#666" stroke-width="1"/>
+
+        <!-- x point -->
+        <circle cx="320" cy="60" r="6" fill="#6ecbf5"/>
+        <text x="320" y="88" text-anchor="middle" fill="#6ecbf5" font-size="15" font-style="italic">x</text>
+
+        <!-- dx nudge -->
+        <rect x="320" y="53" width="45" height="14" fill="#e0724a" rx="2" opacity="0.85"/>
+        <text x="342" y="48" text-anchor="middle" fill="#f09070" font-size="13" font-style="italic">dx</text>
+
+        <!-- Arrow down to g(x) line -->
+        <defs>
+          <marker id="arrowDown1" markerWidth="10" markerHeight="10" refX="5" refY="10" orient="auto">
+            <path d="M0,0 L10,0 L5,10 Z" fill="#888"/>
+          </marker>
+        </defs>
+        <line x1="340" y1="100" x2="340" y2="125" stroke="#888" stroke-width="1.2" marker-end="url(#arrowDown1)"/>
+        <text x="380" y="120" fill="#888" font-size="13" font-style="italic">g acts on x</text>
+
+
+        <!-- ===== NUMBER LINE 2: g(x) ===== -->
+        <text x="30" y="172" text-anchor="middle" fill="#58d6a0" font-size="18" font-style="italic">g(x)</text>
+        <line x1="60" y1="170" x2="760" y2="170" stroke="#555" stroke-width="1.5"/>
+        <!-- Ticks -->
+        <line x1="160" y1="162" x2="160" y2="178" stroke="#666" stroke-width="1"/>
+        <line x1="360" y1="162" x2="360" y2="178" stroke="#666" stroke-width="1"/>
+        <line x1="560" y1="162" x2="560" y2="178" stroke="#666" stroke-width="1"/>
+
+        <!-- g(x) point — maybe at a different position to show mapping -->
+        <circle cx="410" cy="170" r="6" fill="#58d6a0"/>
+        <text x="410" y="198" text-anchor="middle" fill="#58d6a0" font-size="15" font-style="italic">g(x)</text>
+
+        <!-- dg nudge — amplified or compressed depending on g'(x) -->
+        <rect x="410" y="163" width="65" height="14" fill="#e0724a" rx="2" opacity="0.85"/>
+        <text x="442" y="158" text-anchor="middle" fill="#f09070" font-size="13" font-style="italic">dg = g'(x)·dx</text>
+
+        <!-- Annotation: the nudge got scaled -->
+        <text x="540" y="160" fill="#999" font-size="12" font-style="italic">← nudge scaled by g'(x)</text>
+
+        <!-- Arrow down to f line -->
+        <line x1="440" y1="210" x2="440" y2="235" stroke="#888" stroke-width="1.2" marker-end="url(#arrowDown1)"/>
+        <text x="486" y="230" fill="#888" font-size="13" font-style="italic">f acts on g</text>
+
+
+        <!-- ===== NUMBER LINE 3: f(g(x)) ===== -->
+        <text x="30" y="278" text-anchor="middle" fill="#d6a058" font-size="16" font-style="italic">f(g)</text>
+        <line x1="60" y1="280" x2="760" y2="280" stroke="#555" stroke-width="1.5"/>
+        <!-- Ticks -->
+        <line x1="160" y1="272" x2="160" y2="288" stroke="#666" stroke-width="1"/>
+        <line x1="360" y1="272" x2="360" y2="288" stroke="#666" stroke-width="1"/>
+        <line x1="560" y1="272" x2="560" y2="288" stroke="#666" stroke-width="1"/>
+
+        <!-- f(g(x)) point -->
+        <circle cx="480" cy="280" r="6" fill="#d6a058"/>
+        <text x="480" y="308" text-anchor="middle" fill="#d6a058" font-size="15" font-style="italic">f(g(x))</text>
+
+        <!-- df nudge — scaled again -->
+        <rect x="480" y="273" width="90" height="14" fill="#e0724a" rx="2" opacity="0.85"/>
+        <text x="525" y="268" text-anchor="middle" fill="#f09070" font-size="13" font-style="italic">df = f'(g)·dg</text>
+
+        <!-- Annotation -->
+        <text x="630" y="270" fill="#999" font-size="12" font-style="italic">← nudge scaled again by f'(g)</text>
+
+        <!-- ===== FINAL RESULT at bottom ===== -->
+        <rect x="180" y="325" width="470" height="30" rx="6" fill="rgba(244,197,66,0.1)" stroke="#f4c542" stroke-width="1" opacity="0.8"/>
+        <text x="415" y="346" text-anchor="middle" fill="#f4c542" font-size="16" font-style="italic">
+          df = f'(g(x)) · g'(x) · dx &nbsp; ⟹ &nbsp; df/dx = f'(g(x)) · g'(x)
+        </text>
+
+      </svg>
+    </div>
+
+    <div style="max-width: 650px; margin: 20px auto 0;">
+      <div class="explanation">
+        <p>The chain rule is about <span class="highlight">cascading nudges</span>. A tiny nudge <span class="math" style="color:#f09070;">dx</span> on the <span class="math" style="color:#6ecbf5;">x</span> number line gets <em>scaled</em> by <span class="math" style="color:#58d6a0;">g'(x)</span> to produce <span class="math" style="color:#58d6a0;">dg</span> on the middle line.</p>
+        <p>Then <em>that</em> nudge gets scaled again by <span class="math" style="color:#d6a058;">f'(g)</span> to produce <span class="math" style="color:#d6a058;">df</span> on the output line.</p>
+        <p>The total scaling factor from input to output is just the <em>product</em> of the two individual scaling factors:</p>
+        <div class="result-box">
+          <span class="math" style="font-size:1.15rem;">df/dx = f'(g(x)) · g'(x)</span><br><br>
+          <span style="color:#d0d0e0; font-size:0.92rem;">Each function in the chain multiplies the nudge by its own derivative. That's it — derivatives compose by multiplication.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ==================== DEEP PATTERN ==================== -->
+  <div class="diagram-section insight-box">
+    <div class="section-title" style="text-align:center;">The Deep Pattern</div>
+    <p style="color:#d0d0e0; font-size: 1.02rem;">
+      Every derivative rule is a geometric story about what happens when you nudge the input by a tiny <span class="math" style="color:#f09070;">dx</span>.
+    </p>
+    <p style="color:#b0b0cc; font-size: 0.95rem;">
+      <span style="color:#6ecbf5; font-style:italic;">x²</span> &nbsp;→&nbsp; Area grows freely. Count the new strips.<br>
+      <span style="color:#58c6d6; font-style:italic;">1/x</span> &nbsp;→&nbsp; Area is locked. Gain on one side forces loss on another.<br>
+      <span style="color:#e8e860; font-style:italic;">Product rule</span> &nbsp;→&nbsp; Both sides of a rectangle change. Two strips, one for each factor.<br>
+      <span style="color:#d6a058; font-style:italic;">Chain rule</span> &nbsp;→&nbsp; Nudges cascade through a pipeline, each function scaling the nudge by its derivative.
+    </p>
+    <p style="color:#8a8aaa; font-size: 0.9rem; font-style: italic; margin-top: 20px;">
+      No limits. No epsilons. Just geometry and tiny quantities.
+    </p>
+  </div>
+
+  <p class="footer">Geometric Derivative Intuition &nbsp;·&nbsp; Intuitions Notebook</p>
+
+</div>
+</body>
+</html>
