@@ -149,3 +149,22 @@ The experiment: A fair coin is flipped. If Heads, Sleeping Beauty is woken once 
 - Which anthropic assumption?
 
 **(b)** In 3–4 sentences, explain why these three areas — which seem abstract and philosophical — are actually *engineering requirements* for building safe AI systems. Give one concrete example of how a wrong choice in any of these areas could lead to misalignment.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Game Theory Solver & Alignment Simulator
+
+**Build a Nash equilibrium finder and simulate AI-human strategic interaction.**
+
+1. Implement a general 2-player normal form game solver:
+   - Find all pure-strategy Nash equilibria by checking for unilateral deviations
+   - Find the mixed-strategy Nash equilibrium using the indifference principle
+2. Test on classic games: Prisoner's Dilemma, Stag Hunt, Chicken, Battle of the Sexes
+3. Build the AI Trust Game from Exam 6A Q1: rows = {Honest, Deceive}, columns = {Trust, Verify}
+4. Simulate 1000 rounds of repeated play with different strategies: tit-for-tat, always-verify, probabilistic trust (increase trust after honest behavior)
+5. Plot cooperation rate over time for each strategy pair. Which strategies sustain cooperation?
+6. Modify the payoffs to represent a scenario where deception detection improves over time (verification cost decreases). How does the equilibrium shift?
+
+**Stretch:** Implement a simple CDT vs. EDT agent. Have them play a Newcomb-like problem 1000 times. Track payoffs. Which decision theory performs better, and why?
+
+**Tools:** NumPy, Matplotlib.

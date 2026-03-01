@@ -55,3 +55,19 @@
 ## What's Next
 
 You now have the mathematical foundations, the technical understanding of neural networks, the interpretability toolkit, and the philosophical framework to engage with alignment research. The next phase is doing the research yourself.
+
+---
+
+## 📝 Time to Take the Exam
+
+This is it — the final exam of the entire curriculum. It covers Lessons 66–67 but draws on every phase. Everything you've learned converges here.
+
+👉 **[Exam 6B: The Alignment Problem — Capstone Final Examination](../assessments/exam-6b-alignment-capstone.md)**
+
+---
+
+## 🏗️ The Final Project
+
+After the capstone exam, there's one more challenge: a 5-hour intensive project that requires you to use nearly everything you've learned across all 67 lessons. You'll build a transformer from scratch, train it, analyze its dynamics, interpret its internals, attempt to align it, and apply the deep mathematical frameworks from every phase.
+
+👉 **[Final Project: The Alignment Observatory](../assessments/final-project-alignment-observatory.md)**

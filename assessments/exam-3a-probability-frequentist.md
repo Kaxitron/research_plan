@@ -134,3 +134,20 @@ Consider fitting y = β₀ + β₁x to data points: (1,2), (2,4), (3,5), (4,4), 
 **(c)** The r² = |ŷ|²/|y|² connection you derived earlier bridges Phase 1 (projection lengths) and Phase 3 (explained variance). State in one sentence why you need r² (not r) to measure explained variance. *(Hint: variance involves squared lengths.)*
 
 **(d)** A colleague says "Our model got p < 0.001, so it's definitely better." Give two reasons this could still be misleading.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Bootstrap Hypothesis Testing Lab
+
+**Build a resampling-based statistical testing toolkit from scratch.**
+
+1. Generate synthetic data: two groups (e.g., "control" and "treatment") drawn from slightly different distributions
+2. Implement the bootstrap: resample with replacement 10,000 times, compute the mean difference each time, build a confidence interval
+3. Implement a permutation test: shuffle group labels 10,000 times, compute the null distribution of mean differences, calculate the p-value
+4. Compare your bootstrap CI and permutation p-value to the classical t-test result
+5. Visualize: plot the bootstrap distribution, the permutation null distribution, and mark the observed statistic on each
+6. Power analysis: vary the true effect size from 0 to 1 and plot the fraction of times each test correctly rejects H₀ (statistical power curve)
+
+**Stretch:** Demonstrate Simpson's paradox with a synthetic dataset. Show that the treatment helps in every subgroup but hurts overall. Visualize why.
+
+**Tools:** NumPy, Matplotlib, SciPy (for t-test comparison only).

@@ -126,3 +126,20 @@
 **(b)** A research colleague shows you a plot of the Local Learning Coefficient during training. You see: a flat period around λ ≈ 2.0 for the first 5000 steps, then a sharp drop to λ ≈ 0.8 at step 5000, followed by another flat period. Interpret this plot: what happened at step 5000? What can you infer about the model's internal structure before and after?
 
 **(c)** In your own words, write a 3–4 sentence summary of why SLT is considered one of the most promising mathematical frameworks for alignment.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Activation Patching on a Toy Model
+
+**Train a small network and use activation patching to find which components matter.**
+
+1. Train a 2-layer MLP on a task with clear internal structure: e.g., classify (x,y) points where the label depends on whether x > 0 AND y > 0 (a simple AND gate in 2D)
+2. For a set of test inputs, record all intermediate activations (after each layer, after each activation function)
+3. Implement activation patching: for a given input, replace the activation at one specific neuron with the activation from a different input, and measure how the output changes
+4. Sweep through all neurons in the network. Rank them by patching effect (which neurons, when corrupted, most change the output?)
+5. Visualize: create a heatmap showing "importance" of each neuron for each test input
+6. Interpret: do the important neurons correspond to meaningful features? (e.g., one neuron detects "x > 0", another detects "y > 0")
+
+**Stretch:** Implement the same analysis on a slightly harder task (XOR). Show that the network needs at least one hidden layer to solve it, and identify the neuron(s) that compute the intermediate representation.
+
+**Tools:** PyTorch (for training), NumPy/Matplotlib (for analysis and visualization).

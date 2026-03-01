@@ -110,3 +110,10 @@ SLT is one of the most promising mathematical frameworks for alignment because i
 3. **What it will do** (generalization behavior, predicted by the free energy)
 
 If we can measure a model's functional complexity precisely enough, we might detect deceptive strategies (which are functionally complex), predict capability emergence, and understand *why* certain training regimes produce aligned or misaligned models. SLT isn't there yet — but it's the most mathematically principled approach to these questions that currently exists.
+---
+
+## 📝 Time to Take the Exam
+
+Phase 4 is complete — from neurons to transformers to interpretability to the mathematical foundations of why deep learning works. This is the exam that ties it all together.
+
+👉 **[Exam 4B: Mechanistic Interpretability](../assessments/exam-4b-mechanistic-interpretability.md)**

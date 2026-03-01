@@ -165,3 +165,11 @@ Choose ONE open problem from the list below (or propose your own). Write a 1-pag
 **(d)** What is the single most important open question in AI alignment, in your view? Why? What mathematical tools would be needed to answer it? (3–5 sentences.)
 
 **(e)** Final reflection: what concept from this curriculum changed how you think about AI, and why?
+
+---
+
+## 🏗️ The Final Project
+
+You've passed the capstone exam. One challenge remains — a 5-hour intensive project that ties together every lesson across the entire curriculum. Build, train, interpret, and align a language model from scratch.
+
+👉 **[Final Project: The Alignment Observatory](final-project-alignment-observatory.md)**

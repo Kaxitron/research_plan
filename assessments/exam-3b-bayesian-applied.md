@@ -124,3 +124,20 @@ Using everything from Lessons 28–39, write a 5-point critique evaluating this 
 **(b)** SLT says the posterior for singular models concentrates around the set of optimal parameters K (a variety, not a point). The RLCT measures the "width" of K. Connect this to the concept of flat minima from the calculus phase.
 
 **(c)** In your own words: how does the Bayesian framework's automatic Occam's razor (penalizing complexity via the marginal likelihood) connect to the observation that overparameterized neural networks generalize well?
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Bayesian A/B Testing Dashboard
+
+**Build a Bayesian A/B test analyzer that updates beliefs in real time.**
+
+1. Simulate an A/B test: version A converts at 5%, version B at 6% (small true difference). Generate click data sequentially.
+2. Model each version's conversion rate with a Beta prior (start with Beta(1,1) = uniform)
+3. After each batch of 50 observations, update the posterior for both versions. Plot the two posterior distributions overlaid.
+4. Compute and plot over time: (a) P(B > A), (b) expected lift E[B−A], (c) 95% credible interval for the difference
+5. Compare: at what sample size does the Bayesian approach become "confident" (P(B>A) > 0.95) vs. when the frequentist p-value crosses 0.05?
+6. Show how a strong prior (Beta(100,100)) slows down learning — the posterior is "stubborn"
+
+**Stretch:** Add a decision-theoretic layer. Given a cost per observation and a revenue per conversion, compute the expected value of continuing to test vs. deploying B now. Find the optimal stopping point.
+
+**Tools:** NumPy, Matplotlib, SciPy (for Beta distribution).

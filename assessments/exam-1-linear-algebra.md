@@ -362,3 +362,20 @@ The mathematical pipeline connects nearly every lesson:
 *"Every matrix transformation = align input with natural directions → scale each direction → align output with natural directions. This is SVD. Every other concept is a window into part of this story."*
 
 *You now have the complete mathematical language for understanding neural network internals.*
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): SVD Image Compressor
+
+**Build a visual SVD image compression tool in Python.**
+
+1. Load a grayscale image (e.g., a photo or MNIST digit) as a matrix
+2. Compute the full SVD: U Σ Vᵀ
+3. Reconstruct the image using only the top k singular values for k = 1, 5, 10, 25, 50
+4. Plot all reconstructions side-by-side with the original
+5. Plot the singular values on a log scale — observe the rapid decay
+6. Compute and display the compression ratio and reconstruction error (Frobenius norm) for each k
+
+**Stretch:** Apply this to a batch of MNIST digits. Find the minimum k needed to keep digit classification accuracy above 95% using a simple nearest-centroid classifier. What does this tell you about the intrinsic dimensionality of handwritten digits?
+
+**Tools:** NumPy, Matplotlib. No ML libraries needed.

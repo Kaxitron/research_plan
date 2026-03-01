@@ -132,3 +132,20 @@ Trace the complete chain from permutation symmetry to Löb's theorem:
 For each arrow, write one sentence explaining the mathematical mechanism.
 
 **(b)** In 3–4 sentences, explain why BOTH the algebraic geometry thread (singularities, RLCT) AND the logic thread (Gödel, Löb) are necessary for a complete mathematical approach to alignment. What does each contribute that the other cannot?
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Topological Data Analysis on Neural Network Activations
+
+**Use persistent homology to analyze the shape of learned representations.**
+
+1. Train a small network (MLP or CNN) on a subset of MNIST (just digits 0, 1, 2 for simplicity)
+2. Extract the hidden layer activations for 500 test samples
+3. Use a TDA library (e.g., `ripser`, `gudhi`, or `giotto-tda`) to compute the persistent homology of the activation point cloud
+4. Plot the persistence diagram: each point represents a topological feature (connected component, loop, void) with its birth and death times
+5. Interpret: how many distinct clusters does the network create? (H₀ features = connected components.) Are there any loops (H₁ features)?
+6. Compare: run the same analysis on the raw pixel inputs (before the network). Show that the network has "simplified" the topology — fewer, more separated clusters
+
+**Stretch:** Track how the persistence diagram changes across training epochs. Does the topology simplify as the network learns?
+
+**Tools:** PyTorch, ripser or giotto-tda, Matplotlib.

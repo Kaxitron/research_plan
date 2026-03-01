@@ -60,3 +60,11 @@ You now have the mathematical vocabulary for every mechanistic interpretability 
 - **Embedding vectors** (L2) · **Linear combinations** (L3) · **Matrix transformations** (L4) · **Rank** (L6) · **Determinant** (L7) · **Eigenvalues** (L8) · **SVD** (L9) · **Dot products** (L10) · **Change of basis & norms** (L11)
 
 Everything from here builds on these foundations.
+
+---
+
+## 📝 Time to Take the Exam
+
+You've completed all of Phase 1. Every tool in the linear algebra toolkit is now yours. Time to prove it.
+
+👉 **[Phase 1 Final Exam: Linear Algebra](../assessments/exam-1-linear-algebra.md)**

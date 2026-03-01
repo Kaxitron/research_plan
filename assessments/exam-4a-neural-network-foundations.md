@@ -157,3 +157,20 @@ For each component of the LLM pipeline, identify the specific mathematical conce
 | RLHF | ___ | ___ | ___ |
 
 Fill in each cell with a specific concept (e.g., "dot products," "chain rule," "KL divergence"). Then pick any one cell and explain the connection in 2–3 sentences.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Transformer Attention from Scratch
+
+**Build a single-layer attention mechanism in pure NumPy and visualize what it learns.**
+
+1. Implement scaled dot-product attention from scratch: Attention(Q,K,V) = softmax(QKᵀ/√d)V
+2. Create a toy sequence task: given a sequence like [3, 7, 2, 7, ?], the model must copy the token that appeared twice (the "induction" pattern)
+3. Initialize random Q, K, V weight matrices. Implement the forward pass and compute the loss (cross-entropy)
+4. Implement backpropagation through the attention mechanism by hand (compute all gradients analytically)
+5. Train with gradient descent. Plot the attention pattern matrix at initialization vs. after training — you should see the model learn to attend to the repeated token
+6. Visualize the Q and K vectors in 2D (if d=2): show how training aligns the query of the "?" position with the key of the repeated token
+
+**Stretch:** Add a second attention head. Show that the two heads learn different attention patterns (one might attend to position, another to token identity).
+
+**Tools:** NumPy, Matplotlib. No PyTorch.

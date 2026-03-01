@@ -108,3 +108,10 @@ The pipeline reveals where alignment can fail:
 - **Deployment:** novel inputs trigger out-of-distribution behavior not covered by training
 
 Every alignment technique (interpretability, Constitutional AI, red-teaming, scalable oversight) targets one or more of these failure points.
+---
+
+## 📝 Time to Take the Exam
+
+You can now trace the complete path from a single neuron through transformers to the full LLM training pipeline. Time to demonstrate that understanding.
+
+👉 **[Exam 4A: Neural Network Foundations](../assessments/exam-4a-neural-network-foundations.md)**

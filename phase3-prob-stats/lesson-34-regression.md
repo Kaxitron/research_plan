@@ -113,3 +113,10 @@ When you see a regression table in a paper or a Twitter debate, here's what to l
 
 - **Probing classifiers** in interpretability (Lesson 41) are logistic regressions trained on model activations. When researchers say "we found a direction in activation space that predicts truthfulness," they mean "a logistic regression on activations achieves high accuracy." Understanding regression means understanding probing results.
 - **"Controlling for" in alignment evaluations:** if a model appears safer after RLHF, is that the RLHF or the additional compute/data? Regression-style reasoning helps disentangle these.
+---
+
+## 📝 Time to Take the Exam
+
+From probability axioms through information theory, hypothesis testing, experimental design, and regression — the frequentist toolkit is complete.
+
+👉 **[Exam 3A: Probability & Frequentist Methods](../assessments/exam-3a-probability-frequentist.md)**

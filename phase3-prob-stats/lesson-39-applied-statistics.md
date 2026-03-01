@@ -160,3 +160,10 @@ When you encounter a statistical claim online, run through this:
 - **The genetics of alignment:** understanding heritability and gene-environment interaction gives you a framework for thinking about nature vs. training in AI systems. How much of a model's behavior comes from the architecture (its "genes") vs. the training data (its "environment") vs. the interaction?
 - **Reading the alignment literature critically:** alignment researchers make empirical claims ("RLHF reduces harmful outputs by X%"). You now have the tools to evaluate those claims rigorously.
 - **AI risk estimation** uses the same kind of base rate reasoning, prior-updating, and evidence evaluation that this entire phase covers. When someone claims "there's a 10% chance of AI catastrophe," you can ask: what evidence is this based on? What's the model? How sensitive is it to assumptions?
+---
+
+## 📝 Time to Take the Exam
+
+Phase 3 is complete. You've gone from probability foundations through Bayesian reasoning to critically evaluating real-world statistical claims. Time for the final assessment.
+
+👉 **[Exam 3B: Bayesian Deep Dive & Applied Statistics](../assessments/exam-3b-bayesian-applied.md)**

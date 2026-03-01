@@ -249,3 +249,19 @@ You are training a small neural network with loss L(W).
 | Handling constraints | ___ | ___ |
 
 **(e)** The Jacobian determinant from Lesson 20 and the Hessian determinant both appear in this phase. State one specific role each plays in ML.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Gradient Descent Visualizer
+
+**Build an interactive gradient descent simulator on 2D loss surfaces.**
+
+1. Implement three loss functions: (a) a simple bowl (quadratic), (b) a ravine (elongated quadratic with condition number ~50), (c) Rosenbrock's function (banana-shaped valley)
+2. Implement vanilla gradient descent, gradient descent with momentum, and gradient descent with Nesterov momentum
+3. For each optimizer × surface combination, plot the optimization trajectory overlaid on a contour plot
+4. Track and plot the loss vs. step number for all 9 combinations
+5. Experiment: find the largest learning rate that still converges for each combination
+
+**Stretch:** Add Adam optimizer. On which surface does Adam most outperform vanilla GD? Why? (Relate to the Hessian eigenvalue spectrum of each surface.)
+
+**Tools:** NumPy, Matplotlib. No ML libraries needed.

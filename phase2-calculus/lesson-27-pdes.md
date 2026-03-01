@@ -77,3 +77,10 @@
 
 - **Controllable generation:** if diffusion models generate content by following a PDE, can we modify the PDE to guarantee the output satisfies safety constraints? Classifier-free guidance is a step in this direction.
 - **The Fokker-Planck perspective on training** could, in principle, give probabilistic guarantees about where training ends up. This is a theoretical alignment tool.
+---
+
+## 📝 Time to Take the Exam
+
+You've completed Phase 2. From single-variable derivatives to PDEs governing diffusion models, you now speak the language of change and dynamics.
+
+👉 **[Exam 2B: Differential Equations — The Language of Dynamics](../assessments/exam-2b-differential-equations.md)**

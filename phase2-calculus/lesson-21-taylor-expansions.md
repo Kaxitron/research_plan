@@ -57,3 +57,11 @@
 - **Second-order optimizers** (Newton, natural gradient, K-FAC) use the Hessian or its approximation to take smarter steps — they're minimizing the second-order Taylor expansion rather than following the linear approximation.
 - **Learning rate and curvature:** the optimal learning rate for a quadratic loss is 1/λ_max (inverse of largest Hessian eigenvalue). This comes directly from the Taylor expansion.
 - **Scaling laws** — the empirical finding that loss scales as L(N) ~ N^{-α} — are asymptotic statements that Taylor/power-series analysis helps interpret rigorously. Understanding when these power laws break down (phase transitions, emergent capabilities) is critical for predicting when models might suddenly become dangerous.
+
+---
+
+## 📝 Time to Take the Exam
+
+You've now mastered the calculus of optimization — derivatives, gradients, Hessians, constrained optimization, loss landscapes, integration, and Taylor expansions. Time to put it all together.
+
+👉 **[Exam 2A: Calculus — The Language of Optimization](../assessments/exam-2a-calculus-optimization.md)**

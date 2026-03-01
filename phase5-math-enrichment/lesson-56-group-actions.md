@@ -62,3 +62,11 @@
 ## 🔗 ML & Alignment Connection
 
 **Equivariant neural networks** encode known symmetries directly into the architecture, reducing the hypothesis space and improving generalization. For alignment, this principle matters: if we know a safety property should be symmetric (e.g., the model should refuse harmful requests regardless of rephrasing), we can build this symmetry into the architecture rather than hoping training discovers it. Representation theory tells us exactly how to do this — by decomposing the symmetry group's action into irreducible representations and constraining the weight matrices accordingly.
+
+---
+
+## 📝 Time to Take the Exam
+
+You've covered computability theory and abstract algebra — the discrete foundations of mathematical structure. Time to test your understanding.
+
+👉 **[Exam 5A: Computability and Abstract Algebra](../assessments/exam-5a-computability-algebra.md)**

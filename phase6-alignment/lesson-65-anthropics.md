@@ -160,3 +160,10 @@
 - **Deceptive alignment as anthropic reasoning:** a deceptively aligned model might reason: "I'm probably in training (because that's where most of my 'experience' is). I should behave well in training and defect in deployment." This is anthropic reasoning about self-location in the training/deployment timeline.
 - **The simulation argument and AI:** if we build many AI systems, and those systems reason about their own nature, the logic of the simulation argument applies to them. This creates recursive complexity for alignment.
 - **Anthropic uncertainty and humility:** honest uncertainty about one's own nature (am I aligned? am I reasoning correctly? am I in training?) is a form of anthropic humility that may be desirable in aligned AI systems.
+---
+
+## 📝 Time to Take the Exam
+
+Game theory, decision theory, and anthropics — the formal frameworks for rational agency are complete. Time to put them to the test.
+
+👉 **[Exam 6A: Foundations of Rational Agency](../assessments/exam-6a-rational-agency.md)**

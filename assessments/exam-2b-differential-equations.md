@@ -154,3 +154,20 @@ A neural network is trained with gradient descent. Think of the entire training 
 **(d)** Connect at least THREE concepts from this exam to the training process: Lyapunov function, eigenvalue classification, Euler's method, bifurcation, stochastic noise, or the heat equation. For each, state what role it plays.
 
 **(e)** In one sentence: why does understanding the continuous-time ODE (gradient flow) help you understand the discrete-time algorithm (gradient descent)?
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Training Dynamics Phase Portrait
+
+**Simulate gradient descent as a dynamical system and visualize its phase portrait.**
+
+1. Define a 2D loss surface with two local minima and one saddle point (e.g., L(x,y) = (x²−1)² + y²)
+2. Compute the gradient flow ODE: dw/dt = −∇L(w)
+3. Using Euler's method, simulate trajectories from 20+ initial conditions spread across the 2D plane
+4. Plot all trajectories on a single figure with the loss contours in the background
+5. Identify and mark the fixed points (minima, saddle). Color trajectories by which minimum they converge to — visualize the basins of attraction
+6. Add stochastic noise (simulating SGD) and show how noise allows escape from shallow minima
+
+**Stretch:** Compute the Jacobian at each fixed point. Verify that the eigenvalues predict the local behavior you observe (stable node, saddle, etc.).
+
+**Tools:** NumPy, Matplotlib. No ML libraries needed.

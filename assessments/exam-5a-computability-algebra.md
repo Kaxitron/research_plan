@@ -133,3 +133,22 @@
 **(b)** Draw a conceptual map connecting: groups → permutation symmetry → singularities → RLCT → generalization. In 2–3 sentences, explain how abstract algebra provides the mathematical foundation for understanding why neural networks generalize.
 
 **(c)** A colleague asks: "If alignment verification is undecidable (Rice's theorem) and the RLCT is hard to compute (algebraic geometry), should we give up on mathematical approaches to alignment?" Write a 2–3 sentence response.
+
+---
+
+## 🔧 Optional Mini Project (~45 minutes): Turing Machine Simulator & Symmetry Explorer
+
+**Part 1: Build a Turing machine simulator (25 min)**
+1. Implement a Turing machine: tape (infinite in both directions), head position, state, transition table
+2. Program three machines: (a) a binary incrementer, (b) a palindrome detector, (c) a busy beaver (3-state)
+3. Visualize the tape at each step — show the head position and current state
+4. Run the busy beaver and count the steps. Verify it matches the known BB(3) value
+
+**Part 2: Weight space symmetry visualizer (20 min)**
+1. Create a tiny neural network: 2 inputs, 3 hidden (ReLU), 1 output
+2. Train it on a simple task (e.g., XOR or a nonlinear boundary)
+3. For the 3 hidden neurons, there are 3! = 6 permutations. Apply each permutation to the weight matrices (swap rows of W₁ and corresponding columns of W₂)
+4. Verify all 6 networks produce identical outputs on test data
+5. Visualize: plot all 6 weight configurations in a 2D projection (PCA of the weight vectors). Show they form a symmetric pattern
+
+**Tools:** Python. NumPy for Part 1, PyTorch + Matplotlib for Part 2.
