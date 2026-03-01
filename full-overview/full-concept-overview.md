@@ -96,6 +96,9 @@
 - **Pigeonhole principle**
 - **Combinatorics:** permutations P(n,k), combinations C(n,k), with replacement (n^k), stars and bars
 - **Binomial theorem:** (a+b)^n = Σ C(n,k) a^(n-k) b^k
+- **Hockey stick identity:** C(r,r) + C(r+1,r) + ... + C(n,r) = C(n+1,r+1) — diagonal sums in Pascal's triangle
+- **Falling factorial:** x^{(n)} = x(x−1)(x−2)···(x−n+1); P(n,k) = n^{(k)}; C(x,n) = x^{(n)}/n!; natural basis for finite difference calculus and falling factorial decomposition of polynomials
+- **Organizing a double sum by its larger index:** reindex Σ_i Σ_j f(i,j) by grouping on max(i,j) = k; L-shaped shells; simplifies nested-loop analysis and combinatorial sum evaluation
 - **Graph theory:** vertices, edges, degree, paths, cycles, connected/strongly connected, trees (|E| = |V| − 1), bipartite, planar, Euler's formula V − E + F = 2
 - **Modular arithmetic:** congruence, operations mod n, connection to grokking
 
@@ -253,18 +256,67 @@
 ## Phase 2: Calculus (Lessons 13–27)
 
 ### Lesson 13: Calculus Fundamentals
-- **Derivative as rate of change** at an instant
+**Derivatives:**
+- **Derivative as rate of change** at an instant — slope of tangent line
+- **Limit definition:** f'(x) = lim_{h→0} [f(x+h) − f(x)] / h
 - Secant lines → tangent lines via limits
-- "Zooming in" intuition: smooth curves look linear at sufficient magnification
-- **Differentiation toolkit:**
-  - Power rule, constant multiple rule, sum rule
-  - **Product rule** (rectangle area analogy)
-  - **Quotient rule** (or rewrite as product + chain)
-  - **Chain rule:** d/dx f(g(x)) = f'(g(x))·g'(x) — THE most important rule for ML
-- **Key functions:**
-  - eˣ (its own derivative), logarithms, trigonometric functions
-  - Softmax uses eˣ, loss functions use log
-- **Differentials as actual tiny quantities** (not just notation)
+- "Zooming in" intuition: smooth curves look linear at sufficient magnification (local linearity)
+- **Differentials** (dx, dy) as actual tiny quantities, not just notation
+- **Differentiation rules:**
+  - **Power rule:** d/dx xⁿ = nxⁿ⁻¹
+  - **Constant multiple and sum rules** (derivative is a linear operator)
+  - **Product rule:** (fg)' = f'g + fg' (rectangle area analogy)
+  - **Quotient rule:** (f/g)' = (f'g − fg') / g²
+  - **Chain rule:** d/dx f(g(x)) = f'(g(x))·g'(x) — THE most important rule for ML (backpropagation IS the chain rule)
+- **Key functions and their derivatives:**
+  - eˣ → eˣ (its own derivative; softmax, log-likelihood, exponential decay)
+  - ln(x) → 1/x (cross-entropy loss, log-likelihood, information theory)
+  - **Logarithmic derivative:** d/dx ln(f(x)) = f'(x)/f(x) (relative rate of change)
+  - sin(x) → cos(x), cos(x) → −sin(x) (positional encodings, Fourier features)
+  - **Sigmoid σ(x) = 1/(1+e⁻ˣ):** σ'(x) = σ(x)(1−σ(x)), max derivative = 0.25 → vanishing gradients
+  - **tanh(x):** output in (−1,1), tanh'(x) = 1 − tanh²(x)
+  - **ReLU(x) = max(0,x):** derivative is 0 or 1 (no gradient shrinkage), dead neuron problem
+  - Leaky ReLU, GELU (variants)
+
+**Integration:**
+- **Definite integral** ∫ₐᵇ f(x) dx = signed area under curve
+- **Riemann sums:** approximating area with rectangles (left, right, midpoint, trapezoidal)
+- **Fundamental Theorem of Calculus:**
+  - Part 1: d/dx ∫ₐˣ f(t) dt = f(x) (derivative of "area so far" = original function)
+  - Part 2: ∫ₐᵇ f(x) dx = F(b) − F(a) where F' = f (evaluate antiderivative at endpoints)
+- **Antiderivatives** (indefinite integrals): reverse the derivative table
+  - xⁿ → xⁿ⁺¹/(n+1) + C, 1/x → ln|x| + C, eˣ → eˣ + C, sin → −cos + C, cos → sin + C
+  - **Constant of integration** (+C) — vertical shifts don't change slope
+- **Integration techniques:**
+  - **u-substitution:** reverse chain rule, ∫f(g(x))g'(x)dx = ∫f(u)du
+  - **Integration by parts:** ∫u dv = uv − ∫v du (reverse product rule)
+  - Partial fractions (for rational functions)
+  - Trigonometric substitutions and identities
+- **Improper integrals:** ∫₀^∞ f(x) dx as limit of ∫₀ᴺ f(x)dx as N→∞ (convergence/divergence)
+  - Essential for probability densities over unbounded domains (Gaussian, exponential)
+
+**Limits, Continuity, and Foundational Theorems:**
+- **Limits:** lim_{x→a} f(x) — formal ε-δ definition (conceptual understanding, not daily use)
+- **Continuity:** f continuous at a ↔ lim_{x→a} f(x) = f(a)
+- **L'Hôpital's rule:** lim f/g in 0/0 or ∞/∞ form → lim f'/g'
+- **Squeeze theorem:** bound function between two converging functions
+- **Intermediate Value Theorem (IVT):** continuous f on [a,b] hits every value between f(a) and f(b)
+- **Mean Value Theorem (MVT):** there exists c in (a,b) where f'(c) = [f(b)−f(a)]/(b−a) (instantaneous rate = average rate somewhere)
+- **Extreme Value Theorem:** continuous f on closed [a,b] attains its max and min
+
+**Optimization (Critical Points):**
+- **Critical points:** where f'(x) = 0 or undefined — candidates for max/min
+- **Second derivative test:** f''(x₀) > 0 → local min (concave up), f''(x₀) < 0 → local max (concave down), f''(x₀) = 0 → inconclusive
+- **Concavity:** f'' > 0 = concave up (bowl), f'' < 0 = concave down (hill)
+- **Inflection points:** where concavity changes (f'' = 0 and changes sign)
+- Training a neural network = iteratively approximating where ∇L = 0
+
+**Sequences and Series (foundations for Taylor, Lesson 21):**
+- **Sequences:** convergence, divergence, bounded, monotone
+- **Series:** Σaₙ, partial sums, geometric series (a/(1−r) when |r|<1)
+- **Convergence tests:** ratio test, comparison test, integral test (conceptual)
+- **Power series:** Σ aₙxⁿ, radius of convergence
+- Taylor/Maclaurin series covered in depth in Lesson 21
 
 ### Lesson 14: Matrix Calculus
 - Partial derivatives: change when wiggling one input
@@ -918,6 +970,7 @@
 | Adam optimizer | 17, 23, 24 |
 | Adjoint method | 26 |
 | Algebraic varieties | 60 |
+| Antiderivatives / indefinite integrals | 13 |
 | Attention (dot-product) | 10, 43 |
 | Backpropagation | 16, 42 |
 | Bayes factors | 37 |
@@ -953,6 +1006,7 @@
 | Diffusion models | 27 |
 | Directional derivatives | 15 |
 | Double descent | 19 |
+| Double sum reindexing (by larger index) | CS-09 |
 | DPO (Direct Preference Optimization) | 46 |
 | Duality (optimization) | 18 |
 | Dynamic programming | CS-08 |
@@ -963,9 +1017,12 @@
 | EM algorithm | 30 |
 | Emergent capabilities | 49 |
 | Entropy | 31 |
+| Epsilon-delta definition | 13, 57 |
 | Equivariant networks | 56 |
 | Euler's method | 22, 24 |
 | Expected utility | 64 |
+| Extreme Value Theorem | 13 |
+| Falling factorial / Pochhammer symbol | CS-09 |
 | False Discovery Rate (FDR) | 32 |
 | Fixed points (ODE) | 22 |
 | Fokker-Planck equation | 27 |
@@ -974,6 +1031,7 @@
 | Free energy | 37, 50 |
 | Frobenius norm | 11 |
 | Fundamental group π₁ | 58 |
+| Fundamental Theorem of Calculus | 13 |
 | Game theory (Nash equilibrium) | 63 |
 | Gaussian elimination | 6 |
 | Gaussian integral | 20 |
@@ -993,20 +1051,25 @@
 | Heat equation | 27 |
 | Heritability | 39 |
 | Hessian matrix | 14, 21, 23 |
+| Hockey stick identity | CS-09 |
 | Homotopy | 58 |
 | Hooks (PyTorch) | 01, 47 |
 | Hypothesis testing | 32 |
 | Implicit function theorem | 21 |
 | Importance sampling | 20 |
+| Improper integrals | 13, 20 |
 | Inclusion-exclusion | CS-09 |
 | Induction heads | 48 |
 | Information bottleneck | 31 |
 | Inner product of functions | 11 |
 | Instrumental variables | 38 |
+| Integration by parts | 13 |
+| Intermediate Value Theorem | 13 |
 | Jacobian matrix | 14, 20 |
 | KKT conditions | 18 |
 | KL divergence | 31 |
 | Kolmogorov complexity | 53 |
+| L'Hôpital's rule | 13 |
 | Lagrange multipliers | 18 |
 | Laplace approximation | 36 |
 | Least squares (as projection) | 10 |
@@ -1024,6 +1087,7 @@
 | Matrix exponential | 23 |
 | Maximum Likelihood Estimation | 30 |
 | MCMC (Metropolis-Hastings, Gibbs) | 36 |
+| Mean Value Theorem | 13 |
 | Mechanism design | 63 |
 | Mendelian randomization | 38 |
 | Mesa-optimization | 66 |
@@ -1073,6 +1137,7 @@
 | Reparameterization trick | 20, 36 |
 | Representations (group) | 56 |
 | Residual stream | 44 |
+| Riemann sums | 13 |
 | RLCT (Real Log Canonical Threshold) | 37, 50, 60 |
 | RLHF pipeline | 45, 46 |
 | Rings and fields | 55 |
@@ -1108,6 +1173,7 @@
 | Tree traversals (in/pre/post order) | CS-06 |
 | Turing machines | 51 |
 | Two-pointer pattern | CS-04 |
+| u-substitution (reverse chain rule) | 13 |
 | Universal approximation | 41 |
 | VAE (Variational Autoencoder) | 36 |
 | Vanishing/exploding gradients | 7, 42 |
