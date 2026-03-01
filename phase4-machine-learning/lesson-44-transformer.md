@@ -39,6 +39,9 @@
 
 ## 📖 Read
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 8: Attention**
+  - http://www.welchlabs.com/resources/ai-book
+  - *Pairs with the Karpathy GPT build — the book covers the same architecture from a different angle.*
 - **"A Mathematical Framework for Transformer Circuits" (Elhage, Nanda, et al.)**
   - https://transformer-circuits.pub/2021/framework/index.html
   - *The foundational paper of mechanistic interpretability. Uses ALL the linear algebra you learned.*

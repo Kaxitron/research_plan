@@ -190,7 +190,7 @@ Concretely: (1) Train small transformer models on tasks where we CAN verify alig
 | 1. Linear Algebra | Neural networks are composed of linear transformations, and understanding what they do geometrically (projection, rotation, scaling via SVD) is the foundation for understanding what any layer computes. |
 | 2. Calculus & ODEs | Training is a dynamical system; its trajectory, stability, and phase transitions are governed by the loss landscape geometry (Hessian eigenvalues, bifurcations), connecting optimization to dynamics. |
 | 3. Probability & Stats | Every training objective is rooted in probabilistic inference (MLE, KL divergence), and evaluating whether a model is "safe" is fundamentally a statistical inference problem requiring Bayesian reasoning. |
-| 4. Neural Networks & Interp | The gap between what a model computes and what we think it computes is the alignment gap; mechanistic interpretability and SLT give us mathematical tools to measure and close it. |
+| 4. Machine Learning & Interp | The gap between what a model computes and what we think it computes is the alignment gap; mechanistic interpretability and SLT give us mathematical tools to measure and close it. |
 | 5. Extended Math | Fundamental limitations exist (Gödel, Rice) on what can be verified, but algebraic geometry (singularities, RLCT) provides the right complexity measure for understanding why neural networks generalize. |
 | 6. Alignment Theory | Alignment is not just a technical optimization problem — it's a multi-agent strategic interaction governed by game theory, decision theory, and fundamental questions about what rational agents should do. |
 

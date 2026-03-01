@@ -35,6 +35,9 @@
 
 ## 📖 Read (core interpretability papers, in order)
 
+0. **Welch Labs — *The Illustrated Guide to AI*, Ch. 5: AlexNet + Ch. 7: Mechanistic Interpretability**
+   - http://www.welchlabs.com/resources/ai-book
+   - *Ch. 5 covers the moment neural nets became too complex to understand. Ch. 7 introduces mech interp as a response.*
 1. **"A Mathematical Framework for Transformer Circuits"** (deeper re-read)
    - https://transformer-circuits.pub/2021/framework/index.html
 2. **"In-context Learning and Induction Heads" (Olsson et al.)**

@@ -36,6 +36,9 @@
 
 ## 📖 Read
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 3: Backpropagation**
+  - http://www.welchlabs.com/resources/ai-book
+  - *"The F=ma of artificial intelligence." The book walks through backprop with code and exercises.*
 - **Stanford CS231n — "Backpropagation" notes**
   - https://cs231n.github.io/optimization-2/
 

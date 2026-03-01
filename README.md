@@ -206,6 +206,7 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ## Resources
 
+- **Primary Phase 4 Textbook:** [*The Illustrated Guide to AI*](http://www.welchlabs.com/resources/ai-book) by Stephen Welch — 9 chapters with companion videos, code, and exercises
 - [Books & Textbooks](resources/books.md) — all free online unless noted
 - [Video Series Index](resources/video-index.md) — curated videos with lesson mappings
 - [Formula Cheat Sheet](resources/cheat-sheet.md)

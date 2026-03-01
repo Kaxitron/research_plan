@@ -70,6 +70,9 @@
 
 ## 📖 Read — Primary
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 9: Video & Image Generation**
+  - http://www.welchlabs.com/resources/ai-book
+  - *How diffusion models turn text into images — the reverse diffusion process IS a PDE solved backward in time.*
 - **"Understanding Diffusion Models: A Unified Perspective" by Calvin Luo**
   - https://arxiv.org/abs/2208.11970
   - *Comprehensive tutorial connecting all the pieces: SDEs, score matching, Fokker-Planck.*

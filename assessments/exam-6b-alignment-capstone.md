@@ -158,7 +158,7 @@ Choose ONE open problem from the list below (or propose your own). Write a 1-pag
 | 1. Linear Algebra | |
 | 2. Calculus & ODEs | |
 | 3. Probability & Statistics | |
-| 4. Neural Networks & Interp | |
+| 4. Machine Learning & Interp | |
 | 5. Extended Math | |
 | 6. Alignment Theory | |
 

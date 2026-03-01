@@ -33,6 +33,9 @@
 
 ## 📖 Read
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 1: The Perceptron**
+  - http://www.welchlabs.com/resources/ai-book
+  - *The book's first chapter pairs with the video. Historical narrative, hardware demos, and exercises.*
 - **Michael Nielsen — "Neural Networks and Deep Learning," Chapter 1**
   - http://neuralnetworksanddeeplearning.com/chap1.html
 - **colah — "Neural Networks, Manifolds, and Topology"**

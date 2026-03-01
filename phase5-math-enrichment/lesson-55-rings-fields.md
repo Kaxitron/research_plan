@@ -42,6 +42,7 @@
 ## 📺 Watch — Primary
 
 1. **Socratica — "Abstract Algebra" playlist (Rings and Fields episodes)**
+   - https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6
    - *Clear, short introductions to each concept.*
 2. **Michael Penn — "Abstract Algebra" lectures (YouTube)**
    - *More detailed, with good proofs and examples.*

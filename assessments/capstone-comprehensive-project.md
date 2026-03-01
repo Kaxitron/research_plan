@@ -54,7 +54,7 @@ Take GPT-2 small's embedding matrix (50257 × 768).
 
 ## Part 2: Neural Network Mechanics (60 min)
 
-*Phase 4: Neural Networks & Interpretability foundations*
+*Phase 4: Machine Learning & Interpretability foundations*
 
 ### 2A. Forward Pass Trace
 

@@ -67,6 +67,9 @@
 
 ## 📖 Read — Primary
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 4: Deep Learning + Ch. 6: Neural Scaling Laws**
+  - http://www.welchlabs.com/resources/ai-book
+  - *Ch. 4 explains why depth works. Ch. 6 covers scaling laws and the "AI can't cross this line" frontier.*
 - **"Scaling Laws for Neural Language Models" by Kaplan et al. (2020)**
   - https://arxiv.org/abs/2001.08361
   - *The foundational scaling laws paper. Readable and well-written.*

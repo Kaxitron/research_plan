@@ -43,6 +43,9 @@
 
 ## 📖 Read
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 2: Gradient Descent + Ch. 4: Deep Learning**
+  - http://www.welchlabs.com/resources/ai-book
+  - *Ch. 2 covers why gradient descent works (and the historical misconception). Ch. 4 explains why depth matters.*
 - **Nelson Elhage — "Transformers for Software Engineers"**
   - https://blog.nelhage.com/post/transformers-for-software-engineers/
 

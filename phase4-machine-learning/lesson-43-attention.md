@@ -23,6 +23,9 @@
 
 ## 📖 Read
 
+- **Welch Labs — *The Illustrated Guide to AI*, Ch. 8: Attention**
+  - http://www.welchlabs.com/resources/ai-book
+  - *How DeepSeek's Multi-head Latent Attention modifies the original transformer. Code and exercises included.*
 - **"Attention is All You Need" (Vaswani et al., 2017)** — the original paper
 - **Welch Labs — "How DeepSeek Rewrote the Transformer" (Ch. 8: Attention)**
   - https://www.youtube.com/watch?v=cAxYGT4VtBo
