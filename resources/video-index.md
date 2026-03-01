@@ -15,8 +15,8 @@
 | 1 | Vectors, what even are they? | 2 | [Watch](https://www.youtube.com/watch?v=fNk_zzaMoSs) |
 | 2 | Linear combinations, span, and basis vectors | 3 | [Watch](https://www.youtube.com/watch?v=k7RM-ot2NWY) |
 | 3 | Linear transformations and matrices | 4 | [Watch](https://www.youtube.com/watch?v=kYB8IZa5AuE) |
-| 4 | Matrix multiplication as composition | 4 | [Watch](https://www.youtube.com/watch?v=XkY2DOUCWMU) |
-| 5 | Three-dimensional linear transformations | 4 | [Watch](https://www.youtube.com/watch?v=rHLEWRxRGiM) |
+| 4 | Matrix multiplication as composition | 4, 5 | [Watch](https://www.youtube.com/watch?v=XkY2DOUCWMU) |
+| 5 | Three-dimensional linear transformations | 4, 5 | [Watch](https://www.youtube.com/watch?v=rHLEWRxRGiM) |
 | 6 | The determinant | 7 | [Watch](https://www.youtube.com/watch?v=Ip3X9LOh2dk) |
 | 7 | Inverse matrices, column space, null space | 6 | [Watch](https://www.youtube.com/watch?v=uQhTuRlWMxw) |
 | 8 | Nonsquare matrices | 6 | [Watch](https://www.youtube.com/watch?v=v8VSDg_WQlA) |
@@ -61,7 +61,7 @@
 
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
-| 1 | Differential equations, a tourist's guide | 22 | [Watch](https://www.youtube.com/watch?v=p_di4Zn4wz4) |
+| 1 | Differential equations, a tourist's guide | 22, 23 | [Watch](https://www.youtube.com/watch?v=p_di4Zn4wz4) |
 | 2 | But what is a partial differential equation? | 22, 27 | [Watch](https://www.youtube.com/watch?v=ly4S0oi3Yz8) |
 | 3 | Solving the heat equation | 27 | [Watch](https://www.youtube.com/watch?v=ToIXSwZ1pJU) |
 | 4 | But what is a Fourier series? | 27 | [Watch](https://www.youtube.com/watch?v=r6sGWTCMz2k) |
@@ -97,6 +97,28 @@
 | But what is a convolution? | 29 | [Watch](https://www.youtube.com/watch?v=KuXjwB4LzSA) |
 | Why π is in the normal distribution | 28 | [Watch](https://www.youtube.com/watch?v=cy8r7WSuT1I) |
 | Binomial distributions | 28 | [Watch](https://www.youtube.com/watch?v=8idr1WZ1A7Q) |
+| Wordle and Information Theory | 31 | [Watch](https://www.youtube.com/watch?v=v68zYyaEmEA) |
+
+---
+
+## Steve Brunton (Eigensteve) — Applied Mathematics
+
+**Channel:** [youtube.com/c/Eigensteve](https://www.youtube.com/c/Eigensteve)
+**Book:** Brunton & Kutz, *Data-Driven Science and Engineering* (Cambridge, 2019)
+
+*Clear, visual lightboard lectures connecting applied math to engineering and data science. The best resource for SVD, dynamical systems, and neural ODEs. Brunton draws every phase portrait and decomposition by hand.*
+
+| Playlist / Topic | Lesson | Link |
+|-----------------|--------|------|
+| Singular Value Decomposition (full series, ~7 hrs) | 9 | [Playlist](https://www.youtube.com/watch?v=nbBvuuNVfco&list=PLMrJAkhIeNNSVjnsviglFoY2nXildDCcv) |
+| Differential Equations & Dynamical Systems (full course) | 22–26 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Phase Portraits for 2D Systems | 23 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Stability and Eigenvalues | 23, 25 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Stability and Lyapunov Functions, Bifurcations | 25 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Gradient Systems and Lyapunov Functions | 24 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Neural ODEs (Data-Driven Dynamical Systems) | 26 | [Playlist](https://www.youtube.com/playlist?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA) |
+| Fourier Analysis | 27 | [Channel](https://www.youtube.com/c/Eigensteve) |
+| Overview of Dynamical Systems | 22 | [Watch](https://www.youtube.com/watch?v=9fQkLQZe3u8) |
 
 ---
 
@@ -165,14 +187,17 @@
 | Histograms, Mean, Variance | 28–29 | [Statistics Fundamentals playlist](https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9) |
 | Probability Distributions | 28 | Normal, Binomial, Poisson videos |
 | Hypothesis Testing & P-values | 32 | [Watch](https://www.youtube.com/watch?v=0oc49DyA3hU) |
+| Experimental Design | 33 | [Search](https://www.youtube.com/results?search_query=statquest+experimental+design) |
 | Linear Regression | 34 | [Watch](https://www.youtube.com/watch?v=7ArmBVF2dCs) |
-| Logistic Regression | 34 | [Watch](https://www.youtube.com/watch?v=yIYKR4sgzI8) |
+| Logistic Regression | 34, 38 | [Watch](https://www.youtube.com/watch?v=yIYKR4sgzI8) |
 | Regularization (Ridge / Lasso) | 34 | [Watch](https://www.youtube.com/watch?v=Q81RR3yKn30) |
 | Covariance and PCA | 29 | [Watch](https://www.youtube.com/watch?v=FgakZw6K1QQ) |
 | Cross-Validation, Bias-Variance | 19 | [Watch](https://www.youtube.com/watch?v=fSytzGwwBVw) |
 | Bayesian Inference | 35 | [Watch](https://www.youtube.com/watch?v=O2L2Uv9pdDA) |
 | Maximum Likelihood Estimation | 30 | [Watch](https://www.youtube.com/watch?v=XepXtl9YKwc) |
 | Information Entropy | 31 | [Watch](https://www.youtube.com/watch?v=YtebGVx-Fxw) |
+| MCMC & Metropolis-Hastings | 36 | [Search](https://www.youtube.com/results?search_query=statquest+markov+chain+monte+carlo) |
+| GWAS, Clearly Explained | 39 | [Search](https://www.youtube.com/results?search_query=statquest+gwas+clearly+explained) |
 | Neural Networks / Deep Learning | 40–42 | [Neural Networks playlist](https://www.youtube.com/playlist?list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1) |
 
 ---
@@ -208,6 +233,7 @@
 | Research streams (live mech interp research) | 47, 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | 200 Open Problems in Mechanistic Interpretability | 67 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | Grokking paper walkthrough | 25 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| SLT introductory talks (with Jesse Hoogland) | 37, 50 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | Interview: The Inside View — superposition and grokking | 48, 67 | [Watch](https://www.youtube.com/watch?v=cVBGjhN4-1g) |
 | Interview: AXRP Ep 19 — Mechanistic Interpretability | 48, 67 | [Listen](https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html) |
 | Interview: 80,000 Hours — The race to read AI minds | 67 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
@@ -259,10 +285,121 @@
 
 **Channel:** [youtube.com/c/RobertMilesAI](https://www.youtube.com/c/RobertMilesAI)
 
-*Accessible, well-produced explanations of AI safety concepts. Essential for Phase 6.*
+*Accessible, well-produced explanations of AI safety concepts. Rob is the most popular AI safety educator on YouTube. Essential for Phase 6.*
 
-| Topic | Lesson |
-|-------|--------|
-| AI safety overview and failure modes | 63–67 |
-| Reward hacking and specification gaming | 45 |
-| Mesa-optimization and inner alignment | 66 |
+| Title | Lesson | Link |
+|-------|--------|------|
+| AI safety overview and failure modes | 63–67 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| The OTHER AI Alignment Problem: Mesa-Optimizers and Inner Alignment | 66 | [Watch](https://www.youtube.com/watch?v=bJLcIBixGj8) |
+| Reward hacking and specification gaming | 45 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| Newcomb's Problem & Decision Theory | 64 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| The Simulation Argument | 65 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| Löb's Theorem and AI Alignment | 62 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| AIXI (AI Safety series) | 53 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+
+---
+
+## Supplementary Videos by Topic
+
+*Individual videos from various channels that fill specific lesson gaps.*
+
+| Creator | Title | Lesson | Link |
+|---------|-------|--------|------|
+| Computerphile | Halting Problem (with Tom Scott) | 51 | [Search](https://www.youtube.com/results?search_query=computerphile+halting+problem) |
+| Computerphile | Kolmogorov Complexity | 53 | [Search](https://www.youtube.com/results?search_query=computerphile+kolmogorov+complexity) |
+| Veritasium | Math Has a Fatal Flaw (Gödel's theorems) | 62 | [Search](https://www.youtube.com/results?search_query=veritasium+math+has+a+fatal+flaw) |
+| Veritasium | Is Most Published Research Wrong? | 33 | [Search](https://www.youtube.com/results?search_query=veritasium+is+most+published+research+wrong) |
+| MinutePhysics | Simpson's Paradox | 33 | [Search](https://www.youtube.com/results?search_query=minutephysics+simpsons+paradox) |
+| Brady Neal | Introduction to Causal Inference (course) | 38 | [Search](https://www.youtube.com/results?search_query=brady+neal+causal+inference+introduction) |
+| Judea Pearl | The New Science of Cause and Effect (talks) | 38 | [Search](https://www.youtube.com/results?search_query=judea+pearl+causality+lecture) |
+| Yannic Kilcher | Neural Ordinary Differential Equations (paper review) | 26 | [Search](https://www.youtube.com/results?search_query=yannic+kilcher+neural+ODE) |
+| Rational Animations | Decision Theory playlist | 64 | [Channel](https://www.youtube.com/@RationalAnimations) |
+| Julia Galef | An Introduction to Anthropic Reasoning | 65 | [Search](https://www.youtube.com/results?search_query=julia+galef+anthropic+reasoning) |
+| Numberphile | Sleeping Beauty Paradox | 65 | [Search](https://www.youtube.com/results?search_query=numberphile+sleeping+beauty) |
+| Scott Aaronson | P vs NP public lectures | 52 | [Search](https://www.youtube.com/results?search_query=scott+aaronson+p+vs+np+lecture) |
+| MIT OCW / Strogatz | Nonlinear Dynamics and Chaos | 23, 25 | [Search](https://www.youtube.com/results?search_query=strogatz+nonlinear+dynamics+chaos+lecture) |
+| Mutual Information | Variational Autoencoders | 36 | [Search](https://www.youtube.com/results?search_query=mutual+information+variational+autoencoders) |
+| Mutual Information | Reinforcement Learning | 45 | [Search](https://www.youtube.com/results?search_query=mutual+information+reinforcement+learning) |
+| Michael Penn | Abstract Algebra lectures | 55 | [Channel](https://www.youtube.com/@MichaelPennMath) |
+| Liam Carroll / Daniel Murfet | Singular Learning Theory introductions | 50, 60 | [Search](https://www.youtube.com/results?search_query=singular+learning+theory+introduction) |
+| Robert Sapolsky | Stanford Human Behavioral Biology (heritability) | 39 | [Search](https://www.youtube.com/results?search_query=robert+sapolsky+behavioral+genetics+lecture) |
+| McElreath | Statistical Rethinking — Model Comparison lectures | 37 | [Search](https://www.youtube.com/results?search_query=mcelreath+statistical+rethinking+model+comparison) |
+| Yale (Ben Polak) | Game Theory (full course) | 63 | [Playlist](https://www.youtube.com/playlist?list=PL6EF60E1027E1A10B) |
+| Primer | Game Theory simulations | 63 | [Channel](https://www.youtube.com/c/PrimerLearning) |
+
+---
+
+## Lesson Coverage Quick Reference
+
+*Every lesson has at least one video. This table confirms coverage across the full curriculum.*
+
+| Lesson | Topic | Primary Video Source(s) |
+|--------|-------|------------------------|
+| 0 | Setup & Motivation | Welch Labs (How to learn AI) |
+| 1 | PyTorch Foundations | Karpathy (Building micrograd) |
+| 2 | Vectors | 3B1B LA Ch. 1, Trefor Bazett |
+| 3 | Span & Basis | 3B1B LA Ch. 2 |
+| 4 | Transformations | 3B1B LA Ch. 3–5 |
+| 5 | Matrix Operations | 3B1B LA Ch. 3–4 (review) |
+| 6 | Rank & Null Space | 3B1B LA Ch. 7–8 |
+| 7 | Determinant | 3B1B LA Ch. 6 |
+| 8 | Eigenvalues | 3B1B LA Ch. 14 |
+| 9 | SVD | Steve Brunton SVD series |
+| 10 | Dot Products | 3B1B LA Ch. 9–11 |
+| 11 | Change of Basis | 3B1B LA Ch. 13, 15 |
+| 12 | LA Capstone | 3B1B LA full playlist rewatch |
+| 13 | Calculus Fundamentals | 3B1B Calculus full playlist |
+| 14 | Matrix Calculus | 3B1B Calculus Ch. 1, 10 |
+| 15 | Gradients | 3B1B DL Ch. 2, Trefor Bazett |
+| 16 | Chain Rule & Backprop | 3B1B Calculus Ch. 4, DL Ch. 3–4 |
+| 17 | Optimization | Karpathy (Building micrograd) |
+| 18 | Constrained Optimization | 3B1B Calculus Ch. 6, StatQuest |
+| 19 | Loss Landscapes | Welch Labs (Double Descent, Grokking), 3B1B DL Ch. 1 |
+| 20 | Multiple Integration | 3B1B Calculus Ch. 8, Trefor Bazett |
+| 21 | Taylor Expansions | 3B1B Calculus Ch. 10–12 |
+| 22 | Intro to ODEs | 3B1B Diff Eq Ch. 1–2, Steve Brunton |
+| 23 | Linear Systems of ODEs | 3B1B Diff Eq Ch. 1 (rewatch), Steve Brunton |
+| 24 | Gradient Flow | 3B1B DL Ch. 2, Steve Brunton |
+| 25 | Stability & Bifurcations | Steve Brunton, Welch Labs, Neel Nanda (Grokking) |
+| 26 | Neural ODEs | Yannic Kilcher, Steve Brunton |
+| 27 | PDEs & Diffusion | 3B1B Diff Eq Ch. 2–5, Welch Labs Ch. 9 |
+| 28 | Probability | 3B1B (Bayes, CLT, Binomial), StatQuest |
+| 29 | Expectation | StatQuest (Covariance, PCA), 3B1B (Convolutions) |
+| 30 | MLE | StatQuest (MLE) |
+| 31 | Information Theory | 3B1B (Wordle), StatQuest (Entropy) |
+| 32 | Hypothesis Testing | StatQuest (P-values), 3B1B (CLT) |
+| 33 | Experimental Design | Veritasium, MinutePhysics, StatQuest |
+| 34 | Regression | StatQuest (Linear, Logistic, Ridge/Lasso) |
+| 35 | Bayesian Foundations | 3B1B (Bayes), StatQuest (Bayesian Inference) |
+| 36 | Bayesian Computation | StatQuest (MCMC), Mutual Information (VAE) |
+| 37 | Bayesian Model Comparison | Neel Nanda/Hoogland (SLT), McElreath |
+| 38 | Causal Inference | Brady Neal, Judea Pearl |
+| 39 | Applied Statistics | StatQuest (GWAS), Robert Sapolsky |
+| 40 | Single Neuron | Welch Labs Ch. 1, 3B1B DL Ch. 1 |
+| 41 | Forward Pass | Welch Labs Ch. 2+4, Karpathy (makemore) |
+| 42 | Backprop | Welch Labs Ch. 3, Karpathy (Lectures 4–5) |
+| 43 | Attention | 3B1B DL Ch. 5–6, Welch Labs Ch. 8 |
+| 44 | Transformer | Karpathy (GPT), 3B1B DL Ch. 7, Welch Labs Ch. 8 |
+| 45 | RL Foundations | Karpathy (Deep Dive), Mutual Information, Robert Miles |
+| 46 | LLM Pipeline | Karpathy (Deep Dive + Tokenizer) |
+| 47 | Interp Intro | Welch Labs Ch. 5+7, Neel Nanda |
+| 48 | Interp Circuits | Neel Nanda (Transformer Circuits walkthrough) |
+| 49 | Interp Scaling | Welch Labs Ch. 4+6, Karpathy (scaling section) |
+| 50 | Interp SLT | Liam Carroll / Daniel Murfet (SLT), Timaeus |
+| 51 | Turing Machines | Computerphile (Halting Problem) |
+| 52 | Computational Complexity | Scott Aaronson, MIT OCW |
+| 53 | Kolmogorov Complexity | Computerphile, Robert Miles (AIXI) |
+| 54 | Groups | Aleph 0, Socratica |
+| 55 | Rings & Fields | Socratica, Michael Penn |
+| 56 | Group Actions | Socratica |
+| 57 | Point-Set Topology | Aleph 0 |
+| 58 | Homotopy | Aleph 0 |
+| 59 | Manifolds | Eigenchris |
+| 60 | Algebraic Geometry | Aleph 0, Murfet/Hoogland (SLT) |
+| 61 | Propositional Logic | Trefor Bazett (Discrete Math) |
+| 62 | Gödel & Löb | Veritasium, Robert Miles |
+| 63 | Game Theory | Yale Game Theory (Ben Polak), Primer |
+| 64 | Decision Theory | Robert Miles (Newcomb's), Rational Animations |
+| 65 | Anthropics | Julia Galef, Robert Miles, Numberphile |
+| 66 | Alignment Problem | Welch Labs (Bitter Lesson + Subliminal), Robert Miles |
+| 67 | Open Problems | Neel Nanda, Robert Miles, AXRP |
