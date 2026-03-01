@@ -2835,6 +2835,83 @@ function getGhToken() {
 let _lastKnownSha = null;
 let _syncInProgress = false;
 
+// ── README ↔ Dashboard ID mapping ──
+function readmeIdToDashboardId(readmeId) {
+  // CS-01 → cs01, CS-10 → cs10
+  const csMatch = readmeId.match(/^CS-(\d+)$/);
+  if (csMatch) return 'cs' + csMatch[1].replace(/^0/, '');
+  // Numeric IDs stay as numbers
+  const num = parseInt(readmeId);
+  if (!isNaN(num)) return num;
+  return null;
+}
+
+function dashboardIdToReadmeId(dashId) {
+  // cs01 → CS-01, cs10 → CS-10
+  if (typeof dashId === 'string' && dashId.startsWith('cs')) {
+    const num = parseInt(dashId.replace('cs', ''));
+    return 'CS-' + String(num).padStart(2, '0');
+  }
+  return String(dashId);
+}
+
+function readmeStatusToDashboard(statusText) {
+  if (statusText.includes('✅') || statusText.includes('Complete')) return 'complete';
+  if (statusText.includes('🔄') || statusText.includes('In Progress')) return 'in-progress';
+  return 'not-started';
+}
+
+// ── Auto-pull from GitHub on page load ──
+async function pullStatusesFromGithub() {
+  // Only pull if token is already saved — never prompt on auto-pull
+  const token = localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) { console.log('Pull skipped — no GitHub token stored'); return; }
+
+  try {
+    const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
+    if (!getResp.ok) { console.warn(`Pull failed: HTTP ${getResp.status}`); return; }
+
+    const fileData = await getResp.json();
+    _lastKnownSha = fileData.sha; // Cache SHA for future pushes
+    const content = new TextDecoder().decode(
+      Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0))
+    );
+
+    // Parse all table rows: | ID | lesson | status |
+    const rowRegex = /^\| ([A-Za-z0-9-]+) \| .+? \| (.+?) \|$/gm;
+    let match;
+    let changed = false;
+
+    while ((match = rowRegex.exec(content)) !== null) {
+      const readmeId = match[1].trim();
+      const statusText = match[2].trim();
+      const dashId = readmeIdToDashboardId(readmeId);
+      if (dashId === null) continue;
+
+      const lesson = LESSONS.find(l => l.id === dashId);
+      if (!lesson) continue;
+
+      const newStatus = readmeStatusToDashboard(statusText);
+      if (lesson.status !== newStatus) {
+        lesson.status = newStatus;
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      saveStatuses();
+      refreshAll();
+      console.log('Pulled updated statuses from GitHub');
+    } else {
+      console.log('Statuses already in sync with GitHub');
+    }
+  } catch (e) {
+    console.warn('Auto-pull failed:', e.message);
+    // Silent failure — don't disrupt the user
+  }
+}
+
 async function syncReadmeToGithub() {
   const btn = document.getElementById('sync-btn');
   const icon = document.getElementById('sync-icon');
@@ -2858,21 +2935,21 @@ async function syncReadmeToGithub() {
     const currentSha = fileData.sha;
     let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
 
-    // 2. Build status map from current dashboard state
+    // 2. Build status map keyed by README-format IDs
     const statusMap = {};
     LESSONS.forEach(l => {
       const emoji = l.status === 'complete' ? '✅ Complete' :
                     l.status === 'in-progress' ? '🔄 In Progress' : '⬜ Not Started';
-      statusMap[l.id] = emoji;
+      statusMap[dashboardIdToReadmeId(l.id)] = emoji;
     });
 
-    // 3. Replace status in each table row
+    // 3. Replace status in each table row (handles both CS-XX and numeric IDs)
     content = content.replace(
-      /^\| (\d+) \| (.+?) \| (.+?) \|$/gm,
+      /^\| ([A-Za-z0-9-]+) \| (.+?) \| (.+?) \|$/gm,
       (match, id, lessonCol, statusCol) => {
-        const numId = parseInt(id);
-        if (statusMap.hasOwnProperty(numId)) {
-          return `| ${id} | ${lessonCol} | ${statusMap[numId]} |`;
+        const trimmedId = id.trim();
+        if (statusMap.hasOwnProperty(trimmedId)) {
+          return `| ${id} | ${lessonCol} | ${statusMap[trimmedId]} |`;
         }
         return match;
       }
@@ -2978,6 +3055,8 @@ function init() {
     // Use a small helper instead of setView to avoid event.target issues
     refreshCurrentView();
   });
+  // Auto-pull from GitHub: render immediately from localStorage, then update in background
+  pullStatusesFromGithub();
 }
 
 init();
