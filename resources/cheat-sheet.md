@@ -512,6 +512,35 @@ $$\frac{df}{dx} = \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}$
 
 ---
 
+
+## 22. L'Hôpital's Rule
+
+**The problem:** Some limits give you indeterminate forms like 0/0 or ∞/∞ — the ratio could be anything, and direct substitution doesn't work.
+
+**The rule:** If $\lim_{x \to c} \frac{f(x)}{g(x)}$ gives $\frac{0}{0}$ or $\frac{\pm\infty}{\pm\infty}$, then:
+
+$$\lim_{x \to c} \frac{f(x)}{g(x)} = \lim_{x \to c} \frac{f'(x)}{g'(x)}$$
+
+provided the right-hand limit exists. You differentiate the top and bottom **separately** (this is NOT the quotient rule).
+
+**Geometric intuition:** When both f and g approach 0 at the same point, the ratio f/g depends on *how fast* each approaches 0 — which is exactly what their derivatives measure. The function that shrinks faster "wins" the race to zero, making the ratio blow up or vanish.
+
+**Example:**
+
+$$\lim_{x \to 0} \frac{\sin(x)}{x} = \frac{0}{0} \quad \Rightarrow \quad \lim_{x \to 0} \frac{\cos(x)}{1} = 1$$
+
+**When to apply:**
+- ✅ Only for indeterminate forms: 0/0 or ∞/∞
+- ❌ NOT for cases like 1/0 or 5/∞ (those aren't indeterminate — they resolve directly)
+- ✅ Can apply repeatedly if result is still indeterminate
+
+**Common indeterminate forms reducible to L'Hôpital's:**
+- $0 \cdot \infty$ → rewrite as $\frac{f}{1/g}$ to get 0/0 or ∞/∞
+- $\infty - \infty$ → combine into a single fraction
+- $1^\infty$, $0^0$, $\infty^0$ → take ln first, then exponentiate after
+
+**🔗 ML Connection:** L'Hôpital's Rule shows up when analyzing loss functions near critical points — e.g., understanding how cross-entropy loss $-\log(p)$ behaves as predicted probability $p \to 0$ or $p \to 1$, or when deriving limits in softmax temperature scaling as $T \to 0$ or $T \to \infty$.
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
