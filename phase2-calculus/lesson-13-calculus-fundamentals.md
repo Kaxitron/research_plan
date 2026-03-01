@@ -712,27 +712,11 @@ $$\ln(1 + x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^n}{n} = x - \frac{x^2}{2} 
     - Ch. 10: "Taylor series" — critical for understanding why gradient descent works
     - Ch. 11: "Taylor series (geometric view)" — connects to the "zooming in" intuition
 
-### Integration Techniques
-
-- **Khan Academy — Integration techniques**
-  - https://www.khanacademy.org/math/calculus-2
-  - Use the u-substitution, integration by parts, and trig substitution sections
-  - Also: improper integrals section, series and convergence tests sections
-
-- **3Blue1Brown — "But what is a convolution?"**
-  - https://www.youtube.com/watch?v=KuXjwB4LzSA
-  - Not strictly integration technique, but connects integration to signal processing and neural networks
-
 ### Supplementary
-
-- **Khan Academy — Calculus 1**
-  - https://www.khanacademy.org/math/calculus-1
-  - Use as supplementary practice if any rule feels shaky after 3B1B
-  - Particularly recommended: Chain rule section, Optimization problems section
 
 - **Professor Leonard — Calculus 2 playlist**
   - https://www.youtube.com/playlist?list=PLDesaqWTN6ESPaHy2QUKVaXNZuQNxkYQ_
-  - Very thorough, lecture-style. Good for integration by parts, trig substitution, and series if you want someone to walk through many examples slowly
+  - Lecture-style walkthroughs of integration by parts, trig substitution, and series if you want extra worked examples
 
 ---
 
