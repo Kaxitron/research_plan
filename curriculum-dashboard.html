@@ -2334,18 +2334,18 @@ function renderTimeline() {
 
   // ── Big summary at top with pace data ──
   if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
-    html += `<text x="${cx}" y="35" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${pace.weightedRemainLo}–${pace.weightedRemainHi} weighted hours remaining</text>`;
-    html += `<text x="${cx}" y="58" fill="var(--accent-1)" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">Est. completion: ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</text>`;
-    html += `<text x="${cx}" y="78" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h done in ${pace.daysSinceStart} days · ${pace.paceHoursPerDay}h/day pace · ${pctDone}% complete · difficulty-adjusted</text>`;
+    html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${pace.weightedRemainLo}–${pace.weightedRemainHi} weighted hours remaining</text>`;
+    html += `<text x="${cx}" y="78" fill="var(--accent-1)" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">Est. completion: ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</text>`;
+    html += `<text x="${cx}" y="98" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h done in ${pace.daysSinceStart} days · ${pace.paceHoursPerDay}h/day pace · ${pctDone}% complete · difficulty-adjusted</text>`;
   } else {
-    html += `<text x="${cx}" y="40" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
-    html += `<text x="${cx}" y="68" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
+    html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
+    html += `<text x="${cx}" y="83" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
   }
 
   // ── Phase breakdown ──
-  const margin = { top: 105, left: 60, right: 40 };
+  const margin = { top: 125, left: 60, right: 40 };
   const phaseW = w - margin.left - margin.right;
-  const rowH = 52;
+  const rowH = 48;
 
   PHASES.filter(p => p.id !== 'p7').forEach((phase, i) => {
     const pLessons = LESSONS.filter(l => l.phase === phase.id);
