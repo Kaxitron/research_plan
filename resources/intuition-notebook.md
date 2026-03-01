@@ -59,13 +59,12 @@ The null space of an m×n matrix is a subspace of ℝⁿ (the column count = inp
 ## Calculus & Optimization
 
 ### The derivative is literally rise/run — just infinitely zoomed in
-Picture a curve f(x) and pick a point, say x = 2. Now zoom in. Draw a tiny horizontal step dx to the right, and look at how much the curve rises — that vertical change is df. The derivative at that point is just df/dx: the ratio of these two tiny lengths. As you shrink dx toward zero, the curve looks more and more like a straight line — the tangent line — and df/dx becomes the exact slope of that line.
 
-The tangent line (the pink line in the 3B1B visual) is the "best straight-line approximation" of f near that point. It's what the curve *would* be if it kept going at the same rate. The gap between the tangent line and the actual curve is what higher-order terms (Taylor series) fix — the second derivative captures the curve's curvature, the third captures how the curvature itself changes, and so on.
+![Derivative as df/dx](images/derivative-tangent-line-3b1b.png)
 
-**dx and df are actual tiny quantities, not just notation.** dx is a tiny nudge in the input. df is the resulting tiny nudge in the output. Their ratio is the slope. You can rearrange: df = f'(x) · dx, which says "tiny change in output = slope × tiny change in input." This is rise = slope × run at infinitesimal scale. This fraction view is what makes the chain rule feel obvious: df/dg · dg/dx = df/dx because the dg's cancel — each is a real tiny quantity being passed through the chain.
+dx is a tiny nudge in the input. df is the resulting tiny change in the output. The derivative is their ratio — the slope of the tangent line. As dx → 0, the tangent line becomes a perfect local approximation of the curve. Rearranging gives df = f'(x) · dx: rise = slope × run at infinitesimal scale.
 
-**Why this matters for neural networks:** Every weight in a network has a derivative of the loss with respect to it. That derivative tells you: "if I nudge this weight by a tiny dw, the loss changes by (dL/dw) · dw." Gradient descent just applies this to every weight simultaneously — nudge each one in the direction that makes the loss decrease, scaled by the learning rate. The entire training process is built on this one picture of tiny nudges propagating through a computation.
+This fraction view is what makes the chain rule obvious: df/dg · dg/dx = df/dx because the dg's cancel — each is a real tiny quantity passed through the chain. And it's what makes backprop work: every weight's gradient dL/dw tells you "if I nudge this weight by dw, the loss changes by (dL/dw) · dw."
 
 ### The gradient is perpendicular to contour lines and points uphill
 If you're standing on a hillside, the gradient tells you the steepest uphill direction. Gradient descent goes opposite — steepest downhill. The shape of the contour lines (elongated vs. circular) determines how hard optimization is. Circular = easy (condition number ≈ 1). Elongated = hard (high condition number). This is why preconditioning and Adam optimizer help.
