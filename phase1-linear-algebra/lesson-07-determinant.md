@@ -37,10 +37,6 @@
 - In Python: visualize how a grid of points changes under a matrix, verify area scaling matches the determinant
 - **Key exercise:** Construct a matrix with det = 0. Show visually that it squishes 2D space onto a line.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-Determinants appear in normalizing flows (computing how transformations change probability density). They also appear in weight initialization theory: if determinants are too large or small, signals explode or vanish — the vanishing/exploding gradient problem.
-
-## 🧠 Alignment Connection
-
-Determinants connect to alignment through **training stability** and **information preservation**. A layer with det ≈ 0 crushes information — potentially destroying safety-relevant signals. The vanishing/exploding gradient problem (det too small or too large through many layers) directly affects whether a model can learn alignment-relevant behaviors during training. Weight initialization schemes (Xavier, He) are designed to keep determinants near 1, ensuring information flows through the network without distortion. In normalizing flows used for density estimation, the determinant *is* the core computation — and correct density estimation is essential for calibrated uncertainty, a key alignment desideratum.
+Determinants appear in normalizing flows (computing how transformations change probability density) and in weight initialization theory: if determinants are too large or small, signals explode or vanish — the vanishing/exploding gradient problem. Weight initialization schemes (Xavier, He) are designed to keep determinants near 1, ensuring information flows without distortion. For alignment, a layer with det ≈ 0 crushes information — potentially destroying safety-relevant signals. Correct density estimation via normalizing flows also underpins calibrated uncertainty, a key alignment desideratum.

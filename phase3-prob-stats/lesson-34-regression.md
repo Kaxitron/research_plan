@@ -105,13 +105,11 @@ When you see a regression table in a paper or a Twitter debate, here's what to l
 - **Regression table reading exercise:** find 3 papers in different fields (genetics, economics, psychology) that report regression tables. For each: identify the key coefficient, its effect size, confidence interval, and sample size. Assess whether the conclusion is well-supported.
 - **Key exercise:** Someone on Twitter posts: "Controlling for education and income, [variable X] still predicts [outcome Y] at p < 0.01." Write a response considering: (1) is "controlling for" appropriate here? (2) could there be omitted variable bias? (3) what's the effect size? (4) is the causal claim justified? Practice this exact pattern — it's the most common statistical argument you'll encounter online.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Neural networks generalize regression.** A single layer with no activation = linear regression. A single layer with sigmoid = logistic regression. Deep networks = very flexible nonlinear regression with learned features. Understanding the statistical perspective helps you reason about what the network is "fitting."
 - **Interpretable ML** methods like LIME and SHAP essentially fit local regression models to explain individual predictions.
 - **The bias-variance tradeoff** in regression (underfitting vs. overfitting) is the same tradeoff in ML, just with more parameters.
-
-## 🧠 Alignment Connection
 
 - **Probing classifiers** in interpretability (Lesson 41) are logistic regressions trained on model activations. When researchers say "we found a direction in activation space that predicts truthfulness," they mean "a logistic regression on activations achieves high accuracy." Understanding regression means understanding probing results.
 - **"Controlling for" in alignment evaluations:** if a model appears safer after RLHF, is that the RLHF or the additional compute/data? Regression-style reasoning helps disentangle these.

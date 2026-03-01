@@ -65,13 +65,11 @@
 - Solve the Fokker-Planck equation for the double-well potential L(x) = (x²-1)². Show that the steady-state distribution concentrates at the two minima with relative probability determined by the "temperature" σ².
 - Visualize how Fourier modes decay: decompose an image into Fourier components, multiply each by exp(-k²t) for increasing t. Watch the image blur progressively — this is diffusion.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Diffusion models** are the most successful generative models in 2024-2026. They're pure applied PDE theory.
 - **The Fokker-Planck equation** is the theoretical foundation for understanding SGD's implicit bias and the distribution of trained models.
 - **Score-based methods** bypass the normalization problem that plagues energy-based models and Boltzmann machines.
-
-## 🧠 Alignment Connection
 
 - **Controllable generation:** if diffusion models generate content by following a PDE, can we modify the PDE to guarantee the output satisfies safety constraints? Classifier-free guidance is a step in this direction.
 - **The Fokker-Planck perspective on training** could, in principle, give probabilistic guarantees about where training ends up. This is a theoretical alignment tool.

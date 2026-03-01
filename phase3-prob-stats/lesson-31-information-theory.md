@@ -133,7 +133,7 @@
 - **Temperature experiment:** take a trained language model (or a simple softmax classifier). Vary temperature from 0.1 to 5.0. For each temperature, compute the entropy of the output distribution and sample outputs. See diversity increase with temperature.
 - **Key exercise:** you're training a language model. The cross-entropy loss plateaus at 3.2 nats. What does this number mean? (It means the model's predictions have an average surprise of 3.2 nats — equivalently, the model assigns, on average, e^(-3.2) ≈ 4% probability to the correct next token.) If the entropy of English text is estimated at ~1.0 nat per character, how much room for improvement remains?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Cross-entropy** is THE loss function for language modeling. Minimizing cross-entropy = maximizing likelihood (Lesson 21) = minimizing KL divergence from the true distribution. These are all the same optimization.
 - **KL divergence in RLHF:** the KL penalty keeps the fine-tuned model from straying too far from the base model. D_KL(π_finetuned || π_base) is added to the reward. This is information-theoretic regularization — "don't change your predictions too much."
@@ -141,8 +141,6 @@
 - **The data processing inequality** explains why information bottlenecks in neural architectures (like the low-rank attention projection) force the model to discard irrelevant information and keep what matters.
 - **Temperature** controls the entropy of generated text. Low temperature = predictable, repetitive. High temperature = creative, potentially incoherent. Finding the right temperature is finding the right point on the entropy spectrum.
 - **VAEs** (variational autoencoders) minimize a loss that includes a KL divergence term, keeping the latent space close to a prior distribution.
-
-## 🧠 Alignment Connection
 
 - **The KL penalty in RLHF** is one of the most important alignment-relevant applications of information theory. Without it, RLHF training can "overoptimize" — the model finds reward hacks that score well but don't represent genuine improvement. The KL penalty is an information-theoretic leash.
 - **Mutual information and ELK (Eliciting Latent Knowledge):** the question "does the model internally represent the truth?" can be formalized as: is the mutual information between the model's internal state and the ground truth positive? If I(internal_state; truth) > 0 but I(output; truth) = 0, the model "knows" but is hiding it.

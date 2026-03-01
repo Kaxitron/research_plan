@@ -74,6 +74,6 @@
 - **Visualization starter:** plot the unit circle, then apply a 2×2 matrix to it. See the circle become an ellipse. You'll do this in Lesson 4 for real.
 - **Linear algebra warm-up:** create a random 3×3 matrix. Compute its determinant, eigenvalues, SVD, and inverse using NumPy. Print them. You don't need to understand these yet — just verify the tools work.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 Every ML researcher's daily workflow is: write NumPy/PyTorch code → visualize results → iterate. The faster you are with these tools, the more experiments you can run, and experiments are how alignment researchers make discoveries. TransformerLens (which you'll use in Phase 5) is built on PyTorch, which has nearly identical syntax to NumPy.

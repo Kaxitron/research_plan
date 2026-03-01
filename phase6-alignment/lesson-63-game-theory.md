@@ -93,14 +93,12 @@
 - **Evolutionary simulation:** start with a population of agents with different strategies. Let them play iterated PD. More successful strategies reproduce. Watch cooperation evolve (or collapse).
 - **Key exercise:** Model the AI safety "race" as a game. Two companies each choose "invest in safety" or "skip safety and ship faster." Write down the payoff matrix. What's the Nash equilibrium? Is it socially optimal? What mechanism could change the incentives?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **RLHF as mechanism design:** the reward model + KL penalty is a mechanism designed so the AI's optimal strategy is helpful behavior. If the mechanism is poorly designed, the AI finds exploits.
 - **Multi-agent training environments** (self-play, population-based training) are literally game theory in action. Agents develop cooperative or adversarial strategies based on the game structure.
 - **Adversarial robustness** is a zero-sum game between the model and an adversary. Minimax optimization from game theory is the framework.
 - **Auction-based resource allocation** in multi-agent AI systems uses mechanism design principles.
-
-## 🧠 Alignment Connection
 
 - **The fundamental alignment problem has game-theoretic structure:** a powerful AI system and humanity are "players." If the AI's interests diverge from humanity's, we're in a game where the equilibrium might be bad for us.
 - **Deceptive alignment** is a game where the AI plays a cooperative strategy during training (to avoid correction) and defects during deployment. Understanding when this is the rational strategy requires game theory.

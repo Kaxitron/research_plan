@@ -53,7 +53,7 @@ The exam has five sections:
 - **Part E:** ML & alignment applications (attention as dot products, superposition, change of basis in interpretability)
 - **Bonus Project:** Implement PCA from scratch on synthetic data and MNIST — ties together eigenvalues, covariance, SVD, projections, rank, and change of basis into one pipeline.
 
-## 🔗 ML Connection — The Complete Language
+## 🔗 ML & Alignment Connection — The Complete Language
 
 You now have the mathematical vocabulary for every mechanistic interpretability paper:
 

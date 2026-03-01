@@ -49,14 +49,16 @@
 - **Image compression project:** Load a grayscale image as a matrix. Compute SVD. Reconstruct with k = 1, 5, 10, 50, 100 singular values. Watch detail emerge.
 - **Compute compression ratio:** original = m×n numbers. Rank-k SVD = m×k + k + k×n numbers. When does this save space?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 SVD is *everywhere* in ML and alignment research:
 
 - **Attention heads are low-rank:** W_Q and W_K project through a rank bottleneck. SVD reveals what information survives.
-- **LoRA (Low-Rank Adaptation):** Fine-tuning via low-rank updates ΔW = BA. This IS the SVD insight.
-- **Probing in interpretability:** Finding directions that predict labels is SVD-adjacent.
-- **"Mathematical Framework for Transformer Circuits"** uses SVD-like decompositions extensively.
+- **LoRA (Low-Rank Adaptation):** Fine-tuning via low-rank updates ΔW = BA — the SVD insight applied to efficient alignment training.
+- **Probing for safety-relevant features** (deception, power-seeking, honesty) uses SVD-adjacent techniques to find directions in activation space.
+- **"Mathematical Framework for Transformer Circuits"** uses SVD to decompose attention heads into interpretable components.
+
+When you understand SVD, you understand the mathematical language of mechanistic interpretability.
 
 ### SVD and PCA: The Same Coin
 
@@ -65,7 +67,3 @@ PCA asks you to find the eigenvectors of the covariance matrix C = (1/n)XᵀX. B
 The deeper reason this simplifies so cleanly: AᵀA is always symmetric, which guarantees an orthogonal eigenbasis — meaning pure scaling with no rotation. So when SVD decomposes X into rotate → scale → rotate, the two rotations in AᵀA cancel each other out, leaving only the scaling (Σ²) expressed in the V basis.
 
 In practice, real algorithms compute SVD directly on X using iterative methods (never forming XᵀX), which avoids squaring the condition number. But for hand computation, eigendecomposing XᵀX is the right approach.
-
-## 🧠 Alignment Connection
-
-SVD is arguably the single most important decomposition for alignment research. **LoRA** (Low-Rank Adaptation) fine-tunes models by constraining weight updates to a low-rank subspace — this is the SVD insight applied to efficient alignment training. **Probing** for safety-relevant features (deception, power-seeking, honesty) uses SVD-adjacent techniques to find directions in activation space. And Anthropic's "Mathematical Framework for Transformer Circuits" uses SVD to decompose attention heads into interpretable components. When you understand SVD, you understand the mathematical language of mechanistic interpretability.

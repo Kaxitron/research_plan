@@ -73,13 +73,11 @@
 - **Variational inference on 2D Gaussian:** fit a diagonal Gaussian q(θ) to a correlated 2D posterior. See the mean-field approximation miss the correlation. Then fit a full-covariance Gaussian and see it capture it.
 - **Bayesian neural network:** train a small BNN on a 1D regression task using either MCMC (for a tiny network) or VI (mean-field Bayes-by-Backprop). Plot the predictive uncertainty — it should widen where you have no data.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **VAEs** = neural variational inference. **Diffusion models** = score matching (closely related to VI). Understanding this lesson means understanding the probabilistic foundations of the two most important generative model families.
 - **Bayesian optimization** (for hyperparameter tuning) uses Gaussian process posteriors — these are computed using the exact formulas from this lesson.
 - **Uncertainty quantification** in safety-critical applications (medical AI, autonomous driving) requires Bayesian or Bayesian-approximate methods from this lesson.
-
-## 🧠 Alignment Connection
 
 - **Honest uncertainty** requires the full posterior, not just a point estimate. An AI system that can report "I'm 70% confident" rather than just "my best guess is..." is more transparent and controllable.
 - **Bayesian model averaging** (integrating over the posterior rather than using a point estimate) is more robust to model misspecification — it averages over models rather than betting on one. This is a safety property.

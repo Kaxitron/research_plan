@@ -125,14 +125,12 @@
 - **Effect size exercise:** find a real genetics paper reporting "statistically significant" GWAS results. Look up the effect sizes. Calculate how much variance is explained. Realize how small genetic effects typically are.
 - **Key exercise:** A Twitter debate about a psychology study: "p = 0.04, therefore the effect is real." Write a response addressing: (1) what p = 0.04 actually means, (2) what's missing (effect size, power, prior probability), (3) multiple comparisons risk, (4) what a Bayesian analysis would require. This is practice for exactly the kind of adjudication you want to do.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Model evaluation** uses statistical tests constantly. "Is model A better than model B on this benchmark?" requires significance testing. Many ML papers fail to do this — they report accuracy differences without confidence intervals.
 - **A/B testing** in production ML is hypothesis testing. When Anthropic or OpenAI runs experiments on model behavior, they use these tools.
 - **The replication crisis** parallels problems in ML: benchmark gaming, overfitting to test sets, and reporting only the best runs are all forms of p-hacking.
 - **Calibration** (Lesson 23) connects: a well-calibrated model's confidence should match reality, just like a well-done study's p-values should reflect actual false positive rates.
-
-## 🧠 Alignment Connection
 
 - **Safety claims require statistical rigor.** When someone says "this model passed our safety evaluation," you need to ask: what was the power of the test? What effect size could it detect? How many evaluations were run?
 - **The base rate fallacy in alignment:** even a good test for deceptive alignment (say, 95% sensitivity) has high false negative rates if deceptive alignment is rare. This is Bayes' theorem applied to AI safety testing.

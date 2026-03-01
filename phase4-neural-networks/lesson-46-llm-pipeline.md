@@ -96,11 +96,9 @@ Each arrow is something you've learned. The entire pipeline is: probability theo
 - **SFT vs. base model comparison:** Using any open model (GPT-2, Llama), compare base model and instruction-tuned model responses to the same prompts. See the qualitative difference SFT makes.
 - **Key exercise:** Design a complete training pipeline for an AI assistant that helps with medical questions. What data would you use for pre-training? SFT? What would your constitution look like? What could go wrong at each stage? Where are the alignment risks?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 This lesson IS the ML connection for your entire curriculum. Every concept from Phases 1-5 shows up in the pipeline: linear algebra (transformers), calculus (gradient descent, backprop), probability (softmax, MLE), information theory (cross-entropy loss), optimization (Adam, learning rate scheduling), constrained optimization (KL penalty), and neural network architecture. You now understand, end to end, how a model like Claude is built.
-
-## 🧠 Alignment Connection
 
 The pipeline reveals where alignment can fail:
 - **Pre-training:** the model absorbs biases and harmful content from its training data

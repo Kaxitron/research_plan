@@ -76,13 +76,11 @@
 - **Euler's method by hand:** for dx/dt = -x with x(0) = 1, compute x(0.5) using step sizes h = 0.5, 0.25, 0.1. Compare with the exact solution x(t) = e^{-t}. See the accuracy improve as h shrinks. Relate to learning rate.
 - **Key exercise:** for the 1D ODE dx/dt = x(1-x)(x-2), find all fixed points. Classify each as stable or unstable by checking the sign of f'(x*). Sketch the flow on the number line. This is a "bifurcation" preview — the dynamics partition the line into basins of attraction.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Gradient descent IS Euler's method** on the gradient flow ODE. The learning rate IS the step size. This isn't an analogy — it's literally the same algorithm. Everything you learn about Euler's method stability directly predicts when training will diverge.
 - **Vector fields on loss landscapes:** when you see a contour plot of a 2-parameter loss with gradient arrows, you're looking at the vector field of gradient flow. The solution curves are training trajectories.
 - **Fixed points = trained models:** every local minimum of the loss is a stable fixed point of gradient flow. Training dynamics select which fixed point you reach.
-
-## 🧠 Alignment Connection
 
 - **Initial conditions determine outcomes:** just as different starting points lead to different fixed points, different random initializations of a neural network lead to different trained models. Some may be "aligned," others not. Understanding basin structure is understanding the probability that training produces aligned behavior.
 - **The qualitative approach:** we usually can't solve training dynamics analytically. But we can classify the types of fixed points, understand basin structure, and predict qualitative behavior — exactly the approach Strogatz teaches. This is the methodology for analyzing training at scale.

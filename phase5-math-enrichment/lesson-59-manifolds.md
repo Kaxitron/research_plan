@@ -60,6 +60,6 @@
 - The manifold of positive-definite 2×2 matrices: parameterize it, compute the Fisher metric, and visualize geodesics. Compare with straight lines in matrix space.
 - Find the singular points of V = {(x,y,z) : x² + y² - z² = 0} (a cone). Show that V is a manifold everywhere except the origin. Compute the tangent space at a smooth point.
 
-## 🧠 Alignment Connection
+## 🔗 ML & Alignment Connection
 
 **The loss landscape near singularities** — where manifold structure breaks down — is exactly where Singular Learning Theory operates. At smooth points, classical statistics (the Hessian, Fisher information) work fine. But neural networks have degenerate critical points where the Hessian has zero eigenvalues, and classical tools fail. The RLCT (a manifold/algebraic geometry concept) replaces the Hessian at these singular points. Understanding manifolds and their failure modes is understanding *when and why* standard intuitions about training break down.

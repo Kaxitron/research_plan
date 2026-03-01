@@ -74,10 +74,8 @@ These identities are what you'd use to derive gradient updates by hand. In pract
 - **Hessian exercise:** Compute the Hessian of f(x,y) = x³ - 3xy² (monkey saddle). Find eigenvalues at the origin. Verify it's a saddle point (mixed eigenvalue signs). Visualize the surface and see the saddle.
 - **Key exercise:** For a 2-parameter neural network loss, compute the Hessian numerically (finite differences). Find its eigenvalues. Interpret: which direction has steep curvature? Which is flat? How does the condition number relate to training difficulty?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 Every parameter in a neural network gets updated by its gradient. The Jacobian tells you how a layer's output changes with its input — exactly what backpropagation multiplies through. The gradient of the loss is literally the "direction to adjust weights."
 
-## 🧠 Alignment Connection
-
-The Hessian's eigenvalue structure directly impacts alignment. If the loss landscape has sharp, narrow minima for aligned behavior but broad, flat minima for misaligned behavior, gradient descent will preferentially find misaligned solutions (the "simplicity bias" problem). Understanding the Hessian — curvature in every direction — lets you reason about whether alignment objectives create favorable loss geometry. This connects directly to Singular Learning Theory (Phase 5), where the geometry of critical points determines generalization behavior.
+The Hessian's eigenvalue structure directly impacts alignment. If the loss landscape has sharp, narrow minima for aligned behavior but broad, flat minima for misaligned behavior, gradient descent will preferentially find misaligned solutions (the "simplicity bias" problem). Understanding the Hessian — curvature in every direction — lets you reason about whether alignment objectives create favorable loss geometry. This connects to Singular Learning Theory (Phase 5), where the geometry of critical points determines generalization.

@@ -60,6 +60,6 @@
 - For a 2D loss landscape L(w₁,w₂) = (w₁²-1)² + w₂², draw the level set L = 0. Is it connected? Draw L = 0.5. Is it connected?
 - Implement mode connectivity: train two networks on MNIST from different random initializations. Find a linear path and a quadratic Bezier path between them. Plot the loss along each path. Is the low-loss region connected?
 
-## 🧠 Alignment Connection
+## 🔗 ML & Alignment Connection
 
 **Mode connectivity** — whether different trained models can be connected by low-loss paths — is a topological question with alignment implications. If all "good" solutions are connected, fine-tuning from a safe model is more likely to stay safe. If the safe and unsafe solution regions are disconnected, there's a sharper boundary we can try to enforce. The topology of the loss landscape constrains what alignment training can and cannot achieve.

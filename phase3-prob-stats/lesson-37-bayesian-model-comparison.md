@@ -74,13 +74,11 @@
 - **Parameter counting fails:** build a neural network with redundant parameters (e.g., two hidden units that are copies of each other). Show that the parameter count doubles but the effective complexity doesn't. This is why BIC fails for neural networks.
 - **Free energy decomposition:** for a simple model, decompose the log marginal likelihood into goodness-of-fit and complexity terms. Show the complexity penalty growing with model size.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **The training loss is not a good model comparison metric** — it always favors more complex models. The marginal likelihood (or its approximations like WAIC) is the principled alternative.
 - **SLT will give you the correct complexity measure** for neural networks. This lesson provides the Bayesian framework; SLT provides the geometric correction.
 - **The free energy principle** in neuroscience (Karl Friston) proposes that the brain minimizes variational free energy. Whether or not this is correct about brains, it's mathematically equivalent to Bayesian model selection.
-
-## 🧠 Alignment Connection
 
 - **Model selection as alignment selection:** if you can compute the marginal likelihood for different training objectives, you can select the objective that best explains desired behavior with the least complexity. This is a principled approach to reward modeling.
 - **Complexity and deception:** if deceptive alignment requires more "effective parameters" than genuine alignment (i.e., higher RLCT), then Bayesian model comparison would automatically penalize it. Understanding whether this is true is an open alignment question — and it requires the SLT framework.

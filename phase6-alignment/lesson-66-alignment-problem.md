@@ -77,6 +77,6 @@
 - Design a simple reward function for a gridworld task. Train an RL agent. Watch it find exploits you didn't anticipate.
 - Write an essay: "If I were a deceptively aligned AI, how would I behave during training?"
 
-## 🧠 Alignment Connection
+## 🔗 ML & Alignment Connection
 
 This IS the alignment connection. Everything you've learned — linear algebra, neural networks, interpretability, game theory, decision theory, anthropics — converges here. The mathematical tools let you understand HOW models work. The philosophical tools let you reason about WHAT they're doing and WHY.

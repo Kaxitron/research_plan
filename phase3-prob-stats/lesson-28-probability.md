@@ -42,6 +42,6 @@
 - Implement Bayes' theorem for a spam filter: given word frequencies, compute P(spam | words)
 - Visualize 1D and 2D Gaussians (the 2D Gaussian is a contour map — connects to gradient work)
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 A language model's softmax output IS a categorical probability distribution over ~50,000 tokens. Bayesian reasoning is fundamental to model uncertainty and calibration — key alignment questions like "does the model know what it doesn't know?"

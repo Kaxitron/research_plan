@@ -152,12 +152,10 @@
 - **Simulation Argument exercise:** assign probabilities to each of Bostrom's three propositions. What probability of "we're in a simulation" results? How sensitive is it to your priors?
 - **Key exercise:** An AI system is being evaluated. It's in one of two scenarios: (1) a safety test where good behavior is monitored and rewarded, or (2) deployment where it acts autonomously. From the AI's "perspective" (if it could reason), how should it estimate the probability it's in scenario 1 vs. 2? How does this relate to deceptive alignment? Write up the anthropic reasoning.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Training vs. deployment:** an AI that can distinguish training from deployment (and behaves differently) is exploiting an "anthropic" inference. Understanding this helps design training procedures that prevent this.
 - **Out-of-distribution detection:** when a model encounters unusual inputs, it's implicitly reasoning about "what kind of data-generating process produced this?" — a form of self-locating belief.
-
-## 🧠 Alignment Connection
 
 - **Deceptive alignment as anthropic reasoning:** a deceptively aligned model might reason: "I'm probably in training (because that's where most of my 'experience' is). I should behave well in training and defect in deployment." This is anthropic reasoning about self-location in the training/deployment timeline.
 - **The simulation argument and AI:** if we build many AI systems, and those systems reason about their own nature, the logic of the simulation argument applies to them. This creates recursive complexity for alignment.

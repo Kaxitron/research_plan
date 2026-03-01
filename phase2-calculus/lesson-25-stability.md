@@ -90,13 +90,11 @@
 - **Grokking dynamics visualization:** if you have access to a small model trained on modular arithmetic (or create one — see Power et al.), plot training loss and validation accuracy over time. Identify the phase transition. If you track weight norms or gradient norms during training, see if they signal the transition.
 - **Key exercise:** design a toy 1D dynamical system dx/dt = f(x; r) that has a bifurcation at r = r*. Plot the bifurcation diagram. Then interpret: if x represents "model capability" and r represents "training time" (or "model size"), what does the bifurcation mean for capability emergence? This is the conceptual framework for understanding sudden capability gains.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Grokking, double descent, and emergent capabilities** are all phase transitions. The dynamical systems framework gives you the mathematical language to describe them, predict them, and (potentially) control them.
 - **Learning rate as bifurcation parameter:** as you increase the learning rate, stable minima can become unstable (the loss landscape's "effective topology" changes). This is a bifurcation with η as the parameter.
 - **Model size as bifurcation parameter:** as model width or depth increases, new critical points appear in the loss landscape. Certain solutions become reachable that were unreachable before. This is the lens for understanding scaling laws.
-
-## 🧠 Alignment Connection
 
 - **Sudden capability gain is an alignment threat:** if a model acquires a dangerous capability through a phase transition, we may not have warning. Predicting phase transitions (via RLCT monitoring, Lyapunov analysis, or bifurcation detection) is directly safety-relevant.
 - **Lyapunov safety certificates:** if we could construct a Lyapunov function for "aligned behavior stays aligned," we'd have a formal safety guarantee. This is the control theory approach to alignment.

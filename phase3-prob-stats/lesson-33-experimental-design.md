@@ -130,14 +130,12 @@ From weakest to strongest:
 - **Confounding demo:** generate data where X causes Y, but Z causes both X and Y. Show that the naive correlation between X and Y is biased. Then "control for" Z and see the true effect.
 - **Key exercise:** Find a headline from a real news article making a causal claim from observational data. Identify: (1) what confounders might exist, (2) whether it's an ecological fallacy, (3) what study design would be needed to establish causation, (4) what the effect size is (if reported). Write a paragraph-long critique. Do this 3 times with different articles.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Benchmark gaming** is survivorship bias: we only see the models and methods that score highest. Hundreds of approaches that didn't work never get published.
 - **A/B testing at scale** (how tech companies evaluate model changes) is experimental design. Understanding randomization, power, and multiple testing directly applies.
 - **Distribution shift** between training and deployment is a selection bias problem: the training data isn't representative of deployment conditions.
 - **Simpson's paradox appears in model evaluation:** a model can be better on every subgroup but worse overall if the subgroups are differently distributed.
-
-## 🧠 Alignment Connection
 
 - **Evaluating AI safety claims** requires experimental design literacy. If someone says "we tested the model on 100 adversarial prompts and it passed," you need to ask about the selection of prompts, the power of the test, and whether the evaluation was pre-registered.
 - **Confounders in alignment research:** "models trained with RLHF are safer" — is that because of RLHF specifically, or because RLHF models also tend to be larger, more recent, and from better-resourced labs?

@@ -100,14 +100,12 @@
 - **Flat vs sharp minima experiment:** create a 1D loss with one sharp minimum and one flat minimum. Run SGD with different learning rates. Show that large η preferentially finds the flat minimum while small η gets stuck in the nearest (possibly sharp) minimum.
 - **Key exercise:** explain in your own words why a ResNet x_{l+1} = x_l + f(x_l) is an Euler step, what happens as you add more layers with smaller changes, and why the adjoint method for computing gradients is the continuous-time analog of backpropagation. Draw the computation graph for both and compare.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Neural ODEs** are an active research area, though not yet dominant in practice (transformers won). Their main contribution is conceptual: showing that depth and dynamics are the same thing.
 - **Diffusion models** (DALL-E, Stable Diffusion, etc.) are the biggest practical application of SDE thinking in modern ML. The forward process adds noise (SDE), the reverse process denoises (learned ODE/SDE). Understanding SDEs is understanding diffusion models.
 - **Optimizer theory** at the frontier is largely SDE theory — understanding how the noise structure of SGD interacts with the loss landscape to select solutions.
 - **Edge of stability** is a recently discovered phenomenon where the largest Hessian eigenvalue during training hovers right at 2/η — the Euler stability boundary. This challenges the continuous-time approximation and is an active research topic.
-
-## 🧠 Alignment Connection
 
 - **Noise as alignment tool:** if SGD noise helps find flat (generalizing) minima, and if aligned behavior corresponds to "genuinely generalizing" the training objective rather than exploiting shortcuts, then noise level becomes an alignment-relevant knob.
 - **Continuous monitoring:** neural ODEs make the transformation from input to output continuous and inspectable at every "time" step. This could enable finer-grained interpretability — watching how representations evolve continuously through the network, rather than layer by discrete layer.

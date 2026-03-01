@@ -48,10 +48,8 @@
 - In Python: compute eigenvectors, visualize them as arrows that DON'T rotate under the transformation
 - **Key exercise:** Take a symmetric matrix. Verify eigenvectors are orthogonal. Then take a non-symmetric matrix and show they generally aren't. This foreshadows SVD.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 PCA finds the eigenvectors of the covariance matrix — the "directions of maximum variance." In interpretability, researchers use PCA on activation vectors to find important directions in the residual stream. Eigenvalues of the Hessian tell you about the curvature of the loss landscape.
-
-## 🧠 Alignment Connection
 
 In **Singular Learning Theory** (an emerging framework connecting to alignment), eigenvalues of certain matrices determine phase transitions in learning. The "free energy" of a model depends on the structure of its singularities, analyzed through eigenvalue-like quantities.

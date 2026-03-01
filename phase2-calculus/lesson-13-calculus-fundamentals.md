@@ -49,7 +49,7 @@ Try it: graph y = x² and zoom into the point (1, 1). Keep zooming. Eventually i
 
 This is also **why gradient descent works** in neural networks. The loss surface is a complicated curved landscape. But near any point, if you zoom in enough, it looks flat — like a tilted plane. The gradient tells you which direction that plane tilts, and you step "downhill." Then you zoom in again at the new point, get a new local tilt, step downhill again. You're following straight-line approximations of a curved surface, one small step at a time.
 
-### 🔗 ML Connection: Local Linearity IS Gradient Descent
+### 🔗 ML & Alignment: Local Linearity IS Gradient Descent
 
 When a neural network computes a gradient and takes a step, it's doing exactly this:
 1. Zoom into the loss surface at the current weights
@@ -60,6 +60,8 @@ When a neural network computes a gradient and takes a step, it's doing exactly t
 Step too far → the straight-line approximation is no longer accurate → you overshoot.
 Step too small → you waste compute on tiny improvements.
 This is why learning rate matters — it controls how much you trust the local linear approximation.
+
+This matters for alignment: when we train a model with RLHF, gradient descent is the mechanism that teaches the model to be helpful, harmless, and honest. Understanding *how* the gradient signal propagates — where it's strong, where it vanishes, where it might be gamed — is essential for understanding whether alignment training actually works.
 
 ---
 
@@ -262,7 +264,7 @@ Part 2: ∫ₐᵇ f(x) dx = F(b) - F(a), where F is any antiderivative of f.
 
 The "+ C" is the **constant of integration** — a reminder that many functions have the same derivative (vertical shifts don't change slope).
 
-### 🔗 ML Connection: Why Integration Matters
+### 🔗 ML & Alignment: Why Integration Matters
 
 You won't integrate much by hand in ML, but you need to understand it conceptually because:
 
@@ -310,7 +312,7 @@ f''(x) = 6x
 At x = 1: f''(1) = 6 > 0 → **local minimum** at (1, -2)
 At x = -1: f''(-1) = -6 < 0 → **local maximum** at (-1, 2)
 
-### 🔗 ML Connection: The Second Derivative Becomes the Hessian
+### 🔗 ML & Alignment: The Second Derivative Becomes the Hessian
 
 In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of all second partial derivatives — the **Hessian** — tells you curvature in every direction. You'll meet this properly in Lesson 13, but the intuition is the same: the Hessian tells you if you're at a bowl (minimum), a hill (maximum), or a saddle point. In neural networks, saddle points are far more common than local minima — this is a key insight you'll explore in Lesson 18.
 
@@ -436,6 +438,4 @@ This lesson gives you the single-variable foundations. Here's how each subsequen
 
 Every concept in Lessons 13–18 is a multivariable generalization of something in this lesson. If this lesson is solid, the rest of Phase 2 will feel like natural extensions rather than new territory.
 
-## 🧠 Alignment Connection
 
-The chain rule is backpropagation, and backpropagation is how models learn *everything* — including alignment-relevant behaviors. When we train a model with RLHF (Reinforcement Learning from Human Feedback), the gradient signal flowing backward through the chain rule is what teaches the model to be helpful, harmless, and honest. Understanding *how* that signal propagates — where it's strong, where it vanishes, where it might be gamed — is essential for understanding whether alignment training actually works. The vanishing gradient problem isn't just a training issue; it's an alignment issue: if gradients vanish for safety-relevant behaviors, the model won't learn them.

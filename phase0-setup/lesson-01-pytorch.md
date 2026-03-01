@@ -102,10 +102,8 @@ for batch in dataloader:
 - **Hook exercise:** load any pre-trained model (even a tiny one). Register a forward hook on an intermediate layer. Pass input through and inspect the activations captured by the hook. This is the atomic operation of all interpretability research.
 - **Einsum drills:** implement matrix multiplication, batch matrix multiplication, trace, outer product, and attention score computation all using `torch.einsum`.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 PyTorch is not just a tool — it shapes how you think about models. When interpretability researchers say "patch the residual stream at layer 5," they mean: register a hook at layer 5 that replaces the activation tensor with a modified one, then observe how downstream computations change. When they say "compute the OV circuit," they mean: extract weight matrices using `model.W_O[layer, head]` and multiply them. The entire workflow of mechanistic interpretability is PyTorch operations on model internals.
-
-## 🧠 Alignment Connection
 
 TransformerLens exists because PyTorch's hook system allows researchers to surgically intervene on model computations. Every technique in ARENA's interpretability chapters — activation patching, direct logit attribution, probing, steering vectors — is a PyTorch operation. The bridge from "understanding the math" to "doing alignment research" runs through PyTorch fluency.

@@ -64,7 +64,7 @@
 - **EM from scratch:** Generate data from 2 Gaussians (you know the true parameters). Implement EM: E-step computes responsibilities, M-step updates means/variances/mixing weights. Watch the estimated parameters converge to the true ones. Plot the evolution over 20 iterations.
 - **K-means as hard EM:** Implement k-means on the same data. Compare to soft EM. See that k-means makes hard cluster assignments while EM gives probabilities.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 When we train a language model to predict the next token, we are literally doing maximum likelihood estimation. The loss function (cross-entropy) IS the negative log-likelihood. This connection means you understand the fundamental training objective of every modern LLM.
 
@@ -72,7 +72,5 @@ The EM pattern appears throughout ML:
 - **VAEs** use a variant of EM (the ELBO objective)
 - **Self-training / pseudo-labeling** is EM-like: infer labels (E-step), retrain on pseudo-labels (M-step)
 - **Some RLHF formulations** alternate between inferring human preferences (reward model) and optimizing policy — an EM-like loop
-
-## 🧠 Alignment Connection
 
 MLE optimizes the model to match the *training distribution*. But alignment requires the model to generalize beyond training data in the right way. MLE on "predict the next token" doesn't inherently teach the model to be helpful, honest, or harmless — it teaches it to be a good next-token predictor. The gap between "good at MLE" and "aligned" is the entire reason RLHF and Constitutional AI exist.

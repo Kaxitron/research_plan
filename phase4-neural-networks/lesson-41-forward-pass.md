@@ -42,12 +42,8 @@
 - Visualize weight matrices as images — what patterns do they learn?
 - **Key geometric exercise:** For a 2D classification problem, visualize the decision boundary at each layer. Watch the folds happen.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-When interpretability researchers say "the model moves information through the residual stream," they mean each matrix multiplication's output gets added back to a running total. Understanding the forward pass as composed matrix multiplications is THE prerequisite for reading Anthropic's papers.
+The **residual stream** — the running sum that each layer reads from and writes to — is the central object of mechanistic interpretability. When interpretability researchers say "the model moves information through the residual stream," they mean each matrix multiplication's output gets added back to this running total. Understanding the forward pass as composed matrix multiplications is THE prerequisite for reading Anthropic's papers.
 
-The Welch Labs "folding" framing also explains why **depth matters more than width**: adding a layer adds another fold; adding width just makes each fold more complex. A deep network can approximate any function with far fewer neurons than a wide shallow one.
-
-## 🧠 Alignment Connection
-
-The **residual stream** — the running sum that each layer reads from and writes to — is the central object of mechanistic interpretability. Each attention head and MLP layer adds a vector to this stream. Alignment researchers trace how safety-relevant information (e.g., "this request is harmful") flows through the residual stream, which heads amplify or suppress it, and where the model "decides" to refuse or comply. The forward pass isn't just computation; it's a decision-making process you can reverse-engineer.
+The Welch Labs "folding" framing also explains why **depth matters more than width**: adding a layer adds another fold; adding width just makes each fold more complex. Alignment researchers trace how safety-relevant information (e.g., "this request is harmful") flows through the residual stream, which heads amplify or suppress it, and where the model "decides" to refuse or comply. The forward pass isn't just computation; it's a decision-making process you can reverse-engineer.

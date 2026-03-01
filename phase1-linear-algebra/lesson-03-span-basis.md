@@ -37,10 +37,6 @@
 - In Python: generate 3 random vectors in ℝ². Show that any 2D point can be written as a linear combination of 2 of them (but you only need 2, not 3)
 - **Visualization exercise:** animate scaling two basis vectors to reach a target point
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-Superposition in neural networks is EXACTLY about linear combinations. The superposition hypothesis says: a network with n neurons can represent MORE than n concepts by encoding each concept as a *direction* (vector) in n-dimensional space. The "features" overlap — they're non-orthogonal directions, and the network uses linear combinations to separate them. The entire foundation of Anthropic's "Toy Models of Superposition" paper rests on understanding what span and basis mean.
-
-## 🧠 Alignment Connection
-
-The **superposition hypothesis** — Anthropic's central research bet — is fundamentally about span and basis. A model with n neurons can represent far more than n concepts by encoding features as directions in n-dimensional space. These feature directions are non-orthogonal, meaning they *aren't* a basis — they're an overcomplete spanning set. Understanding when and how a network can separate these overlapping directions is the core mathematical question of superposition research, and it starts here with understanding what span and linear independence mean.
+Superposition in neural networks is EXACTLY about linear combinations. The superposition hypothesis says: a network with n neurons can represent MORE than n concepts by encoding each concept as a *direction* (vector) in n-dimensional space. These feature directions are non-orthogonal — they're an overcomplete spanning set, not a basis. The "features" overlap, and the network uses linear combinations to separate them. Understanding when and how a network can disentangle these overlapping directions is the core mathematical question of Anthropic's superposition research, starting with the "Toy Models of Superposition" paper.

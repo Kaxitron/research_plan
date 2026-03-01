@@ -76,6 +76,6 @@
 - **Cross-validation implementation:** Implement 5-fold cross-validation for polynomial regression. Plot train error and validation error vs. polynomial degree. Find the "elbow" where validation error is minimized.
 - **Hessian eigenvalue analysis:** For a 2-parameter network, compute the Hessian at several critical points. Classify each as minimum, maximum, or saddle by checking eigenvalue signs. Visualize the loss surface with critical points marked.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 The shape of the loss landscape is intimately connected to alignment. When we train a model to be "helpful and harmless," the loss landscape determines *which* behaviors emerge. Grokking shows that phase transitions — sudden qualitative changes in model behavior — are real and can appear long after training seems complete. Singularities in the loss landscape (from singular learning theory) are an active area of alignment research.

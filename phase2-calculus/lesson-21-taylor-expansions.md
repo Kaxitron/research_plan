@@ -53,12 +53,8 @@
 - Apply the implicit function theorem: for F(x,λ) = x³ - λx = 0, find the critical points as functions of λ. Identify where the IFT fails (bifurcation points).
 - Newton's method implementation: minimize f(x) = x⁴ - 3x² + x using (a) gradient descent and (b) Newton's method (using the second-order Taylor approximation). Compare convergence speed.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-- **Second-order optimizers** (Newton, natural gradient, K-FAC) use the Hessian or its approximation to take better steps. They're minimizing the second-order Taylor expansion rather than following the linear approximation.
+- **Second-order optimizers** (Newton, natural gradient, K-FAC) use the Hessian or its approximation to take smarter steps — they're minimizing the second-order Taylor expansion rather than following the linear approximation.
 - **Learning rate and curvature:** the optimal learning rate for a quadratic loss is 1/λ_max (inverse of largest Hessian eigenvalue). This comes directly from the Taylor expansion.
-- **Scaling laws as asymptotic analysis:** when we write L(N) ~ N^{-α}, that's an asymptotic statement. Understanding Big-O lets you interpret these claims precisely.
-
-## 🧠 Alignment Connection
-
-Taylor expansions underpin two key alignment concepts. First, **scaling laws** — the empirical finding that loss scales as L(N) ~ N^{-α} — are asymptotic statements that Taylor/power-series analysis helps you interpret rigorously. Understanding when these power laws break down (phase transitions, emergent capabilities) is critical for predicting when models might suddenly become dangerous. Second, **second-order optimization** methods that use the Hessian are increasingly important for fine-tuning aligned models efficiently, and these methods are literally minimizing the second-order Taylor expansion of the loss.
+- **Scaling laws** — the empirical finding that loss scales as L(N) ~ N^{-α} — are asymptotic statements that Taylor/power-series analysis helps interpret rigorously. Understanding when these power laws break down (phase transitions, emergent capabilities) is critical for predicting when models might suddenly become dangerous.

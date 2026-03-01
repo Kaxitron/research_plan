@@ -149,14 +149,12 @@ When you encounter a statistical claim online, run through this:
   For each, apply the 6-step adjudication framework. Write up your analysis in a paragraph.
 - **Key exercise:** Take the most contentious statistical claim you've seen online recently. Apply everything from Lessons 24–28: identify the study design, the effect size, potential confounders, the appropriate causal model, what the evidence actually supports vs. what's being claimed. Write 500 words. This is the skill the entire phase was building toward.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **GWAS methodology parallels feature selection in ML.** Testing millions of features for association, correcting for multiple comparisons, and building polygenic/aggregate scores is conceptually similar to selecting features for a model.
 - **Population stratification correction** uses PCA on genetic data — the exact eigendecomposition from Lessons 8-9, applied to genetic similarity matrices.
 - **ML for genomics** is a growing field: deep learning models predict gene expression, protein structure, and disease risk from genetic sequence data.
 - **Benchmark evaluation** in ML should use the same rigor as clinical trials: pre-registered evaluations, proper test sets, confidence intervals, and replication.
-
-## 🧠 Alignment Connection
 
 - **AI capabilities evaluation** is epidemiology for AI. "Does this model have [dangerous capability]?" requires the same statistical rigor as "Does this drug work?" Effect sizes, sample sizes, and confounders all apply.
 - **The genetics of alignment:** understanding heritability and gene-environment interaction gives you a framework for thinking about nature vs. training in AI systems. How much of a model's behavior comes from the architecture (its "genes") vs. the training data (its "environment") vs. the interaction?

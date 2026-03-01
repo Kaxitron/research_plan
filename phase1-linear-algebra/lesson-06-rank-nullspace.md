@@ -58,10 +58,6 @@
 - **Key exercise:** Create a 4×3 matrix with rank 2. Verify its null space is 1-dimensional. Find a null space vector and show Av = [0,0,0,0].
 - **Implement row reduction in Python:** write a function that takes a matrix and returns its RREF. Compare your output to `numpy.linalg.matrix_rank()` and `scipy.linalg.null_space()`.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-Attention matrices in transformers are deliberately **low-rank.** The QK circuit maps from 768-dimensional space through a 64-dimensional bottleneck and back. This rank constraint forces the attention head to focus on a limited number of "features." Understanding rank is crucial for reasoning about **information bottlenecks** — when does a layer lose information? When does it preserve it?
-
-## 🧠 Alignment Connection
-
-**Information bottlenecks are an alignment tool.** When attention heads project through a low-rank bottleneck (768 → 64 → 768), rank determines what information *survives* and what gets destroyed. This is deliberate: the bottleneck forces the head to select what matters. In alignment, we care about *what* gets preserved and *what* gets discarded — a deceptively aligned model might preserve different information than an honestly aligned one. The null space tells you what information is irrecoverably lost at each layer, which is critical for understanding whether safety-relevant features survive the forward pass.
+Attention matrices in transformers are deliberately **low-rank.** The QK circuit maps from 768-dimensional space through a 64-dimensional bottleneck and back. This rank constraint forces the attention head to focus on a limited number of "features." For alignment, information bottlenecks matter directly: rank determines what information *survives* and what gets destroyed at each layer. A deceptively aligned model might preserve different information than an honestly aligned one. The null space tells you what's irrecoverably lost — critical for understanding whether safety-relevant features survive the forward pass.

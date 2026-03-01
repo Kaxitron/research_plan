@@ -38,10 +38,8 @@
 - Plot 2D vectors in Python with matplotlib — draw addition and scalar multiplication geometrically
 - **Key exercise:** Given v = [3, 1], draw v, 2v, -v, and v + [1, 2] as arrows. Verify the geometry matches the arithmetic.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 In a transformer, every token gets converted to an **embedding vector** — a point in ~768-dimensional space. The word "king" is literally a vector. The word "queen" is another vector. The famous relationship king − man + woman ≈ queen is *vector arithmetic* in embedding space. You're learning the operations that make this possible.
-
-## 🧠 Alignment Connection
 
 When mechanistic interpretability researchers talk about "directions in activation space that correspond to concepts," they mean specific vectors. A "truthfulness direction" or a "toxicity direction" is a vector. Understanding what vectors are — geometrically, not just as lists of numbers — is what lets you reason about whether a model's internal representations are aligned with human concepts.

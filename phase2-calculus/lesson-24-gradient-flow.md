@@ -126,13 +126,11 @@
   Plot both trajectories. Count iterations to reach within 0.01 of the minimum.
 - **Implicit regularization demo:** create a linear regression problem with d=20 features and n=5 data points (underdetermined). Run gradient descent from W=0. Compare the solution to the minimum-norm solution (computed as A⁺b via pseudoinverse). They should match.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Everything about optimizer design** — learning rate schedules, warmup, Adam vs SGD, batch size effects — is a statement about the dynamical system of training. This lesson gives you the framework to reason about all of it.
 - **Loss landscape analysis:** papers on "sharp vs flat minima," "loss of plasticity," and "learning rate as regularizer" are all about the dynamical properties of gradient flow and its stochastic approximation.
 - **The landscape-dynamics duality:** the loss landscape (static) and the training dynamics (flow on that landscape) jointly determine outcomes. You can't understand training from the landscape alone — you need the dynamics.
-
-## 🧠 Alignment Connection
 
 - **Implicit regularization selects for simplicity** — but does "simple" = "aligned"? This is an open question. If gradient descent prefers simple solutions and aligned behavior is simpler than deceptive behavior (debatable!), implicit regularization might help alignment. If deception is a "simpler" solution to the training objective than genuine helpfulness, it hurts.
 - **Optimizer choice as alignment lever:** different optimizers explore different parts of the loss landscape. If we understood basin structure, we could potentially choose optimizers that preferentially find aligned solutions.

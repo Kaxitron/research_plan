@@ -92,11 +92,9 @@
 - **Reward hacking demo:** Design a simple environment where the reward function has an exploit. Watch the agent find it. Then fix the reward function and see the agent learn the intended behavior. Feel Goodhart's Law in your gut.
 - **RLHF conceptual exercise:** Given a language model that produces two responses to "explain quantum physics," one accurate but dry, one engaging but slightly inaccurate — how would a reward model score these? What happens if the reward model systematically prefers engagement over accuracy? Write up the alignment implications.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 Every modern aligned AI system uses RL (or RL-derived methods like DPO) in its training pipeline. When you hear "Claude was trained with RLHF," what actually happened is: humans ranked outputs → a neural network learned to predict those rankings → PPO optimized Claude to generate outputs the ranking model scored highly → a KL penalty kept Claude from drifting too far from the base model. Every piece of this sentence uses concepts from this lesson.
-
-## 🧠 Alignment Connection
 
 RL is where alignment meets practice:
 

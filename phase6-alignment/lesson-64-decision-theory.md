@@ -96,13 +96,11 @@
 - **Policy evaluation:** for Parfit's Hitchhiker, compute the expected utility of "always pay" vs. "never pay" policies. Show that "always pay" dominates.
 - **Key exercise:** You're designing an AI decision-making system. It faces a scenario where the honest action leads to short-term punishment but long-term reward (like admitting it made an error). CDT says lie (the punishment is already determined by your reputation). FDT says be honest (being the type of agent that's honest leads to better outcomes overall). Which decision theory do you want your AI to use? Write up the argument.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Reward hacking** is a decision-theory problem: the AI finds actions that maximize reward without achieving the intended goal. The AI is making "rational" decisions given its utility function — the problem is that the utility function doesn't capture what we want.
 - **Myopic vs. non-myopic agents:** a myopic agent only cares about immediate reward (like CDT in the moment). A non-myopic agent considers future consequences. Most alignment proposals try to make AI somewhat myopic to prevent long-term scheming.
 - **Self-play and commitment:** in multi-agent settings, the ability to commit to a strategy (FDT-style) can lead to better outcomes. But commitment in AI systems raises safety concerns — what if the AI commits to a harmful strategy?
-
-## 🧠 Alignment Connection
 
 Decision theory is arguably the **most philosophically central** topic in alignment:
 

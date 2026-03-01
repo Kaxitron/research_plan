@@ -44,10 +44,6 @@
 - Optionally: ARENA Chapter 1 exercises (building GPT-3 from scratch)
   - https://arena-ch1-transformers.streamlit.app/
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-You now understand, from the ground up, how every major LLM works. This is the same architecture powering Claude, GPT-4, Gemini, and every frontier model. You can now read interpretability papers and understand every mathematical object they reference.
-
-## 🧠 Alignment Connection
-
-You now understand the complete architecture of every frontier AI system, including Claude. This is the architecture that alignment researchers are trying to make safe. Every interpretability technique — activation patching, logit attribution, circuit analysis — operates on this architecture. Every alignment training method — RLHF, constitutional AI, DPO — modifies these weights through backpropagation. Understanding the transformer end-to-end means you can now engage with the central question: *how do we ensure systems built on this architecture behave in accordance with human values?*
+You now understand the complete architecture of every frontier AI system, including Claude. Every interpretability technique — activation patching, logit attribution, circuit analysis — operates on this architecture. Every alignment training method — RLHF, constitutional AI, DPO — modifies these weights through backpropagation. Understanding the transformer end-to-end means you can now engage with the central question: *how do we ensure systems built on this architecture behave in accordance with human values?*

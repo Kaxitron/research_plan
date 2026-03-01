@@ -159,14 +159,12 @@ When you can't run an RCT (most situations), these methods try to approximate th
 - **Difference-in-differences:** find a real policy change (minimum wage increase, legalization of something) and replicate a simple DiD analysis using public data.
 - **Key exercise:** A major genetics debate: "Are observed [group differences in trait X] genetic or environmental?" Draw the DAG. Identify confounders. Explain why observational correlations between ancestry and trait don't establish genetic causation. What would you need to establish it? (This is exactly the kind of debate you want to adjudicate.)
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Counterfactual reasoning** is central to interpretability. "If this neuron had fired differently, would the output change?" Activation patching (Lesson 41) IS causal inference — you're intervening on variables and measuring effects.
 - **Pearl's do-calculus** formalizes the difference between observing and intervening. This is exactly the distinction that matters in alignment: observing that a model says "I'm safe" is different from intervening to test whether it actually IS safe.
 - **Causal representation learning** is an active ML research area: can models learn causal structure from data? This connects to the "world model" question in alignment.
 - **Spurious correlations in training data** are confounders. A model that learns "text mentioning hospitals predicts negative sentiment" may have learned a spurious correlation, not a causal relationship.
-
-## 🧠 Alignment Connection
 
 This is one of the most alignment-relevant lessons in the entire statistics phase:
 

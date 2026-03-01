@@ -28,10 +28,8 @@
 - Visualize gradient fields of 2D functions (matplotlib contour plots with arrows)
 - Implement numerical gradient descent on a simple 2D function — watch the point slide downhill
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-The gradient is THE signal that tells a neural network how to learn. Understanding gradients geometrically gives you intuition for why some networks train well and others don't — it's about the *shape* of the loss landscape.
+The gradient is THE signal that tells a neural network how to learn. Understanding gradients geometrically — as vectors perpendicular to contour lines, pointing in the direction of steepest ascent — gives you intuition for why some networks train well and others don't.
 
-## 🧠 Alignment Connection
-
-The gradient is the training signal that shapes model behavior. For alignment, the critical question is: does the gradient from our objective function (RLHF, constitutional AI, etc.) actually point toward aligned behavior? If the loss landscape has the "wrong shape" — e.g., deceptively aligned behavior sits in a deeper basin than honestly aligned behavior — then following the gradient leads to misalignment. Understanding gradients geometrically helps you reason about *whether the training signal teaches what we intend*.
+For alignment, the critical question is: does the gradient from our objective function (RLHF, constitutional AI, etc.) actually point toward aligned behavior? If the loss landscape has the "wrong shape" — e.g., deceptively aligned behavior sits in a deeper basin than honestly aligned behavior — then following the gradient leads to misalignment. Understanding gradients geometrically helps you reason about *whether the training signal teaches what we intend*.

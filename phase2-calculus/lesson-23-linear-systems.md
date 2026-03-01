@@ -85,13 +85,11 @@ The eigenvalues of A determine the **phase portrait** — the complete qualitati
 - **Linearization practice:** for the nonlinear system dx/dt = x - x³, dy/dt = -y, find all fixed points. At each one, compute the Jacobian and classify the fixed point. Draw the full phase portrait.
 - **Key exercise:** the loss function L(w₁, w₂) = (w₁² - 1)² + w₂² has three critical points: (0,0), (1,0), (-1,0). Compute the Hessian at each. From the eigenvalues, determine which are minima, maxima, or saddle points. Predict the gradient flow behavior near each. Then simulate gradient descent from 20 random initial conditions and overlay on a contour plot to verify.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Hessian eigenvalues → training behavior:** this is the most direct application. The spectrum of the Hessian at a critical point tells you everything about local convergence: the largest eigenvalue limits your learning rate, the smallest determines how slow the slowest direction converges, and the condition number is their ratio.
 - **Saddle points dominate in high dimensions:** in a d-dimensional loss landscape, a random critical point has roughly d/2 positive and d/2 negative Hessian eigenvalues — it's a saddle. True local minima become exponentially rare as d increases. This is why gradient descent works despite non-convexity: it just escapes saddles along the unstable directions.
 - **Preconditioning and natural gradient:** Adam, RMSProp, and natural gradient methods all modify the dynamics to improve conditioning. They effectively change the phase portrait near critical points from elongated to round.
-
-## 🧠 Alignment Connection
 
 - **Basin structure as alignment landscape:** if aligned behavior corresponds to certain basins and misaligned behavior to others, the relative sizes and positions of basins determine alignment probability. Phase portraits visualize this directly.
 - **Saddle escape determines capabilities:** when training encounters a saddle point, *which* unstable direction it escapes along determines what capability is learned. The choice of optimizer and noise level influences this selection — a lever for alignment.

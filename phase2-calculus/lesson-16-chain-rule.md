@@ -30,6 +30,6 @@
 - Draw a computation graph for L = (wx + b - y)² and manually trace gradients backward
 - **Build micrograd (Part 1):** Start Karpathy's Lecture 1 and implement a tiny autograd engine
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 Backpropagation is the *single most important algorithm* in deep learning. For alignment: understanding backprop lets you reason about *what the training signal actually looks like* for different objectives — central to understanding why models behave the way they do.

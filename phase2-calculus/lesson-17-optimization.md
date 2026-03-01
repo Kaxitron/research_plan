@@ -30,6 +30,6 @@
 - Train a small neural network on simple 2D data
 - Experiment: learning rate 0.001 vs 0.1 vs 10 — what happens?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 The optimizer shapes what solutions the network finds. For alignment, the "attractor basins" in the loss landscape determine what behaviors emerge. Understanding optimization helps you reason about: "Why does the network learn *this* strategy instead of *that* one?"

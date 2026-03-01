@@ -72,13 +72,11 @@
 - **MAP = regularized MLE:** show numerically that MAP estimation with a Gaussian prior N(0, λ⁻¹I) gives the same answer as ridge regression with penalty λ.
 - **Demonstrate prior sensitivity:** for the same dataset, compute posteriors with different priors (strong, weak, misspecified). When does the prior matter? When does the data overwhelm it?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Every regularized neural network** is implicitly performing MAP estimation under some prior. Weight decay = Gaussian prior. Understanding this reframes regularization from "engineering trick" to "principled belief."
 - **Transfer learning as prior:** a pretrained model provides an informed prior for fine-tuning. The pretrained weights encode beliefs learned from the pretraining data.
 - **Bayesian neural networks** maintain a distribution over weights instead of point estimates. This gives principled uncertainty quantification — critical for safety applications.
-
-## 🧠 Alignment Connection
 
 - **Calibrated uncertainty is safety-critical.** An aligned AI should know what it doesn't know. Bayesian reasoning provides the normative standard for calibration.
 - **Prior specification is value specification.** The prior encodes what you believe before seeing data. For alignment, the prior encodes what you value before observing behavior. Getting the prior right IS the alignment problem in Bayesian dress.

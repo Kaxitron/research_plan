@@ -33,10 +33,8 @@
 - Compute an attention matrix for a small sequence, visualize as heatmap
 - Begin Karpathy's "Let's build GPT" (Lecture 7)
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
-The attention mechanism is the heart of every modern LLM, including Claude. Interpretability researchers reverse-engineer *what each head learns to attend to* — some copy tokens, some track syntax, some handle pronouns. Understanding attention mechanistically is the foundation of alignment research at Anthropic.
+The attention mechanism is the heart of every modern LLM, including Claude. Alignment researchers at Anthropic and elsewhere analyze *what* each head learns to attend to: some heads copy tokens, some track syntax, some handle entity tracking. Crucially, some heads learn to attend to safety-relevant patterns — detecting harmful requests, tracking conversation context for consistency, or implementing "refusal circuits."
 
-## 🧠 Alignment Connection
-
-Attention patterns are the most interpretable part of transformer behavior. Alignment researchers at Anthropic and elsewhere analyze *what* each head attends to: some heads copy tokens, some track syntax, some handle entity tracking. Crucially, some heads learn to attend to safety-relevant patterns — detecting harmful requests, tracking conversation context for consistency, or implementing "refusal circuits." Understanding attention mechanistically is the foundation for understanding how models implement (or fail to implement) aligned behavior. The **induction head** — a specific attention circuit that learns in-context learning — is the most important circuit discovery in mechanistic interpretability.
+The **induction head** — a specific attention circuit that learns in-context learning — is the most important circuit discovery in mechanistic interpretability. Understanding attention mechanistically is the foundation for understanding how models implement (or fail to implement) aligned behavior.

@@ -99,11 +99,9 @@
 - **LLC tracking exercise:** If tools are available (e.g., from Timaeus), estimate the LLC during training of a small model. Plot it over training steps. Look for discontinuities corresponding to phase transitions.
 - **Key exercise:** Take the grokking demo from Lesson 18. At the moment of grokking (sudden generalization), what happens to the internal structure? How would you interpret this as a phase transition between singularities?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 SLT explains the central mystery of deep learning: why do overparameterized models generalize? The answer isn't "regularization" (though that helps) — it's that the effective complexity (RLCT) is much smaller than the parameter count. The singularities in the loss landscape enforce a form of implicit simplicity bias. Understanding this is understanding *why* deep learning works at all.
-
-## 🧠 Alignment Connection
 
 SLT is one of the most promising mathematical frameworks for alignment because it connects three things that alignment needs connected:
 

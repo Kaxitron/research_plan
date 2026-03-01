@@ -83,11 +83,9 @@
 - **Emergence simulation:** Create a simple task with a threshold (e.g., multi-digit addition). Train models of increasing size. Plot accuracy vs. size. See the sharp transition. Then plot log-probability and see it's smoother.
 - **Key exercise:** You're advising a government on AI safety policy. Models below 100B parameters show no signs of deceptive behavior. Should you conclude models above 100B are also safe? Write up the argument using the concepts from this lesson.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 Scaling laws inform every major decision in AI development: how much compute to buy, how much data to collect, when to expect new capabilities, and whether safety techniques that work at current scale will work at future scale. The answer to "will alignment keep up with capabilities?" depends critically on whether alignment insights scale as well as raw performance.
-
-## 🧠 Alignment Connection
 
 This is where alignment meets reality:
 - **Predictable capabilities** (from scaling laws) can be prepared for

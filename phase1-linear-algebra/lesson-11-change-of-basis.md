@@ -138,7 +138,7 @@ This hierarchy matters because knowing what TYPE a matrix is tells you what tool
 - **Positive definiteness:** Create a symmetric matrix. Compute eigenvalues. If all positive, verify xᵀAx > 0 for random x. If some negative, find x where xᵀAx < 0.
 - **Key exercise:** Take the covariance matrix of 2D data. Show it's symmetric. Show it's PSD. Find eigenvalues and eigenvectors — these are the PCA directions and variances.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 **Change of basis** is fundamental to interpretability. When researchers say "analyze this in the feature basis instead of the neuron basis," they mean a change of basis. Sparse autoencoders find a new basis (feature directions) where activations look sparse and interpretable, rather than dense and opaque in the neuron basis.
 
@@ -150,8 +150,6 @@ This hierarchy matters because knowing what TYPE a matrix is tells you what tool
 - **Spectral norm** of weight matrices bounds how much a layer amplifies signals
 
 **Positive definiteness** of the Hessian tells you about loss landscape curvature. The ratio of largest to smallest Hessian eigenvalue (the **condition number**) measures how "elongated" the landscape is — high condition numbers make optimization slow (steep in one direction, flat in another).
-
-## 🧠 Alignment Connection
 
 **Singular Learning Theory** (SLT) cares deeply about the Hessian and its spectral properties at singularities in the loss landscape. Phase transitions — when a model suddenly "learns" a new capability — correspond to changes in effective dimensionality, measured through eigenvalue analysis. Understanding norms and positive definiteness gives you the vocabulary for this cutting-edge alignment theory.
 

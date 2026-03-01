@@ -54,12 +54,8 @@
 - Implement Monte Carlo estimation of π by sampling random points in [0,1]² and counting those inside the unit circle. Plot convergence vs sample size.
 - Compute the normalization constant of a 2D Gaussian with covariance Σ = [[2,1],[1,3]] by diagonalizing Σ and using the change-of-variables formula.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **Normalizing flows** are literally a chain of change-of-variables transformations, each with a tractable Jacobian determinant. The whole architecture is designed to make this integral formula efficient.
 - **The reparameterization trick** in VAEs: instead of sampling z ~ q(z|x), write z = μ + σε where ε ~ N(0,1). This is a change of variables that makes the gradient flow through the sampling step.
-- **Bayesian computation** is fundamentally about high-dimensional integrals. Every technique in Lesson 36 is a strategy for approximating intractable integrals.
-
-## 🧠 Alignment Connection
-
-Bayesian reasoning — which requires integration over parameter spaces — is central to alignment. Questions like "how confident should we be that this model is safe?" require integrating over possible model behaviors weighted by their probability. The **evidence integral** P(safe behavior) = ∫ P(safe | θ) P(θ | data) dθ is exactly the kind of high-dimensional integral you study here. Tractable approximations to these integrals (variational inference, MCMC) are the computational backbone of uncertainty quantification in AI safety.
+- **Bayesian computation** is fundamentally about high-dimensional integrals. Questions like "how confident should we be that this model is safe?" require integrating over possible model behaviors: P(safe) = ∫ P(safe | θ) P(θ | data) dθ. Tractable approximations to these integrals (variational inference, MCMC) are the computational backbone of uncertainty quantification in AI safety.

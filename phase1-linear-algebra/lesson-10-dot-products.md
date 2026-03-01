@@ -78,7 +78,7 @@
 - **Projection matrix:** For a 2D subspace in ℝ³ (defined by matrix A), compute P = A(AᵀA)⁻¹Aᵀ. Verify P² = P. Apply it to several vectors and see they all land in the plane.
 - **Key exercise:** Take two non-orthogonal vectors in ℝ². Compute their dot product. Rotate one until the dot product is zero. Verify cos(θ) = 0 matches.
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 The dot product is the **atomic operation of attention.** Here's exactly how:
 
@@ -94,8 +94,6 @@ So attention = dot products (this lesson) → softmax → linear combinations (L
 **Orthogonality and superposition:** If all feature directions in a neural network were orthogonal, there'd be no interference between features. But in a 768-dimensional residual stream, a model might want to represent 10,000+ features. You can't fit 10,000 orthogonal vectors in 768 dimensions. So features are *almost* orthogonal, and the interference between non-orthogonal directions creates superposition.
 
 **Projections and probing:** When interpretability researchers train a "linear probe" to predict some property (e.g., part of speech) from activations, they're finding a projection direction. The probe's weight vector defines a direction in activation space, and the dot product of an activation with this direction gives the prediction.
-
-## 🧠 Alignment Connection
 
 When Anthropic's sparse autoencoder work decomposes model activations into interpretable features, they're looking for a set of *approximately orthogonal* directions in activation space. The better separated (more orthogonal) the features, the more interpretable the model. The entire research program of "finding features" is asking: what are the natural near-orthogonal directions in this high-dimensional space?
 

@@ -104,13 +104,11 @@ Imagine a topographic map (contour lines of f) with a trail drawn on it (the con
 - **Regularization as constraint:** Train a linear model with varying L2 regularization strengths. For each λ, compute the norm of the weights ||w||². Plot λ vs ||w||². See that larger λ → smaller ||w||² — you're tightening the constraint.
 - **Key exercise:** You're designing an alignment objective. The AI should maximize helpfulness H(θ) subject to harmlessness score S(θ) ≥ threshold. Write this as a constrained optimization problem. Set up the Lagrangian. What does λ represent? (The "price" of safety — how much helpfulness you sacrifice per unit of harmlessness.) What happens when λ → 0? When λ → ∞?
 
-## 🔗 ML Connection
+## 🔗 ML & Alignment Connection
 
 - **L2 regularization = constrained optimization:** minimizing loss + λ||w||² is equivalent to minimizing loss subject to ||w||² ≤ C. The regularization strength λ IS the Lagrange multiplier. This unifies the "engineering trick" of weight decay with the formal math of constraints.
 - **SVMs are entirely built on Lagrange multipliers:** the maximum-margin hyperplane comes from a constrained optimization problem. The dual reveals which data points are "support vectors" (the ones with non-zero λ).
 - **KKT conditions appear in**: LASSO (L1 regularization), constrained policy optimization in RL, and safety-constrained training objectives.
-
-## 🧠 Alignment Connection
 
 **Alignment IS constrained optimization.** Almost every alignment technique can be framed this way:
 
@@ -122,7 +120,6 @@ Imagine a topographic map (contour lines of f) with a trail drawn on it (the con
 Understanding Lagrange multipliers gives you the vocabulary for the central tradeoff in alignment: **the alignment tax** — how much capability do you sacrifice for each unit of safety? That tradeoff IS λ.
 
 ---
-
 ## 📎 Appendix: Support Vector Machines — Constrained Optimization in Action
 
 > This section covers SVMs as the canonical *application* of everything above. It's optional but demonstrates that Lagrange multipliers aren't abstract — they're the mathematical engine behind a major ML algorithm.
