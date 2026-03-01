@@ -480,6 +480,38 @@ $$r^2 = \frac{\|\hat{y}\|^2}{\|\tilde{y}\|^2} = \frac{SSR}{SST} = \frac{\text{ex
 
 ---
 
+## 21. Derivatives and Differentials
+
+**The derivative** of f(x) is the instantaneous rate of change:
+
+$$\frac{df}{dx} = \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}$$
+
+**Differentials — what dx and df actually mean:**
+- **dx** = a tiny nudge in x (an infinitesimally small change to the input)
+- **df** = the resulting tiny nudge in f (the infinitesimally small change in the output caused by dx)
+- The derivative df/dx is literally a ratio of these two tiny quantities
+- Rearranging: **df = f'(x) · dx** — this says "the tiny change in output = slope × tiny change in input"
+- This is just **rise = slope × run** at infinitesimal scale
+
+**Core derivative rules:**
+
+| Function | Derivative |
+|----------|-----------|
+| $x^n$ | $nx^{n-1}$ |
+| $e^x$ | $e^x$ |
+| $\ln(x)$ | $1/x$ |
+| $\sin(x)$ | $\cos(x)$ |
+| $\cos(x)$ | $-\sin(x)$ |
+| $\sigma(x) = \frac{1}{1+e^{-x}}$ (sigmoid) | $\sigma(x)(1 - \sigma(x))$ |
+| $\tanh(x)$ | $1 - \tanh^2(x)$ |
+| $\text{ReLU}(x) = \max(0,x)$ | $0$ if $x<0$, $1$ if $x>0$, undefined at $0$ |
+
+**Product rule:** $(fg)' = f'g + fg'$
+
+**Quotient rule:** $(f/g)' = (f'g - fg') / g^2$
+
+---
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
@@ -497,8 +529,9 @@ $$r^2 = \frac{\|\hat{y}\|^2}{\|\tilde{y}\|^2} = \frac{SSR}{SST} = \frac{\text{ex
 | rank + nullity = n | Rank-nullity theorem |
 | r = cos(θ) of centered data | Correlation = cosine similarity |
 | r² = SSR/SST | Fraction of variance explained |
+| df = f'(x) dx | Differential: rise = slope × run |
 
 ---
 
-*Last updated: February 2026 — Phase 1 (Linear Algebra) + early statistics preview*
+*Last updated: February 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus) started*
 
