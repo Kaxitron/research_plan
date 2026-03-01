@@ -159,20 +159,20 @@
   }
   .canvas-controls {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 8px;
+    left: 8px;
     z-index: 10;
     display: flex;
-    gap: 4px;
+    gap: 2px;
     background: var(--bg-raised);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 3px;
+    border-radius: 5px;
+    padding: 2px;
   }
   .canvas-btn {
-    padding: 5px 12px;
+    padding: 3px 7px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 9px;
     background: transparent;
     color: var(--text-dim);
     border: none;
@@ -409,7 +409,7 @@
       justify-content: center;
       z-index: 10;
     }
-    .canvas-controls .canvas-btn { padding: 8px 14px; font-size: 11px; flex: 1; text-align: center; }
+    .canvas-controls .canvas-btn { padding: 6px 10px; font-size: 9px; flex: 1; text-align: center; }
 
     .detail-panel {
       display: none;
@@ -1990,19 +1990,19 @@ function renderGraph() {
   });
 
   const phaseLabels = [
-    { x: 70,   y: -12,  color: '#64748b', label: 'CS FOUNDATIONS' },
-    { x: 210,   y: -12,  color: '#94a3b8', label: 'P0 ML TOOLS' },
-    { x: 240,   y: 178,  color: '#6ee7b7', label: 'P1 LINEAR ALGEBRA' },
-    { x: 470,  y: 65,   color: '#818cf8', label: 'P2 CALCULUS & DIFF EQ' },
-    { x: 700,  y: 25,   color: '#f9a8d4', label: 'P3 PROB & STATS' },
-    { x: 880,  y: 25,   color: '#fbbf24', label: 'P4 NN & INTERP' },
-    { x: 1080,  y: 25,   color: '#e879f9', label: 'P5 EXTENDED MATH' },
-    { x: 1280, y: 108,  color: '#c084fc', label: 'P6 ALIGNMENT' },
+    { x: 70,   y: -20,  color: '#64748b', label: 'CS FOUND.' },
+    { x: 210,  y: -20,  color: '#94a3b8', label: 'P0 TOOLS' },
+    { x: 240,  y: 178,  color: '#6ee7b7', label: 'P1 LIN ALG' },
+    { x: 470,  y: 50,   color: '#818cf8', label: 'P2 CALC' },
+    { x: 700,  y: 30,   color: '#f9a8d4', label: 'P3 PROB' },
+    { x: 880,  y: 30,   color: '#fbbf24', label: 'P4 NN' },
+    { x: 1080, y: 30,   color: '#e879f9', label: 'P5 MATH' },
+    { x: 1280, y: 110,  color: '#c084fc', label: 'P6 ALIGN' },
   ];
 
   let labelsHtml = '';
   phaseLabels.forEach(pl => {
-    labelsHtml += `<text x="${tx(pl.x)}" y="${ty(pl.y)}" fill="${pl.color}" opacity="0.3" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" letter-spacing="2" text-anchor="middle">${pl.label}</text>`;
+    labelsHtml += `<text x="${tx(pl.x)}" y="${ty(pl.y)}" fill="${pl.color}" opacity="0.3" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1.5" text-anchor="middle">${pl.label}</text>`;
   });
 
   svg.innerHTML = labelsHtml + edgesHtml + nodesHtml;
