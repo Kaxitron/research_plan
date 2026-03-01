@@ -199,7 +199,8 @@ A structured self-study curriculum building from mathematical foundations throug
 | Exam 5B: Topology & Logic | Lessons 57–62 | 60 min | [Exam](assessments/exam-5b-topology-logic.md) · [Key](assessments/exam-5b-topology-logic-answer-key.md) |
 | Exam 6A: Rational Agency | Lessons 63–65 | 60 min | [Exam](assessments/exam-6a-rational-agency.md) · [Key](assessments/exam-6a-rational-agency-answer-key.md) |
 | Exam 6B: Alignment Capstone | Lessons 66–67 + All | 90 min | [Exam](assessments/exam-6b-alignment-capstone.md) · [Key](assessments/exam-6b-alignment-capstone-answer-key.md) |
-| 🏔 Comprehensive Capstone | All Phases | ~5 hrs | [Project](assessments/capstone-comprehensive-project.md) |
+| 🏔 The Alignment Observatory | All Phases | ~5 hrs | [Project](assessments/final-project-alignment-observatory.md) |
+| 🏔 The Researcher's Gauntlet | All Phases | ~5 hrs | [Project](assessments/capstone-comprehensive-project.md) |
 
 ---
 
