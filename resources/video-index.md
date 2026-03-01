@@ -101,6 +101,29 @@
 
 ---
 
+## NeetCode — Data Structures, Algorithms & Coding Interviews
+
+**Channel:** [youtube.com/@NeetCode](https://www.youtube.com/@NeetCode)
+**Roadmap:** [neetcode.io/roadmap](https://neetcode.io/roadmap)
+
+*The best resource for LeetCode-style problem solving. NeetCode explains the intuition behind each pattern (two pointers, sliding window, DP, etc.) before walking through solutions. The NeetCode 150 roadmap organizes problems by topic in the right learning order.*
+
+| Topic / Playlist | Lesson | Notes |
+|-----------------|--------|-------|
+| Python for Coding Interviews | CS-01 | Compact Python syntax refresher for problem solving |
+| Arrays & Hashing | CS-04 | Two Sum, Group Anagrams, frequency counting patterns |
+| Two Pointers | CS-04 | Sorted array tricks, container problems |
+| Sliding Window | CS-04 | Longest substring, minimum window patterns |
+| Stack | CS-05 | Valid parentheses, monotonic stack |
+| Linked List | CS-05 | Reverse, merge, cycle detection, fast/slow pointers |
+| Binary Search | CS-07 | Classic + "binary search on the answer" pattern |
+| Trees | CS-06 | BFS, DFS, BST validation, LCA |
+| Graphs | CS-06 | DFS/BFS on grids, topological sort, course schedule |
+| Dynamic Programming (1D) | CS-08 | Climbing stairs, house robber, coin change |
+| Dynamic Programming (2D) | CS-08 | LCS, edit distance, unique paths |
+
+---
+
 ## Steve Brunton (Eigensteve) — Applied Mathematics
 
 **Channel:** [youtube.com/c/Eigensteve](https://www.youtube.com/c/Eigensteve)
@@ -335,6 +358,16 @@
 
 | Lesson | Topic | Primary Video Source(s) |
 |--------|-------|------------------------|
+| CS-01 | Python Refresher | NeetCode (Python for Coding Interviews) |
+| CS-02 | C++ Refresher | NeetCode |
+| CS-03 | OOP | NeetCode |
+| CS-04 | Arrays & Hashing | NeetCode (Arrays & Hashing, Sliding Window) |
+| CS-05 | Linked Lists, Stacks & Queues | NeetCode (Linked List, Stack) |
+| CS-06 | Trees & Graphs | NeetCode (Trees, Graphs) |
+| CS-07 | Sorting & Searching | NeetCode (Binary Search) |
+| CS-08 | Recursion & DP | NeetCode (Dynamic Programming) |
+| CS-09 | Discrete Math | Trefor Bazett (Discrete Math) |
+| CS-10 | Computer Organization | Crash Course CS, Ben Eater |
 | 0 | Setup & Motivation | Welch Labs (How to learn AI) |
 | 1 | PyTorch Foundations | Karpathy (Building micrograd) |
 | 2 | Vectors | 3B1B LA Ch. 1, Trefor Bazett |

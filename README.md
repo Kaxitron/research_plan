@@ -1,12 +1,31 @@
 # AI Alignment Research Curriculum
 
-A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 68 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
+A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 78 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
 
-**Start date:** February 21, 2026 · **Estimated total:** 350–500 hours · **Dashboard:** [Interactive Curriculum Map](curriculum-dashboard.html)
+**Start date:** February 21, 2026 · **Estimated total:** 400–560 hours · **Dashboard:** [Interactive Curriculum Map](curriculum-dashboard.html)
 
 ---
 
-## Phase 0: Setup & Tools (4–6h)
+## Phase 0: Setup & Foundations
+
+### CS Foundations (30–45h)
+
+*Rebuild programming fluency and review core CS theory. LeetCode-style problems throughout.*
+
+| # | Lesson | Status |
+|---|--------|--------|
+| CS-01 | [Python Refresher — Getting Your Hands Dirty Again](phase0-cs-foundations/lesson-cs01-python-refresher.md) | ☐ |
+| CS-02 | [C++ Refresher — Memory, Pointers, and the STL](phase0-cs-foundations/lesson-cs02-cpp-refresher.md) | ☐ |
+| CS-03 | [Object-Oriented Programming — Classes in Python & C++](phase0-cs-foundations/lesson-cs03-oop.md) | ☐ |
+| CS-04 | [Arrays, Strings, and Hashing](phase0-cs-foundations/lesson-cs04-arrays-hashing.md) | ☐ |
+| CS-05 | [Linked Lists, Stacks, and Queues](phase0-cs-foundations/lesson-cs05-linked-lists-stacks-queues.md) | ☐ |
+| CS-06 | [Trees and Graphs](phase0-cs-foundations/lesson-cs06-trees-graphs.md) | ☐ |
+| CS-07 | [Sorting and Searching — Complexity in Action](phase0-cs-foundations/lesson-cs07-sorting-searching.md) | ☐ |
+| CS-08 | [Recursion and Dynamic Programming](phase0-cs-foundations/lesson-cs08-recursion-dp.md) | ☐ |
+| CS-09 | [Discrete Math Essentials — Logic, Counting, and Graphs](phase0-cs-foundations/lesson-cs09-discrete-math.md) | ☐ |
+| CS-10 | [Computer Organization — How Code Actually Runs](phase0-cs-foundations/lesson-cs10-computer-organization.md) | ☐ |
+
+### ML Tools (4–6h)
 
 | # | Lesson | Status |
 |---|--------|--------|
