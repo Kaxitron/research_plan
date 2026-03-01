@@ -410,6 +410,7 @@
       z-index: 10;
     }
     .canvas-controls .canvas-btn { padding: 6px 10px; font-size: 9px; flex: 1; text-align: center; }
+    #calendar-view { padding-top: 50px; }
 
     .detail-panel {
       display: none;
@@ -821,125 +822,9 @@
     color: var(--text-dim);
     margin-left: auto;
   }
-
-  /* Hours Entry Modal */
-  .hours-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-  .hours-modal-overlay.visible {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .hours-modal {
-    background: var(--bg-panel);
-    border: 1px solid var(--border-bright);
-    border-radius: 12px;
-    padding: 28px 32px;
-    min-width: 340px;
-    max-width: 420px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    transform: translateY(10px);
-    transition: transform 0.2s ease;
-  }
-  .hours-modal-overlay.visible .hours-modal {
-    transform: translateY(0);
-  }
-  .hours-modal h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 18px;
-    color: var(--text-bright);
-    margin-bottom: 4px;
-    font-weight: 400;
-  }
-  .hours-modal .modal-subtitle {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-  }
-  .hours-modal .modal-estimate {
-    font-size: 12px;
-    color: var(--accent-5);
-    margin-bottom: 16px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .hours-modal input[type="number"] {
-    width: 100%;
-    padding: 10px 14px;
-    font-size: 18px;
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--bg);
-    border: 1px solid var(--border-bright);
-    border-radius: 8px;
-    color: var(--text-bright);
-    outline: none;
-    margin-bottom: 20px;
-    transition: border-color 0.2s;
-  }
-  .hours-modal input[type="number"]:focus {
-    border-color: var(--accent-1);
-  }
-  .hours-modal input[type="number"]::-webkit-inner-spin-button {
-    opacity: 1;
-  }
-  .hours-modal-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-  }
-  .hours-modal-buttons button {
-    padding: 8px 20px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    transition: all 0.15s;
-  }
-  .hours-modal-buttons .modal-cancel {
-    background: transparent;
-    color: var(--text-dim);
-  }
-  .hours-modal-buttons .modal-cancel:hover {
-    background: var(--bg-hover);
-    color: var(--text);
-  }
-  .hours-modal-buttons .modal-confirm {
-    background: var(--accent-1);
-    color: #0a0a0f;
-    border-color: var(--accent-1);
-  }
-  .hours-modal-buttons .modal-confirm:hover {
-    filter: brightness(1.1);
-  }
 </style>
 </head>
 <body>
-
-<!-- Hours Entry Modal -->
-<div class="hours-modal-overlay" id="hours-modal">
-  <div class="hours-modal">
-    <h3 id="hours-modal-title">Lesson Complete!</h3>
-    <div class="modal-subtitle" id="hours-modal-subtitle">How many hours did you spend on this lesson?</div>
-    <div class="modal-estimate" id="hours-modal-estimate">Estimated: 3–5h</div>
-    <input type="number" id="hours-modal-input" min="0.5" max="100" step="0.5" placeholder="e.g. 3.5" />
-    <div class="hours-modal-buttons">
-      <button class="modal-cancel" onclick="closeHoursModal(false)">Cancel</button>
-      <button class="modal-confirm" onclick="closeHoursModal(true)">Save</button>
-    </div>
-  </div>
-</div>
-
 <div class="app">
   <div class="header">
     <h1>The Path to <span>AI Alignment</span></h1>
@@ -953,9 +838,14 @@
       <div>
         ~<span class="stat-value" id="stat-hours-done">0</span><span style="color:#6ee7b7">h done</span> · ~<span class="stat-value" id="stat-hours-left">0</span><span style="color:#fbbf24">h remaining</span>
       </div>
-      <button class="sync-btn" id="sync-btn" onclick="syncReadmeToGithub()" title="Update README.md on GitHub with current progress">
-        <span id="sync-icon">⬆</span> Sync README
-      </button>
+      <div style="display:flex;gap:6px">
+        <button class="sync-btn" id="push-btn" onclick="syncReadmeToGithub()" title="Push local progress to README on GitHub">
+          <span id="push-icon">⬆</span> Push
+        </button>
+        <button class="sync-btn" id="pull-btn" onclick="pullStatusesFromGithub(true)" title="Pull progress from README on GitHub (overwrites local)">
+          <span id="pull-icon">⬇</span> Pull
+        </button>
+      </div>
     </div>
   </div>
 
@@ -998,14 +888,14 @@
 // ═══════════════════════════════════════════════
 
 const PHASES = [
-  { id: 'p0cs', name: 'CS Foundations', color: '#64748b', hours: '31–42h' },
+  { id: 'p0cs', name: 'CS Foundations', color: '#64748b', hours: '30–45h' },
   { id: 'p0', name: 'ML Tools', color: '#94a3b8', hours: '4–6h' },
-  { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '34–49h' },
-  { id: 'p2', name: 'Calculus & Diff Eq', color: '#818cf8', hours: '66–94h' },
-  { id: 'p3', name: 'Probability & Statistics', color: '#f9a8d4', hours: '51–66h' },
-  { id: 'p4', name: 'Machine Learning & Interp', color: '#fbbf24', hours: '53–74h' },
-  { id: 'p5', name: 'Extended Math', color: '#e879f9', hours: '54–75h' },
-  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '23–32h' },
+  { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '35–50h' },
+  { id: 'p2', name: 'Calculus & Diff Eq', color: '#818cf8', hours: '55–80h' },
+  { id: 'p3', name: 'Probability & Statistics', color: '#f9a8d4', hours: '45–65h' },
+  { id: 'p4', name: 'Machine Learning & Interp', color: '#fbbf24', hours: '45–65h' },
+  { id: 'p5', name: 'Extended Math', color: '#e879f9', hours: '50–70h' },
+  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '20–30h' },
   { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
 ];
 
@@ -1235,7 +1125,7 @@ const LESSONS = [
   // ─── Phase 2: Calculus, Multivariable, Diff Eq ───
   {
     id: 13, phase: 'p2', title: 'Calculus Fundamentals',
-    status: 'not-started', hours: '12–18h', label: '13',
+    status: 'not-started', hours: '3–4h', label: '13',
     prereqs: [12], crossPhaseLinks: [],
     conceptChecks: ['Limits and continuity', 'Derivative as rate of change', 'Fundamental theorem of calculus'],
     failureModes: ['Rusty mechanics blocking conceptual understanding'],
@@ -1298,7 +1188,7 @@ const LESSONS = [
   },
   {
     id: 20, phase: 'p2', title: 'Multiple Integration and Change of Variables',
-    status: 'not-started', hours: '4–6h', label: '20',
+    status: 'not-started', hours: '3–5h', label: '20',
     prereqs: [19], crossPhaseLinks: [7],
     conceptChecks: ['Double/triple integrals', 'Jacobian determinant in substitution', 'Gaussian integral', 'Monte Carlo integration'],
     failureModes: ['Not connecting Jacobian to the determinant from Lesson 7'],
@@ -1307,7 +1197,7 @@ const LESSONS = [
   },
   {
     id: 21, phase: 'p2', title: 'Taylor Expansions and Implicit Function Theorem',
-    status: 'not-started', hours: '4–6h', label: '21',
+    status: 'not-started', hours: '3–5h', label: '21',
     prereqs: [20], crossPhaseLinks: [8],
     conceptChecks: ['Multivariate Taylor expansion', 'Hessian IS second-order term', 'IFT: when can you solve implicitly', 'Big-O notation'],
     failureModes: ['Not seeing Taylor expansion as the foundation of ALL local analysis in optimization'],
@@ -1316,7 +1206,7 @@ const LESSONS = [
   },
   {
     id: 22, phase: 'p2', title: 'Introduction to ODEs',
-    status: 'not-started', hours: '4–5h', label: '22',
+    status: 'not-started', hours: '3–4h', label: '22',
     prereqs: [21], crossPhaseLinks: [],
     conceptChecks: ['ODEs as vector fields', 'Euler\'s method', 'Euler\'s method = gradient descent'],
     failureModes: ['Missing the deep connection: training IS solving an ODE'],
@@ -1325,7 +1215,7 @@ const LESSONS = [
   },
   {
     id: 23, phase: 'p2', title: 'Linear Systems and Phase Portraits',
-    status: 'not-started', hours: '5–6h', label: '23',
+    status: 'not-started', hours: '4–5h', label: '23',
     prereqs: [22, 8], crossPhaseLinks: [],
     conceptChecks: ['Eigenvalue classification of fixed points', 'Phase portraits', 'Stability from eigenvalues'],
     failureModes: ['Not connecting eigenvalue sign/magnitude to training dynamics behavior'],
@@ -1334,7 +1224,7 @@ const LESSONS = [
   },
   {
     id: 24, phase: 'p2', title: 'Gradient Flow and Training Dynamics',
-    status: 'not-started', hours: '5–7h', label: '24',
+    status: 'not-started', hours: '4–5h', label: '24',
     prereqs: [23], crossPhaseLinks: [17],
     conceptChecks: ['dW/dt = -∇L as continuous gradient descent', 'Lyapunov proof loss decreases', 'Learning rate stability η < 2/λ_max'],
     failureModes: ['Treating gradient flow as abstract math disconnected from actual training'],
@@ -1343,7 +1233,7 @@ const LESSONS = [
   },
   {
     id: 25, phase: 'p2', title: 'Stability, Lyapunov Functions, Phase Transitions',
-    status: 'not-started', hours: '5–7h', label: '25',
+    status: 'not-started', hours: '4–5h', label: '25',
     prereqs: [24], crossPhaseLinks: [],
     conceptChecks: ['Bifurcation theory', 'Grokking as phase transition', 'Safety certificates via Lyapunov functions'],
     failureModes: ['Not seeing how stability theory gives formal safety guarantees'],
@@ -1352,7 +1242,7 @@ const LESSONS = [
   },
   {
     id: 26, phase: 'p2', title: 'Neural ODEs and Stochastic Dynamics',
-    status: 'not-started', hours: '4–6h', label: '26',
+    status: 'not-started', hours: '3–5h', label: '26',
     prereqs: [25], crossPhaseLinks: [],
     conceptChecks: ['ResNets as Euler steps', 'Adjoint method', 'SDEs for SGD', 'Flat vs sharp minima'],
     failureModes: ['Missing the ResNet ↔ ODE connection'],
@@ -1361,7 +1251,7 @@ const LESSONS = [
   },
   {
     id: 27, phase: 'p2', title: 'PDEs — Diffusion, Heat, and Generative Models',
-    status: 'not-started', hours: '5–7h', label: '27',
+    status: 'not-started', hours: '4–5h', label: '27',
     prereqs: [26], crossPhaseLinks: [],
     conceptChecks: ['Heat equation as Gaussian blurring', 'Fokker-Planck for SGD', 'Score functions and diffusion models', 'Fourier decomposition'],
     failureModes: ['Not connecting diffusion models to the heat equation — they ARE the same math'],
@@ -1371,7 +1261,7 @@ const LESSONS = [
   // ─── Phase 3: Probability & Statistics ───
   {
     id: 28, phase: 'p3', title: 'Probability Distributions and Bayes\' Theorem',
-    status: 'not-started', hours: '5–6h', label: '28',
+    status: 'not-started', hours: '4–5h', label: '28',
     prereqs: [27], crossPhaseLinks: [],
     conceptChecks: ['Discrete vs continuous distributions', 'Joint, marginal, conditional', 'Bayes\' theorem as update rule'],
     failureModes: ['Treating Bayes\' theorem as just a formula rather than a reasoning framework'],
@@ -1389,7 +1279,7 @@ const LESSONS = [
   },
   {
     id: 30, phase: 'p3', title: 'Maximum Likelihood Estimation',
-    status: 'not-started', hours: '4–6h', label: '30',
+    status: 'not-started', hours: '3–5h', label: '30',
     prereqs: [29], crossPhaseLinks: [17],
     conceptChecks: ['Likelihood function', 'Log-likelihood trick', 'MLE as optimization', 'MLE for Gaussian = least squares'],
     failureModes: ['Not seeing that ML training IS MLE'],
@@ -1398,7 +1288,7 @@ const LESSONS = [
   },
   {
     id: 31, phase: 'p3', title: 'Information Theory',
-    status: 'not-started', hours: '5–6h', label: '31',
+    status: 'not-started', hours: '4–5h', label: '31',
     prereqs: [30], crossPhaseLinks: [],
     conceptChecks: ['Entropy as uncertainty', 'KL divergence as distance', 'Cross-entropy loss derivation', 'Mutual information'],
     failureModes: ['Not connecting cross-entropy loss to KL divergence to MLE'],
@@ -1425,7 +1315,7 @@ const LESSONS = [
   },
   {
     id: 34, phase: 'p3', title: 'Regression — Linear to Logistic',
-    status: 'not-started', hours: '5–6h', label: '34',
+    status: 'not-started', hours: '4–5h', label: '34',
     prereqs: [33, 30], crossPhaseLinks: [9],
     conceptChecks: ['Linear regression = projection', 'Logistic regression = MLE for classification', 'Regularization as prior', 'Ridge vs Lasso'],
     failureModes: ['Not connecting regression to projection (Lesson 10) and SVD (Lesson 9)'],
@@ -1516,7 +1406,7 @@ const LESSONS = [
   },
   {
     id: 43, phase: 'p4', title: 'Attention — Dot Products in Action',
-    status: 'not-started', hours: '5–7h', label: '43',
+    status: 'not-started', hours: '4–6h', label: '43',
     prereqs: [42], crossPhaseLinks: [10, 9],
     conceptChecks: ['QKV as learned projections', 'Attention weights as soft lookup', 'Multi-head = multiple subspaces'],
     failureModes: ['Not connecting attention weights to dot product similarity (Lesson 10)'],
@@ -1525,7 +1415,7 @@ const LESSONS = [
   },
   {
     id: 44, phase: 'p4', title: 'Building a Transformer from Scratch',
-    status: 'not-started', hours: '8–10h', label: '44',
+    status: 'not-started', hours: '6–8h', label: '44',
     prereqs: [43], crossPhaseLinks: [],
     conceptChecks: ['Positional encoding', 'Layer norm', 'Residual stream', 'Full architecture assembly'],
     failureModes: ['Copy-pasting code without understanding each component mathematically'],
@@ -1534,7 +1424,7 @@ const LESSONS = [
   },
   {
     id: 45, phase: 'p4', title: 'Reinforcement Learning Foundations',
-    status: 'not-started', hours: '5–7h', label: '45',
+    status: 'not-started', hours: '4–6h', label: '45',
     prereqs: [44], crossPhaseLinks: [30],
     conceptChecks: ['MDP formalism', 'Policy gradient theorem', 'Reward shaping', 'PPO basics'],
     failureModes: ['Not connecting policy gradient to MLE — REINFORCE is MLE weighted by reward'],
@@ -1543,7 +1433,7 @@ const LESSONS = [
   },
   {
     id: 46, phase: 'p4', title: 'The LLM Training Pipeline',
-    status: 'not-started', hours: '5–7h', label: '46',
+    status: 'not-started', hours: '4–6h', label: '46',
     prereqs: [45], crossPhaseLinks: [31],
     conceptChecks: ['Pre-training → SFT → RLHF pipeline', 'KL penalty', 'Constitutional AI', 'Reward model training'],
     failureModes: ['Not seeing RLHF as a Bayesian prior over behaviors (KL penalty constrains posterior)'],
@@ -1587,7 +1477,7 @@ const LESSONS = [
   },
   {
     id: 50, phase: 'p4', title: 'Interpretability — Singular Learning Theory',
-    status: 'not-started', hours: '6–8h', label: '50',
+    status: 'not-started', hours: '5–7h', label: '50',
     prereqs: [49, 37], crossPhaseLinks: [],
     conceptChecks: ['RLCT as effective dimension', 'Why BIC fails for NNs', 'Local Learning Coefficient', 'Phase transitions as bifurcations'],
     failureModes: ['Treating SLT as inaccessible math — the core idea (singular models have lower effective dimension) is intuitive'],
@@ -1629,7 +1519,7 @@ const LESSONS = [
   // Abstract Algebra
   {
     id: 54, phase: 'p5', title: 'Groups — Symmetry as Mathematics',
-    status: 'not-started', hours: '5–6h', label: '54',
+    status: 'not-started', hours: '4–5h', label: '54',
     prereqs: [53], crossPhaseLinks: [],
     conceptChecks: ['Group axioms', 'Subgroups and Lagrange\'s theorem', 'Homomorphisms and isomorphisms', 'S_n (symmetric group)'],
     failureModes: ['Treating groups as abstract nonsense — they ARE the symmetries of neural networks'],
@@ -1638,7 +1528,7 @@ const LESSONS = [
   },
   {
     id: 55, phase: 'p5', title: 'Rings, Fields, and Algebraic Structures',
-    status: 'not-started', hours: '5–6h', label: '55',
+    status: 'not-started', hours: '4–5h', label: '55',
     prereqs: [54], crossPhaseLinks: [],
     conceptChecks: ['Ring axioms', 'Polynomial rings', 'Ideals and quotient rings', 'Fields and the Fundamental Theorem of Algebra'],
     failureModes: ['Not connecting polynomial rings to varieties — solutions of polynomials ARE geometric objects'],
@@ -1647,7 +1537,7 @@ const LESSONS = [
   },
   {
     id: 56, phase: 'p5', title: 'Group Actions, Representations, and NN Symmetry',
-    status: 'not-started', hours: '5–7h', label: '56',
+    status: 'not-started', hours: '4–6h', label: '56',
     prereqs: [55], crossPhaseLinks: [8, 50],
     conceptChecks: ['Group actions and orbits', 'Orbit-stabilizer theorem', 'Neural network permutation symmetry', 'Equivariant architectures', 'Representations as matrices'],
     failureModes: ['Not connecting the orbit-stabilizer theorem to SLT singularities'],
@@ -1657,7 +1547,7 @@ const LESSONS = [
   // Topology & Geometry
   {
     id: 57, phase: 'p5', title: 'Point-Set Topology',
-    status: 'not-started', hours: '5–7h', label: '57',
+    status: 'not-started', hours: '4–5h', label: '57',
     prereqs: [56], crossPhaseLinks: [],
     conceptChecks: ['Open sets and topological spaces', 'Continuity (topological)', 'Compactness guarantees optima exist', 'Connectedness of loss landscape level sets'],
     failureModes: ['Thinking topology is too abstract to be useful — compactness is why optimization works'],
@@ -1666,7 +1556,7 @@ const LESSONS = [
   },
   {
     id: 58, phase: 'p5', title: 'Homotopy and Fundamental Groups',
-    status: 'not-started', hours: '5–7h', label: '58',
+    status: 'not-started', hours: '4–5h', label: '58',
     prereqs: [57], crossPhaseLinks: [],
     conceptChecks: ['Homotopy equivalence', 'Fundamental group π₁', 'Covering spaces', 'Morse theory for loss landscapes'],
     failureModes: ['Not seeing Morse theory as the bridge between topology and optimization'],
@@ -1675,7 +1565,7 @@ const LESSONS = [
   },
   {
     id: 59, phase: 'p5', title: 'Manifolds and Tangent Spaces',
-    status: 'not-started', hours: '5–7h', label: '59',
+    status: 'not-started', hours: '4–6h', label: '59',
     prereqs: [58], crossPhaseLinks: [17],
     conceptChecks: ['Smooth manifolds', 'Tangent spaces and tangent bundles', 'Riemannian metrics', 'Natural gradient', 'Manifold hypothesis for data'],
     failureModes: ['Not connecting Riemannian gradient to the natural gradient in neural network optimization'],
@@ -1684,7 +1574,7 @@ const LESSONS = [
   },
   {
     id: 60, phase: 'p5', title: 'Algebraic Geometry — Singularities for SLT',
-    status: 'not-started', hours: '6–8h', label: '60',
+    status: 'not-started', hours: '5–7h', label: '60',
     prereqs: [59, 55], crossPhaseLinks: [50],
     conceptChecks: ['Algebraic varieties', 'Smooth vs singular points', 'Blow-ups resolve singularities', 'RLCT computation', 'Hironaka\'s theorem guarantees resolution'],
     failureModes: ['Being intimidated — the core idea (blow up singularities until smooth) is geometric and visual'],
@@ -1706,7 +1596,7 @@ const LESSONS = [
   },
   {
     id: 62, phase: 'p5', title: 'Gödel\'s Incompleteness and Löb\'s Theorem',
-    status: 'not-started', hours: '5–7h', label: '62',
+    status: 'not-started', hours: '4–6h', label: '62',
     prereqs: [61, 51], crossPhaseLinks: [],
     conceptChecks: ['First incompleteness theorem', 'Second incompleteness theorem', 'Löb\'s theorem constrains self-trust', 'Diagonal lemma and self-reference', 'Implications for recursive self-improvement'],
     failureModes: ['Not seeing Löb\'s theorem as directly constraining what AI systems can prove about themselves'],
@@ -1728,7 +1618,7 @@ const LESSONS = [
   },
   {
     id: 64, phase: 'p6', title: 'Decision Theory — CDT, EDT, and FDT',
-    status: 'not-started', hours: '5–7h', label: '64',
+    status: 'not-started', hours: '4–6h', label: '64',
     prereqs: [63], crossPhaseLinks: [35],
     conceptChecks: ['Causal vs evidential decision theory', 'Newcomb\'s problem', 'Functional decision theory', 'Updateless decision theory'],
     failureModes: ['Treating decision theory as a solved problem — the right theory for AI agents is still open'],
@@ -1746,7 +1636,7 @@ const LESSONS = [
   },
   {
     id: 66, phase: 'p6', title: 'The Alignment Problem — Technical Foundations',
-    status: 'not-started', hours: '6–8h', label: '66',
+    status: 'not-started', hours: '5–7h', label: '66',
     prereqs: [65], crossPhaseLinks: [46, 50],
     conceptChecks: ['Outer vs inner alignment', 'Mesa-optimization', 'Reward hacking', 'Deceptive alignment', 'Corrigibility'],
     failureModes: ['Thinking alignment is "just make the reward function right" — the problem is much deeper'],
@@ -1758,7 +1648,7 @@ const LESSONS = [
   },
   {
     id: 67, phase: 'p6', title: 'Open Problems and Research Frontiers',
-    status: 'not-started', hours: '5–7h', label: '67',
+    status: 'not-started', hours: '4–6h', label: '67',
     prereqs: [66], crossPhaseLinks: [],
     conceptChecks: ['Current alignment research landscape', 'Scalable oversight', 'Interpretability-based safety', 'Formal verification approaches', 'Your research direction'],
     failureModes: ['Analysis paralysis — at this point, start doing research, not just reading about it'],
@@ -1956,7 +1846,6 @@ let selectedLesson = null;
 
 const STATUS_KEY = 'alignment-curriculum-statuses';
 const STATUS_CYCLE = ['not-started', 'in-progress', 'complete'];
-const ACTUAL_HOURS_KEY = 'alignment-curriculum-actual-hours';
 
 function loadStatuses() {
   try {
@@ -1971,166 +1860,11 @@ function saveStatuses() {
   localStorage.setItem(STATUS_KEY, JSON.stringify(obj));
 }
 
-// ── Actual Hours Tracking ──
-// Storage format: { lessonId: { hours: number, seeded: boolean } }
-function loadActualHours() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(ACTUAL_HOURS_KEY)) || {};
-    // Migrate old format (plain numbers) to new format
-    const result = {};
-    for (const [k, v] of Object.entries(raw)) {
-      if (typeof v === 'number') {
-        result[k] = { hours: v, seeded: false };
-      } else {
-        result[k] = v;
-      }
-    }
-    return result;
-  } catch(e) { return {}; }
-}
-function saveActualHours(data) {
-  localStorage.setItem(ACTUAL_HOURS_KEY, JSON.stringify(data));
-}
-
-// Helper: get just the hours number for a lesson
-function getActualHoursFor(lessonId) {
-  const data = loadActualHours();
-  return data[lessonId] ? data[lessonId].hours : undefined;
-}
-
-// Helper: get total actual hours spent (all lessons, including seeded)
-function getTotalActualHours() {
-  const data = loadActualHours();
-  let total = 0;
-  for (const entry of Object.values(data)) {
-    total += entry.hours;
-  }
-  return total;
-}
-
-// Helper: compute pace multiplier from NON-SEEDED data only
-function computePaceMultiplier() {
-  const data = loadActualHours();
-  let realActual = 0;
-  let realEstimated = 0;
-  for (const [id, entry] of Object.entries(data)) {
-    if (entry.seeded) continue; // Skip seeded data for pace calculation
-    const lesson = LESSONS.find(l => String(l.id) === String(id));
-    if (lesson && lesson.status === 'complete') {
-      realActual += entry.hours;
-      realEstimated += parseHoursGlobal(lesson.hours).avg;
-    }
-  }
-  // Only adjust pace if we have meaningful real data (at least 2 lessons)
-  const realCount = Object.values(data).filter(e => !e.seeded).length;
-  if (realCount >= 2 && realEstimated > 0 && realActual > 0) {
-    return realActual / realEstimated;
-  }
-  return 1.0; // Default: trust the estimates until we have data
-}
-
-// Pre-seed Phase 1 with 28h if not already set
-function seedPhase1Hours() {
-  const hours = loadActualHours();
-  const p1Lessons = LESSONS.filter(l => l.phase === 'p1');
-  const alreadySeeded = p1Lessons.some(l => hours[l.id] !== undefined);
-  if (alreadySeeded) return;
-  // Distribute 28h proportionally to each lesson's estimated average
-  let totalAvg = 0;
-  p1Lessons.forEach(l => { totalAvg += parseHoursGlobal(l.hours).avg; });
-  p1Lessons.forEach(l => {
-    const avg = parseHoursGlobal(l.hours).avg;
-    hours[l.id] = { hours: Math.round((28 * avg / totalAvg) * 10) / 10, seeded: true };
-  });
-  saveActualHours(hours);
-  // Also mark Phase 1 lessons as complete
-  p1Lessons.forEach(l => { l.status = 'complete'; });
-  saveStatuses();
-}
-
-// ── Hours Modal ──
-let _pendingLessonId = null;
-let _pendingPrevStatus = null;
-
-function showHoursModal(lessonId) {
-  const lesson = LESSONS.find(l => l.id === lessonId);
-  const modal = document.getElementById('hours-modal');
-  const input = document.getElementById('hours-modal-input');
-  document.getElementById('hours-modal-title').textContent = `✓ ${lesson.title}`;
-  document.getElementById('hours-modal-subtitle').textContent = 'How many hours did you spend on this lesson?';
-  document.getElementById('hours-modal-estimate').textContent = `Estimated: ${lesson.hours}`;
-  // Pre-fill with average estimate
-  const est = parseHoursGlobal(lesson.hours);
-  input.value = est.avg;
-  _pendingLessonId = lessonId;
-  modal.classList.add('visible');
-  setTimeout(() => { input.focus(); input.select(); }, 100);
-}
-
-function closeHoursModal(confirmed) {
-  const modal = document.getElementById('hours-modal');
-  modal.classList.remove('visible');
-  if (confirmed && _pendingLessonId !== null) {
-    const input = document.getElementById('hours-modal-input');
-    let val = parseFloat(input.value);
-    if (isNaN(val) || val <= 0) val = parseHoursGlobal(LESSONS.find(l => l.id === _pendingLessonId).hours).avg;
-    // Round to nearest 0.5
-    val = Math.round(val * 2) / 2;
-    const hours = loadActualHours();
-    hours[_pendingLessonId] = { hours: val, seeded: false };
-    saveActualHours(hours);
-    // Record pace completion date
-    recordCompletion(_pendingLessonId);
-  } else if (!confirmed && _pendingLessonId !== null) {
-    // User cancelled — revert status
-    const lesson = LESSONS.find(l => l.id === _pendingLessonId);
-    if (_pendingPrevStatus !== null) {
-      lesson.status = _pendingPrevStatus;
-      saveStatuses();
-    }
-  }
-  _pendingLessonId = null;
-  _pendingPrevStatus = null;
-  refreshAll();
-  if (selectedLesson) selectLesson(selectedLesson);
-}
-
-// Handle Enter key in modal
-document.addEventListener('keydown', function(e) {
-  const modal = document.getElementById('hours-modal');
-  if (!modal.classList.contains('visible')) return;
-  if (e.key === 'Enter') closeHoursModal(true);
-  if (e.key === 'Escape') closeHoursModal(false);
-});
-
 function cycleStatus(id, ev) {
   if (ev) ev.stopPropagation();
   const lesson = LESSONS.find(l => l.id === id);
-  const prevStatus = lesson.status;
   const idx = STATUS_CYCLE.indexOf(lesson.status);
-  const nextStatus = STATUS_CYCLE[(idx + 1) % 3];
-
-  // Cycling TO complete → show hours modal
-  if (nextStatus === 'complete') {
-    _pendingPrevStatus = prevStatus;
-    lesson.status = 'complete';
-    saveStatuses();
-    showHoursModal(id);
-    return; // Don't refreshAll yet — modal will do it
-  }
-
-  // Cycling FROM complete → remove actual hours
-  if (prevStatus === 'complete') {
-    const hours = loadActualHours();
-    delete hours[id];
-    saveActualHours(hours);
-    // Also remove pace completion record
-    const paceData = loadPaceData();
-    delete paceData.completions[id];
-    savePaceData(paceData);
-  }
-
-  lesson.status = nextStatus;
+  lesson.status = STATUS_CYCLE[(idx + 1) % 3];
   saveStatuses();
   refreshAll();
   if (selectedLesson === id) selectLesson(id);
@@ -2144,27 +1878,16 @@ function updateStats() {
   document.getElementById('stat-total').textContent = total;
   document.getElementById('progress-fill').style.width = `${(complete / total) * 100}%`;
 
-  const actualHours = loadActualHours();
-
-  // Hours done = actual hours spent (real data)
-  let done = 0;
+  function parseHours(h) {
+    const m = h.match(/(\d+)–(\d+)/);
+    return m ? (parseInt(m[1]) + parseInt(m[2])) / 2 : 5;
+  }
+  let done = 0, remaining = 0;
   LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      done += actualHours[l.id].hours;
-    }
+    const h = parseHours(l.hours);
+    if (l.status === 'complete') done += h;
+    else remaining += h;
   });
-
-  // Pace multiplier from non-seeded data only
-  const paceMultiplier = computePaceMultiplier();
-
-  // Hours remaining = estimates for incomplete lessons, adjusted by pace
-  let remaining = 0;
-  LESSONS.forEach(l => {
-    if (l.status !== 'complete') {
-      remaining += parseHoursGlobal(l.hours).avg * paceMultiplier;
-    }
-  });
-
   document.getElementById('stat-hours-done').textContent = Math.round(done);
   document.getElementById('stat-hours-left').textContent = Math.round(remaining);
 }
@@ -2336,12 +2059,6 @@ function selectLesson(id) {
       <div>Status: <strong style="color:${getStatusColor(lesson.status)};cursor:pointer;border-bottom:1px dashed" onclick="cycleStatus(${fmtId(lesson.id)}, event)" title="Click to change">${lesson.status.replace('-', ' ')}</strong></div>
     </div>
   </div>`;
-
-  // Show actual hours if completed
-  const actualHrs = loadActualHours();
-  if (lesson.status === 'complete' && actualHrs[lesson.id] !== undefined) {
-    html += `<div style="font-size:12px;color:var(--accent-1);font-family:'JetBrains Mono',monospace;margin:6px 0 0 0;padding:0 16px">✓ Completed in ${actualHrs[lesson.id].hours}h (est. ${lesson.hours})</div>`;
-  }
 
   // Prerequisites
   html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">⬆</span> Prerequisites</div>`;
@@ -2535,29 +2252,26 @@ function computePace() {
   const now = new Date();
   const daysSinceStart = Math.max(1, (now - start) / (1000 * 60 * 60 * 24));
 
-  // Sum ACTUAL hours completed (real data from user input)
-  const actualHours = loadActualHours();
+  // Sum content hours completed (using avg of lo-hi range)
   let completedContentHours = 0;
   LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      completedContentHours += actualHours[l.id].hours;
+    if (l.status === 'complete') {
+      const hrs = parseHoursGlobal(l.hours);
+      completedContentHours += hrs.avg;
     }
   });
 
-  // Pace multiplier from non-seeded data only
-  const paceMultiplier = computePaceMultiplier();
-
-  // Your actual pace: real hours per calendar day
+  // Your actual pace: content hours per calendar day
   const paceHoursPerDay = completedContentHours / daysSinceStart;
 
-  // Compute pace-adjusted remaining hours
+  // Compute weighted remaining hours
   let weightedRemainLo = 0, weightedRemainHi = 0;
   LESSONS.forEach(l => {
     if (l.status !== 'complete') {
       const hrs = parseHoursGlobal(l.hours);
       const weight = DIFFICULTY_WEIGHT[l.phase] || 1.3;
-      weightedRemainLo += hrs.lo * weight * paceMultiplier;
-      weightedRemainHi += hrs.hi * weight * paceMultiplier;
+      weightedRemainLo += hrs.lo * weight;
+      weightedRemainHi += hrs.hi * weight;
     }
   });
 
@@ -2573,7 +2287,6 @@ function computePace() {
     daysSinceStart: Math.round(daysSinceStart),
     completedContentHours: Math.round(completedContentHours),
     paceHoursPerDay: paceHoursPerDay.toFixed(1),
-    paceMultiplier: paceMultiplier.toFixed(2),
     weightedRemainLo: Math.round(weightedRemainLo),
     weightedRemainHi: Math.round(weightedRemainHi),
     daysRemainLo, daysRemainHi,
@@ -2605,26 +2318,19 @@ function renderTimeline() {
     return { lo: 5, hi: 5, avg: 5 };
   }
 
-  // Compute totals using actual hours
-  const actualHours = loadActualHours();
-  let actualDone = 0;
-  LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      actualDone += actualHours[l.id].hours;
-    }
-  });
-  const paceMultiplier = computePaceMultiplier();
-
-  let remainLo = 0, remainHi = 0, inProgLo = 0, inProgHi = 0;
+  // Compute totals
+  let doneLo = 0, doneHi = 0, remainLo = 0, remainHi = 0, inProgLo = 0, inProgHi = 0;
   LESSONS.forEach(l => {
     const hrs = parseHours(l.hours);
-    if (l.status === 'in-progress') { inProgLo += hrs.lo; inProgHi += hrs.hi; }
-    else if (l.status !== 'complete') { remainLo += hrs.lo; remainHi += hrs.hi; }
+    if (l.status === 'complete') { doneLo += hrs.lo; doneHi += hrs.hi; }
+    else if (l.status === 'in-progress') { inProgLo += hrs.lo; inProgHi += hrs.hi; }
+    else { remainLo += hrs.lo; remainHi += hrs.hi; }
   });
-  const totalRemainLo = Math.round((remainLo + inProgLo) * paceMultiplier);
-  const totalRemainHi = Math.round((remainHi + inProgHi) * paceMultiplier);
-  const totalEstimate = Math.round(actualDone + (totalRemainLo + totalRemainHi) / 2);
-  const pctDone = totalEstimate > 0 ? Math.round(actualDone / totalEstimate * 100) : 0;
+  const totalRemainLo = remainLo + inProgLo;
+  const totalRemainHi = remainHi + inProgHi;
+  const totalLo = doneLo + inProgLo + remainLo;
+  const totalHi = doneHi + inProgHi + remainHi;
+  const pctDone = Math.round(((doneLo + doneHi) / 2) / ((totalLo + totalHi) / 2) * 100);
 
   // Dynamic pace calculation
   const pace = computePace();
@@ -2634,12 +2340,12 @@ function renderTimeline() {
 
   // ── Big summary at top with pace data ──
   if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
-    html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
+    html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${pace.weightedRemainLo}–${pace.weightedRemainHi} weighted hours remaining</text>`;
     html += `<text x="${cx}" y="78" fill="var(--accent-1)" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">Est. completion: ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</text>`;
-    html += `<text x="${cx}" y="98" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h spent · ${pace.paceHoursPerDay}h/day · ${pace.paceMultiplier}× pace vs estimates · ${pctDone}% complete</text>`;
+    html += `<text x="${cx}" y="98" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h done in ${pace.daysSinceStart} days · ${pace.paceHoursPerDay}h/day pace · ${pctDone}% complete · difficulty-adjusted</text>`;
   } else {
     html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
-    html += `<text x="${cx}" y="83" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${Math.round(actualDone)}h spent · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
+    html += `<text x="${cx}" y="83" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${doneLo}–${doneHi}h complete · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
   }
 
   // ── Phase breakdown ──
@@ -2652,25 +2358,17 @@ function renderTimeline() {
     const complete = pLessons.filter(l => l.status === 'complete').length;
     const inProg = pLessons.filter(l => l.status === 'in-progress').length;
     const total = pLessons.length;
-
-    // Actual hours spent on this phase
-    let pActualDone = 0;
+    let pDoneLo = 0, pDoneHi = 0, pTotalLo = 0, pTotalHi = 0;
     pLessons.forEach(l => {
-      if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-        pActualDone += actualHours[l.id].hours;
-      }
+      const hrs = parseHours(l.hours);
+      pTotalLo += hrs.lo; pTotalHi += hrs.hi;
+      if (l.status === 'complete') { pDoneLo += hrs.lo; pDoneHi += hrs.hi; }
     });
-
-    // Pace-adjusted remaining for this phase
-    let pRemLo = 0, pRemHi = 0;
-    pLessons.forEach(l => {
-      if (l.status !== 'complete') {
-        const hrs = parseHours(l.hours);
-        pRemLo += hrs.lo; pRemHi += hrs.hi;
-      }
-    });
-    const pAdjRemLo = Math.round(pRemLo * paceMultiplier);
-    const pAdjRemHi = Math.round(pRemHi * paceMultiplier);
+    const pRemLo = pTotalLo - pDoneLo;
+    const pRemHi = pTotalHi - pDoneHi;
+    const weight = DIFFICULTY_WEIGHT[phase.id] || 1.0;
+    const pWeightedRemLo = Math.round(pRemLo * weight);
+    const pWeightedRemHi = Math.round(pRemHi * weight);
     const pPct = total > 0 ? (complete / total) : 0;
     const pPctInProg = total > 0 ? (inProg / total) : 0;
 
@@ -2680,10 +2378,9 @@ function renderTimeline() {
     const barH = 16;
     const barY = y + 6;
 
-    // Phase name with hours spent
+    // Phase name with difficulty weight
     html += `<text x="${margin.left}" y="${y + 18}" fill="${phase.color}" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">${phase.name}</text>`;
-    const spentText = pActualDone > 0 ? `${Math.round(pActualDone)}h spent · ` : '';
-    html += `<text x="${margin.left}" y="${y + 32}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${spentText}${complete}/${total} lessons</text>`;
+    html += `<text x="${margin.left}" y="${y + 32}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${complete}/${total} lessons · ${weight}× difficulty</text>`;
 
     // Bar background
     html += `<rect x="${barX}" y="${barY}" width="${barW}" height="${barH}" fill="var(--border)" rx="4" opacity="0.3" />`;
@@ -2694,12 +2391,12 @@ function renderTimeline() {
       html += `<rect x="${barX + barW * pPct}" y="${barY}" width="${barW * pPctInProg}" height="${barH}" fill="${phase.color}" rx="4" opacity="0.3" />`;
     }
 
-    // Hours remaining with pace-adjusted estimate
+    // Hours remaining with weighted estimate
     let hoursText;
     if (pRemLo === 0 && pRemHi === 0) {
-      hoursText = `✓ ${Math.round(pActualDone)}h`;
+      hoursText = '✓ done';
     } else {
-      hoursText = `${pAdjRemLo}–${pAdjRemHi}h left`;
+      hoursText = `${pWeightedRemLo}–${pWeightedRemHi}h (adj.)`;
     }
     html += `<text x="${barX + barW + 12}" y="${y + 20}" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="10">${hoursText}</text>`;
   });
@@ -2813,37 +2510,26 @@ function renderMobileTimeline() {
     return { lo: 5, hi: 5, avg: 5 };
   }
 
-  // Compute using actual hours
-  const actualHours = loadActualHours();
-  let actualDone = 0;
+  // Totals
+  let doneLo = 0, doneHi = 0, remainLo = 0, remainHi = 0;
   LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      actualDone += actualHours[l.id].hours;
-    }
+    const hrs = parseHours(l.hours);
+    if (l.status === 'complete') { doneLo += hrs.lo; doneHi += hrs.hi; }
+    else { remainLo += hrs.lo; remainHi += hrs.hi; }
   });
-  const paceMultiplier = computePaceMultiplier();
-
-  let remainLo = 0, remainHi = 0;
-  LESSONS.forEach(l => {
-    if (l.status !== 'complete') {
-      const hrs = parseHours(l.hours);
-      remainLo += hrs.lo; remainHi += hrs.hi;
-    }
-  });
-  const adjRemLo = Math.round(remainLo * paceMultiplier);
-  const adjRemHi = Math.round(remainHi * paceMultiplier);
-  const totalEstimate = Math.round(actualDone + (adjRemLo + adjRemHi) / 2);
-  const pctDone = totalEstimate > 0 ? Math.round(actualDone / totalEstimate * 100) : 0;
+  const totalLo = doneLo + remainLo;
+  const totalHi = doneHi + remainHi;
+  const pctDone = Math.round(((doneLo + doneHi) / 2) / ((totalLo + totalHi) / 2) * 100);
   const pace = computePace();
 
   let html = '<div class="mt-header">';
   if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
-    html += `<h2>${adjRemLo}–${adjRemHi}h left</h2>`;
+    html += `<h2>${pace.weightedRemainLo}–${pace.weightedRemainHi}h left</h2>`;
     html += `<div class="mt-subtitle">Est. ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</div>`;
-    html += `<div class="mt-meta">${pace.completedContentHours}h spent · ${pace.paceHoursPerDay}h/day · ${pctDone}%</div>`;
+    html += `<div class="mt-meta">${pace.completedContentHours}h in ${pace.daysSinceStart}d · ${pace.paceHoursPerDay}h/day · ${pctDone}%</div>`;
   } else {
-    html += `<h2>${adjRemLo}–${adjRemHi}h remaining</h2>`;
-    html += `<div class="mt-meta">${Math.round(actualDone)}h spent · ${pctDone}% complete</div>`;
+    html += `<h2>${remainLo}–${remainHi}h remaining</h2>`;
+    html += `<div class="mt-meta">${doneLo}–${doneHi}h done · ${pctDone}% complete</div>`;
   }
   html += '</div>';
 
@@ -2852,21 +2538,16 @@ function renderMobileTimeline() {
     const complete = pLessons.filter(l => l.status === 'complete').length;
     const total = pLessons.length;
     const pPct = total > 0 ? (complete / total) : 0;
-
-    let pActualDone = 0;
-    pLessons.forEach(l => {
-      if (l.status === 'complete' && actualHours[l.id] !== undefined) pActualDone += actualHours[l.id].hours;
-    });
-
     let pRemLo = 0, pRemHi = 0;
     pLessons.forEach(l => {
       if (l.status !== 'complete') {
         const hrs = parseHours(l.hours);
-        pRemLo += Math.round(hrs.lo * paceMultiplier);
-        pRemHi += Math.round(hrs.hi * paceMultiplier);
+        const w = DIFFICULTY_WEIGHT[phase.id] || 1.0;
+        pRemLo += Math.round(hrs.lo * w);
+        pRemHi += Math.round(hrs.hi * w);
       }
     });
-    const hoursText = pRemLo === 0 ? `✓ ${Math.round(pActualDone)}h` : `${pRemLo}–${pRemHi}h`;
+    const hoursText = pRemLo === 0 ? '✓' : `${pRemLo}–${pRemHi}h`;
 
     html += `<div class="mt-phase">`;
     html += `<div class="mt-phase-header">
@@ -2877,13 +2558,11 @@ function renderMobileTimeline() {
     html += `<div class="mt-phase-lessons">`;
     pLessons.forEach(l => {
       const statusColor = getStatusColor(l.status);
-      const lActual = actualHours[l.id];
-      const hoursDisplay = (l.status === 'complete' && lActual !== undefined) ? `${lActual.hours}h actual` : l.hours;
       html += `<div class="mt-lesson" onclick="selectLesson(${typeof l.id === 'string' ? '\'' + l.id + '\'' : l.id})">
         <span class="mt-lesson-status" style="background:${statusColor}"></span>
         <span class="mt-lesson-num" style="color:${phase.color}">${l.label || l.id}</span>
         <span class="mt-lesson-title">${l.title}</span>
-        <span class="mt-lesson-hours">${hoursDisplay}</span>
+        <span class="mt-lesson-hours">${l.hours}</span>
       </div>`;
     });
     html += '</div></div>';
@@ -3147,6 +2826,7 @@ function calDrop(ev, dk) {
 
 const GH_REPO = 'Kaxitron/research_plan';
 const GH_README_PATH = 'README.md';
+const GH_CALENDAR_PATH = 'calendar-data.json';
 const GH_TOKEN_KEY = 'alignment-curriculum-gh-token';
 
 function getGhToken() {
@@ -3162,9 +2842,166 @@ function getGhToken() {
 let _lastKnownSha = null;
 let _syncInProgress = false;
 
+// ── README ↔ Dashboard ID mapping ──
+function readmeIdToDashboardId(readmeId) {
+  // CS-01 → cs01, CS-10 → cs10
+  const csMatch = readmeId.match(/^CS-(\d+)$/);
+  if (csMatch) return 'cs' + csMatch[1].replace(/^0/, '');
+  // Numeric IDs stay as numbers
+  const num = parseInt(readmeId);
+  if (!isNaN(num)) return num;
+  return null;
+}
+
+function dashboardIdToReadmeId(dashId) {
+  // cs01 → CS-01, cs10 → CS-10
+  if (typeof dashId === 'string' && dashId.startsWith('cs')) {
+    const num = parseInt(dashId.replace('cs', ''));
+    return 'CS-' + String(num).padStart(2, '0');
+  }
+  return String(dashId);
+}
+
+function readmeStatusToDashboard(statusText) {
+  if (statusText.includes('✅') || statusText.includes('Complete')) return 'complete';
+  if (statusText.includes('🔄') || statusText.includes('In Progress')) return 'in-progress';
+  return 'not-started';
+}
+
+// ── GitHub file helpers ──
+async function ghGet(path, headers) {
+  const resp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, { headers });
+  if (resp.status === 404) return null; // File doesn't exist yet
+  if (!resp.ok) throw new Error(`GitHub GET ${path} failed: ${resp.status}`);
+  const data = await resp.json();
+  const content = new TextDecoder().decode(
+    Uint8Array.from(atob(data.content.replace(/\n/g, '')), c => c.charCodeAt(0))
+  );
+  return { content, sha: data.sha };
+}
+
+async function ghPut(path, content, sha, headers, message) {
+  const encoded = btoa(unescape(encodeURIComponent(content)));
+  const body = { message, content: encoded };
+  if (sha) body.sha = sha;
+  let resp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  // Retry on stale SHA
+  if (resp.status === 409 && sha) {
+    const retry = await ghGet(path, headers);
+    if (retry) {
+      body.sha = retry.sha;
+      resp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+    }
+  }
+  if (!resp.ok) {
+    const err = await resp.json();
+    throw new Error(err.message || `GitHub PUT ${path} failed: ${resp.status}`);
+  }
+  return await resp.json();
+}
+
+// ── Pull statuses + calendar from GitHub ──
+async function pullStatusesFromGithub(manual) {
+  const btn = document.getElementById('pull-btn');
+  const icon = document.getElementById('pull-icon');
+
+  const token = manual ? getGhToken() : localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) {
+    if (manual) { console.log('Pull cancelled — no token'); }
+    return;
+  }
+
+  if (manual) {
+    btn.classList.add('syncing');
+    btn.style.pointerEvents = 'none';
+    icon.textContent = '⟳';
+  }
+
+  try {
+    const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+
+    // Pull lesson statuses from README
+    const readmeData = await ghGet(GH_README_PATH, headers);
+    if (readmeData) {
+      _lastKnownSha = readmeData.sha;
+      const rowRegex = /^\| ([A-Za-z0-9-]+) \| .+? \| (.+?) \|$/gm;
+      let match;
+      let changed = false;
+
+      while ((match = rowRegex.exec(readmeData.content)) !== null) {
+        const readmeId = match[1].trim();
+        const statusText = match[2].trim();
+        const dashId = readmeIdToDashboardId(readmeId);
+        if (dashId === null) continue;
+
+        const lesson = LESSONS.find(l => l.id === dashId);
+        if (!lesson) continue;
+
+        const newStatus = readmeStatusToDashboard(statusText);
+        if (lesson.status !== newStatus) {
+          lesson.status = newStatus;
+          changed = true;
+        }
+      }
+
+      if (changed) {
+        saveStatuses();
+      }
+    }
+
+    // Pull calendar data
+    const calData = await ghGet(GH_CALENDAR_PATH, headers);
+    if (calData) {
+      try {
+        const remoteCal = JSON.parse(calData.content);
+        saveCalendar(remoteCal);
+        console.log('Pulled calendar data from GitHub');
+      } catch (e) {
+        console.warn('Failed to parse calendar JSON:', e);
+      }
+    }
+
+    refreshAll();
+    if (selectedLesson) selectLesson(selectedLesson);
+
+    if (manual) {
+      btn.classList.remove('syncing');
+      btn.classList.add('success');
+      icon.textContent = '✓';
+      setTimeout(() => { btn.classList.remove('success'); icon.textContent = '⬇'; }, 3000);
+    }
+    console.log('Pull complete');
+
+  } catch (e) {
+    console.warn('Pull failed:', e.message);
+    if (manual) {
+      btn.classList.remove('syncing');
+      btn.classList.add('error');
+      icon.textContent = '✗';
+      if (e.message.includes('401') || e.message.includes('403')) {
+        localStorage.removeItem(GH_TOKEN_KEY);
+        alert('Authentication failed — token cleared. Try again with a valid token.');
+      } else {
+        alert(`Pull failed: ${e.message}`);
+      }
+      setTimeout(() => { btn.classList.remove('error'); icon.textContent = '⬇'; }, 3000);
+    }
+  } finally {
+    if (manual) btn.style.pointerEvents = '';
+  }
+}
+
 async function syncReadmeToGithub() {
-  const btn = document.getElementById('sync-btn');
-  const icon = document.getElementById('sync-icon');
+  const btn = document.getElementById('push-btn');
+  const icon = document.getElementById('push-icon');
 
   // Prevent overlapping syncs
   if (_syncInProgress) return;
@@ -3185,27 +3022,27 @@ async function syncReadmeToGithub() {
     const currentSha = fileData.sha;
     let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
 
-    // 2. Build status map from current dashboard state
+    // 2. Build status map keyed by README-format IDs
     const statusMap = {};
     LESSONS.forEach(l => {
       const emoji = l.status === 'complete' ? '✅ Complete' :
                     l.status === 'in-progress' ? '🔄 In Progress' : '⬜ Not Started';
-      statusMap[l.id] = emoji;
+      statusMap[dashboardIdToReadmeId(l.id)] = emoji;
     });
 
-    // 3. Replace status in each table row
+    // 3. Replace status in each table row (handles both CS-XX and numeric IDs)
     content = content.replace(
-      /^\| (\d+) \| (.+?) \| (.+?) \|$/gm,
+      /^\| ([A-Za-z0-9-]+) \| (.+?) \| (.+?) \|$/gm,
       (match, id, lessonCol, statusCol) => {
-        const numId = parseInt(id);
-        if (statusMap.hasOwnProperty(numId)) {
-          return `| ${id} | ${lessonCol} | ${statusMap[numId]} |`;
+        const trimmedId = id.trim();
+        if (statusMap.hasOwnProperty(trimmedId)) {
+          return `| ${id} | ${lessonCol} | ${statusMap[trimmedId]} |`;
         }
         return match;
       }
     );
 
-    // 4. Push updated README — use freshest SHA (cached from last success, or just fetched)
+    // 4. Push updated README
     const shaToUse = _lastKnownSha || currentSha;
     const encodedContent = btoa(unescape(encodeURIComponent(content)));
 
@@ -3238,6 +3075,12 @@ async function syncReadmeToGithub() {
     if (putData.content && putData.content.sha) {
       _lastKnownSha = putData.content.sha;
     }
+
+    // 7. Push calendar data
+    const calJson = JSON.stringify(loadCalendar(), null, 2);
+    const existingCal = await ghGet(GH_CALENDAR_PATH, headers);
+    await ghPut(GH_CALENDAR_PATH, calJson, existingCal ? existingCal.sha : null, headers, 'Update calendar data from dashboard');
+    console.log('Pushed calendar data');
 
     // Success
     btn.classList.remove('syncing');
@@ -3297,7 +3140,6 @@ function refreshCurrentView() {
 
 function init() {
   loadStatuses();
-  seedPhase1Hours();
   renderSidebar();
   window.addEventListener('resize', () => {
     // Re-trigger current view on resize to handle mobile <-> desktop transitions
