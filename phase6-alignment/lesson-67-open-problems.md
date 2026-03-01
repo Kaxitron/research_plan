@@ -66,8 +66,10 @@ This is it — the final exam of the entire curriculum. It covers Lessons 66–6
 
 ---
 
-## 🏗️ The Final Project
+## 🏗️ The Final Projects
 
-After the capstone exam, there's one more challenge: a 5-hour intensive project that requires you to use nearly everything you've learned across all 67 lessons. You'll build a transformer from scratch, train it, analyze its dynamics, interpret its internals, attempt to align it, and apply the deep mathematical frameworks from every phase.
+After the capstone exam, two 5-hour intensive projects await. Each requires you to use nearly everything you've learned across all 67 lessons. Choose one (or do both, if you're feeling ambitious):
 
-👉 **[Final Project: The Alignment Observatory](../assessments/final-project-alignment-observatory.md)**
+👉 **[The Alignment Observatory](../assessments/final-project-alignment-observatory.md)** — Build a small transformer from scratch, train it, analyze its training dynamics, interpret its internals, and attempt to align it. *Focus: constructing everything yourself from the ground up.*
+
+👉 **[The Alignment Researcher's Gauntlet](../assessments/capstone-comprehensive-project.md)** — Investigate sycophantic behavior in GPT-2 small using TransformerLens. Locate the circuit, analyze features, connect to SLT, and propose a fix. *Focus: investigating a real model the way alignment researchers actually work.*
