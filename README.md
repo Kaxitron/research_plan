@@ -184,8 +184,26 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
+## Assessments
+
+| Exam | Covers | Time | Link |
+|------|--------|------|------|
+| Exam 1: Linear Algebra | Lessons 2–12 | 60 min | [Exam](assessments/exam-1-linear-algebra.md) · [Key](assessments/exam-1-linear-algebra-answer-key.md) |
+| Exam 2A: Calculus & Optimization | Lessons 13–21 | 90 min | [Exam](assessments/exam-2a-calculus-optimization.md) · [Key](assessments/exam-2a-calculus-optimization-answer-key.md) |
+| Exam 2B: Differential Equations | Lessons 22–27 | 60 min | [Exam](assessments/exam-2b-differential-equations.md) · [Key](assessments/exam-2b-differential-equations-answer-key.md) |
+| Exam 3A: Probability & Frequentist | Lessons 28–34 | 60 min | [Exam](assessments/exam-3a-probability-frequentist.md) · [Key](assessments/exam-3a-probability-frequentist-answer-key.md) |
+| Exam 3B: Bayesian & Applied Stats | Lessons 35–39 | 60 min | [Exam](assessments/exam-3b-bayesian-applied.md) · [Key](assessments/exam-3b-bayesian-applied-answer-key.md) |
+| Exam 4A: Neural Network Foundations | Lessons 40–46 | 60 min | [Exam](assessments/exam-4a-neural-network-foundations.md) · [Key](assessments/exam-4a-neural-network-foundations-answer-key.md) |
+| Exam 4B: Mechanistic Interpretability | Lessons 47–50 | 60 min | [Exam](assessments/exam-4b-mechanistic-interpretability.md) · [Key](assessments/exam-4b-mechanistic-interpretability-answer-key.md) |
+| Exam 5A: Computability & Algebra | Lessons 51–56 | 60 min | [Exam](assessments/exam-5a-computability-algebra.md) · [Key](assessments/exam-5a-computability-algebra-answer-key.md) |
+| Exam 5B: Topology & Logic | Lessons 57–62 | 60 min | [Exam](assessments/exam-5b-topology-logic.md) · [Key](assessments/exam-5b-topology-logic-answer-key.md) |
+| Exam 6A: Rational Agency | Lessons 63–65 | 60 min | [Exam](assessments/exam-6a-rational-agency.md) · [Key](assessments/exam-6a-rational-agency-answer-key.md) |
+| Exam 6B: Alignment Capstone | Lessons 66–67 + All | 90 min | [Exam](assessments/exam-6b-alignment-capstone.md) · [Key](assessments/exam-6b-alignment-capstone-answer-key.md) |
+| 🏔 Comprehensive Capstone | All Phases | ~5 hrs | [Project](assessments/capstone-comprehensive-project.md) |
+
+---
+
 ## Resources
 
 - [Formula Cheat Sheet](resources/cheat-sheet.md)
 - [Interactive Dashboard](curriculum-dashboard.html) — dependency graph, timeline, calendar, pace tracker
-- [Phase 1 Final Exam](assessments/phase1-linear-algebra-final-exam.md) · [Answer Key](assessments/phase1-linear-algebra-final-exam-answer-key.md)
