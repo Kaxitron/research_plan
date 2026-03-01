@@ -72,6 +72,33 @@
 - **HMC from scratch:** implement leapfrog integration for the same bimodal distribution. Compare efficiency (effective samples per gradient evaluation) with random walk MH.
 - **Variational inference on 2D Gaussian:** fit a diagonal Gaussian q(θ) to a correlated 2D posterior. See the mean-field approximation miss the correlation. Then fit a full-covariance Gaussian and see it capture it.
 - **Bayesian neural network:** train a small BNN on a 1D regression task using either MCMC (for a tiny network) or VI (mean-field Bayes-by-Backprop). Plot the predictive uncertainty — it should widen where you have no data.
+- **Probabilistic programming with NumPyro (supplementary — from Bayesian Computation book gap analysis):** take your hand-rolled Metropolis-Hastings Beta-Binomial model and rewrite it in NumPyro (JAX-based, same ecosystem you'll use for ML). Fit the same model with NUTS (NumPyro's default sampler). Compare: (a) your M-H samples vs. NUTS samples — NUTS should mix much faster, (b) wall-clock time, (c) effective sample size. Then fit a simple Gaussian model: `mu ~ Normal(0, 10); sigma ~ HalfNormal(5); y ~ Normal(mu, sigma)`. The point isn't to learn NumPyro's API exhaustively — it's to have a working tool for when you need to test Bayesian ideas quickly during your research. NumPyro over PyMC because it runs on JAX, which you'll already be using for ML.
+  ```python
+  # Minimal NumPyro example to get started:
+  import numpyro, numpyro.distributions as dist
+  from numpyro.infer import MCMC, NUTS
+  import jax.random as random
+  
+  def model(data):
+      theta = numpyro.sample("theta", dist.Beta(1, 1))
+      numpyro.sample("obs", dist.Binomial(1, theta), obs=data)
+  
+  mcmc = MCMC(NUTS(model), num_warmup=500, num_samples=1000)
+  mcmc.run(random.PRNGKey(0), data=your_data)
+  mcmc.print_summary()
+  ```
+- **MCMC diagnostics — learn to spot bad chains (supplementary):** deliberately break your M-H sampler three ways: (1) set proposal σ = 0.001 (chains get stuck — trace plot looks like a flatline with rare jumps), (2) set proposal σ = 100 (chains reject almost everything — trace plot looks like a flatline that barely moves), (3) run only 50 iterations (not enough samples). For each, plot the trace, compute the acceptance rate, and compute R-hat across 4 chains. Then fix σ to a good value and run 4 chains — verify R-hat ≈ 1.0 and the trace plots look like "hairy caterpillars" (good mixing). Also compute effective sample size (ESS) — if ESS << total samples, you're wasting computation. ArviZ (`az.plot_trace`, `az.summary`) makes this easy. Knowing what bad chains look like prevents you from trusting garbage posteriors.
+- **Hierarchical / multilevel model (supplementary):** this is the most important Bayesian concept your curriculum was missing. The setup: 10 different attention heads are tested for a specific behavior (e.g., "does this head attend to the previous token?"). Each head is tested on a different number of examples (some 5, some 500). Estimate the "success rate" for each head using three approaches:
+  - **No pooling:** estimate each head independently (θ̂ᵢ = successes_i / trials_i). The heads with 5 trials have huge uncertainty.
+  - **Complete pooling:** treat all heads as identical (θ̂ = total_successes / total_trials). Throws away individual variation.
+  - **Hierarchical model:** each head has its own θᵢ, but they're drawn from a shared population: θᵢ ~ Beta(α, β), and you learn α, β from the data. Heads with few trials get "pulled" toward the population mean (shrinkage), while heads with lots of data keep their individual estimates.
+  
+  Implement in NumPyro. Plot the three sets of estimates. The hierarchical estimates should sit between no-pooling and complete-pooling, with low-data heads showing the most shrinkage. This is partial pooling, and it's the correct approach whenever you're analyzing behavior across many units (heads, layers, models, prompts).
+- **Laplace approximation — watch it work, then watch it fail (supplementary — bridge to SLT):** 
+  - **Part 1 (it works):** fit a Gaussian model to 1D data. Find the MAP (posterior mode). Compute the Hessian of the negative log-posterior at the MAP. The Laplace approximation says: posterior ≈ N(MAP, H⁻¹). Compare this Gaussian approximation with the true posterior (which is also Gaussian for this conjugate case). They should match perfectly.
+  - **Part 2 (it fails — multimodality):** fit a 2-component Gaussian mixture: p(x) = 0.5·N(-3, 1) + 0.5·N(3, 1). The true posterior over the mixture weight is bimodal. Compute the Laplace approximation — it's a single Gaussian centered at one mode. It completely misses the other mode. Draw samples from both the Laplace approximation and the true posterior. See the Laplace approximation's catastrophic failure.
+  - **Part 3 (it fails — singularity, the SLT preview):** build a tiny neural network with 2 hidden units. Train it, then permute the two hidden units' weights. You get the SAME function — this is a parameter symmetry. At the symmetry point, the Hessian has a zero eigenvalue (the direction along which permutation doesn't change the function). The Laplace approximation assumes a non-degenerate Hessian — so it breaks. Compute the Hessian, show the near-zero eigenvalue, and compute the resulting (degenerate) Laplace approximation. This is exactly what BIC gets wrong about neural networks, and exactly what Singular Learning Theory fixes. When you reach Lesson 55 (SLT), you'll already know viscerally why regular model selection fails.
+
 
 ## 🔗 ML & Alignment Connection
 
