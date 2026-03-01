@@ -45,7 +45,7 @@ Consider the linear system dx/dt = Ax where A = [[−1, 2], [0, −3]].
 
 **(e)** As t → ∞, along which eigendirection do trajectories approach the origin? Why?
 
-**(f)** If this matrix were the negative Hessian −H of a loss function at a critical point (so the Hessian eigenvalues are +1 and +3), what would this tell you about the loss landscape there?
+**(f)** If this matrix were the Hessian of a loss function at a minimum, what would the eigenvalues tell you about the shape?
 
 ---
 
@@ -59,101 +59,98 @@ A loss function L(w₁, w₂) = w₁⁴ + w₂² has a minimum at the origin.
 
 **(c)** Near the origin, the w₁ direction has much weaker curvature than the w₂ direction. Explain why gradient flow converges slowly from the w₁ direction. *(Hint: what is ∂²L/∂w₁² at w₁ = 0?)*
 
-**(d)** Connect to Euler's method: if you discretize this gradient flow with step size h, write the update rule. What IS this update rule in ML terminology?
+**(d)** Connect to Euler's method: if you discretize this gradient flow with step size h, write the update rule. What IS this in ML terms?
 
 ---
 
 ## Question 4 (10 pts) — Stability and Lyapunov Functions
 
-**(a)** State the three properties a Lyapunov function V(x) must satisfy to prove a fixed point x* = 0 is stable.
+**(a)** State the three properties a Lyapunov function V(x) must satisfy for a fixed point x* = 0.
 
 **(b)** For the system dx/dt = −x³, propose a Lyapunov function and verify it works. Is the origin asymptotically stable?
 
-**(c)** Why is the loss function L a "free" Lyapunov function for gradient flow? Write the one-line proof that dL/dt ≤ 0.
+**(c)** Why is the loss L a "free" Lyapunov function for gradient flow? Write the one-line proof.
 
-**(d)** An alignment researcher dreams of finding a Lyapunov function V(behavior) for an AI system, where V measures "distance from aligned behavior." Explain in 2–3 sentences why this is hard and what it would guarantee if found.
+**(d)** An alignment researcher wants a Lyapunov function V(behavior) where V measures "distance from aligned behavior." Explain in 2–3 sentences why this is hard and what it would guarantee if found.
 
 ---
 
 ## Question 5 (10 pts) — Bifurcations and Phase Transitions
 
-Consider the parameterized system: dx/dt = rx − x³, where r is a parameter.
+Consider dx/dt = rx − x³, where r is a parameter.
 
 **(a)** Find all fixed points as a function of r.
 
-**(b)** For r < 0, r = 0, and r > 0, describe the number and stability of fixed points.
+**(b)** For r < 0, r = 0, and r > 0, classify each fixed point as stable or unstable.
 
-**(c)** What type of bifurcation occurs at r = 0? What happens geometrically?
+**(c)** What type of bifurcation occurs at r = 0? What changes qualitatively?
 
-**(d)** Relate this to neural network training: when a hyperparameter crosses a threshold, the loss landscape can change qualitatively. Give one concrete example of this and explain why understanding bifurcations matters for predicting emergent capabilities.
+**(d)** Relate to training: as model size increases past a threshold, a network suddenly learns a new capability (e.g., in-context learning). Explain in 2–3 sentences how this resembles a bifurcation.
 
 ---
 
 ## Question 6 (10 pts) — Euler's Method IS Gradient Descent
 
-Consider the ODE dx/dt = −2x with x(0) = 4.
+Consider dx/dt = −2x with x(0) = 4.
 
 **(a)** Write the exact analytical solution x(t).
 
-**(b)** Apply Euler's method with step size h = 0.5 for 3 steps. Show the values x₁, x₂, x₃.
+**(b)** Apply Euler's method with h = 0.5 for 3 steps. Show x₁, x₂, x₃.
 
-**(c)** Compare your Euler approximation at t = 1.5 with the exact solution. Why is there a discrepancy?
+**(c)** Compare Euler at t = 1.5 with the exact value.
 
-**(d)** What happens if h = 1.5? Compute a few steps and relate this to learning rate instability in gradient descent.
+**(d)** What happens with h = 1.5? Compute 3 steps. Relate to learning rate instability.
 
-**(e)** The stability condition for Euler's method on dx/dt = λx is |1 + hλ| < 1. For λ = −2, what is the maximum stable step size h?
+**(e)** For dx/dt = λx, the stability condition is |1 + hλ| < 1. For λ = −2, find the maximum stable h.
 
 ---
 
 ## Question 7 (10 pts) — Neural ODEs and ResNets
 
-**(a)** A residual network computes x_{l+1} = x_l + f_θ(x_l) at each layer. Explain why this is Euler's method applied to the ODE dx/dt = f_θ(x).
+**(a)** A ResNet computes x_{l+1} = x_l + f_θ(x_l). Explain why this is Euler's method on dx/dt = f_θ(x).
 
-**(b)** In the continuous limit of infinitely many layers with infinitesimal changes, the ResNet becomes the ODE dx/dt = f_θ(x(t)). Name two advantages of this Neural ODE formulation over a standard fixed-depth ResNet.
+**(b)** In the continuous limit (infinitely many layers, infinitesimal changes), a ResNet becomes an ODE. State one advantage and one disadvantage of neural ODEs compared to standard ResNets.
 
-**(c)** The adjoint method computes gradients through the ODE solver in O(1) memory. Why is naive backpropagation through all solver steps expensive in memory, and how does the adjoint method avoid this?
+**(c)** The adjoint method computes gradients through an ODE solver in O(1) memory. Why is this important? What is it the continuous analog of?
 
-**(d)** A continuous normalizing flow uses the identity d(log p)/dt = −tr(∂f/∂x). Why is the trace of the Jacobian easier to compute than the full Jacobian determinant? What Phase 1 concept is the trace related to?
+**(d)** Neural ODE trajectories cannot cross in phase space (uniqueness theorem). Explain why this limits what a neural ODE can compute, and how augmented neural ODEs fix this.
 
 ---
 
 ## Question 8 (10 pts) — Stochastic Dynamics and SGD
 
-**(a)** Write the stochastic differential equation (SDE) that models SGD: dW = ___dt + ___dB_t. Identify the drift and diffusion terms.
+**(a)** SGD adds noise to gradient descent. The corresponding SDE is dW = −∇L(W)dt + σdB_t. In this equation, identify the deterministic part and the stochastic part.
 
-**(b)** The Fokker-Planck equation describes how the probability density of weights evolves during SGD. In steady state, the distribution approaches p(W) ∝ exp(−L(W)/T). What plays the role of "temperature" T in SGD?
+**(b)** The Fokker-Planck equation describes how the probability distribution over weights evolves during SGD training. Its steady-state solution is p(W) ∝ exp(−L(W)/T). What does the "temperature" T correspond to in SGD terms?
 
-**(c)** High temperature explores widely; low temperature concentrates near minima. How does batch size affect the effective temperature of SGD? Which finds flatter minima — small or large batch?
+**(c)** A low-temperature distribution concentrates near the minimum of L. A high-temperature distribution is spread out. What does this predict about the solutions found by large vs. small batch SGD?
 
-**(d)** Explain in 2–3 sentences why the noise in SGD is a feature, not a bug, from the perspective of finding solutions that generalize well.
+**(d)** Explain in 2–3 sentences why SGD noise is a *feature*, not a bug, from the perspective of finding generalizable solutions.
 
 ---
 
 ## Question 9 (10 pts) — The Heat Equation and Diffusion Models
 
-**(a)** The heat equation is u_t = k∇²u. In one sentence, explain what this equation says physically.
+**(a)** The heat equation is u_t = k∇²u. In one sentence, describe what this equation does to an initial temperature distribution over time.
 
-**(b)** The solution to the heat equation is a convolution with a Gaussian whose width grows as √t. Explain why this means the forward process of a diffusion model (adding noise progressively) eventually destroys all structure in the data.
+**(b)** The solution to the heat equation is a convolution with a Gaussian whose width grows as √t. How does this connect to the forward process of a diffusion model?
 
-**(c)** The reverse process of a diffusion model requires learning the score function ∇_x log p(x,t). What does the score function point toward geometrically?
+**(c)** A diffusion model has two processes: forward (add noise) and reverse (remove noise). The reverse process requires knowing the "score function" ∇_x log p(x,t). Why can't we compute this directly, and what does the neural network learn instead?
 
-**(d)** The full diffusion model pipeline is: data → progressively add noise → pure noise → learn to reverse → generate. Identify which mathematical concepts from this phase underpin each arrow.
+**(d)** The Fokker-Planck equation from Q8 is closely related to the heat equation. State the key difference (one has drift, one doesn't) and explain why both appear in ML.
 
 ---
 
 ## Question 10 (10 pts) — Synthesis: Training as a Dynamical System
 
-A neural network is being trained with gradient descent on loss L(W).
+A neural network is trained with gradient descent. Think of the entire training process as a dynamical system.
 
-**(a)** Model training as a continuous-time system. Write the gradient flow ODE.
+**(a)** State the ODE that describes continuous-time training (gradient flow). What is the "state space"? What are the "fixed points"?
 
-**(b)** At a critical point W*, the Hessian H has eigenvalues {5, 2, −0.1}. Classify this critical point. Using the linear system dx/dt = −Hx near this point, describe the behavior along each eigendirection.
+**(b)** Near a minimum w*, the linearized dynamics are dδ/dt = −H(w*)δ where δ = w − w*. What determines the convergence rate? What determines whether the system oscillates?
 
-**(c)** A phase transition during training causes the loss to suddenly drop. Describe this event using the language of bifurcations and dynamical systems.
+**(c)** A phase transition during training (like grokking) can be modeled as the system crossing a bifurcation point. Describe what "before" and "after" look like in terms of the loss and the model's internal structure.
 
-**(d)** Connect three concepts from this phase to three concepts from Phase 1:
-- Gradient flow eigenvalue classification ↔ ___
-- Euler's method step size stability ↔ ___
-- Jacobian trace in normalizing flows ↔ ___
+**(d)** Connect at least THREE concepts from this exam to the training process: Lyapunov function, eigenvalue classification, Euler's method, bifurcation, stochastic noise, or the heat equation. For each, state what role it plays.
 
-**(e)** In one sentence each, explain how this phase's concepts connect to (i) mechanistic interpretability and (ii) alignment safety.
+**(e)** In one sentence: why does understanding the continuous-time ODE (gradient flow) help you understand the discrete-time algorithm (gradient descent)?

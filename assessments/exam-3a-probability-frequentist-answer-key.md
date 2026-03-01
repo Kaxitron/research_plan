@@ -1,4 +1,4 @@
-# Exam 3A: Core Probability & Frequentist Methods — Answer Key
+# Exam 3A: Probability & Frequentist Methods — Answer Key
 
 **The Path to AI Alignment — Lessons 28–34 Comprehensive Assessment**
 
@@ -6,120 +6,114 @@
 
 ### Question 1 (10 pts)
 
-**(a)** Joint probability P(A,B) = probability both A and B occur. Marginal P(A) = Σ_B P(A,B) = probability of A regardless of B. Conditional P(A|B) = P(A,B)/P(B) = probability of A given B occurred. Relationship: **P(A,B) = P(A|B)P(B) = P(B|A)P(A)**.
+**(a)** 0.5 + 0.3 + 0.15 + 0.05 = 1.0. All probabilities ≥ 0. ✓ Valid distribution.
 
-**(b)** Bayes: P(disease|positive) = P(positive|disease)P(disease)/P(positive).
-P(positive) = P(pos|disease)P(disease) + P(pos|no disease)P(no disease) = 0.95(0.001) + 0.01(0.999) = 0.00095 + 0.00999 = 0.01094.
-P(disease|positive) = 0.00095/0.01094 ≈ **0.087 (about 8.7%)**. Despite the test being 95% sensitive and 99% specific, a positive result only means ~9% chance of disease. This is counterintuitive because the disease is so rare (1/1000) that false positives from the healthy majority outnumber true positives from the rare sick population.
+**(b)** P(spam|+) = P(+|spam)P(spam) / P(+) = (0.95)(0.1) / [(0.95)(0.1) + (0.10)(0.9)] = 0.095 / (0.095 + 0.09) = 0.095/0.185 ≈ **0.514** (about 51%).
 
-**(c)** Prior = P(θ) — beliefs about parameters before seeing data (e.g., regularization). Likelihood = P(data|θ) — how well parameters explain the data (the loss function). Posterior = P(θ|data) — updated beliefs after training. Training is Bayesian updating: start with a prior, observe data, arrive at a posterior.
+**(c)** Despite 95% accuracy, only ~51% of positive results are actually spam because spam is rare (10% base rate). The mistake is ignoring the **base rate** (prior probability) — P(positive|spam) is not P(spam|positive). This is base rate neglect, one of the most common errors in probabilistic reasoning.
 
 ---
 
 ### Question 2 (10 pts)
 
-**(a)** P(k heads) = C(10,k)(0.5)^10. E[X] = np = **5**. Var(X) = np(1−p) = **2.5**.
+**(a)** E[X] = (−1)(0.3) + (0)(0.5) + (2)(0.2) = −0.3 + 0 + 0.4 = **0.1**. E[X²] = (1)(0.3) + (0)(0.5) + (4)(0.2) = 0.3 + 0.8 = 1.1. Var(X) = E[X²] − (E[X])² = 1.1 − 0.01 = **1.09**.
 
-**(b)** μ is the **mean** (center of the bell curve). σ is the **standard deviation** (width). 68% of probability lies within **μ ± σ**.
+**(b)** det(Σ−λI) = (4−λ)(3−λ)−4 = λ²−7λ+8 = 0. λ = (7±√(49−32))/2 = (7±√17)/2. λ₁ ≈ **5.56**, λ₂ ≈ **1.44**. The eigenvectors represent the **principal axes of the data ellipse** — directions of maximum and minimum variance.
 
-**(c)** H = −(0.1 log₂ 0.1 + 0.6 log₂ 0.6 + 0.2 log₂ 0.2 + 0.1 log₂ 0.1) = −(0.1(−3.322) + 0.6(−0.737) + 0.2(−2.322) + 0.1(−3.322)) = 0.332 + 0.442 + 0.464 + 0.332 = **1.57 bits**.
-
-**(d)** Maximum entropy for 4 classes (uniform [0.25, 0.25, 0.25, 0.25]) = log₂(4) = **2.0 bits**. The model's entropy (1.57) is below maximum, meaning it's moderately confident — it concentrates probability on class 2 (0.6) but retains meaningful uncertainty about the others.
+**(c)** Total variance = tr(Σ) = 4+3 = 7 (or equivalently λ₁+λ₂ ≈ 7). First PC captures λ₁/7 ≈ 5.56/7 ≈ **79.4%** of total variance.
 
 ---
 
 ### Question 3 (12 pts)
 
-**(a)** L(μ) = Π (1/√(2πσ²)) exp(−(xᵢ−μ)²/(2σ²)). ℓ(μ) = −n/2 ln(2πσ²) − Σ(xᵢ−μ)²/(2σ²).
+**(a)** L(μ,σ²) = ∏ᵢ (1/√(2πσ²)) exp(−(xᵢ−μ)²/(2σ²))
 
-**(b)** dℓ/dμ = Σ(xᵢ−μ)/σ² = 0 → Σxᵢ = nμ → **μ̂ = (1/n)Σxᵢ = x̄** ✓
+**(b)** ℓ = −(n/2)log(2πσ²) − (1/(2σ²))Σ(xᵢ−μ)². Prefer log-likelihood because: products → sums (numerically stable), and sums are easier to differentiate.
 
-**(c)** ∂ℓ/∂(σ²) = −n/(2σ²) + Σ(xᵢ−μ̂)²/(2σ⁴) = 0 → **σ̂² = (1/n)Σ(xᵢ−x̄)²**. This is biased: E[σ̂²] = (n−1)/n · σ². It slightly underestimates variance. The unbiased estimator divides by n−1 (Bessel's correction).
+**(c)** ∂ℓ/∂μ = (1/σ²)Σ(xᵢ−μ) = 0 → μ̂ = (1/n)Σxᵢ = (3+5+4+6+2)/5 = **4**.
 
-**(d)** The likelihood is P(data|θ) = Π p̂(yᵢ|xᵢ;θ). Taking the log: log L = Σ log p̂(yᵢ|xᵢ;θ). Maximizing this = minimizing −Σ log p̂(yᵢ|xᵢ;θ), which is exactly the cross-entropy loss. **Cross-entropy training IS MLE.**
+**(d)** σ̂² = (1/n)Σ(xᵢ−μ̂)² = (1+1+0+4+4)/5 = **2**. This is **biased** (divides by n not n−1). The unbiased estimator uses n−1.
+
+**(e)** The "model" is a categorical distribution over the vocabulary (parameterized by the neural network). The "parameters" are all the network weights. The distribution being fit is the conditional distribution P(next_token | context). Cross-entropy loss = negative log-likelihood, so minimizing it IS maximum likelihood estimation of the network parameters.
 
 ---
 
-### Question 4 (10 pts)
+### Question 4 (12 pts)
 
-**(a)** Entropy measures the **average information content** (or uncertainty) of a distribution. H(fair coin) = −(0.5 log₂ 0.5 + 0.5 log₂ 0.5) = **1 bit**.
+**(a)** Fair: H = −2(0.5 log₂ 0.5) = **1 bit**. Biased: H = −0.9 log₂ 0.9 − 0.1 log₂ 0.1 ≈ 0.137 + 0.332 = **0.469 bits**. Fair coin has more entropy — maximum uncertainty. The biased coin is more predictable, so there's less surprise/information in each flip.
 
-**(b)** DKL(P‖Q) ≥ 0 by **Gibbs' inequality** (or Jensen's inequality applied to the convex function −log). Equality iff P = Q. It's not symmetric because DKL measures how well Q approximates P — the "cost" of using Q when the truth is P — and that cost depends on which direction you're approximating. DKL(P‖Q) penalizes Q for putting low probability where P has high probability; DKL(Q‖P) does the opposite.
+**(b)** D_KL(P‖Q) = Σ p(x) log(p(x)/q(x)). Not symmetric: D_KL(P‖Q) ≠ D_KL(Q‖P) in general. D_KL = 0 iff P = Q (the distributions are identical).
 
-**(c)** H(P,Q) = −Σ p(x) log q(x) = −Σ p(x) log p(x) + Σ p(x) log(p(x)/q(x)) = **H(P) + DKL(P‖Q)**. Since H(P) is fixed (it's the data entropy), minimizing H(P,Q) is the same as minimizing DKL(P‖Q) — finding the model Q closest to the truth P in KL sense.
+**(c)** H(P,Q) = −Σp(x)log q(x) = −Σp(x)log p(x) + Σp(x)log(p(x)/q(x)) = H(P) + D_KL(P‖Q). Since H(P) is constant w.r.t. Q, minimizing H(P,Q) over Q is equivalent to minimizing D_KL(P‖Q).
 
-**(d)** Without the KL penalty, the model can deviate arbitrarily from the reference, potentially finding pathological policies that exploit the reward model (reward hacking). The KL penalty keeps the fine-tuned model "close" to the pre-trained model, ensuring it retains general language abilities while adapting to human preferences.
+**(d)** KL penalty: β · D_KL(π_new ‖ π_base). Too small β → reward hacking (model diverges far from base, exploiting reward model quirks). Too large β → model barely changes from base (underfitting human preferences, too conservative).
 
 ---
 
 ### Question 5 (10 pts)
 
-**(a)** H₀: no effect (the status quo). H₁: there is an effect. P-value: probability of observing data at least as extreme as what was actually observed, **assuming H₀ is true**.
+**(a)** H₀: p = 0.80 (model is no better than baseline). H₁: p > 0.80 (model is better).
 
-**(b)** p = 0.03 **means:** if the new model were truly no better than the baseline, there is a 3% chance of seeing results this favorable (or more) by random chance alone. It does **NOT** mean: "there's a 3% chance the model is no better" or "97% probability the model is better." The p-value is about the data given H₀, not about H₀ given the data.
+**(b)** z = (85 − 80)/4 = **1.25**.
 
-**(c)** Type I: rejecting H₀ when it's true (false alarm). Type II: failing to reject H₀ when H₁ is true (missed detection). At α = 0.05, P(Type I) = **0.05** (by definition — α is the threshold for rejecting H₀).
+**(c)** p-value 0.106 > 0.05. **Do not reject H₀.** In plain English: there is not enough evidence to conclude the new model is better. The observed improvement could plausibly be due to chance.
 
-**(d)** This is the **multiple comparisons problem** (or p-hacking). P(at least one false positive) = 1 − P(no false positives) = 1 − (0.95)²⁰ ≈ 1 − 0.358 ≈ **0.64**. There's a 64% chance of finding at least one "significant" result by pure chance! The Bonferroni correction adjusts α to 0.05/20 = 0.0025 per test.
+**(d)** A p-value IS: the probability of observing data this extreme (or more) if H₀ were true. A p-value is NOT: the probability that H₀ is true, nor the probability the result is due to chance.
+
+**(e)** With n=10,000, the standard error shrinks to √(10000·0.8·0.2) = 40. z = (8100−8000)/40 = 2.5, p ≈ 0.006 — **statistically significant**. But 81% vs 80% is a tiny improvement — likely **not practically significant**. Statistical significance just means "probably not random noise"; practical significance means "large enough to matter."
 
 ---
 
 ### Question 6 (10 pts)
 
-**(a)** **Confounding variable / ecological fallacy.** Wealth is a confound — wealthy nations both consume more chocolate and invest more in education/research. The correlation is real but the causal conclusion is wrong.
+**(a)** (1) **Randomization** — randomly assign subjects to treatment/control, balancing all confounders. (2) **Control group** — provides a comparison baseline. (3) **Blinding** — subjects/researchers don't know assignments, preventing expectation bias.
 
-**(b)** **Optional stopping / sequential testing without correction.** Repeatedly checking p-values inflates the false positive rate because you get many chances to cross the threshold. Must use sequential testing methods (e.g., alpha spending functions) or pre-register the sample size.
+**(b)** **Correlation ≠ causation.** Confounders: people who exercise may also eat better, be wealthier, have better healthcare access, smoke less, etc. The exercise-cancer correlation might be driven entirely by these confounding variables.
 
-**(c)** **Data snooping / test set contamination.** The test set is no longer an unbiased estimate of performance because it was used for model selection. The reported accuracy is optimistically biased. Must use a held-out test set that is never used for any decision during development.
+**(c)** With 20 tests at α=0.05, you expect ~1 false positive by chance alone (20 × 0.05 = 1). This is the **multiple comparisons problem**. Correction: **Bonferroni correction** — use α/20 = 0.0025 per test. Only reject if p < 0.0025.
 
-**(d)** **Inadequate sample size for the claimed precision.** 100 queries gives at most ~1% granularity. "99.9% blocking" means at most 0.1 failures per 1000 — you can't demonstrate this with only 100 samples. The confidence interval for the true blocking rate is very wide. Also, the test set might not be representative of real-world harmful queries.
-
-**(e)** The large study (n=10,000) provides **much stronger evidence** despite the small study having the "surprising" p = 0.04 result. The odds ratio of 1.1 is very small — barely above 1.0 (no effect). The small study's p = 0.04 is fragile (borderline significant, likely won't replicate). The large study's p = 0.001 with the same small effect is more convincing because the narrow confidence interval pins down the true effect size. However, an OR of 1.1 means a 10% increase in risk — clinically small and possibly explained by residual confounding.
+**(d)** Questions: (1) Was the test set truly held out, or was it tuned on? (2) How many models/hyperparameters were tried? (multiple comparisons) (3) Are confidence intervals reported? (4) Is the improvement practically meaningful or just statistically significant? (5) Does it replicate on other benchmarks?
 
 ---
 
 ### Question 7 (10 pts)
 
-**(a)** The vector y lives in ℝⁿ. The columns of X span a subspace (the column space). β̂ = (XᵀX)⁻¹Xᵀy finds the coefficients such that **ŷ = Xβ̂ is the orthogonal projection of y onto the column space of X**. This is the closest point in the column space to y, minimizing ‖y − Xβ̂‖².
+**(a)** X = [[1,1],[1,2],[1,3],[1,4],[1,5]], y = [2,4,5,4,6]ᵀ, β = [β₀, β₁]ᵀ.
 
-**(b)** Under y ~ N(Xβ, σ²I), the log-likelihood is ℓ(β) = −n/2 ln(2πσ²) − ‖y − Xβ‖²/(2σ²). Maximizing ℓ ⟺ minimizing ‖y − Xβ‖², which is least squares. **OLS = MLE under Gaussian noise.**
+**(b)** The observation vector y is being **projected onto the column space of X**. The fitted values ŷ = Xβ̂ are the projection, and the residuals ε̂ = y − ŷ are orthogonal to the column space. This is exactly the projection from Lesson 10.
 
-**(c)** R² = ‖ŷ‖²/‖y‖² (after centering). R² = 1 means ŷ = y — the projection hits the target exactly. R² = 0 means the projection onto the model subspace has zero length in the "useful" direction — the model captures nothing beyond the mean. Geometrically, R² = cos²(θ) where θ is the angle between y and the column space.
+**(c)** Under ε ~ N(0,σ²), the likelihood is ∝ exp(−‖y−Xβ‖²/(2σ²)). Maximizing this is equivalent to minimizing ‖y−Xβ‖² — the sum of squared residuals. So least squares = MLE under Gaussian noise.
 
-**(d)** Binary outcomes (0/1) violate OLS assumptions: predicted values can be outside [0,1], residuals aren't normally distributed. Logistic regression uses the **cross-entropy (negative log-likelihood) loss**: L = −Σ[yᵢ log σ(xᵢᵀβ) + (1−yᵢ) log(1−σ(xᵢᵀβ))]. This is MLE for a Bernoulli model and keeps predictions in (0,1) via the sigmoid.
+**(d)** r² = 0.80 means 80% of variance explained. Geometrically, r² = |ŷ|²/|y|² = cos²θ where θ is the angle between y and the column space. It's the squared ratio of the projection length to the original vector length.
 
 ---
 
 ### Question 8 (8 pts)
 
-**(a)** E[X] = ∫ x·p(x) dx. For Uniform(0,1): E[X] = ∫₀¹ x dx = **1/2**.
+**(a)** H(P,Q) = −(0·log0.1 + 0·log0.2 + 1·log0.6 + 0·log0.1) = −log(0.6) ≈ **0.511 nats** (or 0.737 bits).
 
-**(b)** E[X²] = ∫₀¹ x² dx = 1/3. Var(X) = 1/3 − (1/2)² = 1/3 − 1/4 = **1/12**.
+**(b)** Perfect: H(P,Q) = −log(1) = **0**. Uniform: H(P,Q) = −log(0.25) = log(4) ≈ **1.386 nats**. Perfect prediction gives zero loss; uniform prediction gives maximum loss.
 
-**(c)** Eigenvectors = **principal components** — the directions of maximum variance. Eigenvalues = **variance along each principal direction**. The technique is **PCA** (Principal Component Analysis), which is the eigendecomposition of the covariance matrix from Phase 1.
-
-**(d)** **No.** Zero covariance does not imply independence. Example: X ~ Uniform(−1,1), Y = X². Then Cov(X,Y) = E[XY] − E[X]E[Y] = E[X³] − 0 = 0 (by symmetry), but X and Y are clearly dependent (Y is a deterministic function of X). Independence is a stronger condition than zero covariance.
+**(c)** H(P) = 0 for a one-hot distribution (no uncertainty in the "true" answer). This means the cross-entropy can reach zero — a model can in principle achieve zero training loss by predicting the correct token with probability 1.
 
 ---
 
-### Question 9 (10 pts)
+### Question 9 (8 pts)
 
-**(a)** H(P,Q) = −Σ p(x) log q(x) = −Σ p(x) log p(x) + Σ p(x) log p(x) − Σ p(x) log q(x) = −Σ p(x) log p(x) + Σ p(x) log(p(x)/q(x)) = **H(P) + DKL(P‖Q)** ✓
+**(a)** Example: Treatment helps 80/100 men (80%) vs 70/100 untreated men (70%) — helps men. Treatment helps 30/50 women (60%) vs 20/50 untreated women (40%) — helps women. Combined treated: 110/150 = 73%. Combined untreated: 90/150 = 60%. Wait, that shows treatment helps overall too. Better example: 1/10 men treated (10%) vs 3/100 untreated men (3%); 9/90 women treated (10%) vs 5/100 untreated women (5%). Combined treated: 10/100 = 10%. Combined untreated: 8/200 = 4%. Treatment "hurts" combined (10% vs 4%) but helps within each group. The key is unequal group sizes and different baseline rates.
 
-**(b)** Perplexity 50 means the model is, on average, **as uncertain as if choosing uniformly among 50 options** at each token. Lower is better — a perplexity of 1 would mean perfect prediction. English has about 50,000+ possible tokens, so perplexity 50 means the model has narrowed it down dramatically from uniform.
+**(b)** Without confidence intervals, we don't know if the differences are within noise. Without effect sizes, we don't know if the improvements are meaningful. 5/7 could easily happen by chance (binomial probability ≈ 0.16 even with no real difference). The claim lacks statistical rigor.
 
-**(c)** T → 0: the distribution collapses to a **one-hot** on the highest logit (argmax, greedy decoding). Entropy → 0. T → ∞: the distribution approaches **uniform** over all classes. Entropy → log(K). T = 1: the standard softmax. Temperature inversely controls entropy — low T = confident/deterministic, high T = uncertain/diverse.
-
-**(d)** Problems: (1) KL divergence of 0.5 is meaningless without context — is this between two Gaussians, two categorical distributions, two language models? The scale depends on the distributions. (2) KL divergence depends on which direction (P‖Q or Q‖P). (3) There's no universal threshold for "good." You'd need: the dimensionality of the distributions, the baseline KL for random/trivial models, and comparison with other methods on the same task.
+**(c)** P(dangerous|flagged) = P(flagged|dangerous)P(dangerous) / P(flagged) = (0.99)(0.001) / [(0.99)(0.001) + (0.05)(0.999)] = 0.00099 / (0.00099 + 0.04995) ≈ 0.00099/0.05094 ≈ **1.94%**. Over 98% of flagged behaviors are false positives! This illustrates why AI safety testing is hard when dangerous behaviors are rare.
 
 ---
 
 ### Question 10 (10 pts)
 
-**(a)** **No.** A 5% difference could be due to random variation. You'd need a paired test (McNemar's test for classification) or a statistical significance test comparing the two models' error rates, accounting for the test set size.
+**(a)** MLE maximizes P(data|θ), which equals maximizing log P(data|θ) = −H(P_data, P_model) (up to constants). Since H(P_data, P_model) = H(P_data) + D_KL(P_data ‖ P_model), and H(P_data) is fixed, MLE minimizes D_KL(P_data ‖ P_model). Training with cross-entropy = MLE = minimizing KL divergence from data to model.
 
-**(b)** **Cross-entropy** is more informative because it measures the quality of the probability predictions, not just the hard classifications. A model that gives 51% probability to the correct class gets the same accuracy credit as one giving 99%, but the cross-entropy correctly reflects that the second model is much better calibrated.
+**(b)** All three give the same answer because the Gaussian likelihood turns MLE into minimizing squared error (the exponent of the Gaussian), and minimizing squared error is equivalent to finding the closest point in the column space (projection). The geometry (projection), the statistics (MLE), and the optimization (least squares) are three views of one mathematical object.
 
-**(c)** **Model B** for safety-critical applications. Model A fails badly on class 3 (40% accuracy), which could be disastrous if class 3 represents a safety-relevant category. In alignment/safety contexts, worst-case performance matters more than average performance. A model that's uniformly reliable (85% across all classes) is preferable to one that's excellent on easy classes but fails on hard/rare ones.
+**(c)** Variance is the expected squared deviation — it involves squared lengths. The correlation r measures the cosine of the angle between vectors, but explained variance requires cos²θ = r² because squaring is needed to convert from "length ratios" to "squared-length ratios" (which is what variance is).
 
-**(d)** R² = r² → r = √(0.64) = **0.8**. The correlation between predictions and true values is 0.8. This connects to the Phase 1 insight: R² involves squared lengths (projection squared over original squared), and since correlation is about direction not magnitude, you need the square root.
+**(d)** (1) Statistical significance doesn't imply practical significance — the effect might be tiny. (2) If many models were tested, this could be a multiple comparisons artifact — the winner among 100 random models will "look" significant.

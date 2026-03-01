@@ -1,4 +1,4 @@
-# Exam 3A: Core Probability & Frequentist Methods
+# Exam 3A: Probability & Frequentist Methods — The Workhorse Toolkit
 
 **The Path to AI Alignment — Lessons 28–34 Comprehensive Assessment**
 
@@ -9,130 +9,128 @@
 | **Time Allowed** | 60 minutes |
 | **Total Points** | 100 |
 | **Materials** | Pencil, paper, calculator (no CAS). No code. |
-| **Format** | 10 questions covering distributions, MLE, information theory, hypothesis testing, and regression |
+| **Format** | 10 questions mixing computation and conceptual depth |
 
-> **Advice:** Show all work. This exam tests the "workhorse" statistical toolkit. The integrative thread: **can you derive MLE, interpret information-theoretic quantities, and critically evaluate statistical claims?**
+> **Advice:** Show all work. The integrative thread: **every ML training objective is rooted in probability and information theory.**
 
 ---
 
 ## Question 1 (10 pts) — Probability Foundations
 
-**(a)** Define joint probability P(A, B), marginal probability P(A), and conditional probability P(A|B). State the relationship between them.
+**(a)** A language model outputs probabilities over a vocabulary of 4 tokens: P(A)=0.5, P(B)=0.3, P(C)=0.15, P(D)=0.05. Verify this is a valid probability distribution.
 
-**(b)** State Bayes' theorem. A medical test has 95% sensitivity (P(positive|disease) = 0.95) and 99% specificity (P(negative|no disease) = 0.99). If the disease prevalence is 1 in 1000, what is the probability a person actually has the disease given a positive test? Show your work and explain why the result is counterintuitive.
+**(b)** Using Bayes' theorem: A classifier has 95% accuracy on spam (P(positive|spam)=0.95) and 90% accuracy on non-spam (P(negative|not spam)=0.90). If 10% of emails are spam, what is P(spam|positive)?
 
-**(c)** Connect Bayes' theorem to ML: in the pattern Prior × Likelihood → Posterior, identify what each term represents when you're training a model on data.
+**(c)** Explain why the answer to (b) might surprise someone who only knows the 95% accuracy figure. What common mistake are they making?
 
 ---
 
-## Question 2 (10 pts) — Distributions
+## Question 2 (10 pts) — Expectation and Covariance
 
-**(a)** A coin is flipped 10 times. Write the probability of getting exactly k heads using the Binomial distribution. What is the expected number of heads? The variance?
+**(a)** A discrete random variable X takes values {−1, 0, 2} with probabilities {0.3, 0.5, 0.2}. Compute E[X] and Var(X).
 
-**(b)** The Gaussian (normal) distribution has density p(x) = (1/√(2πσ²)) exp(−(x−μ)²/(2σ²)). What are the roles of μ and σ? Where does 68% of the probability mass lie?
+**(b)** The covariance matrix of a 2D dataset is Σ = [[4, 2], [2, 3]]. Find the eigenvalues of Σ. What do the eigenvectors represent geometrically?
 
-**(c)** A neural network's softmax output produces a categorical distribution over 4 classes: [0.1, 0.6, 0.2, 0.1]. What is the entropy of this distribution? *(Use log base 2.)*
-
-**(d)** Compare the entropy you computed with the maximum possible entropy for 4 classes (uniform distribution). What does the difference tell you about the model's confidence?
+**(c)** PCA finds the directions of maximum variance by computing eigenvectors of Σ. The eigenvalues tell you the variance along each principal direction. What fraction of total variance is captured by the first principal component in (b)?
 
 ---
 
 ## Question 3 (12 pts) — Maximum Likelihood Estimation
 
-**(a)** You observe data x₁, x₂, ..., xₙ drawn independently from a Gaussian with unknown mean μ and known variance σ². Write the likelihood function L(μ) and the log-likelihood ℓ(μ).
+You observe data: x₁ = 3, x₂ = 5, x₃ = 4, x₄ = 6, x₅ = 2, assumed drawn from N(μ, σ²).
 
-**(b)** Derive the MLE estimator μ̂ by taking dℓ/dμ = 0 and solving. Show that μ̂ = x̄ (the sample mean).
+**(a)** Write the likelihood function L(μ, σ²) for this data.
 
-**(c)** Now suppose the variance σ² is also unknown. Derive the MLE for σ² by taking ∂ℓ/∂(σ²) = 0. Is this estimator biased? *(The MLE for variance divides by n, not n−1.)*
+**(b)** Write the log-likelihood. Why do we prefer to work with log-likelihood?
 
-**(d)** Neural network training with cross-entropy loss is MLE in disguise. If the model outputs softmax probabilities p̂(y|x; θ), explain why minimizing −Σ log p̂(yᵢ|xᵢ; θ) is equivalent to maximizing the likelihood.
+**(c)** Derive the MLE for μ by taking ∂ℓ/∂μ = 0. Compute it for the given data.
+
+**(d)** State (without deriving) the MLE for σ². Is it biased or unbiased?
+
+**(e)** A neural network trained with cross-entropy loss is doing MLE. Explain in 2–3 sentences: what is the "model," what are the "parameters," and what distribution is being fit?
 
 ---
 
-## Question 4 (10 pts) — Information Theory
+## Question 4 (12 pts) — Information Theory
 
-**(a)** Define entropy H(X) = −Σ p(x) log p(x). What does it measure? What is the entropy of a fair coin flip (in bits)?
+**(a)** Compute the entropy H(X) for a fair coin (P(H) = P(T) = 0.5) and for a biased coin (P(H) = 0.9, P(T) = 0.1). Which has more entropy? Why does this make intuitive sense?
 
-**(b)** Define KL divergence DKL(P ‖ Q) = Σ p(x) log(p(x)/q(x)). Why is it always ≥ 0? Why is it NOT symmetric — i.e., why does DKL(P‖Q) ≠ DKL(Q‖P) in general?
+**(b)** Define KL divergence D_KL(P ‖ Q). Is it symmetric? What does D_KL(P ‖ Q) = 0 mean?
 
-**(c)** Show that minimizing cross-entropy H(P, Q) = −Σ p(x) log q(x) is equivalent to minimizing KL divergence DKL(P ‖ Q) when P is fixed (the data distribution). Why does this mean cross-entropy loss = finding the model distribution closest to the data?
+**(c)** Show that minimizing cross-entropy loss H(P, Q) = −Σ p(x) log q(x) between the true distribution P and model distribution Q is equivalent to minimizing KL divergence D_KL(P ‖ Q). *(Hint: write H(P,Q) = H(P) + D_KL(P‖Q).)*
 
-**(d)** In RLHF, a KL penalty DKL(π_new ‖ π_ref) prevents the fine-tuned model from drifting too far from the reference model. Explain in 2 sentences why this is necessary. What goes wrong without it?
+**(d)** In RLHF, a KL penalty keeps the fine-tuned model Q close to the base model P. Write this penalty term. What happens if you make the KL penalty weight too small? Too large?
 
 ---
 
 ## Question 5 (10 pts) — Hypothesis Testing
 
-**(a)** Define the null hypothesis H₀, alternative hypothesis H₁, and p-value. Be precise.
+A researcher claims their new model beats the baseline (accuracy 80%) on a benchmark. They test on 100 examples and get 85% accuracy.
 
-**(b)** A researcher tests whether a new ML model is better than a baseline on a benchmark. They get p = 0.03. State clearly: what does this p-value mean? What does it NOT mean?
+**(a)** State H₀ and H₁ for this test.
 
-**(c)** Define Type I error (false positive) and Type II error (false negative). If α = 0.05, what is the probability of a Type I error?
+**(b)** Under H₀, the number of correct answers follows Binomial(100, 0.8). The standard deviation is √(np(1−p)) = √(100·0.8·0.2) = 4. Compute the z-score for 85 correct.
 
-**(d)** A company tests 20 different model architectures on the same dataset and reports the one with p < 0.05. Why is this problematic? Name this statistical issue and compute the approximate probability of getting at least one false positive when running 20 tests at α = 0.05.
+**(c)** The p-value for z = 1.25 is approximately 0.106. At significance level α = 0.05, do you reject H₀? What does this mean in plain English?
 
----
+**(d)** State what a p-value IS and what it is NOT. (One sentence each.)
 
-## Question 6 (10 pts) — Experimental Design Fallacies
-
-For each scenario, identify the statistical fallacy or design flaw:
-
-**(a)** A study finds that countries with more chocolate consumption per capita have more Nobel Prize winners. Conclusion: "chocolate improves intelligence."
-
-**(b)** A researcher runs an experiment, checks the p-value after every 10 new data points, and stops collecting data as soon as p < 0.05.
-
-**(c)** A paper reports: "Our model achieved 95% accuracy on the test set" — but the authors tried 50 hyperparameter configurations, evaluated each on the test set, and reported the best.
-
-**(d)** An ML safety paper claims "our safety filter blocks 99.9% of harmful queries" based on testing against a dataset of 100 harmful queries.
-
-**(e)** A genetics study finds a significant correlation between a gene variant and a disease in a sample of 50 people, with p = 0.04 and odds ratio 1.1. A follow-up study of 10,000 people finds the same odds ratio of 1.1 but p = 0.001. Discuss which study provides stronger evidence and what the odds ratio tells you.
+**(e)** The researcher increases their test set to 10,000 examples and finds 81% accuracy. Is this result likely to be statistically significant? Is it practically significant? Explain the difference.
 
 ---
 
-## Question 7 (10 pts) — Regression as Geometry and Statistics
+## Question 6 (10 pts) — Experimental Design and Fallacies
 
-**(a)** Linear regression finds ŷ = Xβ̂ where β̂ = (XᵀX)⁻¹Xᵀy. Explain this formula geometrically using the language of Phase 1: what is being projected onto what?
+**(a)** Name and explain three features that make a study reliable (from Lesson 33).
 
-**(b)** Under the statistical model y = Xβ + ε with ε ~ N(0, σ²I), show that the least squares estimator is also the MLE. *(Hint: what does maximizing the Gaussian likelihood minimize?)*
+**(b)** A paper reports: "Among people who exercise, cancer rates are lower. Therefore exercise prevents cancer." Identify the fallacy and explain what confounders might be at play.
 
-**(c)** Define R² (coefficient of determination). You previously learned that R² = |ŷ|²/|y|² — the squared ratio of the projection length to the original vector length. Explain why R² = 1 means perfect fit and R² = 0 means the model predicts no better than the mean.
+**(c)** A researcher tests 20 different hypotheses and finds one with p < 0.05. Should you believe the result? Explain the multiple comparisons problem and one correction method.
 
-**(d)** Logistic regression models P(y=1|x) = σ(xᵀβ). Why can't we use ordinary least squares here? What loss function does logistic regression minimize instead, and why?
-
----
-
-## Question 8 (8 pts) — Expectation and Covariance
-
-**(a)** Define E[X] for a continuous random variable. What is E[X] for X ~ Uniform(0, 1)?
-
-**(b)** Define Var(X) = E[(X − μ)²] = E[X²] − (E[X])². Compute Var(X) for X ~ Uniform(0, 1).
-
-**(c)** The covariance matrix Σ of a random vector X is a matrix with eigenvalues and eigenvectors. What do the eigenvectors represent? What do the eigenvalues represent? Name the technique from Phase 1 that uses this decomposition.
-
-**(d)** If two random variables have Cov(X, Y) = 0, are they necessarily independent? Give an example showing why or why not.
+**(d)** An ML paper reports: "Our model achieves state-of-the-art on benchmark X." What questions should you ask before believing this claim? Name at least three.
 
 ---
 
-## Question 9 (10 pts) — Connecting the Pieces
+## Question 7 (10 pts) — Regression as Projection AND MLE
 
-**(a)** The cross-entropy loss for a language model predicting the next token is H(p, q) = −Σ p(x) log q(x). Show that this equals H(p) + DKL(p ‖ q), where H(p) is the entropy of the true distribution.
+Consider fitting y = β₀ + β₁x to data points: (1,2), (2,4), (3,5), (4,4), (5,6).
 
-**(b)** Perplexity is defined as 2^H(p,q) (or e^H if using natural log). If a language model has perplexity 50 on English text, give an intuitive interpretation.
+**(a)** Set up the matrix equation y = Xβ + ε. Write out X, y, and β.
 
-**(c)** Temperature scaling modifies the softmax: p(x) ∝ exp(logit_x / T). What happens at T → 0? T → ∞? T = 1? How does this relate to entropy?
+**(b)** The least-squares solution is β̂ = (XᵀX)⁻¹Xᵀy. This IS a projection from Phase 1. What is being projected onto what?
 
-**(d)** A mock ML paper claims: "Our model achieves a KL divergence of 0.5 from the true distribution, demonstrating good performance." Identify at least one problem with this claim. What additional information would you need to evaluate it?
+**(c)** Show that least-squares regression is also MLE under the assumption ε ~ N(0, σ²). *(Hint: maximizing the Gaussian likelihood is equivalent to minimizing what?)*
+
+**(d)** Compute r² (coefficient of determination) if the model explains 80% of variance. What does r² = |ŷ|²/|y|² mean geometrically in terms of the projection?
+
+---
+
+## Question 8 (8 pts) — Connecting Cross-Entropy to Training
+
+**(a)** A language model predicts the next token. The true distribution is one-hot: P = (0, 0, 1, 0) (the correct token is token 3). The model predicts Q = (0.1, 0.2, 0.6, 0.1). Compute the cross-entropy loss H(P, Q).
+
+**(b)** What would the cross-entropy be if the model predicted Q = (0, 0, 1, 0)? What about Q = (0.25, 0.25, 0.25, 0.25)?
+
+**(c)** Cross-entropy is bounded below by the entropy H(P). For a one-hot distribution, what is H(P)? What does this mean for training?
+
+---
+
+## Question 9 (8 pts) — Statistical Fallacies in ML
+
+**(a)** Simpson's paradox: a treatment helps men AND helps women, but hurts the combined population. Sketch a numerical example showing how this can happen. *(Hint: unequal group sizes.)*
+
+**(b)** A paper claims "Model A is better than Model B" because A beats B on 5 out of 7 benchmarks. Without seeing confidence intervals or effect sizes, explain why this claim might be weak.
+
+**(c)** Base rate neglect: an AI safety test catches 99% of dangerous behaviors but has a 5% false positive rate. If only 0.1% of model behaviors are actually dangerous, what fraction of flagged behaviors are true positives?
 
 ---
 
 ## Question 10 (10 pts) — Synthesis
 
-A researcher trains two models (A and B) on the same classification dataset with 3 classes. Model A achieves 90% accuracy; Model B achieves 85% accuracy.
+**(a)** Trace the connection: MLE → cross-entropy loss → KL divergence. Show how training a neural network with cross-entropy loss is minimizing the KL divergence between the data distribution and the model.
 
-**(a)** Can you conclude Model A is better? What statistical test could you use to determine if the difference is significant?
+**(b)** Linear regression is simultaneously: (1) a projection (Phase 1), (2) MLE under Gaussian noise, and (3) minimizing squared error. Explain why all three perspectives give the same answer.
 
-**(b)** Model A has average cross-entropy loss 0.3; Model B has 0.5. Which is more informative than accuracy, and why?
+**(c)** The r² = |ŷ|²/|y|² connection you derived earlier bridges Phase 1 (projection lengths) and Phase 3 (explained variance). State in one sentence why you need r² (not r) to measure explained variance. *(Hint: variance involves squared lengths.)*
 
-**(c)** You inspect the confusion matrices and discover Model A achieves 99% accuracy on classes 1 and 2 but only 40% on class 3 (which has 10% prevalence). Model B achieves 85% uniformly. Which model would you prefer for a safety-critical application? Why?
-
-**(d)** The researcher computed R² for a regression component of the pipeline and found R² = 0.64. Using the Phase 1 connection, what is the correlation coefficient r between predictions and true values?
+**(d)** A colleague says "Our model got p < 0.001, so it's definitely better." Give two reasons this could still be misleading.

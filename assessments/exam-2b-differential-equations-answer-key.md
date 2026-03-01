@@ -6,128 +6,128 @@
 
 ### Question 1 (10 pts)
 
-**(a)** x(1−x) = 0 → **x* = 0** and **x* = 1**.
+**(a)** x* = 0 and x* = 1.
 
-**(b)** f'(x) = 1−2x. f'(0) = 1 > 0 → **unstable**. f'(1) = −1 < 0 → **stable**.
+**(b)** f'(x) = 1 − 2x. At x=0: f'(0)=1>0 → **unstable**. At x=1: f'(1)=−1<0 → **stable**.
 
-**(c)** x < 0: arrows left. 0 < x < 1: arrows right. x > 1: arrows left.
+**(c)** x<0: arrows left. 0<x<1: arrows right. x>1: arrows left. Flow converges toward x=1 from both sides.
 
-**(d)** x(0) = 0.1 → increases toward 1. x(0) = 2 → decreases toward 1. Both converge to the stable fixed point.
+**(d)** x(0)=0.1 → increases to 1. x(0)=2 → decreases to 1.
 
-**(e)** For all x(0) > 0, flow always pushes toward x = 1, making (0, ∞) its basin of attraction.
+**(e)** All x>0 are attracted to x=1 because the vector field always points toward it from both sides.
 
 ---
 
 ### Question 2 (12 pts)
 
-**(a)** Upper triangular → eigenvalues on diagonal: **λ₁ = −1, λ₂ = −3**.
+**(a)** Upper triangular → λ₁ = −1, λ₂ = −3.
 
-**(b)** λ₁ = −1: [[0,2],[0,−2]]v = 0 → **v₁ = (1, 0)**. λ₂ = −3: [[2,2],[0,0]]v = 0 → **v₂ = (1, −1)**.
+**(b)** λ₁=−1: v₁ = (1,0). λ₂=−3: v₂ = (1,−1).
 
-**(c)** **x(t) = c₁e^{−t}(1, 0) + c₂e^{−3t}(1, −1)**.
+**(c)** x(t) = c₁e^{−t}(1,0) + c₂e^{−3t}(1,−1).
 
-**(d)** Both eigenvalues negative and real → **stable node**.
+**(d)** Both eigenvalues negative → **stable node**.
 
-**(e)** Along **v₁ = (1, 0)** (the slow eigendirection, λ = −1). The fast component e^{−3t} decays 3× faster, so trajectories first collapse onto v₁, then slowly approach the origin along it.
+**(e)** Along v₁ = (1,0), the slow direction (|λ₁|<|λ₂|). The e^{−3t} decays faster, so trajectories align with v₁ at late times.
 
-**(f)** Hessian eigenvalues +1, +3 → **local minimum** (bowl). Steeper in v₂ direction (curvature 3), shallower in v₁ (curvature 1). Condition number κ = 3.
+**(f)** Curvatures 1 and 3; steeper along v₂. Condition number = 3. GD converges 3× faster along v₂.
 
 ---
 
 ### Question 3 (10 pts)
 
-**(a)** **dw₁/dt = −4w₁³, dw₂/dt = −2w₂**.
+**(a)** dw₁/dt = −4w₁³, dw₂/dt = −2w₂.
 
-**(b)** dL/dt = 4w₁³(−4w₁³) + 2w₂(−2w₂) = **−16w₁⁶ − 4w₂² ≤ 0**. Equality only at origin. ∎
+**(b)** dL/dt = 4w₁³(−4w₁³) + 2w₂(−2w₂) = −16w₁⁶ − 4w₂² ≤ 0. ✓
 
-**(c)** ∂²L/∂w₁² = 12w₁² → **zero at the origin**. The landscape is flat to second order in w₁. Gradient = 4w₁³ ≈ 0 for small w₁, so flow crawls. The w₂ direction has constant curvature 2 and converges exponentially.
+**(c)** ∂²L/∂w₁² = 12w₁² = 0 at origin. Zero curvature → gradient ∝ w₁³ is tiny near 0 → plateau.
 
-**(d)** W_{n+1} = W_n − h∇L(W_n). This IS **gradient descent with learning rate η = h**.
+**(d)** w(t+h) = w(t) − h·∇L(w(t)). This IS gradient descent with η = h.
 
 ---
 
 ### Question 4 (10 pts)
 
-**(a)** (1) V(0) = 0. (2) V(x) > 0 for x ≠ 0 near 0. (3) dV/dt ≤ 0 along trajectories. (Strict inequality gives asymptotic stability.)
+**(a)** (1) V(0)=0, (2) V(x)>0 for x≠0, (3) dV/dt ≤ 0 along trajectories.
 
-**(b)** V(x) = x². dV/dt = 2x(−x³) = **−2x⁴ < 0** for x ≠ 0. **Asymptotically stable.**
+**(b)** V = x²/2. dV/dt = x(−x³) = −x⁴ < 0 for x≠0. Asymptotically stable.
 
-**(c)** dL/dt = ∇L · (−∇L) = **−‖∇L‖² ≤ 0**. Loss never increases along gradient flow.
+**(c)** dL/dt = ∇L·(−∇L) = −‖∇L‖² ≤ 0.
 
-**(d)** Hard because: formalizing "aligned behavior" as a scalar function is itself an open problem (translating values into math), and proving dV/dt ≤ 0 for all inputs requires universal guarantees. If found, it would **mathematically guarantee the system never drifts from alignment** — a stability certificate analogous to what control engineers use for physical systems.
+**(d)** Hard because: defining "aligned" formally is open, and proving dV/dt ≤ 0 for all inputs requires reasoning about the entire input space. If found, it guarantees alignment never degrades — any perturbation corrects itself.
 
 ---
 
 ### Question 5 (10 pts)
 
-**(a)** x(r − x²) = 0: **x = 0** always; **x = ±√r** when r > 0.
+**(a)** x = 0 always; x = ±√r for r > 0.
 
-**(b)** r < 0: one fixed point (x = 0, stable). r = 0: one (marginal). r > 0: three (x = 0 unstable, x = ±√r stable).
+**(b)** r<0: x=0 stable. r>0: x=0 unstable, ±√r stable.
 
-**(c)** **Supercritical pitchfork bifurcation.** One stable point loses stability and two new stable points emerge symmetrically — **symmetry breaking**.
+**(c)** Supercritical pitchfork bifurcation. One stable point splits into two stable + one unstable.
 
-**(d)** Example: as model size crosses a threshold, arithmetic capability suddenly emerges. The loss landscape gains new basins (the arithmetic solution becomes accessible). Bifurcation theory tells us these transitions can be **sharp and discontinuous** — capabilities appear suddenly at critical parameter values, making it dangerous to assume gradual capability growth for safety planning.
+**(d)** Increasing model size creates a new minimum representing the capability. Before the threshold, the minimum doesn't exist. After, training finds it — a sudden qualitative change analogous to the pitchfork's new fixed points appearing.
 
 ---
 
 ### Question 6 (10 pts)
 
-**(a)** **x(t) = 4e^{−2t}**.
+**(a)** x(t) = 4e^{−2t}.
 
-**(b)** x_{n+1} = x_n(1 − 2·0.5) = 0. x₁ = **0**, x₂ = **0**, x₃ = **0**.
+**(b)** x₁ = 4 − 0.5·8 = 0. x₂ = 0. x₃ = 0.
 
-**(c)** Exact x(1.5) = 4e^{−3} ≈ **0.199**. Euler gives 0. The step was large enough to overshoot to exactly zero, missing the gradual exponential decay.
+**(c)** Euler: 0. Exact: 4e^{−3} ≈ 0.199. Euler overshoots to 0 immediately.
 
-**(d)** h = 1.5: x₁ = 4(1−3) = **−8**, x₂ = **16**, x₃ = **−32**. Oscillates and **diverges** — the direct analog of training divergence with too-high learning rate.
+**(d)** h=1.5: x₁=−8, x₂=16, x₃=−32. Oscillates and diverges — learning rate instability.
 
-**(e)** |1−2h| < 1 → 0 < h < 1. **Maximum stable h = 1.**
+**(e)** |1−2h|<1 → 0<h<1. Max stable h = **1**.
 
 ---
 
 ### Question 7 (10 pts)
 
-**(a)** ResNet: x_{l+1} = x_l + f_θ(x_l). Euler: x_{n+1} = x_n + h·g(x_n). Identical with h = 1, g = f_θ. Each residual layer = one Euler step of dx/dt = f_θ(x).
+**(a)** x_{l+1}−x_l = f_θ(x_l) is Δx = f(x)·1, Euler's method with Δt=1.
 
-**(b)** (1) **Constant O(1) memory** via the adjoint method (vs O(depth) for ResNets). (2) **Adaptive computation** — solver adjusts step count to input difficulty.
+**(b)** Advantage: O(1) memory + adaptive computation. Disadvantage: sequential (not parallelizable), and continuous flows are homeomorphisms limiting representational power.
 
-**(c)** Naive backprop stores all N intermediate states → O(N) memory. The adjoint method solves a backward ODE needing only the current state, avoiding storage of the full trajectory.
+**(c)** Avoids storing all intermediate activations. Continuous analog of backpropagation.
 
-**(d)** Trace = sum of d diagonal entries = O(d). Determinant = O(d³). The Hutchinson estimator approximates the trace stochastically in O(d). Trace relates to **sum of eigenvalues** (Phase 1, Lesson 8).
+**(d)** Non-crossing trajectories → homeomorphism → can't change input topology. Augmenting with extra dimensions lets trajectories "go around" each other.
 
 ---
 
 ### Question 8 (10 pts)
 
-**(a)** **dW = −∇L(W)dt + σ(W)dB_t**. Drift = −∇L (gradient descent). Diffusion = σdB_t (mini-batch noise).
+**(a)** Deterministic: −∇L(W)dt. Stochastic: σdB_t.
 
-**(b)** T ∝ **η/B** (learning rate / batch size). This ratio controls exploration vs. exploitation.
+**(b)** T ∝ learning_rate / batch_size. More noise = higher temperature.
 
-**(c)** Smaller batch → larger noise → higher T → broader exploration. **Small batch finds flatter minima** (noise kicks it out of sharp ones but not flat ones).
+**(c)** Large batch (low T) → sharp minima. Small batch (high T) → flat, generalizable minima.
 
-**(d)** Noise biases toward flat minima that are robust to perturbation. Flat minima generalize better because nearby parameters give similar predictions. Without noise, gradient descent converges to the nearest minimum regardless of generalization quality.
+**(d)** Noise makes sharp minima unstable, biasing toward flat minima that generalize. Free implicit regularization.
 
 ---
 
 ### Question 9 (10 pts)
 
-**(a)** Temperature at each point changes proportionally to how much it differs from its neighbors — hot spots cool, cold spots warm, everything smooths toward average.
+**(a)** Smooths any distribution toward uniformity — diffuses toward the average.
 
-**(b)** Gaussian width ∝ √t → ∞ as t → ∞. Infinite-width Gaussian convolution averages everything to uniform — all structure is destroyed.
+**(b)** Forward process = adding Gaussian noise of increasing width = convolution with growing Gaussians. Data → noise, like heat → equilibrium.
 
-**(c)** Points toward **higher probability density** — from unlikely regions toward likely ones. It's the denoising compass.
+**(c)** p(x,t) is intractable. The network learns to approximate the score by denoising: predict the noise added to noisy samples.
 
-**(d)** Data → noise: **heat equation/diffusion**. Noise convergence: **steady state**. Learn to reverse: **score function estimation** (gradients, Lesson 15). Generate: **reverse SDE** (backward dynamics).
+**(d)** Heat equation: diffusion only. Fokker-Planck: drift + diffusion. Heat equation → diffusion model forward process. Fokker-Planck → SGD weight distribution evolution.
 
 ---
 
 ### Question 10 (10 pts)
 
-**(a)** **dW/dt = −∇L(W)**
+**(a)** dW/dt = −∇L(W). State space: ℝ^d (all weight configurations). Fixed points: critical points where ∇L = 0.
 
-**(b)** **Saddle point** (eigenvalues 5, 2 positive; −0.1 negative). Along λ = 5: fast convergence. λ = 2: slower convergence. λ = −0.1: slow escape (unstable direction). Training eventually leaves along the unstable direction.
+**(b)** Convergence rate: smallest eigenvalue of H (slowest direction). Oscillation: in discrete time, when hλ_max > 1. Continuous gradient flow doesn't oscillate (symmetric Hessian → real eigenvalues).
 
-**(c)** A bifurcation: the trajectory was in one basin, the landscape topology changed (new deeper basin appeared), and the system rapidly transitioned. In SLT: model moved between singularities with different RLCTs. Grokking is a prime example — memorization plateau → sudden generalization.
+**(c)** Before: high loss basin, unstructured representations, memorization. After: low-RLCT basin, organized circuits implementing a generalizable algorithm. Sudden because it's crossing a bifurcation.
 
-**(d)** Eigenvalue classification ↔ **eigenanalysis** (Lesson 8). Step size stability ↔ **condition number** (Lesson 11). Jacobian trace ↔ **trace = sum of eigenvalues / determinant = volume scaling** (Lessons 7–8).
+**(d)** (1) Lyapunov/loss: guarantees training makes progress. (2) Eigenvalues: classify critical points and set convergence rates. (3) Noise: implicit regularization toward flat minima.
 
-**(e)** (i) Interpretability: phase transitions reveal when circuits form — developmental interpretability tracks these reorganizations. (ii) Safety: Lyapunov functions are the ideal for formal alignment stability proofs; bifurcation theory warns that capabilities emerge suddenly at thresholds, making gradual testing insufficient.
+**(e)** The continuous flow reveals qualitative structure (fixed points, stability, bifurcations) that discrete gradient descent inherits as approximations.
