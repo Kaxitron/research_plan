@@ -27,7 +27,8 @@
 ## 📺 Watch — Secondary
 
 3. **Welch Labs — "How DeepSeek Rewrote the Transformer [MLA]"**
-   - https://www.youtube.com/@WelchLabs (search "DeepSeek MLA")
+   - https://www.youtube.com/watch?v=cAxYGT4VtBo
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 8: Attention*
    - *18 minutes. After building a standard GPT, this shows you a real frontier modification: Multi-head Latent Attention, the architectural innovation that made DeepSeek 57× more efficient. Watch AFTER Karpathy to appreciate what's being changed and why.*
 
 ## 📖 Read
@@ -37,6 +38,7 @@
   - *The foundational paper of mechanistic interpretability. Uses ALL the linear algebra you learned.*
 - **Neel Nanda's walkthrough of the above**
   - https://www.neelnanda.io/mechanistic-interpretability/a-walkthrough-of-a-mathematical-framework-for-transformer-circuits
+  - **Video walkthrough:** https://www.youtube.com/watch?v=KV5gbOmHbjU
 
 ## 🔨 Do
 

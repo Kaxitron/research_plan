@@ -25,8 +25,6 @@
 
 ## 📺 Watch — Secondary
 
-3. **Khan Academy — "Matrix multiplication"** series
-4. **Professor Leonard — "Matrix Multiplication"**
    - https://www.youtube.com/c/ProfessorLeonard
 
 ## 📖 Read

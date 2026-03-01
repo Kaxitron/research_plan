@@ -65,6 +65,9 @@
    - Bifurcations, limit cycles, and the beginning of chaos. Strogatz is the master.
 4. **Welch Labs — "Grokking and Double Descent"**
    - *Connects phase transition ideas to the specific ML phenomena you'll encounter.*
+5. **Neel Nanda — Grokking paper walkthrough**
+   - https://www.youtube.com/@neelnanda2469
+   - *Neel's walkthrough of the grokking phenomenon with mechanistic interpretability analysis. Connects stability/phase transitions to what neural networks actually learn.*
 
 ## 📖 Read — Primary
 

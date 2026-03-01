@@ -19,7 +19,6 @@
 
 ## 📺 Watch — Secondary
 
-2. **Khan Academy — "Introduction to Vectors"** (as review/practice)
    - Good for extra worked examples if 3B1B moves too fast on any point
 3. **Maththebeautiful (Pavel Grinfeld) — "What is a Vector?"**
    - https://www.youtube.com/watch?v=iVZGsGlmEPk

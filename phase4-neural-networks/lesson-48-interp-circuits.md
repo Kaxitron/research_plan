@@ -16,9 +16,11 @@
 
 1. **Neel Nanda — "Walkthrough of A Mathematical Framework for Transformer Circuits"**
    - https://www.youtube.com/@neelnanda2469
+   - Key video: [Walkthrough of Transformer Circuits](https://www.youtube.com/watch?v=KV5gbOmHbjU)
    - *Stream-of-consciousness video walkthrough of the foundational Transformer Circuits paper. Neel explains every equation and connects them to real model behavior.*
 2. **Neel Nanda — YouTube channel (paper walkthroughs and research streams)**
    - https://www.youtube.com/@neelnanda2469
+   - Key video: [Walkthrough of Transformer Circuits](https://www.youtube.com/watch?v=KV5gbOmHbjU)
    - *Browse his research stream videos — he walks through his actual research process, which is invaluable for learning how mech interp is done in practice.*
 
 ## 📺 Watch — Secondary

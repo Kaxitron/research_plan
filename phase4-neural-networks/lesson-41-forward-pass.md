@@ -17,7 +17,8 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "The Misconception that Almost Stopped AI [How Models Learn Part 1]"**
-   - https://www.youtube.com/@WelchLabs (search "How Models Learn Part 1")
+   - https://www.youtube.com/watch?v=PFDMhdDR_1M
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 2: Gradient Descent + Ch. 4: Deep Learning*
    - *22 minutes. The Belgium/Netherlands map example is PERFECT for your geometric intuition style. Each neuron folds a plane; stacking layers composes folds. You'll see WHY deep networks work. This is the single best visual for understanding what a forward pass actually does to data.*
 
 2. **Karpathy — "Building makemore" (Lecture 2)**
@@ -26,6 +27,10 @@
    - https://www.youtube.com/watch?v=TCH_1BHY58I
 
 ## 📺 Watch — Secondary
+
+4. **Welch Labs — "Why Deep Learning Works Unreasonably Well" (Ch. 4: Deep Learning)**
+   - https://www.youtube.com/watch?v=qx7hirqgfuU
+   - *Shows why depth matters more than width, with the Belgium/Netherlands example extended to multi-layer networks.*
 
 4. **Nelson Elhage — "Transformers for Software Engineers"** (blog/talk)
    - https://blog.nelhage.com/post/transformers-for-software-engineers/

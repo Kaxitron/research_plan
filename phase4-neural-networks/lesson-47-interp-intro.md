@@ -18,12 +18,18 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "The Dark Matter of AI [Mechanistic Interpretability]"**
-   - https://www.youtube.com/@WelchLabs (search "Dark Matter of AI")
+   - https://www.youtube.com/watch?v=UGO_Ehywuxc
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 7: Mechanistic Interpretability*
    - *24 minutes. The best accessible introduction to mechanistic interpretability that exists. Welch uses the "dark matter" framing — we can measure the effects of internal representations without being able to see them directly — and walks through superposition and sparse autoencoders with exceptional clarity. Watch this BEFORE any papers.*
+
+3. **Welch Labs — "The Moment We Stopped Understanding AI" (Ch. 5: AlexNet)**
+   - https://www.youtube.com/watch?v=UZDiGooFs54
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 5: AlexNet*
+   - *17 minutes. Feature visualization, activation atlases, and why we stopped understanding what neural nets learn. Sets up the interpretability problem.*
 
 2. **Neel Nanda's YouTube** — paper walkthroughs and research streams
    - Start with "Implementing GPT-3 from Scratch"
-   - https://www.youtube.com/c/neaborius
+   - https://www.youtube.com/@neelnanda2469
 
 ## 📖 Read (core interpretability papers, in order)
 

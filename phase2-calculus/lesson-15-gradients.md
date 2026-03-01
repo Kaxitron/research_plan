@@ -15,7 +15,6 @@
 
 - **3Blue1Brown — "Gradient descent, how neural networks learn" | Deep Learning Ch. 2**
   - https://www.youtube.com/watch?v=IHZwWFHWa-w
-- **Khan Academy — Gradient and directional derivatives** (extra practice)
 
 ## 📖 Read
 

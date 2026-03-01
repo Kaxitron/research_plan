@@ -16,7 +16,8 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "The F=ma of Artificial Intelligence [Backpropagation, How Models Learn Part 2]"**
-   - https://www.youtube.com/@WelchLabs (search "How Models Learn Part 2")
+   - https://www.youtube.com/watch?v=GKZoOHXGcLo
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 3: Backpropagation*
    - *30 minutes. Welch frames backprop as the fundamental law of deep learning — the way F=ma is the fundamental law of classical mechanics. The geometric treatment of gradients flowing backward through the folded-space picture from Part 1 is exceptional.*
 
 2. **Karpathy — "Becoming a Backprop Ninja" (Lecture 5)**

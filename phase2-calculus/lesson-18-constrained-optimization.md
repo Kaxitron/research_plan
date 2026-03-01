@@ -64,7 +64,6 @@ Imagine a topographic map (contour lines of f) with a trail drawn on it (the con
 
 ## 📺 Watch — Primary
 
-1. **Khan Academy — "Lagrange multipliers, introduction"**
    - https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/constrained-optimization/v/constrained-optimization-introduction
    - *Clear 2D visual walkthrough of the tangent condition.*
 2. **3Blue1Brown — "Lagrange Multipliers | Multivariable Calculus"** (if available in Essence of Calculus)

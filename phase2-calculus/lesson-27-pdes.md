@@ -44,7 +44,11 @@
 1. **3Blue1Brown — "But what is a partial differential equation?"**
    - https://www.youtube.com/watch?v=ly4S0oi3Yz8
    - *Covers the heat equation with beautiful visualizations of Fourier modes.*
-2. **Sander Dieleman — "Diffusion models explained"**
+2. **Welch Labs — "But How Do AI Images and Videos Actually Work?" (Ch. 9, w/ 3B1B)**
+   - https://www.youtube.com/watch?v=iv-5mZ_9CPY
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 9: Video & Image Generation*
+   - *Diffusion models, CLIP, and the math of turning text into images. The perfect application of everything in this lesson — the reverse diffusion process IS a PDE solved backward in time.*
+3. **Sander Dieleman — "Diffusion models explained"**
    - *The best accessible explanation connecting PDEs to diffusion generative models.*
 
 ## 📺 Watch — Secondary

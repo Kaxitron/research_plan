@@ -29,7 +29,6 @@
 4. **3Blue1Brown — "But what is a convolution?"**
    - https://www.youtube.com/watch?v=KuXjwB4LzSA
    - *While about convolution, includes beautiful visualizations of expected value and probability distributions that build intuition.*
-5. **Khan Academy — "Covariance and correlation"**
    - Good worked numerical examples if StatQuest moves too fast
 
 ## 📖 Read

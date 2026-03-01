@@ -24,7 +24,6 @@
 2. **MIT OCW — Strang, Lecture 9: "Independence, Basis, and Dimension"**
    - https://www.youtube.com/watch?v=yjBerM5jWsc
    - Strang emphasizes *counting* — how many vectors do you need? When are they redundant?
-3. **Khan Academy — "Linear combinations and span"**
    - Good for worked examples with specific numbers
 
 ## 📖 Read

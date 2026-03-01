@@ -103,9 +103,9 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
-## Phase 4: Neural Networks & Interpretability (45–65h)
+## Phase 4: Machine Learning & Interpretability (45–65h)
 
-### Neural Network Foundations (40–46)
+### Machine Learning Foundations (40–46)
 
 | # | Lesson | Status |
 |---|--------|--------|

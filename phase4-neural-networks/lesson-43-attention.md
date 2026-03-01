@@ -24,6 +24,11 @@
 ## 📖 Read
 
 - **"Attention is All You Need" (Vaswani et al., 2017)** — the original paper
+- **Welch Labs — "How DeepSeek Rewrote the Transformer" (Ch. 8: Attention)**
+  - https://www.youtube.com/watch?v=cAxYGT4VtBo
+  - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 8: Attention*
+  - *After the 3B1B videos, watch this to see a real frontier modification: Multi-head Latent Attention.*
+
 - **"The Illustrated Transformer" by Jay Alammar**
   - https://jalammar.github.io/illustrated-transformer/
 

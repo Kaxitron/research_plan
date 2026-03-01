@@ -12,5 +12,3 @@
 | **Steve Brunton's channel** | Applications-heavy (data science) | SVD/PCA/applied intuition | ✅ YouTube |
 | **Strang's textbook** | Definitive reference | Going deep on any topic | ❌ Purchase |
 | **BetterExplained** | Intuition-first explanations | Quick "aha" moments | ✅ Online |
-| **Khan Academy** | Worked examples, practice | Mechanical fluency | ✅ Online |
-| **Professor Leonard** | Thorough step-by-step | Building computation skills | ✅ YouTube |

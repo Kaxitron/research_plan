@@ -53,7 +53,6 @@
 4. **MIT OCW — Strang, Lecture 17: "Orthogonal Matrices and Gram-Schmidt"**
    - https://www.youtube.com/watch?v=0MtwqhIwdrI
    - Gram-Schmidt → QR decomposition, another way to decompose any matrix.
-5. **Khan Academy — "Introduction to projections" and "Orthogonal complements"**
    - Good for worked numerical examples
 
 ## 📖 Read — Primary

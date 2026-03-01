@@ -32,6 +32,7 @@
 
 - **"Open Problems in AI X-Risk" (Carlsmith, 2022)**
 - **Neel Nanda — "200 Concrete Open Problems in Mechanistic Interpretability"**
+  - https://www.youtube.com/@neelnanda2469
   - https://www.neelnanda.io/mechanistic-interpretability/favourite-problems
 - **The Alignment Forum** — https://www.alignmentforum.org/
 - **"An Overview of Catastrophic AI Risks" by Hendrycks et al.**

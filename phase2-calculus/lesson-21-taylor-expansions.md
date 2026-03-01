@@ -39,7 +39,6 @@
 1. **3Blue1Brown — "Taylor series" (Essence of Calculus)**
    - https://www.youtube.com/watch?v=3d6DsjIBzJ4
    - *Beautiful visualization of how polynomials progressively approximate functions.*
-2. **Khan Academy — Multivariable Taylor expansion**
 
 ## 📖 Read — Primary
 

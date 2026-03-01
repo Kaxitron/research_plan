@@ -100,56 +100,36 @@
 
 ---
 
-## Welch Labs
+## Welch Labs — *The Illustrated Guide to AI* (Book + Videos)
 
-**Channel:** [youtube.com/@WelchLabs](https://www.youtube.com/@WelchLabs)
+**Channel:** [youtube.com/@WelchLabsVideo](https://www.youtube.com/@WelchLabsVideo)
+**Book:** [welchlabs.com/resources/ai-book](http://www.welchlabs.com/resources/ai-book)
 
-*Stephen Welch's videos combine historical narrative, hardware demonstrations, and beautiful geometric intuition. Exceptional production quality.*
+*Stephen Welch's book combines historical narrative, hardware demonstrations, and exceptional geometric intuition. Each chapter has a companion video, supporting code, and exercises. The book is the primary reference for Phase 4 (Machine Learning).*
 
-### Neural Networks Demystified (7 parts)
+| Ch | Book Chapter | Video | Lesson | Link |
+|----|-------------|-------|--------|------|
+| 1 | The Perceptron | ChatGPT is made from 100 million of these | 40 | [Watch](https://www.youtube.com/watch?v=l-CjXFmcVzY) |
+| 2 | Gradient Descent | The misconception that almost stopped AI | 15, 17 | [Watch](https://www.youtube.com/watch?v=PFDMhdDR_1M) |
+| 3 | Backpropagation | The F=ma of artificial intelligence | 16, 42 | [Watch](https://www.youtube.com/watch?v=GKZoOHXGcLo) |
+| 4 | Deep Learning | Why deep learning works unreasonably well | 41, 49 | [Watch](https://www.youtube.com/watch?v=qx7hirqgfuU) |
+| 5 | AlexNet | The moment we stopped understanding AI | 47 | [Watch](https://www.youtube.com/watch?v=UZDiGooFs54) |
+| 6 | Neural Scaling Laws | AI can't cross this line and we don't know why | 49 | [Watch](https://www.youtube.com/watch?v=5eqRuVp65eY) |
+| 7 | Mechanistic Interpretability | The dark matter of AI | 47 | [Watch](https://www.youtube.com/watch?v=UGO_Ehywuxc) |
+| 8 | Attention | How DeepSeek rewrote the transformer | 43, 44 | [Watch](https://www.youtube.com/watch?v=cAxYGT4VtBo) |
+| 9 | Video & Image Generation | But how do AI images and videos actually work? (w/ 3B1B) | 27 | [Watch](https://www.youtube.com/watch?v=iv-5mZ_9CPY) |
 
-**Playlist:** [youtube.com/playlist?list=PLiaHhY2iBX9hdHaRr6b7XevZtgZRa1PoU](https://www.youtube.com/playlist?list=PLiaHhY2iBX9hdHaRr6b7XevZtgZRa1PoU)
-
-| # | Title | Lesson |
-|---|-------|--------|
-| 1 | Data and Architecture | 40 |
-| 2 | Forward Propagation | 41 |
-| 3 | Gradient Descent | 15, 17 |
-| 4 | Backpropagation | 16, 42 |
-| 5 | Numerical Gradient Checking | 16 |
-| 6 | Training | 17 |
-| 7 | Overfitting, Testing, and Regularization | 19 |
-
-### Imaginary Numbers Are Real (13 parts)
-
-**Playlist:** [youtube.com/playlist?list=PLiaHhY2iBX9g6KIvZ_703G3KJXapKkNaF](https://www.youtube.com/playlist?list=PLiaHhY2iBX9g6KIvZ_703G3KJXapKkNaF)
-
-*Beautiful visual exploration of complex numbers. Enrichment for eigenvalue intuition (Lesson 8) and Fourier analysis.*
-
-| # | Title | Lesson |
-|---|-------|--------|
-| 1–5 | History and geometry of complex numbers | 8 (enrichment) |
-| 6–9 | Complex multiplication as rotation | 8, 11 |
-| 10–13 | Euler's formula and applications | 21, 27 |
-
-### Modern AI / LLM Series
+### Other Welch Labs Videos
 
 | Title | Lesson | Link |
 |-------|--------|------|
-| ChatGPT is made from 100 million of these [The Perceptron] | 40 | [Watch](https://www.youtube.com/watch?v=l-CjXFmcVzY) |
-| The Misconception that Almost Stopped AI [How Models Learn Part 1] | 41 | [Watch](https://www.youtube.com/watch?v=PFDMhdDR_1M) |
-| How Models Learn (Part 2) — Backpropagation & Gradient Descent | 42 | [Watch](https://www.youtube.com/watch?v=GKZoOHXGcLo) |
-| How to learn AI — from the inventor of backpropagation | General | [Watch](https://www.youtube.com/watch?v=czp0Gj3gYF8) |
+| What the Books Get Wrong about AI [Double Descent] | 19 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
+| The most complex model we actually understand [Grokking] | 19, 25 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
+| Can humans make AI any better? [The Bitter Lesson] | 66 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
+| These Numbers Can Make AI Dangerous [Subliminal Learning] | 66 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
 | The moment we satisficed with AI Alignment | 66 | [Watch](https://www.youtube.com/watch?v=FA8_wxhGnOI) |
-| DeepSeek's Multi-head Latent Attention (MLA) | 44 | [Watch](https://www.youtube.com/watch?v=cAxYGT4VtBo) |
+| How to learn AI — from the inventor of backpropagation | General | [Watch](https://www.youtube.com/watch?v=czp0Gj3gYF8) |
 | How OpenAI's o3 model actually works | Optional | [Watch](https://www.youtube.com/watch?v=5ZleBCpJOJE) |
-
-### Learning Machine Learning Series
-
-| Title | Lesson | Link |
-|-------|--------|------|
-| Learning to See (parts 1–5) — Computer Vision from scratch | 41, 42 | [Playlist](https://www.youtube.com/playlist?list=PLiaHhY2iBX9ihLasvE8BKnS2Xg8AhY6iV) |
-| Some Fundamental Theorems in Math | Enrichment | [Watch](https://www.youtube.com/watch?v=gich2gLcnSA) |
 
 ---
 
@@ -170,7 +150,7 @@
 | 7 | Let's build GPT from scratch | 43–44 | [Watch](https://www.youtube.com/watch?v=kCc8FmEb1nY) |
 | 8 | Tokenization (BPE) | Optional | [Watch](https://www.youtube.com/watch?v=zduSFxRajkE) |
 | 9 | Reproducing GPT-2 | Optional | [Watch](https://www.youtube.com/watch?v=l8pRSuU81PU) |
-| — | Deep Dive into LLMs like ChatGPT | 46, 48 | [Watch](https://www.youtube.com/watch?v=7xTGNNLPyMI) |
+| — | Deep Dive into LLMs like ChatGPT | 45, 46 | [Watch](https://www.youtube.com/watch?v=7xTGNNLPyMI) |
 
 ---
 
@@ -212,35 +192,26 @@
 
 ---
 
-## Professor Leonard — Full University Lectures
+## Neel Nanda — Mechanistic Interpretability
 
-**Channel:** [youtube.com/@ProfessorLeonard](https://www.youtube.com/@ProfessorLeonard)
+**Channel:** [youtube.com/@neelnanda2469](https://www.youtube.com/@neelnanda2469)
+**Getting Started Guide:** [neelnanda.io/getting-started](https://www.neelnanda.io/mechanistic-interpretability/getting-started)
 
-*If you want the full classroom experience at a slower pace. Very thorough, very patient.*
+*Neel leads the mechanistic interpretability team at Google DeepMind. His YouTube features paper walkthroughs, live research streams, and TransformerLens tutorials. Essential viewing for Lessons 47–50.*
 
-| Playlist | Lesson | Link |
-|----------|--------|------|
-| Calculus 1 | 13 | [Playlist](https://www.youtube.com/playlist?list=PLF797E961509B4EB5) |
-| Calculus 2 | 20–21 | [Playlist](https://www.youtube.com/playlist?list=PLDesaqWTN6EQ2J4vgsN1HyBeRADEh4Cw-) |
-| Calculus 3 (Multivariable) | 14–15, 20 | [Playlist](https://www.youtube.com/playlist?list=PLDesaqWTN6ESk16YRmzuJ8f6-rnuy0Ry7) |
-| Statistics | 28–29, 32 | [Playlist](https://www.youtube.com/playlist?list=PL5102DFDC6790F3D0) |
-| Differential Equations | 22–26 | [Playlist](https://www.youtube.com/playlist?list=PLDesaqWTN6ESPaHy2QUKVaXNZuQNxkYQ_) |
-
----
-
-## Khan Academy — Supplementary Practice
-
-**Site:** [khanacademy.org/math](https://www.khanacademy.org/math)
-
-*Use for extra practice when a concept isn't clicking. Good worked examples.*
-
-| Course | Lesson | Link |
-|--------|--------|------|
-| Linear Algebra | 2–11 | [Course](https://www.khanacademy.org/math/linear-algebra) |
-| Calculus 1 | 13 | [Course](https://www.khanacademy.org/math/calculus-1) |
-| Multivariable Calculus | 14–15, 20 | [Course](https://www.khanacademy.org/math/multivariable-calculus) |
-| Statistics & Probability | 28–29, 32 | [Course](https://www.khanacademy.org/math/statistics-probability) |
-| Differential Equations | 22–26 | [Course](https://www.khanacademy.org/math/differential-equations) |
+| Title / Type | Lesson | Link |
+|-------------|--------|------|
+| Walkthrough: A Mathematical Framework for Transformer Circuits | 44, 48 | [Watch](https://www.youtube.com/watch?v=KV5gbOmHbjU) |
+| Walkthrough: In-Context Learning and Induction Heads | 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Getting Started in Mechanistic Interpretability | 47 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| TransformerLens tutorials & live coding | 47–48 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Research streams (live mech interp research) | 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| 200 Open Problems in Mechanistic Interpretability | 67 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Grokking paper walkthrough | 19, 25, 50 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Interview: The Inside View — superposition and grokking | 48, 50 | [Watch](https://www.youtube.com/watch?v=cVBGjhN4-1g) |
+| Interview: AXRP Ep 19 — Mechanistic Interpretability | 47–48 | [Listen](https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html) |
+| Interview: 80,000 Hours — The race to read AI minds | 47, 67 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
+| Interview: MLST — Sparse Autoencoders | 47–48 | [Listen](https://open.spotify.com/episode/5XjHhNQxIb16eJZXGmbaCk) |
 
 ---
 
@@ -271,20 +242,6 @@
 
 ---
 
-## Neel Nanda — Mechanistic Interpretability
-
-**Channel:** [youtube.com/@neaborius](https://www.youtube.com/@neaborius)
-
-| Topic | Lesson |
-|-------|--------|
-| Paper walkthroughs (Circuits, Induction Heads) | 47–48 |
-| Research streams (live coding) | 48 |
-| Getting started with mech interp | 47 |
-| TransformerLens tutorials | 47–48 |
-| 200 Open Problems talk | 67 |
-
----
-
 ## Eigenchris — Tensors & Manifolds
 
 **Channel:** [youtube.com/@eigenchris](https://www.youtube.com/@eigenchris)
@@ -298,22 +255,14 @@
 
 ---
 
-## Podcasts & Talks
+## Robert Miles — AI Safety
 
-| Source | Topic | Lesson | Link |
-|--------|-------|--------|------|
-| Robert Miles (YouTube) | AI safety explanations | 63–67 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| AXRP (Daniel Filan) | AI X-Risk Research | 67 | [axrp.net](https://axrp.net/) |
-| The Inside View | Alignment researcher interviews | 67 | [YouTube](https://www.youtube.com/results?search_query=the+inside+view+alignment) |
-| 80,000 Hours Podcast | AI safety episodes | 67 | [80000hours.org/podcast](https://80000hours.org/podcast/) |
-| Julia Galef (Rationally Speaking) | Decision theory, anthropics | 64–65 | [YouTube](https://www.youtube.com/c/JuliaGalef) |
-| Machine Learning Street Talk | Technical ML discussions | 44, 48–50 | [YouTube](https://www.youtube.com/@MachineLearningStreetTalk) |
+**Channel:** [youtube.com/c/RobertMilesAI](https://www.youtube.com/c/RobertMilesAI)
 
----
+*Accessible, well-produced explanations of AI safety concepts. Essential for Phase 6.*
 
-## SLT-Specific Resources
-
-| Source | Topic | Lesson | Link |
-|--------|-------|--------|------|
-| Jesse Hoogland & Daniel Murfet — Intro to SLT | Singular Learning Theory overview | 50, 60 | [YouTube search](https://www.youtube.com/results?search_query=jesse+hoogland+singular+learning+theory) |
-| Tadashi Tokieda — Topology and Geometry | Geometric intuition for algebraic topology | 57–58 | [YouTube search](https://www.youtube.com/results?search_query=tadashi+tokieda+topology) |
+| Topic | Lesson |
+|-------|--------|
+| AI safety overview and failure modes | 63–67 |
+| Reward hacking and specification gaming | 45 |
+| Mesa-optimization and inner alignment | 66 |

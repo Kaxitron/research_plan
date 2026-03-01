@@ -36,11 +36,11 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "Can humans make AI any better? [The Bitter Lesson]"**
-   - https://www.youtube.com/@WelchLabs (search "Bitter Lesson")
+   - https://www.youtube.com/@WelchLabsVideo
    - *23 minutes. Richard Sutton's Bitter Lesson — that scale and compute always beats human domain knowledge — reframed through a clear historical narrative. Explains why alignment is urgent: if the lesson holds, we'll soon have systems far smarter than us, built without understanding them.*
 
 2. **Welch Labs — "These Numbers Can Make AI Dangerous [Subliminal Learning]"**
-   - https://www.youtube.com/@WelchLabs (search "Subliminal Learning")
+   - https://www.youtube.com/@WelchLabsVideo
    - *33 minutes. How AI systems can learn unintended behaviors from training data — a concrete mechanistic demonstration of inner alignment failure. Watch this for a visceral sense of WHY alignment is hard.*
 
 3. **Robert Miles' YouTube channel** — accessible explanations of all alignment concepts

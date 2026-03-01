@@ -334,14 +334,12 @@ In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of 
     - Ch. 10: "Taylor series" — critical for understanding why gradient descent works
     - Ch. 11: "Taylor series (geometric view)" — connects to the "zooming in" intuition
 
-- **Khan Academy — Calculus 1 (selected videos for extra practice)**
   - https://www.khanacademy.org/math/calculus-1
   - Use as supplementary practice if any rule feels shaky after 3B1B
   - Particularly recommended: Chain rule section, Optimization problems section
 
 ### Supplementary
 
-- **Professor Leonard — Calculus 1 full lectures** (if you want a slower, classroom-style walkthrough)
   - https://www.youtube.com/playlist?list=PLF797E961509B4EB5
   - Very thorough but long — only use if 3B1B isn't enough
 

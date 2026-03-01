@@ -39,7 +39,6 @@
 
 1. **3Blue1Brown — "The Gaussian integral" (if available)**
    - The polar coordinates proof is a classic visualization opportunity
-2. **Khan Academy — Multivariable calculus: double integrals, change of variables**
    - Solid worked examples with geometric intuition
 
 ## 📖 Read — Primary

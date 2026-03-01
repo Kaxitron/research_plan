@@ -41,8 +41,14 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "Why Deep Learning Works Unreasonably Well"**
-   - https://www.youtube.com/@WelchLabs
+   - https://www.youtube.com/watch?v=qx7hirqgfuU
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 4: Deep Learning*
    - *Explains why overparameterized models generalize, connecting to double descent (Lesson 18) and scaling.*
+2. **Welch Labs — "AI Can't Cross This Line and We Don't Know Why" (Ch. 6: Neural Scaling Laws)**
+   - https://www.youtube.com/watch?v=5eqRuVp65eY
+   - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 6: Neural Scaling Laws*
+   - *21 minutes. The definitive visual explanation of scaling laws, power laws, and the compute-optimal frontier.*
+
 2. **Andrej Karpathy — "Deep Dive into LLMs" (scaling laws section)**
    - https://www.youtube.com/watch?v=7xTGNNLPyMI
    - *Karpathy explains scaling laws with concrete numbers and graphs. If you watched this for Lesson 40, re-watch the scaling section.*

@@ -55,7 +55,6 @@
 3. **Steve Brunton — "Overview of Dynamical Systems" (Dynamical Systems playlist, videos 1–2)**
    - https://www.youtube.com/c/Eigensteve
    - *Brunton is an applied mathematician who connects dynamical systems to data science. Excellent for seeing why this matters beyond pure math.*
-4. **Khan Academy — "Differential equations introduction"**
    - Useful if you want a slower, example-heavy walkthrough of the basic mechanics
 
 ## 📖 Read — Primary

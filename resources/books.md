@@ -10,6 +10,7 @@
 - **"The Matrix Cookbook"** — Petersen & Pedersen — https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf
 
 ## Deep Learning
+- **"The Welch Labs Illustrated Guide to AI"** — Stephen Welch — http://www.welchlabs.com/resources/ai-book *(Primary reference for Phase 4. 9 chapters covering perceptron → attention → image generation, with code + exercises)*
 - **"Neural Networks and Deep Learning"** — Michael Nielsen — http://neuralnetworksanddeeplearning.com/
 - **"Deep Learning"** — Goodfellow, Bengio, Courville — https://www.deeplearningbook.org/
 - **"Dive into Deep Learning"** — Interactive, with code — https://d2l.ai/
