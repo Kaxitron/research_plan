@@ -38,17 +38,17 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 2 | [Vectors — What Even Are They?](phase1-linear-algebra/lesson-02-vectors.md) | ⬜ Not Started |
-| 3 | [Linear Combinations, Span, and Basis](phase1-linear-algebra/lesson-03-span-basis.md) | ⬜ Not Started |
-| 4 | [Linear Transformations — Matrices as Functions](phase1-linear-algebra/lesson-04-transformations.md) | ⬜ Not Started |
-| 5 | [Matrix Operations — Composition and Inversion](phase1-linear-algebra/lesson-05-matrix-operations.md) | ⬜ Not Started |
-| 6 | [Rank, Null Space, and the Fundamental Theorem](phase1-linear-algebra/lesson-06-rank-nullspace.md) | ⬜ Not Started |
-| 7 | [The Determinant — Volume, Orientation, and Invertibility](phase1-linear-algebra/lesson-07-determinant.md) | ⬜ Not Started |
-| 8 | [Eigenvalues & Eigenvectors — The DNA of a Transformation](phase1-linear-algebra/lesson-08-eigenvalues.md) | ⬜ Not Started |
-| 9 | [Singular Value Decomposition — The Ultimate Factorization](phase1-linear-algebra/lesson-09-svd.md) | ⬜ Not Started |
-| 10 | [Dot Products, Projections, and Orthogonality](phase1-linear-algebra/lesson-10-dot-products.md) | ⬜ Not Started |
-| 11 | [Change of Basis and Norms](phase1-linear-algebra/lesson-11-change-of-basis.md) | ⬜ Not Started |
-| 12 | [Linear Algebra Capstone — Putting It All Together](phase1-linear-algebra/lesson-12-capstone.md) | ⬜ Not Started |
+| 2 | [Vectors — What Even Are They?](phase1-linear-algebra/lesson-02-vectors.md) | ✅ Complete |
+| 3 | [Linear Combinations, Span, and Basis](phase1-linear-algebra/lesson-03-span-basis.md) | ✅ Complete |
+| 4 | [Linear Transformations — Matrices as Functions](phase1-linear-algebra/lesson-04-transformations.md) | ✅ Complete |
+| 5 | [Matrix Operations — Composition and Inversion](phase1-linear-algebra/lesson-05-matrix-operations.md) | ✅ Complete |
+| 6 | [Rank, Null Space, and the Fundamental Theorem](phase1-linear-algebra/lesson-06-rank-nullspace.md) | ✅ Complete |
+| 7 | [The Determinant — Volume, Orientation, and Invertibility](phase1-linear-algebra/lesson-07-determinant.md) | ✅ Complete |
+| 8 | [Eigenvalues & Eigenvectors — The DNA of a Transformation](phase1-linear-algebra/lesson-08-eigenvalues.md) | ✅ Complete |
+| 9 | [Singular Value Decomposition — The Ultimate Factorization](phase1-linear-algebra/lesson-09-svd.md) | ✅ Complete |
+| 10 | [Dot Products, Projections, and Orthogonality](phase1-linear-algebra/lesson-10-dot-products.md) | ✅ Complete |
+| 11 | [Change of Basis and Norms](phase1-linear-algebra/lesson-11-change-of-basis.md) | ✅ Complete |
+| 12 | [Linear Algebra Capstone — Putting It All Together](phase1-linear-algebra/lesson-12-capstone.md) | ✅ Complete |
 
 ---
 
@@ -58,7 +58,7 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | ⬜ Not Started |
+| 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | 🔄 In Progress |
 | 14 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-14-matrix-calculus.md) | ⬜ Not Started |
 | 15 | [Partial Derivatives and Gradients](phase2-calculus/lesson-15-gradients.md) | ⬜ Not Started |
 | 16 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-16-chain-rule.md) | ⬜ Not Started |
