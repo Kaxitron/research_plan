@@ -837,9 +837,14 @@
       <div>
         ~<span class="stat-value" id="stat-hours-done">0</span><span style="color:#6ee7b7">h done</span> · ~<span class="stat-value" id="stat-hours-left">0</span><span style="color:#fbbf24">h remaining</span>
       </div>
-      <button class="sync-btn" id="sync-btn" onclick="syncReadmeToGithub()" title="Update README.md on GitHub with current progress">
-        <span id="sync-icon">⬆</span> Sync README
-      </button>
+      <div style="display:flex;gap:6px">
+        <button class="sync-btn" id="push-btn" onclick="syncReadmeToGithub()" title="Push local progress to README on GitHub">
+          <span id="push-icon">⬆</span> Push
+        </button>
+        <button class="sync-btn" id="pull-btn" onclick="pullStatusesFromGithub(true)" title="Pull progress from README on GitHub (overwrites local)">
+          <span id="pull-icon">⬇</span> Pull
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2861,16 +2866,27 @@ function readmeStatusToDashboard(statusText) {
   return 'not-started';
 }
 
-// ── Auto-pull from GitHub on page load ──
-async function pullStatusesFromGithub() {
-  // Only pull if token is already saved — never prompt on auto-pull
-  const token = localStorage.getItem(GH_TOKEN_KEY);
-  if (!token) { console.log('Pull skipped — no GitHub token stored'); return; }
+// ── Pull statuses from GitHub README ──
+async function pullStatusesFromGithub(manual) {
+  const btn = document.getElementById('pull-btn');
+  const icon = document.getElementById('pull-icon');
+
+  const token = manual ? getGhToken() : localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) {
+    if (manual) { console.log('Pull cancelled — no token'); }
+    return;
+  }
+
+  if (manual) {
+    btn.classList.add('syncing');
+    btn.style.pointerEvents = 'none';
+    icon.textContent = '⟳';
+  }
 
   try {
     const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
     const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
-    if (!getResp.ok) { console.warn(`Pull failed: HTTP ${getResp.status}`); return; }
+    if (!getResp.ok) throw new Error(`GitHub GET failed: ${getResp.status}`);
 
     const fileData = await getResp.json();
     _lastKnownSha = fileData.sha; // Cache SHA for future pushes
@@ -2902,19 +2918,39 @@ async function pullStatusesFromGithub() {
     if (changed) {
       saveStatuses();
       refreshAll();
-      console.log('Pulled updated statuses from GitHub');
-    } else {
-      console.log('Statuses already in sync with GitHub');
+      if (selectedLesson) selectLesson(selectedLesson);
     }
+
+    if (manual) {
+      btn.classList.remove('syncing');
+      btn.classList.add('success');
+      icon.textContent = '✓';
+      setTimeout(() => { btn.classList.remove('success'); icon.textContent = '⬇'; }, 3000);
+    }
+    console.log(changed ? 'Pulled updated statuses from GitHub' : 'Already in sync');
+
   } catch (e) {
-    console.warn('Auto-pull failed:', e.message);
-    // Silent failure — don't disrupt the user
+    console.warn('Pull failed:', e.message);
+    if (manual) {
+      btn.classList.remove('syncing');
+      btn.classList.add('error');
+      icon.textContent = '✗';
+      if (e.message.includes('401') || e.message.includes('403')) {
+        localStorage.removeItem(GH_TOKEN_KEY);
+        alert('Authentication failed — token cleared. Try again with a valid token.');
+      } else {
+        alert(`Pull failed: ${e.message}`);
+      }
+      setTimeout(() => { btn.classList.remove('error'); icon.textContent = '⬇'; }, 3000);
+    }
+  } finally {
+    if (manual) btn.style.pointerEvents = '';
   }
 }
 
 async function syncReadmeToGithub() {
-  const btn = document.getElementById('sync-btn');
-  const icon = document.getElementById('sync-icon');
+  const btn = document.getElementById('push-btn');
+  const icon = document.getElementById('push-icon');
 
   // Prevent overlapping syncs
   if (_syncInProgress) return;
@@ -3055,8 +3091,6 @@ function init() {
     // Use a small helper instead of setView to avoid event.target issues
     refreshCurrentView();
   });
-  // Auto-pull from GitHub: render immediately from localStorage, then update in background
-  pullStatusesFromGithub();
 }
 
 init();
