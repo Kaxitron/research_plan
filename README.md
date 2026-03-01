@@ -2,7 +2,7 @@
 
 A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 78 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
 
-**Start date:** February 21, 2026 · **Estimated total:** 400–560 hours · **Dashboard:** [Interactive Curriculum Map](curriculum-dashboard.html)
+**Start date:** February 21, 2026 · **Estimated total:** 400–560 hours · **Dashboard:** [Interactive Curriculum Map](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
 
 ---
 
