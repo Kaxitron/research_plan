@@ -77,7 +77,7 @@ This fraction view is what makes the chain rule obvious: df/dg · dg/dx = df/dx 
 
 ### Geometric understanding of derivatives, the product rule, and the chain rule
 
-📐 [**Interactive Visualization: The Geometric Derivative**](geometric-derivative.html)
+📐 [**Interactive Visualization: The Geometric Derivative**](https://kaxitron.github.io/research_plan/resources/geometric-derivative.html)
 
 The derivative of x² comes from a square growing by dx on each side — two strips of x·dx plus a negligible corner. For 1/x, a rectangle with constant area 1 gets wider, so its height *must* shrink — the negative sign in -1/x² is geometric necessity. The product rule is two strips on a rectangle where both sides change. The chain rule is cascading nudges through a pipeline of number lines, each function scaling the nudge by its own derivative.
 
