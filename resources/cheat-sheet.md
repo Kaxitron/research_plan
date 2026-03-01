@@ -559,6 +559,7 @@ $$\lim_{x \to 0} \frac{\sin(x)}{x} = \frac{0}{0} \quad \Rightarrow \quad \lim_{x
 | r = cos(θ) of centered data | Correlation = cosine similarity |
 | r² = SSR/SST | Fraction of variance explained |
 | df = f'(x) dx | Differential: rise = slope × run |
+| lim f/g = lim f'/g' | L'Hôpital's Rule (for 0/0 or ∞/∞) |
 
 ---
 
