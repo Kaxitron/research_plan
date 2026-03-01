@@ -47,6 +47,9 @@
 
 1. **Numberphile — "Gödel's Incompleteness Theorem" (Goldrei or similar)**
 2. **Computerphile — "Formal Verification" (with Tom Scott or similar)**
+3. **Dr. Trefor Bazett — Discrete Math (logic foundations sections)**
+   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxersk8fUxiUMSIx0DBqsKZS
+   - *University-level discrete math lectures covering propositional logic, proofs, and formal reasoning.*
 
 ## 📖 Read — Primary
 

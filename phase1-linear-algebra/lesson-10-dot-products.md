@@ -55,6 +55,15 @@
    - Gram-Schmidt → QR decomposition, another way to decompose any matrix.
    - Good for worked numerical examples
 
+## 📺 Watch — Optional
+
+5. **3Blue1Brown — "Cross products" (Ch. 10)**
+   - https://www.youtube.com/watch?v=eu6i7WJeinw
+   - *Cross products are less central to ML than dot products, but understanding them deepens your geometric intuition for how vectors interact in 3D.*
+6. **3Blue1Brown — "Cross products in the light of linear transformations" (Ch. 11)**
+   - https://www.youtube.com/watch?v=BaM7OCEm3G0
+   - *The elegant connection: the cross product IS a determinant, viewed through the lens of transformations.*
+
 ## 📖 Read — Primary
 
 - **MML Book, Chapter 3.1–3.4** (analytic geometry: norms, inner products, lengths, angles, orthogonal projections)

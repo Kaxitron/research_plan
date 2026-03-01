@@ -31,6 +31,12 @@
    - *📖 Book: Welch Labs, "The Illustrated Guide to AI," Ch. 8: Attention*
    - *18 minutes. After building a standard GPT, this shows you a real frontier modification: Multi-head Latent Attention, the architectural innovation that made DeepSeek 57× more efficient. Watch AFTER Karpathy to appreciate what's being changed and why.*
 
+## 📺 Watch — Optional
+
+4. **Andrej Karpathy — "Let's reproduce GPT-2 (124M)"**
+   - https://www.youtube.com/watch?v=l8pRSuU81PU
+   - *~4 hours. Reproduces GPT-2 from scratch with distributed training. Optional but invaluable if you want hands-on transformer engineering experience.*
+
 ## 📖 Read
 
 - **"A Mathematical Framework for Transformer Circuits" (Elhage, Nanda, et al.)**

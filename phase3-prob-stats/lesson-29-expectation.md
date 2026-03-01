@@ -18,7 +18,7 @@
    - https://www.youtube.com/results?search_query=statquest+expected+values
    - *Clear introduction to the "center of mass" interpretation.*
 2. **StatQuest — "Covariance, Clearly Explained"**
-   - https://www.youtube.com/results?search_query=statquest+covariance+clearly+explained
+   - https://www.youtube.com/watch?v=FgakZw6K1QQ
    - *How two variables move together, with visual examples.*
 3. **StatQuest — "PCA, Step by Step"**
    - https://www.youtube.com/results?search_query=statquest+pca+step+by+step

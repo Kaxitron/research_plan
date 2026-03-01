@@ -36,9 +36,15 @@
 
 ## 📺 Watch — Primary
 
-1. **3Blue1Brown — "Taylor series" (Essence of Calculus)**
+1. **3Blue1Brown — "Taylor series" (Essence of Calculus, Ch. 11)**
    - https://www.youtube.com/watch?v=3d6DsjIBzJ4
    - *Beautiful visualization of how polynomials progressively approximate functions.*
+2. **3Blue1Brown — "The other way to visualize derivatives" (Essence of Calculus, Ch. 12)**
+   - https://www.youtube.com/watch?v=CfW845LNObM
+   - *An alternative geometric perspective on Taylor series and derivatives.*
+3. **3Blue1Brown — "Higher order derivatives" (Essence of Calculus, Ch. 10)**
+   - https://www.youtube.com/watch?v=BLkz5LGWihw
+   - *Second derivatives and curvature — essential context for the Hessian in Taylor expansions.*
 
 ## 📖 Read — Primary
 

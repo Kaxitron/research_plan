@@ -46,7 +46,11 @@
 ## 📺 Watch — Primary
 
 1. **Aleph 0 — "Algebraic Topology" introduction videos**
-2. **Numberphile — "Topology of a Twisted Torus" or fundamental group visualizations**
+   - https://www.youtube.com/@Aleph0
+2. **Aleph 0 — "The Fundamental Theorem of Algebra"**
+   - https://www.youtube.com/watch?v=shEk8sz1oOw
+   - *Uses winding numbers (a homotopy concept) to prove FTA — beautiful connection between topology and algebra.*
+3. **Numberphile — "Topology of a Twisted Torus" or fundamental group visualizations**
 
 ## 📖 Read — Primary
 

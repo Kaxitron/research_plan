@@ -55,6 +55,18 @@
 
 3. **Steve Brunton — "Fourier Series and Heat Equation"**
    - https://www.youtube.com/c/Eigensteve
+4. **3Blue1Brown — "Solving the heat equation" (Diff Eq Ch. 3)**
+   - https://www.youtube.com/watch?v=ToIXSwZ1pJU
+   - *How Fourier series actually solve the heat equation — watch right after the primary 3B1B PDE video.*
+5. **3Blue1Brown — "But what is a Fourier series?" (Diff Eq Ch. 4)**
+   - https://www.youtube.com/watch?v=r6sGWTCMz2k
+   - *The visual intuition for Fourier decomposition. Essential for understanding how diffusion models work.*
+
+## 📺 Watch — Optional
+
+6. **3Blue1Brown — "e^(iπ) in 3.14 minutes" (Diff Eq Ch. 5)**
+   - https://www.youtube.com/watch?v=v0YEaeIClKY
+   - *A beautiful 3-minute aside on Euler's identity. Not directly needed but deepens appreciation for complex exponentials in Fourier analysis.*
 
 ## 📖 Read — Primary
 

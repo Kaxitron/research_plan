@@ -31,6 +31,18 @@
   - https://www.youtube.com/watch?v=HZGCoVF3YvM
 - **3Blue1Brown — "The quick proof of Bayes' theorem"**
   - https://www.youtube.com/watch?v=U_85TaXbeIo
+- **3Blue1Brown — "But what is the Central Limit Theorem?"**
+  - https://www.youtube.com/watch?v=zeJD6dqJ5lo
+  - *Why the normal distribution appears everywhere. Essential for understanding hypothesis testing (Lesson 32).*
+- **3Blue1Brown — "Why π is in the normal distribution"**
+  - https://www.youtube.com/watch?v=cy8r7WSuT1I
+  - *The geometric reason π shows up in the bell curve — connects integration, circles, and probability.*
+- **3Blue1Brown — "Binomial distributions"**
+  - https://www.youtube.com/watch?v=8idr1WZ1A7Q
+  - *Visualizes discrete probability before continuous. The binomial → normal connection is the CLT in action.*
+- **StatQuest — Statistics Fundamentals playlist**
+  - https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
+  - *Histograms, mean, variance, and probability distributions — Josh Starmer's clear, visual approach to foundations.*
 
 ## 📖 Read
 

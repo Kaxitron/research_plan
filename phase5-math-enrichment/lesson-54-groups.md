@@ -49,6 +49,12 @@
 
 1. **3Blue1Brown — groups and symmetry (if available)**
 2. **Visual Group Theory — "What is a Group?" (Nathan Carter lectures)**
+3. **Aleph 0 — "Group Theory, Pair of Pants"**
+   - https://www.youtube.com/watch?v=IK3VcATCkuY
+   - *Beautifully produced short video connecting group theory to topology. Perfect for geometric intuition.*
+4. **Socratica — "Abstract Algebra" playlist (Groups episodes)**
+   - https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6
+   - *Short (~10 min), clear introductions. Good on-ramp before the heavier material.*
 
 ## 📖 Read — Primary
 

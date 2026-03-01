@@ -1,6 +1,6 @@
 # Lesson 39: Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates
 
-[← Causal Inference](lesson-38-causal-inference.md) | [Back to TOC](../README.md) | [Next: How a Single Neuron Works →](../phase4-neural-networks/lesson-40-single-neuron.md)
+[← Causal Inference](lesson-38-causal-inference.md) | [Back to TOC](../README.md) | [Next: How a Single Neuron Works →](../phase4-machine-learning/lesson-40-single-neuron.md)
 
 ---
 

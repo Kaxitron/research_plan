@@ -42,15 +42,19 @@
 1. **Robert Miles** — ongoing coverage of new alignment research
    - https://www.youtube.com/c/RobertMilesAI
    - *Start with his videos on mesa-optimization and scalable oversight*
-2. **The Inside View podcast** — interviews with alignment researchers
-   - https://www.youtube.com/results?search_query=the+inside+view+alignment
-   - *Episodes with Neel Nanda, Chris Olah, and Paul Christiano are particularly relevant*
+2. **The Inside View — "Neel Nanda on mechanistic interpretability, superposition and grokking"**
+   - https://www.youtube.com/watch?v=cVBGjhN4-1g
+   - *Deep dive into mech interp research directions. Also browse other Inside View episodes with Chris Olah and Paul Christiano.*
 3. **AXRP (AI X-Risk Research Podcast)** by Daniel Filan
    - https://axrp.net/
    - *Deep technical episodes. Ep. 19 (Neel Nanda on mech interp) and Ep. 12 (Chris Olah on circuits) are standouts*
 4. **80,000 Hours Podcast — "Neel Nanda on the race to read AI minds"**
    - https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/
    - *Neel's updated and candid assessment of mech interp's promise and limitations. Important reality check.*
+5. **Neel Nanda — "200 Open Problems in Mechanistic Interpretability"**
+   - https://www.youtube.com/@neelnanda2469
+   - https://www.neelnanda.io/mechanistic-interpretability/getting-started
+   - *A research project catalog. Browse this for thesis/project ideas — many are approachable with the skills from this curriculum.*
 
 ## What's Next
 

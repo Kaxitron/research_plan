@@ -15,15 +15,15 @@
 | 1 | Vectors, what even are they? | 2 | [Watch](https://www.youtube.com/watch?v=fNk_zzaMoSs) |
 | 2 | Linear combinations, span, and basis vectors | 3 | [Watch](https://www.youtube.com/watch?v=k7RM-ot2NWY) |
 | 3 | Linear transformations and matrices | 4 | [Watch](https://www.youtube.com/watch?v=kYB8IZa5AuE) |
-| 4 | Matrix multiplication as composition | 4–5 | [Watch](https://www.youtube.com/watch?v=XkY2DOUCWMU) |
+| 4 | Matrix multiplication as composition | 4 | [Watch](https://www.youtube.com/watch?v=XkY2DOUCWMU) |
 | 5 | Three-dimensional linear transformations | 4 | [Watch](https://www.youtube.com/watch?v=rHLEWRxRGiM) |
 | 6 | The determinant | 7 | [Watch](https://www.youtube.com/watch?v=Ip3X9LOh2dk) |
 | 7 | Inverse matrices, column space, null space | 6 | [Watch](https://www.youtube.com/watch?v=uQhTuRlWMxw) |
 | 8 | Nonsquare matrices | 6 | [Watch](https://www.youtube.com/watch?v=v8VSDg_WQlA) |
 | 9 | Dot products and duality | 10 | [Watch](https://www.youtube.com/watch?v=LyGKycYT2v0) |
-| 10 | Cross products | Optional | [Watch](https://www.youtube.com/watch?v=eu6i7WJeinw) |
-| 11 | Cross products in light of transformations | Optional | [Watch](https://www.youtube.com/watch?v=BaM7OCEm3G0) |
-| 12 | Cramer's rule, geometrically | Optional | [Watch](https://www.youtube.com/watch?v=jBsC34PxzoM) |
+| 10 | Cross products | 10 | [Watch](https://www.youtube.com/watch?v=eu6i7WJeinw) |
+| 11 | Cross products in light of transformations | 10 | [Watch](https://www.youtube.com/watch?v=BaM7OCEm3G0) |
+| 12 | Cramer's rule, geometrically | 6 | [Watch](https://www.youtube.com/watch?v=jBsC34PxzoM) |
 | 13 | Change of basis | 11 | [Watch](https://www.youtube.com/watch?v=P2LTAUO1TdA) |
 | 14 | Eigenvectors and eigenvalues | 8 | [Watch](https://www.youtube.com/watch?v=PFDu9oVAE-g) |
 | 15 | Abstract vector spaces | 11 | [Watch](https://www.youtube.com/watch?v=TgKwz5Ikpc8) |
@@ -38,7 +38,7 @@
 
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
-| 1 | The essence of calculus | 13 | [Watch](https://www.youtube.com/watch?v=WUvTyaaNkzM) |
+| 1 | The essence of calculus | 13, 14 | [Watch](https://www.youtube.com/watch?v=WUvTyaaNkzM) |
 | 2 | The paradox of the derivative | 13 | [Watch](https://www.youtube.com/watch?v=9vKqVkMQHKk) |
 | 3 | Derivative formulas through geometry | 13 | [Watch](https://www.youtube.com/watch?v=S0_qX4VJhMQ) |
 | 4 | Visualizing the chain rule and product rule | 13, 16 | [Watch](https://www.youtube.com/watch?v=YG15m2VwSjA) |
@@ -62,10 +62,10 @@
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
 | 1 | Differential equations, a tourist's guide | 22 | [Watch](https://www.youtube.com/watch?v=p_di4Zn4wz4) |
-| 2 | But what is a partial differential equation? | 27 | [Watch](https://www.youtube.com/watch?v=ly4S0oi3Yz8) |
+| 2 | But what is a partial differential equation? | 22, 27 | [Watch](https://www.youtube.com/watch?v=ly4S0oi3Yz8) |
 | 3 | Solving the heat equation | 27 | [Watch](https://www.youtube.com/watch?v=ToIXSwZ1pJU) |
 | 4 | But what is a Fourier series? | 27 | [Watch](https://www.youtube.com/watch?v=r6sGWTCMz2k) |
-| 5 | e^(iπ) in 3.14 minutes | Optional | [Watch](https://www.youtube.com/watch?v=v0YEaeIClKY) |
+| 5 | e^(iπ) in 3.14 minutes | 27 | [Watch](https://www.youtube.com/watch?v=v0YEaeIClKY) |
 
 ---
 
@@ -75,13 +75,13 @@
 
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
-| 1 | But what is a neural network? | 40 | [Watch](https://www.youtube.com/watch?v=aircAruvnKk) |
-| 2 | Gradient descent, how neural networks learn | 14–15 | [Watch](https://www.youtube.com/watch?v=IHZwWFHWa-w) |
+| 1 | But what is a neural network? | 19, 40 | [Watch](https://www.youtube.com/watch?v=aircAruvnKk) |
+| 2 | Gradient descent, how neural networks learn | 15, 24 | [Watch](https://www.youtube.com/watch?v=IHZwWFHWa-w) |
 | 3 | Backpropagation, intuitively | 16, 42 | [Watch](https://www.youtube.com/watch?v=Ilg3gGewQ5U) |
 | 4 | Backpropagation calculus | 16, 42 | [Watch](https://www.youtube.com/watch?v=tIeHLnjs5U8) |
 | 5 | Transformers, the tech behind LLMs | 43 | [Watch](https://www.youtube.com/watch?v=wjZofJX0v4M) |
 | 6 | Attention in transformers, step-by-step | 43 | [Watch](https://www.youtube.com/watch?v=eMlx5fFNoYc) |
-| 7 | How might LLMs store facts | 48 | [Watch](https://www.youtube.com/watch?v=9-Jl0dxWQs8) |
+| 7 | How might LLMs store facts | 44, 48 | [Watch](https://www.youtube.com/watch?v=9-Jl0dxWQs8) |
 
 ---
 
@@ -110,9 +110,9 @@
 | Ch | Book Chapter | Video | Lesson | Link |
 |----|-------------|-------|--------|------|
 | 1 | The Perceptron | ChatGPT is made from 100 million of these | 40 | [Watch](https://www.youtube.com/watch?v=l-CjXFmcVzY) |
-| 2 | Gradient Descent | The misconception that almost stopped AI | 15, 17 | [Watch](https://www.youtube.com/watch?v=PFDMhdDR_1M) |
-| 3 | Backpropagation | The F=ma of artificial intelligence | 16, 42 | [Watch](https://www.youtube.com/watch?v=GKZoOHXGcLo) |
-| 4 | Deep Learning | Why deep learning works unreasonably well | 41, 49 | [Watch](https://www.youtube.com/watch?v=qx7hirqgfuU) |
+| 2 | Gradient Descent | The misconception that almost stopped AI | 41 | [Watch](https://www.youtube.com/watch?v=PFDMhdDR_1M) |
+| 3 | Backpropagation | The F=ma of artificial intelligence | 42 | [Watch](https://www.youtube.com/watch?v=GKZoOHXGcLo) |
+| 4 | Deep Learning | Why deep learning works unreasonably well | 19, 41, 49 | [Watch](https://www.youtube.com/watch?v=qx7hirqgfuU) |
 | 5 | AlexNet | The moment we stopped understanding AI | 47 | [Watch](https://www.youtube.com/watch?v=UZDiGooFs54) |
 | 6 | Neural Scaling Laws | AI can't cross this line and we don't know why | 49 | [Watch](https://www.youtube.com/watch?v=5eqRuVp65eY) |
 | 7 | Mechanistic Interpretability | The dark matter of AI | 47 | [Watch](https://www.youtube.com/watch?v=UGO_Ehywuxc) |
@@ -123,13 +123,13 @@
 
 | Title | Lesson | Link |
 |-------|--------|------|
-| What the Books Get Wrong about AI [Double Descent] | 19 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
-| The most complex model we actually understand [Grokking] | 19, 25 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
-| Can humans make AI any better? [The Bitter Lesson] | 66 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
-| These Numbers Can Make AI Dangerous [Subliminal Learning] | 66 | [Search channel](https://www.youtube.com/@WelchLabsVideo) |
+| What the Books Get Wrong about AI [Double Descent] | 19, 25 | [Watch](https://www.youtube.com/watch?v=z64a7USuGX0) |
+| The most complex model we actually understand [Grokking] | 19, 25 | [Watch](https://www.youtube.com/watch?v=D8GOeCFFby4) |
+| Can humans make AI any better? [The Bitter Lesson] | 66 | [Watch](https://www.youtube.com/watch?v=2hcsmtkSzIw) |
+| These Numbers Can Make AI Dangerous [Subliminal Learning] | 66 | [Watch](https://www.youtube.com/watch?v=NUAb6zHXqdI) |
 | The moment we satisficed with AI Alignment | 66 | [Watch](https://www.youtube.com/watch?v=FA8_wxhGnOI) |
-| How to learn AI — from the inventor of backpropagation | General | [Watch](https://www.youtube.com/watch?v=czp0Gj3gYF8) |
-| How OpenAI's o3 model actually works | Optional | [Watch](https://www.youtube.com/watch?v=5ZleBCpJOJE) |
+| How to learn AI — from the inventor of backpropagation | 0 | [Watch](https://www.youtube.com/watch?v=czp0Gj3gYF8) |
+| How OpenAI's o3 model actually works | 49 | [Watch](https://www.youtube.com/watch?v=5ZleBCpJOJE) |
 
 ---
 
@@ -141,16 +141,16 @@
 
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
-| 1 | Building micrograd (backprop from scratch) | 16, 17 | [Watch](https://www.youtube.com/watch?v=VMj-3S1tku0) |
+| 1 | Building micrograd (backprop from scratch) | 1, 17 | [Watch](https://www.youtube.com/watch?v=VMj-3S1tku0) |
 | 2 | Building makemore (bigrams) | 41 | [Watch](https://www.youtube.com/watch?v=PaCmpygFfXo) |
 | 3 | Building makemore Part 2 (MLP) | 41 | [Watch](https://www.youtube.com/watch?v=TCH_1BHY58I) |
 | 4 | Activations, gradients, BatchNorm | 42 | [Watch](https://www.youtube.com/watch?v=P6sfmUTpUmc) |
 | 5 | Becoming a backprop ninja | 42 | [Watch](https://www.youtube.com/watch?v=q8SA3rM6ckI) |
-| 6 | Building a WaveNet | Optional | [Watch](https://www.youtube.com/watch?v=t3YJ5hKiMQ0) |
-| 7 | Let's build GPT from scratch | 43–44 | [Watch](https://www.youtube.com/watch?v=kCc8FmEb1nY) |
-| 8 | Tokenization (BPE) | Optional | [Watch](https://www.youtube.com/watch?v=zduSFxRajkE) |
-| 9 | Reproducing GPT-2 | Optional | [Watch](https://www.youtube.com/watch?v=l8pRSuU81PU) |
-| — | Deep Dive into LLMs like ChatGPT | 45, 46 | [Watch](https://www.youtube.com/watch?v=7xTGNNLPyMI) |
+| 6 | Building a WaveNet | 41 | [Watch](https://www.youtube.com/watch?v=t3YJ5hKiMQ0) |
+| 7 | Let's build GPT from scratch | 44 | [Watch](https://www.youtube.com/watch?v=kCc8FmEb1nY) |
+| 8 | Tokenization (BPE) | 46 | [Watch](https://www.youtube.com/watch?v=zduSFxRajkE) |
+| 9 | Reproducing GPT-2 | 44 | [Watch](https://www.youtube.com/watch?v=l8pRSuU81PU) |
+| — | Deep Dive into LLMs like ChatGPT | 45, 46, 49, 66 | [Watch](https://www.youtube.com/watch?v=7xTGNNLPyMI) |
 
 ---
 
@@ -168,7 +168,7 @@
 | Linear Regression | 34 | [Watch](https://www.youtube.com/watch?v=7ArmBVF2dCs) |
 | Logistic Regression | 34 | [Watch](https://www.youtube.com/watch?v=yIYKR4sgzI8) |
 | Regularization (Ridge / Lasso) | 34 | [Watch](https://www.youtube.com/watch?v=Q81RR3yKn30) |
-| Covariance and PCA | 29, 9 | [Watch](https://www.youtube.com/watch?v=FgakZw6K1QQ) |
+| Covariance and PCA | 29 | [Watch](https://www.youtube.com/watch?v=FgakZw6K1QQ) |
 | Cross-Validation, Bias-Variance | 19 | [Watch](https://www.youtube.com/watch?v=fSytzGwwBVw) |
 | Bayesian Inference | 35 | [Watch](https://www.youtube.com/watch?v=O2L2Uv9pdDA) |
 | Maximum Likelihood Estimation | 30 | [Watch](https://www.youtube.com/watch?v=XepXtl9YKwc) |
@@ -185,10 +185,10 @@
 
 | Playlist | Lesson | Link |
 |----------|--------|------|
-| Multivariable Calculus (full course) | 14–15, 20 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd) |
+| Multivariable Calculus (full course) | 15, 20, 22 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd) |
 | Discrete Math (for logic foundations) | 61 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxersk8fUxiUMSIx0DBqsKZS) |
-| Linear Algebra (full course) | 2–11 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfUl0tcqPNTJsb7R6BqSLo6) |
-| Vector Calculus (full course) | 15, 20 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfW0GMqeUE1bLKaYor6kbHa) |
+| Linear Algebra (full course) | 2 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfUl0tcqPNTJsb7R6BqSLo6) |
+| Vector Calculus (full course) | 15 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfW0GMqeUE1bLKaYor6kbHa) |
 
 ---
 
@@ -202,16 +202,16 @@
 | Title / Type | Lesson | Link |
 |-------------|--------|------|
 | Walkthrough: A Mathematical Framework for Transformer Circuits | 44, 48 | [Watch](https://www.youtube.com/watch?v=KV5gbOmHbjU) |
-| Walkthrough: In-Context Learning and Induction Heads | 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
-| Getting Started in Mechanistic Interpretability | 47 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Walkthrough: In-Context Learning and Induction Heads | 47 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Getting Started in Mechanistic Interpretability | 47, 48 | [Guide](https://www.neelnanda.io/mechanistic-interpretability/getting-started) |
 | TransformerLens tutorials & live coding | 47–48 | [Channel](https://www.youtube.com/@neelnanda2469) |
-| Research streams (live mech interp research) | 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Research streams (live mech interp research) | 47, 48 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | 200 Open Problems in Mechanistic Interpretability | 67 | [Channel](https://www.youtube.com/@neelnanda2469) |
-| Grokking paper walkthrough | 19, 25, 50 | [Channel](https://www.youtube.com/@neelnanda2469) |
-| Interview: The Inside View — superposition and grokking | 48, 50 | [Watch](https://www.youtube.com/watch?v=cVBGjhN4-1g) |
-| Interview: AXRP Ep 19 — Mechanistic Interpretability | 47–48 | [Listen](https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html) |
-| Interview: 80,000 Hours — The race to read AI minds | 47, 67 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
-| Interview: MLST — Sparse Autoencoders | 47–48 | [Listen](https://open.spotify.com/episode/5XjHhNQxIb16eJZXGmbaCk) |
+| Grokking paper walkthrough | 25 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| Interview: The Inside View — superposition and grokking | 48, 67 | [Watch](https://www.youtube.com/watch?v=cVBGjhN4-1g) |
+| Interview: AXRP Ep 19 — Mechanistic Interpretability | 48, 67 | [Listen](https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html) |
+| Interview: 80,000 Hours — The race to read AI minds | 67 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
+| Interview: MLST — Sparse Autoencoders | 48 | [Listen](https://open.spotify.com/episode/5XjHhNQxIb16eJZXGmbaCk) |
 
 ---
 

@@ -71,11 +71,14 @@ Imagine a topographic map (contour lines of f) with a trail drawn on it (the con
 
 ## 📺 Watch — Secondary
 
-3. **MIT OCW 18.02 — "Lagrange Multipliers"**
+3. **3Blue1Brown — Essence of Calculus, Chapter 6:** "Implicit differentiation, what's going on here?"
+   - https://www.youtube.com/watch?v=qb40J4N1fa4
+   - *Implicit differentiation underlies Lagrange multipliers — constraints define surfaces implicitly, and you differentiate along them.*
+4. **MIT OCW 18.02 — "Lagrange Multipliers"**
    - https://www.youtube.com/results?search_query=MIT+OCW+18.02+lagrange+multipliers
-4. **Steve Brunton — "Constrained Optimization: Lagrange Multipliers"**
+5. **Steve Brunton — "Constrained Optimization: Lagrange Multipliers"**
    - Applied perspective connecting to data science
-5. **StatQuest — "Regularization Part 1: Ridge (L2) Regression"**
+6. **StatQuest — "Regularization Part 1: Ridge (L2) Regression"**
    - https://www.youtube.com/watch?v=Q81RR3Y5oRM
    - *Shows the constraint interpretation of regularization — the "constrained region" visual*
 

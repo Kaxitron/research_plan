@@ -44,6 +44,12 @@
 5. **MIT OCW — Strang, Lecture 10: "The Four Fundamental Subspaces"**
    - https://www.youtube.com/watch?v=nHlE7EgMFYo
 
+## 📺 Watch — Optional
+
+6. **3Blue1Brown — "Cramer's rule, geometrically" (Ch. 12)**
+   - https://www.youtube.com/watch?v=jBsC34PxzoM
+   - *A beautiful geometric interpretation of solving systems using determinants. Connects determinants (Lesson 7) back to solving Ax = b.*
+
 ## 📖 Read
 
 - **MML Book, Chapter 2.1–2.3** (systems of linear equations, Gaussian elimination — the computational foundation)

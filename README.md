@@ -1,6 +1,6 @@
 # AI Alignment Research Curriculum
 
-A structured self-study curriculum building from mathematical foundations through neural networks and interpretability to alignment theory and independent research. 68 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
+A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 68 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
 
 **Start date:** February 21, 2026 · **Estimated total:** 350–500 hours · **Dashboard:** [Interactive Curriculum Map](curriculum-dashboard.html)
 
@@ -109,22 +109,22 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 40 | [How a Single Neuron Works](phase4-neural-networks/lesson-40-single-neuron.md) | ☐ |
-| 41 | [The Forward Pass as Matrix Multiplications](phase4-neural-networks/lesson-41-forward-pass.md) | ☐ |
-| 42 | [Backpropagation Through the Full Network](phase4-neural-networks/lesson-42-backprop.md) | ☐ |
-| 43 | [Attention — Dot Products in Action](phase4-neural-networks/lesson-43-attention.md) | ☐ |
-| 44 | [Building a Transformer from Scratch](phase4-neural-networks/lesson-44-transformer.md) | ☐ |
-| 45 | [Reinforcement Learning Foundations](phase4-neural-networks/lesson-45-rl-foundations.md) | ☐ |
-| 46 | [The LLM Training Pipeline](phase4-neural-networks/lesson-46-llm-pipeline.md) | ☐ |
+| 40 | [How a Single Neuron Works](phase4-machine-learning/lesson-40-single-neuron.md) | ☐ |
+| 41 | [The Forward Pass as Matrix Multiplications](phase4-machine-learning/lesson-41-forward-pass.md) | ☐ |
+| 42 | [Backpropagation Through the Full Network](phase4-machine-learning/lesson-42-backprop.md) | ☐ |
+| 43 | [Attention — Dot Products in Action](phase4-machine-learning/lesson-43-attention.md) | ☐ |
+| 44 | [Building a Transformer from Scratch](phase4-machine-learning/lesson-44-transformer.md) | ☐ |
+| 45 | [Reinforcement Learning Foundations](phase4-machine-learning/lesson-45-rl-foundations.md) | ☐ |
+| 46 | [The LLM Training Pipeline](phase4-machine-learning/lesson-46-llm-pipeline.md) | ☐ |
 
 ### Mechanistic Interpretability (47–50)
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 47 | [Interpretability — What Researchers Actually Do](phase4-neural-networks/lesson-47-interp-intro.md) | ☐ |
-| 48 | [Interpretability — Circuits and Features in Practice](phase4-neural-networks/lesson-48-interp-circuits.md) | ☐ |
-| 49 | [Interpretability — Scaling Laws and Emergence](phase4-neural-networks/lesson-49-interp-scaling.md) | ☐ |
-| 50 | [Interpretability — Singular Learning Theory](phase4-neural-networks/lesson-50-interp-slt.md) | ☐ |
+| 47 | [Interpretability — What Researchers Actually Do](phase4-machine-learning/lesson-47-interp-intro.md) | ☐ |
+| 48 | [Interpretability — Circuits and Features in Practice](phase4-machine-learning/lesson-48-interp-circuits.md) | ☐ |
+| 49 | [Interpretability — Scaling Laws and Emergence](phase4-machine-learning/lesson-49-interp-scaling.md) | ☐ |
+| 50 | [Interpretability — Singular Learning Theory](phase4-machine-learning/lesson-50-interp-slt.md) | ☐ |
 
 ---
 
@@ -206,5 +206,7 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ## Resources
 
+- [Books & Textbooks](resources/books.md) — all free online unless noted
+- [Video Series Index](resources/video-index.md) — curated videos with lesson mappings
 - [Formula Cheat Sheet](resources/cheat-sheet.md)
 - [Interactive Dashboard](curriculum-dashboard.html) — dependency graph, timeline, calendar, pace tracker

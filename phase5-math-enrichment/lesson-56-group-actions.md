@@ -46,6 +46,9 @@
 
 1. **Visual Group Theory — "Group Actions" (Nathan Carter)**
 2. **Symmetry and Spectral Graph Theory lectures (YouTube)**
+3. **Socratica — "Abstract Algebra" playlist (Representations episodes)**
+   - https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6
+   - *Short introductions to representation theory concepts.*
 
 ## 📖 Read — Primary
 

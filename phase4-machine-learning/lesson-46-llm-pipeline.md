@@ -72,6 +72,12 @@ Each arrow is something you've learned. The entire pipeline is: probability theo
    - https://www.anthropic.com/research
    - *See how Anthropic specifically approaches alignment training.*
 
+## 📺 Watch — Optional
+
+5. **Andrej Karpathy — "Let's build the GPT Tokenizer"**
+   - https://www.youtube.com/watch?v=zduSFxRajkE
+   - *Deep dive into BPE tokenization — the preprocessing step that determines what a model can even see. Connects to the LLM pipeline.*
+
 ## 📖 Read — Primary
 
 - **"Training language models to follow instructions with human feedback" (InstructGPT paper, 2022)**

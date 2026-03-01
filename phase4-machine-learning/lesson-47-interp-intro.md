@@ -30,6 +30,8 @@
 2. **Neel Nanda's YouTube** — paper walkthroughs and research streams
    - Start with "Implementing GPT-3 from Scratch"
    - https://www.youtube.com/@neelnanda2469
+   - **Getting Started Guide:** https://www.neelnanda.io/mechanistic-interpretability/getting-started
+   - *Neel's curated roadmap for entering mech interp research. Read this early for orientation.*
 
 ## 📖 Read (core interpretability papers, in order)
 

@@ -43,9 +43,13 @@
 
 ## 📺 Watch — Primary
 
-1. **Eigenchris — "Tensor Calculus" playlist (YouTube)**
+1. **Eigenchris — "Tensors for Beginners" playlist**
+   - https://www.youtube.com/playlist?list=PLJHszsWbB6hrkmmq57lX8BV-o-YIOFsiG
+   - *The best visual introduction to tensors for engineers — builds from vectors up.*
+2. **Eigenchris — "Tensor Calculus" playlist**
+   - https://www.youtube.com/playlist?list=PLJHszsWbB6hpk5h8lSfBkVrpjsqvUGTCx
    - *Excellent visual introduction to manifolds and tangent spaces for physicists/engineers.*
-2. **3Blue1Brown — differential forms or manifold content (if available)**
+3. **3Blue1Brown — differential forms or manifold content (if available)**
 
 ## 📖 Read — Primary
 

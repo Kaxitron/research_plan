@@ -43,11 +43,11 @@
 ## 📺 Watch — Primary
 
 1. **Welch Labs — "What the Books Get Wrong about AI [Double Descent]"**
-   - https://www.youtube.com/@WelchLabsVideo
+   - https://www.youtube.com/watch?v=z64a7USuGX0
    - *34 minutes. The classic bias-variance tradeoff from ML textbooks is WRONG for modern deep learning. Welch explains double descent — the counterintuitive finding that more parameters eventually *helps* generalization. Essential for understanding why massive models work.*
 
 2. **Welch Labs — "The most complex model we actually understand [Grokking]"**
-   - https://www.youtube.com/@WelchLabsVideo
+   - https://www.youtube.com/watch?v=D8GOeCFFby4
    - *35 minutes. A network trains on modular arithmetic, appears to massively overfit... and then suddenly "grokks" — generalizing perfectly after thousands of additional steps. This connects directly to phase transitions in singular learning theory and is one of the most striking demonstrations in modern ML.*
 
 3. **3Blue1Brown — "But what is a neural network?" | Deep Learning Ch. 1**
@@ -58,6 +58,10 @@
 4. **Welch Labs — "Why Deep Learning Works Unreasonably Well [How Models Learn Part 3]"**
    - https://www.youtube.com/watch?v=qx7hirqgfuU
    - *34 minutes. Ties together the geometry-of-depth framing with why overparameterized networks generalize. Completes the How Models Learn trilogy.*
+
+5. **StatQuest — "Cross Validation and the Bias-Variance Tradeoff"**
+   - https://www.youtube.com/watch?v=fSytzGwwBVw
+   - *Clear visual walkthrough of how cross-validation helps you pick models that generalize. Connects directly to the bias-variance tradeoff in loss landscapes.*
 
 ## 📖 Read
 

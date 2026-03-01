@@ -60,6 +60,9 @@
    - Search "NumPy tutorial 10 minutes" — any top result will do
 3. **Corey Schafer — "Matplotlib Tutorial"**
    - https://www.youtube.com/results?search_query=corey+schafer+matplotlib
+4. **Welch Labs — "How to learn AI — from the inventor of backpropagation"**
+   - https://www.youtube.com/watch?v=czp0Gj3gYF8
+   - *Motivational and strategic. Geoffrey Hinton's advice on learning AI — a good mindset-setter before diving into the curriculum.*
 
 ## 📖 Read
 

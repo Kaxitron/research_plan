@@ -63,9 +63,13 @@
 
 3. **MIT OCW — Strogatz "Nonlinear Dynamics and Chaos" (Lectures 7–10)**
    - Bifurcations, limit cycles, and the beginning of chaos. Strogatz is the master.
-4. **Welch Labs — "Grokking and Double Descent"**
+4. **Welch Labs — "What the Books Get Wrong about AI [Double Descent]"**
+   - https://www.youtube.com/watch?v=z64a7USuGX0
+   - *Connects the classic bias-variance tradeoff to double descent — a phase transition in model complexity.*
+5. **Welch Labs — "The most complex model we actually understand [Grokking]"**
+   - https://www.youtube.com/watch?v=D8GOeCFFby4
    - *Connects phase transition ideas to the specific ML phenomena you'll encounter.*
-5. **Neel Nanda — Grokking paper walkthrough**
+6. **Neel Nanda — Grokking paper walkthrough**
    - https://www.youtube.com/@neelnanda2469
    - *Neel's walkthrough of the grokking phenomenon with mechanistic interpretability analysis. Connects stability/phase transitions to what neural networks actually learn.*
 

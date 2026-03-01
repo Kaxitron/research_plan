@@ -55,8 +55,9 @@
 
 1. **3Blue1Brown — "Bayes theorem, the geometry of changing beliefs"**
    - https://www.youtube.com/watch?v=HZGCoVF3YvM
-2. **StatQuest — "Bayesian Statistics" series**
-   - Clear, slow, with good examples of priors and posteriors
+2. **StatQuest — "Bayesian Inference, Clearly Explained"**
+   - https://www.youtube.com/watch?v=O2L2Uv9pdDA
+   - *Clear, slow, with good examples of priors and posteriors.*
 
 ## 📖 Read — Primary
 

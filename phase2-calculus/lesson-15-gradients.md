@@ -15,6 +15,12 @@
 
 - **3Blue1Brown — "Gradient descent, how neural networks learn" | Deep Learning Ch. 2**
   - https://www.youtube.com/watch?v=IHZwWFHWa-w
+- **Dr. Trefor Bazett — Multivariable Calculus (gradient and directional derivative sections)**
+  - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
+  - *Clear visual lectures on partial derivatives and gradients. Use for extra practice if 3B1B moves too fast.*
+- **Dr. Trefor Bazett — Vector Calculus (gradient fields)**
+  - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfW0GMqeUE1bLKaYor6kbHa
+  - *Connects gradient concepts to vector fields — directly relevant to understanding gradient flow in training.*
 
 ## 📖 Read
 

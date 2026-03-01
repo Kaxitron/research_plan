@@ -56,6 +56,9 @@
    - https://www.youtube.com/c/Eigensteve
    - *Brunton is an applied mathematician who connects dynamical systems to data science. Excellent for seeing why this matters beyond pure math.*
    - Useful if you want a slower, example-heavy walkthrough of the basic mechanics
+4. **Dr. Trefor Bazett — Multivariable Calculus playlist (ODE-relevant sections)**
+   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
+   - *Clear, visual university lectures. Use for extra practice on differential equations fundamentals.*
 
 ## 📖 Read — Primary
 

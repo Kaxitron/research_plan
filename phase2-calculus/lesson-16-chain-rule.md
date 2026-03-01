@@ -14,6 +14,9 @@
 
 ## 📺 Watch (CRITICAL videos)
 
+- **3Blue1Brown — Essence of Calculus, Chapter 4:** "Visualizing the chain rule and product rule"
+  - https://www.youtube.com/watch?v=YG15m2VwSjA
+  - *The visual foundation for the chain rule before seeing it applied in backpropagation.*
 - **3Blue1Brown — "Backpropagation, intuitively" | Deep Learning Ch. 3**
   - https://www.youtube.com/watch?v=Ilg3gGewQ5U
 - **3Blue1Brown — "Backpropagation calculus" | Deep Learning Ch. 4**

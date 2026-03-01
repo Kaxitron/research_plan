@@ -27,6 +27,10 @@
 
 3. **Karpathy — Building micrograd** (review relevant sections on neurons)
 
+4. **StatQuest — Neural Networks / Deep Learning playlist**
+   - https://www.youtube.com/playlist?list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1
+   - *Josh Starmer walks through neural network fundamentals with clear visuals. Good supplement for lessons 40–42.*
+
 ## 📖 Read
 
 - **Michael Nielsen — "Neural Networks and Deep Learning," Chapter 1**

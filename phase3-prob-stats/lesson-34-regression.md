@@ -69,9 +69,9 @@ When you see a regression table in a paper or a Twitter debate, here's what to l
 ## 📺 Watch — Primary
 
 1. **StatQuest — "Linear Regression, Clearly Explained"**
-   - https://www.youtube.com/results?search_query=statquest+linear+regression+clearly+explained
+   - https://www.youtube.com/watch?v=7ArmBVF2dCs
 2. **StatQuest — "Logistic Regression"**
-   - https://www.youtube.com/results?search_query=statquest+logistic+regression+clearly+explained
+   - https://www.youtube.com/watch?v=yIYKR4sgzI8
    - *Josh covers the odds ratio interpretation well.*
 3. **StatQuest — "Multiple Regression"**
    - https://www.youtube.com/results?search_query=statquest+multiple+regression
@@ -79,7 +79,9 @@ When you see a regression table in a paper or a Twitter debate, here's what to l
 ## 📺 Watch — Secondary
 
 4. **StatQuest — "R-squared, Clearly Explained"**
-5. **StatQuest — "Ridge vs. Lasso Regression"** (connects to your recent ridge/lasso work)
+5. **StatQuest — "Ridge vs. Lasso Regression"**
+   - https://www.youtube.com/watch?v=Q81RR3yKn30
+   - *Connects to your recent ridge/lasso work. Visual explanation of how L1 vs L2 penalties create different solution geometries.*
 6. **Crash Course Statistics — "Regression" (Episode 32)**
 
 ## 📖 Read — Primary

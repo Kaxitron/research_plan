@@ -35,6 +35,12 @@
 4. **Nelson Elhage — "Transformers for Software Engineers"** (blog/talk)
    - https://blog.nelhage.com/post/transformers-for-software-engineers/
 
+## 📺 Watch — Optional
+
+5. **Andrej Karpathy — "Building a WaveNet"**
+   - https://www.youtube.com/watch?v=t3YJ5hKiMQ0
+   - *Extends the makemore series with a more advanced architecture. Optional but deepens understanding of how network depth processes information.*
+
 ## 📖 Read
 
 - **Nelson Elhage — "Transformers for Software Engineers"**

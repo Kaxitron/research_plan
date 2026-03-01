@@ -42,7 +42,8 @@
 
 ## 📺 Watch — Primary
 
-1. **Aleph 0 — "What is a Topological Space?" (YouTube)**
+1. **Aleph 0 — "What is a Topological Space?"**
+   - https://www.youtube.com/watch?v=62WEiGlMOoA
    - *Clear, visual introduction to the axioms and examples.*
 2. **3Blue1Brown — Topology-related content (if available)**
 

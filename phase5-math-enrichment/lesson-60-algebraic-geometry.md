@@ -53,6 +53,9 @@
    - *The most accessible introduction to SLT for ML researchers.*
 2. **Tadashi Tokieda — "Topology and Geometry" (African Institute lectures, YouTube)**
    - *Beautiful lectures on geometric intuition for algebraic concepts.*
+3. **Aleph 0 — "What is Algebraic Geometry?"**
+   - https://www.youtube.com/watch?v=UyI2LNAnxFU
+   - *Short, beautifully produced introduction. Perfect as a gentle on-ramp before the dense SLT material.*
 
 ## 📖 Read — Primary
 

@@ -78,7 +78,7 @@
 ## 📺 Watch — Primary
 
 1. **StatQuest — "P-values, Clearly Explained"**
-   - https://www.youtube.com/results?search_query=statquest+p+values+clearly+explained
+   - https://www.youtube.com/watch?v=0oc49DyA3hU
    - *Josh Starmer's signature style. Best single video on the topic.*
 2. **StatQuest — "Hypothesis Testing and the Null Hypothesis"**
    - https://www.youtube.com/results?search_query=statquest+hypothesis+testing+null+hypothesis
@@ -88,8 +88,11 @@
 
 ## 📺 Watch — Secondary
 
-4. **3Blue1Brown — "Why p-values are weird" (if available)**
-5. **Veritasium — "Is Most Published Research Wrong?"**
+4. **3Blue1Brown — "But what is the Central Limit Theorem?"**
+   - https://www.youtube.com/watch?v=zeJD6dqJ5lo
+   - *Why normal distributions underpin all hypothesis testing. The CLT is the reason p-values work.*
+5. **3Blue1Brown — "Why p-values are weird" (if available)**
+6. **Veritasium — "Is Most Published Research Wrong?"**
    - https://www.youtube.com/results?search_query=veritasium+is+most+published+research+wrong
    - *Covers the replication crisis, p-hacking, publication bias. Gripping.*
 6. **StatQuest — "Effect Size, Clearly Explained"**

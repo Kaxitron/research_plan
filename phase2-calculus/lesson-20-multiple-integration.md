@@ -37,9 +37,18 @@
 
 ## 📺 Watch — Primary
 
-1. **3Blue1Brown — "The Gaussian integral" (if available)**
+1. **3Blue1Brown — Essence of Calculus, Chapter 8:** "Integration and the fundamental theorem of calculus"
+   - https://www.youtube.com/watch?v=rfG8ce4nNh0
+   - *The visual connection between area under curves and antiderivatives — foundation for understanding integration in multiple dimensions.*
+2. **3Blue1Brown — "The Gaussian integral" (if available)**
    - The polar coordinates proof is a classic visualization opportunity
    - Solid worked examples with geometric intuition
+
+## 📺 Watch — Secondary
+
+2. **Dr. Trefor Bazett — Multivariable Calculus (double/triple integral sections)**
+   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
+   - *Clear visual lectures on multiple integration and change of variables. Good for extra worked examples.*
 
 ## 📖 Read — Primary
 

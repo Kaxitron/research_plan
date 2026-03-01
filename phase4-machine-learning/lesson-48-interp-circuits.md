@@ -29,11 +29,14 @@
    - https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html
    - *2.5-hour deep dive into transformer circuits, induction heads, and grokking. Technical but extremely informative. Listen to the induction heads section (starts ~1:59:42) at minimum.*
 4. **The Inside View — "Neel Nanda on mechanistic interpretability, superposition and grokking"**
-   - Search YouTube for "The Inside View Neel Nanda"
+   - https://www.youtube.com/watch?v=cVBGjhN4-1g
    - *Covers the mindset of a mech interp researcher, the linear representation hypothesis, and superposition.*
 5. **3Blue1Brown — "How might LLMs store facts" | Deep Learning Ch. 7**
    - https://www.youtube.com/watch?v=9-Jl0dxWQs8
    - *Visualizes how MLP layers might store factual knowledge — connects to the circuits perspective.*
+6. **MLST — Neel Nanda on Sparse Autoencoders**
+   - https://open.spotify.com/episode/5XjHhNQxIb16eJZXGmbaCk
+   - *How sparse autoencoders decompose superposition into interpretable features. A key modern technique.*
 
 ## 📖 Read
 

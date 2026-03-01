@@ -61,6 +61,9 @@
    - Search YouTube for "Robert Miles AI scaling"
 5. **The Bitter Lesson by Rich Sutton (various presentations)**
    - http://www.incompleteideas.net/IncIdeas/BitterLesson.html (original essay)
+6. **Welch Labs — "How OpenAI's o3 model actually works"**
+   - https://www.youtube.com/watch?v=5ZleBCpJOJE
+   - *A concrete example of scaling and emergent reasoning capabilities in practice.*
 
 ## 📖 Read — Primary
 

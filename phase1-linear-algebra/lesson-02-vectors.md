@@ -23,6 +23,9 @@
 3. **Maththebeautiful (Pavel Grinfeld) — "What is a Vector?"**
    - https://www.youtube.com/watch?v=iVZGsGlmEPk
    - A more formal treatment that emphasizes the abstract definition
+4. **Dr. Trefor Bazett — Linear Algebra (full course)**
+   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfUl0tcqPNTJsb7R6BqSLo6
+   - *Clear, visual university lectures. Use as supplementary practice for any Phase 1 topic that needs extra time.*
 
 ## 📖 Read
 

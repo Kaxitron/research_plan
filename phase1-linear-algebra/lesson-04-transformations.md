@@ -35,6 +35,9 @@
    - https://www.youtube.com/watch?v=J7DzL2_Na80
 4. **MIT OCW — Strang, Lecture 3: "Multiplication and Inverse Matrices"**
    - https://www.youtube.com/watch?v=FX4C-JpTFgY
+5. **3Blue1Brown — "Three-dimensional linear transformations" (Ch. 5)**
+   - https://www.youtube.com/watch?v=rHLEWRxRGiM
+   - *Short extension of the 2D ideas to 3D. Watch to build spatial intuition — neural networks operate in hundreds or thousands of dimensions, so visualizing 3D is the stepping stone.*
 
 ## 📖 Read — Primary
 

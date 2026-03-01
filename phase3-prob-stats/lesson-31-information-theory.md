@@ -90,7 +90,7 @@
 ## 📺 Watch — Secondary
 
 4. **StatQuest — "Entropy (for Data Science)"**
-   - https://www.youtube.com/c/joshstarmer
+   - https://www.youtube.com/watch?v=YtebGVx-Fxw
 5. **Mutual Information (YouTube) — "Mutual Information" channel**
    - Multiple videos on MI, KL divergence, and applications
 6. **Tishby — "Information Theory of Deep Learning"** (talk recordings)

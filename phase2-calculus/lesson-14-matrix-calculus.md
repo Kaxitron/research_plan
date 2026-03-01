@@ -52,7 +52,9 @@ These identities are what you'd use to derive gradient updates by hand. In pract
 
 - **3Blue1Brown — Essence of Calculus, Chapter 1:** "The essence of calculus"
   - https://www.youtube.com/watch?v=WUvTyaaNkzM
-- **3Blue1Brown — Essence of Calculus, Chapter 10:** "Taylor series"
+- **3Blue1Brown — Essence of Calculus, Chapter 10:** "Higher order derivatives"
+  - https://www.youtube.com/watch?v=BLkz5LGWihw
+  - *Second derivatives tell you about curvature — the Hessian IS a matrix of second derivatives.*
 
 ## 📖 Read
 
