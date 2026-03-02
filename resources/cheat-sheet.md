@@ -6,6 +6,59 @@
 
 ---
 
+## 📑 Table of Contents
+
+### [Conceptual Foundations](#-key-conceptual-notes)
+
+### Phase 1 — Linear Algebra
+- [1. Vectors](#1-vectors)
+- [2. Linear Combinations, Span, and Basis](#2-linear-combinations-span-and-basis)
+- [3. Dot Product](#3-dot-product)
+- [4. Cross Product (3D only)](#4-cross-product-3d-only)
+- [5. Cosine Similarity](#5-cosine-similarity)
+- [6. Matrix-Vector Multiplication](#6-matrix-vector-multiplication-two-views)
+- [7. Matrix-Matrix Multiplication](#7-matrix-matrix-multiplication)
+- [8. Rank, Null Space, and Column Space](#8-rank-null-space-and-column-space)
+- [9. Determinant](#9-determinant)
+- [10. Eigenvalues and Eigenvectors](#10-eigenvalues-and-eigenvectors)
+- [11. Singular Value Decomposition (SVD)](#11-singular-value-decomposition-svd)
+- [11b. PCA and the SVD Connection](#11b-pca-and-the-svd-connection)
+- [12. Orthogonality and Projections](#12-orthogonality-and-projections)
+- [13. Gram-Schmidt Process](#13-gram-schmidt-process)
+- [14. Norms — Measuring Size](#14-norms--measuring-size)
+- [15. Special Matrices](#15-special-matrices)
+- [16. Change of Basis](#16-change-of-basis)
+- [17. Ordinary Least Squares (OLS)](#17-ordinary-least-squares-ols)
+- [18. Ridge Regression (L2 Regularization)](#18-ridge-regression-l2-regularization)
+- [19. Lasso Regression (L1 Regularization)](#19-lasso-regression-l1-regularization)
+- [20. Elastic Net (L1 + L2 combined)](#20-elastic-net-l1--l2-combined)
+- [Quick Reference: The Regression Family](#quick-reference-the-regression-family)
+
+### Phase 1 — Applied Statistics Preview
+- [Correlation Coefficient (r)](#correlation-coefficient-r)
+- [Coefficient of Determination (r²)](#coefficient-of-determination-r)
+
+### Phase 2 — Calculus
+- [21. Derivatives and Differentials](#21-derivatives-and-differentials)
+- [22. L'Hôpital's Rule](#22-lhôpitals-rule)
+- [23. Limits and Continuity](#23-limits-and-continuity)
+- [24. Squeeze Theorem](#24-squeeze-theorem)
+- [25. Three Foundational Theorems (IVT, EVT, MVT)](#25-three-foundational-theorems-ivt-evt-mvt)
+- [26. Extended Derivative Table](#26-extended-derivative-table)
+- [27. Trigonometric Identities](#27-trigonometric-identities)
+- [28. Integration — Fundamentals](#28-integration--fundamentals)
+- [29. u-Substitution](#29-u-substitution--the-chain-rule-in-reverse)
+- [30. Integration by Parts](#30-integration-by-parts--the-product-rule-in-reverse)
+- [31. Trigonometric Substitution](#31-trigonometric-substitution--handling-square-roots)
+- [32. Partial Fraction Decomposition](#32-partial-fraction-decomposition)
+- [33. Improper Integrals](#33-improper-integrals--integrating-to-infinity)
+- [34. Critical Points and Optimization](#34-critical-points-and-optimization)
+- [35. Series and Convergence](#35-series-and-convergence)
+
+### [Key Identities Quick Reference](#key-identities-quick-reference)
+
+---
+
 ## 📝 Key Conceptual Notes
 
 **MSE is the question, regression methods are the answer:**
