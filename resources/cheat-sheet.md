@@ -707,6 +707,20 @@ $$\sin A \sin B = \tfrac{1}{2}[\cos(A-B) - \cos(A+B)]$$
 
 $$\int_a^b f(x) \, dx = \text{signed area between } f(x) \text{ and the x-axis from } a \text{ to } b$$
 
+### Riemann Sums — Building the Integral
+
+Chop $[a,b]$ into $n$ pieces of width $\Delta x = (b-a)/n$:
+
+| Method | Formula | Idea |
+|--------|---------|------|
+| Left | $L_n = \sum_{i=0}^{n-1} f(x_i) \Delta x$ | Height at left endpoint |
+| Right | $R_n = \sum_{i=1}^{n} f(x_i) \Delta x$ | Height at right endpoint |
+| Midpoint | $M_n = \sum_{i=0}^{n-1} f\!\left(\frac{x_i+x_{i+1}}{2}\right) \Delta x$ | Height at midpoint |
+| Trapezoidal | $T_n = \frac{L_n + R_n}{2}$ | Average left and right |
+| Simpson's | $S_n = \frac{\Delta x}{3}[f(x_0) + 4f(x_1) + 2f(x_2) + \cdots + f(x_n)]$ | Parabolic arcs |
+
+As $n \to \infty$, all converge to $\int_a^b f(x)\,dx$. Monte Carlo integration (used in Bayesian ML) is a randomized Riemann sum.
+
 ### Fundamental Theorem of Calculus
 
 **Part 1:** $\frac{d}{dx} \int_a^x f(t) \, dt = f(x)$ — the derivative of "area so far" is the original function.
