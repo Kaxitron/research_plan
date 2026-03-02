@@ -4,6 +4,44 @@
 
 > **What this is:** A running collection of deep intuitions — the "aha" moments and mental models that make concepts click. Unlike the cheat sheet (formulas and facts), this notebook captures the *why* behind things. Add to it whenever something crystallizes.
 
+> **📌 Maintenance rule:** When adding a new intuition entry, also add a matching link in the Table of Contents below, under the appropriate section. Keep the TOC in sync with the content.
+
+---
+
+## 📑 Table of Contents
+
+### [Linear Algebra](#linear-algebra)
+- [Matrix × Vector: Two Complementary Views](#matrix--vector-two-complementary-views)
+- [SVD means every matrix is rotate → scale → rotate](#svd-means-every-matrix-is-rotate--scale--rotate)
+- [Eigenvectors are the directions that "survive" a transformation](#eigenvectors-are-the-directions-that-survive-a-transformation)
+- [Why symmetric matrices have orthogonal eigenvectors (via SVD)](#why-symmetric-matrices-have-orthogonal-eigenvectors-via-svd)
+- [PCA's eigenvectors are just SVD's right singular vectors](#pcas-eigenvectors-are-just-svds-right-singular-vectors--and-symmetry-is-why)
+- [PCA is a change of basis that diagonalizes the covariance matrix](#pca-is-a-change-of-basis-that-diagonalizes-the-covariance-matrix)
+- [Matrix type taxonomy](#matrix-type-taxonomy-what-each-type-does-to-space)
+- [Every linear transformation maps the unit square to a parallelogram](#every-linear-transformation-maps-the-unit-square-to-a-parallelogram)
+- [Null space lives in the INPUT space](#null-space-lives-in-the-input-space-not-the-output-space)
+- [Miscellaneous Thoughts](#miscellaneous-thoughts)
+
+### [Calculus & Optimization](#calculus--optimization)
+- [The derivative is literally rise/run](#the-derivative-is-literally-riserun--just-infinitely-zoomed-in)
+- [Geometric understanding of derivatives, product rule, chain rule](#geometric-understanding-of-derivatives-the-product-rule-and-the-chain-rule)
+- [The gradient is perpendicular to contour lines](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
+
+### [Statistics & Regression](#statistics--regression)
+
+### [ML & Neural Networks](#ml--neural-networks)
+
+### [Interpretability](#interpretability)
+
+### [Alignment](#alignment)
+
+### [Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)
+
+### [Calculus Intuitions](#calculus-intuitions)
+- [Riemann Sums — What they really are](#riemann-sums--what-they-really-are)
+- [Trig Sub — Converting back from double angles](#trig-sub--converting-back-from-double-angles)
+- [The Gaussian Integral and the Standard Normal — Why √(2π) and not √π](#the-gaussian-integral-and-the-standard-normal--why-2π-and-not-π)
+
 ---
 
 ## Linear Algebra
@@ -187,6 +225,43 @@ Instead, use double angle identities to decompose back to single angles first:
 $$\sin(2	heta) = 2 \cdot rac{x}{3} \cdot rac{\sqrt{9-x^2}}{3} = rac{2x\sqrt{9-x^2}}{9}$$
 
 You must go through the identity — there's no way to get sin(2θ) directly from the triangle without this step.
+
+---
+
+**The Gaussian Integral and the Standard Normal — Why √(2π) and not √π:**
+
+The Gaussian integral gives us:
+
+$$\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$$
+
+So if you wanted to turn $e^{-x^2}$ into a valid probability density (area = 1), you'd just divide by $\sqrt{\pi}$:
+
+$$p(x) = \frac{1}{\sqrt{\pi}} e^{-x^2}$$
+
+This *is* a perfectly valid PDF. But it has an inconvenient property: its variance is 1/2, not 1. You can verify this by computing $\text{Var}(X) = \int_{-\infty}^{\infty} x^2 \cdot \frac{1}{\sqrt{\pi}} e^{-x^2}\,dx = \frac{1}{2}$.
+
+A variance of 1/2 is ugly to work with — it clutters every formula that builds on top of the Gaussian. So instead, we *stretch* the bell curve horizontally by substituting $x \to x/\sqrt{2}$, which widens it just enough to make the variance exactly 1. Applying this substitution:
+
+$$e^{-x^2} \longrightarrow e^{-x^2/2}$$
+
+But stretching changes the area under the curve. The new integral is:
+
+$$\int_{-\infty}^{\infty} e^{-x^2/2}\,dx = \sqrt{2\pi}$$
+
+(You can verify: substitute $u = x/\sqrt{2}$, so $dx = \sqrt{2}\,du$, and $\sqrt{2} \cdot \sqrt{\pi} = \sqrt{2\pi}$.)
+
+So to normalize this stretched version, we divide by $\sqrt{2\pi}$:
+
+$$p(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$$
+
+This is the **standard normal distribution** $\mathcal{N}(0, 1)$ — mean 0, variance 1. The $\sqrt{2\pi}$ isn't some mysterious constant; it's literally $\sqrt{2} \cdot \sqrt{\pi}$, where the $\sqrt{\pi}$ comes from the Gaussian integral and the $\sqrt{2}$ comes from the horizontal stretch we chose so that the variance would be 1 instead of 1/2.
+
+**The chain of decisions:**
+1. $e^{-x^2}$ has a nice shape but its integral is $\sqrt{\pi}$ (irrational) and dividing by $\sqrt{\pi}$ gives variance 1/2 (ugly)
+2. $e^{-x^2/2}$ is a horizontal stretch that makes the variance exactly 1, but now the integral is $\sqrt{2\pi}$
+3. We chose convenience of variance over convenience of the normalizing constant — because variance shows up in far more formulas than the normalizing constant does
+
+Every time you see $\sqrt{2\pi}$ in statistics, this is why it's there.
 
 ---
 
