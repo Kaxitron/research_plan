@@ -294,6 +294,40 @@ If differentiation asks "what's the slope?", integration asks "what's the area?"
 
 "Signed" means area below the x-axis counts as negative.
 
+### Riemann Sums — Building Area from Rectangles
+
+But how do you actually *compute* the area under a curve? Curves aren't rectangles — you can't just do length × width. The brilliant idea: **approximate** the area with rectangles, then take a limit as the rectangles get thinner.
+
+**The setup:** Take the interval [a, b] and chop it into n equal pieces of width Δx = (b − a)/n. In each piece, build a rectangle whose height is the function value at some point in that subinterval.
+
+**Left Riemann sum:** use the left endpoint of each subinterval for the height:
+
+$$L_n = \sum_{i=0}^{n-1} f(x_i) \cdot \Delta x$$
+
+**Right Riemann sum:** use the right endpoint:
+
+$$R_n = \sum_{i=1}^{n} f(x_i) \cdot \Delta x$$
+
+**Midpoint rule:** use the midpoint of each subinterval:
+
+$$M_n = \sum_{i=0}^{n-1} f\!\left(\frac{x_i + x_{i+1}}{2}\right) \cdot \Delta x$$
+
+**Trapezoidal rule:** average the left and right sums (equivalent to connecting the dots with straight lines instead of flat rectangles):
+
+$$T_n = \frac{L_n + R_n}{2} = \sum_{i=0}^{n-1} \frac{f(x_i) + f(x_{i+1})}{2} \cdot \Delta x$$
+
+**The key idea:** As n → ∞ (rectangles get infinitely thin), ALL of these approaches converge to the same number — the definite integral:
+
+$$\int_a^b f(x)\, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i^*) \cdot \Delta x$$
+
+where $x_i^*$ is any point in the i-th subinterval. This limit IS the definition of the integral, and the fact that the choice of sample point doesn't matter (for continuous functions) is a deep consequence of continuity.
+
+**Accuracy:** Midpoint and trapezoidal rules are more accurate than left/right for the same n. For even better accuracy, **Simpson's rule** uses parabolic arcs instead of flat tops or straight lines:
+
+$$S_n = \frac{\Delta x}{3}\left[f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + \cdots + f(x_n)\right]$$
+
+**🔗 ML Connection:** Riemann sums are the conceptual ancestor of **numerical integration** (quadrature), which is how computers actually compute integrals. When you can't find a closed-form antiderivative (which is most of the time in ML), you approximate the integral with a finite sum. Monte Carlo integration — used heavily in Bayesian inference and reinforcement learning — is essentially a randomized Riemann sum: instead of evenly-spaced sample points, you use random samples drawn from a distribution.
+
 ### The Fundamental Theorem of Calculus
 
 **Differentiation and integration are inverses of each other.**
