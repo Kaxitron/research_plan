@@ -232,6 +232,60 @@ $$\text{ReLU}'(x) = \begin{cases} 1 & \text{if } x > 0 \\ 0 & \text{if } x < 0 \
 
 ## Part 4: Integration — The Reverse Journey
 
+### Limits — Making "Approaches" Precise
+
+Everything in calculus — derivatives, integrals, series — rests on the concept of a **limit.** You've already been using limits intuitively: "shrink h toward zero" in the derivative definition, "zoom in until the curve looks linear." Now let's make it precise.
+
+**Informal definition:** lim_{x→a} f(x) = L means "as x gets arbitrarily close to a, f(x) gets arbitrarily close to L."
+
+**Formal ε-δ definition:** For every ε > 0 (however small a tolerance you choose for the output), there exists a δ > 0 such that whenever 0 < |x - a| < δ (input is within δ of a), we have |f(x) - L| < ε (output is within ε of L).
+
+**The intuition:** You pick how close the output needs to be (ε). I guarantee I can find a neighborhood around a (of width δ) where the function stays within your tolerance. If I can do this for *any* ε you throw at me, the limit exists.
+
+You won't use ε-δ proofs in ML work. But the concept matters: it's the foundation for understanding when approximations (like Taylor series, or gradient descent steps) are valid.
+
+**One-sided limits:** lim_{x→a⁺} f(x) approaches from the right; lim_{x→a⁻} from the left. The two-sided limit exists only if both one-sided limits exist and agree. This is why ReLU has no derivative at x = 0 — the slope from the left (0) and the slope from the right (1) disagree.
+
+### Continuity — No Jumps, No Holes, No Blowups
+
+A function f is **continuous at a** if and only if:
+
+$$\lim_{x \to a} f(x) = f(a)$$
+
+This says three things at once: (1) the limit exists, (2) f(a) is defined, and (3) they're equal. Geometrically: you can draw the graph without lifting your pen.
+
+**Why continuity matters for ML:** The Fundamental Theorem of Calculus (below) requires the integrand to be continuous. More practically, gradient descent assumes the loss function is continuous (and differentiable) — if the loss had jumps, the gradient wouldn't be defined at those points. ReLU introduces a non-differentiable point at x = 0, but it's still *continuous* there, which is enough for practical optimization.
+
+### The Squeeze Theorem — Bounding What You Can't Compute
+
+If g(x) ≤ f(x) ≤ h(x) near a point a, and both g(x) and h(x) approach the same limit L as x → a, then f(x) → L too. You "squeeze" the unknown function between two known ones.
+
+**Classic example:** lim_{x→0} x² sin(1/x). The sin(1/x) part oscillates wildly near 0, so you can't just plug in. But -1 ≤ sin(1/x) ≤ 1, so -x² ≤ x² sin(1/x) ≤ x². Both bounds → 0, so the limit is 0.
+
+**ML connection:** The squeeze theorem is the conceptual tool behind **bounding arguments** in learning theory. When you can't compute an exact quantity (like generalization error), you bound it between two computable quantities and show they converge.
+
+### Three Foundational Theorems About Continuous Functions
+
+These are "existence theorems" — they tell you something *exists* without telling you how to find it. They're the theoretical bedrock under all of optimization.
+
+**Intermediate Value Theorem (IVT):** If f is continuous on [a, b] and y is any value between f(a) and f(b), then there exists some c in (a, b) where f(c) = y.
+
+*Intuition:* A continuous function can't jump over a value. If you start below a horizontal line and end above it, you must cross it somewhere. This guarantees that equations like f(x) = 0 have solutions — which is why root-finding algorithms (bisection method, Newton's method) work.
+
+**Extreme Value Theorem (EVT):** If f is continuous on a closed interval [a, b], then f attains its maximum and minimum somewhere on [a, b].
+
+*Intuition:* A continuous function on a closed, bounded domain can't "escape to infinity" or approach a value without reaching it. This is why optimization on compact domains is well-behaved — the optimal solution **exists**. In ML, weight decay (L2 regularization) effectively constrains the weights to a bounded region, and the EVT guarantees the regularized loss has a minimum.
+
+**Mean Value Theorem (MVT):** If f is continuous on [a, b] and differentiable on (a, b), then there exists some c in (a, b) where:
+
+$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+
+*Intuition:* Somewhere between a and b, the instantaneous rate of change equals the average rate of change. If you drive 100 miles in 2 hours, at some point you must have been going exactly 50 mph.
+
+*Why the MVT matters for ML:* It's the theoretical reason gradient descent makes progress. If the gradient is nonzero at a point, the MVT guarantees the function actually changes value as you move — the function can't be "stuck" at a non-critical point. The MVT also underlies convergence proofs for optimization algorithms: it connects the local information (gradient at a point) to global behavior (actual function change over a step).
+
+---
+
 ### What Integration IS (Geometrically)
 
 If differentiation asks "what's the slope?", integration asks "what's the area?"
@@ -566,6 +620,24 @@ If you can't evaluate an improper integral directly, compare it:
 - If 0 ≤ f(x) ≤ g(x) and ∫ g(x) converges → ∫ f(x) converges (it's smaller than something finite)
 - If f(x) ≥ g(x) ≥ 0 and ∫ g(x) diverges → ∫ f(x) diverges (it's bigger than something infinite)
 
+### L'Hôpital's Rule — Resolving 0/0 and ∞/∞
+
+When evaluating limits, you'll often hit an **indeterminate form** — expressions like 0/0 or ∞/∞ where you can't just plug in. L'Hôpital's rule says:
+
+$$\text{If } \lim_{x \to a} \frac{f(x)}{g(x)} \text{ gives } \frac{0}{0} \text{ or } \frac{\pm\infty}{\pm\infty}, \text{ then } \lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}$$
+
+**Differentiate the top and bottom separately** (this is NOT the quotient rule — you take the derivative of numerator and denominator independently), then try the limit again.
+
+**Example 1:** lim_{x→0} sin(x)/x. Direct substitution gives 0/0. Apply L'Hôpital: lim_{x→0} cos(x)/1 = **1**.
+
+**Example 2:** lim_{x→∞} x/eˣ. Direct substitution gives ∞/∞. Apply L'Hôpital: lim_{x→∞} 1/eˣ = **0**. Exponentials grow faster than any polynomial.
+
+**Example 3 (apply twice):** lim_{x→∞} x²/eˣ. Gives ∞/∞. L'Hôpital: lim_{x→∞} 2x/eˣ. Still ∞/∞. Apply again: lim_{x→∞} 2/eˣ = **0**. No matter the polynomial degree, eˣ wins eventually.
+
+**Other indeterminate forms** like 0·∞, ∞ - ∞, 0⁰, 1^∞, and ∞⁰ can be rewritten as fractions to use L'Hôpital's. For example, for 0·∞: rewrite f·g as f/(1/g) to get 0/0.
+
+**Why this matters here:** When checking whether improper integrals converge, you often need to evaluate limits involving competing growth rates. L'Hôpital's rule is the standard tool. It also shows up when analyzing the asymptotic behavior of loss functions — for instance, understanding how cross-entropy loss behaves as predictions approach 0 or 1.
+
 ### 🔗 ML & Alignment Connection
 
 **Every probability distribution you'll ever use** requires improper integrals to verify it integrates to 1. The Gaussian, exponential, Cauchy, and Student-t distributions all integrate over infinite domains. Understanding convergence vs. divergence tells you which distributions have finite means, finite variances, or neither — the Cauchy distribution, for example, has no mean at all because the integral ∫ x/(π(1+x²)) dx diverges. This matters for understanding **heavy-tailed phenomena** in ML, including the sometimes-surprising behavior of gradient norms during training.
@@ -627,6 +699,30 @@ This "set up an objective function, then optimize" pattern is *literally* what M
 ---
 
 ## Part 12: Series and Infinite Sums — When Adding Forever Gives a Finite Answer
+
+### Sequences — The Prerequisite for Series
+
+Before we can add infinitely many numbers, we need to understand infinitely long *lists* of numbers.
+
+A **sequence** is an ordered list: a₁, a₂, a₃, ... (one number for each positive integer). For example: 1, 1/2, 1/4, 1/8, ... or 1, 1/4, 1/9, 1/16, ... (which is 1/n²).
+
+A sequence **converges** if the terms approach a specific finite number: lim_{n→∞} aₙ = L. It **diverges** if they don't (they blow up, oscillate, or otherwise fail to settle down).
+
+**Key properties:**
+
+A sequence is **bounded** if there's some number M where |aₙ| ≤ M for all n. The terms stay within a finite box.
+
+A sequence is **monotone** if it's always increasing (a₁ ≤ a₂ ≤ a₃ ≤ ...) or always decreasing (a₁ ≥ a₂ ≥ a₃ ≥ ...).
+
+**The Monotone Convergence Theorem:** If a sequence is both **bounded** and **monotone**, it converges. This is deeply intuitive — if you're always going up but can't pass a ceiling, you must settle onto some value. This theorem appears in ML convergence proofs: to show that a training algorithm converges, you often show that the loss sequence is decreasing (monotone) and bounded below (by 0), so it must converge.
+
+**Examples:**
+- aₙ = 1/n → 0. Converges. Decreasing and bounded below by 0.
+- aₙ = (-1)ⁿ → oscillates between -1 and 1. Diverges (bounded but not monotone, and no single limit).
+- aₙ = n² → ∞. Diverges (monotone but not bounded).
+- aₙ = (1 + 1/n)ⁿ → e ≈ 2.718. Converges. This sequence *defines* e, and the convergence is non-obvious — each term is bigger than the last, but bounded above.
+
+The distinction between sequences and series: a **sequence** is a list of numbers; a **series** is what you get when you try to *add them all up*. A series Σ aₙ converges if the sequence of **partial sums** S₁ = a₁, S₂ = a₁ + a₂, S₃ = a₁ + a₂ + a₃, ... converges.
 
 ### The Core Question
 
@@ -1061,5 +1157,6 @@ This lesson gives you the single-variable foundations. Here's how each subsequen
 | **19: Loss Landscapes** | The geometry of high-dimensional critical points — why saddle points dominate |
 
 Every concept in Lessons 14–19 is a multivariable generalization of something in this lesson. If this lesson is solid, the rest of Phase 2 will feel like natural extensions rather than new territory.
+
 
 
