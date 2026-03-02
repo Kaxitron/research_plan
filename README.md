@@ -123,6 +123,17 @@ A structured self-study curriculum building from mathematical foundations throug
 | 41 | [Causal Inference — From Correlation to Causation](phase3-prob-stats/lesson-41-causal-inference.md) | ⬜ Not Started |
 | 42 | [Applied Statistics — Adjudicating Real Debates](phase3-prob-stats/lesson-42-applied-statistics.md) | ⬜ Not Started |
 
+### ML Theory Foundations (68–71)
+
+*Enrichment lessons that branch off the probability core. Can be done in parallel with Frequentist/Bayesian tracks.*
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 68 | [Concentration Inequalities — Markov to Chernoff](phase3-prob-stats/lesson-68-concentration-inequalities.md) | ⬜ Not Started |
+| 69 | [Markov Chains and Mixing](phase3-prob-stats/lesson-69-markov-chains.md) | ⬜ Not Started |
+| 70 | [Fisher Information and Exponential Families](phase3-prob-stats/lesson-70-fisher-information.md) | ⬜ Not Started |
+| 71 | [PAC Learning and Generalization Bounds](phase3-prob-stats/lesson-71-pac-learning.md) | ⬜ Not Started |
+
 ---
 
 ## Phase 4: Machine Learning & Interpretability (118–140h)
@@ -175,6 +186,7 @@ A structured self-study curriculum building from mathematical foundations throug
 | 60 | [Point-Set Topology — Open Sets, Continuity, Compactness](phase5-math-enrichment/lesson-60-point-set-topology.md) | ⬜ Not Started |
 | 61 | [Homotopy and Fundamental Groups](phase5-math-enrichment/lesson-61-homotopy.md) | ⬜ Not Started |
 | 62 | [Manifolds and Tangent Spaces](phase5-math-enrichment/lesson-62-manifolds.md) | ⬜ Not Started |
+| 72 | [Differential Forms and Stokes' Theorem](phase5-math-enrichment/lesson-72-differential-forms.md) | ⬜ Not Started |
 | 63 | [Algebraic Geometry — Singularities and Resolution for SLT](phase5-math-enrichment/lesson-63-algebraic-geometry.md) | ⬜ Not Started |
 
 ### Formal Logic (64–65)
