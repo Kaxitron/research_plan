@@ -4,6 +4,8 @@
 
 *A living reference of formulas, identities, and key insights from the curriculum.*
 
+*⚠️ When adding a new section, also add a corresponding link in the Table of Contents below.*
+
 ---
 
 ## 📑 Table of Contents
@@ -1112,5 +1114,6 @@ $$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus, Lesson 13 complete)*
+
 
 
