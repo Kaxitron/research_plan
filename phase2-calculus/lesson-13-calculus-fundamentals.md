@@ -792,6 +792,80 @@ $$\ln(1 + x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^n}{n} = x - \frac{x^2}{2} 
 
 ---
 
+## Part 13: Partial Fraction Decomposition — Breaking Apart Rational Functions
+
+### The Problem
+
+How do you integrate a fraction like this?
+
+$$\int \frac{3x + 5}{x^2 + 3x + 2}\, dx$$
+
+There's no u-substitution that works (the numerator isn't the derivative of the denominator), and it's not an arctan or arcsin pattern. The technique: **split the fraction into simpler pieces** that you *can* integrate.
+
+### The Core Idea
+
+Factor the denominator:
+
+$$x^2 + 3x + 2 = (x + 1)(x + 2)$$
+
+Then **assume** the fraction can be written as:
+
+$$\frac{3x + 5}{(x + 1)(x + 2)} = \frac{A}{x + 1} + \frac{B}{x + 2}$$
+
+for some constants A and B. Each simple fraction integrates to a logarithm — easy.
+
+### Finding A and B
+
+Multiply both sides by (x + 1)(x + 2):
+
+$$3x + 5 = A(x + 2) + B(x + 1)$$
+
+This must hold for **all** x. The fastest method: plug in values that kill one term.
+
+**Set x = -1:** 3(-1) + 5 = A(1) + B(0) → 2 = A, so **A = 2**
+
+**Set x = -2:** 3(-2) + 5 = A(0) + B(-1) → -1 = -B, so **B = 1**
+
+Therefore:
+
+$$\int \frac{3x + 5}{(x+1)(x+2)}\, dx = \int \frac{2}{x+1}\, dx + \int \frac{1}{x+2}\, dx = 2\ln|x+1| + \ln|x+2| + C$$
+
+### When the Denominator Has a Repeated Factor
+
+If a factor appears twice, you need separate terms for each power:
+
+$$\frac{f(x)}{(x - a)^2(x - b)} = \frac{A}{x - a} + \frac{A_2}{(x - a)^2} + \frac{B}{x - b}$$
+
+**Example:**
+
+$$\frac{5x + 1}{(x-1)^2(x+2)}$$
+
+Set up:
+
+$$5x + 1 = A(x-1)(x+2) + A_2(x+2) + B(x-1)^2$$
+
+**Set x = 1:** 6 = 3A₂ → **A₂ = 2**
+
+**Set x = -2:** -9 = 9B → **B = -1**
+
+**Set x = 0 (or any convenient value):** 1 = A(-1)(2) + 2(2) + (-1)(1) = -2A + 3 → **A = 1**
+
+The (x-1)² term integrates to -A₂/(x-1) via a simple power rule, not a logarithm.
+
+### When the Denominator Has an Irreducible Quadratic
+
+If the denominator contains a quadratic that doesn't factor (like x² + 1), the numerator for that piece needs to be **Ax + B**, not just A:
+
+$$\frac{f(x)}{(x - a)(x^2 + bx + c)} = \frac{A}{x - a} + \frac{Bx + C}{x^2 + bx + c}$$
+
+The quadratic piece often leads to a combination of ln (from the Bx part) and arctan (from the C part, after completing the square). This is exactly the scenario that came up in ∫ 1/(1 + u³) — factoring 1 + u³ = (1 + u)(1 - u + u²) gives one linear factor and one irreducible quadratic.
+
+### 🔗 ML Connection
+
+Partial fractions rarely appear directly in ML computations, but the underlying skill — decomposing a complex expression into simpler pieces that are individually tractable — is a recurring theme. In Bayesian inference, breaking a complicated posterior into simpler components (mixture models, factored distributions) follows the same logic. The technique also appears in solving differential equations via Laplace transforms (Lessons 22–27), where partial fractions convert a complicated transfer function into a sum of terms you can invert individually.
+
+---
+
 ## 📺 Watch
 
 ### Primary (watch these in order)
