@@ -54,6 +54,9 @@
 - [33. Improper Integrals](#33-improper-integrals--integrating-to-infinity)
 - [34. Critical Points and Optimization](#34-critical-points-and-optimization)
 - [35. Series and Convergence](#35-series-and-convergence)
+- [36. Newton's Method](#36-newtons-method)
+- [37. Inverse Function Derivatives](#37-inverse-function-derivatives)
+- [38. Polar Coordinates](#38-polar-coordinates)
 
 ### [Key Identities Quick Reference](#key-identities-quick-reference)
 
@@ -1002,6 +1005,73 @@ $$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
 
 ---
 
+## 36. Newton's Method
+
+**Root-finding:** Given f(x) = 0, iterate:
+
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+**For optimization** (finding where g'(x) = 0):
+
+$$x_{n+1} = x_n - \frac{g'(x_n)}{g''(x_n)}$$
+
+**Convergence:** Quadratic — error roughly squares each step (doubles correct digits). Compare with gradient descent's linear convergence.
+
+**First-order vs second-order:**
+- Gradient descent: $x_{n+1} = x_n - \alpha \cdot g'(x_n)$ — you choose step size α
+- Newton's method: $x_{n+1} = x_n - g'(x_n)/g''(x_n)$ — curvature sets step size automatically
+
+**Multivariable version:** $w_{n+1} = w_n - H^{-1}\nabla L$ where H is the Hessian. Too expensive for large networks → approximations: Adam, L-BFGS, natural gradient.
+
+**Failure modes:** diverges if f'(xₙ) ≈ 0, starting point too far from root, or near inflection points.
+
+---
+
+## 37. Inverse Function Derivatives
+
+$$\frac{d}{dy}[f^{-1}(y)] = \frac{1}{f'(f^{-1}(y))} \qquad \text{equivalently,} \quad \frac{dx}{dy} = \frac{1}{dy/dx}$$
+
+**Derivation method:** Write y = f⁻¹(x), so x = f(y). Differentiate implicitly: 1 = f'(y)·dy/dx → dy/dx = 1/f'(y). Convert back to x.
+
+**Key results derived this way:**
+
+| Function | Inverse | Derivative of inverse |
+|----------|---------|----------------------|
+| $\sin(y)$ | $\arcsin(x)$ | $1/\sqrt{1-x^2}$ |
+| $\cos(y)$ | $\arccos(x)$ | $-1/\sqrt{1-x^2}$ |
+| $\tan(y)$ | $\arctan(x)$ | $1/(1+x^2)$ |
+| $e^y$ | $\ln(x)$ | $1/x$ |
+
+**1D change of variables for probability:** If Y = g(X) with g invertible:
+
+$$p_Y(y) = p_X(g^{-1}(y)) \cdot \left|\frac{d}{dy}g^{-1}(y)\right|$$
+
+The absolute derivative is the 1D Jacobian — generalizes to the Jacobian determinant in multiple dimensions.
+
+---
+
+## 38. Polar Coordinates
+
+**Conversion:**
+
+$$x = r\cos\theta, \quad y = r\sin\theta \qquad r = \sqrt{x^2+y^2}, \quad \theta = \arctan(y/x)$$
+
+**Key identity:** $x^2 + y^2 = r^2$
+
+**Area in polar:** $A = \frac{1}{2}\int_\alpha^\beta [f(\theta)]^2\,d\theta$
+
+**Double integral conversion:** $dx\,dy = r\,dr\,d\theta$ — the factor of $r$ is the Jacobian:
+
+$$J = \det\begin{bmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{bmatrix} = r$$
+
+**The Gaussian integral proof:**
+
+$$I^2 = \iint e^{-(x^2+y^2)}\,dx\,dy = \int_0^{2\pi}\int_0^\infty e^{-r^2}\cdot r\,dr\,d\theta = 2\pi \cdot \frac{1}{2} = \pi$$
+
+$$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
+
+---
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
@@ -1032,6 +1102,12 @@ $$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
 | $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
 | $\sum_{n=0}^{\infty} r^n = \frac{1}{1-r}$ for $\|r\|<1$ | Geometric series |
 | $f(x+h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$ | Taylor (2nd order) |
+| $x_{n+1} = x_n - f(x_n)/f'(x_n)$ | Newton's method (root-finding) |
+| $x_{n+1} = x_n - g'(x_n)/g''(x_n)$ | Newton's method (optimization) |
+| $(f^{-1})'(y) = 1/f'(f^{-1}(y))$ | Inverse function derivative |
+| $p_Y(y) = p_X(g^{-1}(y)) \cdot \|(g^{-1})'(y)\|$ | 1D change of variables |
+| $dx\,dy = r\,dr\,d\theta$ | Polar Jacobian |
+| $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
 
 ---
 
