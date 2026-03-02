@@ -10,37 +10,38 @@
 
 ## 📑 Table of Contents
 
-### [Linear Algebra](#linear-algebra)
+**[Linear Algebra](#linear-algebra)**
 - [Matrix × Vector: Two Complementary Views](#matrix--vector-two-complementary-views)
 - [SVD means every matrix is rotate → scale → rotate](#svd-means-every-matrix-is-rotate--scale--rotate)
 - [Eigenvectors are the directions that "survive" a transformation](#eigenvectors-are-the-directions-that-survive-a-transformation)
 - [Why symmetric matrices have orthogonal eigenvectors (via SVD)](#why-symmetric-matrices-have-orthogonal-eigenvectors-via-svd)
-- [PCA's eigenvectors are just SVD's right singular vectors](#pcas-eigenvectors-are-just-svds-right-singular-vectors--and-symmetry-is-why)
+- [PCA's eigenvectors are just SVD's right singular vectors — and symmetry is why](#pcas-eigenvectors-are-just-svds-right-singular-vectors--and-symmetry-is-why)
 - [PCA is a change of basis that diagonalizes the covariance matrix](#pca-is-a-change-of-basis-that-diagonalizes-the-covariance-matrix)
-- [Matrix type taxonomy](#matrix-type-taxonomy-what-each-type-does-to-space)
+- [Matrix type taxonomy: what each type "does" to space](#matrix-type-taxonomy-what-each-type-does-to-space)
 - [Every linear transformation maps the unit square to a parallelogram](#every-linear-transformation-maps-the-unit-square-to-a-parallelogram)
-- [Null space lives in the INPUT space](#null-space-lives-in-the-input-space-not-the-output-space)
+- [Null space lives in the INPUT space, not the output space](#null-space-lives-in-the-input-space-not-the-output-space)
 - [Miscellaneous Thoughts](#miscellaneous-thoughts)
 
-### [Calculus & Optimization](#calculus--optimization)
-- [The derivative is literally rise/run](#the-derivative-is-literally-riserun--just-infinitely-zoomed-in)
-- [Geometric understanding of derivatives, product rule, chain rule](#geometric-understanding-of-derivatives-the-product-rule-and-the-chain-rule)
-- [The gradient is perpendicular to contour lines](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
-
-### [Statistics & Regression](#statistics--regression)
-
-### [ML & Neural Networks](#ml--neural-networks)
-
-### [Interpretability](#interpretability)
-
-### [Alignment](#alignment)
-
-### [Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)
-
-### [Calculus Intuitions](#calculus-intuitions)
+**[Calculus](#calculus)**
+- [The derivative is literally rise/run — just infinitely zoomed in](#the-derivative-is-literally-riserun--just-infinitely-zoomed-in)
+- [Geometric understanding of derivatives, the product rule, and the chain rule](#geometric-understanding-of-derivatives-the-product-rule-and-the-chain-rule)
+- [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
 - [Riemann Sums — What they really are](#riemann-sums--what-they-really-are)
 - [Trig Sub — Converting back from double angles](#trig-sub--converting-back-from-double-angles)
 - [The Gaussian Integral and the Standard Normal — Why √(2π) and not √π](#the-gaussian-integral-and-the-standard-normal--why-2π-and-not-π)
+
+**[Statistics & Regression](#statistics--regression)**
+- [Least squares IS projection — and the residuals prove it](#least-squares-is-projection--and-the-residuals-prove-it)
+- [Ridge regression is for "everything matters a little"; Lasso is for "most things don't matter"](#ridge-regression-is-for-everything-matters-a-little-lasso-is-for-most-things-dont-matter)
+- [P(data | H₀) ≠ P(H₀ | data)](#pdata--h₀--ph₀--data)
+
+**[Neural Networks](#neural-networks)**
+
+**[Interpretability](#interpretability)**
+
+**[Alignment](#alignment)**
+
+**[Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)**
 
 ---
 
@@ -100,9 +101,10 @@ The null space of an m×n matrix is a subspace of ℝⁿ (the column count = inp
 1. v*v is the same thing as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
 2. The diagonal entries of XᵀX are the variance of the features, whereas the off-diagonal values are the correlation of the features.  
 3. Eigendecomposition works when a matrix is square and non-defective (full set of linearly independent EIGENVECTORS (not columns))
+
 ---
 
-## Calculus & Optimization
+## Calculus
 
 ### The derivative is literally rise/run — just infinitely zoomed in
 
@@ -121,6 +123,74 @@ The derivative of x² comes from a square growing by dx on each side — two str
 
 ### The gradient is perpendicular to contour lines and points uphill
 If you're standing on a hillside, the gradient tells you the steepest uphill direction. Gradient descent goes opposite — steepest downhill. The shape of the contour lines (elongated vs. circular) determines how hard optimization is. Circular = easy (condition number ≈ 1). Elongated = hard (high condition number). This is why preconditioning and Adam optimizer help.
+
+### Riemann Sums — What they really are
+
+The integral is *defined* as the limit of a Riemann sum:
+
+$$\int_a^b f(x)\,dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i) \cdot \Delta x$$
+
+where $\Delta x = \frac{b-a}{n}$ and $x_i = a + i \cdot \frac{b-a}{n}$.
+
+We have the sum of all the tiny rectangles under a curve. Each rectangle has width $\frac{b-a}{n}$ (where $n \to \infty$), and height $f(x_i)$ — the value of the curve at that rectangle's position. To know *which* rectangle we're on, we use $i$: the $i$-th rectangle sits at $x_i = a + i \cdot \frac{b-a}{n}$, which is just the starting point plus $i$ steps of size $\frac{b-a}{n}$. On $[0, 1]$ this simplifies to $x_i = i/n$ with width $1/n$.
+
+To identify $f(x)$ from a sum, literally replace every $i/n$ with $x$. If you see $(i/n)^2 + i/n$, that's $f(x) = x^2 + x$. Straight substitution, nothing hidden.
+
+**Concrete example:** $\int_2^4 x^2\,dx$ as a Riemann sum. Here $a = 2$, $b = 4$, $\Delta x = \frac{2}{n}$, and $x_i = 2 + \frac{2i}{n}$:
+
+$$\lim_{n \to \infty} \sum_{i=1}^{n} \frac{2}{n} \cdot \left(2 + \frac{2i}{n}\right)^2 = \int_2^4 x^2\,dx = \frac{x^3}{3}\Big|_2^4 = \frac{64}{3} - \frac{8}{3} = \frac{56}{3}$$
+
+**The integration bee trick:** Riemann sums normally define integrals, but you can run it backwards — recognize a hard sum as a Riemann sum in disguise, convert to an integral, and evaluate with the FTC. Recipe: factor out $\frac{1}{n}$ as $\Delta x$, rewrite everything else as a function of $\frac{i}{n}$, replace with $x$, integrate.
+
+### Trig Sub — Converting back from double angles
+
+When your trig sub answer contains sin(2θ) or cos(2θ), you **cannot** just read these off the triangle directly. The triangle gives you sinθ, cosθ, tanθ etc. — single-angle functions. There is no shortcut like "multiply the triangle ratio by 2."
+
+Instead, use double angle identities to decompose back to single angles first:
+
+- $\sin(2\theta) = 2\sin\theta\cos\theta$ → then read sinθ and cosθ off the triangle and multiply
+- $\cos(2\theta) = 1 - 2\sin^2\theta$ or $2\cos^2\theta - 1$ → pick whichever form uses what your triangle gives you easily
+
+**Example:** If $x = 3\sin\theta$, the triangle has opposite = $x$, hypotenuse = $3$, adjacent = $\sqrt{9-x^2}$. Then:
+
+$$\sin(2\theta) = 2 \cdot \frac{x}{3} \cdot \frac{\sqrt{9-x^2}}{3} = \frac{2x\sqrt{9-x^2}}{9}$$
+
+You must go through the identity — there's no way to get sin(2θ) directly from the triangle without this step.
+
+### The Gaussian Integral and the Standard Normal — Why √(2π) and not √π
+
+The Gaussian integral gives us:
+
+$$\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$$
+
+So if you wanted to turn $e^{-x^2}$ into a valid probability density (area = 1), you'd just divide by $\sqrt{\pi}$:
+
+$$p(x) = \frac{1}{\sqrt{\pi}} e^{-x^2}$$
+
+This *is* a perfectly valid PDF. But it has an inconvenient property: its variance is 1/2, not 1. You can verify this by computing $\text{Var}(X) = \int_{-\infty}^{\infty} x^2 \cdot \frac{1}{\sqrt{\pi}} e^{-x^2}\,dx = \frac{1}{2}$.
+
+A variance of 1/2 is ugly to work with — it clutters every formula that builds on top of the Gaussian. So instead, we *stretch* the bell curve horizontally by substituting $x \to x/\sqrt{2}$, which widens it just enough to make the variance exactly 1. Applying this substitution:
+
+$$e^{-x^2} \longrightarrow e^{-x^2/2}$$
+
+But stretching changes the area under the curve. The new integral is:
+
+$$\int_{-\infty}^{\infty} e^{-x^2/2}\,dx = \sqrt{2\pi}$$
+
+(You can verify: substitute $u = x/\sqrt{2}$, so $dx = \sqrt{2}\,du$, and $\sqrt{2} \cdot \sqrt{\pi} = \sqrt{2\pi}$.)
+
+So to normalize this stretched version, we divide by $\sqrt{2\pi}$:
+
+$$p(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$$
+
+This is the **standard normal distribution** $\mathcal{N}(0, 1)$ — mean 0, variance 1. The $\sqrt{2\pi}$ isn't some mysterious constant; it's literally $\sqrt{2} \cdot \sqrt{\pi}$, where the $\sqrt{\pi}$ comes from the Gaussian integral and the $\sqrt{2}$ comes from the horizontal stretch we chose so that the variance would be 1 instead of 1/2.
+
+**The chain of decisions:**
+1. $e^{-x^2}$ has a nice shape but its integral is $\sqrt{\pi}$ (irrational) and dividing by $\sqrt{\pi}$ gives variance 1/2 (ugly)
+2. $e^{-x^2/2}$ is a horizontal stretch that makes the variance exactly 1, but now the integral is $\sqrt{2\pi}$
+3. We chose convenience of variance over convenience of the normalizing constant — because variance shows up in far more formulas than the normalizing constant does
+
+Every time you see $\sqrt{2\pi}$ in statistics, this is why it's there.
 
 ---
 
@@ -189,85 +259,4 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-## Calculus Intuitions
-
-**Riemann Sums — What they really are:**
-
-The integral is *defined* as the limit of a Riemann sum:
-
-$$\int_a^b f(x)\,dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i) \cdot \Delta x$$
-
-where $\Delta x = \frac{b-a}{n}$ and $x_i = a + i \cdot \frac{b-a}{n}$.
-
-We have the sum of all the tiny rectangles under a curve. Each rectangle has width $\frac{b-a}{n}$ (where $n \to \infty$), and height $f(x_i)$ — the value of the curve at that rectangle's position. To know *which* rectangle we're on, we use $i$: the $i$-th rectangle sits at $x_i = a + i \cdot \frac{b-a}{n}$, which is just the starting point plus $i$ steps of size $\frac{b-a}{n}$. On $[0, 1]$ this simplifies to $x_i = i/n$ with width $1/n$.
-
-To identify $f(x)$ from a sum, literally replace every $i/n$ with $x$. If you see $(i/n)^2 + i/n$, that's $f(x) = x^2 + x$. Straight substitution, nothing hidden.
-
-**Concrete example:** $\int_2^4 x^2\,dx$ as a Riemann sum. Here $a = 2$, $b = 4$, $\Delta x = \frac{2}{n}$, and $x_i = 2 + \frac{2i}{n}$:
-
-$$\lim_{n \to \infty} \sum_{i=1}^{n} \frac{2}{n} \cdot \left(2 + \frac{2i}{n}\right)^2 = \int_2^4 x^2\,dx = \frac{x^3}{3}\Big|_2^4 = \frac{64}{3} - \frac{8}{3} = \frac{56}{3}$$
-
-**The integration bee trick:** Riemann sums normally define integrals, but you can run it backwards — recognize a hard sum as a Riemann sum in disguise, convert to an integral, and evaluate with the FTC. Recipe: factor out $\frac{1}{n}$ as $\Delta x$, rewrite everything else as a function of $\frac{i}{n}$, replace with $x$, integrate.
-
----
-
-**Trig Sub — Converting back from double angles:**
-
-When your trig sub answer contains sin(2θ) or cos(2θ), you **cannot** just read these off the triangle directly. The triangle gives you sinθ, cosθ, tanθ etc. — single-angle functions. There is no shortcut like "multiply the triangle ratio by 2."
-
-Instead, use double angle identities to decompose back to single angles first:
-
-- $\sin(2	heta) = 2\sin	heta\cos	heta$ → then read sinθ and cosθ off the triangle and multiply
-- $\cos(2	heta) = 1 - 2\sin^2	heta$ or $2\cos^2	heta - 1$ → pick whichever form uses what your triangle gives you easily
-
-**Example:** If $x = 3\sin	heta$, the triangle has opposite = $x$, hypotenuse = $3$, adjacent = $\sqrt{9-x^2}$. Then:
-
-$$\sin(2	heta) = 2 \cdot rac{x}{3} \cdot rac{\sqrt{9-x^2}}{3} = rac{2x\sqrt{9-x^2}}{9}$$
-
-You must go through the identity — there's no way to get sin(2θ) directly from the triangle without this step.
-
----
-
-**The Gaussian Integral and the Standard Normal — Why √(2π) and not √π:**
-
-The Gaussian integral gives us:
-
-$$\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$$
-
-So if you wanted to turn $e^{-x^2}$ into a valid probability density (area = 1), you'd just divide by $\sqrt{\pi}$:
-
-$$p(x) = \frac{1}{\sqrt{\pi}} e^{-x^2}$$
-
-This *is* a perfectly valid PDF. But it has an inconvenient property: its variance is 1/2, not 1. You can verify this by computing $\text{Var}(X) = \int_{-\infty}^{\infty} x^2 \cdot \frac{1}{\sqrt{\pi}} e^{-x^2}\,dx = \frac{1}{2}$.
-
-A variance of 1/2 is ugly to work with — it clutters every formula that builds on top of the Gaussian. So instead, we *stretch* the bell curve horizontally by substituting $x \to x/\sqrt{2}$, which widens it just enough to make the variance exactly 1. Applying this substitution:
-
-$$e^{-x^2} \longrightarrow e^{-x^2/2}$$
-
-But stretching changes the area under the curve. The new integral is:
-
-$$\int_{-\infty}^{\infty} e^{-x^2/2}\,dx = \sqrt{2\pi}$$
-
-(You can verify: substitute $u = x/\sqrt{2}$, so $dx = \sqrt{2}\,du$, and $\sqrt{2} \cdot \sqrt{\pi} = \sqrt{2\pi}$.)
-
-So to normalize this stretched version, we divide by $\sqrt{2\pi}$:
-
-$$p(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$$
-
-This is the **standard normal distribution** $\mathcal{N}(0, 1)$ — mean 0, variance 1. The $\sqrt{2\pi}$ isn't some mysterious constant; it's literally $\sqrt{2} \cdot \sqrt{\pi}$, where the $\sqrt{\pi}$ comes from the Gaussian integral and the $\sqrt{2}$ comes from the horizontal stretch we chose so that the variance would be 1 instead of 1/2.
-
-**The chain of decisions:**
-1. $e^{-x^2}$ has a nice shape but its integral is $\sqrt{\pi}$ (irrational) and dividing by $\sqrt{\pi}$ gives variance 1/2 (ugly)
-2. $e^{-x^2/2}$ is a horizontal stretch that makes the variance exactly 1, but now the integral is $\sqrt{2\pi}$
-3. We chose convenience of variance over convenience of the normalizing constant — because variance shows up in far more formulas than the normalizing constant does
-
-Every time you see $\sqrt{2\pi}$ in statistics, this is why it's there.
-
----
-
 *Last updated: March 2026*
-
-
-
-
-
