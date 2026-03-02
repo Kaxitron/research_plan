@@ -39,6 +39,18 @@
 - **Fourier series:** the general solution to the heat equation is a sum of sinusoidal modes, each decaying exponentially at a rate determined by its frequency. High-frequency modes (sharp features) decay fastest — this is why diffusion blurs fine details first and coarse structure last.
 - **For ML:** this frequency-dependent decay explains why diffusion models generate images from coarse to fine — the reverse process reconstructs low frequencies (overall layout) before high frequencies (texture and detail).
 
+### The Laplace Transform — A Brief Detour
+
+- **The Laplace transform** converts a time-domain function f(t) into a complex-frequency function: F(s) = ∫₀^∞ f(t)e^{-st} dt, where s = σ + iω is a complex number. It's the "sibling" of the Fourier transform — where Fourier decomposes into pure oscillations (e^{iωt}), Laplace decomposes into exponentially growing/decaying oscillations (e^{st}).
+- **Why it exists:** the Fourier transform only works cleanly on functions that don't blow up. The Laplace transform handles transient, decaying, and growing signals by building exponential decay (the e^{-σt} factor) into the decomposition. This makes it the workhorse of control theory and engineering.
+- **The core trick:** differentiation becomes multiplication. If ℒ{f(t)} = F(s), then ℒ{f'(t)} = sF(s) - f(0). This converts differential equations into algebraic equations — solve for F(s), then invert to get f(t). It's enormously powerful for linear ODEs.
+- **Connection to what you already know:**
+  - The **matrix exponential** e^{At} from Lesson 23 can be derived via the inverse Laplace transform: e^{At} = ℒ⁻¹{(sI - A)⁻¹}. The eigenvalues of A become poles in the s-domain — stable systems have poles in the left half-plane (Re(s) < 0), matching the "negative eigenvalues → convergence" rule.
+  - The **Fourier transform** is the special case where s = iω (purely imaginary — no growth or decay, just oscillation). Laplace is Fourier's generalization to the full complex plane.
+  - **Transfer functions** in control theory — G(s) = output/input in the s-domain — are exactly how engineers analyze feedback systems. This connects to alignment: an RLHF training loop IS a feedback control system, and stability analysis of such loops uses these tools.
+- **Why it's not central to this curriculum:** modern ML overwhelmingly uses Fourier methods (spectral analysis, diffusion models) and direct ODE/SDE simulation rather than Laplace techniques. You're unlikely to encounter Laplace transforms in alignment papers. But if you read control theory literature on AI safety (e.g., modeling training dynamics as a control system), you'll see transfer functions and s-domain analysis everywhere.
+- **The one thing to remember:** Laplace transforms turn differential equations into algebra by moving to the frequency domain, just as Fourier does — but Laplace handles transient (non-periodic, decaying) behavior that Fourier can't.
+
 ## 📺 Watch — Primary
 
 1. **3Blue1Brown — "But what is a partial differential equation?"**
