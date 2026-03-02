@@ -173,7 +173,25 @@ $$\lim_{n \to \infty} \sum_{i=1}^{n} \frac{2}{n} \cdot \left(2 + \frac{2i}{n}\ri
 
 ---
 
+**Trig Sub — Converting back from double angles:**
+
+When your trig sub answer contains sin(2θ) or cos(2θ), you **cannot** just read these off the triangle directly. The triangle gives you sinθ, cosθ, tanθ etc. — single-angle functions. There is no shortcut like "multiply the triangle ratio by 2."
+
+Instead, use double angle identities to decompose back to single angles first:
+
+- $\sin(2	heta) = 2\sin	heta\cos	heta$ → then read sinθ and cosθ off the triangle and multiply
+- $\cos(2	heta) = 1 - 2\sin^2	heta$ or $2\cos^2	heta - 1$ → pick whichever form uses what your triangle gives you easily
+
+**Example:** If $x = 3\sin	heta$, the triangle has opposite = $x$, hypotenuse = $3$, adjacent = $\sqrt{9-x^2}$. Then:
+
+$$\sin(2	heta) = 2 \cdot rac{x}{3} \cdot rac{\sqrt{9-x^2}}{3} = rac{2x\sqrt{9-x^2}}{9}$$
+
+You must go through the identity — there's no way to get sin(2θ) directly from the triangle without this step.
+
+---
+
 *Last updated: March 2026*
+
 
 
 
