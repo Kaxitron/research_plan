@@ -541,6 +541,384 @@ $$\lim_{x \to 0} \frac{\sin(x)}{x} = \frac{0}{0} \quad \Rightarrow \quad \lim_{x
 
 **🔗 ML Connection:** L'Hôpital's Rule shows up when analyzing loss functions near critical points — e.g., understanding how cross-entropy loss $-\log(p)$ behaves as predicted probability $p \to 0$ or $p \to 1$, or when deriving limits in softmax temperature scaling as $T \to 0$ or $T \to \infty$.
 
+## 23. Limits and Continuity
+
+**Limit (ε-δ definition):** $\lim_{x \to a} f(x) = L$ means: for every $\varepsilon > 0$, there exists $\delta > 0$ such that
+
+$$0 < |x - a| < \delta \implies |f(x) - L| < \varepsilon$$
+
+**One-sided limits:**
+
+$$\lim_{x \to a^-} f(x) \quad \text{(from left)} \qquad \lim_{x \to a^+} f(x) \quad \text{(from right)}$$
+
+Two-sided limit exists iff both one-sided limits exist and agree.
+
+**Continuity at a:** $f$ is continuous at $a$ iff $\lim_{x \to a} f(x) = f(a)$.
+
+Three requirements: (1) limit exists, (2) $f(a)$ is defined, (3) they're equal.
+
+**Three ways to fail continuity:**
+- **Jump discontinuity:** one-sided limits disagree (step function at 0)
+- **Removable discontinuity (hole):** limit exists but $f(a)$ is missing or wrong
+- **Blow-up:** $f(x) \to \pm\infty$ (like $1/x$ at $x = 0$)
+
+**Hierarchy:** differentiable $\implies$ continuous $\implies$ limit exists (each arrow one-way only)
+
+**ML connection:** ReLU is continuous but not differentiable at $x = 0$ — continuity is enough for practical optimization.
+
+---
+
+## 24. Squeeze Theorem
+
+If $g(x) \leq f(x) \leq h(x)$ near $a$, and $\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L$, then:
+
+$$\lim_{x \to a} f(x) = L$$
+
+**Classic example:**
+
+$$\lim_{x \to 0} x^2 \sin\!\left(\frac{1}{x}\right) = 0$$
+
+because $-x^2 \leq x^2 \sin(1/x) \leq x^2$ and both bounds $\to 0$.
+
+**ML connection:** The bounding strategy — when you can't compute exact generalization error, bound it above and below by computable quantities and show both converge. PAC learning is built on this.
+
+---
+
+## 25. Three Foundational Theorems (IVT, EVT, MVT)
+
+All three require **continuity** as their entry ticket.
+
+### Intermediate Value Theorem (IVT)
+
+If $f$ is continuous on $[a, b]$ and $y$ is between $f(a)$ and $f(b)$, then:
+
+$$\exists \; c \in (a, b) \text{ such that } f(c) = y$$
+
+A continuous function can't skip over a value. **Why it matters:** guarantees root-finding algorithms (bisection method, Newton's method) work.
+
+### Extreme Value Theorem (EVT)
+
+If $f$ is continuous on a **closed** interval $[a, b]$, then $f$ attains its maximum and minimum on $[a, b]$:
+
+$$\exists \; c, d \in [a, b] \text{ such that } f(c) \leq f(x) \leq f(d) \quad \forall x \in [a, b]$$
+
+All three conditions matter — remove "continuous," "closed," or "bounded" and the theorem fails.
+
+**ML connection:** Weight space $\mathbb{R}^n$ is unbounded (not compact), so EVT doesn't directly apply. **Weight decay** ($L_2$ regularization) constrains weights to a bounded region, restoring compactness so the minimum is guaranteed to exist.
+
+### Mean Value Theorem (MVT)
+
+If $f$ is continuous on $[a, b]$ and differentiable on $(a, b)$, then:
+
+$$\exists \; c \in (a, b) \text{ such that } f'(c) = \frac{f(b) - f(a)}{b - a}$$
+
+Somewhere the instantaneous rate equals the average rate. The tangent line is parallel to the secant.
+
+**ML connection:** Guarantees gradient descent makes progress — if the gradient is nonzero, the function value actually changes. Underlies convergence proofs for optimization algorithms.
+
+---
+
+## 26. Extended Derivative Table
+
+| Function | Derivative |
+|----------|-----------|
+| $x^n$ | $nx^{n-1}$ |
+| $e^x$ | $e^x$ |
+| $a^x$ | $a^x \ln(a)$ |
+| $\ln(x)$ | $1/x$ |
+| $\log_a(x)$ | $\frac{1}{x \ln a}$ |
+| $\sin(x)$ | $\cos(x)$ |
+| $\cos(x)$ | $-\sin(x)$ |
+| $\tan(x)$ | $\sec^2(x)$ |
+| $\cot(x)$ | $-\csc^2(x)$ |
+| $\sec(x)$ | $\sec(x)\tan(x)$ |
+| $\csc(x)$ | $-\csc(x)\cot(x)$ |
+| $\arcsin(x)$ | $\frac{1}{\sqrt{1 - x^2}}$ |
+| $\arccos(x)$ | $\frac{-1}{\sqrt{1 - x^2}}$ |
+| $\arctan(x)$ | $\frac{1}{1 + x^2}$ |
+| $\sigma(x) = \frac{1}{1+e^{-x}}$ | $\sigma(x)(1 - \sigma(x))$ |
+| $\tanh(x)$ | $1 - \tanh^2(x)$ |
+| $\text{ReLU}(x) = \max(0,x)$ | $0$ if $x<0$, $1$ if $x>0$, undef at $0$ |
+
+**Differentiation rules:**
+
+| Rule | Formula |
+|------|---------|
+| Constant multiple | $(cf)' = cf'$ |
+| Sum | $(f + g)' = f' + g'$ |
+| Product | $(fg)' = f'g + fg'$ |
+| Quotient | $(f/g)' = (f'g - fg') / g^2$ |
+| Chain | $\frac{d}{dx}f(g(x)) = f'(g(x)) \cdot g'(x)$ |
+| Logarithmic derivative | $\frac{d}{dx}\ln(f(x)) = \frac{f'(x)}{f(x)}$ |
+
+---
+
+## 27. Trigonometric Identities
+
+### Pythagorean Identities
+
+$$\sin^2\theta + \cos^2\theta = 1$$
+
+$$1 + \tan^2\theta = \sec^2\theta$$
+
+$$1 + \cot^2\theta = \csc^2\theta$$
+
+### Double Angle Formulas
+
+$$\sin(2\theta) = 2\sin\theta\cos\theta$$
+
+$$\cos(2\theta) = \cos^2\theta - \sin^2\theta = 2\cos^2\theta - 1 = 1 - 2\sin^2\theta$$
+
+$$\tan(2\theta) = \frac{2\tan\theta}{1 - \tan^2\theta}$$
+
+### Half Angle / Power Reduction (critical for trig integrals)
+
+$$\sin^2\theta = \frac{1 - \cos(2\theta)}{2} \qquad \cos^2\theta = \frac{1 + \cos(2\theta)}{2}$$
+
+### Sum and Difference
+
+$$\sin(A \pm B) = \sin A \cos B \pm \cos A \sin B$$
+
+$$\cos(A \pm B) = \cos A \cos B \mp \sin A \sin B$$
+
+### Product-to-Sum (useful for integrating products of trig functions)
+
+$$\sin A \cos B = \tfrac{1}{2}[\sin(A+B) + \sin(A-B)]$$
+
+$$\cos A \cos B = \tfrac{1}{2}[\cos(A-B) + \cos(A+B)]$$
+
+$$\sin A \sin B = \tfrac{1}{2}[\cos(A-B) - \cos(A+B)]$$
+
+### Key Values
+
+| $\theta$ | $\sin$ | $\cos$ | $\tan$ |
+|-----------|--------|--------|--------|
+| $0$ | $0$ | $1$ | $0$ |
+| $\pi/6$ (30°) | $1/2$ | $\sqrt{3}/2$ | $1/\sqrt{3}$ |
+| $\pi/4$ (45°) | $\sqrt{2}/2$ | $\sqrt{2}/2$ | $1$ |
+| $\pi/3$ (60°) | $\sqrt{3}/2$ | $1/2$ | $\sqrt{3}$ |
+| $\pi/2$ (90°) | $1$ | $0$ | undef |
+
+---
+
+## 28. Integration — Fundamentals
+
+### The Definite Integral
+
+$$\int_a^b f(x) \, dx = \text{signed area between } f(x) \text{ and the x-axis from } a \text{ to } b$$
+
+### Fundamental Theorem of Calculus
+
+**Part 1:** $\frac{d}{dx} \int_a^x f(t) \, dt = f(x)$ — the derivative of "area so far" is the original function.
+
+**Part 2:** $\int_a^b f(x) \, dx = F(b) - F(a)$ where $F' = f$ — evaluate any antiderivative at endpoints.
+
+### Antiderivative Table
+
+| Function | Antiderivative |
+|----------|---------------|
+| $x^n$ $(n \neq -1)$ | $\frac{x^{n+1}}{n+1} + C$ |
+| $1/x$ | $\ln\|x\| + C$ |
+| $e^x$ | $e^x + C$ |
+| $a^x$ | $\frac{a^x}{\ln a} + C$ |
+| $\sin(x)$ | $-\cos(x) + C$ |
+| $\cos(x)$ | $\sin(x) + C$ |
+| $\sec^2(x)$ | $\tan(x) + C$ |
+| $\csc^2(x)$ | $-\cot(x) + C$ |
+| $\sec(x)\tan(x)$ | $\sec(x) + C$ |
+| $\csc(x)\cot(x)$ | $-\csc(x) + C$ |
+| $\tan(x)$ | $-\ln\|\cos(x)\| + C$ |
+| $\sec(x)$ | $\ln\|\sec(x) + \tan(x)\| + C$ |
+| $\frac{1}{\sqrt{1-x^2}}$ | $\arcsin(x) + C$ |
+| $\frac{1}{1+x^2}$ | $\arctan(x) + C$ |
+| $\frac{1}{x^2+a^2}$ | $\frac{1}{a}\arctan(x/a) + C$ |
+| $\frac{1}{\sqrt{a^2-x^2}}$ | $\arcsin(x/a) + C$ |
+
+The $+ C$ is the **constant of integration** — vertical shifts don't change slope. Different $C$ values give different antiderivatives, all equally valid.
+
+---
+
+## 29. u-Substitution — The Chain Rule in Reverse
+
+**The idea:** If you see a composite function with its inner derivative nearby, collapse it.
+
+$$\int f(g(x)) \cdot g'(x) \, dx = \int f(u) \, du \quad \text{where } u = g(x)$$
+
+**Steps:**
+1. Identify the "inner function" $u = g(x)$
+2. Compute $du = g'(x) \, dx$
+3. Rewrite everything in terms of $u$ and $du$ (no $x$ should remain)
+4. Integrate in $u$
+5. Substitute back to $x$
+
+**Example:**
+
+$$\int 2x \cdot e^{x^2} \, dx$$
+
+Let $u = x^2$, so $du = 2x \, dx$. The integral becomes:
+
+$$\int e^u \, du = e^u + C = e^{x^2} + C$$
+
+**For definite integrals:** either convert the bounds to $u$-values, or substitute back and use original bounds.
+
+---
+
+## 30. Integration by Parts — The Product Rule in Reverse
+
+$$\int u \, dv = uv - \int v \, du$$
+
+**Choosing u and dv — LIATE rule** (pick $u$ in this priority order):
+
+| Priority | Type | Example |
+|----------|------|---------|
+| 1 | **L**ogarithmic | $\ln(x)$ |
+| 2 | **I**nverse trig | $\arctan(x)$ |
+| 3 | **A**lgebraic | $x^2$, $x$, $3x+1$ |
+| 4 | **T**rigonometric | $\sin(x)$, $\cos(x)$ |
+| 5 | **E**xponential | $e^x$ |
+
+**Example:**
+
+$$\int x \, e^x \, dx$$
+
+Let $u = x$ (algebraic), $dv = e^x dx$. Then $du = dx$, $v = e^x$.
+
+$$= x e^x - \int e^x \, dx = x e^x - e^x + C = e^x(x - 1) + C$$
+
+**Tabular method** for repeated integration by parts (when $u$ is a polynomial): alternate signs (+, −, +, −, ...), differentiate $u$ column, integrate $dv$ column, multiply diagonally.
+
+---
+
+## 31. Trigonometric Substitution — Handling Square Roots
+
+Use when you see $\sqrt{a^2 - x^2}$, $\sqrt{a^2 + x^2}$, or $\sqrt{x^2 - a^2}$.
+
+| Expression | Substitution | Identity Used | Domain |
+|------------|-------------|---------------|--------|
+| $\sqrt{a^2 - x^2}$ | $x = a\sin\theta$ | $1 - \sin^2\theta = \cos^2\theta$ | $-\pi/2 \leq \theta \leq \pi/2$ |
+| $\sqrt{a^2 + x^2}$ | $x = a\tan\theta$ | $1 + \tan^2\theta = \sec^2\theta$ | $-\pi/2 < \theta < \pi/2$ |
+| $\sqrt{x^2 - a^2}$ | $x = a\sec\theta$ | $\sec^2\theta - 1 = \tan^2\theta$ | $0 \leq \theta < \pi/2$ |
+
+**The idea:** replace the square root with a trig identity that simplifies it completely.
+
+**ML connection:** The $\sqrt{a^2 - x^2}$ form appears in the Gaussian integral $e^{-x^2}$, which is the core of the normal distribution.
+
+---
+
+## 32. Partial Fraction Decomposition
+
+**For integrating rational functions** $\frac{P(x)}{Q(x)}$ where $\deg P < \deg Q$.
+
+**Step 1:** Factor the denominator completely.
+
+**Step 2:** Write the decomposition:
+
+| Denominator factor | Partial fraction form |
+|---|---|
+| $(x - a)$ | $\frac{A}{x - a}$ |
+| $(x - a)^n$ | $\frac{A_1}{x-a} + \frac{A_2}{(x-a)^2} + \cdots + \frac{A_n}{(x-a)^n}$ |
+| $(x^2 + bx + c)$ irreducible | $\frac{Ax + B}{x^2 + bx + c}$ |
+| $(x^2 + bx + c)^n$ irreducible | $\frac{A_1 x + B_1}{x^2+bx+c} + \cdots + \frac{A_n x + B_n}{(x^2+bx+c)^n}$ |
+
+**Step 3:** Solve for constants (multiply both sides by denominator, plug in strategic $x$ values or match coefficients).
+
+**Step 4:** Integrate each term separately — linear denominators give $\ln$, irreducible quadratics give $\arctan$.
+
+**Example:**
+
+$$\int \frac{1}{x^2 - 1} \, dx = \int \frac{1}{(x-1)(x+1)} \, dx = \int \left(\frac{1/2}{x-1} - \frac{1/2}{x+1}\right) dx = \frac{1}{2}\ln\left|\frac{x-1}{x+1}\right| + C$$
+
+**If $\deg P \geq \deg Q$:** do polynomial long division first, then decompose the remainder.
+
+---
+
+## 33. Improper Integrals — Integrating to Infinity
+
+**Type 1: Infinite bounds**
+
+$$\int_a^\infty f(x) \, dx = \lim_{N \to \infty} \int_a^N f(x) \, dx$$
+
+If the limit exists, the integral **converges**. If not, it **diverges**.
+
+**Type 2: Integrand blows up** (e.g., $\int_0^1 \frac{1}{\sqrt{x}} dx$)
+
+$$\int_0^b f(x) \, dx = \lim_{\varepsilon \to 0^+} \int_\varepsilon^b f(x) \, dx$$
+
+**Key examples:**
+
+$$\int_1^\infty \frac{1}{x^p} \, dx \quad \begin{cases} \text{converges} & \text{if } p > 1 \\ \text{diverges} & \text{if } p \leq 1 \end{cases}$$
+
+**The Gaussian integral (most important improper integral in all of ML):**
+
+$$\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}$$
+
+Cannot be computed with single-variable techniques — requires squaring the integral and converting to polar coordinates.
+
+**ML connection:** Probability densities over unbounded domains are improper integrals: $\int_{-\infty}^{\infty} p(x) \, dx = 1$. The Gaussian/normal distribution is built entirely on the Gaussian integral.
+
+---
+
+## 34. Critical Points and Optimization
+
+**Critical point:** where $f'(x) = 0$ or $f'(x)$ is undefined.
+
+**Second derivative test** at a critical point where $f'(x) = 0$:
+- $f''(x) > 0$ → **local minimum** (concave up, bowl)
+- $f''(x) < 0$ → **local maximum** (concave down, hill)
+- $f''(x) = 0$ → **inconclusive** (could be inflection point)
+
+**Concavity:**
+- $f''(x) > 0$ on an interval → concave up (tangent line lies below curve)
+- $f''(x) < 0$ on an interval → concave down (tangent line lies above curve)
+- **Inflection point:** where concavity changes ($f'' = 0$ or undefined, AND sign changes)
+
+**Applied optimization procedure:**
+1. Draw a picture, define variables
+2. Write the quantity to optimize as a function of one variable
+3. Find critical points: set $f'(x) = 0$, solve
+4. Classify via second derivative test (or check endpoints on closed interval)
+5. Answer the actual question
+
+**ML connection:** Training a neural network is setting $\partial L / \partial w = 0$ for all weights. Gradient descent iteratively approximates this. The Hessian (matrix of all second partial derivatives) generalizes the second derivative test to many dimensions.
+
+---
+
+## 35. Series and Convergence
+
+### Taylor Series
+
+$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n$$
+
+At $a = 0$ (Maclaurin series):
+
+| Function | Series | Radius of convergence |
+|----------|--------|-----------------------|
+| $e^x$ | $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots$ | $\infty$ |
+| $\sin(x)$ | $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots$ | $\infty$ |
+| $\cos(x)$ | $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$ | $\infty$ |
+| $\frac{1}{1-x}$ | $1 + x + x^2 + x^3 + \cdots$ | $|x| < 1$ |
+| $\ln(1+x)$ | $x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots$ | $-1 < x \leq 1$ |
+| $(1+x)^k$ | $1 + kx + \frac{k(k-1)}{2!}x^2 + \cdots$ | $|x| < 1$ |
+
+### Geometric Series
+
+$$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
+
+### Convergence Tests (quick reference)
+
+| Test | Use when | Converges if |
+|------|----------|-------------|
+| Geometric | $\sum ar^n$ | $|r| < 1$ |
+| p-series | $\sum 1/n^p$ | $p > 1$ |
+| Ratio | Series with factorials or exponentials | $\lim |a_{n+1}/a_n| < 1$ |
+| Comparison | Can bound against known series | Bounded by convergent series |
+| Integral | $f(n) = a_n$ decreasing, positive | $\int_1^\infty f(x) \, dx$ converges |
+| Alternating | $\sum (-1)^n a_n$ | $a_n \to 0$ and $a_n$ decreasing |
+
+**ML connection:** Taylor series is THE key tool in theoretical ML. When a paper says "to second order" or "locally quadratic," they're using the Taylor expansion truncated at the $x^2$ term: $f(x + h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$.
+
+---
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
@@ -560,8 +938,19 @@ $$\lim_{x \to 0} \frac{\sin(x)}{x} = \frac{0}{0} \quad \Rightarrow \quad \lim_{x
 | r² = SSR/SST | Fraction of variance explained |
 | df = f'(x) dx | Differential: rise = slope × run |
 | lim f/g = lim f'/g' | L'Hôpital's Rule (for 0/0 or ∞/∞) |
+| $f$ cont. on $[a,b]$, $y$ between $f(a),f(b)$ → $\exists c: f(c)=y$ | IVT |
+| $f$ cont. on $[a,b]$ → $f$ attains max and min | EVT |
+| $f$ cont. $[a,b]$, diff. $(a,b)$ → $\exists c: f'(c) = \frac{f(b)-f(a)}{b-a}$ | MVT |
+| sin²θ + cos²θ = 1 | Pythagorean identity |
+| $\frac{d}{dx}\int_a^x f(t)\,dt = f(x)$ | FTC Part 1 |
+| $\int_a^b f(x)\,dx = F(b) - F(a)$ | FTC Part 2 |
+| $\int f(g(x))g'(x)\,dx = \int f(u)\,du$ | u-substitution |
+| $\int u\,dv = uv - \int v\,du$ | Integration by parts |
+| $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
+| $\sum_{n=0}^{\infty} r^n = \frac{1}{1-r}$ for $\|r\|<1$ | Geometric series |
+| $f(x+h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$ | Taylor (2nd order) |
 
 ---
 
-*Last updated: February 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus) started*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus, Lesson 13 complete)*
 
