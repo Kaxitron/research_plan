@@ -807,15 +807,31 @@ $$= x e^x - \int e^x \, dx = x e^x - e^x + C = e^x(x - 1) + C$$
 
 Use when you see $\sqrt{a^2 - x^2}$, $\sqrt{a^2 + x^2}$, or $\sqrt{x^2 - a^2}$.
 
+### Quick Reference: What to Substitute and What the Root Becomes
+
+| You see | You want to kill | Set x = | Root becomes |
+|---------|-----------------|---------|-------------|
+| $\sqrt{a^2 - x^2}$ | the minus | $a\sin\theta$ | $a\cos\theta$ |
+| $\sqrt{a^2 + x^2}$ | the plus | $a\tan\theta$ | $a\sec\theta$ |
+| $\sqrt{x^2 - a^2}$ | the minus (flipped) | $a\sec\theta$ | $a\tan\theta$ |
+
+### Full Details
+
 | Expression | Substitution | Identity Used | Domain |
 |------------|-------------|---------------|--------|
 | $\sqrt{a^2 - x^2}$ | $x = a\sin\theta$ | $1 - \sin^2\theta = \cos^2\theta$ | $-\pi/2 \leq \theta \leq \pi/2$ |
 | $\sqrt{a^2 + x^2}$ | $x = a\tan\theta$ | $1 + \tan^2\theta = \sec^2\theta$ | $-\pi/2 < \theta < \pi/2$ |
 | $\sqrt{x^2 - a^2}$ | $x = a\sec\theta$ | $\sec^2\theta - 1 = \tan^2\theta$ | $0 \leq \theta < \pi/2$ |
 
-**The idea:** replace the square root with a trig identity that simplifies it completely.
+### Essential Trig Integrals for Trig Sub
 
-**ML connection:** The $\sqrt{a^2 - x^2}$ form appears in the Gaussian integral $e^{-x^2}$, which is the core of the normal distribution.
+- $\int \sec^2\theta\, d\theta = \tan\theta + C$
+- $\int \sec\theta\tan\theta\, d\theta = \sec\theta + C$
+- $\int \sec\theta\, d\theta = \ln|\sec\theta + \tan\theta| + C$
+
+**The idea:** replace the square root with a trig identity that simplifies it completely. Draw a right triangle to convert back to x at the end.
+
+**ML connection:** The $\sqrt{a^2 - x^2}$ form appears in the Gaussian integral $e^{-x^2}$, which is the core of the normal distribution. The $\sqrt{a^2 + x^2}$ form shows up in normalizing constants for the Student-t distribution and in kernel methods with radial basis functions.
 
 ---
 
@@ -967,4 +983,5 @@ $$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus, Lesson 13 complete)*
+
 
