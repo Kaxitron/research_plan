@@ -900,6 +900,298 @@ Partial fractions rarely appear directly in ML computations, but the underlying 
 
 ---
 
+## Part 14: Newton's Method — From First-Order to Second-Order Thinking
+
+### The Problem Gradient Descent Can't Solve Efficiently
+
+Imagine you want to find the root of a function — the value of x where f(x) = 0. You could try gradient descent on f(x)², but that's slow and indirect. Newton's method takes a more elegant approach: **use the tangent line as a local approximation, then jump to where the tangent line crosses zero.**
+
+### The Geometric Picture
+
+Stand at a point (xₙ, f(xₙ)) on the curve. Draw the tangent line there. Follow it down to where it hits the x-axis. That x-intercept becomes your next guess xₙ₊₁. Repeat.
+
+The tangent line at xₙ has the equation:
+
+$$y - f(x_n) = f'(x_n)(x - x_n)$$
+
+Setting y = 0 and solving for x:
+
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+
+That's it. That's Newton's method.
+
+### Step-by-Step Example
+
+Find √2 by solving f(x) = x² - 2 = 0.
+
+f'(x) = 2x, so the iteration is:
+
+$$x_{n+1} = x_n - \frac{x_n^2 - 2}{2x_n} = \frac{x_n + 2/x_n}{2}$$
+
+Starting from x₀ = 1:
+
+| Step | xₙ | f(xₙ) = xₙ² - 2 | Error |
+|------|-----|-------------------|-------|
+| 0 | 1.000000 | -1.000000 | 0.414 |
+| 1 | 1.500000 | 0.250000 | 0.086 |
+| 2 | 1.416667 | 0.006944 | 0.0025 |
+| 3 | 1.414216 | 0.000006 | 0.0000021 |
+
+Notice how the error *squares* at each step — from 0.086 to 0.0025 to 0.0000021. This is **quadratic convergence**: each step roughly doubles the number of correct digits. Gradient descent converges *linearly* (each step reduces error by a constant factor). Newton's method is dramatically faster.
+
+### Why the Derivative Matters
+
+Look at the formula again: you divide by f'(xₙ). This means:
+
+- **When the slope is steep** (|f'| is large): you take a small step. The tangent line is nearly vertical, so it crosses zero close to where you are. Good — the linear approximation is trustworthy here.
+- **When the slope is gentle** (|f'| is small): you take a huge step. The tangent line is nearly horizontal, so it crosses zero far away. Risky — you might overshoot.
+- **When f'(xₙ) = 0**: the formula explodes. You're at a critical point where the tangent line is horizontal and never crosses zero. Newton's method fails here.
+
+This is the same tension as choosing a learning rate in gradient descent, but Newton's method handles it *automatically* by using curvature information.
+
+### Newton's Method for Optimization
+
+To **minimize** a function g(x), you want to find where g'(x) = 0. Apply Newton's method to the function f(x) = g'(x):
+
+$$x_{n+1} = x_n - \frac{g'(x_n)}{g''(x_n)}$$
+
+Now the second derivative g''(x) — the curvature — appears explicitly. This is why Newton's method is called a **second-order method**: it uses both the gradient (first derivative) and the curvature (second derivative).
+
+Compare:
+- **Gradient descent:** $x_{n+1} = x_n - \alpha \cdot g'(x_n)$ — you choose α (learning rate) yourself
+- **Newton's method:** $x_{n+1} = x_n - \frac{g'(x_n)}{g''(x_n)}$ — the curvature automatically sets the "right" step size
+
+### When Newton's Method Fails
+
+Newton's method is not foolproof:
+
+1. **Starting too far away:** The tangent line approximation is only good locally. If your initial guess is far from the root, Newton's method can oscillate, diverge, or converge to the wrong root.
+
+2. **Near inflection points:** When f''(x) ≈ 0 near the root, Newton's method can overshoot wildly.
+
+3. **Multiple roots:** The method converges to whichever root is "nearest" in a complicated sense that depends on the starting point. Different starting points can lead to different roots.
+
+### 🔗 ML & Alignment Connection
+
+**Why this is foundational for your path:**
+
+In multiple dimensions, Newton's method for optimization becomes:
+
+$$w_{n+1} = w_n - H^{-1} \nabla L$$
+
+where H is the **Hessian matrix** (all second partial derivatives) and ∇L is the gradient. This is beautiful but impractical for neural networks: if you have 1 billion weights, H is a 10⁹ × 10⁹ matrix. You can't even store it, let alone invert it.
+
+This impossibility drives the entire field of practical optimization:
+
+- **Adam** (the standard optimizer for LLMs) approximates second-order information by tracking running averages of the gradient and its square — a cheap proxy for curvature
+- **L-BFGS** approximates the Hessian inverse using gradient history — used for smaller models
+- **Natural gradient** methods use the Fisher information matrix instead of the Hessian — connects to information geometry
+- **Shampoo, K-FAC** and other methods approximate the Hessian with structured matrices (Kronecker products) — an active research area
+
+Understanding *why* these approximations exist starts with understanding Newton's method in 1D. The 1D version teaches you the payoff (quadratic convergence) and the cost (needing second-order information), and every practical optimizer is a different answer to "how do we get some of Newton's benefit without paying the full price?"
+
+For alignment specifically: the curvature of the loss landscape around a solution tells you about **robustness**. A sharp minimum (high curvature, large g'') means the model's behavior changes rapidly with small weight perturbations — potentially fragile alignment. A broad minimum (low curvature, small g'') suggests more stable behavior. This sharp-vs-broad distinction, which you'll explore in Lesson 30, starts with understanding what the second derivative tells you about the shape of a function.
+
+---
+
+## Part 15: Inverse Function Derivatives — How Inverses Inherit Slopes
+
+### The Geometric Intuition
+
+If you have a function f and its inverse f⁻¹, their graphs are mirror images across the line y = x. This means: **wherever f has slope m, f⁻¹ has slope 1/m at the corresponding point.**
+
+Think about it visually. If f climbs steeply (slope = 3), then f⁻¹ climbs gently (slope = 1/3) at the mirror point. The slopes are reciprocals. This is just the geometric consequence of reflecting across y = x, which swaps rise and run.
+
+### The Formula
+
+If y = f(x), then x = f⁻¹(y), and:
+
+$$\frac{d}{dy}[f^{-1}(y)] = \frac{1}{f'(f^{-1}(y))}$$
+
+Or equivalently, using Leibniz notation:
+
+$$\frac{dx}{dy} = \frac{1}{dy/dx}$$
+
+This is intuitive: dx/dy is literally the reciprocal of dy/dx. The rates of change are reciprocals because the roles of input and output are swapped.
+
+### Deriving the Arctangent Derivative (Example)
+
+Let's use the inverse function rule to derive d/dx [arctan(x)] from scratch instead of memorizing it.
+
+Let y = arctan(x). Then by definition, x = tan(y).
+
+Differentiate both sides with respect to x (implicit differentiation):
+
+$$1 = \sec^2(y) \cdot \frac{dy}{dx}$$
+
+$$\frac{dy}{dx} = \frac{1}{\sec^2(y)} = \cos^2(y)$$
+
+Now we need this in terms of x. Since x = tan(y), draw a right triangle: opposite = x, adjacent = 1, hypotenuse = √(1 + x²).
+
+So cos(y) = 1/√(1 + x²), and therefore cos²(y) = 1/(1 + x²).
+
+$$\boxed{\frac{d}{dx}\arctan(x) = \frac{1}{1 + x^2}}$$
+
+This isn't a formula you need to memorize — it's a formula you can *re-derive* in 30 seconds from the relationship between tan and arctan.
+
+### Deriving the Arcsine Derivative
+
+Let y = arcsin(x), so x = sin(y).
+
+$$1 = \cos(y) \cdot \frac{dy}{dx} \quad \Rightarrow \quad \frac{dy}{dx} = \frac{1}{\cos(y)}$$
+
+Since sin(y) = x, and cos(y) = √(1 - sin²y) = √(1 - x²):
+
+$$\boxed{\frac{d}{dx}\arcsin(x) = \frac{1}{\sqrt{1 - x^2}}}$$
+
+### Deriving the Natural Log Derivative
+
+Let y = ln(x), so x = eʸ.
+
+$$1 = e^y \cdot \frac{dy}{dx} \quad \Rightarrow \quad \frac{dy}{dx} = \frac{1}{e^y} = \frac{1}{x}$$
+
+$$\boxed{\frac{d}{dx}\ln(x) = \frac{1}{x}}$$
+
+This is elegant: eˣ is its own derivative, and because the inverse function rule takes the reciprocal, ln(x) inherits a derivative of 1/x. The "special" property of eˣ propagates to its inverse.
+
+### The General Pattern
+
+Notice what's happening in all three examples:
+1. Write y = f⁻¹(x), so x = f(y)
+2. Differentiate implicitly: 1 = f'(y) · dy/dx
+3. Solve: dy/dx = 1/f'(y)
+4. Re-express in terms of x using the original relationship
+
+This is really just implicit differentiation in disguise. The "inverse function derivative formula" is not a new rule — it's a consequence of the chain rule and implicit differentiation that you already know.
+
+### 🔗 ML & Alignment Connection
+
+**Change of variables in probability — the 1D Jacobian:**
+
+This is where inverse function derivatives become essential for your path. Suppose X is a random variable with known density pₓ(x), and you transform it through an invertible function: Y = g(X). What's the density of Y?
+
+The answer uses the inverse function derivative:
+
+$$p_Y(y) = p_X(g^{-1}(y)) \cdot \left|\frac{d}{dy}g^{-1}(y)\right|$$
+
+That absolute derivative term — |d/dy g⁻¹(y)| — is the **1D Jacobian**. It accounts for how the function g stretches or compresses the probability density. If g stretches a region (|g'| > 1), the density thins out. If g compresses a region (|g'| < 1), the density concentrates. The Jacobian ensures the total probability stays at 1.
+
+**Example:** If X ~ Uniform(0, 1) and Y = X², then g(x) = x², g⁻¹(y) = √y, and d/dy[√y] = 1/(2√y). So:
+
+$$p_Y(y) = 1 \cdot \frac{1}{2\sqrt{y}} = \frac{1}{2\sqrt{y}} \quad \text{for } 0 < y < 1$$
+
+This is a valid density — it integrates to 1, and it tells you Y is concentrated near 0 (squaring uniform numbers pushes them toward zero).
+
+In multiple dimensions, this 1D derivative becomes the **Jacobian determinant** — which you already know is connected to how matrices scale volumes. This is the mathematical foundation of **normalizing flows**, a generative model architecture where simple distributions (Gaussian noise) are pushed through layers of invertible transformations, each with a tractable Jacobian determinant, to produce complex distributions (realistic images, text, etc.). You'll encounter the multivariable version in Lesson 14 (Gradients and Jacobians), and it will feel like a direct extension of what you've just learned.
+
+---
+
+## Part 16: Polar Coordinates — A Different Way to Describe Position
+
+### Why Another Coordinate System?
+
+Cartesian coordinates (x, y) describe a point by its horizontal and vertical distances from the origin. But some shapes are awkward in Cartesian coordinates. A circle of radius 3 centered at the origin requires the equation x² + y² = 9 — a relationship between *two* variables. In polar coordinates, the same circle is simply r = 3 — just one variable.
+
+**Polar coordinates** describe a point by:
+- **r** = the distance from the origin (always ≥ 0)
+- **θ** (theta) = the angle measured counterclockwise from the positive x-axis
+
+### The Conversion Formulas
+
+$$x = r\cos\theta \qquad y = r\sin\theta$$
+
+$$r = \sqrt{x^2 + y^2} \qquad \theta = \arctan\left(\frac{y}{x}\right)$$
+
+These follow directly from the right triangle formed by the point, the origin, and the point's projection onto the x-axis. You've seen these relationships before — they're just trigonometry.
+
+**Key identity:** $x^2 + y^2 = r^2$ — this is the Pythagorean theorem, and it's why circles are simple in polar coordinates.
+
+### Polar Curves — Thinking in (r, θ)
+
+In polar coordinates, a curve is defined by r = f(θ). As θ sweeps from 0 to 2π, the radius r changes according to the function, tracing out a curve.
+
+**Examples:**
+- **r = a** → circle of radius a (constant distance from origin)
+- **r = θ** → spiral (distance grows with angle, called the Archimedean spiral)
+- **r = cos(2θ)** → four-petaled rose (the radius oscillates, creating lobes)
+- **r = 1 + cos(θ)** → cardioid (heart-shaped curve)
+
+### Area in Polar Coordinates
+
+In Cartesian coordinates, we chop the region into thin vertical rectangles. In polar coordinates, we chop it into thin **pie slices** (sectors).
+
+A thin sector at angle θ with radius r and angular width dθ has area:
+
+$$dA = \frac{1}{2} r^2 \, d\theta$$
+
+This is because a sector of a circle with radius r and angle dθ has area (1/2)r²dθ (a fraction dθ/(2π) of the full circle area πr²).
+
+So the total area enclosed by r = f(θ) from θ = α to θ = β is:
+
+$$A = \frac{1}{2} \int_\alpha^\beta [f(\theta)]^2 \, d\theta$$
+
+### The Jacobian: Why dA = r dr dθ (Not Just dr dθ)
+
+This is the critical part for your ML path. When you change from Cartesian to polar in a double integral:
+
+$$\iint f(x, y) \, dx \, dy = \iint f(r\cos\theta, \, r\sin\theta) \cdot r \, dr \, d\theta$$
+
+That extra factor of **r** is the **Jacobian determinant** of the coordinate transformation. Here's why it appears:
+
+A tiny Cartesian box dx × dy has area dx · dy. But a tiny polar "box" (a thin wedge between r and r + dr, and between θ and θ + dθ) has area approximately r · dr · dθ, not dr · dθ. The wedge is wider when r is larger — further from the origin, the same angle dθ sweeps out a larger arc. The factor of r corrects for this stretching.
+
+Formally, the Jacobian of the transformation (r, θ) → (x, y) is:
+
+$$J = \det \begin{bmatrix} \partial x/\partial r & \partial x/\partial \theta \\ \partial y/\partial r & \partial y/\partial \theta \end{bmatrix} = \det \begin{bmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{bmatrix} = r\cos^2\theta + r\sin^2\theta = r$$
+
+This is the determinant from your linear algebra knowledge — it measures how much the transformation stretches area at each point. The connection: **the determinant scales areas** (Lesson 6 in linear algebra) and **the Jacobian determinant scales area elements in coordinate changes** (what you're seeing here). Same concept, different setting.
+
+### The Gaussian Integral — The Payoff
+
+Now you can prove the most important result in all of probability. We want to show:
+
+$$I = \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}$$
+
+**The trick:** Square the integral.
+
+$$I^2 = \left(\int_{-\infty}^{\infty} e^{-x^2} \, dx\right)\left(\int_{-\infty}^{\infty} e^{-y^2} \, dy\right) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy$$
+
+Now convert to polar coordinates. Since x² + y² = r²:
+
+$$I^2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \cdot r \, dr \, d\theta$$
+
+The θ integral is trivial: ∫₀²π dθ = 2π.
+
+The r integral is a u-substitution: let u = r², du = 2r dr:
+
+$$\int_0^{\infty} r \, e^{-r^2} \, dr = \frac{1}{2}\int_0^{\infty} e^{-u} \, du = \frac{1}{2}[-e^{-u}]_0^{\infty} = \frac{1}{2}$$
+
+So:
+
+$$I^2 = 2\pi \cdot \frac{1}{2} = \pi$$
+
+$$\boxed{I = \sqrt{\pi}}$$
+
+The magic: the r factor from the Jacobian (r dr dθ) combines with the e^(-r²) integrand to create r·e^(-r²), which is a simple u-substitution. Without polar coordinates — without the Jacobian factor of r — this integral is impossible to evaluate with elementary techniques.
+
+**The Gaussian normalization constant:** The standard normal distribution has density:
+
+$$p(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$$
+
+The 1/√(2π) factor is there precisely because ∫ e^(-x²/2) dx = √(2π) (substitute u = x/√2 in our result). Every time you see √(2π) in a Gaussian formula, you're looking at a shadow of the Gaussian integral.
+
+### 🔗 ML & Alignment Connection
+
+**Why polar coordinates matter for your path:**
+
+The Gaussian integral proof isn't just beautiful mathematics — it's the foundation of the normal distribution, which is the most important distribution in all of statistics and ML. Every time a paper says "assume Gaussian noise," "Gaussian prior," "reparameterization trick," or "variational inference with diagonal Gaussian," the mathematical validity ultimately traces back to this integral and the normalizing constant it provides.
+
+The Jacobian factor connects directly to your existing knowledge: in linear algebra, the determinant scales areas under linear transformations. The Jacobian generalizes this to nonlinear transformations. In Lesson 14 (Gradients and Jacobians), you'll see this generalize further to arbitrary coordinate changes in high-dimensional spaces. And in normalizing flows (a generative model architecture), the entire model is designed so that the Jacobian determinant is easy to compute — because computing it is necessary for evaluating the probability of generated outputs.
+
+The broader principle: **choosing the right coordinate system can transform an impossible problem into a simple one.** Polar coordinates turn the Gaussian integral from intractable to trivial. In ML, choosing the right parameterization of a model, the right basis for representing features, or the right coordinate system for optimization can make the same dramatic difference. This is the same insight as change of basis in linear algebra — it doesn't change the underlying reality, only how easy it is to work with.
+
+---
+
 ## 📺 Watch
 
 ### Primary (watch these in order)
@@ -1026,6 +1318,27 @@ For each function, find all critical points and classify them (min/max/inflectio
 2. A box with a square base and open top must have a volume of 32,000 cm³. Find the dimensions that minimize the amount of material used.
 3. A 10-foot ladder leans against a wall. The base slides away at 1 ft/sec. How fast is the top sliding down when the base is 6 ft from the wall? ← (related rates — uses implicit differentiation)
 
+### Drill Set 9: Newton's Method
+
+1. Use Newton's method to find √5 by solving x² - 5 = 0. Start at x₀ = 2. Compute x₁, x₂, x₃. How many correct decimal places does x₃ have?
+2. Use Newton's method to find the root of f(x) = x³ - 2x - 5 near x = 2. Compute two iterations.
+3. Apply Newton's method for optimization: minimize g(x) = x⁴ - 4x² + 2 starting from x₀ = 3. Write the iteration formula (using g'/g'') and compute x₁ and x₂. Does it approach a local minimum?
+4. **Failure mode:** Try Newton's method on f(x) = x³ - x starting from x₀ = 1/√3. What happens? Why? ← (Hint: what is f'(1/√3)?)
+
+### Drill Set 10: Inverse Function Derivatives
+
+1. Derive d/dx [arccos(x)] using the inverse function method. ← (Start from x = cos(y), differentiate implicitly)
+2. Derive d/dx [arcsin(x)] from scratch using the inverse function method. Verify it matches the table.
+3. If f(x) = x³ + x (which is strictly increasing, hence invertible), find (f⁻¹)'(2). ← (Hint: f(1) = 2, so f⁻¹(2) = 1. Use the formula.)
+4. **Change of variables practice:** Let X ~ Uniform(0, 1) and Y = -ln(X). Find the density of Y using the change-of-variables formula with the inverse function derivative. What named distribution is this?
+
+### Drill Set 11: Polar Coordinates
+
+1. Convert the point (x, y) = (-1, √3) to polar coordinates (r, θ).
+2. Convert r = 2cos(θ) to Cartesian form. What shape is this? ← (Hint: multiply both sides by r)
+3. Find the area enclosed by one petal of r = cos(2θ). ← (One petal goes from θ = -π/4 to θ = π/4)
+4. **The Gaussian integral:** Verify the key step by computing ∫₀^∞ r·e^(-r²) dr using u-substitution with u = r². Confirm you get 1/2.
+
 ---
 
 ## ✅ Self-Assessment: Am I Ready for Lesson 26?
@@ -1049,6 +1362,13 @@ Before moving on, you should be able to:
 - [ ] Explain why integration gives area under a curve
 - [ ] Articulate why the chain rule is the mathematical foundation of backpropagation
 - [ ] Explain why "zooming in" makes gradient descent work
+- [ ] Apply Newton's method to find roots and explain why it converges quadratically
+- [ ] Explain the difference between first-order (gradient descent) and second-order (Newton's) optimization
+- [ ] Derive inverse trig derivatives (arcsin, arctan) using implicit differentiation
+- [ ] Apply the 1D change-of-variables formula for probability densities
+- [ ] Convert between Cartesian and polar coordinates
+- [ ] Explain why the Jacobian factor r appears in polar double integrals
+- [ ] Reproduce the Gaussian integral proof using polar coordinates
 
 ---
 
@@ -1156,6 +1476,30 @@ Answer each in 2–3 sentences:
 
 ---
 
+### Question 11: Newton's Method
+
+**(a)** Use Newton's method to approximate a root of f(x) = eˣ - 3 starting from x₀ = 1. Compute x₁ and x₂.
+
+**(b)** Write the Newton's method iteration for *minimizing* g(x) = x² + 1/x for x > 0. (That is, apply Newton's method to g'(x) = 0.) Simplify the formula.
+
+---
+
+### Question 12: Inverse Function Derivatives
+
+**(a)** Derive d/dx [arccos(x)] from scratch using the inverse function method (start from x = cos(y), differentiate implicitly, convert back to x).
+
+**(b)** Let X ~ Uniform(0, 1) and Y = X³. Use the change-of-variables formula to find the probability density function of Y.
+
+---
+
+### Question 13: Polar Coordinates and the Gaussian Integral
+
+**(a)** Convert the Cartesian equation x² + y² - 4x = 0 to polar form and identify the curve.
+
+**(b)** Reproduce the Gaussian integral proof: show that $\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$ by squaring the integral, converting to polar coordinates, and evaluating. Show all steps.
+
+---
+
 ### Quiz Answer Key
 
 <details>
@@ -1246,6 +1590,59 @@ Since x = 2tan(θ), we have sin(θ) = x/√(x²+4):
 (b) With ReLU, the chain rule product across 50 layers is 1^50 = 1 (for active neurons) — the gradient passes through unchanged. With sigmoid, the product is at most (0.25)^50 ≈ 10^(-30) — effectively zero. Sigmoid's fractional derivatives multiply to nothing; ReLU's derivative of 1 preserves the signal.
 
 (c) It's a geometric series with ratio γ, so it converges to at most r_max/(1-γ). If γ = 1, the series becomes r₁ + r₂ + r₃ + ..., which diverges if rewards are consistently positive — the agent would value the infinite future equally with the present, making optimization impossible.
+
+**Q11:**
+(a) f(x) = eˣ - 3, f'(x) = eˣ.
+
+x₁ = 1 - (e¹ - 3)/e¹ = 1 - (2.718 - 3)/2.718 = 1 - (-0.282)/2.718 = 1 + 0.1037 = **1.1037**
+
+x₂ = 1.1037 - (e^1.1037 - 3)/e^1.1037 = 1.1037 - (3.0147 - 3)/3.0147 = 1.1037 - 0.00488 = **1.0989**
+
+(Exact answer is ln(3) ≈ 1.0986 — Newton's method is already accurate to 4 decimal places after 2 steps.)
+
+(b) g(x) = x² + 1/x, so g'(x) = 2x - 1/x², g''(x) = 2 + 2/x³.
+
+Newton iteration: x_{n+1} = x_n - g'(x_n)/g''(x_n) = x_n - (2x_n - 1/x_n²) / (2 + 2/x_n³)
+
+Multiply numerator and denominator by x_n³:
+
+**x_{n+1} = x_n - (2x_n⁴ - x_n) / (2x_n³ + 2) = x_n - x_n(2x_n³ - 1) / (2(x_n³ + 1))**
+
+**Q12:**
+(a) Let y = arccos(x), so x = cos(y). Differentiate: 1 = -sin(y) · dy/dx, so dy/dx = -1/sin(y).
+
+Since cos(y) = x, we have sin(y) = √(1 - cos²y) = √(1 - x²) (positive because y ∈ [0, π]).
+
+**d/dx [arccos(x)] = -1/√(1 - x²)**
+
+Note: this is just the negative of d/dx [arcsin(x)], which makes sense because arcsin(x) + arccos(x) = π/2.
+
+(b) Y = X³, so g(x) = x³ and g⁻¹(y) = y^(1/3). The derivative: d/dy [y^(1/3)] = (1/3)y^(-2/3).
+
+p_Y(y) = p_X(g⁻¹(y)) · |d/dy g⁻¹(y)| = 1 · (1/3)y^(-2/3) = **(1/3)y^(-2/3) for 0 < y < 1**
+
+Verification: ∫₀¹ (1/3)y^(-2/3) dy = (1/3) · [3y^(1/3)]₀¹ = 1 ✓
+
+**Q13:**
+(a) x² + y² - 4x = 0. Since x² + y² = r² and x = r cos(θ):
+
+r² - 4r cos(θ) = 0 → r(r - 4cos(θ)) = 0
+
+So **r = 4cos(θ)** (discarding r = 0). This is a circle of radius 2 centered at (2, 0).
+
+(b) Let I = ∫_{-∞}^{∞} e^{-x²} dx. Then:
+
+I² = ∫∫ e^{-(x²+y²)} dx dy
+
+Convert to polar: x² + y² = r², dx dy = r dr dθ:
+
+I² = ∫₀^{2π} ∫₀^∞ e^{-r²} · r dr dθ
+
+The θ integral: ∫₀^{2π} dθ = 2π.
+
+The r integral: let u = r², du = 2r dr → ∫₀^∞ re^{-r²} dr = (1/2)∫₀^∞ e^{-u} du = (1/2)[-e^{-u}]₀^∞ = 1/2.
+
+I² = 2π · (1/2) = π, so **I = √π**.
 
 </details>
 
