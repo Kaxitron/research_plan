@@ -52,28 +52,21 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
-## Phase 2: Calculus, Multivariable Calculus & Differential Equations (157–189h)
+## Phase 2: Calculus, Multivariable Calculus & Differential Equations (175–210h)
 
-### Single-Variable & Matrix Calculus (13–19)
+### Block A: Pure Calculus & Multivariable Foundations (13–21C)
 
 | # | Lesson | Status |
 |---|--------|--------|
 | 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | ✅ Complete |
-| 14 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-14-matrix-calculus.md) | ⬜ Not Started |
 | 15 | [Partial Derivatives and Gradients](phase2-calculus/lesson-15-gradients.md) | ⬜ Not Started |
-| 16 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-16-chain-rule.md) | ⬜ Not Started |
-| 17 | [Optimization and Gradient Descent](phase2-calculus/lesson-17-optimization.md) | ⬜ Not Started |
-| 18 | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-18-constrained-optimization.md) | ⬜ Not Started |
-| 19 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-19-loss-landscapes.md) | ⬜ Not Started |
-
-### Multivariable Calculus (20–21)
-
-| # | Lesson | Status |
-|---|--------|--------|
+| 15B | [The Multivariable Chain Rule and Jacobian Matrices](phase2-calculus/lesson-15b-multivar-chain-rule.md) | ⬜ Not Started |
 | 20 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-20-multiple-integration.md) | ⬜ Not Started |
 | 21 | [Taylor Expansions and the Implicit Function Theorem](phase2-calculus/lesson-21-taylor-expansions.md) | ⬜ Not Started |
+| 21B | [Vector Calculus — Fields, Divergence, Curl, and the Laplacian](phase2-calculus/lesson-21b-vector-calculus.md) | ⬜ Not Started |
+| 21C | [The Fundamental Theorems of Vector Calculus](phase2-calculus/lesson-21c-fundamental-theorems.md) | ⬜ Not Started |
 
-### Differential Equations & Dynamical Systems (22–27)
+### Block B: Differential Equations & Dynamical Systems (22–27)
 
 | # | Lesson | Status |
 |---|--------|--------|
@@ -83,6 +76,16 @@ A structured self-study curriculum building from mathematical foundations throug
 | 25 | [Stability, Lyapunov Functions, and Phase Transitions](phase2-calculus/lesson-25-stability.md) | ⬜ Not Started |
 | 26 | [Neural ODEs and Stochastic Dynamics](phase2-calculus/lesson-26-neural-odes.md) | ⬜ Not Started |
 | 27 | [PDEs — Diffusion, Heat Equation, and Generative Models](phase2-calculus/lesson-27-pdes.md) | ⬜ Not Started |
+
+### Block C: ML-Applied Calculus (14, 16–19)
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 14 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-14-matrix-calculus.md) | ⬜ Not Started |
+| 16 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-16-chain-rule.md) | ⬜ Not Started |
+| 17 | [Optimization and Gradient Descent](phase2-calculus/lesson-17-optimization.md) | ⬜ Not Started |
+| 18 | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-18-constrained-optimization.md) | ⬜ Not Started |
+| 19 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-19-loss-landscapes.md) | ⬜ Not Started |
 
 ---
 
