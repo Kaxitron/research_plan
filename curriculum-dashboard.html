@@ -1489,6 +1489,55 @@ const LESSONS = [
     mvl: [{ type: 'Do', text: 'Find a contested statistical claim online. Analyze the methodology. Write up your assessment.' }],
     projects: [],
   },
+  // ─── Phase 3 Enrichment: ML Theory Foundations ───
+  {
+    id: 68, phase: 'p3', title: 'Concentration Inequalities',
+    status: 'not-started', hours: '4–6h', label: '68',
+    prereqs: [29], crossPhaseLinks: [],
+    conceptChecks: ['Markov inequality from expectation', 'Chebyshev via variance', 'Hoeffding for bounded sums', 'Chernoff via MGFs', 'Sub-Gaussian random variables'],
+    failureModes: ['Memorizing inequalities without seeing the tightening ladder: Markov → Chebyshev → Hoeffding → Chernoff, each using more information'],
+    mvl: [
+      { type: 'Read', text: 'Vershynin "High-Dimensional Probability" Ch.2 (free online)' },
+      { type: 'Watch', text: 'MIT 18.657 — "Concentration Inequalities" lecture' },
+    ],
+    projects: [],
+  },
+  {
+    id: 69, phase: 'p3', title: 'Markov Chains and Mixing',
+    status: 'not-started', hours: '4–6h', label: '69',
+    prereqs: [28], crossPhaseLinks: [4, 8],
+    conceptChecks: ['Transition matrix as linear map', 'Stationary distribution as eigenvector (λ=1)', 'Ergodicity and mixing time', 'Detailed balance', 'PageRank as Markov chain'],
+    failureModes: ['Not connecting stationary distribution to the eigenvalue-1 eigenvector from Phase 1'],
+    mvl: [
+      { type: 'Read', text: 'Levin, Peres & Wilmer "Markov Chains and Mixing Times" Ch.1–4 (free online)' },
+      { type: 'Watch', text: 'Steve Brunton — Markov chains videos' },
+    ],
+    projects: [],
+  },
+  {
+    id: 70, phase: 'p3', title: 'Fisher Information and Exponential Families',
+    status: 'not-started', hours: '4–5h', label: '70',
+    prereqs: [30], crossPhaseLinks: [59],
+    conceptChecks: ['Fisher information as curvature of log-likelihood', 'Cramér-Rao bound: Var(θ̂) ≥ 1/I(θ)', 'Natural gradient = gradient / Fisher matrix', 'Exponential families: natural parameters, sufficient statistics', 'Fisher metric as Riemannian metric on model space'],
+    failureModes: ['Not seeing Fisher information as the bridge between statistics and geometry — it IS the metric on the manifold of distributions'],
+    mvl: [
+      { type: 'Read', text: 'MML textbook — Chapter 8.3 (Exponential Families)' },
+      { type: 'Watch', text: 'Mutual Information (YouTube) — Fisher Information videos' },
+    ],
+    projects: [],
+  },
+  {
+    id: 71, phase: 'p3', title: 'PAC Learning and Generalization Bounds',
+    status: 'not-started', hours: '5–7h', label: '71',
+    prereqs: [68, 31], crossPhaseLinks: [53],
+    conceptChecks: ['PAC framework: probably approximately correct', 'VC dimension measures hypothesis complexity', 'Rademacher complexity: can the model fit random labels?', 'PAC-Bayes: priors tighten bounds', 'Sample complexity: how much data do you NEED?'],
+    failureModes: ['Thinking generalization bounds are only theoretical — PAC-Bayes bounds are tight enough to be practical and directly inform alignment verification'],
+    mvl: [
+      { type: 'Read', text: 'Shalev-Shwartz & Ben-David "Understanding Machine Learning" Ch.2–6 (free online)' },
+      { type: 'Watch', text: 'Mathematicalmonk — Machine Learning (PAC learning lectures)' },
+    ],
+    projects: [],
+  },
   // ─── Phase 4: Machine Learning & Interpretability ───
   {
     id: 40, phase: 'p4', title: 'How a Single Neuron Works',
@@ -1683,6 +1732,18 @@ const LESSONS = [
     conceptChecks: ['Smooth manifolds', 'Tangent spaces and tangent bundles', 'Riemannian metrics', 'Natural gradient', 'Manifold hypothesis for data'],
     failureModes: ['Not connecting Riemannian gradient to the natural gradient in neural network optimization'],
     mvl: [{ type: 'Read', text: 'Loring Tu "Introduction to Manifolds" Ch.1–5' }],
+    projects: [],
+  },
+  {
+    id: 72, phase: 'p5', title: 'Differential Forms and Stokes\' Theorem',
+    status: 'not-started', hours: '5–7h', label: '72',
+    prereqs: [59], crossPhaseLinks: [20, 7],
+    conceptChecks: ['k-forms as multilinear alternating maps', 'Wedge product: dx ∧ dy measures oriented area', 'Exterior derivative d unifies grad/curl/div', 'Generalized Stokes\' theorem: ∫_∂M ω = ∫_M dω', 'Pullback of forms under smooth maps'],
+    failureModes: ['Not seeing that differential forms unify ALL of vector calculus — Green\'s, Stokes\', and divergence theorems are all the same theorem in different dimensions'],
+    mvl: [
+      { type: 'Read', text: 'Loring Tu "Introduction to Manifolds" Ch.17–23' },
+      { type: 'Watch', text: 'Eigenchris — Tensor Calculus / Differential Forms playlist' },
+    ],
     projects: [],
   },
   {
@@ -1888,6 +1949,12 @@ const LAYOUT = {
     38: { x: 700, y: 975 },
     39: { x: 700, y: 1060 },
 
+    // ── Phase 3 Enrichment: ML Theory ──
+    68: { x: 810, y: 165 },
+    69: { x: 810, y: 80 },
+    70: { x: 810, y: 250 },
+    71: { x: 810, y: 375 },
+
     // ── Phase 4: ML & Interpretability ──
     40: { x: 880, y: 80 },
     41: { x: 880, y: 165 },
@@ -1911,6 +1978,7 @@ const LAYOUT = {
     57: { x: 1080, y: 640 },
     58: { x: 1080, y: 725 },
     59: { x: 1080, y: 810 },
+    72: { x: 1190, y: 810 },
     60: { x: 1080, y: 895 },
     61: { x: 1080, y: 1005 },
     62: { x: 1080, y: 1090 },
