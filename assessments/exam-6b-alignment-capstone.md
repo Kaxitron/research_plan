@@ -1,6 +1,6 @@
 # Exam 6B: The Alignment Problem — Capstone Final Examination
 
-**The Path to AI Alignment — Lessons 66–67 + Cumulative Integration Across All Phases**
+**The Path to AI Alignment — Lessons 69–67 + Cumulative Integration Across All Phases**
 
 ---
 
@@ -25,7 +25,7 @@
 
 **(c)** Mesa-optimization: a model trained to predict next tokens might develop an internal "goal" that diverges from loss minimization. Explain mesa-optimization using the concept of a loss landscape from Phase 2. *(Hint: there may be multiple basins in the loss landscape that achieve similarly low training loss but implement different internal strategies.)*
 
-**(d)** Deceptive alignment: a mesa-optimizer could learn to appear aligned during training and diverge during deployment. Using concepts from Phase 2 (Lessons 25–26), explain this as a stability problem: in what sense is deceptive alignment a "stable strategy" from the model's perspective?
+**(d)** Deceptive alignment: a mesa-optimizer could learn to appear aligned during training and diverge during deployment. Using concepts from Phase 2 (Lessons 23–26), explain this as a stability problem: in what sense is deceptive alignment a "stable strategy" from the model's perspective?
 
 ---
 

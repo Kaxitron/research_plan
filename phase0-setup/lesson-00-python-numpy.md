@@ -55,7 +55,7 @@
 ## 📺 Watch
 
 1. **Karpathy — "The spelled-out intro to neural networks and backpropagation"**
-   - This is the micrograd lecture. You'll revisit it in Lesson 16, but the first 30 minutes are a good Python warm-up.
+   - This is the micrograd lecture. You'll revisit it in Lesson 27, but the first 30 minutes are a good Python warm-up.
 2. **NumPy in 10 Minutes (various YouTube channels)**
    - Search "NumPy tutorial 10 minutes" — any top result will do
 3. **Corey Schafer — "Matplotlib Tutorial"**

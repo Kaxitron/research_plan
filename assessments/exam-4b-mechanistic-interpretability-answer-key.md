@@ -1,6 +1,6 @@
 # Exam 4B: Mechanistic Interpretability — Answer Key
 
-**The Path to AI Alignment — Lessons 47–50 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 50–50 Comprehensive Assessment**
 
 ---
 
@@ -94,7 +94,7 @@
 
 **(c)** Before grokking: the model likely has distributed, unstructured representations (memorization uses the network's capacity inefficiently). The LLC would be relatively high. After grokking: look for emergence of **structured circuits** — specific attention patterns, clean feature directions, identifiable algorithms. The LLC should be lower. Specifically, a researcher would compare: feature sparsity (sparser = more structured), circuit complexity (cleaner circuits = simpler strategy), and whether specific interpretable features appeared at the transition.
 
-**(d)** A sudden capability gain is a bifurcation because the **qualitative structure of the loss landscape changes**. Before the transition, the training dynamics are in one basin (one type of solution). At the critical point, a new basin appears (or becomes accessible) that represents a fundamentally different strategy. The system transitions rapidly to the new basin. This is analogous to the pitchfork bifurcation from Lesson 25: a single fixed point (memorization) loses stability and two new solutions emerge (generalizing strategies), and the system "chooses" one.
+**(d)** A sudden capability gain is a bifurcation because the **qualitative structure of the loss landscape changes**. Before the transition, the training dynamics are in one basin (one type of solution). At the critical point, a new basin appears (or becomes accessible) that represents a fundamentally different strategy. The system transitions rapidly to the new basin. This is analogous to the pitchfork bifurcation from Lesson 23: a single fixed point (memorization) loses stability and two new solutions emerge (generalizing strategies), and the system "chooses" one.
 
 ---
 

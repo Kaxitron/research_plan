@@ -1,6 +1,6 @@
 # Exam 5B: Topology and Formal Logic — Answer Key
 
-**The Path to AI Alignment — Lessons 57–62 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 60–62 Comprehensive Assessment**
 
 ---
 

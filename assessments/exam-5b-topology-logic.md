@@ -1,6 +1,6 @@
 # Exam 5B: Topology and Formal Logic
 
-**The Path to AI Alignment — Lessons 57–62 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 60–62 Comprehensive Assessment**
 
 ---
 
@@ -57,7 +57,7 @@
 
 **(b)** What is the tangent space T_pM at a point p on a manifold M? Why is it useful for optimization?
 
-**(c)** Weight space modulo the permutation symmetry S_n (i.e., identifying equivalent weight configurations) is NOT a manifold everywhere — it has singular points. Where do these singularities occur? *(Hint: think about the orbit-stabilizer theorem from Lesson 56.)*
+**(c)** Weight space modulo the permutation symmetry S_n (i.e., identifying equivalent weight configurations) is NOT a manifold everywhere — it has singular points. Where do these singularities occur? *(Hint: think about the orbit-stabilizer theorem from Lesson 59.)*
 
 **(d)** Riemannian gradient descent generalizes gradient descent to manifolds. In one sentence, explain the key idea: how is the gradient adapted to a curved space?
 
@@ -128,7 +128,7 @@ permutation symmetry → ___ → ___ → ___ → RLCT
 
 Trace the complete chain from permutation symmetry to Löb's theorem:
 
-**(a)** Permutation symmetry (Lesson 56) → singularity in weight space → blow-up resolution (Lesson 60) → RLCT computation → free energy formula.
+**(a)** Permutation symmetry (Lesson 59) → singularity in weight space → blow-up resolution (Lesson 63) → RLCT computation → free energy formula.
 For each arrow, write one sentence explaining the mathematical mechanism.
 
 **(b)** In 3–4 sentences, explain why BOTH the algebraic geometry thread (singularities, RLCT) AND the logic thread (Gödel, Löb) are necessary for a complete mathematical approach to alignment. What does each contribute that the other cannot?

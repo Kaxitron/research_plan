@@ -1,10 +1,10 @@
 # Lesson 13: Calculus Fundamentals — Rebuilding Your Intuition
 
-[← Linear Algebra Capstone](../phase1-linear-algebra/lesson-12-capstone.md) | [Back to TOC](../README.md) | [Next: Matrix Calculus →](lesson-14-matrix-calculus.md)
+[← LA Capstone](../phase1-linear-algebra/lesson-12-capstone.md) | [Back to TOC](../README.md) | [Next: Gradients →](lesson-14-gradients.md)
 
 ---
 
-> **Why this lesson exists:** You haven't touched calculus in 6 years. Lessons 14–27 assume fluency with derivatives, the chain rule, integration techniques, and series. This lesson rebuilds that fluency from geometric intuition — exactly the way we approached linear algebra — so that when you hit partial derivatives and gradients, they feel like natural extensions rather than cold formulas.
+> **Why this lesson exists:** You haven't touched calculus in 6 years. Lessons 26–27 assume fluency with derivatives, the chain rule, integration techniques, and series. This lesson rebuilds that fluency from geometric intuition — exactly the way we approached linear algebra — so that when you hit partial derivatives and gradients, they feel like natural extensions rather than cold formulas.
 
 > **Estimated time:** 12–20 hours (take your time — this is the foundation everything else rests on)
 
@@ -171,7 +171,7 @@ $$\frac{d}{dx} \ln(x) = \frac{1}{x}$$
 **Key identity that appears everywhere:**
 $$\frac{d}{dx} \ln(f(x)) = \frac{f'(x)}{f(x)}$$
 
-This is called the **logarithmic derivative**. It measures the *relative* rate of change — "what fraction of itself is f changing by?" This shows up constantly in maximum likelihood estimation (Lesson 21).
+This is called the **logarithmic derivative**. It measures the *relative* rate of change — "what fraction of itself is f changing by?" This shows up constantly in maximum likelihood estimation (Lesson 17).
 
 ### sin(x) and cos(x) — The Oscillators
 
@@ -402,7 +402,7 @@ At x = -1: f''(-1) = -6 < 0 → **local maximum** at (-1, 2)
 
 ### 🔗 ML & Alignment: The Second Derivative Becomes the Hessian
 
-In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of all second partial derivatives — the **Hessian** — tells you curvature in every direction. You'll meet this properly in Lesson 14, but the intuition is the same: the Hessian tells you if you're at a bowl (minimum), a hill (maximum), or a saddle point. In neural networks, saddle points are far more common than local minima — this is a key insight you'll explore in Lesson 19.
+In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of all second partial derivatives — the **Hessian** — tells you curvature in every direction. You'll meet this properly in Lesson 26, but the intuition is the same: the Hessian tells you if you're at a bowl (minimum), a hill (maximum), or a saddle point. In neural networks, saddle points are far more common than local minima — this is a key insight you'll explore in Lesson 30.
 
 ---
 
@@ -449,7 +449,7 @@ Factor: (3y² - 6x)(dy/dx) = 6y - 3x²
 
 Implicit differentiation is the conceptual ancestor of **automatic differentiation.** In a computation graph, you don't have an explicit formula for the loss as a simple function of one weight — it's defined *implicitly* through layers of computation. The chain rule applied through the graph (backprop) is doing the same essential thing: finding derivatives of quantities that are defined through relationships rather than explicit formulas.
 
-It also appears directly in **constrained optimization** (Lesson 18): when you optimize subject to a constraint g(x, y) = 0, implicit differentiation tells you how y must change when x changes to stay on the constraint surface.
+It also appears directly in **constrained optimization** (Lesson 29): when you optimize subject to a constraint g(x, y) = 0, implicit differentiation tells you how y must change when x changes to stay on the constraint surface.
 
 ---
 
@@ -820,7 +820,7 @@ $$\ln(1 + x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^n}{n} = x - \frac{x^2}{2} 
 
 **Geometric series** show up directly in **reinforcement learning:** the discounted return G = r₁ + γr₂ + γ²r₃ + ... is a geometric-series-weighted sum of rewards. The discount factor γ < 1 ensures this converges, just like |r| < 1 ensures the geometric series converges.
 
-**Taylor series** are the mathematical foundation of gradient descent. The first-order Taylor approximation f(x + δ) ≈ f(x) + f'(x)δ is exactly the "locally linear" model that gradient descent trusts for one step. The second-order approximation involves the Hessian and is the basis for Newton's method. You'll explore this in depth in Lesson 21.
+**Taylor series** are the mathematical foundation of gradient descent. The first-order Taylor approximation f(x + δ) ≈ f(x) + f'(x)δ is exactly the "locally linear" model that gradient descent trusts for one step. The second-order approximation involves the Hessian and is the basis for Newton's method. You'll explore this in depth in Lesson 17.
 
 **Power series** concepts also appear in **neural tangent kernel** theory, where the training dynamics of infinitely wide networks can be expressed as series expansions, and in **Singular Learning Theory,** where the "real log canonical threshold" involves analyzing singularities of loss functions — a topic you'll encounter toward the end of this curriculum.
 
@@ -896,7 +896,7 @@ The quadratic piece often leads to a combination of ln (from the Bx part) and ar
 
 ### 🔗 ML Connection
 
-Partial fractions rarely appear directly in ML computations, but the underlying skill — decomposing a complex expression into simpler pieces that are individually tractable — is a recurring theme. In Bayesian inference, breaking a complicated posterior into simpler components (mixture models, factored distributions) follows the same logic. The technique also appears in solving differential equations via Laplace transforms (Lessons 22–27), where partial fractions convert a complicated transfer function into a sum of terms you can invert individually.
+Partial fractions rarely appear directly in ML computations, but the underlying skill — decomposing a complex expression into simpler pieces that are individually tractable — is a recurring theme. In Bayesian inference, breaking a complicated posterior into simpler components (mixture models, factored distributions) follows the same logic. The technique also appears in solving differential equations via Laplace transforms (Lessons 20–27), where partial fractions convert a complicated transfer function into a sum of terms you can invert individually.
 
 ---
 
@@ -928,7 +928,7 @@ Partial fractions rarely appear directly in ML computations, but the underlying 
 
 - **MML Book, Chapter 5.1–5.3** — Differentiation of univariate functions, partial differentiation basics
   - https://mml-book.github.io/
-  - Focus on: derivative rules, chain rule, and Taylor series (5.1–5.3 before moving to 5.4+ in Lesson 14)
+  - Focus on: derivative rules, chain rule, and Taylor series (5.1–5.3 before moving to 5.4+ in Lesson 26)
 
 - **Paul's Online Math Notes — Calculus I & II Review**
   - https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx
@@ -1028,7 +1028,7 @@ For each function, find all critical points and classify them (min/max/inflectio
 
 ---
 
-## ✅ Self-Assessment: Am I Ready for Lesson 14?
+## ✅ Self-Assessment: Am I Ready for Lesson 26?
 
 Before moving on, you should be able to:
 
@@ -1264,7 +1264,7 @@ This lesson gives you the single-variable foundations. Here's how each subsequen
 | **18: Constrained Opt.** | What if you need the minimum *subject to a constraint*? Lagrange multipliers |
 | **19: Loss Landscapes** | The geometry of high-dimensional critical points — why saddle points dominate |
 
-Every concept in Lessons 14–19 is a multivariable generalization of something in this lesson. If this lesson is solid, the rest of Phase 2 will feel like natural extensions rather than new territory.
+Every concept in Lessons 26–19 is a multivariable generalization of something in this lesson. If this lesson is solid, the rest of Phase 2 will feel like natural extensions rather than new territory.
 
 
 

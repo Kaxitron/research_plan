@@ -248,7 +248,7 @@ You are training a small neural network with loss L(W).
 | Understanding local shape | ___ | ___ |
 | Handling constraints | ___ | ___ |
 
-**(e)** The Jacobian determinant from Lesson 20 and the Hessian determinant both appear in this phase. State one specific role each plays in ML.
+**(e)** The Jacobian determinant from Lesson 16 and the Hessian determinant both appear in this phase. State one specific role each plays in ML.
 
 ---
 

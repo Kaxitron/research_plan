@@ -1,6 +1,6 @@
 # Exam 3A: Probability & Frequentist Methods — The Workhorse Toolkit
 
-**The Path to AI Alignment — Lessons 28–34 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 31–34 Comprehensive Assessment**
 
 ---
 
@@ -81,7 +81,7 @@ A researcher claims their new model beats the baseline (accuracy 80%) on a bench
 
 ## Question 6 (10 pts) — Experimental Design and Fallacies
 
-**(a)** Name and explain three features that make a study reliable (from Lesson 33).
+**(a)** Name and explain three features that make a study reliable (from Lesson 36).
 
 **(b)** A paper reports: "Among people who exercise, cancer rates are lower. Therefore exercise prevents cancer." Identify the fallacy and explain what confounders might be at play.
 

@@ -294,6 +294,6 @@ Analogy: a **heavy ball rolling downhill**. In a ravine, the ball averages out s
 | Understanding local shape | **Taylor expansion** (2nd order) | **Quadratic forms** (wᵀHw from Phase 1) |
 | Handling constraints | **Lagrange multipliers** | **Projections** (constraint = projecting onto feasible set) |
 
-**(e)** **Jacobian determinant** (Lesson 20): the correction factor when transforming probability densities. Appears in normalizing flows, Gaussian normalization, and change of variables. It's the local volume-scaling factor.
+**(e)** **Jacobian determinant** (Lesson 16): the correction factor when transforming probability densities. Appears in normalizing flows, Gaussian normalization, and change of variables. It's the local volume-scaling factor.
 
-**Hessian determinant** (Lessons 19, 21): its sign (via eigenvalue products) helps classify critical points. det(H) > 0 means eigenvalues share a sign; det(H) < 0 means saddle point. Its magnitude relates to the "tightness" of the local basin.
+**Hessian determinant** (Lessons 30, 21): its sign (via eigenvalue products) helps classify critical points. det(H) > 0 means eigenvalues share a sign; det(H) < 0 means saddle point. Its magnitude relates to the "tightness" of the local basin.

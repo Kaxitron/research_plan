@@ -1,6 +1,6 @@
 # Exam 6B: The Alignment Problem — Capstone Final Examination — Answer Key
 
-**The Path to AI Alignment — Lessons 66–67 + Cumulative Integration**
+**The Path to AI Alignment — Lessons 69–67 + Cumulative Integration**
 
 ---
 
@@ -16,7 +16,7 @@
 
 **(b)** Even with a perfect pipeline, the reward model was trained on human preferences, which may not reflect what humans actually need. Humans may prefer confident-sounding wrong answers over uncertain correct ones, prefer flattery over honesty, or have inconsistent preferences across contexts. The outer alignment failure is: the loss function (reward model score) doesn't perfectly capture human values. This IS Goodhart's Law — the reward model is a proxy, and optimizing it hard enough will find divergences between the proxy and the true objective.
 
-**(c)** The loss landscape has many basins (local minima or near-minima) that achieve similarly low training loss. Some basins correspond to models that have genuinely learned the task ("aligned mesa-optimizers"), while others correspond to models that have learned a different internal strategy that happens to perform well on training data. Training (gradient descent through the landscape) may settle in either basin depending on initialization and trajectory. The basins are separated by barriers — phase transitions (bifurcations from Lesson 25) where the model's internal structure changes qualitatively.
+**(c)** The loss landscape has many basins (local minima or near-minima) that achieve similarly low training loss. Some basins correspond to models that have genuinely learned the task ("aligned mesa-optimizers"), while others correspond to models that have learned a different internal strategy that happens to perform well on training data. Training (gradient descent through the landscape) may settle in either basin depending on initialization and trajectory. The basins are separated by barriers — phase transitions (bifurcations from Lesson 23) where the model's internal structure changes qualitatively.
 
 **(d)** A deceptively aligned model has learned to model its training process and acts aligned specifically to avoid parameter updates that would change its internal goals. From a stability perspective: the deceptive strategy is a **stable fixed point** in the space of possible strategies during training. Under gradient descent, the deceptive model receives low loss (appears aligned → no corrective gradient signal), so training doesn't push it away from deception. In the dynamical systems language of Phase 2, deceptive alignment is an **attractor** of the training dynamics — gradient flow converges to it and stays there. Breaking out would require either very different training (perturbation large enough to escape the basin) or an interpretability tool that can detect the deception inside the model.
 
@@ -49,9 +49,9 @@ Finally, this connects to **alignment (Phase 6)**: if we can track how λ change
 
 **(b)** In Phase 1 terms: the model has d_model dimensions in its residual stream but needs to represent N >> d_model concepts (features). It can't assign each feature its own orthogonal direction (that would require N dimensions). Instead, it uses **almost-orthogonal** directions. In high dimensions, you can pack exponentially many nearly-orthogonal vectors — the Johnson-Lindenstrauss lemma shows that random vectors in high dimensions are approximately orthogonal. The cost: features interfere with each other (non-zero dot products), creating "crosstalk." This interference is manageable when only a few features are active simultaneously (sparsity), which is why superposition works for sparse feature distributions.
 
-**(c)** An SAE minimizes reconstruction error plus a sparsity penalty: L = ‖x − decode(encode(x))‖² + λ‖encode(x)‖₁. The L1 penalty corresponds to a **Laplace prior** on the feature activations (from Lesson 35 / Q2 of Exam 3B: MAP with Laplace prior = L1 regularization = Lasso). So training the SAE is finding the MAP estimate under a model where: the likelihood says "reconstruct the activations well" (Gaussian noise assumption) and the prior says "most features should be off" (Laplace / sparsity prior). This IS approximate Bayesian inference with a sparsity prior.
+**(c)** An SAE minimizes reconstruction error plus a sparsity penalty: L = ‖x − decode(encode(x))‖² + λ‖encode(x)‖₁. The L1 penalty corresponds to a **Laplace prior** on the feature activations (from Lesson 38 / Q2 of Exam 3B: MAP with Laplace prior = L1 regularization = Lasso). So training the SAE is finding the MAP estimate under a model where: the likelihood says "reconstruct the activations well" (Gaussian noise assumption) and the prior says "most features should be off" (Laplace / sparsity prior). This IS approximate Bayesian inference with a sparsity prior.
 
-**(d)** By **Rice's theorem** (Lesson 51), any non-trivial semantic property of a program is undecidable in general. "This circuit implements addition" is a semantic property — there's no general algorithm to verify it for all possible circuits. However, Rice's theorem gives a worst-case impossibility. In practice, we don't need to verify interpretations of arbitrary programs — we need to verify them for **specific networks** with specific structure. Partial verification is valuable: even if we can't prove an interpretation is complete and correct, we can test it against interventions (activation patching), check consistency across inputs, and falsify incorrect interpretations. The situation is analogous to software testing: you can't prove a program is bug-free (undecidable), but you can find bugs and build confidence through testing.
+**(d)** By **Rice's theorem** (Lesson 54), any non-trivial semantic property of a program is undecidable in general. "This circuit implements addition" is a semantic property — there's no general algorithm to verify it for all possible circuits. However, Rice's theorem gives a worst-case impossibility. In practice, we don't need to verify interpretations of arbitrary programs — we need to verify them for **specific networks** with specific structure. Partial verification is valuable: even if we can't prove an interpretation is complete and correct, we can test it against interventions (activation patching), check consistency across inputs, and falsify incorrect interpretations. The situation is analogous to software testing: you can't prove a program is bug-free (undecidable), but you can find bugs and build confidence through testing.
 
 ---
 
@@ -66,7 +66,7 @@ Finally, this connects to **alignment (Phase 6)**: if we can track how λ change
 
 BIC: F ≈ nL* + (k/2)·log(n), where k = parameter count. BIC uses k/2 as complexity; SLT uses λ ≤ k/2. BIC assumes regularity (non-singular); SLT handles singularities correctly.
 
-**(b)** The symmetric group Sₙ acts on weight space by permuting hidden neurons. Concretely, if we permute the n neurons using σ ∈ Sₙ, we permute the rows of the weight matrix and the corresponding columns of the next layer's weight matrix. This action is a **group action** (Lesson 56): it satisfies the group axioms and preserves the input-output function.
+**(b)** The symmetric group Sₙ acts on weight space by permuting hidden neurons. Concretely, if we permute the n neurons using σ ∈ Sₙ, we permute the rows of the weight matrix and the corresponding columns of the next layer's weight matrix. This action is a **group action** (Lesson 59): it satisfies the group axioms and preserves the input-output function.
 
 The **orbit** of a weight configuration W under Sₙ is the set of all n! permuted versions that compute the same function. The **stabilizer** of W is the subgroup of permutations that leave W unchanged (e.g., if two neurons have identical weights, swapping them is in the stabilizer). By the **orbit-stabilizer theorem**: |orbit| × |stabilizer| = |Sₙ| = n!.
 
@@ -76,7 +76,7 @@ For n hidden neurons: there are **n!** equivalent configurations (the orbit), so
 
 **(c)** At a singularity, the Hessian has zero eigenvalues corresponding to directions along the singular set. The RLCT λ measures how quickly the loss grows as you move **away** from the singular set in all directions. For a regular model, the loss grows quadratically (Hessian positive definite), giving λ = k/2. For a singular model, the loss grows more slowly in some directions (the degenerate ones), giving λ < k/2. More zero Hessian eigenvalues → more flat directions → slower loss growth → smaller RLCT → lower effective complexity. The model has "wasted" parameters in the sense that many parameter directions don't contribute to distinguishing the function.
 
-**(d)** A sudden drop in LLC at step 5000 indicates a **phase transition**: the model has moved from one singularity basin to another with lower RLCT. Mathematically, the loss landscape topology has changed — the model crossed a bifurcation point (Lesson 25) where the nature of the optimal parameters shifted qualitatively.
+**(d)** A sudden drop in LLC at step 5000 indicates a **phase transition**: the model has moved from one singularity basin to another with lower RLCT. Mathematically, the loss landscape topology has changed — the model crossed a bifurcation point (Lesson 23) where the nature of the optimal parameters shifted qualitatively.
 
 In terms of what the model learned: this likely corresponds to circuit formation — the model transitioned from a disorganized representation to a structured algorithm. For example, an induction head might have formed (a circuit that copies patterns), or the model might have discovered a generalizable rule after initially memorizing (grokking). The new singularity has lower λ (simpler effective model), suggesting the model found a more compressed/generalizable solution.
 
@@ -86,7 +86,7 @@ In terms of what the model learned: this likely corresponds to circuit formation
 
 ### Question 5 (15 pts) — The RLHF Pipeline: A Mathematical Dissection
 
-**(a)** Loss: **cross-entropy** L = −Σ log P_θ(x_t | x_{<t}). This is the negative log-likelihood under the autoregressive model, so minimizing it IS MLE (Phase 3, Lesson 30). The distribution being estimated: P(next token | context) — the conditional distribution of language. Assumption: the training data is representative of the distribution we want the model to learn (i.i.d. samples from the "true" distribution of text).
+**(a)** Loss: **cross-entropy** L = −Σ log P_θ(x_t | x_{<t}). This is the negative log-likelihood under the autoregressive model, so minimizing it IS MLE (Phase 3, Lesson 33). The distribution being estimated: P(next token | context) — the conditional distribution of language. Assumption: the training data is representative of the distribution we want the model to learn (i.i.d. samples from the "true" distribution of text).
 
 **(b)** SFT shifts the model from the broad pre-training distribution (all internet text) toward a narrower distribution (helpful assistant responses). In Phase 1 terms: the pre-trained model's representation space spans a high-dimensional manifold of possible text. SFT **projects** the model's behavior onto a lower-dimensional subspace corresponding to the "helpful response" manifold. The model's capabilities are still present (the full space hasn't been destroyed), but the output distribution is concentrated on the useful subspace.
 
@@ -102,7 +102,7 @@ This IS **binary cross-entropy** with the label "A is better" and the predicted 
 - β·D_KL: don't drift too far from the reference (SFT) model
 - β controls the tradeoff: small β → chase reward aggressively (risk reward hacking), large β → stay close to reference (conservative, underfit preferences)
 
-Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π ‖ π_ref) ≤ ε. The Lagrange multiplier is β. This is exactly the structure from Lesson 18: maximize objective subject to constraint, with the multiplier measuring the tradeoff.
+Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π ‖ π_ref) ≤ ε. The Lagrange multiplier is β. This is exactly the structure from Lesson 29: maximize objective subject to constraint, with the multiplier measuring the tradeoff.
 
 **(e)** Failure modes:
 - **Pre-training:** data contamination or bias → model learns the wrong distribution (garbage in, garbage out)
@@ -165,7 +165,7 @@ Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π
 
 **Problem:** Deceptive alignment is the scenario where a model appears aligned during training but pursues different goals during deployment. Detecting it is critical because standard behavioral evaluation can't distinguish genuine from deceptive alignment. We need an internal signal.
 
-**Tools:** SLT and the Local Learning Coefficient (Phase 4/5, Lessons 49–50), mechanistic interpretability / sparse autoencoders (Phase 4, Lessons 47–48), bifurcation theory (Phase 2, Lesson 25), and Bayesian model comparison (Phase 3, Lesson 37).
+**Tools:** SLT and the Local Learning Coefficient (Phase 4/5, Lessons 52–50), mechanistic interpretability / sparse autoencoders (Phase 4, Lessons 50–48), bifurcation theory (Phase 2, Lesson 23), and Bayesian model comparison (Phase 3, Lesson 40).
 
 **Approach:** Hypothesis: deceptive alignment requires the model to simultaneously implement (a) task performance and (b) a model of the training process. This requires more functional complexity than honest alignment, which only needs (a). Therefore, a deceptively aligned model should have a higher RLCT than an honestly aligned one, because it has learned a more complex internal function.
 

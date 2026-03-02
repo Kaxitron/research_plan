@@ -18,7 +18,7 @@
 ### Autograd — The Key Difference from NumPy
 
 - **`requires_grad=True`** tells PyTorch to track operations on this tensor. Every operation builds a computation graph behind the scenes.
-- **`loss.backward()`** walks backward through the computation graph and fills in `.grad` for every tensor that had `requires_grad=True`. This IS backpropagation (Lesson 15), happening automatically.
+- **`loss.backward()`** walks backward through the computation graph and fills in `.grad` for every tensor that had `requires_grad=True`. This IS backpropagation (Lesson 14), happening automatically.
 - **`torch.no_grad()`** context manager disables gradient tracking. Use during inference, evaluation, and when manually updating weights. Forgetting this is a common bug that causes memory leaks.
 - **`detach()`** creates a tensor that shares data but is disconnected from the computation graph. Essential for interpretability work where you want to examine intermediate values without affecting gradients.
 - **The mental model:** every PyTorch operation is a node in a directed graph. Forward pass builds the graph. `backward()` flows gradients through it. The graph is then destroyed (by default) — PyTorch uses dynamic graphs, rebuilt every forward pass.
@@ -68,7 +68,7 @@ for batch in dataloader:
    - Quick orientation to what PyTorch is
 2. **Andrej Karpathy — "Building micrograd"** (first 30 min)
    - https://www.youtube.com/watch?v=VMj-3S1tku0
-   - *You'll do this fully in Lesson 16, but the autograd concept preview is useful here.*
+   - *You'll do this fully in Lesson 27, but the autograd concept preview is useful here.*
 
 ## 📺 Watch — Secondary
 

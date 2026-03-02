@@ -1,6 +1,6 @@
 # Exam 2B: Differential Equations — The Language of Dynamics
 
-**The Path to AI Alignment — Lessons 22–27 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 20–27 Comprehensive Assessment**
 
 ---
 

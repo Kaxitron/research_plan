@@ -1,6 +1,6 @@
 # Exam 6A: Foundations of Rational Agency
 
-**The Path to AI Alignment — Lessons 63–65 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 66–65 Comprehensive Assessment**
 
 ---
 

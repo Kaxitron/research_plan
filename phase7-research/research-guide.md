@@ -1,6 +1,6 @@
 # Your First Research Project
 
-[← Open Problems](../phase6-alignment/lesson-67-open-problems.md) | [Back to TOC](../README.md)
+[← Open Problems](../phase6-alignment/lesson-70-open-problems.md) | [Back to TOC](../README.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Exam 5A: Computability and Abstract Algebra
 
-**The Path to AI Alignment — Lessons 51–56 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 54–56 Comprehensive Assessment**
 
 ---
 

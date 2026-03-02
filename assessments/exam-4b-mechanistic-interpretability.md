@@ -1,6 +1,6 @@
 # Exam 4B: Mechanistic Interpretability
 
-**The Path to AI Alignment — Lessons 47–50 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 50–50 Comprehensive Assessment**
 
 ---
 
@@ -93,7 +93,7 @@
 
 **(c)** Developmental interpretability studies how model internals change during training, especially at phase transitions. Describe what a researcher would look for when examining a model before and after a grokking event.
 
-**(d)** Connect phase transitions to bifurcation theory (Lesson 25): in what sense is a sudden capability gain a bifurcation in the training dynamics?
+**(d)** Connect phase transitions to bifurcation theory (Lesson 23): in what sense is a sudden capability gain a bifurcation in the training dynamics?
 
 ---
 

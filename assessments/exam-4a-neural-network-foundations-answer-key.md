@@ -1,6 +1,6 @@
 # Exam 4A: Neural Network Foundations — Answer Key
 
-**The Path to AI Alignment — Lessons 40–46 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 43–46 Comprehensive Assessment**
 
 ---
 
@@ -74,7 +74,7 @@
 
 **(d)** Objective: **max_π E[R(x,y)] − β·DKL(π ‖ π_ref)**. R(x,y): reward model score (maximize quality). DKL: divergence penalty (don't drift far from reference). β: tradeoff coefficient (the Lagrange multiplier controlling the alignment-capability balance).
 
-**(e)** **Lagrange multipliers / constrained optimization** (Lesson 18). The KL penalty implements a soft constraint: "maximize reward subject to staying near the reference model." β is the Lagrange multiplier.
+**(e)** **Lagrange multipliers / constrained optimization** (Lesson 29). The KL penalty implements a soft constraint: "maximize reward subject to staying near the reference model." β is the Lagrange multiplier.
 
 ### Question 8 (8 pts)
 **(a)** Embedding: **50,000 × 768** (vocab_size × d_model).

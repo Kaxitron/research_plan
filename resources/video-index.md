@@ -57,7 +57,7 @@
 
 **Playlist:** [youtube.com/playlist?list=PLZHQObOWTQDNPOjrT6KVlfJuKtYTftqH6](https://www.youtube.com/playlist?list=PLZHQObOWTQDNPOjrT6KVlfJuKtYTftqH6)
 
-*Essential for Lessons 22–27 on ODEs, dynamical systems, and neural ODEs.*
+*Essential for Lessons 20–27 on ODEs, dynamical systems, and neural ODEs.*
 
 | # | Title | Lesson | Link |
 |---|-------|--------|------|
@@ -245,7 +245,7 @@
 **Channel:** [youtube.com/@neelnanda2469](https://www.youtube.com/@neelnanda2469)
 **Getting Started Guide:** [neelnanda.io/getting-started](https://www.neelnanda.io/mechanistic-interpretability/getting-started)
 
-*Neel leads the mechanistic interpretability team at Google DeepMind. His YouTube features paper walkthroughs, live research streams, and TransformerLens tutorials. Essential viewing for Lessons 47–50.*
+*Neel leads the mechanistic interpretability team at Google DeepMind. His YouTube features paper walkthroughs, live research streams, and TransformerLens tutorials. Essential viewing for Lessons 50–50.*
 
 | Title / Type | Lesson | Link |
 |-------------|--------|------|

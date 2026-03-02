@@ -311,14 +311,14 @@
 - **Inflection points:** where concavity changes (f'' = 0 and changes sign)
 - Training a neural network = iteratively approximating where ∇L = 0
 
-**Sequences and Series (foundations for Taylor, Lesson 21):**
+**Sequences and Series (foundations for Taylor, Lesson 17):**
 - **Sequences:** convergence, divergence, bounded, monotone
 - **Series:** Σaₙ, partial sums, geometric series (a/(1−r) when |r|<1)
 - **Convergence tests:** ratio test, comparison test, integral test (conceptual)
 - **Power series:** Σ aₙxⁿ, radius of convergence
-- Taylor/Maclaurin series covered in depth in Lesson 21
+- Taylor/Maclaurin series covered in depth in Lesson 17
 
-### Lesson 14: Matrix Calculus
+### Lesson 26: Matrix Calculus
 - Partial derivatives: change when wiggling one input
 - **Gradient vector:** ∇f collects all partial derivatives, points "uphill"
 - **Jacobian matrix:** derivative of vector-to-vector function (a matrix)
@@ -332,21 +332,21 @@
   - Eigenvalues = curvature in each direction
   - **Condition number** κ = λ_max/λ_min (elongated landscapes → zigzag SGD)
 
-### Lesson 15: Partial Derivatives and Gradients
+### Lesson 14: Partial Derivatives and Gradients
 - Gradients perpendicular to contour lines
 - Gradient = direction of steepest ascent
 - **Directional derivatives:** rate of change in arbitrary direction
 - **Multivariable chain rule:** the key identity for backpropagation
 - Gradient field visualization (contour plots with arrows)
 
-### Lesson 16: The Chain Rule and Backpropagation
+### Lesson 27: The Chain Rule and Backpropagation
 - Single-variable and multivariable chain rule
 - **Computation graphs:** neural networks as directed graphs of simple operations
 - **Forward pass** (compute values) vs **backward pass** (compute gradients)
 - **Reverse-mode autodiff** vs forward-mode: reverse is O(1) per output, forward is O(1) per input — reverse wins for neural nets (many inputs, one loss)
 - Building a tiny backprop engine (micrograd-style)
 
-### Lesson 17: Optimization and Gradient Descent
+### Lesson 28: Optimization and Gradient Descent
 - **Gradient descent:** W ← W − η∇L(W)
 - **SGD:** mini-batch gradient estimates instead of full dataset
 - Learning rate: too big = overshoot, too small = slow
@@ -355,7 +355,7 @@
 - **Convexity vs non-convexity:** neural network loss is non-convex
 - Building micrograd (Karpathy)
 
-### Lesson 18: Constrained Optimization and Lagrange Multipliers
+### Lesson 29: Constrained Optimization and Lagrange Multipliers
 - **Lagrange multipliers:** at constrained optimum, ∇f ∥ ∇g (gradients parallel)
 - **The Lagrangian:** L(x, λ) = f(x) − λg(x)
 - λ measures the "cost" of the constraint
@@ -366,7 +366,7 @@
 - **Duality:** primal vs dual problems, weak and strong duality
 - SVMs derived via the dual problem
 
-### Lesson 19: Loss Landscapes and Local Minima
+### Lesson 30: Loss Landscapes and Local Minima
 - Loss as function of all parameters in high-dimensional space
 - Local minima, saddle points, plateaus
 - **In high dimensions:** saddle points dominate (not local minima)
@@ -378,7 +378,7 @@
 - Hessian analysis: positive eigenvalues = minimum, mixed = saddle
 - Condition number determines gradient descent zigzagging
 
-### Lesson 20: Multiple Integration and Change of Variables
+### Lesson 16: Multiple Integration and Change of Variables
 - **Double/triple integrals:** volume under surface, iterated integration
 - **Fubini's theorem:** can switch integration order
 - **Change of variables formula:** Jacobian determinant measures local stretching
@@ -390,7 +390,7 @@
 - Normalizing flows = chain of change-of-variables transformations
 - **Reparameterization trick** in VAEs
 
-### Lesson 21: Taylor Expansions and the Implicit Function Theorem
+### Lesson 17: Taylor Expansions and the Implicit Function Theorem
 - **Taylor expansion:** f(x) ≈ f(a) + f'(a)(x−a) + ½f''(a)(x−a)² + ...
 - Zeroth order (constant), first order (gradient descent), second order (Newton's method)
 - **Multivariate Taylor:** f(w) ≈ f(w₀) + ∇f(w₀)ᵀ(w−w₀) + ½(w−w₀)ᵀH(w−w₀)
@@ -400,7 +400,7 @@
 - **Big-O notation:** f(x) = O(g(x)) — asymptotic bounds for truncation errors
 - Scaling laws expressed in asymptotic notation
 
-### Lesson 22: Introduction to ODEs
+### Lesson 20: Introduction to ODEs
 - **ODE:** dx/dt = f(x,t) — rates of change as vector fields
 - **Vector field visualization:** arrows at every point showing direction/speed of flow
 - **Gradient descent as Euler's method on an ODE:** dW/dt = −∇L(W)
@@ -410,7 +410,7 @@
 - **Fixed points:** where f(x*) = 0 (critical points of loss for gradient flow)
 - **1D stability:** f'(x*) < 0 → stable, f'(x*) > 0 → unstable
 
-### Lesson 23: Linear Systems and Phase Portraits
+### Lesson 21: Linear Systems and Phase Portraits
 - **Linear systems:** dx/dt = Ax — behavior determined entirely by eigenvalues of A
 - **Solution:** x(t) = e^{At}x(0) = c₁e^{λ₁t}v₁ + c₂e^{λ₂t}v₂
 - **Matrix exponential**
@@ -427,7 +427,7 @@
 - **Hartman-Grobman theorem:** nonlinear ≈ linear near hyperbolic fixed points
 - **Basins of attraction, separatrices**
 
-### Lesson 24: Gradient Flow and Training Dynamics
+### Lesson 22: Gradient Flow and Training Dynamics
 - **Gradient flow equation:** dW/dt = −∇L(W)
 - **Loss as Lyapunov function:** dL/dt = −‖∇L‖² ≤ 0 (loss always decreases along flow)
 - **Euler stability criterion:** η < 2/λ_max (fundamental learning rate bound)
@@ -439,7 +439,7 @@
 - **SGD noise:** σ² ∝ η/B (learning rate / batch size)
 - Batch size and generalization tradeoff
 
-### Lesson 25: Stability, Lyapunov Functions, and Phase Transitions
+### Lesson 23: Stability, Lyapunov Functions, and Phase Transitions
 - **Lyapunov stability:** find V(x) > 0 with dV/dt ≤ 0 → fixed point is stable
 - **Lyapunov functions for AI safety:** dream of proving alignment stability
 - **Bifurcations:** qualitative behavior changes as parameter varies
@@ -453,7 +453,7 @@
 - **Attractors:** fixed points, limit cycles, strange attractors/chaos
 - Gradient systems can't have limit cycles (Strogatz), but SGD can oscillate
 
-### Lesson 26: Neural ODEs and Stochastic Dynamics
+### Lesson 24: Neural ODEs and Stochastic Dynamics
 - **ResNets as Euler steps:** x_{l+1} = x_l + f_θ(x_l) ≈ ODE
 - **Neural ODE framework:** dx/dt = f_θ(x), solved with adaptive ODE solvers
 - **Adjoint method:** O(1) memory backprop through ODE solver
@@ -467,7 +467,7 @@
 - **Edge of stability:** training at η ≈ 2/λ_max (inherently discrete effect)
 - Simulated annealing connection (LR schedule = cooling)
 
-### Lesson 27: Partial Differential Equations
+### Lesson 25: Partial Differential Equations
 - **Heat equation:** u_t = k∇²u (diffusion = Gaussian blurring)
 - Solution via convolution with Gaussian kernel
 - **Forward process of diffusion models** = progressive noise addition
@@ -482,9 +482,9 @@
 
 ---
 
-## Phase 3: Probability & Statistics (Lessons 28–39)
+## Phase 3: Probability & Statistics (Lessons 31–39)
 
-### Lesson 28: Probability Distributions and Bayes' Theorem
+### Lesson 31: Probability Distributions and Bayes' Theorem
 - Probability axioms, conditional probability, independence
 - **Bayes' theorem:** P(A|B) = P(B|A)P(A)/P(B)
 - Common distributions: Bernoulli, binomial, Gaussian/normal, Poisson, uniform, exponential
@@ -493,7 +493,7 @@
 - Joint, marginal, conditional distributions
 - **Law of total probability**
 
-### Lesson 29: Expectation, Variance, and Covariance
+### Lesson 32: Expectation, Variance, and Covariance
 - **Expected value:** E[X] = Σ xP(x) (weighted average)
 - **Variance:** Var(X) = E[(X−μ)²] = E[X²] − (E[X])²
 - **Standard deviation:** σ = √Var
@@ -503,7 +503,7 @@
 - Linearity of expectation
 - Law of large numbers, moment generating functions
 
-### Lesson 30: Maximum Likelihood Estimation
+### Lesson 33: Maximum Likelihood Estimation
 - **Likelihood:** L(θ) = P(data | θ) — probability of data given parameters
 - **MLE:** θ̂ = argmax P(data | θ), equivalently minimize −log likelihood
 - **Cross-entropy loss = negative log-likelihood** for classification
@@ -514,7 +514,7 @@
 - **Gaussian Mixture Models (GMMs):** EM for fitting multiple Gaussians
 - **K-means as hard EM** (hard vs soft assignments)
 
-### Lesson 31: Information Theory
+### Lesson 34: Information Theory
 - **Information content:** I(x) = −log₂ P(x) — rare events carry more info
 - **Entropy:** H(X) = −Σ P(x) log P(x) — average surprise
   - Maximum entropy = uniform distribution
@@ -528,7 +528,7 @@
 - Two-phase learning: fitting then compressing
 - **Pointwise Mutual Information (PMI):** log[P(x,y)/(P(x)P(y))], connection to Word2Vec
 
-### Lesson 32: Hypothesis Testing
+### Lesson 35: Hypothesis Testing
 - **Null hypothesis (H₀)** vs **alternative hypothesis (H₁)**
 - **P-value:** P(data ≥ this extreme | H₀ true) — NOT P(H₀ | data)
 - **Base rate fallacy:** P(data|H₀) ≠ P(H₀|data)
@@ -540,7 +540,7 @@
 - **Effect sizes:** Cohen's d, Pearson's r, odds ratio — what p-values don't tell you
 - **Confidence intervals:** repeated-experiment interpretation (not probability of containing truth)
 
-### Lesson 33: Experimental Design and Statistical Fallacies
+### Lesson 36: Experimental Design and Statistical Fallacies
 - **Randomization, control groups, blinding** (single, double), **pre-registration**
 - **Hierarchy of evidence:** case reports → observational → RCTs → meta-analyses
 - **Correlation ≠ causation** (confounders)
@@ -550,7 +550,7 @@
 - **Ecological fallacy:** group-level ≠ individual-level relationships
 - **Regression to the mean**
 
-### Lesson 34: Regression
+### Lesson 37: Regression
 - **Linear regression:** y = β₀ + β₁x₁ + ... + ε, ε ~ N(0,σ²)
 - Standard errors, t-tests on coefficients, confidence intervals
 - **R² (coefficient of determination)**
@@ -564,7 +564,7 @@
 - Assumptions: linearity, independence, homoscedasticity
 - **Robust standard errors** (Huber-White)
 
-### Lesson 35: Bayesian Foundations
+### Lesson 38: Bayesian Foundations
 - **Bayesian vs frequentist:** probability as degree of belief vs long-run frequency
 - **Bayes' theorem as update rule:** posterior ∝ likelihood × prior
 - **Priors:** informative, weakly informative, "uninformative" (Jeffreys)
@@ -576,7 +576,7 @@
 - **Sequential updating:** today's posterior = tomorrow's prior
 - Bayesian agent as normative model of rational belief updating
 
-### Lesson 36: Bayesian Computation
+### Lesson 39: Bayesian Computation
 - **The computational problem:** P(D) = ∫P(D|θ)P(θ)dθ is intractable
 - **MCMC (Markov Chain Monte Carlo):** construct chain whose stationary distribution = posterior
   - **Metropolis-Hastings:** propose → accept/reject (normalizing constants cancel)
@@ -591,7 +591,7 @@
 - **VAE connection:** encoder = variational params, decoder = likelihood, VAE loss = negative ELBO
 - **Laplace approximation:** Gaussian at MAP with covariance = inverse Hessian
 
-### Lesson 37: Bayesian Model Comparison
+### Lesson 40: Bayesian Model Comparison
 - **Marginal likelihood (evidence):** P(D|M) = ∫P(D|θ,M)P(θ|M)dθ
 - **Automatic Occam's razor:** complex models spread prior over more patterns → lower evidence for specific data
 - **Bayes factors:** BF₁₂ = P(D|M₁)/P(D|M₂), can support null hypothesis (unlike p-values)
@@ -605,7 +605,7 @@
   - **RLCT (λ)** replaces k/2 as true effective dimension
   - For neural networks: λ ≤ d/2 (simpler than parameter count suggests)
 
-### Lesson 38: Causal Inference
+### Lesson 41: Causal Inference
 - **Counterfactuals:** what would have happened differently?
 - **Potential outcomes framework (Rubin):** Y₁ᵢ, Y₀ᵢ, causal effect = Y₁ − Y₀
 - **Average Treatment Effect (ATE)**
@@ -623,7 +623,7 @@
   - **Propensity score matching**
 - **Mendelian randomization:** genetic variants as natural instruments
 
-### Lesson 39: Applied Statistics
+### Lesson 42: Applied Statistics
 - **Heritability (h²):** fraction of trait variation from genetic variation (population-level, NOT individual)
 - Between-group heritability ≠ between-group genetic causation
 - **Twin studies:** identical vs fraternal twins, assumptions and violations
@@ -638,23 +638,23 @@
 
 ---
 
-## Phase 4: Machine Learning (Lessons 40–50)
+## Phase 4: Machine Learning (Lessons 43–50)
 
-### Lesson 40: Single Neuron
+### Lesson 43: Single Neuron
 - Perceptron model: weighted sum + bias + activation
 - Linear decision boundary (hyperplane)
 - Step function, sigmoid, ReLU activations
 - Perceptron learning rule
 - **XOR problem:** single neurons can't solve non-linear problems
 
-### Lesson 41: Forward Pass
+### Lesson 44: Forward Pass
 - **Multi-layer networks:** stacking linear transformations + nonlinearities
 - Forward pass = sequence of matrix multiplications + activations
 - **ReLU folds space** — geometric view of piecewise-linear decision boundaries
 - Universal approximation theorem
 - Width vs depth tradeoffs
 
-### Lesson 42: Backpropagation
+### Lesson 45: Backpropagation
 - Full network gradient computation via chain rule
 - **Backprop = reverse-mode autodiff on computation graph**
 - Gradient flow through layers
@@ -663,7 +663,7 @@
 - Batch normalization, layer normalization
 - Gradient checking (numerical vs analytical)
 
-### Lesson 43: Attention Mechanism
+### Lesson 46: Attention Mechanism
 - **Query, Key, Value** vectors: Q = xW_Q, K = xW_K, V = xW_V
 - **Attention scores:** QKᵀ/√d_k (scaled dot-product attention)
 - **Softmax** → attention weights (probability distribution over positions)
@@ -672,7 +672,7 @@
 - **Causal/autoregressive masking:** prevent attending to future tokens
 - Multi-head Latent Attention (MLA, DeepSeek variant)
 
-### Lesson 44: Transformer Architecture
+### Lesson 47: Transformer Architecture
 - **Full transformer block:** LayerNorm → Multi-Head Attention → Residual → LayerNorm → MLP → Residual
 - **Residual stream** view: attention heads and MLPs read/write to shared stream
 - **Positional encoding:** sinusoidal or learned
@@ -681,7 +681,7 @@
 - **"Mathematical Framework for Transformer Circuits"** (Elhage, Nanda et al.)
 - Building a transformer from scratch
 
-### Lesson 45: Reinforcement Learning Foundations
+### Lesson 48: Reinforcement Learning Foundations
 - **Agent, Environment, State, Action, Reward** framework
 - **Markov Decision Process (MDP):** states, actions, transition probabilities, rewards
 - **Policy π(a|s):** strategy mapping states to action probabilities
@@ -695,7 +695,7 @@
 - **Reward hacking:** the alignment problem in miniature
 - **RLHF pipeline:** SFT → reward model from comparisons → PPO fine-tuning
 
-### Lesson 46: LLM Training Pipeline
+### Lesson 49: LLM Training Pipeline
 - **Stage 1: Pre-training** — next-token prediction on internet text (MLE)
 - Scaling laws: loss ∝ N^(-α)
 - **Stage 2: SFT** — supervised fine-tuning on (instruction, response) demonstrations
@@ -706,14 +706,14 @@
 - **Constitutional AI:** principle-based self-critique (Anthropic's approach)
 - **Stage 4: Deployment and monitoring**
 
-### Lesson 47: Interpretability Introduction
+### Lesson 50: Interpretability Introduction
 - **Mechanistic interpretability:** understanding model internals at circuit level
 - **Activation patching:** swap activations to measure causal importance
 - **Direct logit attribution:** which components contribute to final token prediction
 - **Probing:** train linear classifiers on intermediate representations
 - **Steering vectors:** add directions to residual stream to modify behavior
 
-### Lesson 48: Circuits and Features
+### Lesson 51: Circuits and Features
 - **Induction heads:** attention pattern that copies previous occurrences
 - **Feature circuits:** networks of components that implement specific computations
 - **Sparse autoencoders (SAEs):** decompose activations into interpretable features
@@ -721,7 +721,7 @@
 - **Monosemantic vs polysemantic neurons**
 - **Scaling monosemanticity** (Anthropic)
 
-### Lesson 49: Scaling Laws and Emergent Capabilities
+### Lesson 52: Scaling Laws and Emergent Capabilities
 - **Kaplan scaling laws:** L(N) ∝ N^(-α) — loss as power law in model size
 - **Chinchilla scaling:** optimal data/params ratio ~20:1
 - **The bitter lesson** (Rich Sutton): scale wins over cleverness
@@ -732,7 +732,7 @@
 - **Grokking as phase transition** in time (not scale)
 - **Developmental interpretability:** tracking internal changes at capability transitions
 
-### Lesson 50: Singular Learning Theory (SLT)
+### Lesson 53: Singular Learning Theory (SLT)
 - **Standard statistics fails for neural networks:** many-to-one parameter-to-function map
 - **Symmetries create singularities:** neuron permutation, weight rescaling, zero neurons
 - Fisher information matrix is singular at singularities
@@ -748,9 +748,9 @@
 
 ---
 
-## Phase 5: Mathematical Enrichment (Lessons 51–62)
+## Phase 5: Mathematical Enrichment (Lessons 54–62)
 
-### Lesson 51: Turing Machines and Decidability
+### Lesson 54: Turing Machines and Decidability
 - **Turing machine:** tape + head + states + transition function — formal definition of computation
 - Church-Turing thesis: anything computable is Turing-computable
 - **Halting problem:** no algorithm can determine if arbitrary programs halt — **undecidable**
@@ -758,7 +758,7 @@
 - **Rice's theorem:** every non-trivial semantic property of programs is undecidable
 - Decidability landscape: decidable, semi-decidable, undecidable
 
-### Lesson 52: Computational Complexity
+### Lesson 55: Computational Complexity
 - **P:** problems solvable in polynomial time
 - **NP:** solutions verifiable in polynomial time
 - **NP-complete:** hardest problems in NP (via polynomial reductions)
@@ -768,7 +768,7 @@
 - **Space complexity:** PSPACE
 - **Circuit complexity:** neural networks as Boolean circuits
 
-### Lesson 53: Kolmogorov Complexity and Algorithmic Information
+### Lesson 56: Kolmogorov Complexity and Algorithmic Information
 - **Kolmogorov complexity K(x):** length of shortest program generating x
 - Incompressible strings (random)
 - K(x) is **uncomputable** (related to halting problem)
@@ -778,7 +778,7 @@
 - Incomputable but provides theoretical ideal for agent design
 - Minimum Description Length (MDL) principle
 
-### Lesson 54: Group Theory
+### Lesson 57: Group Theory
 - **Group:** set + operation satisfying closure, associativity, identity, inverses
 - Examples: integers under addition, permutation groups S_n, cyclic groups Z_n, matrix groups GL(n), SO(n), dihedral groups
 - **Subgroups, cosets, quotient groups** G/N
@@ -788,7 +788,7 @@
 - Abelian vs non-abelian groups
 - **Normal subgroups**
 
-### Lesson 55: Rings, Fields, and Algebraic Structures
+### Lesson 58: Rings, Fields, and Algebraic Structures
 - **Rings:** set with + and ×, additive group + multiplicative monoid
 - Examples: integers Z, polynomials R[x], matrix rings
 - **Fields:** rings where every nonzero element has multiplicative inverse (Q, R, C, F_p)
@@ -797,7 +797,7 @@
 - **Noetherian rings, Hilbert Basis Theorem**
 - **Polynomial rings** — foundation for algebraic geometry
 
-### Lesson 56: Group Actions, Representations, and Neural Network Symmetry
+### Lesson 59: Group Actions, Representations, and Neural Network Symmetry
 - **Group actions:** group acts on a set (orbits, stabilizers)
 - **Neural network symmetries:** neuron permutation symmetry in hidden layers
 - **Orbit-stabilizer theorem** and connection to SLT (parameter symmetries create singularities)
@@ -805,7 +805,7 @@
 - Character theory basics
 - **Equivariant neural networks:** architectures preserving symmetries (CNNs = translation equivariance)
 
-### Lesson 57: Point-Set Topology
+### Lesson 60: Point-Set Topology
 - **Topological spaces:** defined by open sets satisfying axioms
 - **Continuity:** topological definition (preimage of open is open)
 - **Compactness:** every open cover has finite subcover
@@ -816,7 +816,7 @@
 - **Hausdorff spaces:** points can be separated by open sets
 - Homeomorphisms (topological equivalence)
 
-### Lesson 58: Homotopy and Fundamental Groups
+### Lesson 61: Homotopy and Fundamental Groups
 - **Homotopy:** continuous deformation of one map into another
 - Homotopy equivalence of spaces
 - **Fundamental group π₁:** loops up to continuous deformation
@@ -825,7 +825,7 @@
 - **Covering spaces:** unwinding topology
 - Loss landscape topology: holes and non-contractible loops
 
-### Lesson 59: Manifolds and Tangent Spaces
+### Lesson 62: Manifolds and Tangent Spaces
 - **Smooth manifolds:** locally Euclidean spaces with smooth transition maps
 - Examples: spheres, tori, weight space as manifold
 - **Tangent spaces and tangent bundles**
@@ -833,7 +833,7 @@
 - **Manifold hypothesis:** real-world data lies on low-dimensional manifold in high-dimensional space
 - **Singularities:** where manifold structure breaks down (key for SLT)
 
-### Lesson 60: Algebraic Geometry Essentials
+### Lesson 63: Algebraic Geometry Essentials
 - **Algebraic varieties:** solution sets of polynomial equations
 - Affine varieties, projective varieties
 - **Smooth vs singular points:** Jacobian rank condition
@@ -844,7 +844,7 @@
 - **Computing RLCTs for examples:** linear regression, reduced rank regression, neural networks
 - Direct connection to SLT: algebraic geometry provides the computational tools
 
-### Lesson 61: Propositional and Predicate Logic
+### Lesson 64: Propositional and Predicate Logic
 - **Propositional logic:** connectives (∧, ∨, ¬, →, ↔), truth tables
 - Tautologies, contradictions, satisfiability
 - Normal forms (CNF, DNF)
@@ -854,7 +854,7 @@
 - **Models and interpretations** (semantic side)
 - **Formal verification** of software/AI systems
 
-### Lesson 62: Gödel's Incompleteness and Löb's Theorem
+### Lesson 65: Gödel's Incompleteness and Löb's Theorem
 - **Gödel's First Incompleteness Theorem:** any consistent formal system strong enough to express arithmetic contains true but unprovable statements
 - **Gödel numbering:** encoding statements as numbers (self-reference)
 - **Gödel's Second Incompleteness Theorem:** such a system cannot prove its own consistency
@@ -866,9 +866,9 @@
 
 ---
 
-## Phase 6: Alignment Theory (Lessons 63–67)
+## Phase 6: Alignment Theory (Lessons 66–67)
 
-### Lesson 63: Game Theory
+### Lesson 66: Game Theory
 - **Normal form games, extensive form games**
 - **Nash equilibrium:** no player can unilaterally improve
 - **Dominant strategies, mixed strategies**
@@ -878,7 +878,7 @@
 - **Common knowledge, signaling, information asymmetry**
 - **Auction theory** (Vickrey, etc.)
 
-### Lesson 64: Decision Theory
+### Lesson 67: Decision Theory
 - **Expected utility theory:** maximize E[u(outcome)]
 - **Von Neumann-Morgenstern axioms**
 - **Three decision theories:**
@@ -890,7 +890,7 @@
 - **Logical uncertainty**
 - Implications for AI agent design
 
-### Lesson 65: Anthropics and Self-Locating Beliefs
+### Lesson 68: Anthropics and Self-Locating Beliefs
 - **Observation selection effects**
 - **Sleeping Beauty Problem**
 - **Self-Sampling Assumption (SSA)** vs **Self-Indication Assumption (SIA)**
@@ -899,7 +899,7 @@
 - **Doomsday argument**
 - **Embedded agency:** agents reasoning about themselves as part of the environment
 
-### Lesson 66: The Alignment Problem
+### Lesson 69: The Alignment Problem
 - **Core problem:** ensuring AI systems pursue goals beneficial to humanity
 - **Outer alignment:** specifying the right objective
 - **Inner alignment:** ensuring the model optimizes for the specified objective
@@ -910,7 +910,7 @@
   - Scalable oversight, interpretability-based safety
 - **Goodhart's Law:** when a measure becomes a target, it ceases to be a good measure
 
-### Lesson 67: Open Problems and Research Frontiers
+### Lesson 70: Open Problems and Research Frontiers
 - **Technical open problems:** scalable oversight, interpretability gaps, robustness
 - **Emerging theoretical frameworks:** SLT for understanding learning, agent foundations
 - **Research frontiers in interpretability:** sparse autoencoders at scale, developmental interpretability, causal scrubbing
