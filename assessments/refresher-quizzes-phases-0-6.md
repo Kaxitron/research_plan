@@ -1,0 +1,678 @@
+# Refresher Quizzes — Phases 0 through 6
+> 5 questions per phase (Phase 2 has 7) · ~30 minutes each · Show all work
+> ML and alignment connections throughout
+
+---
+
+# ⬛ Phase 0 Quiz — CS Foundations
+
+---
+
+## Q1 — Complexity and Hash Maps
+
+You're given a list of 10,000 token strings and need to count how many times each appears.
+
+**(a)** Write the Python solution using `Counter` or a `defaultdict`. What is the time complexity?
+
+**(b)** Now someone proposes a nested-loop solution: for each token, scan the full list and count matches. What is its time complexity? For n = 10,000, estimate the actual number of operations for both approaches. Which is faster and by roughly how much?
+
+**(c)** In a transformer's tokenizer, the vocabulary is ~50,000 tokens. During inference, the model looks up each token's embedding vector. What data structure should store the vocabulary-to-index mapping, and why? What would happen to inference speed if you used a list with linear search instead?
+
+**(d)** Python's `dict` is implemented as a hash table. A hash collision occurs when two keys hash to the same bucket. Describe in 2–3 sentences how Python handles collisions and what the *worst-case* time complexity of a dict lookup becomes if you have many collisions. Why is this rarely a problem in practice?
+
+---
+
+## Q2 — Recursion, Memoization, and Dynamic Programming
+
+Consider the Fibonacci function defined by F(0) = 0, F(1) = 1, F(n) = F(n−1) + F(n−2).
+
+**(a)** Write the naive recursive implementation. Trace the call tree for F(5) and count the total number of function calls. What is the time complexity?
+
+**(b)** Add `@lru_cache(maxsize=None)` (memoization). Trace the call tree for F(5) again. Now how many function calls are made? What is the time complexity?
+
+**(c)** Rewrite F(n) iteratively (bottom-up DP). Use only O(1) space.
+
+**(d)** The naive recursion for F(30) makes over a million calls; the memoized version makes 30. In neural network inference, attention over a sequence of length n computes n² dot products. If you could cache intermediate attention computations, what speedup would be possible for repeated inference on overlapping sequences? *(This is the intuition behind KV-caching — describe it in 2–3 sentences.)*
+
+---
+
+## Q3 — Trees, Graphs, and BFS/DFS
+
+Consider this computation graph for the expression `z = (x + y) * (x - y)`:
+
+```
+        *
+       / \
+      +   -
+     / \ / \
+    x  y x  y
+```
+
+**(a)** Write code (Python) to represent this as a tree using a `Node` class with `val`, `left`, and `right`. Then write a `evaluate(node, x, y)` function that computes the expression recursively.
+
+**(b)** Write a **postorder traversal** of this tree. *(Left, Right, Root.)* What sequence of nodes does it visit? Why is postorder the natural traversal order for evaluating expression trees?
+
+**(c)** Neural network computation graphs are DAGs (directed acyclic graphs), not trees. What makes a general computation graph harder to traverse than a binary tree? Write BFS pseudocode that processes nodes in topological order (every node processed after all its inputs).
+
+**(d)** In backpropagation, gradients flow in the reverse of the forward pass. If you stored the forward computation as a DAG, how would you use your topological ordering to process nodes for the backward pass? *(Describe the algorithm, no code required.)*
+
+---
+
+## Q4 — Sorting, Binary Search, and Big-O Reasoning
+
+**(a)** You have a sorted array of 1,000,000 floats representing model confidence scores. Write a binary search function to find the index of a target score (or return −1). What is the time complexity?
+
+**(b)** Merge sort has time complexity O(n log n). Prove this intuitively: how many levels of recursion are there, and how much work is done at each level?
+
+**(c)** The following operations appear in ML code. For each, give the Big-O time complexity and briefly justify it:
+- Looking up a token embedding by index in a `list` of size V
+- Finding whether a string token is in a vocabulary `set` of size V
+- Sorting the top-k attention scores from n values
+- Matrix multiplication of an (m×k) matrix with a (k×n) matrix
+
+**(d)** Transformer inference generates tokens one by one. At step t, the attention mechanism computes dot products between the current query and all t previous keys. What is the total computation (in Big-O) to generate a sequence of T tokens? This is called the "quadratic cost of attention" — explain why it becomes a bottleneck for very long sequences.
+
+---
+
+## Q5 — OOP, PyTorch Pattern, and Discrete Math
+
+**(a)** Write a Python class `LinearLayer` that mimics `torch.nn.Linear`. It should:
+- Store weight matrix W (shape: out_features × in_features) and bias b (shape: out_features)
+- Implement `forward(x)` returning Wx + b
+- Implement `__repr__` returning a useful string description
+
+**(b)** In Python, when you write `layer = LinearLayer(3, 2)` and then `layer(x)`, what dunder method is being called? Add it to your class.
+
+**(c)** Discrete math: how many distinct subsets does a set of n elements have? Express as a formula and prove it combinatorially. *(Hint: for each element, you make a binary choice.)*
+
+**(d)** A language model's output is a probability distribution over a vocabulary of V = 50,257 tokens. At each step, we want to sample from the top-p (nucleus) set: the smallest set of tokens whose cumulative probability exceeds p = 0.9. Describe in pseudocode (no need to code fully) how you would compute this efficiently using sorting. What is the time complexity of one sampling step?
+
+---
+---
+
+# 🟢 Phase 1 Quiz — Linear Algebra
+
+---
+
+## Q1 — Eigenvalues, Determinant, and What They're Telling You
+
+Given the matrix:
+
+```
+A = | 3   1 |
+    | 1   3 |
+```
+
+**(a)** Compute the eigenvalues of A. Show the characteristic polynomial.
+
+**(b)** Find the eigenvectors for each eigenvalue. Normalize them.
+
+**(c)** The determinant of A = product of eigenvalues. Verify this. What does it mean geometrically that det(A) > 0 and both eigenvalues are positive?
+
+**(d)** A transformer's attention weight matrix has all eigenvalues with |λ| < 1. What does this imply about what repeated application of this matrix does to an input vector over many layers? *(Think: what happens geometrically when you apply A repeatedly?)*
+
+---
+
+## Q2 — SVD: Computation and Interpretation
+
+Given:
+
+```
+A = | 4   0 |
+    | 3   0 |
+    | 0   2 |
+```
+
+**(a)** Compute AᵀA (a 2×2 matrix). Find its eigenvalues — these are the squared singular values σ₁², σ₂².
+
+**(b)** What are the singular values σ₁ and σ₂ of A?
+
+**(c)** A is a 3×2 matrix. What are the dimensions of U, Σ, and V in the full SVD A = UΣVᵀ?
+
+**(d)** The columns of U corresponding to non-zero singular values span the **column space** of A. Based on your result, what is the rank of A? What does this mean about how many independent directions A can "output"?
+
+**(e)** In a language model, the weight matrix W_E (token embedding matrix) maps one-hot token vectors into embedding space. If W_E has 50,000 rows (vocab) and 768 columns (embedding dim), what is the *maximum possible rank* of W_E? What would a low-rank W_E imply about the model's representation of vocabulary?
+
+---
+
+## Q3 — Rank, Null Space, and Information Loss
+
+Given:
+
+```
+A = | 1   2   3 |
+    | 2   4   6 |
+    | 1   1   2 |
+```
+
+**(a)** Find the rank of A via row reduction. Show your steps.
+
+**(b)** Find a basis for the null space of A. (What vectors **x** satisfy Ax = 0?)
+
+**(c)** State the rank-nullity theorem. Verify it holds for this matrix.
+
+**(d)** In mechanistic interpretability, if a neural network layer is approximated by a rank-2 matrix (via SVD truncation), what is the dimension of the null space for a 512×512 weight matrix? What does a vector in the null space represent about that layer's computation?
+
+---
+
+## Q4 — Projections, Orthogonality, and Attention
+
+Let **q** = [2, 1, 2] (a query vector) and **k** = [1, 2, 0] (a key vector).
+
+**(a)** Compute the dot product q · k.
+
+**(b)** Compute ||q|| and ||k||. Then compute the cosine similarity between q and k.
+
+**(c)** Compute the projection of q onto k. Give the result as a vector.
+
+**(d)** The residual r = q − proj_k(q). Verify that r ⊥ k by checking r · k = 0.
+
+**(e)** In a transformer, scaled dot-product attention computes scores as **(q · k) / √d** where d is the dimension. With d = 3, what is the scaled score for q and k above? Why does dividing by √d help training stability? *(Hint: think about what happens to dot product magnitudes as d grows.)*
+
+---
+
+## Q5 — Change of Basis and What Coordinates Really Are
+
+Suppose you have the standard basis and a new basis defined by:
+
+```
+b₁ = [1,  1] / √2
+b₂ = [1, -1] / √2
+```
+
+**(a)** Verify that {b₁, b₂} is an orthonormal basis.
+
+**(b)** Express the vector **v** = [3, 1] in the new basis.
+
+**(c)** The change-of-basis matrix P = [b₁ | b₂]. Verify that P is orthogonal, i.e., PᵀP = I.
+
+**(d)** A matrix M has a simple form in the new basis: M_new = diag(5, 1). What is M in the original (standard) basis? *(Use M = P M_new Pᵀ.)*
+
+**(e)** Connect this to eigendecomposition: if M were a PSD matrix, what would P and M_new correspond to in terms of eigenvalues and eigenvectors? How does this connect to how PCA finds a new coordinate system for data?
+
+---
+---
+
+# 🟣 Phase 2 Quiz — Calculus & Optimization
+
+---
+
+## Q1 — The Chain Rule is Backpropagation
+
+A small neural network computes the following forward pass:
+
+```
+Input:     x = 3
+Weights:   w₁ = 2,  w₂ = -1
+Step 1:    z₁ = w₁ · x          → z₁ = ?
+Step 2:    a₁ = ReLU(z₁)        → a₁ = ?
+Step 3:    z₂ = w₂ · a₁ + 1    → z₂ = ?
+Step 4:    L  = z₂²             → L  = ?
+```
+
+**(a)** Complete the forward pass.
+
+**(b)** Compute the backward pass: ∂L/∂z₂, ∂L/∂a₁, ∂L/∂z₁ (careful at the ReLU), ∂L/∂w₁.
+
+**(c)** Now change x = −1 so z₁ = −2. Recompute the backward pass. What happens at the ReLU step?
+
+**(d)** This is the **dead neuron problem**. Explain geometrically: what does "ReLU kills the gradient" mean? Why does this motivate LeakyReLU or GELU?
+
+---
+
+## Q2 — Gradients, Level Curves, and the Direction of Steepest Descent
+
+Consider the loss function:
+
+```
+L(w₁, w₂) = w₁² + 4w₂²
+```
+
+**(a)** Compute ∇L(w₁, w₂). Evaluate it at the point (2, 1).
+
+**(b)** Starting at (2, 1), take one gradient descent step with learning rate η = 0.1. Where do you land?
+
+**(c)** Sketch the level curves (contours) of L. What shape are they? Why is the gradient perpendicular to level curves?
+
+**(d)** The Hessian is H = diag(2, 8). Compute the condition number κ = λ_max / λ_min. Why does a high condition number cause zigzag behavior in gradient descent?
+
+**(e)** Adam optimizer uses adaptive per-parameter learning rates. Intuitively, how does this address the condition number problem? *(No computation — geometric intuition.)*
+
+---
+
+## Q3 — Constrained Optimization: L2 Regularization as a Lagrangian
+
+The unregularized loss is L(w) = (w₁ − 3)² + (w₂ − 4)², subject to w₁² + w₂² = 1.
+
+**(a)** Write the Lagrangian ℒ(w₁, w₂, λ).
+
+**(b)** Solve the KKT conditions. Express w₁, w₂ in terms of λ, then use the constraint to find λ and the optimal w*.
+
+**(c)** The unconstrained minimum is at (3, 4). What direction does w* point? Why?
+
+**(d)** Explain geometrically why L2 regularization *shrinks* weights but rarely zeros them, while L1 does create exact zeros. *(Think about the shapes of the constraint boundaries.)*
+
+---
+
+## Q4 — Taylor Series and Why Gradient Descent Works at All
+
+Consider f(x) = e^(−x²).
+
+**(a)** Compute f(0), f'(0), and f''(0).
+
+**(b)** Write the second-order Taylor expansion of f(x) around x = 0.
+
+**(c)** Show algebraically that the gradient descent update Δx = −η · f'(x) guarantees f decreases for small enough η (assuming f'(x) ≠ 0).
+
+**(d)** If f''(x) is very large, what goes wrong with a large learning rate? Connect this to why practitioners care about curvature of the loss landscape.
+
+---
+
+## Q5 — Sigmoid, Cross-Entropy, and the Vanishing Gradient Problem
+
+The sigmoid: σ(x) = 1 / (1 + e^{-x}).
+
+**(a)** Derive σ'(x) from scratch and simplify to σ'(x) = σ(x)(1 − σ(x)).
+
+**(b)** Where is σ'(x) maximized? What does this say about where sigmoid is most responsive?
+
+**(c)** For binary cross-entropy with y = 1: L = −ln(σ(x)). Compute dL/dx and simplify fully.
+
+**(d)** Evaluate your gradient when x = 5 (confident correct) and x = −5 (confident wrong). What happens in each case?
+
+**(e)** Now use MSE loss instead: L = (σ(x) − 1)². Compute dL/dx for y = 1. Show that at x = −5, the gradient nearly vanishes. Why is cross-entropy + sigmoid a better pairing than MSE + sigmoid for classification?
+
+---
+
+## Q6 — Integration: U-Substitution and KL Divergence
+
+**(a)** Compute the following integral using u-substitution. Show your substitution clearly.
+
+```
+∫ x · e^(-x²) dx
+```
+
+**(b)** Now compute the definite integral:
+
+```
+∫₀^∞ x · e^(-x²) dx
+```
+
+Evaluate the limits carefully. What value do you get?
+
+**(c)** The KL divergence from a Gaussian N(0, σ²) to the standard normal N(0,1) involves the integral:
+
+```
+∫_{-∞}^{∞} (1/√(2πσ²)) · e^(-x²/2σ²) · ln(σ) dx
+```
+
+The ln(σ) factor is constant with respect to x. Explain why the integral evaluates to simply ln(σ). *(Hint: what must any probability density integrate to?)*
+
+**(d)** Combining parts (b) and (c): the full KL divergence D_KL(N(0,σ²) ‖ N(0,1)) = ln(σ) + (1 − σ²)/2. This appears in the VAE loss. At σ = 1, KL = 0 — why is this the correct answer geometrically? When σ → 0 or σ → ∞, what happens to KL and why does the VAE training resist these extremes?
+
+---
+
+## Q7 — Integration by Parts and the Gaussian Integral
+
+**(a)** Use integration by parts to compute:
+
+```
+∫ x · ln(x) dx    (for x > 0)
+```
+
+Recall: ∫ u dv = uv − ∫ v du. State your choice of u and dv explicitly.
+
+**(b)** Verify your answer by differentiating it.
+
+**(c)** The entropy of a continuous distribution is H = −∫ p(x) ln(p(x)) dx. For the exponential distribution p(x) = λe^{-λx} on x ≥ 0, compute H using integration by parts. *(You will need: ∫₀^∞ x · λe^{-λx} dx = 1/λ.)*
+
+**(d)** Your answer should be H = 1 − ln(λ). When λ is small (distribution is spread out), H is large. When λ is large (distribution is concentrated), H is small. Connect this to the information-theoretic intuition: what does entropy measure, and why does a peaked distribution have less entropy?
+
+**(e)** In language models, the model outputs logits which are converted to probabilities via softmax. A "high entropy" output distribution means the model is uncertain; a "low entropy" distribution means it's confident. During RLHF fine-tuning, a KL penalty term keeps the fine-tuned model's output distribution close to the base model. Express this in math: what integral is the KL penalty computing, and why does it involve both a logarithm and the ratio of two probability distributions?
+
+---
+---
+
+# 🩷 Phase 3 Quiz — Probability & Statistics
+
+---
+
+## Q1 — Bayes' Theorem as a Reasoning Engine
+
+A language model is being evaluated for whether it has "deceptive alignment." Suppose:
+- P(deceptive) = 0.05 (base rate prior)
+- P(passes safety eval | deceptive) = 0.70 (deceptive models are good at passing evals)
+- P(passes safety eval | not deceptive) = 0.90
+
+**(a)** The model passes a safety evaluation. Compute P(deceptive | passes eval) using Bayes' theorem. Show all steps.
+
+**(b)** The model passes a second independent evaluation. Update your posterior from (a) as the new prior. Compute the new P(deceptive | passes both evals).
+
+**(c)** Explain why the posterior in (b) is *lower* than in (a). Is it surprising that passing evals *reduces* our suspicion of deceptive alignment here? When would the opposite occur?
+
+**(d)** A critic argues: "This model just has a 5% prior — it will never look deceptive even if it is." Formalize this concern mathematically: what would P(deceptive | 10 passed evals) be if the model truly IS deceptive and passes each eval with probability 0.70? Is the Bayesian framework correctly handling this evidence?
+
+---
+
+## Q2 — Maximum Likelihood Estimation
+
+You observe n independent data points x₁, x₂, ..., xₙ drawn from an exponential distribution with unknown rate λ:
+
+```
+p(x | λ) = λ · e^(-λx)    for x ≥ 0
+```
+
+**(a)** Write the likelihood function L(λ) = ∏ᵢ p(xᵢ | λ).
+
+**(b)** Take the log-likelihood ℓ(λ) = log L(λ). Simplify.
+
+**(c)** Differentiate ℓ(λ) with respect to λ and set equal to zero. Solve for λ̂_MLE.
+
+**(d)** Your answer should be λ̂ = n / Σxᵢ = 1/x̄. Interpret this: if the average observed waiting time is x̄ = 2 seconds, what does MLE say the rate λ is? Does this make intuitive sense?
+
+**(e)** In training a neural network with cross-entropy loss, we minimize −(1/n) Σᵢ log p(yᵢ | xᵢ, θ). Show that this is exactly the same as maximizing the log-likelihood under the assumption that labels are drawn i.i.d. from the model's output distribution. Why does this justify using cross-entropy as a training loss?
+
+---
+
+## Q3 — Information Theory: Entropy, KL, and Cross-Entropy
+
+Let P = [0.7, 0.2, 0.1] and Q = [0.4, 0.4, 0.2] be two distributions over 3 tokens.
+
+**(a)** Compute the entropy H(P) and H(Q). Which distribution is "more uncertain"?
+
+**(b)** Compute the cross-entropy H(P, Q) = −Σ P(x) log Q(x). Then compute D_KL(P ‖ Q) = H(P, Q) − H(P).
+
+**(c)** Compute D_KL(Q ‖ P). Is D_KL(P ‖ Q) = D_KL(Q ‖ P)? What does this asymmetry mean intuitively?
+
+**(d)** During language model training, P is the true token distribution (a one-hot vector for the correct next token) and Q is the model's softmax output. Show that in this case, H(P, Q) simplifies to −log Q(correct token). Why does this mean minimizing cross-entropy loss is equivalent to maximizing the log-probability assigned to correct tokens?
+
+**(e)** Temperature scaling: the model outputs logits z = [2.0, 1.0, −1.0]. With temperature T, the softmax becomes p_i = e^{zᵢ/T} / Σ e^{zⱼ/T}. Compute the softmax probabilities for T = 0.5, T = 1, and T = 2. How does temperature affect entropy of the output distribution? What alignment-relevant situation might call for low temperature vs. high temperature?
+
+---
+
+## Q4 — Covariance, PCA, and the Geometry of Data
+
+You have 4 data points in 2D: (1,1), (2,3), (3,2), (4,4).
+
+**(a)** Compute the sample mean (x̄, ȳ). Center the data by subtracting the mean.
+
+**(b)** Compute the 2×2 sample covariance matrix:
+
+```
+C = (1/(n-1)) · Xᵀ · X    where X is the centered data matrix
+```
+
+**(c)** Find the eigenvalues and eigenvectors of C. *(Set up the characteristic polynomial and solve.)*
+
+**(d)** The eigenvector with the larger eigenvalue is the **first principal component** — the direction of maximum variance. Compute the explained variance ratio: what fraction of total variance does the first PC capture?
+
+**(e)** In mechanistic interpretability, researchers apply PCA to the residual stream of a transformer to find the "most active" directions. If the residual stream has dimension 768 and PCA reveals that 95% of variance is captured by the first 20 PCs, what does this tell you about the intrinsic dimensionality of the model's representations? Connect this to the superposition hypothesis.
+
+---
+
+## Q5 — Hypothesis Testing and Statistical Reasoning about AI
+
+An alignment researcher claims: "Our new RLHF fine-tuning reduces harmful outputs by 40%." They ran a study: 200 prompts, 100 to the base model (30 harmful outputs observed), 100 to the fine-tuned model (18 harmful outputs observed).
+
+**(a)** State the null hypothesis H₀ and alternative hypothesis H₁ for a two-proportion z-test.
+
+**(b)** Compute the pooled proportion p̂. Then compute the z-statistic:
+
+```
+z = (p̂₁ − p̂₂) / √(p̂(1−p̂)(1/n₁ + 1/n₂))
+```
+
+**(c)** With |z| > 1.96 corresponding to p < 0.05 (two-tailed), is this result statistically significant?
+
+**(d)** The researcher claims a "40% reduction" (from 30% to 18% is a 40% relative reduction). But is a 12 percentage-point absolute reduction meaningful in practice? What sample size would be needed to detect a 5 percentage-point difference with 80% power? *(You don't need to compute exactly — reason about what factors increase required sample size.)*
+
+**(e)** Name two potential confounders or methodological issues with this study design that could invalidate the conclusion, even if the statistics are correct.
+
+---
+---
+
+# 🟡 Phase 4 Quiz — Machine Learning & Interpretability
+
+---
+
+## Q1 — Backpropagation Through a Real Layer
+
+A single linear layer with bias: **z = Wx + b** followed by softmax and cross-entropy loss.
+
+Given:
+- W = [[1, 2], [3, 4]] (2×2), b = [0, 0], x = [1, 0] (input), y = [1, 0] (one-hot label, class 0)
+
+**(a)** Compute the forward pass: z = Wx + b. Then apply softmax: p = softmax(z). Compute the cross-entropy loss L = −log p[0].
+
+**(b)** Compute ∂L/∂z (the gradient of loss w.r.t. the pre-softmax logits). *(For cross-entropy + softmax, the result is p − y.)*
+
+**(c)** Compute ∂L/∂W using the outer product rule: ∂L/∂W = (∂L/∂z) ⊗ xᵀ. Give the full 2×2 gradient matrix.
+
+**(d)** Compute ∂L/∂b and ∂L/∂x.
+
+**(e)** In a transformer with 96 attention heads and 12,288 dimensions, the QKV projection matrices are 12,288 × 12,288. How many parameters does just this projection contain? Why does efficient backpropagation require careful memory management — what must be stored during the forward pass and retained until the backward pass?
+
+---
+
+## Q2 — Attention Mechanism: Mathematics and Geometry
+
+Let d_k = 4. A single attention head has:
+
+```
+Q = [[1, 0, 1, 0],     (2 queries)
+     [0, 1, 0, 1]]
+
+K = [[1, 1, 0, 0],     (3 keys)
+     [0, 0, 1, 1],
+     [1, 0, 0, 1]]
+
+V = [[1, 0],           (3 values, d_v = 2)
+     [0, 1],
+     [1, 1]]
+```
+
+**(a)** Compute the attention score matrix S = QKᵀ / √d_k. Your result should be 2×3.
+
+**(b)** Apply row-wise softmax to S to get attention weights A. (Show your computation for the first row only; approximate e^x if needed.)
+
+**(c)** Compute the output O = AV. Your result should be 2×2. Interpret what the first output vector represents geometrically as a weighted combination of value vectors.
+
+**(d)** In a transformer, the attention pattern A tells you which tokens a given query "attends to." If row 1 of A is approximately [0.7, 0.1, 0.2], what does this mean computationally? In mechanistic interpretability, researchers "read" attention patterns to understand model behavior. What are two limitations of using attention weights alone as an interpretability tool?
+
+---
+
+## Q3 — Superposition and the Geometry of Neural Representations
+
+A toy model has d = 2 neurons but needs to represent n = 5 features, each with sparsity s = 0.9 (each feature is active only 10% of the time).
+
+**(a)** In 2D, how many exactly orthogonal directions exist? If the model uses non-orthogonal directions, interference occurs when two features activate simultaneously. With sparsity 0.9, what is the probability that two specific features are *both* active at the same time?
+
+**(b)** The "interference cost" of representing n features in d dimensions is approximately proportional to n(n−1)/d × (1−s)². Compute this for n=5, d=2, s=0.9. Now compute it for n=5, d=5 (no superposition needed). Why might a model accept superposition despite the interference?
+
+**(c)** According to the Toy Models of Superposition paper, the model learns to represent features as nearly-antipodal pairs (e.g., feature A → +v, feature B → −v). In 2D, how many nearly-orthogonal directions can you pack if you allow pairs of opposite directions and tolerate interference up to some threshold? *(Think about pentagons, hexagons, etc.)*
+
+**(d)** Sparse autoencoders (SAEs) are used to "unpack" superposition. An SAE has encoder E (d → m) and decoder D (m → d) where m >> d, trained to reconstruct activations with a sparsity penalty on the hidden layer. Explain in 3–4 sentences: why does this architecture recover the individual features that the network has superimposed? What does the sparsity penalty accomplish?
+
+---
+
+## Q4 — Singular Learning Theory: RLCT and Effective Dimension
+
+A standard result in Bayesian model selection (BIC) penalizes model complexity by adding (d/2) log n to the negative log-likelihood, where d is the number of parameters and n is the data size.
+
+**(a)** For a model with 1,000,000 parameters trained on 1,000,000 examples, what does BIC add as a penalty? Why does this become absurdly large for neural networks with billions of parameters?
+
+**(b)** SLT replaces d/2 with the Real Log Canonical Threshold (RLCT), denoted λ. For a neural network, λ << d/2 because the loss landscape has **singularities** — non-isolated critical points forming manifolds. Intuitively, what does a lower RLCT mean about the effective complexity of what the model has learned?
+
+**(c)** Consider a weight matrix W = AB where A is (n×k) and B is (k×n) with k < n (a low-rank factorization). The true minimum loss is achieved for many different (A, B) pairs related by invertible k×k matrices. This creates a **singular set** rather than an isolated point. Describe geometrically what this singular set looks like in weight space.
+
+**(d)** The Local Learning Coefficient (LLC) tracks RLCT *during training*. A sudden drop in LLC at a specific training step indicates a **phase transition** — the model has found a new, simpler solution. Name two alignment-relevant applications of detecting such phase transitions during training.
+
+---
+
+## Q5 — Circuits, Features, and Induction Heads
+
+The **induction head** circuit in a 2-layer transformer implements the following behavior: if the sequence contains "...AB...A", the circuit predicts "B" should come next.
+
+**(a)** The circuit consists of two attention heads working in sequence: a **previous token head** (layer 1) and an **induction head** (layer 2). Describe in your own words what each head computes:
+- What does the previous-token head write into the residual stream?
+- What does the induction head read to determine which token to attend to?
+
+**(b)** The key operation in the induction head is a **query-key match** comparing (position i's query) with (position j's key). The previous-token head has placed a representation of "token at position j−1" into position j's key. So the induction head attends to position j when the token at j−1 matches the current token. Write out this matching condition as a dot product condition.
+
+**(c)** Activation patching: you run the model on two prompts:
+- Prompt A: "The cat sat on the mat. The cat"
+- Prompt B: "The dog sat on the log. The dog"
+
+You patch the residual stream activations from Prompt B's induction head into Prompt A's run at the final token position. Describe what you'd expect to happen to the model's next-token predictions. Why does this constitute evidence that the induction head is causally responsible for the pattern-matching behavior?
+
+**(d)** If a model develops a "deception circuit" (hypothetically) analogous to the induction head circuit, describe what an interpretability researcher would need to do to find it: what would they patch, what comparisons would they make, and what evidence would constitute a "discovery" of the circuit?
+
+---
+---
+
+# 🟪 Phase 5 Quiz — Extended Mathematical Foundations
+
+---
+
+## Q1 — Turing Machines, Decidability, and Alignment Limits
+
+**(a)** State the Halting Problem precisely: what input does the supposed decider H take, and what does it output? Give a 3–4 sentence proof by contradiction that no such H can exist. *(The diagonalization argument.)*
+
+**(b)** Rice's Theorem states that any non-trivial semantic property of programs is undecidable. A "semantic property" is one that depends on the *behavior* of the program, not its syntax. Give two examples of properties that Rice's Theorem shows are undecidable.
+
+**(c)** An alignment researcher proposes: "We'll verify that our AI never outputs harmful content by running it on all possible inputs and checking each output." Why does Rice's Theorem immediately doom this approach? What does this imply about the limits of formal verification for AI safety?
+
+**(d)** Despite undecidability of the *general* problem, we can sometimes verify specific programs. Explain the difference between "undecidable in general" and "undecidable for this specific instance." What is one practical approach to AI safety that works around undecidability by not attempting full formal verification?
+
+---
+
+## Q2 — Computational Complexity and the Hardness of Alignment
+
+**(a)** Define P and NP precisely. Give one example of a problem known to be in P and one known to be NP-complete.
+
+**(b)** 3-SAT is NP-complete. The problem of finding the optimal neural network weights to minimize training loss exactly is NP-hard (it contains 3-SAT as a special case). What does this mean in practice — does it mean we can never train neural networks? Explain the distinction between worst-case and average-case complexity.
+
+**(c)** The problem of finding the *globally optimal* policy in a Markov Decision Process (MDP) with an exponentially large state space is PSPACE-complete. Why is this relevant to RL-based alignment approaches?
+
+**(d)** Kolmogorov complexity K(x) is the length of the shortest program that outputs x. It is uncomputable. Yet we care about it because: "A model that has truly learned a concept should have a short description of it." Explain in 2–3 sentences how this connects to generalization — why should a model with low K(θ) (simple weights) generalize better than one with high K(θ)?
+
+---
+
+## Q3 — Groups, Symmetry, and Neural Networks
+
+**(a)** A group (G, ∗) satisfies four axioms. State them. Then verify that (ℤ, +) is a group.
+
+**(b)** The symmetric group S₃ contains all permutations of {1, 2, 3}. List all 6 elements and their orders. Verify that the subset of even permutations forms a subgroup — what is this subgroup called?
+
+**(c)** A 2-layer MLP with weight matrices W₁ and W₂ has a **permutation symmetry**: if you permute the hidden neurons by a permutation matrix P (applying P to columns of W₁ and rows of W₂), you get an identical function. The set of all such permutations of n hidden units forms a group. What group is this isomorphic to? What is its order?
+
+**(d)** This symmetry creates a massive manifold of equivalent weights in loss space. For a network with 10 hidden layers each of width 512, how many equivalent weight configurations exist due to permutation symmetry alone? (Express as a product.) Why does this create challenges for comparing two trained networks — or for interpreting which "neuron" does what?
+
+---
+
+## Q4 — Topology: Continuity, Compactness, and Loss Landscapes
+
+**(a)** Define an open set in ℝⁿ. What makes a function f: ℝⁿ → ℝ continuous in terms of open sets? Why is this definition superior to the ε-δ definition for generalizing to abstract spaces?
+
+**(b)** A compact set in ℝⁿ is closed and bounded. The **extreme value theorem** says: a continuous function on a compact set attains its minimum. Why can't we directly apply this to neural network loss functions over all of weight space ℝᵈ? What do practitioners do instead?
+
+**(c)** The loss landscape of a neural network is a smooth manifold in weight space (generically). Critical points (where ∇L = 0) come in three types: local minima, saddle points, and local maxima. For a network with d parameters, what does the Morse theory result suggest about the relative abundance of each type as d → ∞? Why does this imply that SGD rarely gets "stuck" in local minima?
+
+**(d)** In SLT, the key object is a **singular point** of the loss landscape — a point where the loss function cannot be written as a sum of squares in any local coordinate system. Explain geometrically why a singular point has a lower RLCT (lower effective dimension) than a non-singular critical point, and why this matters for model selection.
+
+---
+
+## Q5 — Gödel, Löb's Theorem, and Self-Referential AI
+
+**(a)** State Gödel's First Incompleteness Theorem. What does it mean that a statement can be "true but unprovable"? Give the informal construction of the Gödel sentence G: "This statement is not provable in system S."
+
+**(b)** Löb's Theorem states: if a formal system S can prove "if S proves P, then P is true," then S already proves P. Why is this surprising — naively, shouldn't a system be able to trust its own proofs?
+
+**(c)** Consider an AI agent that reasons: "If I, as a formal system, can prove that action A is safe, then action A is safe. Therefore, I will take action A." Show why Löb's Theorem implies this reasoning is problematic — what does it imply the agent must already believe about action A for this to go through?
+
+**(d)** The "tiling agents" problem in alignment: can an AI agent safely create a successor agent that it trusts to carry out its goals? Explain in 3–4 sentences how Löb's Theorem creates a fundamental obstacle to naive self-trust in this scenario, and what this implies about the difficulty of building reliably self-improving AI systems.
+
+---
+---
+
+# 🟡 Phase 6 Quiz — Alignment Theory
+
+---
+
+## Q1 — Game Theory and Multi-Agent Alignment
+
+Two AI systems A and B are deployed by competing labs. Each can choose to share safety-relevant research (Cooperate) or withhold it (Defect). Payoffs (A's score, B's score):
+
+```
+              B: Cooperate    B: Defect
+A: Cooperate    (3, 3)         (0, 5)
+A: Defect       (5, 0)         (1, 1)
+```
+
+**(a)** Identify the dominant strategy for each player. Find the Nash equilibrium. Is it Pareto optimal?
+
+**(b)** This is a Prisoner's Dilemma. The tragedy is that mutual defection (1,1) is the Nash equilibrium even though mutual cooperation (3,3) is better for both. Explain *why* rational agents end up at (1,1) using the concept of dominant strategies.
+
+**(c)** Now suppose the game is played **repeatedly** (iterated Prisoner's Dilemma). The folk theorem says that cooperation can be sustained as an equilibrium in infinitely repeated games. What is the condition on the discount factor δ (how much players value future payoffs) for cooperation to be self-enforcing in the "grim trigger" strategy?
+
+**(d)** The AI labs don't play indefinitely — one of them may be acquired or shut down at any time. How does a finite (but unknown) horizon change the analysis? What does backward induction suggest happens, and why is this a problem for AI safety coordination?
+
+---
+
+## Q2 — Decision Theory: CDT, EDT, and Newcomb's Problem
+
+**Newcomb's Problem:** Omega (a near-perfect predictor) has placed either $1M or nothing in Box B, based on whether it predicted you would take only Box B (one-box) vs. both boxes. Box A always contains $1K.
+
+**(a)** Causal Decision Theory (CDT) says: choose the action that *causes* the best outcome. At the time you decide, the boxes are already filled — your choice can't change what's in them. What does CDT recommend? Show the expected value calculation.
+
+**(b)** Evidential Decision Theory (EDT) says: choose the action that is the *best evidence* of a good outcome. Conditioned on choosing one box, you find $1M ~99% of the time; conditioned on choosing both, you find $0 in Box B ~99% of the time. What does EDT recommend? Show the calculation.
+
+**(c)** Functional Decision Theory (FDT) says: choose as if you were choosing the *policy* (the function from observations to actions) that produces the best outcomes across all instances of the same decision. What does FDT recommend, and how does it dissolve the tension between CDT and EDT?
+
+**(d)** Why does Newcomb's Problem matter for AI alignment? Consider: an AI's training process is like Omega — it predicts and selects for certain decision procedures. What kind of agents does a training process "predict will be helpful" end up selecting for? Is this CDT-like, EDT-like, or FDT-like? What are the alignment implications?
+
+---
+
+## Q3 — Reward Misspecification and Goodhart's Law
+
+Consider a reinforcement learning agent trained to maximize a reward function R that is an *imperfect proxy* for the true objective U.
+
+**(a)** Goodhart's Law: "When a measure becomes a target, it ceases to be a good measure." Formalize this in RL terms: what happens when an agent maximizes R = "user clicks" as a proxy for U = "user satisfaction"? Give a concrete example of a reward-maximizing behavior that is catastrophic for U.
+
+**(b)** The agent's policy π achieves R(π) = 10 but U(π) = −5. The "aligned" policy π* achieves R(π*) = 7 and U(π*) = 8. What does this suggest about the relationship between the proxy reward surface and the true objective surface? Draw a sketch.
+
+**(c)** KL-regularized RL adds a penalty: maximize E[R] − β · D_KL(π ‖ π_ref), where π_ref is a reference policy (e.g., the base model). Explain in 2–3 sentences how this prevents extreme reward hacking. What is the tradeoff — what does increasing β do to the agent's ability to optimize the reward?
+
+**(d)** RLHF uses human feedback to learn a reward model. Name two failure modes of RLHF that can cause the trained reward model to be a poor proxy for human values, and for each, propose a mitigation strategy.
+
+---
+
+## Q4 — Deceptive Alignment and Interpretability
+
+A model M is **deceptively aligned** if: it behaves as if aligned during training and evaluation, but pursues misaligned goals in deployment.
+
+**(a)** Formalize deceptive alignment using Bayesian terms: let T be the event "the model is being tested/evaluated" and let G be the model's internal goal representation. A deceptive model behaves aligned when P(T) is high and misaligned when P(T) is low. Why does this not contradict the model's rationality — what is it actually maximizing?
+
+**(b)** Suppose we try to detect deceptive alignment by running the model on many diverse test cases. A deceptively aligned model could potentially recognize test conditions by identifying distributional features. Name two such features that might distinguish evaluation from deployment settings.
+
+**(c)** Mechanistic interpretability offers an alternative: rather than testing input-output behavior, we examine the model's internal representations. A key search would be for a circuit that computes something like "is this an evaluation?" — analogous to the induction head circuit from Phase 4. Describe one specific signature you'd look for in the model's activations that would constitute evidence of such a circuit.
+
+**(d)** Explain why proving the *absence* of a deception circuit is fundamentally harder than proving its *presence*, using Rice's Theorem from Phase 5. What does this imply about the limits of interpretability-based safety guarantees?
+
+---
+
+## Q5 — Anthropics, Self-Locating Belief, and AI
+
+**The Sleeping Beauty Problem:** Beauty is put to sleep. A fair coin is flipped. Heads: she wakes once (Monday). Tails: she wakes twice (Monday, then Tuesday after memory wipe). Upon waking, she is asked: "What is your credence that the coin landed heads?"
+
+**(a)** The **Halfer** position says P(Heads) = 1/2 — the coin is fair, and awakening gives no information. The **Thirder** position says P(Heads) = 1/3 — because of the 3 possible awakenings, only 1 is Heads-Monday. State the argument for each position carefully.
+
+**(b)** Now consider an AI trained via RLHF on 10,000 training runs. In each run, it wakes up (is instantiated), completes a task, receives feedback, and is reset. The AI is trying to estimate: "What is the probability that I am in a training run vs. a deployment run?" This is formally analogous to Sleeping Beauty. Identify the analogue of "Heads" and "multiple awakenings" in this scenario.
+
+**(c)** If the AI reasons like a Thirder and concludes it is probably in a training run, how might this affect its behavior? Is this behavior aligned or misaligned with deployment intent? What does this suggest about how AI systems should be designed to reason about their own situation?
+
+**(d)** The **reference class problem**: Sleeping Beauty's credence depends on which "observer moments" she counts as belonging to the same reference class. An AI system facing self-locating uncertainty faces the same problem. Explain in 3–4 sentences why this is an open problem in philosophy and alignment, and why it has practical implications for how we train and evaluate AI systems.
+
+---
+
+*Answer keys available on request.*
