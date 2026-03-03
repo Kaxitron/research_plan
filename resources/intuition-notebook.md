@@ -240,6 +240,48 @@ The sum is squeezed between two integrals that differ by just $f(1)$. So the sum
 
 **ML connection:** This integral-vs-sum relationship appears in learning rate theory. The conditions for SGD convergence — $\sum \eta_t = \infty$ but $\sum \eta_t^2 < \infty$ — are checked via the integral test. A schedule of $\eta_t = 1/t$ works because $\int 1/x\,dx = \ln(x) \to \infty$ (enough exploration) while $\int 1/x^2\,dx = 1$ (updates settle down).
 
+### Which convergence test for which series — pattern matching guide
+
+The decision algorithm above gives you the logical flowchart. This section is the complement: a pattern-matching guide organized by *what the series looks like*. Each test has a natural habitat — a family of series it's built for. The ratio test, for example, is powerful but completely blind to polynomial-rate decay (it returns $L = 1$ for *every* p-series, regardless of $p$). Matching the right test to the right series saves time and avoids inconclusive dead ends.
+
+**Factorials or exponentials → Ratio Test.** When consecutive terms have a clean multiplicative relationship, the ratio $a_{n+1}/a_n$ simplifies beautifully. This test detects *exponential-rate* convergence or divergence.
+
+$$\sum \frac{2^n}{n!}: \quad \frac{a_{n+1}}{a_n} = \frac{2^{n+1}}{(n+1)!} \cdot \frac{n!}{2^n} = \frac{2}{n+1} \to 0 < 1 \quad \text{(converges)}$$
+
+**Polynomial terms (rational functions of $n$) → Limit Comparison with a p-series.** If the terms look like a ratio of polynomials in $n$, find the dominant power and compare to $1/n^p$. The ratio test *cannot* handle these — it always gives $L = 1$.
+
+$$\sum \frac{3n + 1}{n^3 - 5}: \quad \text{Dominant behavior is } \frac{3n}{n^3} = \frac{3}{n^2}. \quad \text{Compare to } \sum \frac{1}{n^2}$$
+
+$$\lim_{n \to \infty} \frac{(3n+1)/(n^3-5)}{1/n^2} = \lim \frac{(3n+1) \cdot n^2}{n^3 - 5} = \lim \frac{3n^3 + n^2}{n^3 - 5} = 3$$
+
+Since $0 < 3 < \infty$ and $\sum 1/n^2$ converges ($p = 2 > 1$), the original series converges.
+
+**Decreasing function you can integrate → Integral Test.** When the terms come from a clean, integrable function and comparison isn't obvious. Especially useful for terms involving $\ln(n)$.
+
+$$\sum \frac{1}{n \ln(n)}: \quad \int_2^{\infty} \frac{1}{x \ln(x)}\,dx = \ln(\ln(x))\Big|_2^{\infty} = \infty \quad \text{(diverges)}$$
+
+This series is tricky because it *looks* like it should converge (terms go to zero, and faster than $1/n$), but it doesn't. The integral test catches it cleanly. (Note: $\sum 1/(n \cdot \ln(n)^2)$ *does* converge — the extra power of $\ln$ is just enough.)
+
+**Alternating signs → Alternating Series Test.** When terms flip sign via $(-1)^n$. Just check that the absolute values decrease and approach zero.
+
+$$\sum \frac{(-1)^n}{n}: \quad b_n = \frac{1}{n} \text{ is decreasing and } b_n \to 0 \quad \text{(converges conditionally)}$$
+
+This converges even though $\sum 1/n$ diverges — the alternating signs create enough cancellation. But it's only *conditional* convergence: rearranging the terms can change the sum (Riemann rearrangement theorem).
+
+**Everything raised to the $n$-th power → Root Test.** When taking an $n$-th root simplifies things more cleanly than the ratio would.
+
+$$\sum \left(\frac{n}{2n+1}\right)^n: \quad |a_n|^{1/n} = \frac{n}{2n+1} \to \frac{1}{2} < 1 \quad \text{(converges)}$$
+
+The ratio test would work here too, but the algebra is messier. The root test peels off the $n$-th power immediately.
+
+**Partial fractions reveal cancellation → Telescoping.** When the terms decompose into $f(n) - f(n+1)$, consecutive terms cancel and the partial sum collapses.
+
+$$\sum \frac{1}{n(n+1)}: \quad \frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}$$
+
+$$S_N = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \cdots + \left(\frac{1}{N} - \frac{1}{N+1}\right) = 1 - \frac{1}{N+1} \to 1$$
+
+**Why the ratio test has a blind spot:** The ratio test measures whether terms decay at an *exponential* rate. Polynomial decay ($1/n^p$) is always slower than exponential decay, so the ratio $a_{n+1}/a_n$ approaches 1 from below for every p-series — the test can't distinguish $1/n$ (diverges) from $1/n^{100}$ (converges). That's why polynomial series need comparison or integration instead.
+
 ---
 
 ## Statistics & Regression
