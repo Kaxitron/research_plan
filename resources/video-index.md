@@ -322,6 +322,33 @@
 
 ---
 
+## Herman Kamper — Introduction to Machine Learning (DatA414)
+
+**Channel:** [youtube.com/@kamperh](https://www.youtube.com/@kamperh)
+**Course Page:** [kamperh.com/data414](https://www.kamperh.com/data414/)
+**GitHub:** [github.com/kamperh/data414](https://github.com/kamperh/data414)
+
+*Full university ML course from Stellenbosch University. Handwritten tablet-style lectures with mathematical derivations, slides, and Colab notebooks. Covers the full pipeline from linear regression through neural networks with backprop. Especially strong on vector/matrix derivatives and the bridge from logistic regression to neural networks. CC BY-SA licensed.*
+
+| Playlist / Topic | Lesson | Key Videos |
+|-----------------|--------|------------|
+| Linear Regression (simple through multiple) | 34 | [Simple LR](https://youtu.be/L5-lxSGO9bM&list=PLmZlBIcArwhNd_sWiz6f1-NHc3lg3k7PF), [Vector/Matrix Derivatives](https://youtu.be/FCWrduAxf-Q&list=PLmZlBIcArwhNd_sWiz6f1-NHc3lg3k7PF) |
+| Overfitting & Regularisation | 19, 34 | [Overfitting](https://youtu.be/S7B3LQJrU0w&list=PLmZlBIcArwhNd_sWiz6f1-NHc3lg3k7PF), [Regularisation](https://youtu.be/Zojp8z8GD8c&list=PLmZlBIcArwhNd_sWiz6f1-NHc3lg3k7PF) |
+| Maximum Likelihood Estimation & Gaussians | 30 | [MLE](https://youtu.be/i6Rp0eiINgM&list=PLmZlBIcArwhPnCzcSUU5mF90aU_dMSnZ2), [Multivariate Gaussian](https://youtu.be/azrTdjrA2bU&list=PLmZlBIcArwhPnCzcSUU5mF90aU_dMSnZ2) |
+| Classification (KNN, Naive Bayes, Generative vs Discriminative) | 38, 40 | [KNN](https://youtu.be/73YHJwp71hk&list=PLmZlBIcArwhMiJk7vCghuHGOGXXjC4n6b), [Bayes Classifier](https://youtu.be/AaOTx_eLGZ0&list=PLmZlBIcArwhMiJk7vCghuHGOGXXjC4n6b) |
+| Logistic Regression & Gradient Descent | 15, 34, 38 | [Model & Loss](https://youtu.be/nS6YewQAK7I&list=PLmZlBIcArwhOr0ysO1Hg4Wfoww0dZnHz4), [Gradient Descent](https://youtu.be/BlnLoqn3ZBo&list=PLmZlBIcArwhOr0ysO1Hg4Wfoww0dZnHz4), [Decision Boundary](https://youtu.be/fPT8VeuFRkU&list=PLmZlBIcArwhOr0ysO1Hg4Wfoww0dZnHz4) |
+| Decision Trees & Ensemble Methods | 38 | [Decision Trees Intro](https://youtu.be/mfzTmt0nTtU&list=PLmZlBIcArwhPrP3H7iejBQpqtP1UHrhFp), [Random Forests](https://youtu.be/7ex0aF2k7YY&list=PLmZlBIcArwhOS-uLDR79Dzzp_e1QdxOhP), [Boosting](https://youtu.be/9C__SHdkY8A&list=PLmZlBIcArwhOS-uLDR79Dzzp_e1QdxOhP) |
+| K-Means Clustering & PCA | 29 | [K-Means](https://youtu.be/PgK1IppRdsE&list=PLmZlBIcArwhMfNuMBg4XR-YQ0QIqdHCrl), [PCA Intro](https://youtu.be/MLknbgx7k_k&list=PLmZlBIcArwhMfNuMBg4XR-YQ0QIqdHCrl), [PCA & SVD](https://youtu.be/DQ_BkPHIl-g&list=PLmZlBIcArwhMfNuMBg4XR-YQ0QIqdHCrl) |
+| Introduction to Neural Networks (full playlist, ~2.5 hrs) | 14, 16, 40-42 | [Playlist](https://www.youtube.com/playlist?list=PLmZlBIcArwhMHnIrNu70mlvZOwe6MqWYn), [Logistic Regression to NNs](https://youtu.be/_FWFutvALwo&list=PLmZlBIcArwhMHnIrNu70mlvZOwe6MqWYn), [Backprop](https://youtu.be/6SW1oUztmzg&list=PLmZlBIcArwhMHnIrNu70mlvZOwe6MqWYn) |
+
+### Also on the Channel
+
+| Course | Description |
+|--------|-------------|
+| [NLP817](https://www.kamperh.com/nlp817/) | Introduction to Natural Language Processing (includes transformers unit) |
+
+---
+
 ## Supplementary Videos by Topic
 
 *Individual videos from various channels that fill specific lesson gaps.*
@@ -402,13 +429,13 @@
 | 31 | Information Theory | 3B1B (Wordle), StatQuest (Entropy) |
 | 32 | Hypothesis Testing | StatQuest (P-values), 3B1B (CLT) |
 | 33 | Experimental Design | Veritasium, MinutePhysics, StatQuest |
-| 34 | Regression | StatQuest (Linear, Logistic, Ridge/Lasso) |
+| 34 | Regression | StatQuest (Linear, Logistic, Ridge/Lasso), Herman Kamper (Linear Regression series) |
 | 35 | Bayesian Foundations | 3B1B (Bayes), StatQuest (Bayesian Inference) |
 | 36 | Bayesian Computation | StatQuest (MCMC), Mutual Information (VAE) |
 | 37 | Bayesian Model Comparison | Neel Nanda/Hoogland (SLT), McElreath |
 | 38 | Causal Inference | Brady Neal, Judea Pearl |
 | 39 | Applied Statistics | StatQuest (GWAS), Robert Sapolsky |
-| 40 | Single Neuron | Welch Labs Ch. 1, 3B1B DL Ch. 1 |
+| 40 | Single Neuron | Welch Labs Ch. 1, 3B1B DL Ch. 1, Herman Kamper (Classification) |
 | 41 | Forward Pass | Welch Labs Ch. 2+4, Karpathy (makemore) |
 | 42 | Backprop | Welch Labs Ch. 3, Karpathy (Lectures 4–5) |
 | 43 | Attention | 3B1B DL Ch. 5–6, Welch Labs Ch. 8 |
