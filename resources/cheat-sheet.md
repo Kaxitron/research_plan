@@ -59,6 +59,7 @@
 - [36. Newton's Method](#36-newtons-method)
 - [37. Inverse Function Derivatives](#37-inverse-function-derivatives)
 - [38. Polar Coordinates](#38-polar-coordinates)
+- [39. Taylor's Theorem — Remainder Forms](#39-taylors-theorem--remainder-forms)
 
 ### [Key Identities Quick Reference](#key-identities-quick-reference)
 
@@ -1098,6 +1099,78 @@ $$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
 
 ---
 
+
+## 39. Taylor's Theorem — Remainder Forms
+
+### Taylor's Theorem (Exact)
+
+$$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k + R_n(x)$$
+
+This is an **exact equation**, not an approximation. $R_n(x)$ captures everything the polynomial misses.
+
+### Deriving the Coefficients
+
+Assume $f(x) = c_0 + c_1(x-a) + c_2(x-a)^2 + \cdots$ and match derivatives at $a$:
+
+- $f(a) = c_0$, so $c_0 = f(a)$
+- $f'(a) = c_1$, so $c_1 = f'(a)$
+- $f''(a) = 2c_2$, so $c_2 = f''(a)/2!$
+- $f^{(n)}(a) = n! \cdot c_n$, so $c_n = f^{(n)}(a)/n!$
+
+The $n!$ in the denominator cancels the $n!$ that appears when you differentiate $(x-a)^n$ exactly $n$ times.
+
+### Integral Remainder (Exact — No Approximation)
+
+$$R_n(x) = \int_a^x \frac{(x-t)^n}{n!} f^{(n+1)}(t) \, dt$$
+
+Derived by repeatedly applying integration by parts to the Fundamental Theorem $f(x) = f(a) + \int_a^x f'(t)\,dt$. Each round peels off one Taylor term and leaves a smaller integral.
+
+### Lagrange Remainder (Compressed via MVT)
+
+$$R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$$
+
+for some $c$ between $a$ and $x$. Obtained by applying the Mean Value Theorem for Integrals to the integral remainder. The unknown $c$ absorbs the entire infinite tail of higher-order terms.
+
+**Three factors of the remainder:**
+
+| Factor | Meaning |
+|--------|---------|
+| $(x-a)^{n+1}$ | How far you are from the expansion point |
+| $\frac{1}{(n+1)!}$ | How many terms the polynomial already captured |
+| $f^{(n+1)}(c)$ | How "wild" the function is beyond what was captured |
+
+### Error Bound (Practical Form)
+
+$$|R_n(x)| \leq \frac{M}{(n+1)!}|x-a|^{n+1} \quad \text{where } M = \max_{t \in [a,x]} |f^{(n+1)}(t)|$$
+
+Replace unknown $c$ with worst-case maximum.
+
+### Proving a Taylor Series Converges to $f$
+
+1. Write $f(x) = T_n(x) + R_n(x)$ (always exact)
+2. Show $|R_n(x)| \to 0$ as $n \to \infty$
+3. Then $f(x) = \lim_{n \to \infty} T_n(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x-a)^k$
+
+**Key fact:** Matching all derivatives at $a$ is necessary but not sufficient. The pathological function $f(x) = e^{-1/x^2}$ has all derivatives equal to zero at $x = 0$, so its Taylor series is identically 0 — but the function is not zero. The remainder must actually vanish.
+
+### Compact Series Formulas — Derivation Checklist
+
+To go from "compute derivatives" to $\sum$ notation:
+
+1. Compute $f^{(n)}(a)$ for several $n$, plug into $\frac{f^{(n)}(a)}{n!}(x-a)^n$
+2. Which powers survive? (odd → use $2n+1$; even → use $2n$; all → use $n$)
+3. Do signs alternate? (yes → include $(-1)^n$ or $(-1)^{n+1}$)
+4. Simplify the coefficient (factorials in $f^{(n)}(a)$ may cancel the $n!$)
+
+| Pattern | Encoding |
+|---------|----------|
+| Alternating signs $+, -, +, -$ | $(-1)^n$ |
+| Signs start negative $-, +, -, +$ | $(-1)^{n+1}$ |
+| Only odd powers $x, x^3, x^5$ | $x^{2n+1}$ |
+| Only even powers $1, x^2, x^4$ | $x^{2n}$ |
+
+---
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
@@ -1126,6 +1199,9 @@ $$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
 | $\int f(g(x))g'(x)\,dx = \int f(u)\,du$ | u-substitution |
 | $\int u\,dv = uv - \int v\,du$ | Integration by parts |
 | $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
+| $R_n(x) = \int_a^x \frac{(x-t)^n}{n!} f^{(n+1)}(t)\,dt$ | Exact integral remainder |
+| $R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ | Lagrange remainder |
+| $\|R_n(x)\| \leq \frac{M}{(n+1)!}\|x-a\|^{n+1}$ | Taylor error bound |
 | $\sum_{n=0}^{\infty} r^n = \frac{1}{1-r}$ for $\|r\|<1$ | Geometric series |
 | $f(x+h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$ | Taylor (2nd order) |
 | $x_{n+1} = x_n - f(x_n)/f'(x_n)$ | Newton's method (root-finding) |
@@ -1134,10 +1210,13 @@ $$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
 | $p_Y(y) = p_X(g^{-1}(y)) \cdot \|(g^{-1})'(y)\|$ | 1D change of variables |
 | $dx\,dy = r\,dr\,d\theta$ | Polar Jacobian |
 | $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
+| $R_n(x) = \int_a^x \frac{(x-t)^n}{n!} f^{(n+1)}(t)\,dt$ | Exact integral remainder |
+| $R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ | Lagrange remainder |
+| $\|R_n(x)\| \leq \frac{M}{(n+1)!}\|x-a\|^{n+1}$ | Taylor error bound |
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus, Lesson 13 complete)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus through Lesson 21)*
 
 
 
