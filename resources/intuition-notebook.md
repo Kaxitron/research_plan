@@ -29,6 +29,9 @@
 - [Riemann Sums — What they really are](#riemann-sums--what-they-really-are)
 - [Trig Sub — Converting back from double angles](#trig-sub--converting-back-from-double-angles)
 - [The Gaussian Integral and the Standard Normal — Why √(2π) and not √π](#the-gaussian-integral-and-the-standard-normal--why-2π-and-not-π)
+- [Taylor Series -- Polynomial Approximation as Derivative Matching](#taylor-series----polynomial-approximation-as-derivative-matching)
+- [Taylor Remainder -- What Each Piece Means Visually](#taylor-remainder----what-each-piece-means-visually)
+- [Why Taylors Theorem Is True](#why-taylors-theorem-is-true----repeated-integration-by-parts)
 
 **[Statistics & Regression](#statistics--regression)**
 - [Least squares IS projection — and the residuals prove it](#least-squares-is-projection--and-the-residuals-prove-it)
@@ -282,6 +285,34 @@ $$S_N = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + 
 
 **Why the ratio test has a blind spot:** The ratio test measures whether terms decay at an *exponential* rate. Polynomial decay ($1/n^p$) is always slower than exponential decay, so the ratio $a_{n+1}/a_n$ approaches 1 from below for every p-series — the test can't distinguish $1/n$ (diverges) from $1/n^{100}$ (converges). That's why polynomial series need comparison or integration instead.
 
+### Taylor Series -- Polynomial Approximation as Derivative Matching
+
+The core idea: you cannot evaluate a complicated function everywhere, but you can compute its derivatives at a single point a. Taylor series builds the unique polynomial matching all derivatives at a. The n! in the denominator cancels the n! produced by differentiating (x-a)^n.
+
+The physics analogy: x = x0 + v0*t + (1/2)a*t^2 IS a second-order Taylor expansion. f(a) = position, f'(a)*delta = velocity*time, f''(a)/2*delta^2 = half-acceleration*time-squared. Each term asks a deeper question about rates of change.
+
+Deriving compact sum notation: (1) compute derivatives at a, (2) spot which powers survive and whether signs alternate, (3) encode with (-1)^n for alternating signs, 2n+1 for odd powers, 2n for even powers.
+
+Why ln(1+x) has 1/n not 1/n!: its derivatives already contain factorials that cancel the Taylor formula denominator. Always simplify f^(n)(a)/n! fully.
+
+ML connection: zeroth order = random search, first order = gradient descent, second order = Newton method via Hessian.
+
+### Taylor Remainder -- What Each Piece Means Visually
+
+R_n(x) = f^(n+1)(c) / (n+1)! * (x-a)^(n+1) has three factors. Visually: the pink arrow between the true function and the Taylor polynomial.
+
+(x-a)^(n+1): how far from the expansion point. Further = bigger error. More terms make error shrink faster near a.
+
+1/(n+1)!: how many terms already captured. Factorials grow explosively, crushing the remainder.
+
+f^(n+1)(c): how wild the function is beyond what was captured. The mysterious c between a and x absorbs the entire infinite tail of higher derivatives.
+
+For gradient descent (n=1): R_1 = f''(c)/2 * (x-a)^2. Error = half curvature times step size squared. Why learning rate depends on largest Hessian eigenvalue.
+
+### Why Taylors Theorem Is True -- Repeated Integration by Parts
+
+Start from FTC: f(x) = f(a) + integral of f'(t) dt. Apply integration by parts with v = -(x-t). Each round peels off one Taylor coefficient, pushes remainder into smaller integral. After n rounds: exact polynomial plus exact integral remainder. No approximation anywhere. Factorials accumulate from repeated integration mirroring repeated differentiation.
+
 ---
 
 ## Statistics & Regression
@@ -349,5 +380,5 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-*Last updated: March 2026*
+*Last updated: March 2026 -- through Lesson 21 (Taylor Series)*
 
