@@ -246,7 +246,7 @@ $$\det(A - \lambda I) = 0$$
 
 $$A = PDP^{-1}$$
 
-where P = matrix of eigenvectors (columns), D = diagonal matrix of eigenvalues.
+where P = matrix of eigenvectors (columns), D = diagonal matrix of eigenvalues. A is only diagonalizable if it is square and it has n linearly independent eigenvectors, where n = the number of columns/rows.
 
 **Meaning:** change to eigenbasis → scale each direction → change back.
 
