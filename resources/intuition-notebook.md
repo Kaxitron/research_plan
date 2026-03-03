@@ -215,6 +215,31 @@ When you see $\sum a_n$ and need to determine convergence, walk through this flo
 
 **When you're stuck:** partial fractions, algebraic simplification, or rewriting the series in a different form often reveals which test to use. The goal is always to reduce to a known form or a clean comparison.
 
+
+### The Integral Test — why comparing to an integral works
+
+When $f(x)$ is positive and decreasing, the sum $\sum_{n=1}^{N} f(n)$ and the integral $\int_1^{N} f(x)\,dx$ are racing each other — and the sum always wins, because the rectangles poke above the curve.
+
+**The 1/x example that makes this click:**
+
+Draw $y = 1/x$ and left-endpoint rectangles at each integer. Each rectangle has width 1 and height $1/n$, so its area equals the $n$-th term of the harmonic series. Because $1/x$ is decreasing, the rectangle from $n$ to $n+1$ is taller than the curve on that interval (the left endpoint is the highest point). So the rectangles collectively overshoot the area under the curve:
+
+$$\sum_{n=1}^{N} \frac{1}{n} > \int_1^{N+1} \frac{1}{x}\,dx = \ln(N+1)$$
+
+Since $\ln(N+1) \to \infty$, anything bigger than it must also diverge. That proves $\sum 1/n = \infty$.
+
+**Why this logic generalizes:** For any positive, decreasing $f(x)$:
+
+$$\int_1^{N+1} f(x)\,dx < \sum_{n=1}^{N} f(n) < f(1) + \int_1^{N} f(x)\,dx$$
+
+The sum is squeezed between two integrals that differ by just $f(1)$. So the sum converges if and only if the integral converges — they live or die together.
+
+**Why it's a lower bound, not upper:** The key insight is that left-endpoint rectangles on a *decreasing* function always overshoot the curve. The integral is strictly *smaller* than the sum. So if even the smaller thing (the integral) blows up, the bigger thing (the sum) must blow up too. This is just the comparison test in disguise: $a_n > b_n$ and $\sum b_n = \infty$ implies $\sum a_n = \infty$.
+
+**The knife edge at p = 1:** For the p-series $\sum 1/n^p$, the corresponding integral is $\int_1^{\infty} x^{-p}\,dx$. The antiderivative switches behavior at $p = 1$: for $p \neq 1$ it's $x^{1-p}/(1-p)$ (a power function), but at $p = 1$ it's $\ln(x)$ (which diverges). So $p = 1$ is the exact boundary — shrink the terms even slightly faster than $1/n$ (any $p > 1$) and the integral becomes finite.
+
+**ML connection:** This integral-vs-sum relationship appears in learning rate theory. The conditions for SGD convergence — $\sum \eta_t = \infty$ but $\sum \eta_t^2 < \infty$ — are checked via the integral test. A schedule of $\eta_t = 1/t$ works because $\int 1/x\,dx = \ln(x) \to \infty$ (enough exploration) while $\int 1/x^2\,dx = 1$ (updates settle down).
+
 ---
 
 ## Statistics & Regression
