@@ -192,6 +192,29 @@ This is the **standard normal distribution** $\mathcal{N}(0, 1)$ — mean 0, var
 
 Every time you see $\sqrt{2\pi}$ in statistics, this is why it's there.
 
+### Series convergence — the decision algorithm
+
+When you see $\sum a_n$ and need to determine convergence, walk through this flowchart in order:
+
+**Step 0: Does $a_n \to 0$?** If $\lim_{n\to\infty} a_n \neq 0$, the series **diverges**. Full stop. This is the divergence test — it can only prove divergence, never convergence. (The converse is false: $\sum 1/n$ diverges even though $1/n \to 0$.)
+
+**Step 1: Is it a known form?**
+- **Geometric** $\sum ar^n$: converges iff $|r| < 1$. Look for a constant ratio between consecutive terms.
+- **p-series** $\sum 1/n^p$: converges iff $p > 1$. If the dominant behavior looks like $1/n^p$, jump to limit comparison.
+- **Telescoping**: partial fractions give $f(n) - f(n+1)$, so the partial sums collapse.
+
+**Step 2: Factorials or exponentials?** → **Ratio test.** Compute $\lim |a_{n+1}/a_n|$. Less than 1 → converges. Greater than 1 → diverges. Equal to 1 → inconclusive (this is the test's blind spot — it fails on all p-series, for instance). Intuition: you're asking "does each term shrink by a fixed fraction compared to the last one?"
+
+**Step 3: Can you compare it to something known?** → **Limit comparison test.** Find a simpler series $b_n$ with the same dominant behavior. If $\lim a_n/b_n = L$ where $0 < L < \infty$, both series do the same thing. This is the workhorse test — most "messy rational function" series are handled here by comparing to a p-series. (Direct comparison also works: if $0 \leq a_n \leq b_n$ and $\sum b_n$ converges, so does $\sum a_n$.)
+
+**Step 4: Clean decreasing function?** → **Integral test.** If $a_n = f(n)$ where $f$ is positive, continuous, and decreasing, then $\sum a_n$ converges iff $\int_1^\infty f(x)\,dx$ converges. Useful when the comparison isn't obvious but you can integrate the function.
+
+**Step 5: Alternating signs?** → **Alternating series test.** If $a_n = (-1)^n b_n$ with $b_n > 0$, $b_n$ decreasing, and $b_n \to 0$, the series converges. Note: this only gives *conditional* convergence. If $\sum |a_n|$ also converges, you have *absolute* convergence (stronger).
+
+**Step 6: Everything raised to $n$th power?** → **Root test.** Compute $\lim |a_n|^{1/n}$. Same threshold as ratio test (< 1 converges, > 1 diverges, = 1 inconclusive). Useful when the ratio test gives messy algebra but taking nth roots simplifies things.
+
+**When you're stuck:** partial fractions, algebraic simplification, or rewriting the series in a different form often reveals which test to use. The goal is always to reduce to a known form or a clean comparison.
+
 ---
 
 ## Statistics & Regression
@@ -260,3 +283,4 @@ The p-value gives you the first thing. What you actually want is the second thin
 ---
 
 *Last updated: March 2026*
+
