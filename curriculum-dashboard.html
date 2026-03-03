@@ -1012,6 +1012,29 @@ const PHASES = [
   { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
 ];
 
+// ─── Repeatable Review Activities (infinite placement on calendar) ───
+const REVIEW_ITEMS = [
+  { id: 'review-intuition', title: 'Review Intuition Notebook', label: '📓', color: '#a78bfa', repeatable: true, phase: '_review' },
+];
+
+function getReviewItem(id) {
+  if (id === 'review-intuition') return REVIEW_ITEMS[0];
+  const match = id.match(/^review-problems-(.+)$/);
+  if (match) {
+    const phase = PHASES.find(p => p.id === match[1]);
+    if (phase) return { id, title: `Review Problems: ${phase.name}`, label: '📝', color: phase.color, repeatable: true, phase: '_review' };
+  }
+  return null;
+}
+
+function findItem(id) {
+  return LESSONS.find(l => l.id === id) || getReviewItem(id);
+}
+
+function isReviewItem(id) {
+  return id === 'review-intuition' || (typeof id === 'string' && id.startsWith('review-problems-'));
+}
+
 const LESSONS = [
   // ─── Phase 0: CS Foundations ───
   {
@@ -3004,7 +3027,7 @@ function renderCalendar() {
     const dk = dateKey(calYear, calMonth, d);
     const isToday = dk === todayKey;
     const isSelected = dk === calSelectedDate;
-    const dayLessons = (cal[dk] || []).map(id => LESSONS.find(l => l.id === id)).filter(Boolean);
+    const dayLessons = (cal[dk] || []).map(id => findItem(id)).filter(Boolean);
 
     let classes = 'cal-day';
     if (isToday) classes += ' today';
@@ -3014,8 +3037,8 @@ function renderCalendar() {
     html += `<div class="cal-day-num">${d}</div>`;
 
     dayLessons.forEach(lesson => {
-      const color = getPhaseColor(lesson.phase);
-      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();calChipClick(${fmtId(lesson.id)},'${dk}')" title="${lesson.title} — click to view, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
+      const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
+      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();${lesson.repeatable ? '' : `calChipClick(${fmtId(lesson.id)},'${dk}')`}" title="${lesson.title} — right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
       html += `<span class="cal-chip-num">${lesson.label || lesson.id}</span>`;
       html += `<span class="cal-chip-title">${lesson.title}</span>`;
       html += `</div>`;
@@ -3055,6 +3078,27 @@ function renderCalendar() {
 
   html += `</div></div>`;
 
+  // Review activities pool — always visible, infinitely placeable
+  html += `<div class="cal-unscheduled" style="margin-top:0;border-top:1px solid var(--border)">`;
+  html += `<div class="cal-unscheduled-label">REVIEW ACTIVITIES — place as many times as you want</div>`;
+  html += `<div style="display:flex;flex-wrap:wrap;gap:0">`;
+
+  // Review Intuition Notebook
+  const riColor = '#a78bfa';
+  html += `<div class="cal-pool-chip" style="background:${riColor}15;color:${riColor}" draggable="true" ondragstart="calDragStart(event,'review-intuition')" onclick="calPoolClick('review-intuition')" title="Review your Intuition Notebook — placeable on any number of days">`;
+  html += `<span style="font-size:11px">📓</span>`;
+  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Review Intuition Notebook</span>`;
+  html += `</div>`;
+
+  // Review Problems: Phase X
+  const rpColor = '#f59e0b';
+  html += `<div class="cal-pool-chip" style="background:${rpColor}15;color:${rpColor}" draggable="true" ondragstart="calDragStartReviewProblems(event)" onclick="calPoolClickReviewProblems()" title="Review problems for a specific phase — you'll pick which phase">`;
+  html += `<span style="font-size:11px">📝</span>`;
+  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Review Problems: Phase X</span>`;
+  html += `</div>`;
+
+  html += `</div></div>`;
+
   container.innerHTML = html;
 }
 
@@ -3088,12 +3132,12 @@ function calSelectDay(dk) {
 function showDayPicker(dk) {
   const cal = loadCalendar();
   const dayLessonIds = cal[dk] || [];
-  const dayLessons = dayLessonIds.map(id => LESSONS.find(l => l.id === id)).filter(Boolean);
+  const dayItems = dayLessonIds.map(id => findItem(id)).filter(Boolean);
   const available = LESSONS.filter(l => !dayLessonIds.includes(l.id));
   const dayCounts = getScheduledDayCounts();
 
   const parts = dk.split('-');
-  const dateStr = new Date(parseInt(parts[0]), parseInt(parts[2])-1, parseInt(parts[3]))
+  const dateStr = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]))
     .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   let html = `<div class="detail-header">
@@ -3105,16 +3149,16 @@ function showDayPicker(dk) {
   </div>`;
 
   // Scheduled for this day
-  if (dayLessons.length > 0) {
+  if (dayItems.length > 0) {
     html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">📅</span> Scheduled</div>`;
-    dayLessons.forEach(lesson => {
-      const color = getPhaseColor(lesson.phase);
+    dayItems.forEach(lesson => {
+      const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
       const otherDays = (dayCounts[lesson.id] || 1) - 1;
       const otherNote = otherDays > 0 ? ` <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text-dim)">+${otherDays} other day${otherDays>1?'s':''}</span>` : '';
       html += `<div style="display:flex;align-items:center;gap:8px;padding:6px 0">
         <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:${color}">${lesson.label || lesson.id}</span>
-        <span style="font-size:12px;flex:1;cursor:pointer" onclick="selectLesson(${fmtId(lesson.id)})">${lesson.title}${otherNote}</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)">${lesson.hours}</span>
+        <span style="font-size:12px;flex:1;${lesson.repeatable ? '' : `cursor:pointer" onclick="selectLesson(${fmtId(lesson.id)})`}">${lesson.title}${otherNote}</span>
+        ${lesson.hours ? `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim)">${lesson.hours}</span>` : ''}
         <button onclick="calRemoveLesson(${fmtId(lesson.id)},'${dk}')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 4px" title="Remove from this day">✕</button>
       </div>`;
     });
@@ -3143,6 +3187,31 @@ function showDayPicker(dk) {
     });
     html += `</div>`;
   }
+
+  // Review activities section in day picker
+  html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔁</span> Review Activities</div>`;
+
+  // Review Intuition Notebook
+  if (!dayLessonIds.includes('review-intuition')) {
+    html += `<div class="picker-lesson" onclick="calAddLesson('review-intuition','${dk}')">
+      <span class="picker-lesson-num" style="color:#a78bfa">📓</span>
+      <span>Review Intuition Notebook</span>
+      <span class="picker-hours"></span>
+    </div>`;
+  }
+
+  // Review Problems — one entry per phase not already on this day
+  PHASES.forEach(phase => {
+    const rpId = `review-problems-${phase.id}`;
+    if (dayLessonIds.includes(rpId)) return;
+    html += `<div class="picker-lesson" onclick="calAddLesson('${rpId}','${dk}')">
+      <span class="picker-lesson-num" style="color:${phase.color}">📝</span>
+      <span>Review Problems: ${phase.name}</span>
+      <span class="picker-hours"></span>
+    </div>`;
+  });
+
+  html += `</div>`;
 
   document.getElementById('detail-empty').style.display = 'none';
   document.getElementById('detail-content').style.display = 'block';
@@ -3183,7 +3252,7 @@ function calChipClick(lessonId, dk) {
 function calPoolClick(lessonId) {
   if (calSelectedDate) {
     calAddLesson(lessonId, calSelectedDate);
-  } else {
+  } else if (!isReviewItem(lessonId)) {
     selectLesson(lessonId);
   }
 }
@@ -3200,6 +3269,12 @@ function calDrop(ev, dk) {
   ev.preventDefault();
   ev.target.closest('.cal-day')?.classList.remove('drag-over');
   if (calDragLesson !== null) {
+    if (calDragLesson === '__review-problems-pick__') {
+      // Dropping "Review Problems" — prompt for phase
+      calDragLesson = null;
+      showPhasePicker(dk);
+      return;
+    }
     const cal = loadCalendar();
     // Add to this day (don't remove from other days — lessons can span multiple days)
     if (!cal[dk]) cal[dk] = [];
@@ -3209,6 +3284,59 @@ function calDrop(ev, dk) {
     renderCalendar();
     if (calSelectedDate === dk) showDayPicker(dk);
   }
+}
+
+// ── Review Problems phase picker ──
+
+function calDragStartReviewProblems(ev) {
+  calDragLesson = '__review-problems-pick__';
+  ev.dataTransfer.effectAllowed = 'move';
+}
+
+function calPoolClickReviewProblems() {
+  if (calSelectedDate) {
+    showPhasePicker(calSelectedDate);
+  }
+}
+
+function showPhasePicker(dk) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+  let inner = `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;max-width:360px;width:90%">`;
+  inner += `<div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;margin-bottom:12px;color:var(--text)">Which phase to review?</div>`;
+  inner += `<div style="display:flex;flex-direction:column;gap:4px">`;
+
+  PHASES.forEach(phase => {
+    inner += `<button class="phase-pick-btn" data-phase="${phase.id}" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${phase.color}12;border:1px solid ${phase.color}33;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;color:${phase.color};text-align:left">`;
+    inner += `<span style="width:8px;height:8px;border-radius:50%;background:${phase.color};flex-shrink:0"></span>`;
+    inner += `<span>${phase.name}</span>`;
+    inner += `</button>`;
+  });
+
+  inner += `</div></div>`;
+
+  const box = document.createElement('div');
+  box.innerHTML = inner;
+  overlay.appendChild(box.firstChild);
+  document.body.appendChild(overlay);
+
+  overlay.querySelectorAll('.phase-pick-btn').forEach(btn => {
+    btn.onmouseenter = () => { btn.style.filter = 'brightness(1.3)'; };
+    btn.onmouseleave = () => { btn.style.filter = ''; };
+    btn.onclick = () => {
+      const phaseId = btn.dataset.phase;
+      const reviewId = `review-problems-${phaseId}`;
+      const cal = loadCalendar();
+      if (!cal[dk]) cal[dk] = [];
+      if (!cal[dk].includes(reviewId)) cal[dk].push(reviewId);
+      saveCalendar(cal);
+      overlay.remove();
+      renderCalendar();
+      if (calSelectedDate === dk) showDayPicker(dk);
+    };
+  });
 }
 
 
@@ -3450,4 +3578,5 @@ init();
 </script>
 </body>
 </html>
+
 
