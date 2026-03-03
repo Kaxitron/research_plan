@@ -1005,6 +1005,30 @@ $$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
 
 **ML connection:** Taylor series is THE key tool in theoretical ML. When a paper says "to second order" or "locally quadratic," they're using the Taylor expansion truncated at the $x^2$ term: $f(x + h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$.
 
+### Common Exact Sums — The "Vocabulary" of Series
+
+Most exact series evaluations work by decomposing (often via partial fractions) into pieces that reduce to one of these known results.
+
+| Sum | Value | Name / Origin |
+|-----|-------|---------------|
+| $\sum_{n=0}^{\infty} x^n$ | $\frac{1}{1-x}$, $\|x\| < 1$ | Geometric series |
+| $\sum_{n=0}^{\infty} \frac{x^n}{n!}$ | $e^x$ | Exponential series |
+| $\sum_{n=1}^{\infty} \frac{1}{n^2}$ | $\frac{\pi^2}{6}$ | Basel problem (Euler, 1734) |
+| $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$ | $\ln 2$ | Alternating harmonic series |
+| $\sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1}$ | $\frac{\pi}{4}$ | Leibniz formula (Gregory–Leibniz) |
+| $\sum_{n=1}^{\infty} \frac{1}{n^4}$ | $\frac{\pi^4}{90}$ | Euler (generalizes Basel) |
+| $\sum_{n=1}^{\infty} \frac{1}{n(n+1)}$ | $1$ | Telescoping series |
+
+**Key asymptotic facts:**
+
+$$H_N = \sum_{n=1}^{N}\frac{1}{n} \approx \ln N + \gamma \quad (\gamma \approx 0.5772 \text{, Euler–Mascheroni constant})$$
+
+$$H_{2N} - H_N \to \ln 2 \quad \text{as } N \to \infty$$
+
+**Strategy:** When you encounter a complicated rational series, use partial fractions to decompose it into pieces that match this table. The individual pieces may diverge (e.g. harmonic-like sums), but their cancellation often produces exact answers involving $\pi$, $\ln 2$, and other constants.
+
+**ML connection:** Recognizing known forms is exactly how applied ML math works — you don't re-derive the gradient of cross-entropy loss from scratch each time, you learn to decompose unfamiliar expressions into familiar building blocks.
+
 ---
 
 ## 36. Newton's Method
@@ -1114,6 +1138,7 @@ $$\boxed{\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}}$$
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus, Lesson 13 complete)*
+
 
 
 
