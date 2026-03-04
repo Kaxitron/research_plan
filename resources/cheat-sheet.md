@@ -995,14 +995,82 @@ $$\sum_{n=0}^{\infty} r^n = \frac{1}{1-r} \quad \text{for } |r| < 1$$
 
 ### Convergence Tests (quick reference)
 
-| Test | Use when | Converges if |
-|------|----------|-------------|
-| Geometric | $\sum ar^n$ | $|r| < 1$ |
-| p-series | $\sum 1/n^p$ | $p > 1$ |
-| Ratio | Series with factorials or exponentials | $\lim |a_{n+1}/a_n| < 1$ |
-| Comparison | Can bound against known series | Bounded by convergent series |
-| Integral | $f(n) = a_n$ decreasing, positive | $\int_1^\infty f(x) \, dx$ converges |
-| Alternating | $\sum (-1)^n a_n$ | $a_n \to 0$ and $a_n$ decreasing |
+| Test | Use when | Converges if | Diverges if |
+|------|----------|-------------|-------------|
+| **Geometric** | Series has the form $\sum ar^n$ | $\|r\| < 1$ (sum $= a/(1-r)$) | $\|r\| \geq 1$ |
+| **p-series** | Series has the form $\sum 1/n^p$ | $p > 1$ | $p \leq 1$ |
+| **Ratio** | Factorials ($n!$), exponentials ($k^n$), or products | $L < 1$ where $L = \lim_{n\to\infty} \|a_{n+1}/a_n\|$ | $L > 1$ (inconclusive if $L = 1$) |
+| **Root** | Terms raised to the $n$th power ($c_n^{\,n}$) | $L < 1$ where $L = \lim_{n\to\infty} \|a_n\|^{1/n}$ | $L > 1$ (inconclusive if $L = 1$) |
+| **Comparison** | Can bound against a known series | $0 \leq a_n \leq b_n$ and $\sum b_n$ converges | $0 \leq b_n \leq a_n$ and $\sum b_n$ diverges |
+| **Limit Comparison** | Ratio to a known series approaches a constant | $\lim a_n/b_n = c > 0$ and $\sum b_n$ converges | $\lim a_n/b_n = c > 0$ and $\sum b_n$ diverges |
+| **Integral** | $f(n) = a_n$, continuous, positive, decreasing for $n \geq N$ | $\int_N^\infty f(x)\,dx$ converges | $\int_N^\infty f(x)\,dx$ diverges |
+| **Alternating Series** | $\sum (-1)^n b_n$ with $b_n > 0$ | $b_n$ is eventually decreasing AND $b_n \to 0$ | (test only proves convergence) |
+| **Divergence (nth-term)** | Always check this first | (test cannot prove convergence) | $\lim_{n\to\infty} a_n \neq 0$ |
+
+#### Geometric Series — details
+
+$$\sum_{n=0}^{\infty} ar^n = \frac{a}{1-r}, \quad |r| < 1$$
+
+**How to recognise it:** Each term is a fixed multiple of the previous one. Look for expressions like $3 \cdot (1/2)^n$, $(0.9)^n$, $5 \cdot (-1/3)^n$.
+
+**How to apply:**
+1. Identify $a$ (the first term) and $r$ (the common ratio).
+2. If $|r| < 1$, the series converges to $a/(1-r)$.
+3. If $|r| \geq 1$, the series diverges.
+
+**Watch out for index shifts.** If the sum starts at $n = 1$ instead of $n = 0$:
+
+$$\sum_{n=1}^{\infty} ar^n = \frac{ar}{1-r}$$
+
+**Partial sum formula** (useful for finite sums):
+
+$$\sum_{n=0}^{N} ar^n = a\,\frac{1 - r^{N+1}}{1 - r}$$
+
+**Example:** $\sum_{n=0}^{\infty} \frac{3}{4^n} = \frac{3}{1 - 1/4} = 4$.
+
+#### Ratio Test — details
+
+Given $\sum a_n$ (with $a_n \neq 0$ eventually), compute:
+
+$$L = \lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right|$$
+
+| Result | Conclusion |
+|--------|-----------|
+| $L < 1$ | **Absolutely convergent** |
+| $L > 1$ (or $L = \infty$) | **Divergent** |
+| $L = 1$ | **Inconclusive** — must use another test |
+
+**How to recognise when to use it:** Your series has factorials ($n!$), exponentials ($k^n$), or products/ratios that simplify nicely when you form $a_{n+1}/a_n$.
+
+**How to apply:**
+1. Write out $a_{n+1}$ by replacing every $n$ with $n+1$.
+2. Form the ratio $|a_{n+1}/a_n|$ and simplify — most factors cancel.
+3. Take $\lim_{n \to \infty}$ of whatever remains.
+
+**Example:** $\sum \frac{n!}{3^n}$
+
+$$\frac{a_{n+1}}{a_n} = \frac{(n+1)!}{3^{n+1}} \cdot \frac{3^n}{n!} = \frac{n+1}{3} \to \infty$$
+
+$L = \infty > 1$ → **diverges**.
+
+**Example:** $\sum \frac{2^n}{n!}$
+
+$$\frac{a_{n+1}}{a_n} = \frac{2^{n+1}}{(n+1)!} \cdot \frac{n!}{2^n} = \frac{2}{n+1} \to 0$$
+
+$L = 0 < 1$ → **converges** (this is actually $e^2 - 1$ from the exponential series).
+
+**When it fails ($L = 1$):** This happens for p-series ($\sum 1/n^p$), harmonic-like series, and many polynomial-ratio series. Fall back to comparison, integral, or limit comparison tests.
+
+#### Decision flowchart — which test to try
+
+1. **First:** Does $a_n \to 0$? If not → **diverges** (nth-term test).
+2. **Geometric form?** ($ar^n$) → Use **geometric series** test.
+3. **p-series form?** ($1/n^p$) → Use **p-series** test.
+4. **Factorials or exponentials?** → Try the **ratio test**.
+5. **$n$th powers?** ($c_n^{\,n}$) → Try the **root test**.
+6. **Alternating signs?** → Try the **alternating series test**.
+7. **Looks like a known series?** → Try **(limit) comparison**.
+8. **Can write $a_n = f(n)$ with $f$ easy to integrate?** → Try the **integral test**.
 
 **ML connection:** Taylor series is THE key tool in theoretical ML. When a paper says "to second order" or "locally quadratic," they're using the Taylor expansion truncated at the $x^2$ term: $f(x + h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2$.
 
