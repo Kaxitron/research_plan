@@ -315,6 +315,10 @@ Start from FTC: f(x) = f(a) + integral of f'(t) dt. Apply integration by parts w
 
 ---
 
+### Newton's Method for Optimization — Root-Finding One Level Up
+
+Newton's method finds zeros. That's all it does. The optimization trick: minimizing g(x) means finding where g'(x) = 0, which is a root-finding problem. Apply Newton to f(x) = g'(x) and the second derivative g''(x) appears naturally as f'(x). You're still just finding zeros — but of the derivative, not the original function. This is the conceptual bridge to all second-order optimizers in ML: training a neural network = finding zeros of ∇L(w), which is Newton's method applied to the gradient. The Hessian appears because it's the derivative of the gradient.
+
 ## Statistics & Regression
 
 ### Least squares IS projection — and the residuals prove it
@@ -380,5 +384,6 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-*Last updated: March 2026 -- through Lesson 21 (Taylor Series)*
+*Last updated: March 2026 -- through Lesson 13 Part 14 (Newton's Method)*
+
 
