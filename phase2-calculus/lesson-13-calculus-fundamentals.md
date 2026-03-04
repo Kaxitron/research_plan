@@ -1,6 +1,6 @@
 # Lesson 13: Calculus Fundamentals — Rebuilding Your Intuition
 
-[← LA Capstone](../phase1-linear-algebra/lesson-12-capstone.md) | [Back to TOC](../README.md) | [Next: Gradients →](lesson-14-gradients.md)
+[← LA Capstone](../phase1-linear-algebra/lesson-12-capstone.md) | [Back to TOC](../README.md) | [Next: Intro to ODEs →](lesson-14-intro-odes.md)
 
 ---
 

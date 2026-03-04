@@ -1,6 +1,6 @@
 # Exam 4A: Neural Network Foundations — Answer Key
 
-**The Path to AI Alignment — Lessons 43–46 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 40–50, 82 Comprehensive Assessment**
 
 ---
 

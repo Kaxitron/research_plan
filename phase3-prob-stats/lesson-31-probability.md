@@ -1,6 +1,6 @@
 # Lesson 31: Probability Distributions and Bayes' Theorem
 
-[← PDEs](../phase2-calculus/lesson-25-pdes.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-32-expectation.md)
+[← Loss Landscapes](../phase2-calculus/lesson-81-loss-landscapes.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-32-expectation.md)
 
 ---
 

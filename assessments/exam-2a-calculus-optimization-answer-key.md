@@ -1,6 +1,6 @@
 # Exam 2A: Calculus — The Language of Optimization — Answer Key
 
-**The Path to AI Alignment — Lessons 13–21 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 13–23 Comprehensive Assessment**
 
 ---
 

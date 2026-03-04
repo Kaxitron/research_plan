@@ -1,8 +1,8 @@
 # AI Alignment Research Curriculum
 
-A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 78 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
+A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 85 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
 
-**Start date:** February 21, 2026 · **Estimated total:** 780–940 hours · **Dashboard:** [Interactive Curriculum Map](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
+**Start date:** February 21, 2026 · **Estimated total:** 860–1040 hours · **Dashboard:** [Interactive Curriculum Map](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
 
 ---
 
@@ -52,40 +52,56 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
-## Phase 2: Calculus, Multivariable Calculus & Differential Equations (175–210h)
+## Phase 2: Calculus, ODEs, Multivariable, Vector Calculus, PDEs & ML Calc (235–280h)
 
-### Block A: Pure Calculus & Multivariable Foundations (13–19)
+### Block A: Ordinary Differential Equations (13–18) — Trefor Bazett
 
 | # | Lesson | Status |
 |---|--------|--------|
 | 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | ✅ Complete |
-| 14 | [Partial Derivatives and Gradients](phase2-calculus/lesson-14-gradients.md) | ⬜ Not Started |
-| 15 | [The Multivariable Chain Rule and Jacobian Matrices](phase2-calculus/lesson-15-multivariable-chain-rule.md) | ⬜ Not Started |
-| 16 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-16-multiple-integration.md) | ⬜ Not Started |
-| 17 | [Taylor Expansions and the Implicit Function Theorem](phase2-calculus/lesson-17-taylor-expansions.md) | ⬜ Not Started |
-| 18 | [Vector Calculus — Fields, Divergence, Curl, and the Laplacian](phase2-calculus/lesson-18-vector-calculus.md) | ⬜ Not Started |
-| 19 | [The Fundamental Theorems of Vector Calculus](phase2-calculus/lesson-19-fundamental-theorems.md) | ⬜ Not Started |
+| 14 | [Introduction to ODEs — Classification and Direction Fields](phase2-calculus/lesson-14-intro-odes.md) | ⬜ Not Started |
+| 15 | [First-Order ODEs — Separable, Linear, and Exact](phase2-calculus/lesson-15-first-order-odes.md) | ⬜ Not Started |
+| 16 | [Higher-Order Linear ODEs and Mechanical Vibrations](phase2-calculus/lesson-16-higher-order-odes.md) | ⬜ Not Started |
+| 17 | [The Laplace Transform](phase2-calculus/lesson-17-laplace-transform.md) | ⬜ Not Started |
+| 18 | [Systems of ODEs and Phase Portraits](phase2-calculus/lesson-18-systems-odes.md) | ⬜ Not Started |
 
-### Block B: Differential Equations & Dynamical Systems (20–25)
-
-| # | Lesson | Status |
-|---|--------|--------|
-| 20 | [Introduction to ODEs — Rates of Change as Vector Fields](phase2-calculus/lesson-20-intro-odes.md) | ⬜ Not Started |
-| 21 | [Linear Systems and Phase Portraits](phase2-calculus/lesson-21-linear-systems.md) | ⬜ Not Started |
-| 22 | [Gradient Flow and Training Dynamics](phase2-calculus/lesson-22-gradient-flow.md) | ⬜ Not Started |
-| 23 | [Stability, Lyapunov Functions, and Phase Transitions](phase2-calculus/lesson-23-stability.md) | ⬜ Not Started |
-| 24 | [Neural ODEs and Stochastic Dynamics](phase2-calculus/lesson-24-neural-odes.md) | ⬜ Not Started |
-| 25 | [PDEs — Diffusion, Heat Equation, and Generative Models](phase2-calculus/lesson-25-pdes.md) | ⬜ Not Started |
-
-### Block C: ML-Applied Calculus (26–30)
+### Block B: Multivariable Calculus (19–23) — Trefor Bazett
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 26 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-26-matrix-calculus.md) | ⬜ Not Started |
-| 27 | [The Chain Rule — This IS Backpropagation](phase2-calculus/lesson-27-chain-rule.md) | ⬜ Not Started |
-| 28 | [Optimization and Gradient Descent](phase2-calculus/lesson-28-optimization.md) | ⬜ Not Started |
-| 29 | [Constrained Optimization and Lagrange Multipliers](phase2-calculus/lesson-29-constrained-optimization.md) | ⬜ Not Started |
-| 30 | [Loss Landscapes and Local Minima](phase2-calculus/lesson-30-loss-landscapes.md) | ⬜ Not Started |
+| 19 | [Partial Derivatives, Gradients, and Directional Derivatives](phase2-calculus/lesson-19-partial-derivatives.md) | ⬜ Not Started |
+| 20 | [The Multivariable Chain Rule and Jacobian Matrices](phase2-calculus/lesson-20-multivariable-chain-rule.md) | ⬜ Not Started |
+| 21 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-21-multiple-integration.md) | ⬜ Not Started |
+| 22 | [Taylor Expansions and the Implicit Function Theorem](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
+| 23 | [Optimization in Several Variables and Lagrange Multipliers](phase2-calculus/lesson-23-optimization.md) | ⬜ Not Started |
+
+### Block C: Vector Calculus (24–27, 73) — Trefor Bazett
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 24 | [Line Integrals and Curves](phase2-calculus/lesson-24-line-integrals.md) | ⬜ Not Started |
+| 25 | [Vector Fields and Conservative Fields](phase2-calculus/lesson-25-vector-fields.md) | ⬜ Not Started |
+| 26 | [Green's Theorem — Circulation, Divergence, and Curl](phase2-calculus/lesson-26-greens-theorem.md) | ⬜ Not Started |
+| 27 | [Surfaces, Surface Area, and Surface Integrals](phase2-calculus/lesson-27-surface-integrals.md) | ⬜ Not Started |
+| 73 | [Stokes' Theorem, Divergence Theorem, and the Unified View](phase2-calculus/lesson-73-stokes-divergence.md) | ⬜ Not Started |
+
+### Block D: Partial Differential Equations (74–78) — Jason Bramburger
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 74 | [Introduction to PDEs — Classification and the Heat Equation](phase2-calculus/lesson-74-intro-pdes.md) | ⬜ Not Started |
+| 75 | [Separation of Variables and Fourier Series](phase2-calculus/lesson-75-separation-fourier.md) | ⬜ Not Started |
+| 76 | [The Wave Equation — Vibrations and d'Alembert](phase2-calculus/lesson-76-wave-equation.md) | ⬜ Not Started |
+| 77 | [Helmholtz, Laplace, and Transport Equations](phase2-calculus/lesson-77-helmholtz-laplace.md) | ⬜ Not Started |
+| 78 | [PDEs in ML — Diffusion Models, Numerical Methods, and Score Matching](phase2-calculus/lesson-78-pdes-ml.md) | ⬜ Not Started |
+
+### Block E: ML-Applied Calculus (79–81)
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 79 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-79-matrix-calculus.md) | ⬜ Not Started |
+| 80 | [Optimization Algorithms — SGD through Adam](phase2-calculus/lesson-80-optimization-algorithms.md) | ⬜ Not Started |
+| 81 | [Loss Landscapes, Gradient Flow, and Training Dynamics](phase2-calculus/lesson-81-loss-landscapes.md) | ⬜ Not Started |
 
 ---
 
@@ -136,28 +152,36 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
-## Phase 4: Machine Learning & Interpretability (118–140h)
+## Phase 4: Machine Learning & Interpretability (148–176h)
 
-### Machine Learning Foundations (43–49)
+### Block A: Welch Labs + Karpathy (40–49)
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 43 | [How a Single Neuron Works](phase4-machine-learning/lesson-43-single-neuron.md) | ⬜ Not Started |
-| 44 | [The Forward Pass as Matrix Multiplications](phase4-machine-learning/lesson-44-forward-pass.md) | ⬜ Not Started |
-| 45 | [Backpropagation Through the Full Network](phase4-machine-learning/lesson-45-backprop.md) | ⬜ Not Started |
-| 46 | [Attention — Dot Products in Action](phase4-machine-learning/lesson-46-attention.md) | ⬜ Not Started |
+| 40 | [The Perceptron — How a Single Neuron Works](phase4-machine-learning/lesson-40-perceptron.md) | ⬜ Not Started |
+| 41 | [Gradient Descent — Learning from Errors](phase4-machine-learning/lesson-41-gradient-descent.md) | ⬜ Not Started |
+| 42 | [Backpropagation — The F=ma of AI](phase4-machine-learning/lesson-42-backpropagation.md) | ⬜ Not Started |
+| 43 | [Deep Learning — Why Depth Works](phase4-machine-learning/lesson-43-deep-learning.md) | ⬜ Not Started |
+| 44 | [AlexNet and Convolutional Neural Networks](phase4-machine-learning/lesson-44-alexnet-convnets.md) | ⬜ Not Started |
+| 45 | [Neural Scaling Laws and Emergence](phase4-machine-learning/lesson-45-scaling-laws.md) | ⬜ Not Started |
+| 46 | [Attention — How Transformers Think](phase4-machine-learning/lesson-46-attention.md) | ⬜ Not Started |
 | 47 | [Building a Transformer from Scratch](phase4-machine-learning/lesson-47-transformer.md) | ⬜ Not Started |
-| 48 | [Reinforcement Learning Foundations](phase4-machine-learning/lesson-48-rl-foundations.md) | ⬜ Not Started |
-| 49 | [The LLM Training Pipeline](phase4-machine-learning/lesson-49-llm-pipeline.md) | ⬜ Not Started |
+| 48 | [Mechanistic Interpretability — The Dark Matter of AI](phase4-machine-learning/lesson-48-mech-interp.md) | ⬜ Not Started |
+| 49 | [Video & Image Generation — Diffusion Models](phase4-machine-learning/lesson-49-diffusion-models.md) | ⬜ Not Started |
 
-### Mechanistic Interpretability (50–53)
+### Block B: Additional ML Topics (50, 82)
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 50 | [Interpretability — What Researchers Actually Do](phase4-machine-learning/lesson-50-interp-intro.md) | ⬜ Not Started |
-| 51 | [Interpretability — Circuits and Features in Practice](phase4-machine-learning/lesson-51-interp-circuits.md) | ⬜ Not Started |
-| 52 | [Interpretability — Scaling Laws and Emergence](phase4-machine-learning/lesson-52-interp-scaling.md) | ⬜ Not Started |
-| 53 | [Interpretability — Singular Learning Theory](phase4-machine-learning/lesson-53-interp-slt.md) | ⬜ Not Started |
+| 50 | [Reinforcement Learning Foundations](phase4-machine-learning/lesson-50-rl-foundations.md) | ⬜ Not Started |
+| 82 | [The LLM Training Pipeline](phase4-machine-learning/lesson-82-llm-pipeline.md) | ⬜ Not Started |
+
+### Block C: Deep Interpretability (83–84)
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 83 | [Interpretability — Circuits, Features, and Superposition](phase4-machine-learning/lesson-83-interp-circuits.md) | ⬜ Not Started |
+| 84 | [Interpretability — Singular Learning Theory](phase4-machine-learning/lesson-84-interp-slt.md) | ⬜ Not Started |
 
 ---
 
@@ -223,12 +247,12 @@ A structured self-study curriculum building from mathematical foundations throug
 | Exam | Covers | Time | Link |
 |------|--------|------|------|
 | Exam 1: Linear Algebra | Lessons 2–12 | 60 min | [Exam](assessments/exam-1-linear-algebra.md) · [Key](assessments/exam-1-linear-algebra-answer-key.md) |
-| Exam 2A: Calculus & Optimization | Lessons 13–19 | 90 min | [Exam](assessments/exam-2a-calculus-optimization.md) · [Key](assessments/exam-2a-calculus-optimization-answer-key.md) |
-| Exam 2B: Differential Equations | Lessons 20–25 | 60 min | [Exam](assessments/exam-2b-differential-equations.md) · [Key](assessments/exam-2b-differential-equations-answer-key.md) |
+| Exam 2A: Calculus & Optimization | Lessons 13–23 | 90 min | [Exam](assessments/exam-2a-calculus-optimization.md) · [Key](assessments/exam-2a-calculus-optimization-answer-key.md) |
+| Exam 2B: Differential Equations & PDEs | Lessons 14–18, 73–81 | 60 min | [Exam](assessments/exam-2b-differential-equations.md) · [Key](assessments/exam-2b-differential-equations-answer-key.md) |
 | Exam 3A: Probability & Frequentist | Lessons 31–37 | 60 min | [Exam](assessments/exam-3a-probability-frequentist.md) · [Key](assessments/exam-3a-probability-frequentist-answer-key.md) |
 | Exam 3B: Bayesian & Applied Stats | Lessons 38–42 | 60 min | [Exam](assessments/exam-3b-bayesian-applied.md) · [Key](assessments/exam-3b-bayesian-applied-answer-key.md) |
-| Exam 4A: Neural Network Foundations | Lessons 43–49 | 60 min | [Exam](assessments/exam-4a-neural-network-foundations.md) · [Key](assessments/exam-4a-neural-network-foundations-answer-key.md) |
-| Exam 4B: Mechanistic Interpretability | Lessons 50–53 | 60 min | [Exam](assessments/exam-4b-mechanistic-interpretability.md) · [Key](assessments/exam-4b-mechanistic-interpretability-answer-key.md) |
+| Exam 4A: Neural Network Foundations | Lessons 40–50, 82 | 60 min | [Exam](assessments/exam-4a-neural-network-foundations.md) · [Key](assessments/exam-4a-neural-network-foundations-answer-key.md) |
+| Exam 4B: Mechanistic Interpretability | Lessons 48, 83–84 | 60 min | [Exam](assessments/exam-4b-mechanistic-interpretability.md) · [Key](assessments/exam-4b-mechanistic-interpretability-answer-key.md) |
 | Exam 5A: Computability & Algebra | Lessons 54–59 | 60 min | [Exam](assessments/exam-5a-computability-algebra.md) · [Key](assessments/exam-5a-computability-algebra-answer-key.md) |
 | Exam 5B: Topology & Logic | Lessons 60–65 | 60 min | [Exam](assessments/exam-5b-topology-logic.md) · [Key](assessments/exam-5b-topology-logic-answer-key.md) |
 | Exam 6A: Rational Agency | Lessons 66–68 | 60 min | [Exam](assessments/exam-6a-rational-agency.md) · [Key](assessments/exam-6a-rational-agency-answer-key.md) |

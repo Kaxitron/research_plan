@@ -1,6 +1,6 @@
 # Lesson 42: Applied Statistics — Genetics, Epidemiology, and Adjudicating Debates
 
-[← Causal Inference](lesson-41-causal-inference.md) | [Back to TOC](../README.md) | [Next: How a Single Neuron Works →](../phase4-machine-learning/lesson-43-single-neuron.md)
+[← Causal Inference](lesson-41-causal-inference.md) | [Back to TOC](../README.md) | [Next: The Perceptron →](../phase4-machine-learning/lesson-40-perceptron.md)
 
 ---
 

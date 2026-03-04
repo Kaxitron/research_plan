@@ -1,6 +1,6 @@
 # Exam 4B: Mechanistic Interpretability — Answer Key
 
-**The Path to AI Alignment — Lessons 50–50 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 48, 83–84 Comprehensive Assessment**
 
 ---
 

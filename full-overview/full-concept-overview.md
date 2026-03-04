@@ -253,232 +253,162 @@
 
 ---
 
-## Phase 2: Calculus (Lessons 13–27)
+## Phase 2: Calculus (Lessons 13–23, 73–81)
+
+### Block A: ODEs (Lessons 13–18)
 
 ### Lesson 13: Calculus Fundamentals
-**Derivatives:**
-- **Derivative as rate of change** at an instant — slope of tangent line
-- **Limit definition:** f'(x) = lim_{h→0} [f(x+h) − f(x)] / h
-- Secant lines → tangent lines via limits
-- "Zooming in" intuition: smooth curves look linear at sufficient magnification (local linearity)
-- **Differentials** (dx, dy) as actual tiny quantities, not just notation
-- **Differentiation rules:**
-  - **Power rule:** d/dx xⁿ = nxⁿ⁻¹
-  - **Constant multiple and sum rules** (derivative is a linear operator)
-  - **Product rule:** (fg)' = f'g + fg' (rectangle area analogy)
-  - **Quotient rule:** (f/g)' = (f'g − fg') / g²
-  - **Chain rule:** d/dx f(g(x)) = f'(g(x))·g'(x) — THE most important rule for ML (backpropagation IS the chain rule)
-- **Key functions and their derivatives:**
-  - eˣ → eˣ (its own derivative; softmax, log-likelihood, exponential decay)
-  - ln(x) → 1/x (cross-entropy loss, log-likelihood, information theory)
-  - **Logarithmic derivative:** d/dx ln(f(x)) = f'(x)/f(x) (relative rate of change)
-  - sin(x) → cos(x), cos(x) → −sin(x) (positional encodings, Fourier features)
-  - **Sigmoid σ(x) = 1/(1+e⁻ˣ):** σ'(x) = σ(x)(1−σ(x)), max derivative = 0.25 → vanishing gradients
-  - **tanh(x):** output in (−1,1), tanh'(x) = 1 − tanh²(x)
-  - **ReLU(x) = max(0,x):** derivative is 0 or 1 (no gradient shrinkage), dead neuron problem
-  - Leaky ReLU, GELU (variants)
+- Derivative as rate of change, limit definition, local linearity
+- Differentiation rules: power, product, quotient, chain rule
+- Key derivatives: eˣ, ln(x), sigmoid, ReLU, tanh
+- Integration: FTC, u-substitution, integration by parts, improper integrals
+- Limits, L'Hopital's rule, MVT, IVT, sequences and series foundations
 
-**Integration:**
-- **Definite integral** ∫ₐᵇ f(x) dx = signed area under curve
-- **Riemann sums:** approximating area with rectangles (left, right, midpoint, trapezoidal)
-- **Fundamental Theorem of Calculus:**
-  - Part 1: d/dx ∫ₐˣ f(t) dt = f(x) (derivative of "area so far" = original function)
-  - Part 2: ∫ₐᵇ f(x) dx = F(b) − F(a) where F' = f (evaluate antiderivative at endpoints)
-- **Antiderivatives** (indefinite integrals): reverse the derivative table
-  - xⁿ → xⁿ⁺¹/(n+1) + C, 1/x → ln|x| + C, eˣ → eˣ + C, sin → −cos + C, cos → sin + C
-  - **Constant of integration** (+C) — vertical shifts don't change slope
-- **Integration techniques:**
-  - **u-substitution:** reverse chain rule, ∫f(g(x))g'(x)dx = ∫f(u)du
-  - **Integration by parts:** ∫u dv = uv − ∫v du (reverse product rule)
-  - Partial fractions (for rational functions)
-  - Trigonometric substitutions and identities
-- **Improper integrals:** ∫₀^∞ f(x) dx as limit of ∫₀ᴺ f(x)dx as N→∞ (convergence/divergence)
-  - Essential for probability densities over unbounded domains (Gaussian, exponential)
+### Lesson 14: Introduction to ODEs
+- ODE as vector field: dx/dt = f(x,t)
+- Gradient descent as Euler's method on gradient flow ODE
+- Solution curves, existence/uniqueness, fixed points
+- 1D stability analysis: f'(x*) < 0 stable, f'(x*) > 0 unstable
 
-**Limits, Continuity, and Foundational Theorems:**
-- **Limits:** lim_{x→a} f(x) — formal ε-δ definition (conceptual understanding, not daily use)
-- **Continuity:** f continuous at a ↔ lim_{x→a} f(x) = f(a)
-- **L'Hôpital's rule:** lim f/g in 0/0 or ∞/∞ form → lim f'/g'
-- **Squeeze theorem:** bound function between two converging functions
-- **Intermediate Value Theorem (IVT):** continuous f on [a,b] hits every value between f(a) and f(b)
-- **Mean Value Theorem (MVT):** there exists c in (a,b) where f'(c) = [f(b)−f(a)]/(b−a) (instantaneous rate = average rate somewhere)
-- **Extreme Value Theorem:** continuous f on closed [a,b] attains its max and min
+### Lesson 15: First-Order ODEs
+- Separable equations, integrating factors, exact equations
+- Linear first-order ODEs and solution methods
+- Phase line analysis and qualitative behavior
+- Applications: exponential growth/decay, logistic equation
 
-**Optimization (Critical Points):**
-- **Critical points:** where f'(x) = 0 or undefined — candidates for max/min
-- **Second derivative test:** f''(x₀) > 0 → local min (concave up), f''(x₀) < 0 → local max (concave down), f''(x₀) = 0 → inconclusive
-- **Concavity:** f'' > 0 = concave up (bowl), f'' < 0 = concave down (hill)
-- **Inflection points:** where concavity changes (f'' = 0 and changes sign)
-- Training a neural network = iteratively approximating where ∇L = 0
+### Lesson 16: Higher-Order ODEs
+- Linear systems dx/dt = Ax, solutions via eigenvalues
+- Phase portrait classification: stable/unstable nodes, saddles, spirals, centers
+- Matrix exponential, Jacobian linearization, Hartman-Grobman theorem
+- Basins of attraction, separatrices, condition number and convergence
 
-**Sequences and Series (foundations for Taylor, Lesson 17):**
-- **Sequences:** convergence, divergence, bounded, monotone
-- **Series:** Σaₙ, partial sums, geometric series (a/(1−r) when |r|<1)
-- **Convergence tests:** ratio test, comparison test, integral test (conceptual)
-- **Power series:** Σ aₙxⁿ, radius of convergence
-- Taylor/Maclaurin series covered in depth in Lesson 17
+### Lesson 17: Laplace Transform
+- Definition, linearity, transforms of common functions
+- Solving ODEs via Laplace transform (algebraic method)
+- Transfer functions and system analysis
+- Inverse Laplace transform, convolution theorem
 
-### Lesson 26: Matrix Calculus
-- Partial derivatives: change when wiggling one input
-- **Gradient vector:** ∇f collects all partial derivatives, points "uphill"
-- **Jacobian matrix:** derivative of vector-to-vector function (a matrix)
-- **Key matrix calculus results:**
-  - ∂/∂x(Ax) = A
-  - ∂/∂x(xᵀAx) = (A + Aᵀ)x
-  - ∂/∂X tr(AX) = Aᵀ
-- **Taylor series and linearization:** f(x+δ) ≈ f(x) + ∇f(x)ᵀδ (why gradient descent works)
-- Learning rate controls how far to trust the linear approximation
-- **Hessian matrix:** second-order partial derivatives, always symmetric
-  - Eigenvalues = curvature in each direction
-  - **Condition number** κ = λ_max/λ_min (elongated landscapes → zigzag SGD)
+### Lesson 18: Systems of ODEs
+- Coupled systems, state-space representation
+- Gradient flow: dW/dt = -nabla L(W), loss as Lyapunov function
+- Euler stability criterion, momentum as second-order ODE
+- Lyapunov stability, bifurcations (saddle-node, pitchfork), phase transitions in training
 
-### Lesson 14: Partial Derivatives and Gradients
-- Gradients perpendicular to contour lines
-- Gradient = direction of steepest ascent
-- **Directional derivatives:** rate of change in arbitrary direction
-- **Multivariable chain rule:** the key identity for backpropagation
-- Gradient field visualization (contour plots with arrows)
+### Block B: Multivariable Calculus (Lessons 19–23)
 
-### Lesson 27: The Chain Rule and Backpropagation
+### Lesson 19: Partial Derivatives and Gradients
+- Partial derivatives, gradient vector, directional derivatives
+- Gradients perpendicular to contour lines, steepest ascent
+- Gradient field visualization, multivariable chain rule
+- Critical points, second derivative test, concavity and inflection points
+
+### Lesson 20: Chain Rule and Jacobians
 - Single-variable and multivariable chain rule
-- **Computation graphs:** neural networks as directed graphs of simple operations
-- **Forward pass** (compute values) vs **backward pass** (compute gradients)
-- **Reverse-mode autodiff** vs forward-mode: reverse is O(1) per output, forward is O(1) per input — reverse wins for neural nets (many inputs, one loss)
-- Building a tiny backprop engine (micrograd-style)
+- Jacobian matrix: derivative of vector-to-vector functions
+- Computation graphs, forward pass vs backward pass
+- Reverse-mode autodiff vs forward-mode, backprop engine (micrograd)
 
-### Lesson 28: Optimization and Gradient Descent
-- **Gradient descent:** W ← W − η∇L(W)
-- **SGD:** mini-batch gradient estimates instead of full dataset
-- Learning rate: too big = overshoot, too small = slow
-- **Momentum:** accumulate velocity, coast through flat regions
-- **Adam optimizer:** adaptive per-parameter learning rates
-- **Convexity vs non-convexity:** neural network loss is non-convex
-- Building micrograd (Karpathy)
+### Lesson 21: Multiple Integration
+- Double/triple integrals, iterated integration, Fubini's theorem
+- Change of variables, Jacobian determinant as local stretching
+- Polar/spherical coordinates, the Gaussian integral via polar coordinates
+- Monte Carlo integration, importance sampling, reparameterization trick
 
-### Lesson 29: Constrained Optimization and Lagrange Multipliers
-- **Lagrange multipliers:** at constrained optimum, ∇f ∥ ∇g (gradients parallel)
-- **The Lagrangian:** L(x, λ) = f(x) − λg(x)
-- λ measures the "cost" of the constraint
-- **Multiple constraints and KKT conditions** (inequality constraints)
-- **Complementary slackness:** inactive constraints get λ = 0
-- **Convex optimization:** every local minimum is global
-- **Regularization as soft constraint:** L2 penalty ↔ constrained ||w||² ≤ C, λ IS the Lagrange multiplier
-- **Duality:** primal vs dual problems, weak and strong duality
-- SVMs derived via the dual problem
+### Lesson 22: Taylor Expansions and the Implicit Function Theorem
+- Taylor expansion: zeroth, first, second order approximations
+- Multivariate Taylor: local landscape as quadratic form of the Hessian
+- Implicit function theorem, failure at singularities (bifurcation points, SLT)
+- Big-O notation, Newton's method, scaling laws in asymptotic notation
 
-### Lesson 30: Loss Landscapes and Local Minima
-- Loss as function of all parameters in high-dimensional space
-- Local minima, saddle points, plateaus
-- **In high dimensions:** saddle points dominate (not local minima)
-- **Bias-variance tradeoff:** error = bias² + variance + noise
-- **Double descent:** error curve goes down, up, then down again for overparameterized models
-- **Grokking:** sudden generalization after apparent overfitting
-- **Cross-validation:** k-fold for estimating generalization
-- **Model selection:** AIC, BIC
-- Hessian analysis: positive eigenvalues = minimum, mixed = saddle
-- Condition number determines gradient descent zigzagging
+### Lesson 23: Optimization and Lagrange Multipliers
+- Gradient descent, SGD, learning rate, momentum, Adam
+- Lagrange multipliers, the Lagrangian, KKT conditions
+- Regularization as soft constraint, duality, convex optimization
+- Loss landscapes, saddle points, bias-variance, double descent, grokking
 
-### Lesson 16: Multiple Integration and Change of Variables
-- **Double/triple integrals:** volume under surface, iterated integration
-- **Fubini's theorem:** can switch integration order
-- **Change of variables formula:** Jacobian determinant measures local stretching
-- Polar coordinates (Jacobian = r)
-- **The Gaussian integral:** ∫e^(-x²)dx = √π (proved via polar coordinates)
-- **Multivariate Gaussian** normalization involves det(Σ)
-- **Monte Carlo integration:** approximate ∫f(x)p(x)dx by sampling
-- **Importance sampling:** sample from proposal q, reweight by p/q
-- Normalizing flows = chain of change-of-variables transformations
-- **Reparameterization trick** in VAEs
+### Block C: Vector Calculus (Lessons 24–27, 73)
 
-### Lesson 17: Taylor Expansions and the Implicit Function Theorem
-- **Taylor expansion:** f(x) ≈ f(a) + f'(a)(x−a) + ½f''(a)(x−a)² + ...
-- Zeroth order (constant), first order (gradient descent), second order (Newton's method)
-- **Multivariate Taylor:** f(w) ≈ f(w₀) + ∇f(w₀)ᵀ(w−w₀) + ½(w−w₀)ᵀH(w−w₀)
-- At critical points: local landscape IS the quadratic form of the Hessian
-- **Implicit function theorem:** when F(x,y)=0 can be solved for y=g(x), and g'(x) = −(∂F/∂x)/(∂F/∂y)
-- Fails at singularities → bifurcation points (key for SLT)
-- **Big-O notation:** f(x) = O(g(x)) — asymptotic bounds for truncation errors
-- Scaling laws expressed in asymptotic notation
+### Lesson 24: Line Integrals
+- Scalar and vector line integrals, path parameterization
+- Work as line integral of force field
+- Conservative fields, path independence, potential functions
+- Fundamental theorem for line integrals
 
-### Lesson 20: Introduction to ODEs
-- **ODE:** dx/dt = f(x,t) — rates of change as vector fields
-- **Vector field visualization:** arrows at every point showing direction/speed of flow
-- **Gradient descent as Euler's method on an ODE:** dW/dt = −∇L(W)
-- Step size h = learning rate η
-- **Solution curves / trajectories:** paths following the vector field
-- **Existence and uniqueness theorem** (Lipschitz continuity)
-- **Fixed points:** where f(x*) = 0 (critical points of loss for gradient flow)
-- **1D stability:** f'(x*) < 0 → stable, f'(x*) > 0 → unstable
+### Lesson 25: Vector Fields
+- Divergence: sources and sinks, div(F) = nabla . F
+- Curl: rotation/circulation, curl(F) = nabla x F
+- Irrotational and solenoidal fields
+- Physical and ML interpretations (flow fields, gradient fields)
 
-### Lesson 21: Linear Systems and Phase Portraits
-- **Linear systems:** dx/dt = Ax — behavior determined entirely by eigenvalues of A
-- **Solution:** x(t) = e^{At}x(0) = c₁e^{λ₁t}v₁ + c₂e^{λ₂t}v₂
-- **Matrix exponential**
-- **Phase portrait classification by eigenvalues:**
-  - Both negative real → **stable node** (convergence)
-  - Both positive real → **unstable node**
-  - Opposite signs → **saddle point**
-  - Complex with α < 0 → **stable spiral**
-  - Complex with α > 0 → **unstable spiral**
-  - Complex with α = 0 → **center** (closed orbits)
-- **Condition number revisited dynamically:** mismatched eigenvalues → zigzagging convergence
-- Adam/preconditioning equalize eigenvalues
-- **Jacobian linearization:** behavior near fixed point ≈ behavior of dx/dt = Jx
-- **Hartman-Grobman theorem:** nonlinear ≈ linear near hyperbolic fixed points
-- **Basins of attraction, separatrices**
+### Lesson 26: Green's Theorem
+- Relating line integrals to double integrals over enclosed region
+- Circulation and flux forms of Green's theorem
+- Applications: area computation, verifying conservative fields
+- Connection to fundamental theorem of calculus in higher dimensions
 
-### Lesson 22: Gradient Flow and Training Dynamics
-- **Gradient flow equation:** dW/dt = −∇L(W)
-- **Loss as Lyapunov function:** dL/dt = −‖∇L‖² ≤ 0 (loss always decreases along flow)
-- **Euler stability criterion:** η < 2/λ_max (fundamental learning rate bound)
-- **Momentum as second-order ODE:** damped ball rolling on loss surface
-- Momentum helps with ill-conditioning (cancels zigzag)
-- **Implicit regularization:** gradient descent from small init → minimum-norm solution
-- For deep linear networks → low-rank solutions
-- **Learning rate as temperature:** larger η → more noise → escapes sharp minima
-- **SGD noise:** σ² ∝ η/B (learning rate / batch size)
-- Batch size and generalization tradeoff
+### Lesson 27: Surface Integrals
+- Parameterized surfaces, surface area element
+- Scalar and vector surface integrals (flux)
+- Orientation of surfaces, normal vectors
+- Applications to physics and probability on manifolds
 
-### Lesson 23: Stability, Lyapunov Functions, and Phase Transitions
-- **Lyapunov stability:** find V(x) > 0 with dV/dt ≤ 0 → fixed point is stable
-- **Lyapunov functions for AI safety:** dream of proving alignment stability
-- **Bifurcations:** qualitative behavior changes as parameter varies
-  - **Saddle-node bifurcation:** two fixed points collide and annihilate
-  - **Pitchfork bifurcation:** symmetry breaking, one → three fixed points
-- **Phase transitions in training:** sudden qualitative changes (loss drops, capabilities emerge)
-- **Grokking** as saddle escape from memorization to generalization
-- **Emergent capabilities** as phase transitions in model size
-- **SLT phase transitions:** RLCT jumps correspond to capability acquisition
-- **Local Learning Coefficient (LLC):** tracks RLCT during training
-- **Attractors:** fixed points, limit cycles, strange attractors/chaos
-- Gradient systems can't have limit cycles (Strogatz), but SGD can oscillate
+### Lesson 73: Stokes' Theorem and the Divergence Theorem
+- Stokes' theorem: circulation integral = curl flux through surface
+- Divergence theorem: flux through closed surface = divergence integral over volume
+- Generalized Stokes' theorem unifying FTC, Green's, classical Stokes', divergence
+- Differential forms (conceptual), connections to topology and gauge theory
 
-### Lesson 24: Neural ODEs and Stochastic Dynamics
-- **ResNets as Euler steps:** x_{l+1} = x_l + f_θ(x_l) ≈ ODE
-- **Neural ODE framework:** dx/dt = f_θ(x), solved with adaptive ODE solvers
-- **Adjoint method:** O(1) memory backprop through ODE solver
-- Advantages: constant memory, adaptive computation
-- Limitations: sequential solving, homeomorphism constraint
-- **Continuous normalizing flows:** d(log p)/dt = −tr(∂f/∂x) (Hutchinson trace estimator)
-- **Stochastic Differential Equations (SDEs):** dW = −∇L dt + σ dB_t
-- **SGD as noisy gradient flow**
-- **Fokker-Planck perspective:** P(W) ∝ exp(−L(W)/T) at steady state
-- Large learning rate → preference for flat minima (sharp minima destabilized)
-- **Edge of stability:** training at η ≈ 2/λ_max (inherently discrete effect)
-- Simulated annealing connection (LR schedule = cooling)
+### Block D: PDEs (Lessons 74–78)
 
-### Lesson 25: Partial Differential Equations
-- **Heat equation:** u_t = k∇²u (diffusion = Gaussian blurring)
+### Lesson 74: Heat Equation
+- u_t = k nabla^2 u, diffusion as Gaussian blurring
 - Solution via convolution with Gaussian kernel
-- **Forward process of diffusion models** = progressive noise addition
-- **Fokker-Planck equation:** ∂p/∂t = −∂(fp)/∂x + (σ²/2)∂²p/∂x²
-- Describes probability distribution over weight space during SGD
-- **Score function:** ∇_x log p(x) — gradient of log-probability
-- **Score matching:** learn score without normalization constant
-- **Reverse SDE for diffusion models:** requires learned score function
-- **Probability flow ODE** (deterministic version of reverse SDE)
-- **Separation of variables, Fourier series** for solving linear PDEs
-- High-frequency modes decay fastest → diffusion models generate coarse-to-fine
+- Forward process of diffusion models as progressive noise addition
+- Boundary conditions (Dirichlet, Neumann), maximum principle
+
+### Lesson 75: Separation of Variables and Fourier Series
+- Separation of variables for linear PDEs
+- Fourier series: representing functions as sums of sinusoids
+- Fourier coefficients, convergence, Gibbs phenomenon
+- High-frequency modes decay fastest (coarse-to-fine generation)
+
+### Lesson 76: Wave Equation
+- u_tt = c^2 nabla^2 u, traveling wave solutions, d'Alembert's formula
+- Standing waves, normal modes, superposition
+- Energy conservation in wave systems
+- Signal propagation and information flow analogies
+
+### Lesson 77: Helmholtz, Laplace, and Transport Equations
+- Laplace equation (steady-state heat), harmonic functions
+- Helmholtz equation (frequency-domain wave), eigenvalue problems
+- Transport equation, method of characteristics
+- Connections to spectral methods and graph Laplacians in ML
+
+### Lesson 78: PDEs in ML
+- Fokker-Planck equation: probability evolution during SGD
+- Score function, score matching, reverse SDE for diffusion models
+- Probability flow ODE, continuous normalizing flows
+- Neural operators and physics-informed neural networks (PINNs)
+
+### Block E: ML Calculus (Lessons 79–81)
+
+### Lesson 79: Matrix Calculus
+- Gradient vector, Jacobian matrix, Hessian matrix
+- Key matrix calculus results: d/dx(Ax), d/dx(x^T A x), d/dX tr(AX)
+- Hessian eigenvalues as curvature, condition number and zigzag SGD
+- Taylor linearization: f(x+d) ~ f(x) + nabla f^T d (why gradient descent works)
+
+### Lesson 80: Optimization Algorithms
+- Gradient descent, SGD, mini-batch estimates
+- Momentum, Nesterov acceleration, Adam optimizer
+- Convexity vs non-convexity, learning rate schedules
+- Implicit regularization, edge of stability, SGD noise as temperature
+
+### Lesson 81: Loss Landscapes and Gradient Flow
+- Loss landscapes in high dimensions: saddle points dominate
+- Gradient flow dW/dt = -nabla L, Lyapunov analysis
+- Neural ODEs, adjoint method, ResNets as Euler steps
+- SDEs for SGD, Fokker-Planck steady state, simulated annealing
 
 ---
 
@@ -638,113 +568,98 @@
 
 ---
 
-## Phase 4: Machine Learning (Lessons 43–50)
+## Phase 4: Machine Learning (Lessons 40–50, 82–84)
 
-### Lesson 43: Single Neuron
+### Block A: Core ML (Lessons 40–49)
+
+### Lesson 40: Perceptron
 - Perceptron model: weighted sum + bias + activation
 - Linear decision boundary (hyperplane)
 - Step function, sigmoid, ReLU activations
 - Perceptron learning rule
-- **XOR problem:** single neurons can't solve non-linear problems
+- XOR problem: single neurons can't solve non-linear problems
 
-### Lesson 44: Forward Pass
-- **Multi-layer networks:** stacking linear transformations + nonlinearities
-- Forward pass = sequence of matrix multiplications + activations
-- **ReLU folds space** — geometric view of piecewise-linear decision boundaries
-- Universal approximation theorem
-- Width vs depth tradeoffs
+### Lesson 41: Gradient Descent
+- Gradient descent: W <- W - eta nabla L(W)
+- SGD: mini-batch gradient estimates, learning rate tuning
+- Momentum, Nesterov acceleration
+- Convexity vs non-convexity of neural network loss
 
-### Lesson 45: Backpropagation
+### Lesson 42: Backpropagation
 - Full network gradient computation via chain rule
-- **Backprop = reverse-mode autodiff on computation graph**
-- Gradient flow through layers
-- Vanishing/exploding gradients
-- **Residual connections** help gradient flow
-- Batch normalization, layer normalization
-- Gradient checking (numerical vs analytical)
+- Backprop = reverse-mode autodiff on computation graph
+- Gradient flow through layers, vanishing/exploding gradients
+- Residual connections, batch/layer normalization, gradient checking
+
+### Lesson 43: Deep Learning
+- Multi-layer networks: stacking linear transformations + nonlinearities
+- Forward pass = sequence of matrix multiplications + activations
+- ReLU folds space, universal approximation theorem
+- Width vs depth tradeoffs, representation learning
+
+### Lesson 44: AlexNet and CNNs
+- Convolutional layers: local receptive fields, weight sharing
+- Pooling, stride, feature hierarchies (edges -> textures -> objects)
+- AlexNet as the deep learning watershed moment
+- Modern CNN architectures, transfer learning
+
+### Lesson 45: Scaling Laws
+- Kaplan scaling laws: L(N) proportional to N^(-alpha)
+- Chinchilla scaling: optimal data/params ratio ~20:1
+- The bitter lesson (Rich Sutton): scale wins over cleverness
+- Emergent capabilities, measurement artifact debate, grokking as phase transition
 
 ### Lesson 46: Attention Mechanism
-- **Query, Key, Value** vectors: Q = xW_Q, K = xW_K, V = xW_V
-- **Attention scores:** QKᵀ/√d_k (scaled dot-product attention)
-- **Softmax** → attention weights (probability distribution over positions)
-- Weighted sum of values
-- **Multi-head attention:** multiple attention patterns in parallel
-- **Causal/autoregressive masking:** prevent attending to future tokens
+- Query, Key, Value vectors: Q = xW_Q, K = xW_K, V = xW_V
+- Attention scores: QK^T/sqrt(d_k), softmax as probability distribution
+- Multi-head attention, causal/autoregressive masking
 - Multi-head Latent Attention (MLA, DeepSeek variant)
 
 ### Lesson 47: Transformer Architecture
-- **Full transformer block:** LayerNorm → Multi-Head Attention → Residual → LayerNorm → MLP → Residual
-- **Residual stream** view: attention heads and MLPs read/write to shared stream
-- **Positional encoding:** sinusoidal or learned
-- **QK circuit** (W_Qᵀ W_K): determines what a head attends to
-- **OV circuit** (W_O W_V): determines what information moves
-- **"Mathematical Framework for Transformer Circuits"** (Elhage, Nanda et al.)
-- Building a transformer from scratch
+- Full transformer block: LayerNorm -> MHA -> Residual -> LayerNorm -> MLP -> Residual
+- Residual stream view, positional encoding (sinusoidal or learned)
+- QK circuit and OV circuit analysis
+- "Mathematical Framework for Transformer Circuits" (Elhage, Nanda et al.)
 
-### Lesson 48: Reinforcement Learning Foundations
-- **Agent, Environment, State, Action, Reward** framework
-- **Markov Decision Process (MDP):** states, actions, transition probabilities, rewards
-- **Policy π(a|s):** strategy mapping states to action probabilities
-- **Value function V(s)** and **Q-function Q(s,a)**
-- **Discount factor γ:** future reward weighting
-- **Policy gradient methods:** ∇J(θ) = E[∇log π(a|s)·Q(s,a)]
-- **PPO (Proximal Policy Optimization):** clipped updates, trust region
-- **Value-based methods:** Q-learning, DQN
-- **Reward shaping, specification gaming, Goodhart's Law**
-- **Sparse vs dense rewards, credit assignment problem**
-- **Reward hacking:** the alignment problem in miniature
-- **RLHF pipeline:** SFT → reward model from comparisons → PPO fine-tuning
+### Lesson 48: Mechanistic Interpretability
+- Mechanistic interpretability: reverse-engineering model internals
+- Activation patching, direct logit attribution, probing
+- Induction heads, feature circuits, steering vectors
+- Sparse autoencoders (SAEs), superposition, monosemantic vs polysemantic neurons
 
-### Lesson 49: LLM Training Pipeline
-- **Stage 1: Pre-training** — next-token prediction on internet text (MLE)
-- Scaling laws: loss ∝ N^(-α)
-- **Stage 2: SFT** — supervised fine-tuning on (instruction, response) demonstrations
-- Format learning, not judgment
-- **Stage 3: RLHF / DPO / Constitutional AI** — preference optimization
-- Reward model, PPO, KL penalty from base model
-- **DPO:** direct preference optimization (skip reward model)
-- **Constitutional AI:** principle-based self-critique (Anthropic's approach)
-- **Stage 4: Deployment and monitoring**
+### Lesson 49: Diffusion Models
+- Forward process: progressive noise addition (heat equation connection)
+- Reverse process: learned denoising, score function estimation
+- Score matching, reverse SDE, probability flow ODE
+- DDPM, classifier-free guidance, connections to Fokker-Planck
 
-### Lesson 50: Interpretability Introduction
-- **Mechanistic interpretability:** understanding model internals at circuit level
-- **Activation patching:** swap activations to measure causal importance
-- **Direct logit attribution:** which components contribute to final token prediction
-- **Probing:** train linear classifiers on intermediate representations
-- **Steering vectors:** add directions to residual stream to modify behavior
+### Block B: Applied ML (Lessons 50, 82)
 
-### Lesson 51: Circuits and Features
-- **Induction heads:** attention pattern that copies previous occurrences
-- **Feature circuits:** networks of components that implement specific computations
-- **Sparse autoencoders (SAEs):** decompose activations into interpretable features
-- **Superposition:** models represent more features than dimensions
-- **Monosemantic vs polysemantic neurons**
-- **Scaling monosemanticity** (Anthropic)
+### Lesson 50: RL Foundations
+- Agent, Environment, State, Action, Reward framework
+- MDP, policy pi(a|s), value function V(s), Q-function Q(s,a)
+- Policy gradient methods, PPO, value-based methods (Q-learning, DQN)
+- Reward shaping, specification gaming, Goodhart's Law, reward hacking
 
-### Lesson 52: Scaling Laws and Emergent Capabilities
-- **Kaplan scaling laws:** L(N) ∝ N^(-α) — loss as power law in model size
-- **Chinchilla scaling:** optimal data/params ratio ~20:1
-- **The bitter lesson** (Rich Sutton): scale wins over cleverness
-- **Emergent capabilities:** abrupt appearance at certain scales
-  - In-context learning, chain-of-thought, theory of mind
-- **Measurement artifact debate** (Schaeffer et al.): smooth in log-space, sharp in accuracy
-- **Practical danger threshold** may still be sharp
-- **Grokking as phase transition** in time (not scale)
-- **Developmental interpretability:** tracking internal changes at capability transitions
+### Lesson 82: LLM Pipeline
+- Pre-training: next-token prediction (MLE), scaling laws
+- SFT: supervised fine-tuning on demonstrations
+- RLHF / DPO / Constitutional AI: preference optimization
+- KL penalty, credit assignment, deployment and monitoring
 
-### Lesson 53: Singular Learning Theory (SLT)
-- **Standard statistics fails for neural networks:** many-to-one parameter-to-function map
-- **Symmetries create singularities:** neuron permutation, weight rescaling, zero neurons
-- Fisher information matrix is singular at singularities
-- **Free energy:** F = −log ∫ P(D|θ)P(θ)dθ
-  - Regular models: F ≈ (d/2)log n (= BIC)
-  - **Singular models: F ≈ λ·log n − (m−1)·log log n**
-- **RLCT (Real Log Canonical Threshold) λ:** true effective dimension, λ ≤ d/2
-- Measured via singularity geometry (blow-ups from algebraic geometry)
-- **Why overparameterized networks generalize:** real complexity (RLCT) << parameter count
-- **Phase transitions:** model moves between basins with different RLCTs
-- **Local Learning Coefficient (LLC):** estimable RLCT, tracks phase transitions during training
-- Connection to: eigenvalues (flat Hessian directions), rank (degenerate Fisher information), algebraic geometry (resolution of singularities)
+### Block C: Interpretability Theory (Lessons 83–84)
+
+### Lesson 83: Circuits and Superposition
+- Superposition hypothesis: more features than dimensions via near-orthogonality
+- SAE training and feature dictionaries for auditing model internals
+- Induction head circuit: previous token head + induction head composition
+- IOI circuit in GPT-2, developmental interpretability
+
+### Lesson 84: Singular Learning Theory (SLT)
+- Neural networks are singular: many-to-one parameter-to-function map
+- Symmetries create singularities, Fisher information is singular
+- RLCT (Real Log Canonical Threshold): true effective complexity, lambda <= d/2
+- Free energy formula, LLC tracking, phase transitions as bifurcations in training
 
 ---
 

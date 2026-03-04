@@ -1,6 +1,6 @@
 # Lesson 54: Turing Machines, Decidability, and the Halting Problem
 
-[← Interpretability — SLT](../phase4-machine-learning/lesson-53-interp-slt.md) | [Back to TOC](../README.md) | [Next: Computational Complexity →](lesson-55-computational-complexity.md)
+[← Interpretability — SLT](../phase4-machine-learning/lesson-84-interp-slt.md) | [Back to TOC](../README.md) | [Next: Computational Complexity →](lesson-55-computational-complexity.md)
 
 ---
 
