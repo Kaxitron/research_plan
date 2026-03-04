@@ -268,6 +268,17 @@
 - When Ax = b has no exact solution, x̂ = (AᵀA)⁻¹Aᵀb minimizes ||Ax − b||²
 - Least squares IS projection: Ax̂ is the projection of b onto the column space of A
 
+**Linear Regression as Projection:**
+- Setup: A = design matrix (rows = data points, columns = features), y = observed outcomes
+- ŷ = Ax̂ = projection of y onto Col(A) — the best prediction living in the column space
+- Error vector e = y − ŷ is perpendicular to Col(A): Aᵀ(y − Ax̂) = 0 (the normal equations)
+- Geometric picture: y lives in ℝⁿ, Col(A) is a subspace; ŷ is the closest point in that subspace
+- R² = ||ŷ||² / ||y||² — fraction of total variance explained by the model (when data is mean-centered)
+- Equivalently: R² = 1 − ||y − ŷ||² / ||y||² — one minus the fraction of unexplained variance
+- Pythagorean theorem: ||y||² = ||ŷ||² + ||e||² (because ŷ ⊥ e), so both R² formulas are consistent
+- R² = 1 means y ∈ Col(A) (perfect fit, zero error); R² = 0 means ŷ = 0 (model explains nothing)
+- Adding more columns to A can only increase R² (larger subspace to project onto), motivating regularization
+
 **Gram-Schmidt Process:**
 - Input: any basis {v₁, ..., vₖ}
 - Output: orthonormal basis {u₁, ..., uₖ} spanning the same subspace
@@ -310,12 +321,26 @@
 - **Trace:** tr(A) = Σ aᵢᵢ = Σ λᵢ; tr(AB) = tr(BA) (cyclic property)
 - **Inner product of functions:** ⟨f, g⟩ = ∫f(x)g(x)dx — extending dot products to function spaces; orthogonal functions
 
+**Principal Component Analysis (PCA):**
+- Goal: find the directions of maximum variance in the data
+- Mean-center the data first: X̃ = X − μ (subtract column means)
+- Covariance matrix: C = (1/n) X̃ᵀX̃ — symmetric PSD, entry Cᵢⱼ = covariance between features i and j
+- Diagonal entries = variances; off-diagonal entries = covariances (linear dependencies between features)
+- Correlation = covariance normalized by standard deviations: ρᵢⱼ = Cᵢⱼ / (σᵢ σⱼ), ρ ∈ [−1, 1]
+- PCA = eigendecomposition of C: eigenvectors are principal components, eigenvalues are variances along those directions
+- PCA IS a change of basis: the eigenvector basis diagonalizes C, guaranteeing uncorrelated components
+- First principal component = direction of maximum variance; second = max variance orthogonal to first; etc.
+- Dimensionality reduction: keep top k components, explained variance ratio = Σᵢ₌₁ᵏ λᵢ / Σ λⱼ
+- Choosing k: scree plot (eigenvalue vs. component number), elbow method, or variance threshold (e.g., keep 95%)
+- Connection to SVD: if X̃ = UΣVᵀ, then C = VΣ²Vᵀ/n, so V gives the principal components and σᵢ²/n = λᵢ
+
 **ML Connection:**
 - Weight decay = L2 regularization (penalizes ||w||₂²)
 - L1 regularization (Lasso) = sparsity (many weights driven to exactly 0)
 - Gradient clipping uses norms to bound update sizes
 - Layer normalization, spectral normalization
 - Covariance matrices are always symmetric PSD
+- PCA used for feature preprocessing, visualization (project high-dim data to 2D/3D), and noise reduction
 
 ---
 
