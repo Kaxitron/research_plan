@@ -70,6 +70,32 @@
 - Power series: Σaₙxⁿ, radius of convergence
 - Taylor/Maclaurin series (expanded in Lesson 17)
 
+**Newton's Method:**
+- Root-finding via linearization: x_{n+1} = xₙ − f(xₙ)/f'(xₙ)
+- Geometric intuition: follow the tangent line to the x-axis, repeat
+- Quadratic convergence: correct digits roughly double each iteration (when it converges)
+- Failure modes: f'(xₙ) ≈ 0 (horizontal tangent), oscillation, divergence from bad initial guess
+- Basin of attraction: set of initial points that converge to a given root
+- Connection to optimization: apply Newton's method to f'(x) = 0 to find extrema → Newton's method in optimization
+- ML connection: second-order optimization methods (Newton-Raphson, natural gradient) use curvature information
+
+**Inverse Function Derivatives:**
+- If y = f(x) is invertible, then (f⁻¹)'(y) = 1/f'(x) = 1/f'(f⁻¹(y))
+- Geometric intuition: reflecting the curve over y = x swaps rise and run → slope inverts
+- Derivation of d/dx(arcsin x), d/dx(arccos x), d/dx(arctan x) via implicit differentiation
+- Derivation of d/dx(ln x) = 1/x from inverse of eˣ
+- General principle: implicit differentiation is the universal tool when an explicit inverse is messy or unavailable
+
+**Polar Coordinates:**
+- Point representation: (r, θ) where r = distance from origin, θ = angle from positive x-axis
+- Conversion: x = r cos θ, y = r sin θ; r² = x² + y², θ = arctan(y/x)
+- Common polar curves: circles (r = a), cardioids (r = 1 + cos θ), roses (r = cos nθ), spirals (r = aθ), limaçons
+- Polar area: A = ½ ∫ r(θ)² dθ — derived from summing thin pie-slice sectors
+- Arc length in polar: L = ∫ √(r² + (dr/dθ)²) dθ
+- Tangent lines: dy/dx = (r'sin θ + r cos θ)/(r'cos θ − r sin θ) via parametric chain rule
+- Symmetry tests: replace θ → −θ, θ → π−θ, or r → −r to detect symmetry about x-axis, y-axis, or origin
+- ML/alignment connection: polar/angular coordinates appear in phase portraits of 2D dynamical systems and in complex-valued representations
+
 ---
 
 ### Lesson 14: Partial Derivatives and Gradients
