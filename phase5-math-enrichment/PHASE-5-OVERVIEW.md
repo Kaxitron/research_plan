@@ -1,12 +1,12 @@
 # Phase 5 Overview: Extended Mathematical Foundations — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 5 (Lessons 54–65, plus Lesson 72). These are the deep mathematical foundations that underpin Singular Learning Theory, agent foundations, and formal verification — the theoretical bedrock for alignment research.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 5 (Lessons 67–79). These are the deep mathematical foundations that underpin Singular Learning Theory, agent foundations, and formal verification — the theoretical bedrock for alignment research.
 
 ---
 
-## Computability & Complexity (Lessons 54–56)
+## Computability & Complexity (Lessons 67–69)
 
-### Lesson 54: Turing Machines, Decidability, and the Halting Problem
+### Lesson 67: Turing Machines, Decidability, and the Halting Problem
 
 - **Turing machine:** tape + read/write head + finite state control + transition function — the formal definition of "computation"
 - **Church-Turing thesis:** anything intuitively computable is Turing-computable (not a theorem — a claim about the universe)
@@ -20,7 +20,7 @@
 
 ---
 
-### Lesson 55: Computational Complexity — P, NP, and Feasibility
+### Lesson 68: Computational Complexity — P, NP, and Feasibility
 
 - **P:** problems solvable in polynomial time — "efficiently solvable"
 - **NP:** problems whose solutions are verifiable in polynomial time — "efficiently checkable"
@@ -38,7 +38,7 @@
 
 ---
 
-### Lesson 56: Kolmogorov Complexity, Algorithmic Information, and Solomonoff Induction
+### Lesson 69: Kolmogorov Complexity, Algorithmic Information, and Solomonoff Induction
 
 - **Kolmogorov complexity K(x):** length of the shortest program that generates string x
 - Simple/compressible strings have low K; random/incompressible strings have K(x) ≈ |x|
@@ -55,9 +55,9 @@
 
 ---
 
-## Abstract Algebra (Lessons 57–59)
+## Abstract Algebra (Lessons 70–72)
 
-### Lesson 57: Groups — Symmetry as Mathematics
+### Lesson 70: Groups — Symmetry as Mathematics
 
 - **Group:** set G with operation · satisfying closure, associativity, identity element e, inverses
 - **Examples:** integers under addition (ℤ, +); nonzero reals under multiplication (ℝ*, ×); permutation groups Sₙ; cyclic groups ℤₙ; matrix groups GL(n), SL(n), O(n), SO(n); dihedral groups Dₙ
@@ -76,7 +76,7 @@
 
 ---
 
-### Lesson 58: Rings, Fields, and Algebraic Structures
+### Lesson 71: Rings, Fields, and Algebraic Structures
 
 - **Ring:** set with two operations (+, ×); additive group + multiplicative monoid
 - Examples: integers ℤ, polynomials R[x], matrices Mₙ(R), integers mod n (ℤₙ)
@@ -95,7 +95,7 @@
 
 ---
 
-### Lesson 59: Group Actions, Representations, and Neural Network Symmetry
+### Lesson 72: Group Actions, Representations, and Neural Network Symmetry
 
 - **Group action:** a group G acts on a set X via a map G × X → X respecting group structure
 - **Orbits:** Orb(x) = {g·x : g ∈ G} — everything reachable from x
@@ -116,9 +116,9 @@
 
 ---
 
-## Topology & Geometry (Lessons 60–63, 72)
+## Topology & Geometry (Lessons 73–76, 79)
 
-### Lesson 60: Point-Set Topology — Open Sets, Continuity, Compactness
+### Lesson 73: Point-Set Topology — Open Sets, Continuity, Compactness
 
 - **Topological space:** set X with collection of "open sets" satisfying axioms (∅ and X open; unions of open sets are open; finite intersections of open sets are open)
 - **Closed sets:** complements of open sets
@@ -138,7 +138,7 @@
 
 ---
 
-### Lesson 61: Homotopy and Fundamental Groups
+### Lesson 74: Homotopy and Fundamental Groups
 
 - **Homotopy:** continuous deformation of one map into another — f ≃ g if you can smoothly morph f to g
 - **Homotopy equivalence of spaces:** X ≃ Y if you can continuously deform one into the other (weaker than homeomorphism)
@@ -154,7 +154,7 @@
 
 ---
 
-### Lesson 62: Manifolds and Tangent Spaces
+### Lesson 75: Manifolds and Tangent Spaces
 
 - **Smooth manifold:** space that locally looks like ℝⁿ with smooth transition maps between coordinate patches
 - **Charts and atlases:** local coordinate systems covering the manifold
@@ -170,7 +170,7 @@
 
 ---
 
-### Lesson 72: Differential Forms and Stokes' Theorem
+### Lesson 79: Differential Forms and Stokes' Theorem
 
 - **Differential forms:** the "right" objects to integrate on manifolds
 - **0-forms** = functions, **1-forms** = things you integrate along curves, **2-forms** = things you integrate over surfaces, **k-forms** = things you integrate over k-dimensional regions
@@ -187,7 +187,7 @@
 
 ---
 
-### Lesson 63: Algebraic Geometry — Singularities and Resolution for SLT
+### Lesson 76: Algebraic Geometry — Singularities and Resolution for SLT
 
 - **Algebraic varieties:** solution sets of polynomial equations (e.g., the set of all (x,y) where x² + y² = 1)
 - **Affine varieties** (in ℝⁿ or ℂⁿ), **projective varieties** (in projective space)
@@ -209,14 +209,14 @@
 
 ---
 
-## Formal Logic (Lessons 64–65)
+## Formal Logic (Lessons 77–78)
 
-### Lesson 64: Propositional and Predicate Logic
+### Lesson 77: Propositional and Predicate Logic
 
 - **Propositional logic:** atomic propositions combined with connectives ∧ (and), ∨ (or), ¬ (not), → (implies), ↔ (iff)
 - **Truth tables** for evaluating compound propositions
 - **Tautologies** (always true), **contradictions** (always false), **contingencies** (sometimes true)
-- **Satisfiability:** is there an assignment making the formula true? (SAT — NP-complete from Lesson 55)
+- **Satisfiability:** is there an assignment making the formula true? (SAT — NP-complete from Lesson 68)
 - **Normal forms:** CNF (conjunctive normal form), DNF (disjunctive normal form)
 - **Logical equivalences:** De Morgan's, double negation, contrapositive, distribution, absorption
 - **Predicate logic (first-order logic):** variables, predicates, quantifiers ∀ (for all), ∃ (there exists)
@@ -230,7 +230,7 @@
 
 ---
 
-### Lesson 65: Gödel's Incompleteness, Löb's Theorem, and Self-Reference
+### Lesson 78: Gödel's Incompleteness, Löb's Theorem, and Self-Reference
 
 - **Gödel numbering:** encoding logical statements as natural numbers — statements can "talk about" other statements (and themselves)
 - **Self-referential sentences:** "this statement is not provable" (Gödel sentence G)
@@ -254,5 +254,5 @@
 
 ## Assessments
 
-- **Exam 5A: Computability & Algebra** (Lessons 54–59) — 60 min
-- **Exam 5B: Topology & Logic** (Lessons 60–65, 72) — 60 min
+- **Exam 5A: Computability & Algebra** (Lessons 67–72) — 60 min
+- **Exam 5B: Topology & Logic** (Lessons 73–79) — 60 min

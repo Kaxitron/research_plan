@@ -1,145 +1,167 @@
 # Exam 4B: Mechanistic Interpretability
 
-**The Path to AI Alignment — Lessons 48, 83–84 Comprehensive Assessment**
+**The Path to AI Alignment -- Lessons 61, 65–66 Comprehensive Assessment**
 
 ---
 
 | | |
 |---|---|
-| **Time Allowed** | 60 minutes |
-| **Total Points** | 100 |
-| **Materials** | Pencil, paper. No calculator needed. |
-| **Format** | 10 questions: more conceptual and research-oriented than previous exams |
+| **Part I** | 10 short questions -- 30 minutes |
+| **Part II** | Interpretability project -- 3-4 hours |
+| **Materials** | Part I: pencil and paper. Part II: Python, TransformerLens, PyTorch |
+| **Format** | Conceptual fluency (Part I) + hands-on research (Part II) |
 
-> **Advice:** This exam values clear reasoning and connections between ideas over computation. The thread: **can you explain what interpretability reveals, why it matters for alignment, and how SLT provides the mathematical foundation?**
-
----
-
-## Question 1 (10 pts) — The Interpretability Landscape
-
-**(a)** State the central question of mechanistic interpretability in one sentence.
-
-**(b)** Describe three distinct interpretability techniques (e.g., probing, activation patching, SAEs). For each, state what it reveals and one limitation.
-
-**(c)** Why is interpretability crucial for alignment? Give a concrete scenario where interpretability could detect a safety-relevant property that behavioral testing alone would miss.
+> **Advice:** Part I tests whether you have internalized the core ideas well enough to explain them quickly and reason about counterfactuals. Part II tests whether you can do interpretability research. The thread: **can you explain what mechanistic interpretability reveals, why singular learning theory provides its mathematical foundation, and then actually investigate a model's internals?**
 
 ---
 
-## Question 2 (10 pts) — Superposition as Geometry
+# Part I: Core Concepts (30 minutes)
 
-**(a)** The superposition hypothesis states that neural networks represent more features than they have dimensions. Explain how this is possible using a geometric analogy. *(Hint: think about near-orthogonal vectors in high dimensions.)*
-
-**(b)** In d dimensions, approximately how many nearly-orthogonal vectors can you fit? (Give the approximate scaling, not an exact formula.) Why does this matter for understanding why networks are so hard to interpret?
-
-**(c)** If a neuron responds to both "cat" and "car" features because those features are superimposed, what does this mean for interpreting individual neurons? Why are features a better unit of analysis than neurons?
+Answer each question in 2-4 sentences unless otherwise specified. These are meant to be quick -- test your intuition, not your ability to write essays.
 
 ---
 
-## Question 3 (10 pts) — Sparse Autoencoders
+## Question 1 -- Mechanistic vs. Behavioral
 
-**(a)** A Sparse Autoencoder (SAE) is trained to decompose a model's activations into interpretable features. Describe the architecture: what is the encoder, the decoder, and the sparsity penalty?
-
-**(b)** The SAE objective is: minimize ‖x − Decode(Encode(x))‖² + λ·‖Encode(x)‖₁. Interpret each term.
-
-**(c)** Connect to Phase 3: the L1 penalty corresponds to what Bayesian prior? Why does this prior encourage sparsity?
-
-**(d)** An SAE trained on a language model produces a feature dictionary with entries like "feature 4817: activates on Python code," "feature 2103: activates on first-person emotional expressions." Why is this useful for alignment research?
+What is mechanistic interpretability, and how does it differ from behavioral testing (i.e., just running inputs and checking outputs)? Give one concrete example where behavioral testing would miss something that mechanistic interpretability could catch.
 
 ---
 
-## Question 4 (10 pts) — Circuits: Induction Heads
+## Question 2 -- Activation Patching
 
-**(a)** Describe the induction head circuit: what pattern does it detect, and how does it work (in terms of attention operations)?
-
-**(b)** The induction head requires two attention heads working in sequence. Describe what each head does (the "previous token head" and the "induction head").
-
-**(c)** Why was the discovery of induction heads significant for mechanistic interpretability? What does it demonstrate about how transformers implement algorithms?
-
-**(d)** The indirect object identification (IOI) circuit in GPT-2 is a more complex circuit. In 2–3 sentences, describe what task it solves and why finding it was a milestone.
+You run activation patching on a language model: you replace the activation at a specific layer and position with the activation from a different input, then observe how the output changes. What does a large change in output tell you about that activation? What does no change tell you?
 
 ---
 
-## Question 5 (10 pts) — Scaling Laws and Emergence
+## Question 3 -- Superposition
 
-**(a)** State the neural scaling law: how does loss L relate to compute C, dataset size D, and parameter count N? What is remarkable about these power-law relationships?
-
-**(b)** Define emergent capabilities. Give two examples of capabilities that appear suddenly at a specific model scale.
-
-**(c)** Why is emergence a problem for alignment? Connect to the concept of "predictability" — if we can't predict when dangerous capabilities will appear, what does this mean for safety testing?
-
-**(d)** Some researchers argue that emergence is an artifact of metrics (the "mirage" hypothesis). Explain this argument in 2–3 sentences.
+A transformer's residual stream has 512 dimensions, yet the model appears to represent thousands of distinct features. Explain how this is possible. Why does superposition make individual neurons hard to interpret?
 
 ---
 
-## Question 6 (12 pts) — Singular Learning Theory: Core Ideas
+## Question 4 -- Sparse Autoencoders
 
-**(a)** Classical statistics assumes models are "regular." Define what "regular" means in terms of the Fisher information matrix and the local shape of the loss landscape.
-
-**(b)** Why are neural networks NOT regular? Give two specific reasons related to the parameter-to-function mapping.
-
-**(c)** At a singularity, the Hessian has zero eigenvalues. From Phase 1 and 2, explain what zero Hessian eigenvalues mean geometrically for the loss landscape.
-
-**(d)** The RLCT (Real Log Canonical Threshold) λ replaces d/2 as the measure of model complexity. State the free energy formula and explain why λ ≤ d/2 explains generalization of overparameterized networks.
-
-**(e)** For a 1-hidden-unit ReLU network learning the zero function y = 0, the RLCT is λ = 1/4 (with 3 parameters). Compare with the "regular" value d/2 = 3/2. What does this 6× reduction in effective complexity mean?
+A Sparse Autoencoder (SAE) is trained to decompose model activations into interpretable features using the objective: minimize ||x - Decode(Encode(x))||^2 + lambda * ||Encode(x)||_1. In one sentence each: what does the reconstruction term do, what does the sparsity term do, and why does the combination help us find monosemantic features?
 
 ---
 
-## Question 7 (10 pts) — Phase Transitions and the LLC
+## Question 5 -- Induction Heads
 
-**(a)** What is a phase transition in the context of neural network training? Give an example (grokking, sudden capability gain, etc.).
-
-**(b)** The Local Learning Coefficient (LLC) is an estimable version of the RLCT that can be tracked during training. What does a sudden drop in the LLC indicate?
-
-**(c)** Developmental interpretability studies how model internals change during training, especially at phase transitions. Describe what a researcher would look for when examining a model before and after a grokking event.
-
-**(d)** Connect phase transitions to bifurcation theory (Lesson 23): in what sense is a sudden capability gain a bifurcation in the training dynamics?
+Describe the induction head circuit in 2-3 sentences: what pattern does it detect, and how do the two heads (the previous-token head and the induction head) work together? Why was this discovery significant for the claim that transformers learn interpretable algorithms?
 
 ---
 
-## Question 8 (10 pts) — The Geometry of Singularities
+## Question 6 -- QK vs. OV Circuits
 
-**(a)** Consider f(w₁, w₂) = (w₁w₂)². Plot or describe this surface. Where is the singularity? What shape does the zero set f = 0 have?
-
-**(b)** Compute the Hessian of f at the origin. What does the result tell you about the local shape?
-
-**(c)** Why can't the Hessian capture the true geometry at a singularity? What additional mathematical tool (from algebraic geometry) is needed?
-
-**(d)** In one sentence, describe what a "blow-up" does to a singularity and why it's useful for computing the RLCT.
+In a transformer attention head, the QK circuit and the OV circuit serve different roles. What does each one compute? (One sentence each is sufficient.)
 
 ---
 
-## Question 9 (8 pts) — SLT for Alignment
+## Question 7 -- Why Standard Statistics Fails
 
-**(a)** If we could compute the RLCT for different model behaviors (aligned vs. misaligned), what would we want to find? Which behavior should have lower RLCT, and why?
-
-**(b)** A deceptively aligned model implements a more complex internal strategy than a genuinely aligned model (it must model the training process AND decide when to defect). How would this difference in functional complexity theoretically manifest in SLT quantities?
-
-**(c)** What are the current practical limitations of using SLT for alignment research? Name at least two.
+BIC approximates model complexity using k/2, where k is the parameter count. Why does this fail for neural networks? Name two specific properties of neural networks that violate the "regularity" assumption BIC requires.
 
 ---
 
-## Question 10 (10 pts) — Synthesis
+## Question 8 -- The RLCT
 
-**(a)** Trace the mathematical thread from Phase 1 to SLT: eigenvalues → Hessian → loss landscape → singularities → RLCT. For each arrow, write one sentence explaining the connection.
-
-**(b)** A research colleague shows you a plot of the Local Learning Coefficient during training. You see: a flat period around λ ≈ 2.0 for the first 5000 steps, then a sharp drop to λ ≈ 0.8 at step 5000, followed by another flat period. Interpret this plot: what happened at step 5000? What can you infer about the model's internal structure before and after?
-
-**(c)** In your own words, write a 3–4 sentence summary of why SLT is considered one of the most promising mathematical frameworks for alignment.
+The Real Log Canonical Threshold (lambda) replaces d/2 as the measure of model complexity in Singular Learning Theory. What does lambda measure intuitively? Why is the fact that lambda <= d/2 important for explaining why overparameterized networks generalize?
 
 ---
 
-## 🔧 Optional Mini Project (~45 minutes): Activation Patching on a Toy Model
+## Question 9 -- Phase Transitions
 
-**Train a small network and use activation patching to find which components matter.**
+During training, a model's loss sometimes drops sharply after a long plateau (as in grokking). What is happening internally at such a phase transition, according to SLT? What would you expect to see in a plot of the Local Learning Coefficient at the moment of the transition?
 
-1. Train a 2-layer MLP on a task with clear internal structure: e.g., classify (x,y) points where the label depends on whether x > 0 AND y > 0 (a simple AND gate in 2D)
-2. For a set of test inputs, record all intermediate activations (after each layer, after each activation function)
-3. Implement activation patching: for a given input, replace the activation at one specific neuron with the activation from a different input, and measure how the output changes
-4. Sweep through all neurons in the network. Rank them by patching effect (which neurons, when corrupted, most change the output?)
-5. Visualize: create a heatmap showing "importance" of each neuron for each test input
-6. Interpret: do the important neurons correspond to meaningful features? (e.g., one neuron detects "x > 0", another detects "y > 0")
+---
 
-**Stretch:** Implement the same analysis on a slightly harder task (XOR). Show that the network needs at least one hidden layer to solve it, and identify the neuron(s) that compute the intermediate representation.
+## Question 10 -- Local Learning Coefficient
 
-**Tools:** PyTorch (for training), NumPy/Matplotlib (for analysis and visualization).
+A researcher tracks the Local Learning Coefficient (LLC) during training and observes it sitting at approximately 2.0 for 5000 steps, then dropping sharply to approximately 0.8. What does the LLC track, and what can you infer happened at the transition? Why is a lower LLC value associated with better generalization?
+
+---
+
+# Part II: Mechanistic Interpretability Investigation (3-4 hours)
+
+## Project: Investigating Induction Heads in GPT-2 Small
+
+Use TransformerLens to investigate how GPT-2 small implements in-context learning through induction heads. This project has three phases: replicate a known finding, extend it with your own analysis, and write up results.
+
+### Setup
+
+```bash
+pip install transformer-lens torch numpy matplotlib plotly
+```
+
+```python
+import transformer_lens
+from transformer_lens import HookedTransformer
+import torch
+import numpy as np
+
+model = HookedTransformer.from_pretrained("gpt2-small")
+```
+
+### Phase 1: Replicate (60-90 minutes)
+
+**Goal:** Confirm that GPT-2 small contains induction heads and identify which heads they are.
+
+1. **Construct an induction-style prompt.** Create a sequence with a repeated pattern, e.g., a sequence of random tokens where a subsequence appears twice: `[A B C D ... A B C D ...]`. The model should predict the token after `A B C` on the second occurrence by copying what followed `A B C` on the first occurrence.
+
+2. **Run the model and cache all activations.** Use `model.run_with_cache()` to capture attention patterns at every layer and head.
+
+3. **Identify induction heads.** For each attention head, compute an "induction score": on the repeated subsequence, how strongly does the head at position `i` attend to position `j` where token `j+1` matches what should come next? Heads with high induction scores are induction heads.
+
+4. **Visualize the attention patterns** of the top 2-3 induction heads. The attention pattern should show a clear diagonal stripe offset by the length of the repeated subsequence.
+
+**Deliverable:** A ranked list of heads by induction score, with attention pattern visualizations for the top candidates. Identify which (layer, head) pairs are induction heads.
+
+### Phase 2: Extend (60-90 minutes)
+
+Choose ONE of the following extensions:
+
+**Option A -- Activation Patching.** Use activation patching to confirm that the induction heads you identified are causally important for in-context copying. Patch the output of each head (replace it with the output from a corrupted input that breaks the repeated pattern) and measure the change in the model's ability to predict the next token in the repeated sequence. Rank all heads by their causal effect. Compare this causal ranking to your induction score ranking from Phase 1.
+
+**Option B -- Previous-Token Heads.** Induction heads need a "previous-token head" in an earlier layer to compose with. Identify which earlier-layer heads attend primarily to the previous token position. Then demonstrate the composition: show that the previous-token head's output is used by the induction head's QK circuit to look up the right source position. Visualize the two-step circuit.
+
+**Option C -- Varying the Pattern.** Test the robustness of induction heads by varying the task:
+- Does the induction behavior work with natural language (repeated phrases in English text) or only with random token sequences?
+- What happens with longer gaps between the first and second occurrence of the pattern?
+- At what sequence length does induction head performance degrade?
+
+Plot your findings and interpret what they reveal about the generality of the induction mechanism.
+
+**Deliverable:** Results from your chosen extension with supporting visualizations and a 1-2 paragraph interpretation.
+
+### Phase 3: Write-Up (30-60 minutes)
+
+Write a short report (1-2 pages) covering:
+
+1. **Question:** What did you investigate and why does it matter for interpretability?
+2. **Method:** What tools did you use, and how did you set up the experiment?
+3. **Replication results:** Which heads are induction heads in GPT-2 small? Include your key visualization.
+4. **Extension results:** What did your extension reveal? Include your key finding and what it adds beyond the replication.
+5. **Reflection:** What surprised you? What would you investigate next with more time? How does this connect to the broader goal of understanding whether models are safe?
+
+**Deliverable:** A written report with embedded figures, submitted as a PDF or Jupyter notebook.
+
+### Grading Criteria
+
+| Component | Weight | What we look for |
+|---|---|---|
+| Replication correctness | 30% | Correctly identified induction heads, clean visualizations |
+| Extension depth | 30% | Genuine investigation beyond replication, not just re-running code |
+| Write-up clarity | 20% | Clear writing, results properly interpreted, figures labeled |
+| Code quality | 10% | Readable, commented, reproducible |
+| Connection to alignment | 10% | Demonstrates understanding of why this work matters |
+
+### Alternative Project (if TransformerLens setup is not feasible)
+
+**Train a small transformer on a synthetic task and analyze it.**
+
+1. Train a 2-layer transformer on a simple algorithmic task (modular addition, sequence copying, or parenthesis matching) using PyTorch.
+2. After training, extract and visualize all attention patterns.
+3. Use activation patching to identify which components are causally responsible for the task.
+4. Write up: what circuit did the model learn? Does it match what you would expect from a hand-designed solution?
+
+Same deliverables and grading criteria apply.

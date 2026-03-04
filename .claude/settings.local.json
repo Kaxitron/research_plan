@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase*/*lesson*.md | tail -1)",
+      "WebSearch",
+      "WebFetch(domain:onlineacademiccommunity.uvic.ca)",
+      "WebFetch(domain:hybrid.concordia.ca)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:web.uvic.ca)",
+      "WebFetch(domain:www.jirka.org)",
+      "WebFetch(domain:www.celsiuselements.com)",
+      "WebFetch(domain:www.myopenmath.com)",
+      "WebFetch(domain:www.classcentral.com)",
+      "Bash(find /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase7-research -name \"*.md\" 2>/dev/null | head -10)",
+      "Bash(ls /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase3-prob-stats/lesson-*.md | sort)",
+      "Bash(ls /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase5-math-enrichment/lesson-*.md | sort)",
+      "Bash(cd /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase3-prob-stats && mv lesson-43-probability.md lesson-37-probability.md && mv lesson-44-expectation.md lesson-38-expectation.md && mv lesson-45-mle.md lesson-39-mle.md && mv lesson-46-information-theory.md lesson-40-information-theory.md && mv lesson-47-hypothesis-testing.md lesson-41-hypothesis-testing.md && mv lesson-48-experimental-design.md lesson-42-experimental-design.md && echo \"P3 fixed\")",
+      "Bash(cd /mnt/c/Users/Veste/Documents/Local_Code/research_plan/phase5-math-enrichment && mv lesson-79-group-actions.md lesson-72-group-actions.md && echo \"P5 fixed\")",
+      "Bash(python3 renumber_content.py 2>&1)",
+      "Bash(cd /mnt/c/Users/Veste/Documents/Local_Code/research_plan && python3 renumber_content.py 2>&1)",
+      "Bash(python3 -c \"\nimport re\nwith open\\('curriculum-dashboard.html'\\) as f:\n    content = f.read\\(\\)\nids = re.findall\\(r\\\\\"id: \\(\\\\d+\\),.*?label: '\\(\\\\d+\\)'\\\\\", content\\)\nmismatches = [\\(i,l\\) for i,l in ids if i != l]\nprint\\(f'Total numeric lessons: {len\\(ids\\)}'\\)\nprint\\(f'Mismatches: {len\\(mismatches\\)}'\\)\nfor i,l in mismatches:\n    print\\(f'  id={i} label={l}'\\)\n\")",
+      "Bash(python3 -c \"\nimport re\nwith open\\('curriculum-dashboard.html'\\) as f:\n    content = f.read\\(\\)\nids = re.findall\\(r\\\\\"id: \\(\\\\d+\\),.*?label: '\\(\\\\d+\\)'\\\\\", content, re.DOTALL\\)\nif not ids:\n    # Try single line\n    for line in content.split\\('\\\\n'\\):\n        m_id = re.search\\(r'id: \\(\\\\d+\\),', line\\)\n        m_lab = re.search\\(r\\\\\"label: '\\(\\\\d+\\)'\\\\\", line\\)\n        if m_id and m_lab:\n            if m_id.group\\(1\\) != m_lab.group\\(1\\):\n                print\\(f'MISMATCH: id={m_id.group\\(1\\)} label={m_lab.group\\(1\\)} in: {line.strip\\(\\)[:80]}'\\)\n    print\\('Check complete'\\)\n\")",
+      "Bash(python3 fix_table_ids.py 2>&1)",
+      "Bash(python3 fix_overview_ids.py)"
+    ]
+  }
+}

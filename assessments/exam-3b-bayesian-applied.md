@@ -1,6 +1,6 @@
 # Exam 3B: Bayesian Deep Dive & Applied Statistics — The Paradigm Shift
 
-**The Path to AI Alignment — Lessons 38–39 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 44–52 Comprehensive Assessment**
 
 ---
 
@@ -113,7 +113,7 @@ A medical device has a defect rate θ. You observe 0 defects in 100 tests.
 
 A blog post claims: "Study shows that GPT-5 has emergent deceptive capabilities, p = 0.02."
 
-Using everything from Lessons 31–39, write a 5-point critique evaluating this claim. Address: the study design, the p-value interpretation, potential confounders, Bayesian considerations, and what additional evidence you'd want.
+Using everything from Lessons 37–48, write a 5-point critique evaluating this claim. Address: the study design, the p-value interpretation, potential confounders, Bayesian considerations, and what additional evidence you'd want.
 
 ---
 

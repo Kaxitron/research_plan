@@ -1,6 +1,6 @@
 # Exam 6B: The Alignment Problem — Capstone Final Examination — Answer Key
 
-**The Path to AI Alignment — Lessons 69–67 + Cumulative Integration**
+**The Path to AI Alignment — Lessons 83–84 + Cumulative Integration**
 
 ---
 
@@ -49,9 +49,9 @@ Finally, this connects to **alignment (Phase 6)**: if we can track how λ change
 
 **(b)** In Phase 1 terms: the model has d_model dimensions in its residual stream but needs to represent N >> d_model concepts (features). It can't assign each feature its own orthogonal direction (that would require N dimensions). Instead, it uses **almost-orthogonal** directions. In high dimensions, you can pack exponentially many nearly-orthogonal vectors — the Johnson-Lindenstrauss lemma shows that random vectors in high dimensions are approximately orthogonal. The cost: features interfere with each other (non-zero dot products), creating "crosstalk." This interference is manageable when only a few features are active simultaneously (sparsity), which is why superposition works for sparse feature distributions.
 
-**(c)** An SAE minimizes reconstruction error plus a sparsity penalty: L = ‖x − decode(encode(x))‖² + λ‖encode(x)‖₁. The L1 penalty corresponds to a **Laplace prior** on the feature activations (from Lesson 38 / Q2 of Exam 3B: MAP with Laplace prior = L1 regularization = Lasso). So training the SAE is finding the MAP estimate under a model where: the likelihood says "reconstruct the activations well" (Gaussian noise assumption) and the prior says "most features should be off" (Laplace / sparsity prior). This IS approximate Bayesian inference with a sparsity prior.
+**(c)** An SAE minimizes reconstruction error plus a sparsity penalty: L = ‖x − decode(encode(x))‖² + λ‖encode(x)‖₁. The L1 penalty corresponds to a **Laplace prior** on the feature activations (from Lesson 47 / Q2 of Exam 3B: MAP with Laplace prior = L1 regularization = Lasso). So training the SAE is finding the MAP estimate under a model where: the likelihood says "reconstruct the activations well" (Gaussian noise assumption) and the prior says "most features should be off" (Laplace / sparsity prior). This IS approximate Bayesian inference with a sparsity prior.
 
-**(d)** By **Rice's theorem** (Lesson 54), any non-trivial semantic property of a program is undecidable in general. "This circuit implements addition" is a semantic property — there's no general algorithm to verify it for all possible circuits. However, Rice's theorem gives a worst-case impossibility. In practice, we don't need to verify interpretations of arbitrary programs — we need to verify them for **specific networks** with specific structure. Partial verification is valuable: even if we can't prove an interpretation is complete and correct, we can test it against interventions (activation patching), check consistency across inputs, and falsify incorrect interpretations. The situation is analogous to software testing: you can't prove a program is bug-free (undecidable), but you can find bugs and build confidence through testing.
+**(d)** By **Rice's theorem** (Lesson 70), any non-trivial semantic property of a program is undecidable in general. "This circuit implements addition" is a semantic property — there's no general algorithm to verify it for all possible circuits. However, Rice's theorem gives a worst-case impossibility. In practice, we don't need to verify interpretations of arbitrary programs — we need to verify them for **specific networks** with specific structure. Partial verification is valuable: even if we can't prove an interpretation is complete and correct, we can test it against interventions (activation patching), check consistency across inputs, and falsify incorrect interpretations. The situation is analogous to software testing: you can't prove a program is bug-free (undecidable), but you can find bugs and build confidence through testing.
 
 ---
 
@@ -66,7 +66,7 @@ Finally, this connects to **alignment (Phase 6)**: if we can track how λ change
 
 BIC: F ≈ nL* + (k/2)·log(n), where k = parameter count. BIC uses k/2 as complexity; SLT uses λ ≤ k/2. BIC assumes regularity (non-singular); SLT handles singularities correctly.
 
-**(b)** The symmetric group Sₙ acts on weight space by permuting hidden neurons. Concretely, if we permute the n neurons using σ ∈ Sₙ, we permute the rows of the weight matrix and the corresponding columns of the next layer's weight matrix. This action is a **group action** (Lesson 59): it satisfies the group axioms and preserves the input-output function.
+**(b)** The symmetric group Sₙ acts on weight space by permuting hidden neurons. Concretely, if we permute the n neurons using σ ∈ Sₙ, we permute the rows of the weight matrix and the corresponding columns of the next layer's weight matrix. This action is a **group action** (Lesson 72): it satisfies the group axioms and preserves the input-output function.
 
 The **orbit** of a weight configuration W under Sₙ is the set of all n! permuted versions that compute the same function. The **stabilizer** of W is the subgroup of permutations that leave W unchanged (e.g., if two neurons have identical weights, swapping them is in the stabilizer). By the **orbit-stabilizer theorem**: |orbit| × |stabilizer| = |Sₙ| = n!.
 
@@ -86,7 +86,7 @@ In terms of what the model learned: this likely corresponds to circuit formation
 
 ### Question 5 (15 pts) — The RLHF Pipeline: A Mathematical Dissection
 
-**(a)** Loss: **cross-entropy** L = −Σ log P_θ(x_t | x_{<t}). This is the negative log-likelihood under the autoregressive model, so minimizing it IS MLE (Phase 3, Lesson 33). The distribution being estimated: P(next token | context) — the conditional distribution of language. Assumption: the training data is representative of the distribution we want the model to learn (i.i.d. samples from the "true" distribution of text).
+**(a)** Loss: **cross-entropy** L = −Σ log P_θ(x_t | x_{<t}). This is the negative log-likelihood under the autoregressive model, so minimizing it IS MLE (Phase 3, Lesson 39). The distribution being estimated: P(next token | context) — the conditional distribution of language. Assumption: the training data is representative of the distribution we want the model to learn (i.i.d. samples from the "true" distribution of text).
 
 **(b)** SFT shifts the model from the broad pre-training distribution (all internet text) toward a narrower distribution (helpful assistant responses). In Phase 1 terms: the pre-trained model's representation space spans a high-dimensional manifold of possible text. SFT **projects** the model's behavior onto a lower-dimensional subspace corresponding to the "helpful response" manifold. The model's capabilities are still present (the full space hasn't been destroyed), but the output distribution is concentrated on the useful subspace.
 
@@ -102,7 +102,7 @@ This IS **binary cross-entropy** with the label "A is better" and the predicted 
 - β·D_KL: don't drift too far from the reference (SFT) model
 - β controls the tradeoff: small β → chase reward aggressively (risk reward hacking), large β → stay close to reference (conservative, underfit preferences)
 
-Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π ‖ π_ref) ≤ ε. The Lagrange multiplier is β. This is exactly the structure from Lesson 29: maximize objective subject to constraint, with the multiplier measuring the tradeoff.
+Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π ‖ π_ref) ≤ ε. The Lagrange multiplier is β. This is exactly the structure from Lesson 23: maximize objective subject to constraint, with the multiplier measuring the tradeoff.
 
 **(e)** Failure modes:
 - **Pre-training:** data contamination or bias → model learns the wrong distribution (garbage in, garbage out)
@@ -165,7 +165,7 @@ Constrained optimization interpretation: maximize E[R(x)] **subject to** D_KL(π
 
 **Problem:** Deceptive alignment is the scenario where a model appears aligned during training but pursues different goals during deployment. Detecting it is critical because standard behavioral evaluation can't distinguish genuine from deceptive alignment. We need an internal signal.
 
-**Tools:** SLT and the Local Learning Coefficient (Phase 4/5, Lessons 52–50), mechanistic interpretability / sparse autoencoders (Phase 4, Lessons 50–48), bifurcation theory (Phase 2, Lesson 23), and Bayesian model comparison (Phase 3, Lesson 40).
+**Tools:** SLT and the Local Learning Coefficient (Phase 4/5, Lessons 66, 76), mechanistic interpretability / sparse autoencoders (Phase 4, Lessons 61, 65), bifurcation theory (Phase 2, Lesson 23), and Bayesian model comparison (Phase 3, Lesson 46).
 
 **Approach:** Hypothesis: deceptive alignment requires the model to simultaneously implement (a) task performance and (b) a model of the training process. This requires more functional complexity than honest alignment, which only needs (a). Therefore, a deceptively aligned model should have a higher RLCT than an honestly aligned one, because it has learned a more complex internal function.
 

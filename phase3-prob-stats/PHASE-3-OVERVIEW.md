@@ -1,12 +1,12 @@
 # Phase 3 Overview: Probability & Statistics — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 3 (Lessons 31–42, plus ML Theory Foundations 68–71). Use for review, exam prep, or topic lookup.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 3 (Lessons 37–52). Use for review, exam prep, or topic lookup.
 
 ---
 
-## Core Probability (Lessons 31–34)
+## Core Probability (Lessons 37–40)
 
-### Lesson 31: Probability Distributions and Bayes' Theorem
+### Lesson 37: Probability Distributions and Bayes' Theorem
 
 **Foundations:**
 - Probability axioms: P(Ω) = 1, P(A) ≥ 0, P(A∪B) = P(A) + P(B) for disjoint events
@@ -37,7 +37,7 @@
 
 ---
 
-### Lesson 32: Expectation, Variance, and Covariance
+### Lesson 38: Expectation, Variance, and Covariance
 
 **Expectation:**
 - E[X] = Σ xP(x) (discrete) or ∫ xp(x)dx (continuous) — weighted average
@@ -68,7 +68,7 @@
 
 ---
 
-### Lesson 33: Maximum Likelihood Estimation
+### Lesson 39: Maximum Likelihood Estimation
 
 **Likelihood and MLE:**
 - **Likelihood:** L(θ) = P(data | θ) — probability of observed data given parameters
@@ -92,7 +92,7 @@
 
 ---
 
-### Lesson 34: Information Theory — Entropy, KL Divergence, and Cross-Entropy
+### Lesson 40: Information Theory — Entropy, KL Divergence, and Cross-Entropy
 
 **Information Content:**
 - I(x) = −log₂ P(x) (measured in bits) — rare events carry more information
@@ -134,9 +134,9 @@
 
 ---
 
-## Frequentist Methods (Lessons 35–37)
+## Frequentist Methods (Lessons 41–43)
 
-### Lesson 35: Hypothesis Testing and P-Values
+### Lesson 41: Hypothesis Testing and P-Values
 
 - **Null hypothesis H₀** (default/no-effect) vs **alternative H₁**
 - **P-value:** P(data ≥ this extreme | H₀ true) — NOT P(H₀ | data)
@@ -152,7 +152,7 @@
 
 ---
 
-### Lesson 36: Experimental Design and Statistical Fallacies
+### Lesson 42: Experimental Design and Statistical Fallacies
 
 - **Randomization:** eliminates systematic confounders
 - **Control groups:** comparison baseline
@@ -168,7 +168,7 @@
 
 ---
 
-### Lesson 37: Regression — From Linear to Logistic
+### Lesson 43: Regression — From Linear to Logistic
 
 - **Simple linear regression:** y = β₀ + β₁x + ε; OLS minimizes Σ(yᵢ − ŷᵢ)²
 - **OLS solution:** β̂ = (XᵀX)⁻¹Xᵀy (least squares IS projection)
@@ -186,9 +186,9 @@
 
 ---
 
-## Bayesian Deep Dive (Lessons 38–40)
+## Bayesian Deep Dive (Lessons 44–46)
 
-### Lesson 38: Bayesian Reasoning & Foundations
+### Lesson 44: Bayesian Reasoning & Foundations
 
 - **Bayesian vs frequentist:** probability as degree of belief vs long-run frequency
 - **Posterior ∝ likelihood × prior:** P(θ|D) ∝ P(D|θ)P(θ)
@@ -203,7 +203,7 @@
 
 ---
 
-### Lesson 39: Bayesian Computation — Making the Intractable Tractable
+### Lesson 45: Bayesian Computation — Making the Intractable Tractable
 
 - **The computational problem:** P(D) = ∫P(D|θ)P(θ)dθ is usually intractable
 - **MCMC (Markov Chain Monte Carlo):** construct chain whose stationary distribution = posterior
@@ -222,7 +222,7 @@
 
 ---
 
-### Lesson 40: Bayesian Model Comparison and the Free Energy Principle
+### Lesson 46: Bayesian Model Comparison and the Free Energy Principle
 
 - **Marginal likelihood (evidence):** P(D|M) = ∫P(D|θ,M)P(θ|M)dθ
 - **Automatic Occam's razor:** complex models spread prior thinly → lower evidence for specific data
@@ -238,9 +238,9 @@
 
 ---
 
-## Applied Statistics (Lessons 41–42)
+## Applied Statistics (Lessons 47–48)
 
-### Lesson 41: Causal Inference — From Correlation to Causation
+### Lesson 47: Causal Inference — From Correlation to Causation
 
 - **Counterfactuals:** what would have happened differently?
 - **Potential outcomes (Rubin):** Y₁ᵢ, Y₀ᵢ, causal effect = Y₁ − Y₀
@@ -254,7 +254,7 @@
 
 ---
 
-### Lesson 42: Applied Statistics — Adjudicating Real Debates
+### Lesson 48: Applied Statistics — Adjudicating Real Debates
 
 - **Heritability (h²):** fraction of trait variation from genetic variation (population-level)
 - Between-group heritability ≠ between-group genetic causation
@@ -269,9 +269,9 @@
 
 ---
 
-## ML Theory Foundations (Lessons 68–71)
+## ML Theory Foundations (Lessons 49–52)
 
-### Lesson 68: Concentration Inequalities — Markov to Chernoff
+### Lesson 49: Concentration Inequalities — Markov to Chernoff
 
 - **Markov's inequality:** P(X ≥ a) ≤ E[X]/a (weakest, most general)
 - **Chebyshev's inequality:** P(|X−μ| ≥ kσ) ≤ 1/k²
@@ -280,7 +280,7 @@
 - **Sub-Gaussian and sub-exponential random variables**
 - Applications: bounding sample means, uniform convergence, generalization bounds
 
-### Lesson 69: Markov Chains and Mixing
+### Lesson 50: Markov Chains and Mixing
 
 - **Markov property:** future depends only on present, not past
 - **Transition matrices:** Pᵢⱼ = P(X_{t+1}=j | X_t=i)
@@ -291,7 +291,7 @@
 - Connection to MCMC: design chains whose stationary distribution = target posterior
 - **Detailed balance** (reversibility): π_i P_{ij} = π_j P_{ji}
 
-### Lesson 70: Fisher Information and Exponential Families
+### Lesson 51: Fisher Information and Exponential Families
 
 - **Fisher information:** I(θ) = E[(∂/∂θ log P(x|θ))²] = −E[∂²/∂θ² log P(x|θ)]
 - Measures curvature of log-likelihood → how informative data is about θ
@@ -303,7 +303,7 @@
 - Gaussian, Bernoulli, Poisson, Gamma, Beta all belong to exponential families
 - **Natural gradient descent:** updates in Fisher information metric (accounts for parameter space geometry)
 
-### Lesson 71: PAC Learning and Generalization Bounds
+### Lesson 52: PAC Learning and Generalization Bounds
 
 - **PAC framework:** Probably Approximately Correct
 - **Sample complexity:** how many examples needed to learn within ε error with probability 1−δ
@@ -319,5 +319,5 @@
 
 ## Assessments
 
-- **Exam 3A: Probability & Frequentist** (Lessons 31–37) — 60 min
-- **Exam 3B: Bayesian & Applied Stats** (Lessons 38–42) — 60 min
+- **Exam 3A: Probability & Frequentist** (Lessons 37–43) — 60 min
+- **Exam 3B: Bayesian & Applied Stats** (Lessons 44–52) — 60 min

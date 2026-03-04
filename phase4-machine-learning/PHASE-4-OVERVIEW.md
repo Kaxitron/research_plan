@@ -1,14 +1,14 @@
 # Phase 4 Overview: Machine Learning & Interpretability — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 4 (Lessons 40-84). Spans from the single neuron through transformers to mechanistic interpretability and Singular Learning Theory. Structured around Welch Labs *The Illustrated Guide to AI* (9 chapters) + Karpathy *Neural Networks: Zero to Hero*.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 4 (Lessons 53-66). Spans from the single neuron through transformers to mechanistic interpretability and Singular Learning Theory. Structured around Welch Labs *The Illustrated Guide to AI* (9 chapters) + Karpathy *Neural Networks: Zero to Hero*.
 >
 > **Estimated time:** ~148-176 hours
 
 ---
 
-## Block A: Welch Labs Chapters 1-9 + Karpathy (Lessons 40-49)
+## Block A: Welch Labs Chapters 1-9 + Karpathy (Lessons 53-62)
 
-### Lesson 40: The Perceptron — How a Single Neuron Works
+### Lesson 53: The Perceptron — How a Single Neuron Works
 **Source: Welch Labs Ch. 1**
 
 **The Perceptron Model**
@@ -33,7 +33,7 @@
 
 ---
 
-### Lesson 41: Gradient Descent — Learning from Errors
+### Lesson 54: Gradient Descent — Learning from Errors
 **Source: Welch Labs Ch. 2, Karpathy ZtH #1**
 
 **Loss Functions and Optimization**
@@ -66,7 +66,7 @@
 
 ---
 
-### Lesson 42: Backpropagation — The F=ma of AI
+### Lesson 55: Backpropagation — The F=ma of AI
 **Source: Welch Labs Ch. 3, Karpathy ZtH #1, #5**
 
 **The Chain Rule in Neural Networks**
@@ -101,7 +101,7 @@
 
 ---
 
-### Lesson 43: Deep Learning — Why Depth Works
+### Lesson 56: Deep Learning — Why Depth Works
 **Source: Welch Labs Ch. 4, Karpathy ZtH #2-3, #4**
 
 **Multi-Layer Networks**
@@ -115,7 +115,7 @@
 - **Depth = compositionality:** deep networks learn hierarchical features (edges -> textures -> parts -> objects)
 - **Width vs depth tradeoffs:** wider = more features per layer; deeper = more compositional/hierarchical features
 - **Parameter counting:** layer with m inputs and n outputs has m*n + n parameters
-- **Overparameterization:** modern networks have far more parameters than training examples, yet generalize — a puzzle explained partly by implicit regularization and SLT (Lesson 84)
+- **Overparameterization:** modern networks have far more parameters than training examples, yet generalize — a puzzle explained partly by implicit regularization and SLT (Lesson 66)
 
 **Karpathy makemore Series (ZtH #2-3): Bigram to MLP**
 - Bigram language model: counting pairs, converting to probabilities
@@ -140,7 +140,7 @@
 
 ---
 
-### Lesson 44: AlexNet and Convolutional Neural Networks
+### Lesson 57: AlexNet and Convolutional Neural Networks
 **Source: Welch Labs Ch. 5**
 
 **Convolution as Feature Detection**
@@ -180,7 +180,7 @@
 
 ---
 
-### Lesson 45: Neural Scaling Laws and Emergence
+### Lesson 58: Neural Scaling Laws and Emergence
 **Source: Welch Labs Ch. 6**
 
 **Kaplan Scaling Laws**
@@ -212,13 +212,13 @@
 - **Tracking internal representational changes** at capability transitions
 - Phase transitions in training: loss plateaus followed by sudden drops; internal restructuring
 - Circuit formation and reorganization during training
-- Connection to Singular Learning Theory phase transitions (Lesson 84)
+- Connection to Singular Learning Theory phase transitions (Lesson 66)
 
 **ML/alignment connection:** Scaling laws and emergence are central to AI safety forecasting. If dangerous capabilities emerge unpredictably at scale, we cannot rely on testing smaller models. The emergence debate determines whether we can predict when models will acquire specific capabilities.
 
 ---
 
-### Lesson 46: Attention — How Transformers Think
+### Lesson 59: Attention — How Transformers Think
 **Source: Welch Labs Ch. 8*, Karpathy ZtH #7**
 
 *Note: Welch Labs chapters 7 and 8 are taught in swapped order — build the transformer first, then interpret it.
@@ -252,7 +252,7 @@
 
 ---
 
-### Lesson 47: Building a Transformer from Scratch
+### Lesson 60: Building a Transformer from Scratch
 **Source: Karpathy ZtH #7, #9**
 
 **The Transformer Block**
@@ -294,10 +294,10 @@
 
 ---
 
-### Lesson 48: Mechanistic Interpretability — The Dark Matter of AI
+### Lesson 61: Mechanistic Interpretability — The Dark Matter of AI
 **Source: Welch Labs Ch. 7***
 
-*Note: Taught after the transformer build (Lesson 47) so that interpretability techniques can be applied to a model you understand from the inside.
+*Note: Taught after the transformer build (Lesson 60) so that interpretability techniques can be applied to a model you understand from the inside.
 
 **What Mechanistic Interpretability Is**
 - **Mechanistic interpretability:** understanding model internals at the circuit/algorithm level — not just what models do, but how they do it
@@ -330,7 +330,7 @@
 
 ---
 
-### Lesson 49: Video & Image Generation — Diffusion Models
+### Lesson 62: Video & Image Generation — Diffusion Models
 **Source: Welch Labs Ch. 9**
 
 **The Core Idea: Denoising**
@@ -368,9 +368,9 @@
 
 ---
 
-## Block B: Additional ML Topics (Lessons 50, 82)
+## Block B: Additional ML Topics (Lessons 63–64)
 
-### Lesson 50: Reinforcement Learning Foundations
+### Lesson 63: Reinforcement Learning Foundations
 
 **The RL Framework**
 - **Agent-Environment loop:** state -> action -> reward -> next state -> ...
@@ -410,7 +410,7 @@
 
 ---
 
-### Lesson 82: The LLM Training Pipeline
+### Lesson 64: The LLM Training Pipeline
 **Source: Karpathy ZtH #8, Deep Dive into LLMs**
 
 **Stage 1: Pre-training**
@@ -455,9 +455,9 @@
 
 ---
 
-## Block C: Deep Interpretability (Lessons 83-84)
+## Block C: Deep Interpretability (Lessons 65-66)
 
-### Lesson 83: Interpretability — Circuits, Features, and Superposition
+### Lesson 65: Interpretability — Circuits, Features, and Superposition
 
 **Feature Representation in Neural Networks**
 - **Monosemantic vs polysemantic neurons:** monosemantic = responds to one concept; polysemantic = responds to multiple unrelated concepts
@@ -497,7 +497,7 @@
 
 ---
 
-### Lesson 84: Interpretability — Singular Learning Theory
+### Lesson 66: Interpretability — Singular Learning Theory
 
 **Why Standard Statistics Fails for Neural Networks**
 - **Parameter-to-function map is many-to-one:** different parameter settings can produce identical input-output behavior
@@ -543,6 +543,5 @@
 
 ## Assessments
 
-- **Exam 4A: Neural Network Foundations** (Lessons 40-49) — 90 min
-- **Exam 4B: Reinforcement Learning and the LLM Pipeline** (Lessons 50, 82) — 60 min
-- **Exam 4C: Deep Interpretability** (Lessons 83-84) — 60 min
+- **Exam 4A: Neural Networks & ML** (Lessons 53–64) — 10 short questions (30 min) + 5-hour Karpathy-style build project
+- **Exam 4B: Mechanistic Interpretability** (Lessons 61, 65–66) — 10 short questions (30 min) + 3-4 hour interpretability project

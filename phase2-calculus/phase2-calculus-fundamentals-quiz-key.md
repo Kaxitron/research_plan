@@ -328,4 +328,32 @@ $$\boxed{\int x^3 e^{x^2}\,dx = \frac{e^{x^2}}{2}(x^2-1) + C}$$
 
 ---
 
+## Q16 — Integration
+
+$$\int \frac{\cos x}{e^x}\, dx = \int e^{-x}\cos x\, dx$$
+
+**Method: Integration by parts (twice, with cycling).**
+
+**First IBP.** Let $u = \cos x$, $dv = e^{-x}\,dx$, so $du = -\sin x\,dx$, $v = -e^{-x}$.
+
+$$I = -e^{-x}\cos x - \int e^{-x}\sin x\,dx$$
+
+**Second IBP.** Let $u = \sin x$, $dv = e^{-x}\,dx$, so $du = \cos x\,dx$, $v = -e^{-x}$.
+
+$$\int e^{-x}\sin x\,dx = -e^{-x}\sin x + \int e^{-x}\cos x\,dx = -e^{-x}\sin x + I$$
+
+**Substitute back:**
+
+$$I = -e^{-x}\cos x - \left(-e^{-x}\sin x + I\right) = -e^{-x}\cos x + e^{-x}\sin x - I$$
+
+**Solve for $I$.** The original integral has reappeared on the right. Add $I$ to both sides:
+
+$$2I = e^{-x}(\sin x - \cos x)$$
+
+$$\boxed{I = \frac{e^{-x}(\sin x - \cos x)}{2} + C}$$
+
+*(Check: differentiate using the product rule to verify.)*
+
+---
+
 *End of answer key.*

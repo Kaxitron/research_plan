@@ -1,6 +1,6 @@
 # Exam 3A: Probability & Frequentist Methods — Answer Key
 
-**The Path to AI Alignment — Lessons 31–34 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 37–43 Comprehensive Assessment**
 
 ---
 

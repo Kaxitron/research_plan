@@ -1,6 +1,6 @@
 # Phase 2 Overview: ODEs, Multivariable Calculus, Vector Calculus, PDEs & ML-Applied Calculus — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 2 (Lessons 13-81), organized into five blocks across 24 lessons. Primary sources are Trefor Bazett's ODE, Multivariable, and Vector Calculus courses, Jason Bramburger's PDE course, and ML-focused applied calculus material.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 2 (Lessons 13-36), organized into five blocks across 24 lessons. Primary sources are Trefor Bazett's ODE, Multivariable, and Vector Calculus courses, Jason Bramburger's PDE course, and ML-focused applied calculus material.
 >
 > **Estimated total hours:** ~235-280h
 
@@ -527,7 +527,7 @@
 
 ---
 
-## Block C: Vector Calculus (Lessons 24-27, 73) — Trefor Bazett Vector Calculus (8 Chapters)
+## Block C: Vector Calculus (Lessons 24-27, 28) — Trefor Bazett Vector Calculus (8 Chapters)
 
 ### Lesson 24: Line Integrals and Curves (Ch. 1)
 
@@ -672,7 +672,7 @@
 
 ---
 
-### Lesson 73: Stokes' Theorem, Divergence Theorem, and the Unified View (Ch. 7-8)
+### Lesson 28: Stokes' Theorem, Divergence Theorem, and the Unified View (Ch. 7-8)
 
 **Stokes' Theorem:**
 - closed_integral_C F . dr = integral integral_S (curl F) . dS
@@ -711,9 +711,9 @@
 
 ---
 
-## Block D: Partial Differential Equations (Lessons 74-78) — Jason Bramburger PDE Course
+## Block D: Partial Differential Equations (Lessons 29-33) — Jason Bramburger PDE Course
 
-### Lesson 74: Introduction to PDEs — Classification and the Heat Equation
+### Lesson 29: Introduction to PDEs — Classification and the Heat Equation
 
 **What Is a PDE:**
 - A partial differential equation involves partial derivatives of a function of multiple variables
@@ -755,7 +755,7 @@
 
 ---
 
-### Lesson 75: Separation of Variables and Fourier Series
+### Lesson 30: Separation of Variables and Fourier Series
 
 **Separation of Variables:**
 - Ansatz: assume u(x,t) = X(x)T(t) — the solution factors into spatial and temporal parts
@@ -793,7 +793,7 @@
 
 ---
 
-### Lesson 76: The Wave Equation — Vibrations and d'Alembert
+### Lesson 31: The Wave Equation — Vibrations and d'Alembert
 
 **The Wave Equation:**
 - u_{tt} = c^2 u_{xx} (1D), u_{tt} = c^2 grad^2 u (higher dimensions)
@@ -834,7 +834,7 @@
 
 ---
 
-### Lesson 77: Helmholtz, Laplace, and Transport Equations
+### Lesson 32: Helmholtz, Laplace, and Transport Equations
 
 **Laplace's Equation and Harmonic Functions:**
 - grad^2 u = 0 — the prototypical elliptic PDE
@@ -877,7 +877,7 @@
 
 ---
 
-### Lesson 78: PDEs in ML — Diffusion Models, Numerical Methods, and Score Matching
+### Lesson 33: PDEs in ML — Diffusion Models, Numerical Methods, and Score Matching
 
 **Diffusion Models and the Forward Process:**
 - Forward process: dx = f(x,t)dt + g(t)dB_t — progressive noise addition via an SDE
@@ -934,9 +934,9 @@
 
 ---
 
-## Block E: ML-Applied Calculus (Lessons 79-81)
+## Block E: ML-Applied Calculus (Lessons 34-36)
 
-### Lesson 79: Matrix Calculus — Bridging to Backpropagation
+### Lesson 34: Matrix Calculus — Bridging to Backpropagation
 
 **Scalar-by-Vector Derivatives:**
 - grad f for f: R^n -> R — the gradient is a vector of partial derivatives
@@ -979,7 +979,7 @@
 
 ---
 
-### Lesson 80: Optimization Algorithms — SGD through Adam
+### Lesson 35: Optimization Algorithms — SGD through Adam
 
 **Vanilla Gradient Descent:**
 - W <- W - eta grad L(W)
@@ -1036,7 +1036,7 @@
 
 ---
 
-### Lesson 81: Loss Landscapes, Gradient Flow, and Training Dynamics
+### Lesson 36: Loss Landscapes, Gradient Flow, and Training Dynamics
 
 **Loss Landscapes:**
 - The loss function L(W) as a surface over all parameters (typically millions/billions of dimensions)
@@ -1094,6 +1094,8 @@
 
 ## Assessments
 
-- **Exam 2A: ODEs and Multivariable Calculus** (Lessons 13-23, Blocks A + B) — 90 min
-- **Exam 2B: Vector Calculus and PDEs** (Lessons 24-27, 73-78, Blocks C + D) — 90 min
-- **Exam 2C: ML-Applied Calculus** (Lessons 79-81, Block E) — 60 min
+- **Exam 2A: Ordinary Differential Equations** (Lessons 14-18, Block A) — 90 min, 15 questions
+- **Exam 2B: Multivariable Calculus** (Lessons 19-23, Block B) — 90 min, 15 questions
+- **Exam 2C: Vector Calculus** (Lessons 24-27, 28, Block C) — 90 min, 15 questions
+- **Exam 2D: Partial Differential Equations** (Lessons 29-33, Block D) — 90 min, 15 questions
+- **Exam 2E: ML-Applied Calculus** (Lessons 34-36, Block E) — 60 min, 8 questions

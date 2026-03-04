@@ -196,4 +196,14 @@ $$\int x^3 e^{x^2}\, dx$$
 
 ---
 
+## Question 16 — Integration
+
+Evaluate:
+
+$$\int \frac{\cos x}{e^x}\, dx$$
+
+*(No hints.)*
+
+---
+
 *End of quiz. Check all answers before looking at the key.*

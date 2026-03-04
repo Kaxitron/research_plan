@@ -1,6 +1,6 @@
 # Lesson 12: Linear Algebra Capstone
 
-[← Change of Basis](lesson-11-change-of-basis.md) | [Back to TOC](../README.md) | [Next: Matrix Calculus →](../phase2-calculus/lesson-13-matrix-calculus.md)
+[← Change of Basis](lesson-11-change-of-basis.md) | [Back to TOC](../README.md) | [Next: Matrix Calculus →](../phase2-calculus/lesson-34-matrix-calculus.md)
 
 ---
 

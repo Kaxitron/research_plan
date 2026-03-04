@@ -1,6 +1,6 @@
 # Lesson 27: Surfaces, Surface Area, and Surface Integrals (Bazett Ch. 5-6)
 
-[<- Previous](lesson-26-greens-theorem.md) | [Back to TOC](../README.md) | [Next: Stokes' and Divergence Theorems ->](lesson-73-stokes-divergence.md)
+[<- Previous](lesson-26-greens-theorem.md) | [Back to TOC](../README.md) | [Next: Stokes' and Divergence Theorems ->](lesson-28-stokes-divergence.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Exam 3B: Bayesian Deep Dive & Applied Statistics — Answer Key
 
-**The Path to AI Alignment — Lessons 38–39 Comprehensive Assessment**
+**The Path to AI Alignment — Lessons 44–52 Comprehensive Assessment**
 
 ---
 
@@ -60,7 +60,7 @@
 
 **(c)** **Collider bias** (or selection bias). Sicker patients go to hospitals with more ICU beds. The severity of illness confounds the relationship — ICU beds → allocated to sicker patients → higher mortality. The ICU beds don't cause death; they're selected by the very factor that causes death.
 
-**(d)** Alignment requires counterfactual reasoning: "If the AI had been given a different prompt, would it still behave safely?" or "If we hadn't included this safety training, would the model be deceptive?" Decision theory (Lesson 67) asks agents to evaluate counterfactual consequences of actions. Causal inference provides the mathematical framework for making such counterfactual claims rigorous.
+**(d)** Alignment requires counterfactual reasoning: "If the AI had been given a different prompt, would it still behave safely?" or "If we hadn't included this safety training, would the model be deceptive?" Decision theory (Lesson 84) asks agents to evaluate counterfactual consequences of actions. Causal inference provides the mathematical framework for making such counterfactual claims rigorous.
 
 ---
 

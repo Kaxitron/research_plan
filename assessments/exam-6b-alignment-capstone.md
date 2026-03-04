@@ -1,6 +1,6 @@
 # Exam 6B: The Alignment Problem — Capstone Final Examination
 
-**The Path to AI Alignment — Lessons 69–67 + Cumulative Integration Across All Phases**
+**The Path to AI Alignment — Lessons 83–84 + Cumulative Integration Across All Phases**
 
 ---
 

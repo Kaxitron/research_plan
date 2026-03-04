@@ -1,10 +1,10 @@
 # Phase 6 Overview: Alignment Theory — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 6 (Lessons 66–70). This is where everything converges: the mathematics, the ML, the interpretability, and the philosophy meet the central question of making AI systems safe and beneficial.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 6 (Lessons 80–84). This is where everything converges: the mathematics, the ML, the interpretability, and the philosophy meet the central question of making AI systems safe and beneficial.
 
 ---
 
-## Lesson 66: Game Theory Foundations
+## Lesson 80: Game Theory Foundations
 
 **Basic Framework:**
 - **Normal form (strategic form) games:** players, strategies, payoff matrix — simultaneous moves
@@ -41,7 +41,7 @@
 
 ---
 
-## Lesson 67: Decision Theory — CDT, EDT, and FDT
+## Lesson 81: Decision Theory — CDT, EDT, and FDT
 
 **Expected Utility Theory:**
 - **Utility function u:** maps outcomes to real numbers representing preference
@@ -78,7 +78,7 @@
 
 ---
 
-## Lesson 68: Anthropics and Self-Locating Beliefs
+## Lesson 82: Anthropics and Self-Locating Beliefs
 
 - **Observation selection effects:** your existence as an observer biases what you can observe
 - **Self-locating beliefs:** "which observer am I?" — probability over your identity/location in the multiverse or population
@@ -105,7 +105,7 @@
 
 ---
 
-## Lesson 69: The Alignment Problem — Technical Foundations
+## Lesson 83: The Alignment Problem — Technical Foundations
 
 **The Core Problem:**
 - Ensuring AI systems pursue goals that are beneficial to humanity
@@ -140,14 +140,14 @@
 - **Value lock-in:** early powerful AI systems may permanently shape the future
 
 **Formal Frameworks:**
-- **AIXI and its limitations** (from Lesson 56): theoretically optimal but incomputable and non-aligned by default
+- **AIXI and its limitations** (from Lesson 69): theoretically optimal but incomputable and non-aligned by default
 - **Logical induction:** reasoning under logical uncertainty
 - **Infra-Bayesianism:** handling non-realizability and adversarial environments
 - **Cooperative inverse reinforcement learning (CIRL):** human and AI jointly optimize; AI uncertain about human values
 
 ---
 
-## Lesson 70: Open Problems and Research Frontiers
+## Lesson 84: Open Problems and Research Frontiers
 
 **Technical Open Problems:**
 - **Scalable oversight:** supervising AI on superhuman tasks
@@ -178,5 +178,5 @@
 
 ## Assessments
 
-- **Exam 6A: Rational Agency** (Lessons 66–68) — 60 min
-- **Exam 6B: Alignment Capstone** (Lessons 69–70 + All Phases) — 90 min
+- **Exam 6A: Rational Agency** (Lessons 80–82) — 60 min
+- **Exam 6B: Alignment Capstone** (Lessons 83–84 + All Phases) — 90 min

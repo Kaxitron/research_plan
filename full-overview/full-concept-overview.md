@@ -117,16 +117,16 @@
 
 ---
 
-## Phase 0: Setup (Lessons 00–01)
+## Phase 0: Setup (Lessons 0–1)
 
-### Lesson 00: Python & NumPy
+### Lesson 0: Python & NumPy
 - NumPy array creation: `np.array`, `np.eye`, `np.zeros`, `np.random.randn`
 - Linear algebra operations: `@` (matmul), `np.linalg.inv`, `np.linalg.det`, `np.linalg.eig`, `np.linalg.svd`, `np.linalg.norm`, `.T`
 - **Broadcasting** rules
 - Matplotlib: `plt.plot`, `plt.scatter`, `plt.quiver` (vectors), `plt.contour`, `plt.imshow` (heatmaps)
 - Jupyter notebooks and Google Colab
 
-### Lesson 01: PyTorch
+### Lesson 1: PyTorch
 - **Tensors:** NumPy arrays with autograd and GPU support
 - Device management (CPU/GPU), `dtype` (float32 default, float16/bfloat16 for large models)
 - Converting: `torch.from_numpy()`, `.numpy()`
@@ -144,22 +144,22 @@
 
 ---
 
-## Phase 1: Linear Algebra (Lessons 02–12)
+## Phase 1: Linear Algebra (Lessons 2–12)
 
-### Lesson 02: Vectors
+### Lesson 2: Vectors
 - Vectors as arrows (geometric) AND lists of numbers (computational)
 - Vector addition (tip-to-tail), scalar multiplication
 - Coordinates are basis-dependent instructions
 - Embedding vectors in transformers (~768-dimensional)
 
-### Lesson 03: Linear Combinations, Span, and Basis
+### Lesson 3: Linear Combinations, Span, and Basis
 - **Linear combination:** a₁v₁ + a₂v₂ + ... + aₙvₙ
 - **Span:** all reachable vectors via linear combinations
 - **Linear independence** vs dependence
 - **Basis:** minimal spanning set, exactly n vectors for ℝⁿ
 - **Superposition hypothesis:** networks encode more features than dimensions using non-orthogonal directions
 
-### Lesson 04: Linear Transformations and Matrices
+### Lesson 4: Linear Transformations and Matrices
 - **Matrices as transformations** of space (not just grids of numbers)
 - Columns of a matrix = where basis vectors land
 - "Linear" means: lines stay lines, origin stays fixed
@@ -168,7 +168,7 @@
 - **Matrix multiplication as composition:** AB means "apply B, then A"
 - Non-commutativity: AB ≠ BA in general
 
-### Lesson 05: Matrix Operations
+### Lesson 5: Matrix Operations
 - **Two views of matrix-vector multiplication:**
   - Row view: dot products (pattern matching)
   - Column view: linear combination of columns
@@ -177,7 +177,7 @@
 - Associativity: (AB)C = A(BC)
 - **QK and OV circuits** in transformers as matrix compositions
 
-### Lesson 06: Rank, Null Space, and Column Space
+### Lesson 6: Rank, Null Space, and Column Space
 - **Column space:** all possible outputs of Ax (span of columns)
 - **Null space (kernel):** all x where Ax = 0 (vectors crushed to zero)
 - **Rank:** dimension of column space = number of independent directions in output
@@ -186,7 +186,7 @@
 - Pivot columns, free variables, reading solutions from RREF
 - Attention matrices are deliberately **low-rank** (e.g., 768 → 64 → 768)
 
-### Lesson 07: The Determinant
+### Lesson 7: The Determinant
 - **Determinant = scaling factor for area/volume** under transformation
 - det = 0 ↔ rank deficient ↔ non-invertible ↔ non-trivial null space
 - det < 0 ↔ orientation flip
@@ -195,7 +195,7 @@
 - Cofactor expansion
 - Vanishing/exploding gradients and determinant magnitudes
 
-### Lesson 08: Eigenvalues and Eigenvectors
+### Lesson 8: Eigenvalues and Eigenvectors
 - **Eigenvector:** direction unchanged by transformation (Av = λv)
 - **Eigenvalue λ:** the scaling factor
 - **Characteristic equation:** det(A − λI) = 0
@@ -204,7 +204,7 @@
 - PCA finds eigenvectors of covariance matrix
 - Hessian eigenvalues = loss landscape curvature
 
-### Lesson 09: Singular Value Decomposition (SVD)
+### Lesson 9: Singular Value Decomposition (SVD)
 - **A = UΣVᵀ** — rotate (V) → scale (Σ) → rotate (U)
 - Works for ANY matrix (rectangular, rank-deficient)
 - Singular values σ₁ ≥ σ₂ ≥ ... ≥ 0
@@ -253,7 +253,7 @@
 
 ---
 
-## Phase 2: Calculus (Lessons 13–23, 73–81)
+## Phase 2: Calculus (Lessons 13–23, 28–81)
 
 ### Block A: ODEs (Lessons 13–18)
 
@@ -326,7 +326,7 @@
 - Regularization as soft constraint, duality, convex optimization
 - Loss landscapes, saddle points, bias-variance, double descent, grokking
 
-### Block C: Vector Calculus (Lessons 24–27, 73)
+### Block C: Vector Calculus (Lessons 24–27, 28)
 
 ### Lesson 24: Line Integrals
 - Scalar and vector line integrals, path parameterization
@@ -352,59 +352,59 @@
 - Orientation of surfaces, normal vectors
 - Applications to physics and probability on manifolds
 
-### Lesson 73: Stokes' Theorem and the Divergence Theorem
+### Lesson 28: Stokes' Theorem and the Divergence Theorem
 - Stokes' theorem: circulation integral = curl flux through surface
 - Divergence theorem: flux through closed surface = divergence integral over volume
 - Generalized Stokes' theorem unifying FTC, Green's, classical Stokes', divergence
 - Differential forms (conceptual), connections to topology and gauge theory
 
-### Block D: PDEs (Lessons 74–78)
+### Block D: PDEs (Lessons 29–33)
 
-### Lesson 74: Heat Equation
+### Lesson 29: Heat Equation
 - u_t = k nabla^2 u, diffusion as Gaussian blurring
 - Solution via convolution with Gaussian kernel
 - Forward process of diffusion models as progressive noise addition
 - Boundary conditions (Dirichlet, Neumann), maximum principle
 
-### Lesson 75: Separation of Variables and Fourier Series
+### Lesson 30: Separation of Variables and Fourier Series
 - Separation of variables for linear PDEs
 - Fourier series: representing functions as sums of sinusoids
 - Fourier coefficients, convergence, Gibbs phenomenon
 - High-frequency modes decay fastest (coarse-to-fine generation)
 
-### Lesson 76: Wave Equation
+### Lesson 31: Wave Equation
 - u_tt = c^2 nabla^2 u, traveling wave solutions, d'Alembert's formula
 - Standing waves, normal modes, superposition
 - Energy conservation in wave systems
 - Signal propagation and information flow analogies
 
-### Lesson 77: Helmholtz, Laplace, and Transport Equations
+### Lesson 32: Helmholtz, Laplace, and Transport Equations
 - Laplace equation (steady-state heat), harmonic functions
 - Helmholtz equation (frequency-domain wave), eigenvalue problems
 - Transport equation, method of characteristics
 - Connections to spectral methods and graph Laplacians in ML
 
-### Lesson 78: PDEs in ML
+### Lesson 33: PDEs in ML
 - Fokker-Planck equation: probability evolution during SGD
 - Score function, score matching, reverse SDE for diffusion models
 - Probability flow ODE, continuous normalizing flows
 - Neural operators and physics-informed neural networks (PINNs)
 
-### Block E: ML Calculus (Lessons 79–81)
+### Block E: ML Calculus (Lessons 34–36)
 
-### Lesson 79: Matrix Calculus
+### Lesson 34: Matrix Calculus
 - Gradient vector, Jacobian matrix, Hessian matrix
 - Key matrix calculus results: d/dx(Ax), d/dx(x^T A x), d/dX tr(AX)
 - Hessian eigenvalues as curvature, condition number and zigzag SGD
 - Taylor linearization: f(x+d) ~ f(x) + nabla f^T d (why gradient descent works)
 
-### Lesson 80: Optimization Algorithms
+### Lesson 35: Optimization Algorithms
 - Gradient descent, SGD, mini-batch estimates
 - Momentum, Nesterov acceleration, Adam optimizer
 - Convexity vs non-convexity, learning rate schedules
 - Implicit regularization, edge of stability, SGD noise as temperature
 
-### Lesson 81: Loss Landscapes and Gradient Flow
+### Lesson 36: Loss Landscapes and Gradient Flow
 - Loss landscapes in high dimensions: saddle points dominate
 - Gradient flow dW/dt = -nabla L, Lyapunov analysis
 - Neural ODEs, adjoint method, ResNets as Euler steps
@@ -412,9 +412,9 @@
 
 ---
 
-## Phase 3: Probability & Statistics (Lessons 31–39)
+## Phase 3: Probability & Statistics (Lessons 37–52)
 
-### Lesson 31: Probability Distributions and Bayes' Theorem
+### Lesson 37: Probability Distributions and Bayes' Theorem
 - Probability axioms, conditional probability, independence
 - **Bayes' theorem:** P(A|B) = P(B|A)P(A)/P(B)
 - Common distributions: Bernoulli, binomial, Gaussian/normal, Poisson, uniform, exponential
@@ -423,7 +423,7 @@
 - Joint, marginal, conditional distributions
 - **Law of total probability**
 
-### Lesson 32: Expectation, Variance, and Covariance
+### Lesson 38: Expectation, Variance, and Covariance
 - **Expected value:** E[X] = Σ xP(x) (weighted average)
 - **Variance:** Var(X) = E[(X−μ)²] = E[X²] − (E[X])²
 - **Standard deviation:** σ = √Var
@@ -433,7 +433,7 @@
 - Linearity of expectation
 - Law of large numbers, moment generating functions
 
-### Lesson 33: Maximum Likelihood Estimation
+### Lesson 39: Maximum Likelihood Estimation
 - **Likelihood:** L(θ) = P(data | θ) — probability of data given parameters
 - **MLE:** θ̂ = argmax P(data | θ), equivalently minimize −log likelihood
 - **Cross-entropy loss = negative log-likelihood** for classification
@@ -444,7 +444,7 @@
 - **Gaussian Mixture Models (GMMs):** EM for fitting multiple Gaussians
 - **K-means as hard EM** (hard vs soft assignments)
 
-### Lesson 34: Information Theory
+### Lesson 40: Information Theory
 - **Information content:** I(x) = −log₂ P(x) — rare events carry more info
 - **Entropy:** H(X) = −Σ P(x) log P(x) — average surprise
   - Maximum entropy = uniform distribution
@@ -458,7 +458,7 @@
 - Two-phase learning: fitting then compressing
 - **Pointwise Mutual Information (PMI):** log[P(x,y)/(P(x)P(y))], connection to Word2Vec
 
-### Lesson 35: Hypothesis Testing
+### Lesson 41: Hypothesis Testing
 - **Null hypothesis (H₀)** vs **alternative hypothesis (H₁)**
 - **P-value:** P(data ≥ this extreme | H₀ true) — NOT P(H₀ | data)
 - **Base rate fallacy:** P(data|H₀) ≠ P(H₀|data)
@@ -470,7 +470,7 @@
 - **Effect sizes:** Cohen's d, Pearson's r, odds ratio — what p-values don't tell you
 - **Confidence intervals:** repeated-experiment interpretation (not probability of containing truth)
 
-### Lesson 36: Experimental Design and Statistical Fallacies
+### Lesson 42: Experimental Design and Statistical Fallacies
 - **Randomization, control groups, blinding** (single, double), **pre-registration**
 - **Hierarchy of evidence:** case reports → observational → RCTs → meta-analyses
 - **Correlation ≠ causation** (confounders)
@@ -480,7 +480,7 @@
 - **Ecological fallacy:** group-level ≠ individual-level relationships
 - **Regression to the mean**
 
-### Lesson 37: Regression
+### Lesson 43: Regression
 - **Linear regression:** y = β₀ + β₁x₁ + ... + ε, ε ~ N(0,σ²)
 - Standard errors, t-tests on coefficients, confidence intervals
 - **R² (coefficient of determination)**
@@ -494,7 +494,7 @@
 - Assumptions: linearity, independence, homoscedasticity
 - **Robust standard errors** (Huber-White)
 
-### Lesson 38: Bayesian Foundations
+### Lesson 44: Bayesian Foundations
 - **Bayesian vs frequentist:** probability as degree of belief vs long-run frequency
 - **Bayes' theorem as update rule:** posterior ∝ likelihood × prior
 - **Priors:** informative, weakly informative, "uninformative" (Jeffreys)
@@ -506,7 +506,7 @@
 - **Sequential updating:** today's posterior = tomorrow's prior
 - Bayesian agent as normative model of rational belief updating
 
-### Lesson 39: Bayesian Computation
+### Lesson 45: Bayesian Computation
 - **The computational problem:** P(D) = ∫P(D|θ)P(θ)dθ is intractable
 - **MCMC (Markov Chain Monte Carlo):** construct chain whose stationary distribution = posterior
   - **Metropolis-Hastings:** propose → accept/reject (normalizing constants cancel)
@@ -521,7 +521,7 @@
 - **VAE connection:** encoder = variational params, decoder = likelihood, VAE loss = negative ELBO
 - **Laplace approximation:** Gaussian at MAP with covariance = inverse Hessian
 
-### Lesson 40: Bayesian Model Comparison
+### Lesson 46: Bayesian Model Comparison
 - **Marginal likelihood (evidence):** P(D|M) = ∫P(D|θ,M)P(θ|M)dθ
 - **Automatic Occam's razor:** complex models spread prior over more patterns → lower evidence for specific data
 - **Bayes factors:** BF₁₂ = P(D|M₁)/P(D|M₂), can support null hypothesis (unlike p-values)
@@ -535,7 +535,7 @@
   - **RLCT (λ)** replaces k/2 as true effective dimension
   - For neural networks: λ ≤ d/2 (simpler than parameter count suggests)
 
-### Lesson 41: Causal Inference
+### Lesson 47: Causal Inference
 - **Counterfactuals:** what would have happened differently?
 - **Potential outcomes framework (Rubin):** Y₁ᵢ, Y₀ᵢ, causal effect = Y₁ − Y₀
 - **Average Treatment Effect (ATE)**
@@ -553,7 +553,7 @@
   - **Propensity score matching**
 - **Mendelian randomization:** genetic variants as natural instruments
 
-### Lesson 42: Applied Statistics
+### Lesson 48: Applied Statistics
 - **Heritability (h²):** fraction of trait variation from genetic variation (population-level, NOT individual)
 - Between-group heritability ≠ between-group genetic causation
 - **Twin studies:** identical vs fraternal twins, assumptions and violations
@@ -566,68 +566,110 @@
 - **Nutrition science:** confounders everywhere, healthy user bias
 - Statistical adjudication of empirical claims
 
+### Lesson 49: Concentration Inequalities — From Markov to Chernoff
+- **The tightening ladder:** Markov → Chebyshev → Hoeffding → Chernoff (more assumptions → tighter bounds)
+- **Markov's inequality:** P(X ≥ t) ≤ μ/t (uses only the mean, very general but weak)
+- **Chebyshev's inequality:** P(|X−μ| ≥ t) ≤ σ²/t² (adds variance, polynomial decay)
+- **Hoeffding's inequality:** P(|S̄−μ| ≥ t) ≤ 2exp(−2nt²/(b−a)²) (exponential decay for bounded averages)
+- **Chernoff bounds:** optimize over t in P(X ≥ a) ≤ E[e^{tX}]/e^{ta} — uses MGF, tightest possible
+- **Sub-Gaussian variables:** MGF bounded by Gaussian MGF → automatic Hoeffding-type tails
+- **Union bound:** P(∪Aᵢ) ≤ ΣP(Aᵢ) — needed for simultaneous guarantees over multiple parameters
+- **ML connection:** generalization guarantees, RLHF reward estimation reliability, safety evaluation sample sizes
+
+### Lesson 50: Markov Chains and Mixing
+- **Markov property:** P(X_{n+1} | X_n, ..., X_0) = P(X_{n+1} | X_n) — future depends only on present
+- **Transition matrix P:** Pᵢⱼ = P(X_{n+1}=j | Xₙ=i), each row sums to 1 (stochastic matrix)
+- **n-step transitions:** (i,j) entry of Pⁿ — matrix powers from linear algebra
+- **Stationary distribution:** πP = π — left eigenvector of P with eigenvalue 1
+- **Ergodicity:** irreducible + aperiodic → converges to unique π from any start
+- **Mixing time:** τ_mix ≈ 1/(1−λ₂) — eigenvalue gap determines convergence speed
+- **Detailed balance:** π(i)P(i→j) = π(j)P(j→i) — reversibility, basis of Metropolis-Hastings
+- **PageRank:** stationary distribution of random web surfer = dominant eigenvector
+- **ML connection:** RL as MDP, MCMC convergence, SGD as Markov chain on parameter space
+
+### Lesson 51: Fisher Information and Exponential Families
+- **Score function:** s(θ) = ∂/∂θ log p(x|θ), E[s(θ)] = 0
+- **Fisher information:** I(θ) = Var(score) = −E[∂²/∂θ² log p(x|θ)] — curvature of log-likelihood
+- **Fisher information matrix:** I(θ)ᵢⱼ = E[∂ᵢ log p · ∂ⱼ log p] — defines Riemannian metric on parameter space
+- **Cramér-Rao bound:** Var(θ̂) ≥ 1/(nI(θ)) — fundamental speed limit on estimation
+- **Natural gradient:** Ĩ∇L = I(θ)⁻¹∇L — geometry-aware optimization (explains why Adam works)
+- **Exponential families:** p(x|θ) = h(x)exp(ηᵀT(x) − A(η)) — Gaussian, Bernoulli, Poisson, categorical
+- **Sufficient statistics:** T(X) captures ALL information about θ — compress without losing anything
+- **ML connection:** natural gradient ≈ Adam, singular Fisher matrix → SLT, information geometry
+
+### Lesson 52: PAC Learning and Generalization Bounds
+- **Generalization gap:** |L(h) − L̂(h)| — difference between true and empirical risk
+- **PAC framework:** with probability ≥ 1−δ, true error ≤ empirical error + ε, given n ≥ n₀(ε, δ, H)
+- **Finite classes:** n ≥ (1/2ε²)log(2|H|/δ) — only logarithmic in hypothesis count
+- **VC dimension:** largest number of points H can shatter; VC(linear in ℝᵈ) = d+1
+- **VC bound:** sample complexity n = O(d/ε² · log(d/ε))
+- **Rademacher complexity:** data-dependent measure — how well can H fit random noise?
+- **PAC-Bayes:** E_Q[L(h)] ≤ E_Q[L̂(h)] + √(D_KL(Q‖P) + log(n/δ))/(2n) — tightest practical bounds
+- **Why classical bounds fail for deep learning:** implicit regularization, compression, SLT (RLCT < parameter count)
+- **ML connection:** safety evaluation guarantees, alignment tax quantification, distributional shift
+
 ---
 
-## Phase 4: Machine Learning (Lessons 40–50, 82–84)
+## Phase 4: Machine Learning (Lessons 53–66)
 
-### Block A: Core ML (Lessons 40–49)
+### Block A: Core ML (Lessons 53–62)
 
-### Lesson 40: Perceptron
+### Lesson 53: Perceptron
 - Perceptron model: weighted sum + bias + activation
 - Linear decision boundary (hyperplane)
 - Step function, sigmoid, ReLU activations
 - Perceptron learning rule
 - XOR problem: single neurons can't solve non-linear problems
 
-### Lesson 41: Gradient Descent
+### Lesson 54: Gradient Descent
 - Gradient descent: W <- W - eta nabla L(W)
 - SGD: mini-batch gradient estimates, learning rate tuning
 - Momentum, Nesterov acceleration
 - Convexity vs non-convexity of neural network loss
 
-### Lesson 42: Backpropagation
+### Lesson 55: Backpropagation
 - Full network gradient computation via chain rule
 - Backprop = reverse-mode autodiff on computation graph
 - Gradient flow through layers, vanishing/exploding gradients
 - Residual connections, batch/layer normalization, gradient checking
 
-### Lesson 43: Deep Learning
+### Lesson 56: Deep Learning
 - Multi-layer networks: stacking linear transformations + nonlinearities
 - Forward pass = sequence of matrix multiplications + activations
 - ReLU folds space, universal approximation theorem
 - Width vs depth tradeoffs, representation learning
 
-### Lesson 44: AlexNet and CNNs
+### Lesson 57: AlexNet and CNNs
 - Convolutional layers: local receptive fields, weight sharing
 - Pooling, stride, feature hierarchies (edges -> textures -> objects)
 - AlexNet as the deep learning watershed moment
 - Modern CNN architectures, transfer learning
 
-### Lesson 45: Scaling Laws
+### Lesson 58: Scaling Laws
 - Kaplan scaling laws: L(N) proportional to N^(-alpha)
 - Chinchilla scaling: optimal data/params ratio ~20:1
 - The bitter lesson (Rich Sutton): scale wins over cleverness
 - Emergent capabilities, measurement artifact debate, grokking as phase transition
 
-### Lesson 46: Attention Mechanism
+### Lesson 59: Attention Mechanism
 - Query, Key, Value vectors: Q = xW_Q, K = xW_K, V = xW_V
 - Attention scores: QK^T/sqrt(d_k), softmax as probability distribution
 - Multi-head attention, causal/autoregressive masking
 - Multi-head Latent Attention (MLA, DeepSeek variant)
 
-### Lesson 47: Transformer Architecture
+### Lesson 60: Transformer Architecture
 - Full transformer block: LayerNorm -> MHA -> Residual -> LayerNorm -> MLP -> Residual
 - Residual stream view, positional encoding (sinusoidal or learned)
 - QK circuit and OV circuit analysis
 - "Mathematical Framework for Transformer Circuits" (Elhage, Nanda et al.)
 
-### Lesson 48: Mechanistic Interpretability
+### Lesson 61: Mechanistic Interpretability
 - Mechanistic interpretability: reverse-engineering model internals
 - Activation patching, direct logit attribution, probing
 - Induction heads, feature circuits, steering vectors
 - Sparse autoencoders (SAEs), superposition, monosemantic vs polysemantic neurons
 
-### Lesson 49: Diffusion Models
+### Lesson 62: Diffusion Models
 - Forward process: progressive noise addition (heat equation connection)
 - Reverse process: learned denoising, score function estimation
 - Score matching, reverse SDE, probability flow ODE
@@ -635,27 +677,27 @@
 
 ### Block B: Applied ML (Lessons 50, 82)
 
-### Lesson 50: RL Foundations
+### Lesson 63: RL Foundations
 - Agent, Environment, State, Action, Reward framework
 - MDP, policy pi(a|s), value function V(s), Q-function Q(s,a)
 - Policy gradient methods, PPO, value-based methods (Q-learning, DQN)
 - Reward shaping, specification gaming, Goodhart's Law, reward hacking
 
-### Lesson 82: LLM Pipeline
+### Lesson 64: LLM Pipeline
 - Pre-training: next-token prediction (MLE), scaling laws
 - SFT: supervised fine-tuning on demonstrations
 - RLHF / DPO / Constitutional AI: preference optimization
 - KL penalty, credit assignment, deployment and monitoring
 
-### Block C: Interpretability Theory (Lessons 83–84)
+### Block C: Interpretability Theory (Lessons 65–66)
 
-### Lesson 83: Circuits and Superposition
+### Lesson 65: Circuits and Superposition
 - Superposition hypothesis: more features than dimensions via near-orthogonality
 - SAE training and feature dictionaries for auditing model internals
 - Induction head circuit: previous token head + induction head composition
 - IOI circuit in GPT-2, developmental interpretability
 
-### Lesson 84: Singular Learning Theory (SLT)
+### Lesson 66: Singular Learning Theory (SLT)
 - Neural networks are singular: many-to-one parameter-to-function map
 - Symmetries create singularities, Fisher information is singular
 - RLCT (Real Log Canonical Threshold): true effective complexity, lambda <= d/2
@@ -663,9 +705,9 @@
 
 ---
 
-## Phase 5: Mathematical Enrichment (Lessons 54–62)
+## Phase 5: Mathematical Enrichment (Lessons 67–79)
 
-### Lesson 54: Turing Machines and Decidability
+### Lesson 67: Turing Machines and Decidability
 - **Turing machine:** tape + head + states + transition function — formal definition of computation
 - Church-Turing thesis: anything computable is Turing-computable
 - **Halting problem:** no algorithm can determine if arbitrary programs halt — **undecidable**
@@ -673,7 +715,7 @@
 - **Rice's theorem:** every non-trivial semantic property of programs is undecidable
 - Decidability landscape: decidable, semi-decidable, undecidable
 
-### Lesson 55: Computational Complexity
+### Lesson 68: Computational Complexity
 - **P:** problems solvable in polynomial time
 - **NP:** solutions verifiable in polynomial time
 - **NP-complete:** hardest problems in NP (via polynomial reductions)
@@ -683,7 +725,7 @@
 - **Space complexity:** PSPACE
 - **Circuit complexity:** neural networks as Boolean circuits
 
-### Lesson 56: Kolmogorov Complexity and Algorithmic Information
+### Lesson 69: Kolmogorov Complexity and Algorithmic Information
 - **Kolmogorov complexity K(x):** length of shortest program generating x
 - Incompressible strings (random)
 - K(x) is **uncomputable** (related to halting problem)
@@ -693,7 +735,7 @@
 - Incomputable but provides theoretical ideal for agent design
 - Minimum Description Length (MDL) principle
 
-### Lesson 57: Group Theory
+### Lesson 70: Group Theory
 - **Group:** set + operation satisfying closure, associativity, identity, inverses
 - Examples: integers under addition, permutation groups S_n, cyclic groups Z_n, matrix groups GL(n), SO(n), dihedral groups
 - **Subgroups, cosets, quotient groups** G/N
@@ -703,7 +745,7 @@
 - Abelian vs non-abelian groups
 - **Normal subgroups**
 
-### Lesson 58: Rings, Fields, and Algebraic Structures
+### Lesson 71: Rings, Fields, and Algebraic Structures
 - **Rings:** set with + and ×, additive group + multiplicative monoid
 - Examples: integers Z, polynomials R[x], matrix rings
 - **Fields:** rings where every nonzero element has multiplicative inverse (Q, R, C, F_p)
@@ -712,7 +754,7 @@
 - **Noetherian rings, Hilbert Basis Theorem**
 - **Polynomial rings** — foundation for algebraic geometry
 
-### Lesson 59: Group Actions, Representations, and Neural Network Symmetry
+### Lesson 72: Group Actions, Representations, and Neural Network Symmetry
 - **Group actions:** group acts on a set (orbits, stabilizers)
 - **Neural network symmetries:** neuron permutation symmetry in hidden layers
 - **Orbit-stabilizer theorem** and connection to SLT (parameter symmetries create singularities)
@@ -720,7 +762,7 @@
 - Character theory basics
 - **Equivariant neural networks:** architectures preserving symmetries (CNNs = translation equivariance)
 
-### Lesson 60: Point-Set Topology
+### Lesson 73: Point-Set Topology
 - **Topological spaces:** defined by open sets satisfying axioms
 - **Continuity:** topological definition (preimage of open is open)
 - **Compactness:** every open cover has finite subcover
@@ -731,7 +773,7 @@
 - **Hausdorff spaces:** points can be separated by open sets
 - Homeomorphisms (topological equivalence)
 
-### Lesson 61: Homotopy and Fundamental Groups
+### Lesson 74: Homotopy and Fundamental Groups
 - **Homotopy:** continuous deformation of one map into another
 - Homotopy equivalence of spaces
 - **Fundamental group π₁:** loops up to continuous deformation
@@ -740,7 +782,7 @@
 - **Covering spaces:** unwinding topology
 - Loss landscape topology: holes and non-contractible loops
 
-### Lesson 62: Manifolds and Tangent Spaces
+### Lesson 75: Manifolds and Tangent Spaces
 - **Smooth manifolds:** locally Euclidean spaces with smooth transition maps
 - Examples: spheres, tori, weight space as manifold
 - **Tangent spaces and tangent bundles**
@@ -748,7 +790,18 @@
 - **Manifold hypothesis:** real-world data lies on low-dimensional manifold in high-dimensional space
 - **Singularities:** where manifold structure breaks down (key for SLT)
 
-### Lesson 63: Algebraic Geometry Essentials
+### Lesson 79: Differential Forms and Stokes' Theorem
+- **k-forms:** 0-forms = functions, 1-forms = integrable along curves, 2-forms = over surfaces, 3-forms = volumes
+- **Wedge product ∧:** antisymmetric (dx∧dy = −dy∧dx, dx∧dx = 0) — captures oriented area/volume
+- **Connection to determinants:** (dx∧dy)(u,v) = det[u|v] — wedge product IS the determinant
+- **Exterior derivative d:** unifies grad (d on 0-forms), curl (d on 1-forms), div (d on 2-forms)
+- **d² = 0:** curl(grad f) = 0 and div(curl F) = 0 are both consequences of this single fact
+- **Generalized Stokes' theorem:** ∫_∂M ω = ∫_M dω — unifies FTC, Green's, Stokes', Divergence theorems
+- **Pullbacks φ*:** how forms transform under maps — the change of variables formula IS a pullback
+- **De Rham cohomology:** Hᵏ(M) = {closed k-forms}/{exact k-forms} — detects topological holes via calculus
+- **ML connection:** normalizing flows (change of variables = pullback), Fisher metric as 2-tensor, SLT blow-up pullbacks
+
+### Lesson 76: Algebraic Geometry Essentials
 - **Algebraic varieties:** solution sets of polynomial equations
 - Affine varieties, projective varieties
 - **Smooth vs singular points:** Jacobian rank condition
@@ -759,7 +812,7 @@
 - **Computing RLCTs for examples:** linear regression, reduced rank regression, neural networks
 - Direct connection to SLT: algebraic geometry provides the computational tools
 
-### Lesson 64: Propositional and Predicate Logic
+### Lesson 77: Propositional and Predicate Logic
 - **Propositional logic:** connectives (∧, ∨, ¬, →, ↔), truth tables
 - Tautologies, contradictions, satisfiability
 - Normal forms (CNF, DNF)
@@ -769,7 +822,7 @@
 - **Models and interpretations** (semantic side)
 - **Formal verification** of software/AI systems
 
-### Lesson 65: Gödel's Incompleteness and Löb's Theorem
+### Lesson 78: Gödel's Incompleteness and Löb's Theorem
 - **Gödel's First Incompleteness Theorem:** any consistent formal system strong enough to express arithmetic contains true but unprovable statements
 - **Gödel numbering:** encoding statements as numbers (self-reference)
 - **Gödel's Second Incompleteness Theorem:** such a system cannot prove its own consistency
@@ -781,9 +834,9 @@
 
 ---
 
-## Phase 6: Alignment Theory (Lessons 66–67)
+## Phase 6: Alignment Theory (Lessons 80–84)
 
-### Lesson 66: Game Theory
+### Lesson 80: Game Theory
 - **Normal form games, extensive form games**
 - **Nash equilibrium:** no player can unilaterally improve
 - **Dominant strategies, mixed strategies**
@@ -793,7 +846,7 @@
 - **Common knowledge, signaling, information asymmetry**
 - **Auction theory** (Vickrey, etc.)
 
-### Lesson 67: Decision Theory
+### Lesson 81: Decision Theory
 - **Expected utility theory:** maximize E[u(outcome)]
 - **Von Neumann-Morgenstern axioms**
 - **Three decision theories:**
@@ -805,7 +858,7 @@
 - **Logical uncertainty**
 - Implications for AI agent design
 
-### Lesson 68: Anthropics and Self-Locating Beliefs
+### Lesson 82: Anthropics and Self-Locating Beliefs
 - **Observation selection effects**
 - **Sleeping Beauty Problem**
 - **Self-Sampling Assumption (SSA)** vs **Self-Indication Assumption (SIA)**
@@ -814,7 +867,7 @@
 - **Doomsday argument**
 - **Embedded agency:** agents reasoning about themselves as part of the environment
 
-### Lesson 69: The Alignment Problem
+### Lesson 83: The Alignment Problem
 - **Core problem:** ensuring AI systems pursue goals beneficial to humanity
 - **Outer alignment:** specifying the right objective
 - **Inner alignment:** ensuring the model optimizes for the specified objective
@@ -825,7 +878,7 @@
   - Scalable oversight, interpretability-based safety
 - **Goodhart's Law:** when a measure becomes a target, it ceases to be a good measure
 
-### Lesson 70: Open Problems and Research Frontiers
+### Lesson 84: Open Problems and Research Frontiers
 - **Technical open problems:** scalable oversight, interpretability gaps, robustness
 - **Emerging theoretical frameworks:** SLT for understanding learning, agent foundations
 - **Research frontiers in interpretability:** sparse autoencoders at scale, developmental interpretability, causal scrubbing
