@@ -4,7 +4,7 @@
 
 *A living reference of formulas, identities, and key insights from the curriculum.*
 
-*⚠️ When adding a new section, also add a corresponding link in the Table of Contents below.*
+*⚠️ When adding a new cheat sheet item, place it in the correct phase and block section below. Also add a corresponding link in the Table of Contents. Calculus items go into one of the six blocks (Fundamentals, ODEs, Multivariable, Vector Calculus, PDEs, Matrix Calculus). Probability items go into Phase 3, and so on.*
 
 ---
 
@@ -41,6 +41,8 @@
 - [Coefficient of Determination (r²)](#coefficient-of-determination-r)
 
 ### Phase 2 — Calculus
+
+#### [Fundamentals of Calculus](#fundamentals-of-calculus)
 - [21. Derivatives and Differentials](#21-derivatives-and-differentials)
 - [22. L'Hôpital's Rule](#22-lhôpitals-rule)
 - [23. Limits and Continuity](#23-limits-and-continuity)
@@ -60,10 +62,36 @@
 - [37. Inverse Function Derivatives](#37-inverse-function-derivatives)
 - [38. Polar Coordinates](#38-polar-coordinates)
 - [39. Taylor's Theorem — Remainder Forms](#39-taylors-theorem--remainder-forms)
+
+#### [Ordinary Differential Equations](#ordinary-differential-equations)
 - [40. First-Order ODEs — Solution Methods](#40-first-order-odes--solution-methods)
 - [41. Exact Equations and Integrating Factors for Non-Exact Equations](#41-exact-equations-and-integrating-factors-for-non-exact-equations)
 
-### [Key Identities Quick Reference](#key-identities-quick-reference)
+#### [Multivariable Calculus](#multivariable-calculus)
+*Section not yet started — items will be added during lessons 19–23.*
+
+#### [Vector Calculus](#vector-calculus)
+*Section not yet started — items will be added during lessons 24–28.*
+
+#### [Partial Differential Equations](#partial-differential-equations)
+*Section not yet started — items will be added during lessons 29–33.*
+
+#### [Matrix Calculus & Optimization](#matrix-calculus--optimization)
+*Section not yet started — items will be added during lessons 34–36.*
+
+### Phase 3 — Probability & Statistics
+*Section not yet started — items will be added during lessons 37–52.*
+
+### Phase 4 — Machine Learning & Interpretability
+*Section not yet started — items will be added during lessons 53–66.*
+
+### Phase 5 — Extended Mathematical Foundations
+*Section not yet started — items will be added during lessons 67–79.*
+
+### Phase 6 — Alignment Theory
+*Section not yet started — items will be added during lessons 80–84.*
+
+### [Key Identities Quick Reference](#-key-identities-quick-reference)
 
 ---
 
@@ -538,6 +566,10 @@ $$r^2 = \frac{\|\hat{y}\|^2}{\|\tilde{y}\|^2} = \frac{SSR}{SST} = \frac{\text{ex
 - Pythagorean theorem works because ŷ ⊥ e (the orthogonality principle from Lesson 9)
 - Adding more predictors always increases R² (even nonsense ones) → use **adjusted R²** to penalize complexity
 - Adjusted R² is conceptually similar to regularization: prefer simpler explanations
+
+---
+
+# Fundamentals of Calculus
 
 ---
 
@@ -1241,6 +1273,10 @@ To go from "compute derivatives" to $\sum$ notation:
 
 ---
 
+# Ordinary Differential Equations
+
+---
+
 ## 40. First-Order ODEs — Solution Methods
 
 ### Separable Equations
@@ -1323,7 +1359,55 @@ After finding $\mu$, multiply through and solve the now-exact equation using the
 
 ---
 
-## Key Identities Quick Reference
+# Multivariable Calculus
+
+*Section not yet started — items will be added during lessons 19–23.*
+
+---
+
+# Vector Calculus
+
+*Section not yet started — items will be added during lessons 24–28.*
+
+---
+
+# Partial Differential Equations
+
+*Section not yet started — items will be added during lessons 29–33.*
+
+---
+
+# Matrix Calculus & Optimization
+
+*Section not yet started — items will be added during lessons 34–36.*
+
+---
+
+# Phase 3 — Probability & Statistics
+
+*Section not yet started — items will be added during lessons 37–52.*
+
+---
+
+# Phase 4 — Machine Learning & Interpretability
+
+*Section not yet started — items will be added during lessons 53–66.*
+
+---
+
+# Phase 5 — Extended Mathematical Foundations
+
+*Section not yet started — items will be added during lessons 67–79.*
+
+---
+
+# Phase 6 — Alignment Theory
+
+*Section not yet started — items will be added during lessons 80–84.*
+
+---
+
+## 📋 Key Identities Quick Reference
 
 | Identity | Meaning |
 |----------|---------|
@@ -1361,14 +1445,10 @@ After finding $\mu$, multiply through and solve the now-exact equation using the
 | $(f^{-1})'(y) = 1/f'(f^{-1}(y))$ | Inverse function derivative |
 | $p_Y(y) = p_X(g^{-1}(y)) \cdot \|(g^{-1})'(y)\|$ | 1D change of variables |
 | $dx\,dy = r\,dr\,d\theta$ | Polar Jacobian |
-| $\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$ | Gaussian integral |
-| $R_n(x) = \int_a^x \frac{(x-t)^n}{n!} f^{(n+1)}(t)\,dt$ | Exact integral remainder |
-| $R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ | Lagrange remainder |
-| $\|R_n(x)\| \leq \frac{M}{(n+1)!}\|x-a\|^{n+1}$ | Taylor error bound |
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus through Lesson 21)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs)*
 
 
 
