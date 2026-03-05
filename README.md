@@ -61,7 +61,7 @@ A structured self-study curriculum building from mathematical foundations throug
 | 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | ✅ Complete |
 | 14 | [Introduction to ODEs — Classification and Direction Fields](phase2-calculus/lesson-14-intro-odes.md) | ⬜ Not Started |
 | 15 | [First-Order ODEs — Separable, Linear, and Exact](phase2-calculus/lesson-15-first-order-odes.md) | ⬜ Not Started |
-| 16 | [Higher-Order Linear ODEs and Mechanical Vibrations](phase2-calculus/lesson-16-higher-order-odes.md) | ⬜ Not Started |
+| 16 | [Higher-Order Linear ODEs, Mechanical Vibrations, and Power Series Solutions](phase2-calculus/lesson-16-higher-order-odes.md) | ⬜ Not Started |
 | 17 | [The Laplace Transform](phase2-calculus/lesson-17-laplace-transform.md) | ⬜ Not Started |
 | 18 | [Systems of ODEs and Phase Portraits](phase2-calculus/lesson-18-systems-odes.md) | ⬜ Not Started |
 
@@ -69,11 +69,11 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 19 | [Partial Derivatives, Gradients, and Directional Derivatives](phase2-calculus/lesson-19-partial-derivatives.md) | ⬜ Not Started |
-| 20 | [The Multivariable Chain Rule and Jacobian Matrices](phase2-calculus/lesson-20-multivariable-chain-rule.md) | ⬜ Not Started |
-| 21 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-21-multiple-integration.md) | ⬜ Not Started |
-| 22 | [Taylor Expansions and the Implicit Function Theorem](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
-| 23 | [Optimization in Several Variables and Lagrange Multipliers](phase2-calculus/lesson-23-optimization.md) | ⬜ Not Started |
+| 19 | [3D Geometry, Curves, and Curvature](phase2-calculus/lesson-19-partial-derivatives.md) | ⬜ Not Started |
+| 20 | [Multivariable Functions, Limits, and Partial Derivatives](phase2-calculus/lesson-20-multivariable-chain-rule.md) | ⬜ Not Started |
+| 21 | [The Chain Rule, Directional Derivatives, and Gradients](phase2-calculus/lesson-21-multiple-integration.md) | ⬜ Not Started |
+| 22 | [Optimization, Taylor Expansions, and the IFT](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
+| 23 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-23-optimization.md) | ⬜ Not Started |
 
 ### Block C: Vector Calculus (24–28) — Trefor Bazett
 

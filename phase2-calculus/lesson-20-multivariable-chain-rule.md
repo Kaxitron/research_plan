@@ -1,62 +1,55 @@
-# Lesson 20: The Multivariable Chain Rule and Jacobian Matrices
+# Lesson 20: Multivariable Functions, Limits, and Partial Derivatives
 
-[<- Previous](lesson-19-partial-derivatives.md) | [Back to TOC](../README.md) | [Next: Multiple Integration ->](lesson-21-multiple-integration.md)
+[<- Previous](lesson-19-partial-derivatives.md) | [Back to TOC](../README.md) | [Next: Chain Rule & Gradients ->](lesson-21-multiple-integration.md)
 
 ---
 
 ## Core Learning
 
-- The multivariable chain rule tells you how to differentiate composite functions when several intermediate variables each depend on several independent variables. The key idea is tree diagrams: you sum over all paths through the dependency tree, multiplying derivatives along each path. This generalizes the single-variable chain rule f'(g(x)) * g'(x) to any number of variables and any depth of composition.
-- The Jacobian matrix packages this idea into linear algebra. For a function F: R^n -> R^m, the Jacobian J is the m x n matrix of all partial derivatives, J_{ij} = partial F_i / partial x_j. The Jacobian IS the total derivative -- the best linear approximation to F near a point. The chain rule for compositions becomes matrix multiplication: J_{g composed with f} = J_g * J_f. This single equation IS backpropagation written in the language of linear algebra.
-- The Hessian matrix H_{ij} = partial^2 f / partial x_i partial x_j collects second-order partial derivatives and describes the curvature of a scalar function. Its eigenvalues are the curvatures in each eigendirection: positive definite means bowl (minimum), negative definite means dome (maximum), mixed signs mean saddle. The condition number (ratio of largest to smallest eigenvalue) controls how elongated the loss landscape is, which directly determines how badly gradient descent zigzags.
+- Functions of several variables f: R^n -> R take multiple inputs and produce a scalar output. For f(x, y), the graph is a surface in 3D; for more variables, you cannot visualize the graph directly but can study it through level sets (contour plots). Level curves f(x, y) = c are the "topographic map" of the surface -- places where the function has constant height. Understanding functions through their contour structure is essential: in ML, loss contours show which parameter combinations give equal loss, and understanding their shape determines whether optimization is easy or hard.
+- Multivariable limits are fundamentally harder than single-variable limits because there are infinitely many paths approaching a point. If lim f(x, y) exists as (x,y) -> (a,b), it must be the same along EVERY path. The path test exploits this: if two different paths give different limits, the limit does not exist. The squeeze theorem and algebraic techniques handle the cases where the limit does exist. Continuity in multiple dimensions means the limit equals the function value, just as in one dimension, but the richer path structure makes discontinuities easier to create and harder to detect.
+- Partial derivatives measure the rate of change of f when you vary one input while holding all others fixed -- they are literally single-variable derivatives taken one coordinate at a time. The notation partial f / partial x means "differentiate with respect to x, treating y as a constant." Higher-order partials like f_xy involve differentiating twice; Clairaut's theorem guarantees f_xy = f_yx when both are continuous. The critical subtlety is the differentiability hierarchy: having all partial derivatives does NOT guarantee continuity (a function can have partials everywhere but be discontinuous), while being differentiable (having a good linear approximation) DOES guarantee continuity. This hierarchy matters because gradient-based optimization implicitly assumes differentiability, not just the existence of partials.
 
 ## Watch -- Primary
 
-- **Trefor Bazett -- Multivariable Calculus** (chain rule and Jacobian sections)
+- **Trefor Bazett -- Multivariable Calculus** (functions, limits, and partial derivatives sections)
   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
-  - Focus on the multivariable chain rule, tree diagrams, and Jacobian matrix videos.
+  - Focus on the videos covering functions of several variables, contour plots, multivariable limits, the path test, partial derivatives, and higher-order partials (roughly videos 10-16 in the playlist).
 
 ## Watch -- Secondary
 
-- **3Blue1Brown -- "Backpropagation calculus" (Deep Learning Ch. 4)**
-  - https://www.youtube.com/watch?v=tIeHLnjs5U8
-  - Shows how the chain rule on a computation graph produces backpropagation.
-- **Trefor Bazett -- Multivariable Calculus** (curvature, TNB frame sections)
-  - Same playlist. The curvature and Frenet-Serret frame material connects to how curves bend in space, providing geometric intuition for the Hessian.
+- **3Blue1Brown -- "Gradient descent, how neural networks learn" (Deep Learning Ch. 2)**
+  - https://www.youtube.com/watch?v=IHZwWFHWa-w
+  - Visual intuition for what partial derivatives mean geometrically -- slicing a surface along coordinate directions -- and why we collect them into gradients.
 
 ## Read
 
-- **colah's blog -- "Calculus on Computational Graphs: Backpropagation"**
-  - http://colah.github.io/posts/2015-08-Backprop/
-  - Essential reading. Explains backprop as the chain rule applied to computation graphs -- exactly the Jacobian composition from this lesson.
-- **MML Book (Deisenroth, Faisal, Ong)** -- Section 5.2 on the chain rule and Section 5.3 on gradients of compositions.
+- **Stewart's Calculus** -- Chapter 14, Sections 14.1-14.3 (functions of several variables, limits and continuity, partial derivatives). Includes detailed limit examples using the path test and thorough coverage of higher-order partials.
+- **MML Book (Deisenroth, Faisal, Ong)** -- Section 5.1 on partial derivatives and gradients for the ML perspective.
 
 ## Key Equations
 
-Multivariable chain rule (scalar version):
+Partial derivative definition:
 
-$$\frac{dz}{dt} = \frac{\partial z}{\partial x}\frac{dx}{dt} + \frac{\partial z}{\partial y}\frac{dy}{dt}$$
+$$\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h, y) - f(x, y)}{h}$$
 
-General chain rule (sum over all paths):
+Clairaut's theorem (equality of mixed partials):
 
-$$\frac{\partial f}{\partial t_j} = \sum_{i} \frac{\partial f}{\partial x_i}\frac{\partial x_i}{\partial t_j}$$
+$$f_{xy} = f_{yx} \quad \text{(when both are continuous)}$$
 
-Jacobian matrix for F: R^n -> R^m:
+Total differential:
 
-$$J = \begin{bmatrix} \partial F_1/\partial x_1 & \cdots & \partial F_1/\partial x_n \\ \vdots & \ddots & \vdots \\ \partial F_m/\partial x_1 & \cdots & \partial F_m/\partial x_n \end{bmatrix}$$
+$$df = \frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy$$
 
-Chain rule as Jacobian multiplication:
+Differentiability hierarchy:
 
-$$J_{g \circ f} = J_g \cdot J_f$$
-
-Hessian matrix:
-
-$$H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$$
+$$\text{differentiable} \implies \text{continuous} \implies \text{limits exist}$$
+$$\text{partials exist} \;\not\!\!\!\implies \text{continuous}$$
 
 ## ML and Alignment Connection
 
-The chain rule on computation graphs IS backpropagation. A neural network is a sequence of differentiable operations composed together. The forward pass computes the output; the backward pass multiplies Jacobians in reverse order to propagate gradients from the loss back to each parameter. The equation J_{g composed with f} = J_g * J_f is exactly what happens at each layer boundary during the backward pass.
+Partial derivatives are the atomic unit of gradient computation. Every element of the gradient vector nabla L(theta) is a partial derivative partial L / partial theta_i, measuring how much the loss changes when you nudge one parameter while holding all others fixed. In a neural network with millions of parameters, backpropagation efficiently computes all these partial derivatives in one backward pass rather than computing each one separately.
 
-The Hessian measures curvature of the loss landscape. Its eigenvalues determine whether a critical point is a minimum (all positive), maximum (all negative), or saddle (mixed). In high-dimensional neural networks, saddle points vastly outnumber local minima (by random matrix theory arguments), so the Hessian spectrum tells you what kind of landscape the optimizer is navigating. The condition number lambda_max / lambda_min controls convergence speed -- poorly conditioned landscapes cause gradient descent to zigzag, which is why adaptive optimizers like Adam exist.
+The differentiability hierarchy has practical consequences: activation functions like ReLU have undefined derivatives at zero, yet gradient descent still works because these non-differentiable points form a set of measure zero. Understanding when partial derivatives exist but the function is not differentiable helps explain why some theoretical guarantees of smooth optimization break down in practice -- and why techniques like gradient clipping and careful initialization exist to handle these edge cases.
 
-For alignment, understanding the backward pass mechanistically is essential for interpretability techniques like gradient-based attribution and for understanding how different components of the loss function (helpfulness vs harmlessness) compete during training.
+Contour plots of the loss function reveal the geometry that determines optimization difficulty. Circular contours mean all directions are equally easy to optimize (well-conditioned); elongated elliptical contours mean some directions converge much faster than others (ill-conditioned), causing gradient descent to zigzag. This geometry is controlled by the eigenvalues of the Hessian, which we will study in Lesson 22.

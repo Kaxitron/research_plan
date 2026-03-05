@@ -1,64 +1,63 @@
-# Lesson 23: Optimization in Several Variables and Lagrange Multipliers
+# Lesson 23: Multiple Integration and Change of Variables
 
 [<- Previous](lesson-22-taylor-expansions.md) | [Back to TOC](../README.md) | [Next: Line Integrals ->](lesson-24-line-integrals.md)
+
+**Prerequisite note:** This lesson also depends on Lesson 7 (determinants). The Jacobian determinant from change-of-variables is the same determinant you studied in the linear algebra phase -- it measures how a transformation stretches or compresses volume.
 
 ---
 
 ## Core Learning
 
-- Finding minima and maxima of multivariable functions starts with setting the gradient to zero to find critical points. But not all critical points are minima -- you need the second derivative test via the Hessian to classify them. A positive definite Hessian (all eigenvalues positive) means local minimum; negative definite means local maximum; mixed eigenvalues mean saddle point. In high-dimensional neural network loss landscapes, saddle points vastly outnumber local minima, which is why understanding the Hessian spectrum matters for ML.
-- Lagrange multipliers solve constrained optimization: minimize f(x) subject to g(x) = 0. The key geometric insight is that at the optimum, the gradient of f must be parallel to the gradient of g -- otherwise you could move along the constraint surface and still decrease f. This gives the Lagrangian condition nabla f = lambda * nabla g, where lambda (the Lagrange multiplier) is the "shadow price" of the constraint. Multiple constraints require one multiplier per constraint.
-- KKT (Karush-Kuhn-Tucker) conditions extend Lagrange multipliers to inequality constraints g(x) <= 0. The crucial new feature is complementary slackness: either the constraint is active (g = 0 and lambda > 0) or it is inactive (g < 0 and lambda = 0). Duality theory provides an alternative formulation of the optimization problem that is sometimes easier to solve. The deep connection to ML is that L2 regularization (adding lambda * ||w||^2 to the loss) is exactly equivalent to constraining ||w||^2 <= C for some C determined by lambda -- Lagrange multipliers make this equivalence precise.
+- Double and triple integrals extend single-variable integration to higher dimensions. A double integral computes the "volume" under a surface over a 2D region; a triple integral computes the "hypervolume" over a 3D region. Fubini's theorem says you can evaluate these as iterated integrals -- integrate one variable at a time -- and you can swap the order of integration when the integrand is continuous. Setting up the correct bounds is often the hardest part.
+- Change of variables is the multivariable analogue of u-substitution. When you transform coordinates (e.g., Cartesian to polar), the area/volume element picks up a factor of |det(J)|, where J is the Jacobian matrix of the transformation. This is why dA = r dr d(theta) in polar coordinates -- the factor r IS the Jacobian determinant. Cylindrical and spherical coordinates are the standard 3D extensions, and the general formula works for any invertible smooth coordinate change.
+- The Gaussian integral (integral of e^{-x^2} from -infinity to infinity = sqrt(pi)) is proved using a polar coordinate change of variables and is one of the most important single results in all of applied mathematics. It is the reason the normal distribution normalizes. Monte Carlo integration -- approximating integrals by random sampling -- provides a practical alternative when analytical integration is intractable, which is nearly always the case in high-dimensional ML problems.
 
 ## Watch -- Primary
 
-- **Trefor Bazett -- Multivariable Calculus** (optimization and Lagrange multiplier sections)
+- **Trefor Bazett -- Multivariable Calculus** (double integrals, triple integrals, change of variables sections)
   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
-  - Focus on critical point classification, second derivative test, and the Lagrange multiplier videos.
+  - Focus on the videos covering iterated integrals, Fubini's theorem, polar/cylindrical/spherical coordinates, the Jacobian determinant, and the Gaussian integral (roughly videos 25-30 in the playlist).
 
 ## Watch -- Secondary
 
-- **Khan Academy -- "Lagrange multipliers"**
-  - https://www.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/constrained-optimization/a/lagrange-multipliers-single-constraint
-  - Step-by-step visual walkthrough with worked examples.
-- **Steve Brunton -- "Constrained Optimization" (Data-Driven Science)**
-  - https://www.youtube.com/c/Eigensteve
-  - Connects constrained optimization to engineering and ML applications.
+- **3Blue1Brown -- "But what is a convolution?"**
+  - https://www.youtube.com/watch?v=KuXjwB4LzSA
+  - Convolution involves integrating the product of two functions -- relevant background for understanding how Gaussian kernels interact with integration.
+- **Trefor Bazett -- Multivariable Calculus** (Gaussian integral derivation)
+  - Same playlist. Look for the video proving the Gaussian integral via polar coordinates.
 
 ## Read
 
-- **Stewart's Calculus** -- Sections on local extrema, second derivative test, and Lagrange multipliers (typically Chapter 14).
-- **Boyd and Vandenberghe -- "Convex Optimization"** -- Chapter 5 on duality. Available free at https://web.stanford.edu/~boyd/cvxbook/. This is the standard reference for KKT conditions and duality in optimization.
-- **MML Book (Deisenroth, Faisal, Ong)** -- Section 7.2 on constrained optimization and Lagrange multipliers.
+- **Stewart's Calculus** -- Chapters on multiple integrals (typically Chapters 15-16). Covers iterated integrals, change of variables, and all three coordinate systems with worked examples.
+- **MML Book (Deisenroth, Faisal, Ong)** -- Section 6.3 on change of variables for probability densities. Directly connects the Jacobian determinant to how probability distributions transform.
 
 ## Key Equations
 
-Critical points (necessary condition for extremum):
+Double integral as iterated integral:
 
-$$\nabla f = \mathbf{0}$$
+$$\iint_R f \, dA = \int_a^b \int_{c(x)}^{d(x)} f(x, y) \, dy \, dx$$
 
-Second derivative test via Hessian:
-- H positive definite (all eigenvalues > 0) implies local minimum
-- H negative definite (all eigenvalues < 0) implies local maximum
-- H indefinite (mixed eigenvalues) implies saddle point
+Change of variables formula:
 
-Lagrange multiplier condition (single equality constraint g(x) = 0):
+$$\iint f(x, y) \, dA = \iint f(g(u, v)) \, |\det(J_g)| \, du \, dv$$
 
-$$\nabla f = \lambda \nabla g$$
+Polar coordinates area element:
 
-The Lagrangian:
+$$dA = r \, dr \, d\theta$$
 
-$$\mathcal{L}(\mathbf{x}, \lambda) = f(\mathbf{x}) - \lambda \, g(\mathbf{x})$$
+Spherical coordinates volume element:
 
-KKT conditions (inequality constraints g_i(x) <= 0):
+$$dV = \rho^2 \sin\phi \, d\rho \, d\theta \, d\phi$$
 
-$$\nabla f = \sum_i \lambda_i \nabla g_i, \quad \lambda_i \geq 0, \quad \lambda_i g_i(\mathbf{x}) = 0 \text{ (complementary slackness)}$$
+The Gaussian integral:
 
-Regularization-constraint equivalence:
+$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
 
-$$\min_{\mathbf{w}} L(\mathbf{w}) + \lambda \|\mathbf{w}\|^2 \quad \Longleftrightarrow \quad \min_{\mathbf{w}} L(\mathbf{w}) \text{ subject to } \|\mathbf{w}\|^2 \leq C$$
+Monte Carlo approximation:
 
-## Block B Capstone Project — Multivariable Optimization Lab (3h)
+$$\int f(x) p(x) \, dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i), \quad x_i \sim p$$
+
+## Block B Capstone Project — Multivariable Calculus Lab (3h)
 
 **C++ Component (~1h):**
 1. Implement gradient descent and Newton's method for arbitrary differentiable functions in C++
@@ -66,13 +65,13 @@ $$\min_{\mathbf{w}} L(\mathbf{w}) + \lambda \|\mathbf{w}\|^2 \quad \Longleftrigh
 
 **Python Component (~2h):**
 3. Visualize gradient descent on 2D loss surfaces with 3D matplotlib surface plots and contour plots — show how Newton's method takes fewer steps but each step is more expensive
-4. Build a Lagrange multiplier solver for constrained optimization using scipy. Demonstrate numerically that L2 regularization ↔ constrained optimization (show equivalent solutions for matching λ and C)
-5. Implement Monte Carlo integration for a 10-dimensional integral and compare with the analytical result — show convergence rate of 1/√N
+4. Build a Lagrange multiplier solver for constrained optimization using scipy. Demonstrate numerically that L2 regularization <-> constrained optimization (show equivalent solutions for matching lambda and C)
+5. Implement Monte Carlo integration for a 10-dimensional integral and compare with the analytical result — show convergence rate of 1/sqrt(N)
 
 ## ML and Alignment Connection
 
-ALL of neural network training is optimization: minimize a loss function over millions of parameters. The Hessian eigenvalue spectrum at a critical point tells you whether you have found a minimum (all positive -- good) or a saddle point (mixed signs -- common in high dimensions). Random matrix theory predicts that in a function of n variables, a random critical point has roughly half positive and half negative Hessian eigenvalues, so saddle points exponentially outnumber local minima as dimension increases. This explains why gradient descent in neural networks rarely gets trapped in bad local minima -- it gets stuck at saddle points instead, and momentum/noise help escape them.
+The Gaussian integral is WHY the normal distribution normalizes to 1 -- without it, Gaussian distributions (which appear everywhere in ML: weight initialization, noise models, variational inference, diffusion models) would not be valid probability distributions. The proof via polar coordinates is a beautiful application of the change-of-variables formula.
 
-Lagrange multipliers explain WHY regularization works. L2 regularization (weight decay) adds lambda * ||w||^2 to the loss. This is mathematically equivalent to optimizing the original loss subject to the constraint ||w||^2 <= C. The multiplier lambda IS the regularization strength. Larger lambda means tighter constraint means smaller weights means simpler model. This equivalence is not just theoretical -- it is the foundation of support vector machines, where the dual of a constrained optimization problem gives the kernel trick.
+Monte Carlo integration is how we approximate intractable expectations in Bayesian ML and reinforcement learning. Whenever you see E_{x ~ p}[f(x)] in a paper, it is almost certainly estimated by sampling x_i from p and averaging f(x_i). Importance sampling, MCMC, and the reparameterization trick in VAEs are all refinements of this basic idea.
 
-For alignment, constrained optimization is directly relevant: we want to maximize helpfulness SUBJECT TO safety constraints. The Lagrangian formulation suggests that safety constraints can be converted to penalty terms in the loss (and vice versa), but the KKT conditions reveal subtleties -- complementary slackness means some constraints may be "slack" (inactive) at the optimum, which has implications for how robustly safety constraints bind during training.
+The Jacobian determinant from the change-of-variables formula reappears in normalizing flows -- a class of generative models that construct complex distributions by composing simple invertible transformations. Each transformation contributes a |det(J)| factor to the density, and training requires computing or efficiently approximating these determinants. This directly connects Lesson 7 (determinants) to modern generative modeling.

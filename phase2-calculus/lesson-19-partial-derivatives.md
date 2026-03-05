@@ -1,53 +1,60 @@
-# Lesson 19: Partial Derivatives, Gradients, and Directional Derivatives
+# Lesson 19: 3D Geometry, Curves, and Curvature
 
-[<- Previous](lesson-18-systems-odes.md) | [Back to TOC](../README.md) | [Next: Multivariable Chain Rule ->](lesson-20-multivariable-chain-rule.md)
+[<- Previous](lesson-18-systems-odes.md) | [Back to TOC](../README.md) | [Next: Multivariable Functions ->](lesson-20-multivariable-chain-rule.md)
 
 ---
 
 ## Core Learning
 
-- Partial derivatives measure the rate of change of a function when you wiggle one input variable while holding all others fixed. They are the building blocks of multivariable calculus — every gradient, Jacobian, and Hessian is assembled from partial derivatives.
-- The gradient vector collects all partial derivatives into a single object that points in the direction of steepest ascent. Its magnitude tells you how steep that ascent is. This is the central object in optimization: gradient descent simply moves opposite to the gradient. Level curves (contours) are always perpendicular to the gradient, which is why gradient descent trajectories cross contour lines at right angles.
-- Directional derivatives generalize partials by asking: how fast does the function change if I move in an arbitrary direction? The answer is the dot product of the gradient with the unit direction vector, which means the gradient encodes ALL directional information. Tangent planes and linear approximation extend these ideas to give the best local flat approximation to a surface, while quadric surfaces and level curves/surfaces provide the geometric vocabulary for visualizing multivariable functions.
+- Lines and planes are the fundamental geometric objects in 3D. A line through point P in direction v has parametric form r(t) = P + tv; eliminating the parameter gives symmetric equations. A plane through point P with normal vector n satisfies n . (r - P) = 0. The distance from a point to a plane uses the projection formula. These objects appear everywhere: the tangent line to a curve, the tangent plane to a surface, and the decision boundaries of linear classifiers are all lines and planes in the appropriate dimension.
+- Vector-valued functions r(t) = <x(t), y(t), z(t)> describe curves in space. The derivative r'(t) is the tangent vector pointing in the direction of motion; its magnitude |r'(t)| is the speed. This separates geometry (the path) from kinematics (how fast you traverse it). Arc length s = integral of |r'(t)| dt measures the intrinsic length of the curve independent of parameterization, and reparameterizing by arc length produces a unit-speed curve where the parameter itself measures distance traveled.
+- Curvature kappa measures how sharply a curve bends -- it is the rate at which the unit tangent vector T changes direction per unit arc length: kappa = |dT/ds|. Large curvature means tight turning; zero curvature means straight. The osculating circle at a point has radius R = 1/kappa and represents the best-fitting circle to the curve. The TNB (Frenet-Serret) frame -- unit tangent T, principal normal N, and binormal B = T x N -- provides a moving coordinate system that rides along the curve, with T pointing forward, N pointing toward the center of curvature, and B completing the right-handed frame.
 
 ## Watch -- Primary
 
-- **Trefor Bazett -- Multivariable Calculus** (full playlist)
+- **Trefor Bazett -- Multivariable Calculus** (3D geometry and curves sections)
   - https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd
-  - Focus on the sections covering partial derivatives, gradients, directional derivatives, tangent planes, and linear approximation.
+  - Focus on the videos covering equations of lines and planes, vector-valued functions, arc length, curvature, and the TNB frame (roughly videos 4-9 in the playlist).
 
 ## Watch -- Secondary
 
-- **3Blue1Brown -- "Gradient descent, how neural networks learn" (Deep Learning Ch. 2)**
-  - https://www.youtube.com/watch?v=IHZwWFHWa-w
-  - Visual intuition for why the gradient is the direction of steepest ascent and how gradient descent uses it.
+- **3Blue1Brown -- "Essence of Calculus"**
+  - https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr
+  - The series builds intuition for derivatives as rates of change that extends naturally to vector-valued functions and curves in space.
 
 ## Read
 
-- **Stewart's Calculus** or **Thomas' Calculus** -- Chapters on partial derivatives, directional derivatives, and gradients (typically Chapters 14-15).
-- **colah's blog -- "Calculus on Computational Graphs: Backpropagation"**
-  - http://colah.github.io/posts/2015-08-Backprop/
+- **Stewart's Calculus** -- Chapter 12 (vectors, lines, planes) and Chapter 13 (vector functions, arc length, curvature). These chapters cover all the 3D geometry and curve theory with worked examples.
+- **MML Book (Deisenroth, Faisal, Ong)** -- Section 5.5 on linearization and tangent spaces, which connects the geometric ideas here to the differential geometry perspective used in ML.
 
 ## Key Equations
 
-Gradient vector:
+Parametric line through P in direction v:
 
-$$\nabla f = \left(\frac{\partial f}{\partial x_1}, \ldots, \frac{\partial f}{\partial x_n}\right)$$
+$$\mathbf{r}(t) = \mathbf{P} + t\mathbf{v}$$
 
-Directional derivative in direction u-hat:
+Plane with normal n through point P:
 
-$$D_{\hat{u}} f = \nabla f \cdot \hat{u}$$
+$$\mathbf{n} \cdot (\mathbf{r} - \mathbf{P}) = 0$$
 
-Tangent plane at (a, b):
+Distance from point Q to plane n . r = d:
 
-$$z = f(a,b) + f_x(a,b)(x - a) + f_y(a,b)(y - b)$$
+$$D = \frac{|\mathbf{n} \cdot \mathbf{Q} - d|}{|\mathbf{n}|}$$
 
-Linear approximation:
+Arc length:
 
-$$f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a}) \cdot (\mathbf{x} - \mathbf{a})$$
+$$L = \int_a^b |\mathbf{r}'(t)| \, dt$$
+
+Curvature:
+
+$$\kappa = \left|\frac{d\mathbf{T}}{ds}\right| = \frac{|\mathbf{r}' \times \mathbf{r}''|}{|\mathbf{r}'|^3}$$
+
+TNB frame:
+
+$$\mathbf{T} = \frac{\mathbf{r}'}{|\mathbf{r}'|}, \quad \mathbf{N} = \frac{\mathbf{T}'}{|\mathbf{T}'|}, \quad \mathbf{B} = \mathbf{T} \times \mathbf{N}$$
 
 ## ML and Alignment Connection
 
-The gradient of the loss function, nabla L(theta), is THE learning signal in neural network training. Every parameter update in gradient descent moves opposite to the gradient: theta <- theta - eta * nabla L(theta). The gradient points in the direction of steepest ascent on the loss surface, so negating it gives steepest descent. Directional derivatives tell you the learning rate in any direction, which matters when you consider that optimizers like Adam effectively change the direction of descent away from the raw gradient.
+Curvature shows up in optimization through the geometry of the loss landscape. The curvature of optimization trajectories -- paths traced by gradient descent through parameter space -- determines convergence behavior. High curvature in the loss surface (large Hessian eigenvalues) causes gradient descent to overshoot and zigzag, which is why adaptive optimizers exist. The concept of geodesics (curves of zero geodesic curvature) on parameter manifolds underlies natural gradient descent, which follows the steepest descent path on the statistical manifold rather than in raw parameter space.
 
-For alignment, the gradient is the mechanism by which the objective function shapes model behavior. If the loss landscape has a geometry where deceptive alignment sits in a deeper basin than honest alignment, gradient descent will reliably find the deceptive solution. Understanding gradients geometrically -- as perpendicular to contours, with magnitude proportional to surface steepness -- builds the intuition needed to reason about whether training signals are actually pointing toward the behavior we intend.
+The TNB frame provides intuition for how coordinate systems adapt to local geometry, which is the same principle behind information geometry and the Fisher information metric. When we later study how the parameter-function map of neural networks creates curved manifolds with singularities, the Frenet-Serret machinery of this lesson -- how frames rotate as you move along a curve -- will provide concrete geometric intuition for abstract differential-geometric concepts.

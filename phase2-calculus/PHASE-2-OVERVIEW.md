@@ -188,7 +188,7 @@
 
 ---
 
-### Lesson 16: Higher-Order Linear ODEs and Mechanical Vibrations
+### Lesson 16: Higher-Order Linear ODEs, Mechanical Vibrations, and Power Series Solutions
 
 **Second-Order Linear ODEs with Constant Coefficients:**
 - General form: ay'' + by' + cy = g(t)
@@ -196,17 +196,17 @@
 - **Two distinct real roots** r_1, r_2: y = c_1 e^{r_1 t} + c_2 e^{r_2 t}
 - **Repeated real root** r: y = (c_1 + c_2 t) e^{rt}
 - **Complex conjugate roots** alpha +/- beta i: y = e^{alpha t}(c_1 cos(beta t) + c_2 sin(beta t))
-- **Fundamental solutions and the Wronskian:** W(y_1, y_2) = y_1 y_2' - y_1' y_2; nonzero Wronskian guarantees linear independence
 
-**Nonhomogeneous Equations:**
-- **Method of undetermined coefficients:** guess the form of the particular solution based on g(t)
-  - g(t) polynomial -> try polynomial of same degree
-  - g(t) = e^{at} -> try Ae^{at}
-  - g(t) = sin/cos -> try A cos + B sin
-  - If the guess solves the homogeneous equation, multiply by t
-- **Variation of parameters:** y_p = u_1 y_1 + u_2 y_2 where u_1' and u_2' are found from a 2x2 system
-  - More general than undetermined coefficients — works for any g(t)
-- **Superposition principle:** for linear equations, sum of solutions is a solution
+**Higher-Order Linear ODEs:**
+- nth-order: a_n y^{(n)} + ... + a_1 y' + a_0 y = g(t)
+- Characteristic polynomial of degree n -> n roots -> n linearly independent solutions
+- Same methods (undetermined coefficients, variation of parameters) extend to higher order
+- **Reduction of order:** if one solution is known, find a second linearly independent one
+
+**Linear Independence and the Wronskian:**
+- **Fundamental solutions and the Wronskian:** W(y_1, y_2) = y_1 y_2' - y_1' y_2; nonzero Wronskian guarantees linear independence
+- For n solutions: W(y_1, ..., y_n) is the determinant of the matrix whose rows are y_i and their derivatives
+- **Abel's theorem:** the Wronskian either vanishes everywhere or nowhere on an interval (for solutions of a linear ODE)
 
 **Mechanical Vibrations (Spring-Mass-Damper):**
 - **Free undamped:** my'' + ky = 0 -> y = A cos(omega_0 t - phi), omega_0 = sqrt(k/m)
@@ -219,11 +219,21 @@
   - **Beats:** when omega is close to but not equal to omega_0, amplitude modulates
   - **Steady-state vs transient response:** transient dies out, steady-state persists
 
-**Higher-Order Linear ODEs:**
-- nth-order: a_n y^{(n)} + ... + a_1 y' + a_0 y = g(t)
-- Characteristic polynomial of degree n -> n roots -> n linearly independent solutions
-- Same methods (undetermined coefficients, variation of parameters) extend to higher order
-- **Reduction of order:** if one solution is known, find a second linearly independent one
+**Nonhomogeneous Equations:**
+- **Method of undetermined coefficients:** guess the form of the particular solution based on g(t)
+  - g(t) polynomial -> try polynomial of same degree
+  - g(t) = e^{at} -> try Ae^{at}
+  - g(t) = sin/cos -> try A cos + B sin
+  - If the guess solves the homogeneous equation, multiply by t
+- **Variation of parameters:** y_p = u_1 y_1 + u_2 y_2 where u_1' and u_2' are found from a 2x2 system
+  - More general than undetermined coefficients — works for any g(t)
+- **Superposition principle:** for linear equations, sum of solutions is a solution
+
+**Power Series Solutions:**
+- Assume y = sum a_n x^n, substitute into the ODE, match coefficients of each power of x to get a recurrence relation for the a_n
+- **Ordinary point:** where the coefficient functions P(x), Q(x) in y'' + P(x)y' + Q(x)y = 0 are analytic — power series solutions guaranteed to converge
+- **Singular point:** where P(x) or Q(x) blow up — standard power series method fails; need Frobenius method or other techniques
+- **Airy's equation:** y'' - xy = 0 — canonical example with no closed-form elementary solution, solved exactly by power series yielding two independent series Ai(x) and Bi(x)
 
 **Initial Value Problems vs Boundary Value Problems:**
 - IVP: conditions at a single point (y(t_0) = y_0, y'(t_0) = v_0)
