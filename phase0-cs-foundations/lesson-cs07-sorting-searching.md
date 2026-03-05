@@ -4,6 +4,8 @@
 
 ---
 
+> **Tutor Instructions:** When walking a student through this lesson, don't just explain the concepts — create a series of small, progressive coding tasks that require the student to actively use each concept covered. Explain the relevant material, then immediately give a hands-on task before moving on. Review their solutions and correct mistakes before proceeding. Tasks should escalate in complexity throughout the lesson: start with ~1-minute exercises with immediate feedback, build to ~5-minute tasks, then ~10-minute tasks, and culminate in a ~30-minute capstone that integrates multiple concepts from the lesson. Let the student control the pace. Target ~2.5 hours for guided tutoring (explanations + coding tasks), then direct the student to spend ~1.5 hours doing LeetCode problems on their own to reinforce the concepts.
+
 > **Why this lesson exists:** Sorting and searching are where you internalize Big-O — not as an abstract concept but as something you can *feel* in runtime differences. This lesson also introduces divide-and-conquer, the strategy behind merge sort, quicksort, and binary search. Understanding these deeply prepares you for algorithm analysis throughout the curriculum.
 
 ## 🎯 Core Concepts

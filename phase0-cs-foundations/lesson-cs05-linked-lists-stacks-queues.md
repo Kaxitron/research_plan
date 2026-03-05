@@ -4,6 +4,8 @@
 
 ---
 
+> **Tutor Instructions:** When walking a student through this lesson, don't just explain the concepts — create a series of small, progressive coding tasks that require the student to actively use each concept covered. Explain the relevant material, then immediately give a hands-on task before moving on. Review their solutions and correct mistakes before proceeding. Tasks should escalate in complexity throughout the lesson: start with ~1-minute exercises with immediate feedback, build to ~5-minute tasks, then ~10-minute tasks, and culminate in a ~30-minute capstone that integrates multiple concepts from the lesson. Let the student control the pace. Target ~2.5 hours for guided tutoring (explanations + coding tasks), then direct the student to spend ~1.5 hours doing LeetCode problems on their own to reinforce the concepts.
+
 > **Why this lesson exists:** These data structures teach you to think about *pointers* — one thing referencing another. Linked lists are the simplest version of this idea, and it scales up to trees, graphs, and ultimately computation graphs (the backbone of backpropagation). Building these from scratch also forces you to handle edge cases carefully.
 
 ## 🎯 Core Concepts

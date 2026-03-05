@@ -4,6 +4,8 @@
 
 ---
 
+> **Tutor Instructions:** When walking a student through this lesson, don't just explain the concepts — create a series of small, progressive coding tasks that require the student to actively use each concept covered. Explain the relevant material, then immediately give a hands-on task before moving on. Review their solutions and correct mistakes before proceeding. Tasks should escalate in complexity throughout the lesson: start with ~1-minute exercises with immediate feedback, build to ~5-minute tasks, then ~10-minute tasks, and culminate in a ~30-minute capstone that integrates multiple concepts from the lesson. Let the student control the pace. Target ~2.5 hours for guided tutoring (explanations + coding tasks), then direct the student to spend ~1.5 hours doing LeetCode problems on their own to reinforce the concepts.
+
 > **Why this lesson exists:** Every ML framework is built on classes — `torch.nn.Module`, `torch.Tensor`, `Dataset`, `DataLoader`. If you can't read and write classes fluently, you can't read ML code. This lesson rebuilds that fluency in both Python and C++.
 
 ## 🎯 Core Concepts
