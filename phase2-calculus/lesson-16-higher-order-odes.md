@@ -6,6 +6,8 @@
 
 ## Core Learning
 
+- Analyze autonomous equations qualitatively using phase line diagrams: identify equilibrium points and classify them as stable, unstable, or semi-stable
+- Understand the logistic growth model as the canonical autonomous ODE example
 - Solve constant-coefficient second-order linear ODEs using the characteristic equation
 - Handle all three cases of the characteristic equation: distinct real roots, repeated roots, and complex conjugate roots
 - Extend constant-coefficient methods to higher-order ODEs (3rd order and above) via higher-degree characteristic polynomials
@@ -44,6 +46,25 @@
   - *Covers the eigenvalue classification of 2D systems, which is the matrix formulation of second-order equations.*
 
 ## Key Equations
+
+**Autonomous equations --- phase line analysis:**
+
+An autonomous ODE $dy/dt = f(y)$ can be analyzed qualitatively without solving:
+
+1. Find equilibria: set $f(y^*) = 0$
+2. Draw the phase line: mark equilibria on a vertical $y$-axis, draw arrows up where $f(y) > 0$ and down where $f(y) < 0$
+3. Classify each equilibrium:
+   - **Stable** (attractor): arrows point toward it from both sides ($f'(y^*) < 0$)
+   - **Unstable** (repeller): arrows point away from both sides ($f'(y^*) > 0$)
+   - **Semi-stable**: arrows point toward from one side, away from the other
+
+**The logistic growth model:**
+
+$$\frac{dP}{dt} = rP\left(1 - \frac{P}{K}\right)$$
+
+- $r$ = growth rate, $K$ = carrying capacity
+- Equilibria: $P^* = 0$ (unstable) and $P^* = K$ (stable)
+- Solutions starting between 0 and $K$ grow sigmoidally toward $K$
 
 **Constant-coefficient second-order homogeneous ODE:**
 
@@ -100,6 +121,8 @@ $$\frac{d^2 W}{dt^2} + \gamma \frac{dW}{dt} = -\nabla L(W)$$
 This is exactly a damped oscillator with the loss gradient as the driving force.
 
 ## ML and Alignment Connection
+
+Phase line analysis of autonomous equations is the simplest version of training dynamics analysis. When you ask "does this training process converge?", you are asking whether the loss minimum is a stable equilibrium of the gradient flow ODE $dW/dt = -\nabla L(W)$. A loss minimum is a stable equilibrium (arrows point toward it); a saddle point is unstable (arrows point away in at least one direction). The logistic growth model's sigmoid solution also appears directly as the sigmoid activation function --- same ODE, different context.
 
 Momentum in SGD is a second-order ODE, and the entire vocabulary of mechanical vibrations applies directly. The update rule with momentum --- $\Delta w = -\eta \nabla L + \beta \Delta w_{\text{prev}}$ --- is discretized from $\ddot{W} + \gamma \dot{W} = -\nabla L$, which is a damped oscillator driven by the loss gradient. The momentum coefficient beta controls damping: too little damping (beta close to 1) and the optimizer oscillates wildly around the minimum like an underdamped spring. Too much damping and convergence is sluggish. The critical damping point gives the fastest convergence without oscillation.
 
