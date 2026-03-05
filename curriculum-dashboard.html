@@ -923,6 +923,85 @@
   .hours-modal-buttons .modal-confirm:hover {
     filter: brightness(1.1);
   }
+
+  /* Log Hours Modal */
+  .log-modal-form { display: flex; flex-direction: column; gap: 14px; }
+  .log-modal-form label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+  .log-modal-form input[type="date"],
+  .log-modal-form select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    color: var(--text-bright);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-top: 4px;
+  }
+  .log-modal-form input[type="date"]:focus,
+  .log-modal-form select:focus { border-color: var(--accent-1); }
+  .log-modal-form select option { background: var(--bg-panel); color: var(--text); }
+  .log-modal-form select optgroup { font-weight: 700; color: var(--text-dim); }
+  .log-entries-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .log-entries-table th {
+    text-align: left;
+    padding: 4px 8px;
+    color: var(--text-dim);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .log-entries-table td {
+    padding: 4px 8px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+  }
+  .log-entries-table .delete-btn {
+    background: none; border: none; color: var(--text-dim);
+    cursor: pointer; font-size: 12px; padding: 2px 4px;
+  }
+  .log-entries-table .delete-btn:hover { color: #f87171; }
+  .log-today-total {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-1);
+    margin-top: 6px;
+    text-align: right;
+  }
+  .log-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    padding: 4px 12px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .log-btn:hover { color: var(--accent-1); border-color: var(--accent-1); }
+  .hours-log-detail {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 6px 0 0 0;
+    padding: 0 16px;
+  }
+  .hours-log-detail .log-total { color: var(--accent-1); }
+  .hours-log-detail .log-breakdown {
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-top: 2px;
+    padding-left: 16px;
+  }
 </style>
 </head>
 <body>
@@ -938,6 +1017,45 @@
       <button class="modal-cancel" onclick="closeHoursModal(false)">Cancel</button>
       <button class="modal-confirm" onclick="closeHoursModal(true)">Save</button>
     </div>
+  </div>
+</div>
+
+<!-- Confirm Complete Modal -->
+<div class="hours-modal-overlay" id="confirm-complete-modal">
+  <div class="hours-modal">
+    <h3 id="confirm-complete-title">Mark Complete?</h3>
+    <div class="modal-subtitle" id="confirm-complete-subtitle"></div>
+    <div class="hours-modal-buttons">
+      <button class="modal-cancel" onclick="closeConfirmCompleteModal(false)">Cancel</button>
+      <button class="modal-confirm" onclick="closeConfirmCompleteModal(true)">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Log Hours Modal -->
+<div class="hours-modal-overlay" id="log-hours-modal">
+  <div class="hours-modal" style="min-width:min(400px,90vw)">
+    <h3>Log Study Hours</h3>
+    <div class="log-modal-form">
+      <div>
+        <label>Date</label>
+        <input type="date" id="log-date-input" />
+      </div>
+      <div>
+        <label>Lesson</label>
+        <select id="log-lesson-select"></select>
+      </div>
+      <div>
+        <label>Hours</label>
+        <input type="number" id="log-hours-input" min="0.5" max="100" step="0.5" placeholder="e.g. 2" style="margin-bottom:0" />
+      </div>
+    </div>
+    <div class="hours-modal-buttons" style="margin-top:16px">
+      <button class="modal-cancel" onclick="closeLogHoursModal('cancel')">Close</button>
+      <button class="modal-confirm" onclick="closeLogHoursModal('save-another')" style="background:var(--bg-hover);color:var(--text);border-color:var(--border)">Save & Add Another</button>
+      <button class="modal-confirm" onclick="closeLogHoursModal('save-close')">Save & Close</button>
+    </div>
+    <div id="log-today-entries" style="margin-top:16px;border-top:1px solid var(--border);padding-top:12px"></div>
   </div>
 </div>
 
@@ -960,6 +1078,7 @@
       <button class="sync-btn" id="pull-btn" onclick="pullFromGithub()" title="Pull progress from GitHub and overwrite local" style="margin-left:6px">
         <span id="pull-icon">⬇</span> Pull
       </button>
+      <button class="log-btn" onclick="showLogHoursModal()" title="Log study hours">📝 Log</button>
     </div>
   </div>
 
@@ -2186,6 +2305,77 @@ let selectedLesson = null;
 const STATUS_KEY = 'alignment-curriculum-statuses';
 const STATUS_CYCLE = ['not-started', 'in-progress', 'complete'];
 const ACTUAL_HOURS_KEY = 'alignment-curriculum-actual-hours';
+const HOURS_LOG_KEY = 'alignment-curriculum-hours-log';
+const HOURS_MIGRATED_KEY = 'alignment-curriculum-hours-migrated';
+
+// ── Hours Log Storage ──
+function loadHoursLog() {
+  try { return JSON.parse(localStorage.getItem(HOURS_LOG_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveHoursLog(log) {
+  localStorage.setItem(HOURS_LOG_KEY, JSON.stringify(log));
+}
+
+function addLogEntry(lessonId, hours, date, seeded) {
+  const log = loadHoursLog();
+  const now = new Date();
+  const dateStr = date || now.toISOString().slice(0, 10);
+  const id = log.length > 0 ? Math.max(...log.map(e => e.id)) + 1 : 1;
+  const entry = { id, lessonId, hours, date: dateStr, timestamp: now.toISOString() };
+  if (seeded) entry.seeded = true;
+  log.push(entry);
+  saveHoursLog(log);
+  return entry;
+}
+
+function deleteLogEntry(entryId) {
+  const log = loadHoursLog();
+  saveHoursLog(log.filter(e => e.id !== entryId));
+}
+
+function getLoggedHoursForLesson(lessonId) {
+  const log = loadHoursLog();
+  return log.filter(e => String(e.lessonId) === String(lessonId)).reduce((sum, e) => sum + e.hours, 0);
+}
+
+function getLoggedHoursForDate(dateStr) {
+  const log = loadHoursLog();
+  return log.filter(e => e.date === dateStr).reduce((sum, e) => sum + e.hours, 0);
+}
+
+function getLogEntriesForDate(dateStr) {
+  return loadHoursLog().filter(e => e.date === dateStr);
+}
+
+function getLogEntriesForLesson(lessonId) {
+  return loadHoursLog().filter(e => String(e.lessonId) === String(lessonId));
+}
+
+function migrateToHoursLog() {
+  if (localStorage.getItem(HOURS_MIGRATED_KEY)) return;
+  try {
+    const raw = JSON.parse(localStorage.getItem(ACTUAL_HOURS_KEY)) || {};
+    const paceData = loadPaceData();
+    const log = [];
+    let nextId = 1;
+    for (const [lessonId, v] of Object.entries(raw)) {
+      const hours = typeof v === 'number' ? v : (v ? v.hours : 0);
+      const seeded = typeof v === 'object' && v && v.seeded;
+      if (hours <= 0) continue;
+      let dateStr = new Date().toISOString().slice(0, 10);
+      if (paceData.completions && paceData.completions[lessonId]) {
+        dateStr = paceData.completions[lessonId].slice(0, 10);
+      }
+      const entry = { id: nextId++, lessonId: isNaN(lessonId) ? lessonId : parseInt(lessonId), hours, date: dateStr, timestamp: new Date().toISOString() };
+      if (seeded) entry.seeded = true;
+      log.push(entry);
+    }
+    if (log.length > 0) saveHoursLog(log);
+  } catch(e) { console.warn('Hours migration failed:', e); }
+  localStorage.setItem(HOURS_MIGRATED_KEY, 'true');
+}
 
 function loadStatuses() {
   try {
@@ -2200,80 +2390,51 @@ function saveStatuses() {
   localStorage.setItem(STATUS_KEY, JSON.stringify(obj));
 }
 
-// ── Actual Hours Tracking ──
-// Storage format: { lessonId: { hours: number, seeded: boolean } }
+// ── Actual Hours Tracking (aggregated from hours log) ──
 function loadActualHours() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(ACTUAL_HOURS_KEY)) || {};
-    // Migrate old format (plain numbers) to new format
-    const result = {};
-    for (const [k, v] of Object.entries(raw)) {
-      if (typeof v === 'number') {
-        result[k] = { hours: v, seeded: false };
-      } else {
-        result[k] = v;
-      }
-    }
-    return result;
-  } catch(e) { return {}; }
-}
-function saveActualHours(data) {
-  localStorage.setItem(ACTUAL_HOURS_KEY, JSON.stringify(data));
+  const log = loadHoursLog();
+  const result = {};
+  log.forEach(entry => {
+    const key = entry.lessonId;
+    if (!result[key]) result[key] = { hours: 0, seeded: !!entry.seeded };
+    result[key].hours += entry.hours;
+    if (!entry.seeded) result[key].seeded = false;
+  });
+  return result;
 }
 
-// Helper: get just the hours number for a lesson
 function getActualHoursFor(lessonId) {
-  const data = loadActualHours();
-  return data[lessonId] ? data[lessonId].hours : undefined;
+  const total = getLoggedHoursForLesson(lessonId);
+  return total > 0 ? total : undefined;
 }
 
-// Helper: get total actual hours spent (all lessons, including seeded)
 function getTotalActualHours() {
   const data = loadActualHours();
   let total = 0;
-  for (const entry of Object.values(data)) {
-    total += entry.hours;
-  }
+  for (const entry of Object.values(data)) total += entry.hours;
   return total;
 }
 
-// Helper: compute pace multiplier from NON-SEEDED data only
-function computePaceMultiplier() {
-  const data = loadActualHours();
-  let realActual = 0;
-  let realEstimated = 0;
-  for (const [id, entry] of Object.entries(data)) {
-    if (entry.seeded) continue; // Skip seeded data for pace calculation
-    const lesson = LESSONS.find(l => String(l.id) === String(id));
-    if (lesson && lesson.status === 'complete') {
-      realActual += entry.hours;
-      realEstimated += parseHoursGlobal(lesson.hours).avg;
-    }
-  }
-  // Only adjust pace if we have meaningful real data (at least 2 lessons)
-  const realCount = Object.values(data).filter(e => !e.seeded).length;
-  if (realCount >= 2 && realEstimated > 0 && realActual > 0) {
-    return realActual / realEstimated;
-  }
-  return 1.0; // Default: trust the estimates until we have data
-}
-
-// Pre-seed Phase 1 with 28h if not already set
+// Pre-seed lessons 2–13 with 53h total (actual time spent) if not already set
 function seedPhase1Hours() {
-  const hours = loadActualHours();
-  const p1Lessons = LESSONS.filter(l => l.phase === 'p1');
-  const alreadySeeded = p1Lessons.some(l => hours[l.id] !== undefined);
-  if (alreadySeeded) return;
-  // Distribute 28h proportionally to each lesson's estimated average
+  const log = loadHoursLog();
+  // Seed lessons 2–12 (Phase 1) + lesson 13 (first Phase 2)
+  const seededLessons = LESSONS.filter(l => l.phase === 'p1' || l.id === 13);
+  const hasEntries = seededLessons.some(l => log.some(e => String(e.lessonId) === String(l.id)));
+  if (hasEntries) return;
+
+  const TOTAL_HOURS = 53;
   let totalAvg = 0;
-  p1Lessons.forEach(l => { totalAvg += parseHoursGlobal(l.hours).avg; });
-  p1Lessons.forEach(l => {
+  seededLessons.forEach(l => { totalAvg += parseHoursGlobal(l.hours).avg; });
+  let nextId = log.length > 0 ? Math.max(...log.map(e => e.id)) + 1 : 1;
+  const now = new Date().toISOString();
+  seededLessons.forEach(l => {
     const avg = parseHoursGlobal(l.hours).avg;
-    hours[l.id] = { hours: Math.round((28 * avg / totalAvg) * 10) / 10, seeded: true };
+    const hours = Math.round((TOTAL_HOURS * avg / totalAvg) * 10) / 10;
+    log.push({ id: nextId++, lessonId: l.id, hours, date: '2026-02-21', timestamp: now, seeded: true });
   });
-  saveActualHours(hours);
-  // Also mark Phase 1 lessons as complete
-  p1Lessons.forEach(l => { l.status = 'complete'; });
+  saveHoursLog(log);
+  seededLessons.forEach(l => { l.status = 'complete'; });
   saveStatuses();
 }
 
@@ -2303,15 +2464,10 @@ function closeHoursModal(confirmed) {
     const input = document.getElementById('hours-modal-input');
     let val = parseFloat(input.value);
     if (isNaN(val) || val <= 0) val = parseHoursGlobal(LESSONS.find(l => l.id === _pendingLessonId).hours).avg;
-    // Round to nearest 0.5
     val = Math.round(val * 2) / 2;
-    const hours = loadActualHours();
-    hours[_pendingLessonId] = { hours: val, seeded: false };
-    saveActualHours(hours);
-    // Record pace completion date
+    addLogEntry(_pendingLessonId, val);
     recordCompletion(_pendingLessonId);
   } else if (!confirmed && _pendingLessonId !== null) {
-    // User cancelled — revert status
     const lesson = LESSONS.find(l => l.id === _pendingLessonId);
     if (_pendingPrevStatus !== null) {
       lesson.status = _pendingPrevStatus;
@@ -2324,12 +2480,148 @@ function closeHoursModal(confirmed) {
   if (selectedLesson) selectLesson(selectedLesson);
 }
 
-// Handle Enter key in modal
+// ── Log Hours Modal ──
+function showLogHoursModal() {
+  const modal = document.getElementById('log-hours-modal');
+  const dateInput = document.getElementById('log-date-input');
+  const lessonSelect = document.getElementById('log-lesson-select');
+  const hoursInput = document.getElementById('log-hours-input');
+
+  dateInput.value = new Date().toISOString().slice(0, 10);
+  dateInput.onchange = () => renderLogModalEntries();
+
+  let options = '';
+  const inProgress = LESSONS.filter(l => l.status === 'in-progress');
+  const notStarted = LESSONS.filter(l => l.status === 'not-started');
+
+  if (inProgress.length > 0) {
+    options += '<optgroup label="In Progress">';
+    inProgress.forEach(l => {
+      const phase = PHASES.find(p => p.id === l.phase);
+      options += `<option value="${l.id}">[${phase.name}] ${l.label || l.id}. ${l.title}</option>`;
+    });
+    options += '</optgroup>';
+  }
+
+  PHASES.forEach(phase => {
+    const phaseLessons = notStarted.filter(l => l.phase === phase.id);
+    if (phaseLessons.length === 0) return;
+    options += `<optgroup label="${phase.name}">`;
+    phaseLessons.forEach(l => {
+      options += `<option value="${l.id}">${l.label || l.id}. ${l.title}</option>`;
+    });
+    options += '</optgroup>';
+  });
+
+  lessonSelect.innerHTML = options;
+  hoursInput.value = '';
+  modal.classList.add('visible');
+  renderLogModalEntries();
+  setTimeout(() => hoursInput.focus(), 100);
+}
+
+function closeLogHoursModal(action) {
+  if (action === 'save-close' || action === 'save-another') {
+    const dateInput = document.getElementById('log-date-input');
+    const lessonSelect = document.getElementById('log-lesson-select');
+    const hoursInput = document.getElementById('log-hours-input');
+    let hours = parseFloat(hoursInput.value);
+    if (isNaN(hours) || hours <= 0) { hoursInput.focus(); return; }
+    hours = Math.round(hours * 2) / 2;
+    const lessonId = isNaN(lessonSelect.value) ? lessonSelect.value : parseInt(lessonSelect.value);
+    addLogEntry(lessonId, hours, dateInput.value);
+    if (action === 'save-another') {
+      hoursInput.value = '';
+      renderLogModalEntries();
+      hoursInput.focus();
+      refreshAll();
+      if (selectedLesson) selectLesson(selectedLesson);
+      return;
+    }
+  }
+  document.getElementById('log-hours-modal').classList.remove('visible');
+  refreshAll();
+  if (selectedLesson) selectLesson(selectedLesson);
+}
+
+function renderLogModalEntries() {
+  const container = document.getElementById('log-today-entries');
+  const dateStr = document.getElementById('log-date-input').value;
+  const entries = getLogEntriesForDate(dateStr);
+  if (entries.length === 0) {
+    container.innerHTML = '<div style="font-size:12px;color:var(--text-dim)">No entries for this date yet.</div>';
+    return;
+  }
+  let html = '<table class="log-entries-table"><tr><th>Lesson</th><th>Hours</th><th></th></tr>';
+  entries.forEach(e => {
+    const lesson = LESSONS.find(l => String(l.id) === String(e.lessonId));
+    const name = lesson ? `${lesson.label || lesson.id}. ${lesson.title}` : e.lessonId;
+    html += `<tr><td>${name}</td><td>${e.hours}h</td><td><button class="delete-btn" onclick="deleteLogEntryAndRefresh(${e.id})" title="Delete">✕</button></td></tr>`;
+  });
+  html += '</table>';
+  const total = entries.reduce((s, e) => s + e.hours, 0);
+  html += `<div class="log-today-total">Daily total: ${total}h</div>`;
+  container.innerHTML = html;
+}
+
+function deleteLogEntryAndRefresh(entryId) {
+  deleteLogEntry(entryId);
+  renderLogModalEntries();
+  refreshAll();
+  if (selectedLesson) selectLesson(selectedLesson);
+}
+
+// ── Confirm Complete Modal ──
+let _confirmLessonId = null;
+let _confirmPrevStatus = null;
+
+function showConfirmCompleteModal(lessonId) {
+  const lesson = LESSONS.find(l => l.id === lessonId);
+  const logged = getLoggedHoursForLesson(lessonId);
+  const est = parseHoursGlobal(lesson.hours);
+  document.getElementById('confirm-complete-title').textContent = `Mark "${lesson.title}" complete?`;
+  document.getElementById('confirm-complete-subtitle').textContent = `Total logged: ${logged}h (est. ${est.lo}\u2013${est.hi}h)`;
+  _confirmLessonId = lessonId;
+  document.getElementById('confirm-complete-modal').classList.add('visible');
+}
+
+function closeConfirmCompleteModal(confirmed) {
+  document.getElementById('confirm-complete-modal').classList.remove('visible');
+  if (confirmed && _confirmLessonId !== null) {
+    recordCompletion(_confirmLessonId);
+  } else if (!confirmed && _confirmLessonId !== null) {
+    const lesson = LESSONS.find(l => l.id === _confirmLessonId);
+    if (_confirmPrevStatus !== null) {
+      lesson.status = _confirmPrevStatus;
+      saveStatuses();
+    }
+  }
+  _confirmLessonId = null;
+  _confirmPrevStatus = null;
+  refreshAll();
+  if (selectedLesson) selectLesson(selectedLesson);
+}
+
+// Handle Enter/Escape key in modals
 document.addEventListener('keydown', function(e) {
-  const modal = document.getElementById('hours-modal');
-  if (!modal.classList.contains('visible')) return;
-  if (e.key === 'Enter') closeHoursModal(true);
-  if (e.key === 'Escape') closeHoursModal(false);
+  const hoursModal = document.getElementById('hours-modal');
+  if (hoursModal.classList.contains('visible')) {
+    if (e.key === 'Enter') closeHoursModal(true);
+    if (e.key === 'Escape') closeHoursModal(false);
+    return;
+  }
+  const logModal = document.getElementById('log-hours-modal');
+  if (logModal.classList.contains('visible')) {
+    if (e.key === 'Enter') closeLogHoursModal('save-close');
+    if (e.key === 'Escape') closeLogHoursModal('cancel');
+    return;
+  }
+  const confirmModal = document.getElementById('confirm-complete-modal');
+  if (confirmModal.classList.contains('visible')) {
+    if (e.key === 'Enter') closeConfirmCompleteModal(true);
+    if (e.key === 'Escape') closeConfirmCompleteModal(false);
+    return;
+  }
 });
 
 function cycleStatus(id, ev) {
@@ -2339,21 +2631,28 @@ function cycleStatus(id, ev) {
   const idx = STATUS_CYCLE.indexOf(lesson.status);
   const nextStatus = STATUS_CYCLE[(idx + 1) % 3];
 
-  // Cycling TO complete → show hours modal
+  // Cycling TO complete
   if (nextStatus === 'complete') {
-    _pendingPrevStatus = prevStatus;
-    lesson.status = 'complete';
-    saveStatuses();
-    showHoursModal(id);
-    return; // Don't refreshAll yet — modal will do it
+    const logged = getLoggedHoursForLesson(id);
+    if (logged > 0) {
+      // Has logged hours → confirmation modal
+      _confirmPrevStatus = prevStatus;
+      lesson.status = 'complete';
+      saveStatuses();
+      showConfirmCompleteModal(id);
+      return;
+    } else {
+      // No logged hours → hours modal (backward compatible)
+      _pendingPrevStatus = prevStatus;
+      lesson.status = 'complete';
+      saveStatuses();
+      showHoursModal(id);
+      return;
+    }
   }
 
-  // Cycling FROM complete → remove actual hours
+  // Cycling FROM complete → keep log entries (hours were spent), remove completion record
   if (prevStatus === 'complete') {
-    const hours = loadActualHours();
-    delete hours[id];
-    saveActualHours(hours);
-    // Also remove pace completion record
     const paceData = loadPaceData();
     delete paceData.completions[id];
     savePaceData(paceData);
@@ -2368,30 +2667,23 @@ function cycleStatus(id, ev) {
 function updateStats() {
   const total = LESSONS.length;
   const complete = LESSONS.filter(l => l.status === 'complete').length;
-  const inProgress = LESSONS.filter(l => l.status === 'in-progress').length;
   document.getElementById('stat-complete').textContent = complete;
   document.getElementById('stat-total').textContent = total;
   document.getElementById('progress-fill').style.width = `${(complete / total) * 100}%`;
 
   const actualHours = loadActualHours();
 
-  // Hours done = actual hours spent (real data)
+  // Hours done = all logged hours
   let done = 0;
-  LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      done += actualHours[l.id].hours;
-    }
-  });
+  for (const entry of Object.values(actualHours)) done += entry.hours;
 
-  // Pace multiplier from non-seeded data only
-  const paceMultiplier = computePaceMultiplier();
-
-  // Hours remaining = estimates for incomplete lessons, adjusted by pace
+  // Hours remaining: for each non-complete lesson, max(0, estimate - logged)
   let remaining = 0;
   LESSONS.forEach(l => {
-    if (l.status !== 'complete') {
-      remaining += parseHoursGlobal(l.hours).avg * paceMultiplier;
-    }
+    if (l.status === 'complete') return;
+    const est = parseHoursGlobal(l.hours).avg;
+    const logged = getLoggedHoursForLesson(l.id);
+    remaining += Math.max(0, est - logged);
   });
 
   document.getElementById('stat-hours-done').textContent = Math.round(done);
@@ -2566,10 +2858,28 @@ function selectLesson(id) {
     </div>
   </div>`;
 
-  // Show actual hours if completed
-  const actualHrs = loadActualHours();
-  if (lesson.status === 'complete' && actualHrs[lesson.id] !== undefined) {
-    html += `<div style="font-size:12px;color:var(--accent-1);font-family:'JetBrains Mono',monospace;margin:6px 0 0 0;padding:0 16px">✓ Completed in ${actualHrs[lesson.id].hours}h (est. ${lesson.hours})</div>`;
+  // Show hours log
+  const logEntries = getLogEntriesForLesson(lesson.id);
+  if (logEntries.length > 0) {
+    const totalLogged = logEntries.reduce((s, e) => s + e.hours, 0);
+    html += `<div class="hours-log-detail">`;
+    if (lesson.status === 'complete') {
+      html += `<div class="log-total">\u2713 Completed in ${totalLogged}h (est. ${lesson.hours})</div>`;
+    } else {
+      html += `<div class="log-total">\ud83d\udcdd Hours logged: ${totalLogged}h</div>`;
+    }
+    const byDate = {};
+    logEntries.forEach(e => { if (!byDate[e.date]) byDate[e.date] = 0; byDate[e.date] += e.hours; });
+    const dateEntries = Object.entries(byDate).sort((a, b) => a[0].localeCompare(b[0]));
+    if (dateEntries.length > 0) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const breakdown = dateEntries.map(([d, h]) => {
+        const parts = d.split('-');
+        return `${months[parseInt(parts[1])-1]} ${parseInt(parts[2])}: ${h}h`;
+      }).join(' \u00b7 ');
+      html += `<div class="log-breakdown">${breakdown}</div>`;
+    }
+    html += `</div>`;
   }
 
   // Prerequisites
@@ -2764,37 +3074,27 @@ function computePace() {
   const now = new Date();
   const daysSinceStart = Math.max(1, (now - start) / (1000 * 60 * 60 * 24));
 
-  // Sum ACTUAL hours completed (real data from user input)
+  // Sum ALL logged hours
   const actualHours = loadActualHours();
   let completedContentHours = 0;
-  LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      completedContentHours += actualHours[l.id].hours;
-    }
-  });
+  for (const entry of Object.values(actualHours)) completedContentHours += entry.hours;
 
-  // Pace multiplier from non-seeded data only
-  const paceMultiplier = computePaceMultiplier();
-
-  // Your actual pace: real hours per calendar day
   const paceHoursPerDay = completedContentHours / daysSinceStart;
 
-  // Compute pace-adjusted remaining hours
+  // Remaining = estimate - logged (per lesson), weighted by difficulty
   let weightedRemainLo = 0, weightedRemainHi = 0;
   LESSONS.forEach(l => {
-    if (l.status !== 'complete') {
-      const hrs = parseHoursGlobal(l.hours);
-      const weight = DIFFICULTY_WEIGHT[l.phase] || 1.3;
-      weightedRemainLo += hrs.lo * weight * paceMultiplier;
-      weightedRemainHi += hrs.hi * weight * paceMultiplier;
-    }
+    if (l.status === 'complete') return;
+    const hrs = parseHoursGlobal(l.hours);
+    const weight = DIFFICULTY_WEIGHT[l.phase] || 1.3;
+    const logged = getLoggedHoursForLesson(l.id);
+    weightedRemainLo += Math.max(0, hrs.lo * weight - logged);
+    weightedRemainHi += Math.max(0, hrs.hi * weight - logged);
   });
 
-  // Estimated days remaining
   const daysRemainLo = paceHoursPerDay > 0 ? Math.round(weightedRemainLo / paceHoursPerDay) : Infinity;
   const daysRemainHi = paceHoursPerDay > 0 ? Math.round(weightedRemainHi / paceHoursPerDay) : Infinity;
 
-  // Projected completion dates
   const projLo = new Date(now.getTime() + daysRemainLo * 24 * 60 * 60 * 1000);
   const projHi = new Date(now.getTime() + daysRemainHi * 24 * 60 * 60 * 1000);
 
@@ -2802,7 +3102,6 @@ function computePace() {
     daysSinceStart: Math.round(daysSinceStart),
     completedContentHours: Math.round(completedContentHours),
     paceHoursPerDay: paceHoursPerDay.toFixed(1),
-    paceMultiplier: paceMultiplier.toFixed(2),
     weightedRemainLo: Math.round(weightedRemainLo),
     weightedRemainHi: Math.round(weightedRemainHi),
     daysRemainLo, daysRemainHi,
@@ -2837,21 +3136,23 @@ function renderTimeline() {
   // Compute totals using actual hours
   const actualHours = loadActualHours();
   let actualDone = 0;
-  LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      actualDone += actualHours[l.id].hours;
-    }
-  });
-  const paceMultiplier = computePaceMultiplier();
+  for (const entry of Object.values(actualHours)) actualDone += entry.hours;
 
   let remainLo = 0, remainHi = 0, inProgLo = 0, inProgHi = 0;
   LESSONS.forEach(l => {
+    if (l.status === 'complete') return;
     const hrs = parseHours(l.hours);
-    if (l.status === 'in-progress') { inProgLo += hrs.lo; inProgHi += hrs.hi; }
-    else if (l.status !== 'complete') { remainLo += hrs.lo; remainHi += hrs.hi; }
+    const logged = getLoggedHoursForLesson(l.id);
+    if (l.status === 'in-progress') {
+      inProgLo += Math.max(0, hrs.lo - logged);
+      inProgHi += Math.max(0, hrs.hi - logged);
+    } else {
+      remainLo += Math.max(0, hrs.lo - logged);
+      remainHi += Math.max(0, hrs.hi - logged);
+    }
   });
-  const totalRemainLo = Math.round((remainLo + inProgLo) * paceMultiplier);
-  const totalRemainHi = Math.round((remainHi + inProgHi) * paceMultiplier);
+  const totalRemainLo = Math.round(remainLo + inProgLo);
+  const totalRemainHi = Math.round(remainHi + inProgHi);
   const totalEstimate = Math.round(actualDone + (totalRemainLo + totalRemainHi) / 2);
   const pctDone = totalEstimate > 0 ? Math.round(actualDone / totalEstimate * 100) : 0;
 
@@ -2865,7 +3166,7 @@ function renderTimeline() {
   if (pace.completedContentHours > 0 && pace.daysRemainLo !== Infinity) {
     html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="24" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
     html += `<text x="${cx}" y="78" fill="var(--accent-1)" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">Est. completion: ${formatDate(pace.projLo)} – ${formatDate(pace.projHi)}</text>`;
-    html += `<text x="${cx}" y="98" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h spent · ${pace.paceHoursPerDay}h/day · ${pace.paceMultiplier}× pace vs estimates · ${pctDone}% complete</text>`;
+    html += `<text x="${cx}" y="98" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">${pace.completedContentHours}h spent · ${pace.paceHoursPerDay}h/day · ${pctDone}% complete</text>`;
   } else {
     html += `<text x="${cx}" y="55" fill="var(--text-bright)" font-family="JetBrains Mono, monospace" font-size="26" font-weight="700" text-anchor="middle">${totalRemainLo}–${totalRemainHi} hours remaining</text>`;
     html += `<text x="${cx}" y="83" fill="var(--text-dim)" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">${Math.round(actualDone)}h spent · ${pctDone}% of curriculum · Complete lessons to activate pace tracker</text>`;
@@ -2885,21 +3186,20 @@ function renderTimeline() {
     // Actual hours spent on this phase
     let pActualDone = 0;
     pLessons.forEach(l => {
-      if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-        pActualDone += actualHours[l.id].hours;
-      }
+      if (actualHours[l.id] !== undefined) pActualDone += actualHours[l.id].hours;
     });
 
-    // Pace-adjusted remaining for this phase
+    // Remaining for this phase (subtract logged hours)
     let pRemLo = 0, pRemHi = 0;
     pLessons.forEach(l => {
-      if (l.status !== 'complete') {
-        const hrs = parseHours(l.hours);
-        pRemLo += hrs.lo; pRemHi += hrs.hi;
-      }
+      if (l.status === 'complete') return;
+      const hrs = parseHours(l.hours);
+      const logged = getLoggedHoursForLesson(l.id);
+      pRemLo += Math.max(0, hrs.lo - logged);
+      pRemHi += Math.max(0, hrs.hi - logged);
     });
-    const pAdjRemLo = Math.round(pRemLo * paceMultiplier);
-    const pAdjRemHi = Math.round(pRemHi * paceMultiplier);
+    const pAdjRemLo = Math.round(pRemLo);
+    const pAdjRemHi = Math.round(pRemHi);
     const pPct = total > 0 ? (complete / total) : 0;
     const pPctInProg = total > 0 ? (inProg / total) : 0;
 
@@ -3045,22 +3345,18 @@ function renderMobileTimeline() {
   // Compute using actual hours
   const actualHours = loadActualHours();
   let actualDone = 0;
-  LESSONS.forEach(l => {
-    if (l.status === 'complete' && actualHours[l.id] !== undefined) {
-      actualDone += actualHours[l.id].hours;
-    }
-  });
-  const paceMultiplier = computePaceMultiplier();
+  for (const entry of Object.values(actualHours)) actualDone += entry.hours;
 
   let remainLo = 0, remainHi = 0;
   LESSONS.forEach(l => {
-    if (l.status !== 'complete') {
-      const hrs = parseHours(l.hours);
-      remainLo += hrs.lo; remainHi += hrs.hi;
-    }
+    if (l.status === 'complete') return;
+    const hrs = parseHours(l.hours);
+    const logged = getLoggedHoursForLesson(l.id);
+    remainLo += Math.max(0, hrs.lo - logged);
+    remainHi += Math.max(0, hrs.hi - logged);
   });
-  const adjRemLo = Math.round(remainLo * paceMultiplier);
-  const adjRemHi = Math.round(remainHi * paceMultiplier);
+  const adjRemLo = Math.round(remainLo);
+  const adjRemHi = Math.round(remainHi);
   const totalEstimate = Math.round(actualDone + (adjRemLo + adjRemHi) / 2);
   const pctDone = totalEstimate > 0 ? Math.round(actualDone / totalEstimate * 100) : 0;
   const pace = computePace();
@@ -3084,18 +3380,18 @@ function renderMobileTimeline() {
 
     let pActualDone = 0;
     pLessons.forEach(l => {
-      if (l.status === 'complete' && actualHours[l.id] !== undefined) pActualDone += actualHours[l.id].hours;
+      if (actualHours[l.id] !== undefined) pActualDone += actualHours[l.id].hours;
     });
 
     let pRemLo = 0, pRemHi = 0;
     pLessons.forEach(l => {
-      if (l.status !== 'complete') {
-        const hrs = parseHours(l.hours);
-        pRemLo += Math.round(hrs.lo * paceMultiplier);
-        pRemHi += Math.round(hrs.hi * paceMultiplier);
-      }
+      if (l.status === 'complete') return;
+      const hrs = parseHours(l.hours);
+      const logged = getLoggedHoursForLesson(l.id);
+      pRemLo += Math.max(0, hrs.lo - logged);
+      pRemHi += Math.max(0, hrs.hi - logged);
     });
-    const hoursText = pRemLo === 0 ? `✓ ${Math.round(pActualDone)}h` : `${pRemLo}–${pRemHi}h`;
+    const hoursText = pRemLo === 0 ? `\u2713 ${Math.round(pActualDone)}h` : `${Math.round(pRemLo)}\u2013${Math.round(pRemHi)}h`;
 
     html += `<div class="mt-phase">`;
     html += `<div class="mt-phase-header">
@@ -3107,7 +3403,7 @@ function renderMobileTimeline() {
     pLessons.forEach(l => {
       const statusColor = getStatusColor(l.status);
       const lActual = actualHours[l.id];
-      const hoursDisplay = (l.status === 'complete' && lActual !== undefined) ? `${lActual.hours}h actual` : l.hours;
+      const hoursDisplay = lActual !== undefined ? `${lActual.hours}h logged` : l.hours;
       html += `<div class="mt-lesson" onclick="selectLesson(${typeof l.id === 'string' ? '\'' + l.id + '\'' : l.id})">
         <span class="mt-lesson-status" style="background:${statusColor}"></span>
         <span class="mt-lesson-num" style="color:${phase.color}">${l.label || l.id}</span>
@@ -3698,6 +3994,7 @@ function refreshCurrentView() {
 
 function init() {
   loadStatuses();
+  migrateToHoursLog();
   seedPhase1Hours();
   renderSidebar();
   window.addEventListener('resize', () => {
