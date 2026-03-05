@@ -58,14 +58,6 @@ $$-\big(p(x)\, y'\big)' + q(x)\, y = \lambda\, w(x)\, y$$
 **Orthogonality of eigenfunctions:**
 $$\int_a^b y_m(x)\, y_n(x)\, w(x)\, dx = 0 \quad \text{for } m \neq n$$
 
-## Do
-
-1. **Fourier series convergence.** Implement Fourier series approximation for (a) a square wave and (b) a sawtooth wave on [0, 2*pi]. Animate the partial sums as you add terms from N = 1 to N = 50. Observe the Gibbs phenomenon at discontinuities -- the overshoot that never goes away no matter how many terms you add.
-
-2. **Heat equation via Fourier.** Solve the 1D heat equation on [0, 1] with Dirichlet BCs u(0,t) = u(1,t) = 0. Use an initial condition u(x,0) = x(1-x). Compute the Fourier sine coefficients analytically (or numerically via quadrature). Plot the solution at several times and observe high-frequency modes dying out first. Compare the Fourier series solution to your finite difference solution from Lesson 74.
-
-3. **Eigenvalue exploration.** For the Sturm-Liouville problem -y'' = lambda * y on [0, pi] with y(0) = y(pi) = 0, verify numerically that the eigenvalues are lambda_n = n^2 and eigenfunctions are sin(nx). Then modify the boundary conditions to y'(0) = y'(pi) = 0 (Neumann) and find the new eigenvalues and eigenfunctions (cosines). Plot the first 5 eigenfunctions in each case.
-
 ## ML and Alignment Connection
 
 Fourier analysis decomposes signals into frequency components -- this is exactly what spectral methods in ML do. Graph neural networks use the graph Fourier transform (eigenvectors of the graph Laplacian) to define convolutions on graphs. Transformer positional encodings use sinusoidal bases directly borrowed from Fourier series. The spectral bias of neural networks -- the empirical observation that networks learn low-frequency components before high-frequency ones -- mirrors the heat equation's frequency-dependent decay.

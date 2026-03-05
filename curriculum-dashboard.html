@@ -991,6 +991,52 @@
     transition: all 0.2s;
   }
   .log-btn:hover { color: var(--accent-1); border-color: var(--accent-1); }
+
+  /* Progress Modal */
+  .progress-modal-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+  }
+  .progress-modal-info span { color: var(--accent-5); }
+  .progress-modal-complete {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .progress-modal-complete:hover { border-color: var(--complete); }
+  .progress-modal-complete input[type="checkbox"] {
+    width: 16px; height: 16px; accent-color: var(--complete); cursor: pointer;
+  }
+  .progress-modal-complete label {
+    font-size: 13px; color: var(--text); cursor: pointer; user-select: none;
+  }
+  .progress-modal-logged {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .progress-modal-logged table {
+    width: 100%; border-collapse: collapse; margin-top: 6px;
+  }
+  .progress-modal-logged th {
+    text-align: left; padding: 3px 6px; color: var(--text-dim);
+    font-weight: 600; border-bottom: 1px solid var(--border);
+  }
+  .progress-modal-logged td {
+    padding: 3px 6px; color: var(--text); border-bottom: 1px solid var(--border);
+  }
   .hours-log-detail {
     font-size: 12px;
     font-family: 'JetBrains Mono', monospace;
@@ -1058,6 +1104,32 @@
       <button class="modal-confirm" onclick="closeLogHoursModal('save-close')">Save & Close</button>
     </div>
     <div id="log-today-entries" style="margin-top:16px;border-top:1px solid var(--border);padding-top:12px"></div>
+  </div>
+</div>
+
+<!-- Progress Modal (shown when clicking in-progress lesson) -->
+<div class="hours-modal-overlay" id="progress-modal">
+  <div class="hours-modal">
+    <h3 id="progress-modal-title">Log Progress</h3>
+    <div class="progress-modal-info">
+      <div>Est: <span id="progress-modal-est">3–5h</span></div>
+      <div>Logged: <span id="progress-modal-logged">0h</span></div>
+    </div>
+    <div class="log-modal-form">
+      <div>
+        <label>Hours spent this session</label>
+        <input type="number" id="progress-hours-input" min="0.5" max="100" step="0.5" placeholder="e.g. 1.5" style="margin-bottom:0" />
+      </div>
+    </div>
+    <div class="progress-modal-complete" onclick="document.getElementById('progress-complete-check').click()">
+      <input type="checkbox" id="progress-complete-check" onclick="event.stopPropagation()" />
+      <label for="progress-complete-check">Mark as complete</label>
+    </div>
+    <div id="progress-modal-history" class="progress-modal-logged"></div>
+    <div class="hours-modal-buttons" style="margin-top:16px">
+      <button class="modal-cancel" onclick="closeProgressModal('cancel')">Cancel</button>
+      <button class="modal-confirm" onclick="closeProgressModal('save')">Save</button>
+    </div>
   </div>
 </div>
 
@@ -2622,6 +2694,12 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeHoursModal(false);
     return;
   }
+  const progressModal = document.getElementById('progress-modal');
+  if (progressModal.classList.contains('visible')) {
+    if (e.key === 'Enter') closeProgressModal('save');
+    if (e.key === 'Escape') closeProgressModal('cancel');
+    return;
+  }
   const logModal = document.getElementById('log-hours-modal');
   if (logModal.classList.contains('visible')) {
     if (e.key === 'Enter') closeLogHoursModal('save-close');
@@ -2636,44 +2714,97 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+// ── Progress Modal (in-progress lesson click) ──
+let _progressLessonId = null;
+
+function showProgressModal(lessonId) {
+  const lesson = LESSONS.find(l => l.id === lessonId);
+  const est = parseHoursGlobal(lesson.hours);
+  const logged = getLoggedHoursForLesson(lessonId);
+  _progressLessonId = lessonId;
+
+  document.getElementById('progress-modal-title').textContent = lesson.title;
+  document.getElementById('progress-modal-est').textContent = `${est.lo}–${est.hi}h`;
+  document.getElementById('progress-modal-logged').textContent = `${logged}h`;
+  document.getElementById('progress-hours-input').value = '';
+  document.getElementById('progress-complete-check').checked = false;
+
+  // Show log history for this lesson
+  const entries = getLogEntriesForLesson(lessonId);
+  const historyDiv = document.getElementById('progress-modal-history');
+  if (entries.length > 0) {
+    let html = '<table><tr><th>Date</th><th>Hours</th></tr>';
+    entries.forEach(e => {
+      html += `<tr><td>${e.date}</td><td>${e.hours}h</td></tr>`;
+    });
+    html += '</table>';
+    historyDiv.innerHTML = html;
+  } else {
+    historyDiv.innerHTML = '';
+  }
+
+  document.getElementById('progress-modal').classList.add('visible');
+  setTimeout(() => { document.getElementById('progress-hours-input').focus(); }, 100);
+}
+
+function closeProgressModal(action) {
+  if (action === 'save') {
+    const input = document.getElementById('progress-hours-input');
+    const markComplete = document.getElementById('progress-complete-check').checked;
+    let hours = parseFloat(input.value);
+
+    // Allow saving with 0 hours if marking complete (already logged enough)
+    if (!markComplete && (isNaN(hours) || hours <= 0)) { input.focus(); return; }
+
+    if (!isNaN(hours) && hours > 0) {
+      hours = Math.round(hours * 2) / 2;
+      addLogEntry(_progressLessonId, hours);
+    }
+
+    if (markComplete) {
+      const lesson = LESSONS.find(l => l.id === _progressLessonId);
+      lesson.status = 'complete';
+      saveStatuses();
+      recordCompletion(_progressLessonId);
+    }
+  }
+
+  document.getElementById('progress-modal').classList.remove('visible');
+  _progressLessonId = null;
+  refreshAll();
+  if (selectedLesson) selectLesson(selectedLesson);
+}
+
 function cycleStatus(id, ev) {
   if (ev) ev.stopPropagation();
   const lesson = LESSONS.find(l => l.id === id);
   const prevStatus = lesson.status;
-  const idx = STATUS_CYCLE.indexOf(lesson.status);
-  const nextStatus = STATUS_CYCLE[(idx + 1) % 3];
 
-  // Cycling TO complete
-  if (nextStatus === 'complete') {
-    const logged = getLoggedHoursForLesson(id);
-    if (logged > 0) {
-      // Has logged hours → confirmation modal
-      _confirmPrevStatus = prevStatus;
-      lesson.status = 'complete';
-      saveStatuses();
-      showConfirmCompleteModal(id);
-      return;
-    } else {
-      // No logged hours → hours modal (backward compatible)
-      _pendingPrevStatus = prevStatus;
-      lesson.status = 'complete';
-      saveStatuses();
-      showHoursModal(id);
-      return;
-    }
+  // Not started → in-progress
+  if (prevStatus === 'not-started') {
+    lesson.status = 'in-progress';
+    saveStatuses();
+    refreshAll();
+    if (selectedLesson === id) selectLesson(id);
+    return;
   }
 
-  // Cycling FROM complete → keep log entries (hours were spent), remove completion record
+  // In-progress → show progress modal
+  if (prevStatus === 'in-progress') {
+    showProgressModal(id);
+    return;
+  }
+
+  // Complete → not-started (remove completion record, keep log entries)
   if (prevStatus === 'complete') {
     const paceData = loadPaceData();
     delete paceData.completions[id];
     savePaceData(paceData);
+    lesson.status = 'not-started';
+    saveStatuses();
+    refreshAll();
+    if (selectedLesson === id) selectLesson(id);
   }
-
-  lesson.status = nextStatus;
-  saveStatuses();
-  refreshAll();
-  if (selectedLesson === id) selectLesson(id);
 }
 
 function updateStats() {

@@ -58,50 +58,16 @@ Regularization-constraint equivalence:
 
 $$\min_{\mathbf{w}} L(\mathbf{w}) + \lambda \|\mathbf{w}\|^2 \quad \Longleftrightarrow \quad \min_{\mathbf{w}} L(\mathbf{w}) \text{ subject to } \|\mathbf{w}\|^2 \leq C$$
 
-## Do
+## Block B Capstone Project — Multivariable Optimization Lab (3h)
 
-1. **Critical point classification.** For f(x, y) = x^4 + y^4 - 4xy + 1, find all critical points (set nabla f = 0 and solve). Compute the Hessian at each critical point and classify as minimum, maximum, or saddle using the eigenvalue test. Verify by plotting the surface.
+**C++ Component (~1h):**
+1. Implement gradient descent and Newton's method for arbitrary differentiable functions in C++
+2. Compute Jacobians and Hessians numerically using finite differences — output optimization trajectories to CSV
 
-2. **Lagrange multipliers by hand and code.** Maximize f(x, y) = xy subject to x^2 + y^2 = 1 (find the rectangle of maximum area inscribed in the unit circle). Solve analytically using nabla f = lambda * nabla g. Then solve numerically using scipy.optimize.minimize with a constraint. Verify the solutions match.
-
-3. **Regularization = constraint.** Consider a simple linear regression problem: minimize ||Ax - b||^2. Solve it three ways: (a) unconstrained (normal equations), (b) with L2 regularization (ridge regression: minimize ||Ax - b||^2 + lambda * ||x||^2), and (c) with an explicit constraint ||x||^2 <= C using scipy.optimize.minimize with a constraint. Show that for each lambda, there exists a C such that solutions (b) and (c) are identical. Plot the solution norm ||x|| as a function of lambda and as a function of C.
-
-```python
-import numpy as np
-from scipy.optimize import minimize
-
-# Lagrange multipliers: maximize f(x,y) = xy on the unit circle
-# Equivalent to minimizing -xy subject to x^2 + y^2 - 1 = 0
-
-def objective(x):
-    return -x[0] * x[1]
-
-def constraint(x):
-    return x[0]**2 + x[1]**2 - 1.0
-
-from scipy.optimize import minimize
-
-result = minimize(objective, x0=[0.5, 0.5],
-                  constraints={'type': 'eq', 'fun': constraint})
-print(f"Optimal point: ({result.x[0]:.4f}, {result.x[1]:.4f})")
-print(f"Max xy = {-result.fun:.4f}")
-print(f"Analytical: (1/sqrt(2), 1/sqrt(2)), max xy = 0.5")
-
-# Regularization vs constraint equivalence
-np.random.seed(42)
-A = np.random.randn(20, 5)
-b = np.random.randn(20)
-
-# Ridge regression for various lambda
-lambdas = np.logspace(-3, 3, 50)
-norms_ridge = []
-for lam in lambdas:
-    x_ridge = np.linalg.solve(A.T @ A + lam * np.eye(5), A.T @ b)
-    norms_ridge.append(np.linalg.norm(x_ridge)**2)
-
-print(f"\nRidge: lambda=0.001 -> ||x||^2 = {norms_ridge[0]:.4f}")
-print(f"Ridge: lambda=1000  -> ||x||^2 = {norms_ridge[-1]:.6f}")
-```
+**Python Component (~2h):**
+3. Visualize gradient descent on 2D loss surfaces with 3D matplotlib surface plots and contour plots — show how Newton's method takes fewer steps but each step is more expensive
+4. Build a Lagrange multiplier solver for constrained optimization using scipy. Demonstrate numerically that L2 regularization ↔ constrained optimization (show equivalent solutions for matching λ and C)
+5. Implement Monte Carlo integration for a 10-dimensional integral and compare with the analytical result — show convergence rate of 1/√N
 
 ## ML and Alignment Connection
 

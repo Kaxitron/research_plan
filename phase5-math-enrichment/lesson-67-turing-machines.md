@@ -51,9 +51,3 @@
   - https://www.scottaaronson.com/writings/bignumbers.html
   - *Fun essay connecting computability to very large numbers.*
 
-## 🔨 Do
-
-- Write a simulated Turing machine in Python that computes basic functions (increment, add). Feel the Church-Turing thesis in your bones.
-- Implement a universal TM simulator that takes a TM description and input, then simulates it.
-- Walk through the halting problem proof with a specific example. What happens when D runs H(D,D)?
-- For 5 alignment-relevant properties (e.g., "never produces harmful output"), explain why each is undecidable in general by Rice's theorem, then discuss what partial verification techniques might work for specific systems.

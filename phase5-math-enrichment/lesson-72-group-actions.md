@@ -55,12 +55,16 @@
 - **"Visual Group Theory" by Nathan Carter** — Chapters 10–12 (actions, representations)
 - **"Algebra" by Artin** — Chapters 5–6 (group actions, with excellent geometric examples)
 
-## 🔨 Do
+## Block Capstone Project — Neural Network Symmetry Explorer (3h)
 
-- Compute the orbits and stabilizers of S₃ acting on weight vectors of a 2-input, 3-hidden, 1-output network. Find a generic point (trivial stabilizer) and a singular point (non-trivial stabilizer).
-- Implement the orbit-stabilizer theorem numerically: for each weight vector in a discretized space, compute its orbit size and stabilizer size. Verify they multiply to |G|.
-- Show that a convolutional layer IS an equivariant layer: verify that conv(shift(x)) = shift(conv(x)) numerically in PyTorch.
-- Representation decomposition: write the 6×6 permutation matrices for S₃ acting on ℝ³. Find the trivial sub-representation (the all-ones direction, invariant under all permutations) and the standard representation (the orthogonal complement).
+**C++ Component (~1h):**
+1. Enumerate all permutation symmetries of a small MLP (2-input, 3-hidden, 1-output) in C++ by generating all permutation matrices for S₃
+2. For each permutation, apply it to a weight vector and verify the network output is identical — output results to CSV
+
+**Python Component (~2h):**
+3. Implement the orbit-stabilizer theorem numerically in PyTorch: for random weight vectors, compute orbit sizes and stabilizer sizes, verify they multiply to |G| = 6
+4. Show that a convolutional layer IS an equivariant layer: verify conv(shift(x)) = shift(conv(x)) numerically in PyTorch
+5. Visualize the loss landscape along symmetry directions — show the flat valleys created by permutation invariance. Compute the Hessian at symmetric points and demonstrate rank degeneracy. Connect the number of symmetries to SLT singularity structure
 
 ## 🔗 ML & Alignment Connection
 

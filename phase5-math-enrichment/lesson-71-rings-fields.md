@@ -52,13 +52,6 @@
 - **"Visual Group Theory" by Nathan Carter** — Chapters 7–9 (rings, fields, polynomials)
 - **"Abstract Algebra" by Dummit & Foote** — Chapters 7–9 (the standard reference, very thorough)
 
-## 🔨 Do
-
-- Verify that ℤ₆ is a ring but not a field (find a nonzero element without an inverse: 2 × 3 = 0 mod 6 — zero divisors!).
-- Construct ℂ as ℝ[x]/(x²+1). Show that (a + bx)(c + dx) = (ac - bd) + (ad + bc)x in this quotient ring — this IS complex multiplication.
-- For the polynomial f(w₁,w₂) = w₁w₂ in ℝ[w₁,w₂], describe the variety V(f) = {(w₁,w₂) : w₁w₂ = 0}. What does this variety look like? (It's the union of the two coordinate axes — a singularity at the origin.)
-- Compute the ideal (x², xy) in ℝ[x,y]. What variety does it define? What's the quotient ring ℝ[x,y]/(x², xy)?
-
 ## 🔗 ML & Alignment Connection
 
 Polynomial rings describe the loss landscape algebraically. The variety V(∂L/∂w) — the set of critical points — is an algebraic variety, and its singularity structure (studied via ring theory) determines how the model generalizes. The Noetherian property guarantees this structure is always "finite" in a precise sense, making systematic analysis possible. This algebraic framework is how Singular Learning Theory moves beyond classical statistics to give correct predictions for neural network behavior.

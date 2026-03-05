@@ -46,39 +46,6 @@ Linear approximation:
 
 $$f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a}) \cdot (\mathbf{x} - \mathbf{a})$$
 
-## Do
-
-1. **Gradient field visualization.** Pick a 2D function like f(x,y) = x^2 + 2y^2. Use matplotlib to plot its contour lines and overlay gradient arrows (quiver plot) at a grid of points. Verify visually that the arrows are perpendicular to the contours and point toward increasing f.
-
-2. **Numerical vs analytical gradient.** Implement a function that computes the numerical gradient via finite differences: (partial f / partial x_i) approx [f(x + h*e_i) - f(x - h*e_i)] / (2h). Compare this with the analytical gradient for f(x,y) = sin(x)*cos(y) at several points. Plot the relative error as h varies from 1e-1 to 1e-10 and observe the "sweet spot" before floating-point noise dominates.
-
-3. **Directional derivative explorer.** For a chosen function and point, compute the directional derivative in 36 evenly spaced directions (every 10 degrees). Plot D_u f as a function of angle. Verify the maximum occurs in the gradient direction and equals the gradient magnitude.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-def numerical_gradient(f, x, h=1e-5):
-    """Central difference gradient approximation."""
-    grad = np.zeros_like(x)
-    for i in range(len(x)):
-        e_i = np.zeros_like(x)
-        e_i[i] = h
-        grad[i] = (f(x + e_i) - f(x - e_i)) / (2 * h)
-    return grad
-
-# Example: compare numerical vs analytical
-def f(x):
-    return x[0]**2 + 2*x[1]**2
-
-def grad_f_analytical(x):
-    return np.array([2*x[0], 4*x[1]])
-
-point = np.array([1.0, 1.0])
-print("Numerical: ", numerical_gradient(f, point))
-print("Analytical:", grad_f_analytical(point))
-```
-
 ## ML and Alignment Connection
 
 The gradient of the loss function, nabla L(theta), is THE learning signal in neural network training. Every parameter update in gradient descent moves opposite to the gradient: theta <- theta - eta * nabla L(theta). The gradient points in the direction of steepest ascent on the loss surface, so negating it gives steepest descent. Directional derivatives tell you the learning rate in any direction, which matters when you consider that optimizers like Adam effectively change the direction of descent away from the raw gradient.

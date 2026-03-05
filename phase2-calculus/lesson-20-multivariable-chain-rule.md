@@ -53,49 +53,6 @@ Hessian matrix:
 
 $$H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$$
 
-## Do
-
-1. **Tree diagram practice.** Given z = f(x, y) where x = g(s, t) and y = h(s, t), draw the dependency tree and write out partial z / partial s and partial z / partial t by summing over all paths. Verify with a concrete example: z = x^2 * y, x = s + t, y = s * t.
-
-2. **Jacobian composition as backprop.** Build a simple two-layer computation: x -> (layer 1) -> h -> (layer 2) -> y, where layer 1 is h = sigma(Wx + b) and layer 2 is y = Vh + c, with sigma = tanh. Compute J_{layer1} and J_{layer2} analytically. Verify that J_{layer2} * J_{layer1} gives the same result as computing the full Jacobian of the composition directly.
-
-3. **Hessian eigenvalue explorer.** For f(x, y) = x^2 + k*y^2 with k = 1, 5, 25, compute the Hessian, find its eigenvalues, and compute the condition number. Run gradient descent on each and plot the trajectories. Show that higher condition number produces more zigzagging.
-
-```python
-import numpy as np
-
-def jacobian_numerical(F, x, h=1e-5):
-    """Compute Jacobian of F: R^n -> R^m numerically."""
-    f0 = F(x)
-    m = len(f0)
-    n = len(x)
-    J = np.zeros((m, n))
-    for j in range(n):
-        e_j = np.zeros(n)
-        e_j[j] = h
-        J[:, j] = (F(x + e_j) - F(x - e_j)) / (2 * h)
-    return J
-
-# Example: verify chain rule J_{g o f} = J_g * J_f
-def f(x):
-    return np.array([x[0]**2 + x[1], x[0]*x[1]])
-
-def g(y):
-    return np.array([np.sin(y[0] + y[1])])
-
-def gof(x):
-    return g(f(x))
-
-x0 = np.array([1.0, 2.0])
-J_f = jacobian_numerical(f, x0)
-J_g = jacobian_numerical(g, f(x0))
-J_gof = jacobian_numerical(gof, x0)
-
-print("J_g @ J_f:\n", J_g @ J_f)
-print("J_{g o f}:\n", J_gof)
-print("Match:", np.allclose(J_g @ J_f, J_gof))
-```
-
 ## ML and Alignment Connection
 
 The chain rule on computation graphs IS backpropagation. A neural network is a sequence of differentiable operations composed together. The forward pass computes the output; the backward pass multiplies Jacobians in reverse order to propagate gradients from the loss back to each parameter. The equation J_{g composed with f} = J_g * J_f is exactly what happens at each layer boundary during the backward pass.

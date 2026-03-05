@@ -57,33 +57,6 @@ Monte Carlo approximation:
 
 $$\int f(x) p(x) \, dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i), \quad x_i \sim p$$
 
-## Do
-
-1. **Monte Carlo integration.** Implement Monte Carlo integration to estimate the integral of f(x) = e^{-x^2} from -5 to 5 (which should be close to sqrt(pi)). Plot the estimate as a function of N (number of samples) on a log scale. Show that the error decreases as 1/sqrt(N) regardless of dimension.
-
-2. **High-dimensional comparison.** Extend your Monte Carlo integrator to compute the volume of the unit ball in d = 2, 5, 10, 20 dimensions (fraction of random points in the unit cube that land inside the unit ball). Compare with the analytical formula. Observe how grid-based quadrature becomes hopeless but Monte Carlo still works (the "curse of dimensionality" for grids).
-
-3. **Gaussian integral numerically.** Compute the Gaussian integral numerically by: (a) direct numerical quadrature (scipy.integrate.quad), (b) Monte Carlo sampling, and (c) the polar coordinates trick implemented numerically (integrate in polar, transform back). Verify all three give sqrt(pi).
-
-```python
-import numpy as np
-
-def monte_carlo_integrate(f, a, b, N=100000):
-    """Monte Carlo estimate of integral of f from a to b."""
-    x = np.random.uniform(a, b, N)
-    return (b - a) * np.mean(f(x))
-
-# Estimate the Gaussian integral
-f = lambda x: np.exp(-x**2)
-estimates = []
-Ns = [100, 1000, 10000, 100000, 1000000]
-for N in Ns:
-    est = monte_carlo_integrate(f, -5, 5, N)
-    estimates.append(est)
-    print(f"N={N:>8d}: estimate = {est:.6f}, true = {np.sqrt(np.pi):.6f}, "
-          f"error = {abs(est - np.sqrt(np.pi)):.6f}")
-```
-
 ## ML and Alignment Connection
 
 The Gaussian integral is WHY the normal distribution normalizes to 1 -- without it, Gaussian distributions (which appear everywhere in ML: weight initialization, noise models, variational inference, diffusion models) would not be valid probability distributions. The proof via polar coordinates is a beautiful application of the change-of-variables formula.

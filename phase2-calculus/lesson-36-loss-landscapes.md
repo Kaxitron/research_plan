@@ -82,13 +82,16 @@ dW = -grad_L(W) dt + sigma dB_t
 
 where sigma^2 is proportional to eta/B (learning rate / batch size).
 
-## Do
+## Block E Capstone Project — Autodiff Engine & Optimizer Suite (4h)
 
-1. **Gradient flow simulation:** Implement continuous gradient descent by solving dW/dt = -grad_L(W) with `scipy.integrate.solve_ivp` (use RK45). Compare the continuous trajectory to discrete GD with various step sizes on a quadratic loss. Show that continuous flow always decreases loss, but discrete GD can oscillate or diverge when eta is too large.
-2. **Verify the stability condition numerically:** For a quadratic loss L(x) = 0.5 * x^T A x with known eigenvalues, run GD with learning rates above and below 2/lambda_max. Plot the loss curves and confirm the theory predicts the transition from convergence to divergence.
-3. **ResNet-Euler connection:** Implement a simple ResNet (5-10 residual blocks) and a Neural ODE that parameterizes the same dynamics. Train both on a toy classification task. Show that the ResNet with many thin blocks approximates the Neural ODE solution.
-4. **Edge of stability visualization:** Train a small network on MNIST and track the top Hessian eigenvalue (use power iteration) and the loss over training steps. Show that the sharpness rises to approximately 2/eta and then hovers there -- the edge of stability. Use the `pyhessian` library or implement power iteration manually.
-5. **Grokking experiment (optional, longer):** Train a small transformer on modular addition (e.g., a + b mod 97). Train well past the point of zero training loss and track validation accuracy. Observe the sudden transition from memorization to generalization.
+**C++ Component (~1.5h):**
+1. Build a reverse-mode automatic differentiation engine from scratch in C++ — define a `Value` class with a computation graph, implement forward and backward passes for +, -, *, /, tanh, and ReLU
+2. Build SGD, momentum, and Adam optimizers on top of your engine
+3. Train a 2-layer MLP on XOR using your engine — verify all gradients against finite differences
+
+**Python Component (~2.5h):**
+4. Compare continuous gradient flow (solve the ODE dx/dt = −∇L via RK4 using scipy) vs discrete optimizer steps on a quadratic loss — show they converge to the same minimum but discrete steps can oscillate
+5. Train a small network on MNIST and track the top Hessian eigenvalue (use power iteration) over training. Verify the edge of stability: sharpness rises to approximately 2/η and hovers there
 
 ## ML & Alignment Connection
 

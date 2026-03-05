@@ -51,9 +51,3 @@
 - **Scott Aaronson — "Quantum Computing Since Democritus"** — Chapters on complexity
   - *Readable, opinionated, brilliant.*
 
-## 🔨 Do
-
-- Implement a SAT solver (brute force, then DPLL with backtracking). Test on random 3-SAT instances. See the phase transition at the clause-to-variable ratio ~4.27.
-- Show NP-hardness of training: construct a simple network where finding global optimum requires solving a known NP-hard problem.
-- Benchmark: for a specific function, compare the network size needed at depth 2 vs depth 5 vs depth 10. See depth efficiency empirically.
-- Research exercise: for 3 alignment-relevant tasks (adversarial robustness, reward verification, behavior prediction), find the known complexity results. Which are NP-hard? PSPACE-hard? Undecidable?

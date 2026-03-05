@@ -65,16 +65,16 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{t, x_0, \epsilon}\!\left[\big\| s_\theta(x_t
 **Score-denoiser relationship** (Gaussian noise with variance $\sigma^2$):
 $$\nabla_x \log p(x_t | x_0) = -\frac{x_t - x_0}{\sigma^2} = \frac{\epsilon}{\sigma} \quad \text{(predicting noise } \epsilon \text{)}$$
 
-## Do
+## Block D Capstone Project — PDE Solver & Mini Diffusion Model (4h)
 
-1. **Simple 2D diffusion model.** Implement a toy diffusion model on a 2D distribution (e.g., a mixture of Gaussians or a Swiss roll):
-   - **(a) Forward process:** starting from data samples, add Gaussian noise at T = 100 time steps following a linear variance schedule. Visualize the data distribution at t = 0, T/4, T/2, 3T/4, and T. Confirm that at t = T the distribution is approximately standard Gaussian.
-   - **(b) Score network:** train a small MLP (3-4 hidden layers, ~256 units each) to predict the score nabla_x log p_t(x) conditioned on time t. Use the denoising score matching objective.
-   - **(c) Reverse process:** generate new samples by starting from Gaussian noise and running the reverse SDE (Euler-Maruyama discretization) using your trained score network. Visualize the generated samples alongside the original data.
+**C++ Component (~1h):**
+1. Build finite difference solvers for the heat equation (u_t = α u_xx) and wave equation (u_tt = c² u_xx) in C++
+2. Output time-step snapshots to CSV — visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side
 
-2. **Probability flow ODE vs reverse SDE.** Using the same trained score network, generate samples using both the reverse SDE and the probability flow ODE. Compare: the ODE gives deterministic trajectories (same noise input = same output), while the SDE gives stochastic ones. Visualize the generation trajectories in 2D space for both methods.
-
-3. **Sampler comparison.** Implement Euler-Maruyama (simplest, many steps needed) and a higher-order scheme (e.g., Heun's method / improved Euler) for the reverse process. Compare sample quality at T = 1000 steps, T = 100 steps, and T = 10 steps. Observe how better numerical methods allow fewer steps with acceptable quality -- this is exactly the tradeoff that DDIM, DPM-Solver, and other fast samplers exploit.
+**Python Component (~3h):**
+3. Implement forward diffusion as progressive Gaussian noise on 2D data (mixture of Gaussians). Visualize the data distribution at t = 0, T/4, T/2, 3T/4, T — confirm convergence to standard Gaussian
+4. Train a small score network s_θ(x,t) ≈ ∇_x log p_t(x) using denoising score matching. Use a 3-layer MLP with time conditioning
+5. Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Compare generated vs original distribution. Connect every step to PDE theory from this block
 
 ## ML and Alignment Connection
 

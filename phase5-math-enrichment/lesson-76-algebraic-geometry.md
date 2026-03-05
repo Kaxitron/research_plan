@@ -69,13 +69,16 @@
 - **"An Invitation to Singular Learning Theory" by Liam Carroll et al.**
   - *Recent tutorial paper bridging AG and ML. Start here if Watanabe is too dense.*
 
-## 🔨 Do
+## Block Capstone Project — Singularity Resolution & RLCT Calculator (3h)
 
-- Classify the singularity type (smooth, node, cusp) for: y² - x² = 0, y² - x³ = 0, y² - x⁵ = 0, y² - x²(x+1) = 0. Plot each variety. Compute the Jacobian at singular points.
-- Blow-up by hand: for V = {x² - y² = 0}, substitute y = tx (blow-up coordinates), show the strict transform separates the two branches. Plot the original and resolved variety.
-- Compute the RLCT of f(w) = w⁴ in 1D. Compute the integral ∫₀¹ w^{-4t} dw and find the pole.
-- Numerical RLCT estimation: for a 1-hidden-unit ReLU network trained to learn y=0, sample the loss near the singular minimizers and fit the power-law behavior to estimate λ. Compare with the theoretical λ = 1/4.
-- Read one section of Watanabe's book or the Carroll et al. tutorial and write a one-paragraph summary of the main theorem in your own words.
+**C++ Component (~1h):**
+1. Implement blow-up resolution for plane curve singularities in C++: for the cusp y² = x³, substitute y = tx, compute the strict transform, and show the singularity becomes smooth
+2. Detect singular vs smooth points via Jacobian rank computation — output classification for a list of algebraic varieties
+
+**Python Component (~2h):**
+3. Visualize algebraic varieties (y² = x², y² = x³, y² = x⁵, Whitney umbrella) in matplotlib — color-code singular vs smooth points using the Jacobian rank test
+4. Compute the RLCT numerically for a 1-hidden-unit ReLU network: sample the loss near singular minimizers and fit the power-law behavior to estimate λ. Compare with the theoretical λ = 1/4
+5. Plot the free energy as a function of sample size for models with different RLCTs. Demonstrate that RLCT predicts generalization better than naive parameter counting
 
 ## 🔗 ML & Alignment Connection
 

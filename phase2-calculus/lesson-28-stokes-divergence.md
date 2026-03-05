@@ -59,13 +59,16 @@ $$\int_{\partial \Omega} \omega = \int_{\Omega} d\omega$$
 
 $$\nabla \times \mathbf{F} = \left( \frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z} \right) \mathbf{i} + \left( \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x} \right) \mathbf{j} + \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) \mathbf{k}$$
 
-## Do
+## Block C Capstone Project — Vector Calculus Theorem Verifier (3h)
 
-1. **Verify Stokes' theorem:** Let F = (y, -x, z^2). Let S be the upper hemisphere of the unit sphere (z >= 0) with boundary curve C (the unit circle in the xy-plane). Compute (a) the circulation integral around C by parameterizing the circle, and (b) the flux of curl(F) through S by parameterizing the hemisphere. Confirm both sides match.
-2. **Verify the divergence theorem:** Let F = (x^2, y^2, z^2). Let E be the unit cube [0,1]^3. Compute (a) the outward flux through all six faces (six separate surface integrals), and (b) the triple integral of div(F) = 2x + 2y + 2z over the cube. Confirm equality.
-3. **Compute curl and divergence of 3D fields:** For F = (yz, xz, xy), compute curl(F) and div(F). Is this field conservative (curl = 0)? If so, find the potential function. Verify using the FTLI.
-4. **Hierarchy visualization:** Create a diagram (can be a matplotlib figure with text and arrows) showing the hierarchy of integral theorems: FTC at the base, then FTLI, Green's (both forms), Stokes', and Divergence theorem at the top. For each, label: what is the "derivative" being integrated, what is the "domain," and what is the "boundary." Include the generalized Stokes' theorem as the unifying principle at the top.
-5. **Divergence theorem and probability:** Consider the vector field F = (x, y, z) (constant divergence = 3). Compute the flux through (a) the unit sphere, (b) a sphere of radius 2, (c) a cube of side 2 centered at the origin. In each case, verify the divergence theorem. Then think: if F represents a probability flow, what does "divergence = 3" mean? (Probability is being created -- this corresponds to a non-conserving process. Conservation requires div = 0, which is the continuity equation.)
+**C++ Component (~1h):**
+1. Implement numerical line integral, surface integral, and volume integral routines in C++ using quadrature rules
+2. Output computed values to CSV for verification against Python implementations
+
+**Python Component (~2h):**
+3. Verify Green's theorem (both circulation and flux forms) on specific 2D vector fields — compute both sides independently and confirm equality
+4. Verify Stokes' theorem: compute the circulation around a curve and the flux of curl through the bounded surface. Verify the divergence theorem on the unit cube
+5. Visualize 2D and 3D vector fields with matplotlib showing curl, divergence, and gradient fields. Create a diagram showing the unified hierarchy: FTC → FTLI → Green's → Stokes' → Divergence theorem
 
 ## ML & Alignment Connection
 

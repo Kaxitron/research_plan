@@ -59,14 +59,6 @@ $$\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}$$
 **Steady-state** (set $\partial u / \partial t = 0$):
 $$\nabla^2 u = 0 \quad \text{(Laplace's equation)}$$
 
-## Do
-
-1. **Finite difference heat equation solver (1D).** Discretize the 1D heat equation on [0, L] using forward Euler in time and central differences in space. Use a grid of N = 100 spatial points and choose a time step satisfying the stability condition dt <= dx^2 / (2 * alpha). Start with a step function initial condition and visualize the temperature evolving over time -- watch it smooth into a bell curve.
-
-2. **Boundary condition experiments.** Modify your solver to handle: (a) Dirichlet BCs (fixed temperature at both ends), (b) Neumann BCs (insulated ends, zero flux), (c) mixed BCs (one end fixed, one insulated). Plot the long-time behavior in each case and verify that Dirichlet reaches the steady-state linear interpolation while Neumann reaches uniform temperature.
-
-3. **Stability investigation.** Deliberately violate the CFL stability condition by choosing dt > dx^2 / (2 * alpha). Observe the numerical blowup. Then implement the implicit (backward Euler) scheme, which is unconditionally stable, and compare.
-
 ## ML and Alignment Connection
 
 The heat equation IS the forward process in diffusion models (DDPM, Stable Diffusion). Adding Gaussian noise to data is equivalent to solving the heat equation: each denoising step undoes a small amount of diffusion. The thermal diffusivity alpha controls the noise schedule -- how quickly information is destroyed.

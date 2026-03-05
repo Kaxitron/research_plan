@@ -70,13 +70,16 @@
 
 - **"The Logic of Provability" by George Boolos** — the definitive reference on provability logic
 
-## 🔨 Do
+## Block Capstone Project — SAT Solver & Self-Reference Engine (3h)
 
-- Walk through Gödel's proof for a specific system: construct the Gödel sentence for a toy proof system. Verify it's true but unprovable.
-- Prove Löb's theorem from the Hilbert-Bernays derivability conditions. (This is a hard exercise — attempt it, use references as needed.)
-- Formalize the "shutdown problem": an agent A reasons about whether it should allow shutdown. Using provability logic, show that A cannot prove "if I prove shutdown is good, then shutdown is good" (by Löb, this would require A to prove shutdown is good, which requires verification it can't complete).
-- Read the Yudkowsky & Herreshoff "Tiling Agents" paper. Write a one-page summary of the main impossibility result and its implications for recursive self-improvement.
-- Essay: Compare the halting problem (Lesson 54), Rice's theorem, Gödel's incompleteness, and Löb's theorem. What's the common thread? How do these four impossibility results collectively constrain the alignment research program?
+**C++ Component (~1h):**
+1. Build a DPLL SAT solver from scratch in C++ with unit propagation and pure literal elimination
+2. Encode graph coloring (3-color a Petersen graph) and a 9×9 Sudoku as SAT instances — solve them with your solver
+
+**Python Component (~2h):**
+3. Implement Gödel numbering: encode and decode logical formulas as integers. Construct self-referential sentences using the diagonal lemma — build a sentence that says "I am not provable"
+4. Build a toy "trust checker" that tries to verify its own correctness. Demonstrate Löb's theorem implications: show that the checker necessarily fails to prove its own soundness, connecting to AI self-modification limits
+5. Essay component: Compare the halting problem, Rice's theorem, Gödel's incompleteness, and Löb's theorem. Explain how these four impossibility results collectively constrain the alignment research program
 
 ## 🔗 ML & Alignment Connection
 

@@ -52,14 +52,6 @@ $$\oint_C \mathbf{F} \cdot \mathbf{n} \, ds = \iint_D \left( \frac{\partial P}{\
 
 $$\nabla^2 f = \text{div}(\nabla f) = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}$$
 
-## Do
-
-1. **Verify Green's theorem (circulation form):** For F = (x*y, x^2) on the unit disk, compute (a) the line integral around the unit circle by parameterizing and integrating, and (b) the double integral of (dQ/dx - dP/dy) over the disk using polar coordinates. Confirm both sides match.
-2. **Verify Green's theorem (flux form):** For F = (x^2, y^2) on the square [0,1] x [0,1], compute (a) the outward flux through the boundary (four line integrals), and (b) the double integral of div(F) over the square. Confirm equality.
-3. **Visualize curl and divergence:** Create a grid of points and plot vector fields with (a) positive curl (rotating), (b) positive divergence (expanding), (c) zero curl and zero divergence (a conservative, incompressible field). Use color-coded background to show the magnitude of curl or divergence at each point.
-4. **Area via Green's theorem:** Use the formula A = (1/2) * oint(x dy - y dx) to compute the area enclosed by an ellipse (x/a)^2 + (y/b)^2 = 1. Verify against the known answer pi*a*b.
-5. **Laplacian exploration:** Compute nabla^2 f for f = x^2 + y^2, f = ln(x^2 + y^2), and f = e^x * sin(y). Which is harmonic (nabla^2 f = 0)? Verify numerically by checking that the value at the center of a small circle equals the average of values on the circle.
-
 ## ML & Alignment Connection
 
 Divergence measures whether a vector field is "spreading out" or "compressing" -- this is the infinitesimal version of volume change, and volume change is exactly what normalizing flows need to track. The change-of-variables formula for probability densities involves the Jacobian determinant, which measures finite volume change; divergence gives the differential version. Specifically, for continuous normalizing flows, the instantaneous change in log-density is d(log p)/dt = -tr(df/dx), which is the negative divergence of the velocity field. The Laplacian appears directly in the heat equation u_t = k nabla^2 u, which IS the forward process in diffusion models: adding Gaussian noise to data is mathematically equivalent to running the heat equation. Understanding Green's theorem -- the connection between boundary integrals and interior derivatives -- builds toward the divergence theorem, which is the mathematical backbone of probability conservation in these generative models.

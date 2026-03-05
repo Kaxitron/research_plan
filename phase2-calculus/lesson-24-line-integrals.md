@@ -52,13 +52,6 @@ $$\int_C f \, ds = \int_a^b f(r(t)) \, \|r'(t)\| \, dt$$
 
 $$ds = \|r'(t)\| \, dt$$
 
-## Do
-
-1. **Parameterize several curves:** Write parameterizations for (a) a circle of radius 2, (b) a helix r(t) = (cos t, sin t, t/2pi), (c) a figure-eight (Lissajous curve with x = sin t, y = sin 2t). Plot all three in Python using matplotlib (use `plot3D` for the helix).
-2. **Compute arc lengths numerically:** For each curve above, compute the arc length by numerically evaluating the integral L = integral of ||r'(t)|| dt. Use `scipy.integrate.quad` or a simple Riemann sum. Compare the circle result to the known answer 2*pi*r.
-3. **Scalar line integral visualization:** Define a scalar field f(x, y) = x^2 + y^2. Compute the scalar line integral of f along the unit circle. Visualize this by plotting the "curtain" -- the surface swept out by vertical lines from the curve up to f(r(t)) -- and confirm that the integral equals the area of this curtain.
-4. **Parameterization independence:** Parameterize the unit circle two different ways: (a) constant speed r(t) = (cos t, sin t) on [0, 2pi], (b) variable speed r(t) = (cos t^2, sin t^2) on [0, sqrt(2pi)]. Compute the arc length both ways and verify you get the same answer.
-
 ## ML & Alignment Connection
 
 Paths through parameter space during training ARE curves. The arc length of a training trajectory -- how far the weights travel from initialization to convergence -- measures the geometric complexity of the optimization path. Research on the implicit bias of gradient descent shows that among all models fitting the data, gradient descent finds solutions reachable by short paths from initialization. This "short path" preference is a form of implicit regularization: shorter paths correspond to simpler, more generalizable models. Understanding line integrals along training curves also connects to computing quantities like "total gradient norm traveled," which practitioners use to diagnose training health.

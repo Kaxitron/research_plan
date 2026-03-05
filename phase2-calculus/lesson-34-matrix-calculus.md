@@ -60,13 +60,6 @@ $$J_f = \begin{bmatrix} \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\part
 
 **Chain rule as matrix multiplication:** For y = f(g(x)), J_{f circ g} = J_f * J_g
 
-## Do
-
-1. **Build forward-mode and reverse-mode autodiff** for a simple computation graph (3-4 operations). Implement both as classes that track values and derivatives. Show that forward mode needs one pass per input, reverse mode needs one pass per output.
-2. **Verify matrix calculus identities numerically:** For random A and x, compute ∂(Ax)/∂x and ∂(x^TAx)/∂x both analytically (using the identities) and numerically (finite differences). Confirm they match to floating-point precision.
-3. **Compare computational cost:** For a function f: R^1000 -> R^1 (mimicking a loss function), time forward-mode (1000 passes) vs reverse-mode (1 pass). Measure the wall-clock difference.
-4. **Trace a gradient through a 2-layer network:** For a simple network y = W2 * relu(W1 * x + b1) + b2 with scalar loss L = (y - t)^2, compute ∂L/∂W1 by hand using the chain rule. Then verify with PyTorch autograd.
-
 ## ML & Alignment Connection
 
 Matrix calculus is the language of backpropagation. Every gradient computation in deep learning -- from the simplest linear regression to the largest transformer -- uses these identities. The choice of forward vs reverse mode autodiff determines computational cost: reverse mode (backprop) is O(1) in output dimension, making it ideal for scalar-loss training. For alignment, this matters in two ways. First, mechanistic interpretability tools like activation patching and attribution methods are all built on tracing gradients through specific subgraphs -- you need matrix calculus fluency to understand what these tools actually compute. Second, understanding the computational structure of backpropagation reveals what information is available at each layer during training, which constrains what kinds of learned optimization or deceptive behavior are mechanistically possible.

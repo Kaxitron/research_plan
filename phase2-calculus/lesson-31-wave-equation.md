@@ -57,14 +57,6 @@ $$u(x,t) = \sum_{n=1}^{\infty} \left[ A_n \cos\!\left(\frac{n\pi c t}{L}\right) 
 **Energy conservation:**
 $$E(t) = \frac{1}{2}\int_0^L \left[ u_t^2 + c^2 u_x^2 \right] dx = \text{const}$$
 
-## Do
-
-1. **Wave equation finite difference solver.** Implement the 1D wave equation on [0, L] using central differences in both space and time: u(i, n+1) = 2*u(i,n) - u(i,n-1) + (c*dt/dx)^2 * [u(i+1,n) - 2*u(i,n) + u(i-1,n)]. Use the CFL condition c*dt/dx <= 1 for stability. Start with a Gaussian pulse initial condition and zero initial velocity. Animate the solution and observe the pulse splitting into two traveling waves.
-
-2. **Wave vs heat comparison.** From the same initial condition (a Gaussian bump), solve both the wave equation and the heat equation. Create a side-by-side animation. Observe: the wave splits and propagates while preserving its shape; the heat diffuses, spreads, and loses amplitude. The wave solution has the same total energy at all times; the heat solution's "energy" (integral of u^2) decreases monotonically.
-
-3. **Standing waves and harmonics.** Set up a vibrating string (Dirichlet BCs at both ends). Initialize with the first 3 Fourier modes individually and visualize each standing wave. Then initialize with a plucked string (triangular initial condition) and decompose into Fourier modes. Animate the full solution and verify it is a superposition of standing waves.
-
 ## ML and Alignment Connection
 
 Waves propagate information without losing it; heat diffuses and destroys information. This distinction is directly relevant to neural network architecture design. Residual connections (y = x + f(x)) preserve the input signal like a wave -- information passes through even if f contributes nothing. Without residual connections, deep networks behave more like the heat equation: signals attenuate and gradients vanish as they propagate through layers.

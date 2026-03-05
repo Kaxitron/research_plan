@@ -48,47 +48,6 @@ IFT fails (singularity) when:
 
 $$\frac{\partial F}{\partial y} = 0$$
 
-## Do
-
-1. **Taylor approximation comparison.** For f(x, y) = sin(x) * e^y, compute the 1st-order (linear) and 2nd-order (quadratic) Taylor approximations centered at (0, 0). Plot all three surfaces (true function, linear approx, quadratic approx) over [-1, 1] x [-1, 1]. Compute the max absolute error of each approximation over this region.
-
-2. **Hessian at critical points.** For f(x, y) = x^3 - 3xy^2 (monkey saddle), find the critical point at the origin, compute the Hessian there, and find its eigenvalues. What does the second-order test say? Plot the function near the origin to see the monkey saddle shape that the Hessian's zero eigenvalues fail to capture.
-
-3. **IFT failure visualization.** Consider the curve F(x, y) = y^2 - x^3 = 0 (a cusp). Plot the curve. At the origin, verify that partial F / partial y = 0 (IFT fails). Show that the curve is NOT the graph of a smooth function y = g(x) near the origin -- it has a cusp where two branches meet. Contrast with a nearby non-singular point where the IFT holds and the curve is locally a smooth graph.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-def taylor_2nd_order(f, grad_f, hessian_f, x0):
-    """Return a function that evaluates the 2nd-order Taylor approx at x0."""
-    f0 = f(x0)
-    g0 = grad_f(x0)
-    H0 = hessian_f(x0)
-    def approx(x):
-        h = x - x0
-        return f0 + g0 @ h + 0.5 * h @ H0 @ h
-    return approx
-
-# Example: f(x,y) = sin(x) * exp(y)
-f = lambda x: np.sin(x[0]) * np.exp(x[1])
-grad_f = lambda x: np.array([np.cos(x[0]) * np.exp(x[1]),
-                              np.sin(x[0]) * np.exp(x[1])])
-hessian_f = lambda x: np.array([[-np.sin(x[0]) * np.exp(x[1]),
-                                   np.cos(x[0]) * np.exp(x[1])],
-                                  [np.cos(x[0]) * np.exp(x[1]),
-                                   np.sin(x[0]) * np.exp(x[1])]])
-
-x0 = np.array([0.0, 0.0])
-approx = taylor_2nd_order(f, grad_f, hessian_f, x0)
-
-# Test: compare true value vs approximation at a nearby point
-x_test = np.array([0.1, 0.1])
-print(f"True:   {f(x_test):.6f}")
-print(f"Taylor: {approx(x_test):.6f}")
-print(f"Error:  {abs(f(x_test) - approx(x_test)):.6f}")
-```
-
 ## ML and Alignment Connection
 
 Taylor expansion IS how we analyze optimization algorithms. The first-order expansion justifies gradient descent: near the current point, the loss is approximately linear, and moving opposite the gradient decreases it. The second-order expansion justifies Newton's method: using curvature information (the Hessian) gives a better approximation and can converge much faster, but at the cost of computing and inverting the Hessian (O(n^2) storage, O(n^3) inversion for n parameters).

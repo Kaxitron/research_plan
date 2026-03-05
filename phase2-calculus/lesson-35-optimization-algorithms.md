@@ -73,14 +73,6 @@ eta_t = eta_min + 0.5 * (eta_max - eta_min) * (1 + cos(pi * t / T))
 
 f(lambda*x + (1-lambda)*y) <= lambda*f(x) + (1-lambda)*f(y) for all lambda in [0,1]
 
-## Do
-
-1. **Implement SGD, momentum, and Adam from scratch** in pure NumPy. Each optimizer should be a class with an `update(params, grads)` method. No frameworks allowed.
-2. **Visualize optimizer trajectories on a 2D surface:** Use the Rosenbrock function f(x,y) = (1-x)^2 + 100(y-x^2)^2. Plot the path each optimizer takes from the same starting point. Observe how momentum overshoots and Adam adapts.
-3. **Implement cosine annealing** and compare convergence curves (loss vs step) against constant learning rate for a small network trained on MNIST. Plot both on the same axes.
-4. **Learning rate sensitivity experiment:** Train the same network with learning rates spanning 1e-5 to 1.0 (log-spaced). Plot final loss vs learning rate for SGD and Adam. Show that Adam is more robust to learning rate choice.
-5. **AdamW vs Adam+L2:** Train a small network with both. Show that Adam+L2 regularization does not actually produce the same result as AdamW, confirming the decoupling insight.
-
 ## ML & Alignment Connection
 
 The choice of optimizer has direct alignment implications. Adam's adaptive learning rates mean different parameters learn at different speeds -- safety-relevant features might be learned faster or slower than capabilities, depending on gradient magnitudes. Learning rate schedules affect training dynamics: warmup prevents early memorization of spurious patterns, while cosine annealing helps find flatter (more generalizable) minima that may also be more robust to distribution shift. The batch size controls the noise level of SGD, which determines whether training escapes sharp minima (potentially memorized or overfit solutions) in favor of flat ones (potentially more general and aligned). For RLHF specifically, the optimizer choice affects how quickly the model moves away from the pretrained distribution -- too aggressive optimization can cause reward hacking, where the model exploits the reward model rather than learning genuinely helpful behavior. Understanding optimizers at this level is essential for designing stable, controllable training procedures.

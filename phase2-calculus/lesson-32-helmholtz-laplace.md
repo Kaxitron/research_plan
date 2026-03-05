@@ -62,14 +62,6 @@ $$\frac{dx}{dt} = c, \qquad \frac{du}{dt} = 0 \quad \Longrightarrow \quad u(x,t)
 **Nonlinear transport** (Burgers' equation):
 $$\frac{\partial u}{\partial t} + u \frac{\partial u}{\partial x} = 0$$
 
-## Do
-
-1. **Laplace solver on a square.** Solve Laplace's equation nabla^2 u = 0 on the unit square [0,1] x [0,1] with boundary conditions: u = 1 on the top edge, u = 0 on the other three edges. Use the finite difference method with a grid of at least 50 x 50 points and iterate (Jacobi or Gauss-Seidel) until convergence. Plot the solution as a heatmap and contour plot.
-
-2. **Mean value property verification.** Using your Laplace solution, pick several interior points and numerically verify the mean value property: the value at the point equals the average over a circle of points surrounding it. Try different radii. Quantify the error (it should be small, limited only by your grid resolution).
-
-3. **Transport equation and characteristics.** Implement the method of characteristics for du/dt + c * du/dx = 0 with a Gaussian initial condition. Plot the characteristic lines in the (x,t) plane and the solution surface. Then implement the nonlinear Burgers' equation du/dt + u * du/dx = 0 with a smooth initial condition and watch characteristics converge until a shock forms. Visualize the moment of shock formation.
-
 ## ML and Alignment Connection
 
 Laplace's equation describes equilibrium -- the state a system reaches after all transient dynamics have died out. In ML, a converged trained model is analogous to a steady-state solution: the loss landscape dynamics have settled. Harmonic functions and the mean value property connect to the idea that well-generalized models produce predictions that are smooth averages over nearby inputs -- this is precisely what regularization encourages. The maximum principle (extremes only on the boundary) is the mathematical reason why adversarial examples tend to be found at the edges of the data distribution rather than in the interior.

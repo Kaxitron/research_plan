@@ -99,14 +99,6 @@ $$(\varphi^*\omega)(v_1, ..., v_k) = \omega(d\varphi(v_1), ..., d\varphi(v_k))$$
 - **Bott & Tu "Differential Forms in Algebraic Topology"**
   - *Advanced but magnificent. If you want to see how differential forms connect to the algebraic topology of Lesson 58.*
 
-## 🔨 Do
-
-- **Verify the unification:** take a specific vector field F = (y², -x², z) in ℝ³. Compute its curl using (a) the classical cross-product formula and (b) the exterior derivative of the corresponding 1-form. Verify they give the same answer. Do the same for divergence. See that d does all the work.
-- **Stokes' theorem by hand:** for the 1-form ω = x dy on the unit disk D, compute (a) ∫_∂D ω (line integral around the boundary) and (b) ∫_D dω (area integral of the exterior derivative). Verify they're equal — this is Green's theorem as Stokes' theorem.
-- **Pullback computation:** for the map φ(r, θ) = (r cos θ, r sin θ) (polar coordinates), pull back the form dx ∧ dy. Show you get r dr ∧ dθ — the Jacobian factor r appears automatically.
-- **d² = 0 verification:** take a function f(x, y, z) = x²y + yz². Compute df (a 1-form). Then compute d(df) (should be a 2-form). Verify it's zero — this is curl(grad f) = 0 in disguise.
-- **Key exercise:** the divergence theorem says ∭_V (div F) dV = ∯_S F · dS. Rewrite both sides using differential forms and the generalized Stokes' theorem. This is the exercise that makes the unification click.
-
 ## 🔗 ML & Alignment Connection
 
 - **Normalizing flows (Lesson 26, 36):** the change of variables formula that normalizing flows depend on is a pullback of differential forms. The log-determinant of the Jacobian that appears in the loss is the log of the pullback factor. Understanding forms makes normalizing flow theory transparent.

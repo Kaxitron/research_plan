@@ -53,13 +53,6 @@ $$A = \iint \sqrt{1 + f_x^2 + f_y^2} \, dx \, dy$$
 
 $$\iint_S \mathbf{F} \cdot d\mathbf{S} = \iint \mathbf{F} \cdot (\mathbf{r}_u \times \mathbf{r}_v) \, du \, dv$$
 
-## Do
-
-1. **Parameterize and plot 3D surfaces:** Write parameterizations for (a) a sphere of radius R using spherical coordinates (u = theta, v = phi), (b) a torus with major radius 3 and minor radius 1, (c) a saddle surface z = x^2 - y^2 on [-1,1] x [-1,1]. Plot each using matplotlib's `plot_surface`.
-2. **Compute surface area numerically:** For the sphere, compute the surface area by numerically evaluating the double integral of ||r_u x r_v|| du dv. Compare to the known result 4*pi*R^2. Repeat for the torus and compare to the known formula 4*pi^2 * R * r.
-3. **Flux integral computation:** Compute the outward flux of F = (x, y, z) through the unit sphere. Set up the parameterization, compute r_u x r_v (outward-pointing), and evaluate the double integral. Verify against the divergence theorem result: the divergence of F is 3, and the volume of the unit sphere is 4*pi/3, so the flux should be 4*pi.
-4. **Orientability visualization:** Plot a Mobius strip using the standard parameterization. Attempt to draw normal vectors at several points and observe how they flip direction as you traverse the strip, demonstrating non-orientability.
-
 ## ML & Alignment Connection
 
 Loss surfaces in neural networks are high-dimensional surfaces embedded in parameter space. The geometry of these surfaces -- their area, curvature, and normal directions -- determines how "easy" or "hard" it is for optimization to find and stay in good regions. The surface area of a region in the loss landscape is related to the volume of parameter space that maps to similar loss values: regions with large surface area are easier to "hit" during random initialization. The cross product r_u x r_v that gives the normal vector is the same mathematical object that appears in constrained optimization: the normal to a constraint surface determines the direction of Lagrange multiplier forces. In higher dimensions, this generalizes to the Jacobian and its role in the geometry of constraint manifolds -- the same Jacobian that appears in normalizing flows and the change-of-variables formula for probability densities.
