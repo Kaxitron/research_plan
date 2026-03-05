@@ -222,6 +222,8 @@ Step 4:    L  = z₂²             → L  = ?
 
 ## Q2 — Gradients, Level Curves, and the Direction of Steepest Descent
 
+Include a remainder problem. Rn = F^(n+1)(c) * (x-a)^n+1 / (n+1)!
+
 Consider the loss function:
 
 ```
