@@ -926,6 +926,43 @@
     filter: brightness(1.1);
   }
 
+  /* Daily Plan */
+  .daily-plan { max-width: 500px; margin: 0 auto; }
+  .daily-plan h2 { margin: 0 0 16px; font-size: 18px; }
+  .daily-plan-total { font-size: 14px; color: var(--text-dim); margin-bottom: 20px; }
+  .daily-plan-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .daily-plan-row .dp-name {
+    flex: 1; font-size: 14px; background: none; border: none;
+    color: var(--text); font-family: inherit; outline: none;
+    border-bottom: 1px dashed transparent; padding: 2px 0;
+  }
+  .daily-plan-row .dp-name:focus { border-bottom-color: var(--accent-1); }
+  .daily-plan-row .dp-hours {
+    width: 60px; text-align: center; font-size: 14px;
+    background: var(--bg-hover); border: 1px solid var(--border);
+    color: var(--text); border-radius: 4px; padding: 4px;
+    font-family: inherit;
+  }
+  .daily-plan-row .dp-bar {
+    width: 80px; height: 8px; background: var(--bg-hover);
+    border-radius: 4px; overflow: hidden; flex-shrink: 0;
+  }
+  .daily-plan-row .dp-bar-fill { height: 100%; border-radius: 4px; transition: width 0.2s; }
+  .daily-plan-row .dp-del {
+    background: none; border: none; color: var(--text-dim);
+    cursor: pointer; font-size: 14px; padding: 2px 6px;
+  }
+  .daily-plan-row .dp-del:hover { color: var(--not-started); }
+  .daily-plan-add {
+    margin-top: 12px; background: none; border: 1px dashed var(--border);
+    color: var(--text-dim); padding: 6px 14px; border-radius: 6px;
+    cursor: pointer; font-size: 13px;
+  }
+  .daily-plan-add:hover { border-color: var(--accent-1); color: var(--accent-1); }
+
   /* Log Hours Modal */
   .log-modal-form { display: flex; flex-direction: column; gap: 14px; }
   .log-modal-form label {
@@ -1162,6 +1199,7 @@
       <button class="canvas-btn active" onclick="setView('dependency', event)">Dependency Map</button>
       <button class="canvas-btn" onclick="setView('timeline', event)">Timeline</button>
       <button class="canvas-btn" onclick="setView('calendar', event)">Calendar</button>
+      <button class="canvas-btn" onclick="setView('dailyplan', event)">Daily Plan</button>
     </div>
     <div class="canvas-legend" id="canvas-legend">
       <div class="legend-item"><div class="legend-dot" style="background:var(--complete)"></div> Complete</div>
@@ -1174,6 +1212,7 @@
     <div class="mobile-view" id="mobile-dependency" style="display:none"></div>
     <div class="mobile-view" id="mobile-timeline" style="display:none"></div>
     <div id="calendar-view" style="display:none;position:absolute;inset:0;overflow-y:auto;background:var(--bg)"></div>
+    <div id="dailyplan-view" style="display:none;position:absolute;inset:0;overflow-y:auto;background:var(--bg);padding:24px"></div>
   </div>
 
   <div class="detail-backdrop" id="detail-backdrop" onclick="closeMobileDetail()"></div>
@@ -1208,10 +1247,12 @@ const PHASES = [
 // ─── Repeatable Review Activities (infinite placement on calendar) ───
 const REVIEW_ITEMS = [
   { id: 'review-intuition', title: 'Review Intuition Notebook', label: '📓', color: '#a78bfa', repeatable: true, phase: '_review' },
+  { id: 'project-euler', title: 'Project Euler', label: '🧮', color: '#38bdf8', repeatable: true, phase: '_review' },
 ];
 
 function getReviewItem(id) {
   if (id === 'review-intuition') return REVIEW_ITEMS[0];
+  if (id === 'project-euler') return REVIEW_ITEMS[1];
   const match = id.match(/^review-problems-(.+)$/);
   if (match) {
     const phase = PHASES.find(p => p.id === match[1]);
@@ -1225,7 +1266,7 @@ function findItem(id) {
 }
 
 function isReviewItem(id) {
-  return id === 'review-intuition' || (typeof id === 'string' && id.startsWith('review-problems-'));
+  return id === 'review-intuition' || id === 'project-euler' || (typeof id === 'string' && id.startsWith('review-problems-'));
 }
 
 const LESSONS = [
@@ -2840,6 +2881,7 @@ function refreshAll() {
   if (currentView === 'dependency') renderGraph();
   else if (currentView === 'timeline') renderTimeline();
   else if (currentView === 'calendar') renderCalendar();
+  else if (currentView === 'dailyplan') renderDailyPlan();
   updateStats();
 }
 
@@ -3132,11 +3174,13 @@ function setView(view, ev) {
       if (view === 'dependency' && b.textContent.includes('Dependency')) b.classList.add('active');
       else if (view === 'timeline' && b.textContent.includes('Timeline')) b.classList.add('active');
       else if (view === 'calendar' && b.textContent.includes('Calendar')) b.classList.add('active');
+      else if (view === 'dailyplan' && b.textContent.includes('Daily Plan')) b.classList.add('active');
     });
   }
 
   const svg = document.getElementById('graph-svg');
   const calView = document.getElementById('calendar-view');
+  const dpView = document.getElementById('dailyplan-view');
   const legend = document.getElementById('canvas-legend');
   const mobileDep = document.getElementById('mobile-dependency');
   const mobileTl = document.getElementById('mobile-timeline');
@@ -3145,6 +3189,7 @@ function setView(view, ev) {
   // Hide everything first
   svg.style.display = 'none';
   calView.style.display = 'none';
+  dpView.style.display = 'none';
   legend.style.display = 'none';
   mobileDep.style.display = 'none';
   mobileTl.style.display = 'none';
@@ -3175,6 +3220,9 @@ function setView(view, ev) {
   } else if (view === 'calendar') {
     calView.style.display = '';
     renderCalendar();
+  } else if (view === 'dailyplan') {
+    dpView.style.display = '';
+    renderDailyPlan();
   }
 }
 
@@ -3925,6 +3973,7 @@ const GH_README_PATH = 'README.md';
 const GH_CALENDAR_PATH = 'calendar-data.json';
 const GH_HOURS_PATH = 'hours-log.json';
 const GH_PACE_PATH = 'pace-data.json';
+const GH_DAILYPLAN_PATH = 'daily-plan.json';
 const GH_TOKEN_KEY = 'alignment-curriculum-gh-token';
 
 function getGhToken() {
@@ -4041,6 +4090,19 @@ async function pushToGithub() {
     });
     if (!pacePut.ok) { const e = await pacePut.json(); throw new Error(e.message || `Pace PUT failed: ${pacePut.status}`); }
 
+    // ── 5. Push daily plan ──
+    const dpData = loadDailyPlan();
+    const dpJson = JSON.stringify(dpData, null, 2);
+    const encodedDp = btoa(unescape(encodeURIComponent(dpJson)));
+    const dpGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_DAILYPLAN_PATH}`, { headers });
+    const dpPutBody = { message: 'Push daily plan from dashboard', content: encodedDp };
+    if (dpGet.ok) { const dData = await dpGet.json(); dpPutBody.sha = dData.sha; }
+    const dpPut = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_DAILYPLAN_PATH}`, {
+      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify(dpPutBody)
+    });
+    if (!dpPut.ok) { const e = await dpPut.json(); throw new Error(e.message || `Daily plan PUT failed: ${dpPut.status}`); }
+
     setBtnState('push-btn', 'success', '✓');
     setTimeout(() => setBtnState('push-btn', null, '⬆'), 3000);
 
@@ -4131,6 +4193,17 @@ async function pullFromGithub() {
       } catch(e) { console.warn('Pace JSON parse failed:', e); }
     }
 
+    // ── 5. Pull daily plan ──
+    const dpGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_DAILYPLAN_PATH}`, { headers });
+    if (dpGet.ok) {
+      const dpData = await dpGet.json();
+      const dpJson = new TextDecoder().decode(Uint8Array.from(atob(dpData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
+      try {
+        const parsed = JSON.parse(dpJson);
+        saveDailyPlan(parsed);
+      } catch(e) { console.warn('Daily plan JSON parse failed:', e); }
+    }
+
     // Refresh all views
     refreshAll();
     if (selectedLesson !== null) selectLesson(selectedLesson);
@@ -4158,12 +4231,78 @@ async function pullFromGithub() {
 
 
 // ═══════════════════════════════════════════════
+// DAILY PLAN
+// ═══════════════════════════════════════════════
+
+const DAILY_PLAN_KEY = 'alignment-curriculum-daily-plan';
+const DAILY_PLAN_COLORS = ['#6ee7b7','#818cf8','#fbbf24','#f9a8d4','#38bdf8','#e879f9','#fb923c','#c084fc'];
+
+function loadDailyPlan() {
+  try { return JSON.parse(localStorage.getItem(DAILY_PLAN_KEY)) || [
+    { name: 'Math', hours: 4 },
+    { name: 'CS Foundations', hours: 1 },
+    { name: 'Book Writing', hours: 3 },
+  ]; } catch(e) { return []; }
+}
+
+function saveDailyPlan(plan) { localStorage.setItem(DAILY_PLAN_KEY, JSON.stringify(plan)); }
+
+function renderDailyPlan() {
+  const container = document.getElementById('dailyplan-view');
+  const plan = loadDailyPlan();
+  const total = plan.reduce((s, r) => s + r.hours, 0);
+  const maxH = Math.max(1, ...plan.map(r => r.hours));
+
+  let html = '<div class="daily-plan">';
+  html += '<h2>Daily Hour Allocation</h2>';
+  html += `<div class="daily-plan-total">${total} hours / day</div>`;
+
+  plan.forEach((row, i) => {
+    const color = DAILY_PLAN_COLORS[i % DAILY_PLAN_COLORS.length];
+    const pct = (row.hours / maxH) * 100;
+    html += `<div class="daily-plan-row">
+      <input class="dp-name" value="${row.name.replace(/"/g, '&quot;')}" onchange="updateDailyPlan(${i}, 'name', this.value)" />
+      <input class="dp-hours" type="number" min="0" max="24" step="0.5" value="${row.hours}" onchange="updateDailyPlan(${i}, 'hours', this.value)" />
+      <div class="dp-bar"><div class="dp-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <button class="dp-del" onclick="removeDailyPlanRow(${i})" title="Remove">✕</button>
+    </div>`;
+  });
+
+  html += '<button class="daily-plan-add" onclick="addDailyPlanRow()">+ Add activity</button>';
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function updateDailyPlan(idx, field, value) {
+  const plan = loadDailyPlan();
+  if (field === 'hours') plan[idx].hours = Math.max(0, parseFloat(value) || 0);
+  else plan[idx].name = value;
+  saveDailyPlan(plan);
+  renderDailyPlan();
+}
+
+function addDailyPlanRow() {
+  const plan = loadDailyPlan();
+  plan.push({ name: 'New Activity', hours: 1 });
+  saveDailyPlan(plan);
+  renderDailyPlan();
+}
+
+function removeDailyPlanRow(idx) {
+  const plan = loadDailyPlan();
+  plan.splice(idx, 1);
+  saveDailyPlan(plan);
+  renderDailyPlan();
+}
+
+// ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
 
 function refreshCurrentView() {
   const svg = document.getElementById('graph-svg');
   const calView = document.getElementById('calendar-view');
+  const dpView = document.getElementById('dailyplan-view');
   const legend = document.getElementById('canvas-legend');
   const mobileDep = document.getElementById('mobile-dependency');
   const mobileTl = document.getElementById('mobile-timeline');
@@ -4171,6 +4310,7 @@ function refreshCurrentView() {
 
   svg.style.display = 'none';
   calView.style.display = 'none';
+  dpView.style.display = 'none';
   legend.style.display = 'none';
   mobileDep.style.display = 'none';
   mobileTl.style.display = 'none';
@@ -4184,6 +4324,9 @@ function refreshCurrentView() {
   } else if (currentView === 'calendar') {
     calView.style.display = '';
     renderCalendar();
+  } else if (currentView === 'dailyplan') {
+    dpView.style.display = '';
+    renderDailyPlan();
   }
 }
 

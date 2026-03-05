@@ -86,22 +86,42 @@ def fibonacci(n):
 2. **NeetCode — "Climbing Stairs" walkthrough** — the simplest DP problem, perfectly explained
 3. **Reducible — "5 Simple Steps for Solving Dynamic Programming Problems"** (optional, good framework)
 
-## 🔨 Practice Problems
+## 🔨 Practice Problems (NeetCode 150)
 
-| # | Problem | Category | Difficulty |
-|---|---------|----------|------------|
-| 1 | Climbing Stairs (LC #70) | 1D DP (fibonacci variant) | Easy |
-| 2 | House Robber (LC #198) | 1D DP | Medium |
-| 3 | Coin Change (LC #322) | Unbounded knapsack | Medium |
-| 4 | Longest Increasing Subsequence (LC #300) | 1D DP | Medium |
-| 5 | Unique Paths (LC #62) | 2D DP (grid) | Medium |
-| 6 | Longest Common Subsequence (LC #1143) | 2D DP (strings) | Medium |
-| 7 | Word Break (LC #139) | 1D DP + hash set | Medium |
-| 8 | 0/1 Knapsack | Classic DP | Medium |
-| 9 | Edit Distance (LC #72) | 2D DP | Medium |
-| 10 | Decode Ways (LC #91) | 1D DP | Medium |
+**Strategy:** start with House Robber — it makes the DP pattern click. Then Coin Change. Once 1D DP feels natural, move to 2D. Backtracking and Greedy are included here because they build on the same recursive thinking.
 
-**Strategy:** solve Climbing Stairs and House Robber first — they make the pattern click. Then Coin Change. Once 1D DP feels natural, move to 2D.
+| # | Problem | Category | Pattern | Difficulty |
+|---|---------|----------|---------|------------|
+| 1 | [Combination Sum](https://leetcode.com/problems/combination-sum/) | Backtracking | Backtrack with reuse | Medium |
+| 2 | [Permutations](https://leetcode.com/problems/permutations/) | Backtracking | Swap / used-set backtracking | Medium |
+| 3 | [Subsets II](https://leetcode.com/problems/subsets-ii/) | Backtracking | Backtrack + skip duplicates | Medium |
+| 4 | [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) | Backtracking | Backtrack + skip duplicates | Medium |
+| 5 | [Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/) | Backtracking | Backtrack + palindrome check | Medium |
+| 6 | [Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | Backtracking | Backtracking | Medium |
+| 7 | [N-Queens](https://leetcode.com/problems/n-queens/) | Backtracking | Constraint backtracking | Hard |
+| 8 | [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) | 1-D DP | Fibonacci variant | Easy |
+| 9 | [House Robber](https://leetcode.com/problems/house-robber/) | 1-D DP | Skip/take DP | Medium |
+| 10 | [House Robber II](https://leetcode.com/problems/house-robber-ii/) | 1-D DP | Circular skip/take | Medium |
+| 11 | [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/) | 1-D DP | Expand from center / DP | Medium |
+| 12 | [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/) | 1-D DP | Expand from center | Medium |
+| 13 | [Decode Ways](https://leetcode.com/problems/decode-ways/) | 1-D DP | 1D DP | Medium |
+| 14 | [Coin Change](https://leetcode.com/problems/coin-change/) | 1-D DP | Unbounded knapsack | Medium |
+| 15 | [Word Break](https://leetcode.com/problems/word-break/) | 1-D DP | 1D DP + hash set | Medium |
+| 16 | [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/) | 1-D DP | 1D DP or patience sort | Medium |
+| 17 | [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/) | 1-D DP | 0/1 knapsack | Medium |
+| 18 | [Unique Paths](https://leetcode.com/problems/unique-paths/) | 2-D DP | Grid DP | Medium |
+| 19 | [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) | 2-D DP | String DP | Medium |
+| 20 | [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | 2-D DP | State machine DP | Medium |
+| 21 | [Coin Change II](https://leetcode.com/problems/coin-change-ii/) | 2-D DP | Unbounded knapsack 2D | Medium |
+| 22 | [Interleaving String](https://leetcode.com/problems/interleaving-string/) | 2-D DP | 2D string DP | Medium |
+| 23 | [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/) | 2-D DP | 2D string DP | Hard |
+| 24 | [Edit Distance](https://leetcode.com/problems/edit-distance/) | 2-D DP | 2D string DP | Medium |
+| 25 | [Burst Balloons](https://leetcode.com/problems/burst-balloons/) | 2-D DP | Interval DP | Hard |
+| 26 | [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP | 2D string DP | Hard |
+| 27 | [Jump Game II](https://leetcode.com/problems/jump-game-ii/) | Greedy | Greedy BFS-style | Medium |
+| 28 | [Merge Triplets to Form Target Triplet](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/) | Greedy | Greedy filtering | Medium |
+| 29 | [Partition Labels](https://leetcode.com/problems/partition-labels/) | Greedy | Greedy + last occurrence | Medium |
+| 30 | [Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/) | Greedy | Greedy range tracking | Medium |
 
 ## 🔗 ML Connection
 

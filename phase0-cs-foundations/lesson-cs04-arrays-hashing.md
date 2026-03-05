@@ -43,24 +43,39 @@
 2. **NeetCode — "Sliding Window" pattern explanation**
    - Search his channel for the sliding window walkthrough
 
-## 🔨 Practice Problems (from NeetCode 150)
+## 🔨 Practice Problems (NeetCode 150)
 
 Do these in Python first. Redo favorites in C++ for practice.
 
-| # | Problem | Pattern | Difficulty |
-|---|---------|---------|------------|
-| 1 | Contains Duplicate (LC #217) | Hash set | Easy |
-| 2 | Valid Anagram (LC #242) | Frequency count | Easy |
-| 3 | Two Sum (LC #1) | Hash map | Easy |
-| 4 | Group Anagrams (LC #49) | Hash map + sorting | Medium |
-| 5 | Top K Frequent Elements (LC #347) | Hash map + heap or bucket sort | Medium |
-| 6 | Product of Array Except Self (LC #238) | Prefix/suffix products | Medium |
-| 7 | Longest Consecutive Sequence (LC #128) | Hash set | Medium |
-| 8 | Best Time to Buy and Sell Stock (LC #121) | Sliding window / one pass | Easy |
-| 9 | Longest Substring Without Repeating Characters (LC #3) | Sliding window + hash set | Medium |
-| 10 | Minimum Window Substring (LC #76) | Sliding window + frequency count | Hard |
+| # | Problem | Category | Pattern | Difficulty |
+|---|---------|----------|---------|------------|
+| 1 | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) | Arrays & Hashing | Hash set | Easy |
+| 2 | [Valid Anagram](https://leetcode.com/problems/valid-anagram/) | Arrays & Hashing | Frequency count | Easy |
+| 3 | [Two Sum](https://leetcode.com/problems/two-sum/) | Arrays & Hashing | Hash map | Easy |
+| 4 | [Group Anagrams](https://leetcode.com/problems/group-anagrams/) | Arrays & Hashing | Hash map + sorting | Medium |
+| 5 | [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) | Arrays & Hashing | Hash map + heap or bucket sort | Medium |
+| 6 | [Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) | Arrays & Hashing | String encoding | Medium |
+| 7 | [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) | Arrays & Hashing | Prefix/suffix products | Medium |
+| 8 | [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) | Arrays & Hashing | Hash set per row/col/box | Medium |
+| 9 | [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) | Arrays & Hashing | Hash set | Medium |
+| 10 | [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | Two Pointers | Two pointers inward | Easy |
+| 11 | [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two Pointers | Two pointers inward | Medium |
+| 12 | [3Sum](https://leetcode.com/problems/3sum/) | Two Pointers | Sort + two pointers | Medium |
+| 13 | [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) | Two Pointers | Two pointers greedy | Medium |
+| 14 | [Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/) | Two Pointers | Two pointers / prefix max | Hard |
+| 15 | [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Sliding Window | Sliding window / one pass | Easy |
+| 16 | [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Sliding Window | Sliding window + hash set | Medium |
+| 17 | [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding Window | Sliding window + frequency count | Medium |
+| 18 | [Permutation in String](https://leetcode.com/problems/permutation-in-string/) | Sliding Window | Fixed-size sliding window | Medium |
+| 19 | [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) | Sliding Window | Sliding window + frequency count | Hard |
+| 20 | [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) | Sliding Window | Monotonic deque | Hard |
+| 21 | [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) | Greedy | Kadane's algorithm | Medium |
+| 22 | [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) | 1-D DP | Array scan tracking min/max | Medium |
+| 23 | [Missing Number](https://leetcode.com/problems/missing-number/) | Bit Manipulation | XOR / math | Easy |
+| 24 | [Rotate Image](https://leetcode.com/problems/rotate-image/) | Math & Geometry | Matrix transpose + reverse | Medium |
+| 25 | [Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/) | Math & Geometry | In-place marking | Medium |
 
-**Goal:** solve 1–3 without hints. For 4–7, try 15 min then watch NeetCode's walkthrough. 8–10 are stretch goals.
+**Goal:** solve Easy problems without hints. For Medium, try 15 min then watch NeetCode's walkthrough. Hard problems are stretch goals.
 
 ## 🔗 ML Connection
 

@@ -84,13 +84,20 @@ Every line of Python eventually becomes something like this. A `for` loop is a `
 ## 🔨 Practice
 
 1. **Binary conversions:** convert 42, 255, and −7 (8-bit two's complement) to binary by hand. Convert `10110011₂` to decimal.
-2. **Bitwise problems:**
-   - Single Number (LC #136) — find the element that appears once when all others appear twice. Use XOR.
-   - Number of 1 Bits (LC #191) — count set bits.
-   - Counting Bits (LC #338) — for each number 0 to n, count its 1-bits.
-3. **Floating point exploration:** in Python, compute `0.1 + 0.2`. Why isn't it exactly 0.3? Compute `1e16 + 1 - 1e16`. Why is the result 0?
-4. **Cache experiment:** write a program that accesses a large array sequentially vs randomly. Time both. Observe the cache effect.
-5. **Stack trace:** write a recursive function and deliberately cause a stack overflow. Read the error message — it tells you the call depth.
+2. **Floating point exploration:** in Python, compute `0.1 + 0.2`. Why isn't it exactly 0.3? Compute `1e16 + 1 - 1e16`. Why is the result 0?
+3. **Cache experiment:** write a program that accesses a large array sequentially vs randomly. Time both. Observe the cache effect.
+4. **Stack trace:** write a recursive function and deliberately cause a stack overflow. Read the error message — it tells you the call depth.
+
+### Bit Manipulation (NeetCode 150)
+
+| # | Problem | Category | Pattern | Difficulty |
+|---|---------|----------|---------|------------|
+| 1 | [Single Number](https://leetcode.com/problems/single-number/) | Bit Manipulation | XOR all elements | Easy |
+| 2 | [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/) | Bit Manipulation | Bit counting (n & n-1) | Easy |
+| 3 | [Counting Bits](https://leetcode.com/problems/counting-bits/) | Bit Manipulation | DP + bit manipulation | Easy |
+| 4 | [Reverse Bits](https://leetcode.com/problems/reverse-bits/) | Bit Manipulation | Bit shifting | Easy |
+| 5 | [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/) | Bit Manipulation | Bit-level addition (carry + XOR) | Medium |
+| 6 | [Reverse Integer](https://leetcode.com/problems/reverse-integer/) | Bit Manipulation | Modular arithmetic + overflow | Medium |
 
 ## 🔗 ML Connection
 

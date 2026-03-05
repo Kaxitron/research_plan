@@ -81,9 +81,20 @@
 1. **Truth tables:** build truth tables for (A → B) ∨ C and verify De Morgan's laws.
 2. **Induction proof:** prove that 1 + 2 + ... + n = n(n+1)/2 by induction.
 3. **Counting:** how many 4-digit PINs exist? How many with no repeated digits? How many with digits in increasing order?
-4. **Graph problems:** given an adjacency list, implement and run DFS and BFS. Detect if the graph has a cycle. Check if it's bipartite (LC #785).
+4. **Graph problems:** given an adjacency list, implement and run DFS and BFS. Detect if the graph has a cycle. Check if it's bipartite ([Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/)).
 5. **Modular arithmetic:** compute 7^100 mod 13 using repeated squaring. Connect to how hashing works.
 6. **Pigeonhole:** prove that in any group of 13 people, at least 2 share a birth month.
+
+### Math & Geometry (NeetCode 150)
+
+These problems test mathematical reasoning and matrix manipulation — skills that transfer directly to working with tensors in ML.
+
+| # | Problem | Category | Pattern | Difficulty |
+|---|---------|----------|---------|------------|
+| 1 | [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/) | Math & Geometry | Layer-by-layer traversal | Medium |
+| 2 | [Plus One](https://leetcode.com/problems/plus-one/) | Math & Geometry | Carry propagation | Easy |
+| 3 | [Multiply Strings](https://leetcode.com/problems/multiply-strings/) | Math & Geometry | Grade-school multiplication | Medium |
+| 4 | [Detect Squares](https://leetcode.com/problems/detect-squares/) | Math & Geometry | Hash map + geometry | Medium |
 
 ## 🔗 ML Connection
 

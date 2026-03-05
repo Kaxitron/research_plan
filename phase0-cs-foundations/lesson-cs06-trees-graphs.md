@@ -116,20 +116,47 @@ def bfs(graph, start):
 2. **NeetCode — Graphs playlist**
 3. **William Fiset — "Graph Theory playlist"** — deeper theory if you want it
 
-## 🔨 Practice Problems
+## 🔨 Practice Problems (NeetCode 150)
 
-| # | Problem | Type | Difficulty |
-|---|---------|------|------------|
-| 1 | Invert Binary Tree (LC #226) | Tree recursion | Easy |
-| 2 | Maximum Depth of Binary Tree (LC #104) | Tree recursion | Easy |
-| 3 | Same Tree (LC #100) | Tree comparison | Easy |
-| 4 | Subtree of Another Tree (LC #572) | Tree recursion | Easy |
-| 5 | Lowest Common Ancestor of a BST (LC #235) | BST property | Medium |
-| 6 | Binary Tree Level Order Traversal (LC #102) | BFS | Medium |
-| 7 | Validate Binary Search Tree (LC #98) | DFS + bounds | Medium |
-| 8 | Number of Islands (LC #200) | Graph DFS/BFS on grid | Medium |
-| 9 | Clone Graph (LC #133) | Graph BFS + hash map | Medium |
-| 10 | Course Schedule (LC #207) | Topological sort / cycle detection | Medium |
+| # | Problem | Category | Pattern | Difficulty |
+|---|---------|----------|---------|------------|
+| 1 | [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) | Trees | Tree recursion | Easy |
+| 2 | [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) | Trees | Tree recursion | Easy |
+| 3 | [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/) | Trees | DFS + global max | Easy |
+| 4 | [Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/) | Trees | DFS + height check | Easy |
+| 5 | [Same Tree](https://leetcode.com/problems/same-tree/) | Trees | Tree comparison | Easy |
+| 6 | [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) | Trees | Tree recursion | Easy |
+| 7 | [Lowest Common Ancestor of a BST](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | Trees | BST property | Medium |
+| 8 | [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) | Trees | BFS | Medium |
+| 9 | [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) | Trees | BFS / DFS | Medium |
+| 10 | [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/) | Trees | DFS + running max | Medium |
+| 11 | [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) | Trees | DFS + bounds | Medium |
+| 12 | [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/) | Trees | Inorder traversal | Medium |
+| 13 | [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | Trees | Recursion + hash map | Medium |
+| 14 | [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | Trees | DFS + global max | Hard |
+| 15 | [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Trees | BFS or DFS | Hard |
+| 16 | [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) | Tries | Trie design | Medium |
+| 17 | [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | Tries | Trie + DFS (wildcard) | Medium |
+| 18 | [Word Search II](https://leetcode.com/problems/word-search-ii/) | Tries | Trie + backtracking on grid | Hard |
+| 19 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | Graphs | DFS/BFS on grid | Medium |
+| 20 | [Clone Graph](https://leetcode.com/problems/clone-graph/) | Graphs | BFS + hash map | Medium |
+| 21 | [Max Area of Island](https://leetcode.com/problems/max-area-of-island/) | Graphs | DFS on grid | Medium |
+| 22 | [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | Graphs | Multi-source DFS/BFS | Medium |
+| 23 | [Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | Graphs | Multi-source BFS | Medium |
+| 24 | [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | Graphs | Border DFS/BFS | Medium |
+| 25 | [Course Schedule](https://leetcode.com/problems/course-schedule/) | Graphs | Topological sort / cycle detection | Medium |
+| 26 | [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | Graphs | Topological sort (return order) | Medium |
+| 27 | [Redundant Connection](https://leetcode.com/problems/redundant-connection/) | Graphs | Union-Find | Medium |
+| 28 | [Word Ladder](https://leetcode.com/problems/word-ladder/) | Graphs | BFS shortest path | Hard |
+| 29 | [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/) | Advanced Graphs | Hierholzer's / DFS | Hard |
+| 30 | [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) | Advanced Graphs | Prim's / Kruskal's MST | Medium |
+| 31 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | Advanced Graphs | Dijkstra's shortest path | Medium |
+| 32 | [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) | Advanced Graphs | Dijkstra's / binary search + BFS | Hard |
+| 33 | [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | Advanced Graphs | Bellman-Ford / modified Dijkstra | Medium |
+| 34 | [Word Search](https://leetcode.com/problems/word-search/) | Backtracking | Grid DFS/backtracking | Medium |
+| 35 | [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) | 2-D DP | DFS + memoization on grid | Hard |
+| 36 | [Target Sum](https://leetcode.com/problems/target-sum/) | 2-D DP | Decision tree recursion | Medium |
+| 37 | [Pow(x, n)](https://leetcode.com/problems/powx-n/) | Math & Geometry | Recursive divide-and-conquer | Medium |
 
 ## 🔗 ML Connection
 
