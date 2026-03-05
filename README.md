@@ -59,8 +59,8 @@ A structured self-study curriculum building from mathematical foundations throug
 | # | Lesson | Status |
 |---|--------|--------|
 | 13 | [Calculus Fundamentals — Rebuilding Your Intuition](phase2-calculus/lesson-13-calculus-fundamentals.md) | ✅ Complete |
-| 14 | [Introduction to ODEs — Classification and Direction Fields](phase2-calculus/lesson-14-intro-odes.md) | ⬜ Not Started |
-| 15 | [First-Order ODEs — Separable, Linear, and Exact](phase2-calculus/lesson-15-first-order-odes.md) | ⬜ Not Started |
+| 14 | [Introduction to ODEs — Classification and Direction Fields](phase2-calculus/lesson-14-intro-odes.md) | ✅ Complete |
+| 15 | [First-Order ODEs — Separable, Linear, and Exact](phase2-calculus/lesson-15-first-order-odes.md) | ✅ Complete |
 | 16 | [Higher-Order Linear ODEs, Mechanical Vibrations, and Power Series Solutions](phase2-calculus/lesson-16-higher-order-odes.md) | ⬜ Not Started |
 | 17 | [The Laplace Transform](phase2-calculus/lesson-17-laplace-transform.md) | ⬜ Not Started |
 | 18 | [Systems of ODEs and Phase Portraits](phase2-calculus/lesson-18-systems-odes.md) | ⬜ Not Started |
