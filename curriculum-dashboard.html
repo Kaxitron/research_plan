@@ -2757,7 +2757,7 @@ function closeProgressModal(action) {
     if (!markComplete && (isNaN(hours) || hours <= 0)) { input.focus(); return; }
 
     if (!isNaN(hours) && hours > 0) {
-      hours = Math.round(hours * 2) / 2;
+      hours = Math.round(hours * 10) / 10;
       addLogEntry(_progressLessonId, hours);
     }
 
@@ -2795,11 +2795,14 @@ function cycleStatus(id, ev) {
     return;
   }
 
-  // Complete → not-started (remove completion record, keep log entries)
+  // Complete → not-started (remove completion record and log entries)
   if (prevStatus === 'complete') {
     const paceData = loadPaceData();
     delete paceData.completions[id];
     savePaceData(paceData);
+    // Remove all logged hours for this lesson
+    const log = loadHoursLog();
+    saveHoursLog(log.filter(e => String(e.lessonId) !== String(id)));
     lesson.status = 'not-started';
     saveStatuses();
     refreshAll();
