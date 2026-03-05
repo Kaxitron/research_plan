@@ -1,6 +1,6 @@
 # Lesson 19: 3D Geometry, Curves, and Curvature
 
-[<- Previous](lesson-18-systems-odes.md) | [Back to TOC](../README.md) | [Next: Multivariable Functions ->](lesson-20-multivariable-chain-rule.md)
+[<- Previous](lesson-18-systems-odes.md) | [Back to TOC](../README.md) | [Next: Multivariable Functions ->](lesson-20-multivariable-functions.md)
 
 ---
 

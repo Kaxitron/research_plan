@@ -171,7 +171,7 @@ $$\frac{d}{dx} \ln(x) = \frac{1}{x}$$
 **Key identity that appears everywhere:**
 $$\frac{d}{dx} \ln(f(x)) = \frac{f'(x)}{f(x)}$$
 
-This is called the **logarithmic derivative**. It measures the *relative* rate of change — "what fraction of itself is f changing by?" This shows up constantly in maximum likelihood estimation (Lesson 17).
+This is called the **logarithmic derivative**. It measures the *relative* rate of change — "what fraction of itself is f changing by?" This shows up constantly in maximum likelihood estimation (Lesson 39).
 
 ### sin(x) and cos(x) — The Oscillators
 
@@ -402,7 +402,7 @@ At x = -1: f''(-1) = -6 < 0 → **local maximum** at (-1, 2)
 
 ### 🔗 ML & Alignment: The Second Derivative Becomes the Hessian
 
-In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of all second partial derivatives — the **Hessian** — tells you curvature in every direction. You'll meet this properly in Lesson 26, but the intuition is the same: the Hessian tells you if you're at a bowl (minimum), a hill (maximum), or a saddle point. In neural networks, saddle points are far more common than local minima — this is a key insight you'll explore in Lesson 30.
+In one dimension, f''(x) tells you curvature. In many dimensions, the matrix of all second partial derivatives — the **Hessian** — tells you curvature in every direction. You'll meet this properly in Lesson 22, but the intuition is the same: the Hessian tells you if you're at a bowl (minimum), a hill (maximum), or a saddle point. In neural networks, saddle points are far more common than local minima — this is a key insight you'll also explore in Lesson 22.
 
 ---
 
@@ -449,7 +449,7 @@ Factor: (3y² - 6x)(dy/dx) = 6y - 3x²
 
 Implicit differentiation is the conceptual ancestor of **automatic differentiation.** In a computation graph, you don't have an explicit formula for the loss as a simple function of one weight — it's defined *implicitly* through layers of computation. The chain rule applied through the graph (backprop) is doing the same essential thing: finding derivatives of quantities that are defined through relationships rather than explicit formulas.
 
-It also appears directly in **constrained optimization** (Lesson 29): when you optimize subject to a constraint g(x, y) = 0, implicit differentiation tells you how y must change when x changes to stay on the constraint surface.
+It also appears directly in **constrained optimization** (Lesson 22): when you optimize subject to a constraint g(x, y) = 0, implicit differentiation tells you how y must change when x changes to stay on the constraint surface.
 
 ---
 
@@ -820,7 +820,7 @@ $$\ln(1 + x) = \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^n}{n} = x - \frac{x^2}{2} 
 
 **Geometric series** show up directly in **reinforcement learning:** the discounted return G = r₁ + γr₂ + γ²r₃ + ... is a geometric-series-weighted sum of rewards. The discount factor γ < 1 ensures this converges, just like |r| < 1 ensures the geometric series converges.
 
-**Taylor series** are the mathematical foundation of gradient descent. The first-order Taylor approximation f(x + δ) ≈ f(x) + f'(x)δ is exactly the "locally linear" model that gradient descent trusts for one step. The second-order approximation involves the Hessian and is the basis for Newton's method. You'll explore this in depth in Lesson 17.
+**Taylor series** are the mathematical foundation of gradient descent. The first-order Taylor approximation f(x + δ) ≈ f(x) + f'(x)δ is exactly the "locally linear" model that gradient descent trusts for one step. The second-order approximation involves the Hessian and is the basis for Newton's method. You'll explore this in depth in Lesson 22.
 
 **Power series** concepts also appear in **neural tangent kernel** theory, where the training dynamics of infinitely wide networks can be expressed as series expansions, and in **Singular Learning Theory,** where the "real log canonical threshold" involves analyzing singularities of loss functions — a topic you'll encounter toward the end of this curriculum.
 
@@ -990,7 +990,7 @@ This impossibility drives the entire field of practical optimization:
 
 Understanding *why* these approximations exist starts with understanding Newton's method in 1D. The 1D version teaches you the payoff (quadratic convergence) and the cost (needing second-order information), and every practical optimizer is a different answer to "how do we get some of Newton's benefit without paying the full price?"
 
-For alignment specifically: the curvature of the loss landscape around a solution tells you about **robustness**. A sharp minimum (high curvature, large g'') means the model's behavior changes rapidly with small weight perturbations — potentially fragile alignment. A broad minimum (low curvature, small g'') suggests more stable behavior. This sharp-vs-broad distinction, which you'll explore in Lesson 30, starts with understanding what the second derivative tells you about the shape of a function.
+For alignment specifically: the curvature of the loss landscape around a solution tells you about **robustness**. A sharp minimum (high curvature, large g'') means the model's behavior changes rapidly with small weight perturbations — potentially fragile alignment. A broad minimum (low curvature, small g'') suggests more stable behavior. This sharp-vs-broad distinction, which you'll explore in Lesson 22, starts with understanding what the second derivative tells you about the shape of a function.
 
 ---
 
@@ -1082,7 +1082,7 @@ $$p_Y(y) = 1 \cdot \frac{1}{2\sqrt{y}} = \frac{1}{2\sqrt{y}} \quad \text{for } 0
 
 This is a valid density — it integrates to 1, and it tells you Y is concentrated near 0 (squaring uniform numbers pushes them toward zero).
 
-In multiple dimensions, this 1D derivative becomes the **Jacobian determinant** — which you already know is connected to how matrices scale volumes. This is the mathematical foundation of **normalizing flows**, a generative model architecture where simple distributions (Gaussian noise) are pushed through layers of invertible transformations, each with a tractable Jacobian determinant, to produce complex distributions (realistic images, text, etc.). You'll encounter the multivariable version in Lesson 14 (Gradients and Jacobians), and it will feel like a direct extension of what you've just learned.
+In multiple dimensions, this 1D derivative becomes the **Jacobian determinant** — which you already know is connected to how matrices scale volumes. This is the mathematical foundation of **normalizing flows**, a generative model architecture where simple distributions (Gaussian noise) are pushed through layers of invertible transformations, each with a tractable Jacobian determinant, to produce complex distributions (realistic images, text, etc.). You'll encounter the multivariable version in Lesson 21 (Chain Rule and Jacobians), and it will feel like a direct extension of what you've just learned.
 
 ---
 
@@ -1220,7 +1220,7 @@ The broader principle: **choosing the right coordinate system can transform an i
 
 - **MML Book, Chapter 5.1–5.3** — Differentiation of univariate functions, partial differentiation basics
   - https://mml-book.github.io/
-  - Focus on: derivative rules, chain rule, and Taylor series (5.1–5.3 before moving to 5.4+ in Lesson 26)
+  - Focus on: derivative rules, chain rule, and Taylor series (5.1–5.3 before moving to 5.4+ in Lesson 20)
 
 - **Paul's Online Math Notes — Calculus I & II Review**
   - https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx
@@ -1231,7 +1231,7 @@ The broader principle: **choosing the right coordinate system can transform an i
 
 ---
 
-## ✅ Self-Assessment: Am I Ready for Lesson 26?
+## ✅ Self-Assessment: Am I Ready for Lesson 14?
 
 Before moving on, you should be able to:
 

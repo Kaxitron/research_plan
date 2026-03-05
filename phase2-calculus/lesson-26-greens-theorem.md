@@ -6,16 +6,15 @@
 
 ## Core Learning
 
-Green's theorem is the first of the "big integral theorems" that connect the behavior of a vector field on the boundary of a region to the behavior of its derivatives in the interior. In its circulation form, it says that the total circulation of a vector field around a closed curve equals the double integral of the scalar curl over the enclosed region. In its flux (divergence) form, it says the total outward flux through a closed curve equals the double integral of the divergence over the interior. Both forms express the same deep principle: boundary behavior encodes interior information.
+Green's theorem is the first of the "big integral theorems" that connect the behavior of a vector field on the boundary of a region to the behavior of its derivatives in the interior. Using the divergence and curl you learned in the previous lesson, Green's theorem makes a powerful connection: in its circulation form, it says that the total circulation of a vector field around a closed curve equals the double integral of the scalar curl over the enclosed region. In its flux (divergence) form, it says the total outward flux through a closed curve equals the double integral of the divergence over the interior. Both forms express the same deep principle: boundary behavior encodes interior information.
 
-The scalar curl (dQ/dx - dP/dy) at a point measures the local rotational tendency of the field -- how much the field "swirls" around that point. The divergence (dP/dx + dQ/dy) measures the local expansion or compression -- whether the field is "spreading out" (source) or "pulling in" (sink) at that point. Green's theorem says you can compute the total rotation or total flux by either walking around the boundary or summing up the local contributions inside. This is a 2D version of the more general integral theorems (Stokes' and Divergence) that you will see in later lessons.
+Green's theorem says you can compute the total rotation or total flux by either walking around the boundary or summing up the local contributions inside. This is a 2D version of the more general integral theorems (Stokes' and Divergence) that you will see in later lessons. Green's theorem also applies to composite (multiply-connected) regions -- regions with holes. When a region has an inner boundary (like an annulus), you must account for both the outer and inner boundary curves with consistent orientations.
 
 The Laplacian, defined as div(grad f) = nabla^2 f, combines both operations and measures how much f at a point deviates from the average of its neighbors. It is the engine behind the heat equation (u_t = k nabla^2 u), which describes diffusion -- and diffusion is exactly the forward process in diffusion models, one of the most successful families of generative models in modern ML.
 
-- Scalar curl in 2D: (dQ/dx - dP/dy) as circulation density
 - Green's theorem (circulation form): line integral of F around boundary = double integral of curl over interior
-- Divergence of a 2D vector field: dP/dx + dQ/dy
 - Green's theorem (flux/divergence form): flux through boundary = double integral of divergence over interior
+- Green's theorem on composite (multiply-connected) regions: handling domains with holes, inner and outer boundary orientations
 - The Laplacian: nabla^2 f = div(grad f) = sum of unmixed second partials
 - Harmonic functions: nabla^2 f = 0 (value at center = average over surrounding circle)
 - Applications: area computation via Green's theorem, fluid flow, electrostatics

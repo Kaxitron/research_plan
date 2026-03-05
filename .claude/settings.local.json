@@ -21,7 +21,8 @@
       "Bash(python3 -c \"\nimport re\nwith open\\('curriculum-dashboard.html'\\) as f:\n    content = f.read\\(\\)\nids = re.findall\\(r\\\\\"id: \\(\\\\d+\\),.*?label: '\\(\\\\d+\\)'\\\\\", content\\)\nmismatches = [\\(i,l\\) for i,l in ids if i != l]\nprint\\(f'Total numeric lessons: {len\\(ids\\)}'\\)\nprint\\(f'Mismatches: {len\\(mismatches\\)}'\\)\nfor i,l in mismatches:\n    print\\(f'  id={i} label={l}'\\)\n\")",
       "Bash(python3 -c \"\nimport re\nwith open\\('curriculum-dashboard.html'\\) as f:\n    content = f.read\\(\\)\nids = re.findall\\(r\\\\\"id: \\(\\\\d+\\),.*?label: '\\(\\\\d+\\)'\\\\\", content, re.DOTALL\\)\nif not ids:\n    # Try single line\n    for line in content.split\\('\\\\n'\\):\n        m_id = re.search\\(r'id: \\(\\\\d+\\),', line\\)\n        m_lab = re.search\\(r\\\\\"label: '\\(\\\\d+\\)'\\\\\", line\\)\n        if m_id and m_lab:\n            if m_id.group\\(1\\) != m_lab.group\\(1\\):\n                print\\(f'MISMATCH: id={m_id.group\\(1\\)} label={m_lab.group\\(1\\)} in: {line.strip\\(\\)[:80]}'\\)\n    print\\('Check complete'\\)\n\")",
       "Bash(python3 fix_table_ids.py 2>&1)",
-      "Bash(python3 fix_overview_ids.py)"
+      "Bash(python3 fix_overview_ids.py)",
+      "Bash(git push:*)"
     ]
   }
 }

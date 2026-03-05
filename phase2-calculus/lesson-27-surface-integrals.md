@@ -10,12 +10,17 @@ Just as curves are parameterized by one parameter t, surfaces are parameterized 
 
 Surface integrals come in two flavors. A scalar surface integral integrates a function over a surface weighted by surface area -- the 2D analog of a scalar line integral. A flux integral (vector surface integral) measures how much a vector field passes through the surface. For flux, orientation matters: you need to choose which direction the normal points (inward vs. outward, or up vs. down), and the sign of the flux depends on this choice. Not all surfaces can be consistently oriented -- the Mobius strip is the classic counterexample -- but for the closed surfaces needed in the divergence theorem, orientation is well-defined.
 
+Before moving to the big integral theorems, this is also where the 3D curl test for conservative fields comes together. In Lesson 25, you learned the 2D test (dP/dy = dQ/dx). In 3D, a vector field F is conservative if and only if curl F = 0 (in a simply connected domain). The "spider criteria" provides a useful mnemonic for checking all three components of the curl simultaneously. This extends the exact/closed forms relationship to 3D.
+
 These concepts matter for ML at a conceptual level: loss surfaces are high-dimensional surfaces in parameter space, and their geometry -- surface area, curvature, normal directions -- determines how optimization behaves. The cross product that gives the normal vector is the same cross product that appears in the constraint-surface geometry of Lagrange multipliers: the normal to the constraint surface determines the direction along which the constraint "pushes" the solution.
 
 - Parametric surfaces r(u, v) and their tangent vectors r_u, r_v
+- Visualizing and understanding parametric surfaces in 3D
 - The normal vector r_u x r_v and its geometric meaning
 - Surface area via the cross product magnitude
-- Surface area for explicit surfaces z = f(x, y) and implicit surfaces
+- Surface area for explicit surfaces z = f(x, y) and for parametric surfaces
+- Why curl is useful: physical interpretation, and the spider criteria for identifying conservative fields
+- The 3D curl test for conservative fields: extending the 2D test (curl F = 0 in simply connected domains)
 - Scalar surface integrals: integrating a function over a surface
 - Orientability: the Mobius strip as a non-orientable surface
 - Flux integrals: measuring how much of a vector field passes through a surface

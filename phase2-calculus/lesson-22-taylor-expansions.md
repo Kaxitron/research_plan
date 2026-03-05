@@ -1,6 +1,6 @@
 # Lesson 22: Optimization, Taylor Expansions, and the Implicit Function Theorem
 
-[<- Previous](lesson-21-multiple-integration.md) | [Back to TOC](../README.md) | [Next: Multiple Integration ->](lesson-23-optimization.md)
+[<- Previous](lesson-21-chain-rule-gradients.md) | [Back to TOC](../README.md) | [Next: Multiple Integration ->](lesson-23-multiple-integration.md)
 
 ---
 

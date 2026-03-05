@@ -1,6 +1,6 @@
 # Lesson 24: Line Integrals and Curves (Bazett Ch. 1)
 
-[<- Previous](lesson-23-optimization.md) | [Back to TOC](../README.md) | [Next: Vector Fields ->](lesson-25-vector-fields.md)
+[<- Previous](lesson-23-multiple-integration.md) | [Back to TOC](../README.md) | [Next: Vector Fields ->](lesson-25-vector-fields.md)
 
 ---
 
@@ -18,6 +18,7 @@ These ideas are not abstract for ML. Every training run traces a curve through p
 - Arc length as the integral of speed
 - Scalar line integrals: accumulating a scalar field along a curve
 - Line integrals in 2D and 3D
+- Distinguishing types of line integrals: scalar (ds) vs component (dx, dy, dz) — identifying which type you are computing
 - Piecewise-smooth curves and how to handle corners
 
 ## Watch -- Primary

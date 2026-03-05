@@ -14,8 +14,10 @@ The deepest insight is the unified view. Every major integral theorem in calculu
 
 - 3D curl: nabla x F as a vector measuring local rotation
 - Stokes' theorem: circulation around boundary = flux of curl through surface
+- Computing Stokes' theorem: evaluating surface integrals via line integrals and vice versa
 - Divergence theorem: flux through closed surface = integral of divergence over volume
 - Gauss' Law as a consequence of the divergence theorem
+- Finding sources and sinks using the divergence theorem: identifying where flux originates or vanishes
 - Regions with multiple boundary components (e.g., a shell with inner and outer surfaces)
 - The hierarchy: FTC -> FTLI -> Green's -> Stokes' -> Divergence theorem
 - Generalized Stokes' theorem: integral of omega over boundary of Omega = integral of d-omega over Omega

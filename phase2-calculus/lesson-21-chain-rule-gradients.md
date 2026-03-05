@@ -1,6 +1,6 @@
 # Lesson 21: The Chain Rule, Directional Derivatives, and Gradients
 
-[<- Previous](lesson-20-multivariable-chain-rule.md) | [Back to TOC](../README.md) | [Next: Optimization & Taylor ->](lesson-22-taylor-expansions.md)
+[<- Previous](lesson-20-multivariable-functions.md) | [Back to TOC](../README.md) | [Next: Optimization & Taylor ->](lesson-22-taylor-expansions.md)
 
 ---
 

@@ -69,11 +69,11 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 19 | [3D Geometry, Curves, and Curvature](phase2-calculus/lesson-19-partial-derivatives.md) | ⬜ Not Started |
-| 20 | [Multivariable Functions, Limits, and Partial Derivatives](phase2-calculus/lesson-20-multivariable-chain-rule.md) | ⬜ Not Started |
-| 21 | [The Chain Rule, Directional Derivatives, and Gradients](phase2-calculus/lesson-21-multiple-integration.md) | ⬜ Not Started |
-| 22 | [Optimization, Taylor Expansions, and the IFT](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
-| 23 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-23-optimization.md) | ⬜ Not Started |
+| 19 | [3D Geometry, Curves, and Curvature](phase2-calculus/lesson-19-3d-geometry.md) | ⬜ Not Started |
+| 20 | [Multivariable Functions, Limits, and Partial Derivatives](phase2-calculus/lesson-20-multivariable-functions.md) | ⬜ Not Started |
+| 21 | [The Chain Rule, Directional Derivatives, and Gradients](phase2-calculus/lesson-21-chain-rule-gradients.md) | ⬜ Not Started |
+| 22 | [Optimization, Taylor Expansions, and the Implicit Function Theorem](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
+| 23 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-23-multiple-integration.md) | ⬜ Not Started |
 
 ### Block C: Vector Calculus (24–28) — Trefor Bazett
 
@@ -89,19 +89,19 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 29 | [Introduction to PDEs — Classification and the Heat Equation](phase2-calculus/lesson-29-intro-pdes.md) | ⬜ Not Started |
-| 30 | [Separation of Variables and Fourier Series](phase2-calculus/lesson-30-separation-fourier.md) | ⬜ Not Started |
-| 31 | [The Wave Equation — Vibrations and d'Alembert](phase2-calculus/lesson-31-wave-equation.md) | ⬜ Not Started |
-| 32 | [Helmholtz, Laplace, and Transport Equations](phase2-calculus/lesson-32-helmholtz-laplace.md) | ⬜ Not Started |
-| 33 | [PDEs in ML — Diffusion Models, Numerical Methods, and Score Matching](phase2-calculus/lesson-33-pdes-ml.md) | ⬜ Not Started |
+| 29 | [Heat Equation, Separation of Variables, and Laplace's Equation](phase2-calculus/lesson-29-intro-pdes.md) | ⬜ Not Started |
+| 30 | [Fourier Series and the Wave Equation](phase2-calculus/lesson-30-separation-fourier.md) | ⬜ Not Started |
+| 31 | [Eigenvalue Problems and Sturm-Liouville Theory](phase2-calculus/lesson-31-wave-equation.md) | ⬜ Not Started |
+| 32 | [Helmholtz Equation, Fourier Transform, and Infinite Domains](phase2-calculus/lesson-32-helmholtz-laplace.md) | ⬜ Not Started |
+| 33 | [Method of Characteristics, Transport Equations, and PDEs in ML](phase2-calculus/lesson-33-pdes-ml.md) | ⬜ Not Started |
 
-### Block E: ML-Applied Calculus (34–36)
+### Block E: Matrix Calculus for Deep Learning (34–36) — Parr & Howard
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 34 | [Matrix Calculus — Bridging to Backpropagation](phase2-calculus/lesson-34-matrix-calculus.md) | ⬜ Not Started |
-| 35 | [Optimization Algorithms — SGD through Adam](phase2-calculus/lesson-35-optimization-algorithms.md) | ⬜ Not Started |
-| 36 | [Loss Landscapes, Gradient Flow, and Training Dynamics](phase2-calculus/lesson-36-loss-landscapes.md) | ⬜ Not Started |
+| 34 | [Scalar Derivatives, Partial Derivatives, and the Gradient](phase2-calculus/lesson-34-scalar-derivatives.md) | ⬜ Not Started |
+| 35 | [Matrix Calculus — Jacobians, Element-wise Rules, and Chain Rules](phase2-calculus/lesson-35-matrix-calculus.md) | ⬜ Not Started |
+| 36 | [Neural Network Gradients — From Neurons to Backpropagation](phase2-calculus/lesson-36-neural-network-gradients.md) | ⬜ Not Started |
 
 ---
 
@@ -164,7 +164,7 @@ A structured self-study curriculum building from mathematical foundations throug
 | 56 | [Deep Learning — Why Depth Works](phase4-machine-learning/lesson-56-deep-learning.md) | ⬜ Not Started |
 | 57 | [AlexNet and Convolutional Neural Networks](phase4-machine-learning/lesson-57-alexnet-convnets.md) | ⬜ Not Started |
 | 58 | [Neural Scaling Laws and Emergence](phase4-machine-learning/lesson-58-scaling-laws.md) | ⬜ Not Started |
-| 59 | [Attention — How Transformers Think](phase4-machine-learning/lesson-59-attention.md) | ⬜ Not Started |
+| 59 | [Attention — Dot Products in Action](phase4-machine-learning/lesson-59-attention.md) | ⬜ Not Started |
 | 60 | [Building a Transformer from Scratch](phase4-machine-learning/lesson-60-transformer.md) | ⬜ Not Started |
 | 61 | [Mechanistic Interpretability — The Dark Matter of AI](phase4-machine-learning/lesson-61-mech-interp.md) | ⬜ Not Started |
 | 62 | [Video & Image Generation — Diffusion Models](phase4-machine-learning/lesson-62-diffusion-models.md) | ⬜ Not Started |

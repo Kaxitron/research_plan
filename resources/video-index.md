@@ -447,9 +447,9 @@
 | 31 | Wave Equation | Jason Bramburger (PDEs) |
 | 32 | Helmholtz & Transport Equations | Jason Bramburger (PDEs) |
 | 33 | PDEs in ML | Jason Bramburger (PDEs) |
-| 34 | Matrix Calculus | 3B1B DL Ch. 4 (Backprop calculus) |
-| 35 | Optimization Algorithms | Stanford CS231n, Deeplearning.AI |
-| 36 | Loss Landscapes & Training Dynamics | 3B1B Diff Eq Ch. 1, Steve Brunton, Yannic Kilcher (Neural ODE) |
+| 34 | Scalar Derivatives & the Gradient | 3B1B DL Ch. 2 (Gradient descent), Parr & Howard (read) |
+| 35 | Matrix Calculus — Jacobians & Chain Rules | 3B1B DL Ch. 4 (Backprop calculus), Parr & Howard (read) |
+| 36 | Neural Network Gradients & Backprop | Karpathy (micrograd), 3B1B DL Ch. 4, Stanford CS231n |
 | 37 | Probability | 3B1B (Bayes, CLT, Binomial), StatQuest |
 | 38 | Expectation | StatQuest (Covariance, PCA), 3B1B (Convolutions) |
 | 39 | MLE | StatQuest (MLE) |

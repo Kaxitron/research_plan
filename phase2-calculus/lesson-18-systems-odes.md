@@ -1,6 +1,6 @@
 # Lesson 18: Systems of ODEs and Phase Portraits
 
-[<- Previous](lesson-17-laplace-transform.md) | [Back to TOC](../README.md) | [Next: 3D Geometry ->](lesson-19-partial-derivatives.md)
+[<- Previous](lesson-17-laplace-transform.md) | [Back to TOC](../README.md) | [Next: 3D Geometry ->](lesson-19-3d-geometry.md)
 
 ---
 

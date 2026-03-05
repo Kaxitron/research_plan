@@ -352,7 +352,7 @@
 
 ## Block B: Multivariable Calculus (Lessons 19-23) — Trefor Bazett Multivariable Course
 
-### Lesson 19: Partial Derivatives, Gradients, and Directional Derivatives
+### Lesson 19: 3D Geometry, Curves, and Curvature
 
 **Functions of Several Variables:**
 - f: R^n -> R — scalar-valued function of a vector input
@@ -393,7 +393,7 @@
 
 ---
 
-### Lesson 20: The Multivariable Chain Rule and Jacobian Matrices
+### Lesson 20: Multivariable Functions, Limits, and Partial Derivatives
 
 **Chain Rule Generalizations:**
 - Single-variable reminder: d/dx f(g(x)) = f'(g(x)) g'(x)
@@ -427,7 +427,7 @@
 
 ---
 
-### Lesson 21: Multiple Integration and Change of Variables
+### Lesson 21: The Chain Rule, Directional Derivatives, and Gradients
 
 **Double and Triple Integrals:**
 - Double integral integral integral_D f(x,y) dA: volume under surface over region D
@@ -467,7 +467,7 @@
 
 ---
 
-### Lesson 22: Taylor Expansions and the Implicit Function Theorem
+### Lesson 22: Optimization, Taylor Expansions, and the Implicit Function Theorem
 
 **Taylor Series (Single Variable):**
 - f(x) ~ f(a) + f'(a)(x-a) + (1/2)f''(a)(x-a)^2 + (1/3!)f'''(a)(x-a)^3 + ...
@@ -500,7 +500,7 @@
 
 ---
 
-### Lesson 23: Optimization in Several Variables and Lagrange Multipliers
+### Lesson 23: Multiple Integration and Change of Variables
 
 **Unconstrained Optimization:**
 - **Critical points:** where grad f = 0 (all partial derivatives vanish)
@@ -563,6 +563,12 @@
 - Additivity over curve segments: integral_C = integral_{C_1} + integral_{C_2}
 - Scalar line integrals are always positive (when f > 0); vector line integrals can be negative
 
+**Distinguishing Types of Line Integrals:**
+- Scalar line integrals (integral f ds): weighted by arc length, independent of orientation
+- Component line integrals (integral P dx, Q dy, R dz): depend on orientation
+- Vector line integrals (integral F . dr): work integral, depend on orientation
+- Identifying which type you are computing from the notation and context
+
 **Computing Line Integrals:**
 - Step 1: Parameterize the curve
 - Step 2: Compute r'(t) and ||r'(t)|| (or the dot product F . r')
@@ -579,6 +585,32 @@
 - A vector field F assigns a vector to every point in a region: F(x,y) = (P(x,y), Q(x,y))
 - Visualization: arrow at each point showing direction and magnitude
 - Examples: gravitational fields, fluid velocity fields, gradient fields
+- Gradient vector fields F = grad(phi) and potential functions phi
+
+**Divergence:**
+- div(F) = partial P/partial x + partial Q/partial y (+ partial R/partial z in 3D)
+- Measures net outward flux per unit area — sources (+) and sinks (-)
+- Positive divergence = field spreading out; negative = field converging
+
+**Line Integral of a Vector Field (Work):**
+- integral_C F . dr = integral_a^b F(r(t)) . r'(t) dt
+- Physical meaning: work done by force field F along curve C
+- **Component form:** integral_C P dx + Q dy + R dz
+
+**Line Integrals with Respect to x, y, z:**
+- integral_C P dx, integral_C Q dy, integral_C R dz as individual component integrals
+- Relationship to the full work integral: integral_C F . dr = integral_C P dx + Q dy + R dz
+- These depend on orientation — reversing the curve negates the integral
+
+**Flux Integrals with Components:**
+- Flux = integral_C F . n_hat ds: measuring outward flow through a curve
+- In 2D: integral_C -Q dx + P dy (or integral_C P dy - Q dx depending on convention)
+- Measures how much of the field passes through the curve rather than along it
+
+**Curl in 2D (Scalar Curl):**
+- scalar curl = partial Q/partial x - partial P/partial y
+- Measures local circulation/rotation of the field at a point
+- Positive curl = counterclockwise rotation; negative = clockwise
 
 **Conservative Vector Fields:**
 - F is conservative if F = grad phi for some scalar potential function phi
@@ -591,9 +623,14 @@
 
 **Testing for Conservative Fields:**
 - In 2D: F = (P, Q) is conservative if and only if partial P/partial y = partial Q/partial x (on a simply connected domain)
-- In 3D: F = (P, Q, R) is conservative if and only if curl F = 0 (on a simply connected domain)
 - **Simply connected domain:** no holes — every closed curve can be continuously shrunk to a point
-- On domains with holes, curl = 0 is necessary but not sufficient
+- On domains with holes, the test is necessary but not sufficient
+
+**Exact and Closed Forms:**
+- A differential form P dx + Q dy is **exact** if it equals d(phi) for some scalar function phi (i.e., F is conservative)
+- A form is **closed** if partial P/partial y = partial Q/partial x (i.e., it passes the conservative test)
+- On simply connected domains: closed implies exact
+- This language generalizes to higher dimensions and connects to the 3D curl test (Lesson 27)
 
 **Finding Potential Functions:**
 - Integrate P w.r.t. x -> phi(x,y) = integral P dx + g(y)
@@ -620,23 +657,13 @@
 - closed_integral_C F . n_hat ds = integral integral_D (partial P/partial x + partial Q/partial y) dA
 - Outward flux through boundary = integral of divergence over interior
 
-**Divergence:**
-- div(F) = grad . F = partial P/partial x + partial Q/partial y (+ partial R/partial z in 3D)
-- Measures net outward flux per unit area — sources (+) and sinks (-)
-- Positive divergence = field spreading out; negative = field converging
-- div(grad f) = grad^2 f = the Laplacian
-
-**Curl:**
-- 2D scalar curl: partial Q/partial x - partial P/partial y (measures local rotation)
-- 3D vector curl: curl(F) = grad x F = (R_y - Q_z, P_z - R_x, Q_x - P_y)
-- Measures local circulation/rotation of the field
-- **Key identities:**
-  - curl(grad phi) = 0 always — gradient fields have no rotation
-  - div(curl F) = 0 always — curls have no divergence
-  - If curl F = 0 on simply connected domain -> F is conservative
+**Green's Theorem on Composite (Multiply-Connected) Regions:**
+- Regions with holes (e.g., annulus): must account for both outer and inner boundary curves
+- Inner boundaries traversed clockwise (opposite to outer boundary) to maintain "region on the left" convention
+- Allows application of Green's theorem even when the field has singularities inside holes
 
 **The Laplacian:**
-- grad^2 f = partial^2 f/partial x^2 + partial^2 f/partial y^2 + ... (sum of unmixed second partials)
+- grad^2 f = div(grad f) = partial^2 f/partial x^2 + partial^2 f/partial y^2 + ... (sum of unmixed second partials)
 - Measures how much f(x) deviates from the average of its neighbors
 - grad^2 f = 0 -> harmonic function (value at center = average over surrounding sphere)
 - Appears in: heat equation, diffusion models, score matching, Laplace's equation
@@ -656,13 +683,25 @@
 **Parametric Surfaces:**
 - r(u,v) = (x(u,v), y(u,v), z(u,v)) for (u,v) in domain D
 - Examples: planes, spheres, cylinders, cones, tori, graphs z = f(x,y)
+- Visualizing and understanding parametric surfaces in 3D
 - **Tangent vectors:** r_u and r_v span the tangent plane at each point
 - **Normal vector:** n = r_u x r_v (cross product of tangent vectors)
 
 **Surface Area:**
 - Surface area = integral integral_D ||r_u x r_v|| du dv
 - For graphs z = f(x,y): SA = integral integral sqrt(1 + f_x^2 + f_y^2) dA
-- The factor ||r_u x r_v|| is the area magnification factor from parameter space to the surface
+- Surface area of parametric surfaces: the factor ||r_u x r_v|| is the area magnification factor from parameter space to the surface
+
+**Why Curl Is Useful and the Spider Criteria:**
+- Physical interpretation of curl: local rotation, paddle wheel analogy
+- The "spider criteria" mnemonic for quickly checking all three components of curl F in 3D
+- Identifying conservative fields using curl: if curl F = 0 on a simply connected domain, F is conservative
+
+**The 3D Curl Test for Conservative Fields:**
+- In 3D: F = (P, Q, R) is conservative if and only if curl F = 0 (on a simply connected domain)
+- This extends the 2D test (partial P/partial y = partial Q/partial x) to three dimensions
+- All three component conditions: R_y = Q_z, P_z = R_x, Q_x = P_y
+- On domains with holes, curl = 0 is necessary but not sufficient
 
 **Scalar Surface Integrals:**
 - integral integral_S f dS = integral integral_D f(r(u,v)) ||r_u x r_v|| du dv
@@ -691,11 +730,21 @@
 - The surface S can be any orientable surface with boundary C — the integral is the same for all such surfaces
 - Orientation: right-hand rule relates curve orientation to surface normal
 
+**Computing Stokes' Theorem:**
+- Evaluating surface integrals by converting to line integrals (and vice versa)
+- Choosing the easier side: sometimes the line integral is simpler, sometimes the surface integral
+- Worked examples with various surfaces and boundary curves
+
 **The Divergence Theorem (Gauss's Theorem):**
 - closed_integral integral_S F . dS = integral integral integral_E div(F) dV
 - Total outward flux through closed surface S = integral of divergence over enclosed volume E
 - Generalizes Green's theorem (flux form) to 3D
 - Applications: Gauss's law in electrostatics, fluid flow conservation, heat flow
+
+**Finding Sources and Sinks Using the Divergence Theorem:**
+- Identifying where flux originates (sources, div > 0) or vanishes (sinks, div < 0)
+- Using the divergence theorem to compute total source/sink strength in a region
+- Physical applications: charge density from electric flux, fluid production/absorption rates
 
 **The Hierarchy of Fundamental Theorems:**
 - **FTC (1D):** integral_a^b f'(x) dx = f(b) - f(a)
@@ -721,384 +770,280 @@
 
 ---
 
-## Block D: Partial Differential Equations (Lessons 29-33) — Jason Bramburger PDE Course
+## Block D: Partial Differential Equations (Lessons 29-33) — Jason Bramburger PDE Course (46 videos)
 
-### Lesson 29: Introduction to PDEs — Classification and the Heat Equation
+### Lesson 29: Heat Equation, Separation of Variables, and Laplace's Equation (Videos: Intro, L1-L12)
 
-**What Is a PDE:**
+**PDE Classification (Videos: Intro, L1-L2):**
 - A partial differential equation involves partial derivatives of a function of multiple variables
 - **Classification by order:** the highest-order derivative present
 - **Linear vs nonlinear:** linear if u and its derivatives appear linearly
-- **Homogeneous vs nonhomogeneous:** presence of forcing terms
-
-**Classification of Second-Order Linear PDEs:**
-- **General form:** Au_{xx} + Bu_{xy} + Cu_{yy} + (lower order) = 0
-- **Discriminant:** B^2 - 4AC determines type:
+- **Classification of second-order linear PDEs:** Au_{xx} + Bu_{xy} + Cu_{yy} + (lower order) = 0
   - B^2 - 4AC < 0: **Elliptic** (e.g., Laplace/Poisson) — equilibrium, steady-state
   - B^2 - 4AC = 0: **Parabolic** (e.g., heat equation) — diffusion, smoothing
   - B^2 - 4AC > 0: **Hyperbolic** (e.g., wave equation) — propagation, waves
-- Each type has fundamentally different behavior, solution methods, and boundary condition requirements
 
-**The Heat Equation:**
-- u_t = k grad^2 u (or u_t = k u_{xx} in 1D)
-- Models diffusion of heat, chemical concentration, probability density
-- **Key properties:**
-  - **Smoothing:** rough initial data becomes smooth instantly
-  - High-frequency modes decay fastest (exponential decay rate proportional to frequency^2)
-  - **Maximum principle:** the maximum temperature occurs at t = 0 or on the boundary (no internal hot spots can form)
-  - Solution via convolution with Gaussian kernel: Gaussian blurring over time
-  - **Irreversible:** information is lost as time progresses (forward process is well-posed, backward is ill-posed)
+**The Heat Equation (Videos: L1-L5):**
+- u_t = k grad^2 u (or u_t = k u_{xx} in 1D); derived from conservation of energy + Fourier's law
+- **Boundary conditions:** Dirichlet (fixed temperature), Neumann (fixed heat flux), Robin (mixed), Periodic
+- **Equilibrium temperature distributions:** steady-state solutions satisfy grad^2 u = 0; in 1D with Dirichlet BCs, the equilibrium is linear interpolation between boundary values
+- **The heat equation in higher dimensions:** u_t = k(u_{xx} + u_{yy}) in 2D, u_t = k(u_{xx} + u_{yy} + u_{zz}) in 3D; separation of variables extends naturally
+- **Linearity:** if u_1, u_2 are solutions, then c_1 u_1 + c_2 u_2 is also a solution — superposition makes Fourier series solutions possible
+- **Key properties:** smoothing, maximum principle, irreversibility, high-frequency modes decay fastest
+- **Well-posedness (Hadamard):** existence, uniqueness, continuous dependence on data
 
-**Boundary Conditions:**
-- **Dirichlet:** u specified on boundary (fixed temperature)
-- **Neumann:** partial u/partial n specified on boundary (fixed heat flux)
-- **Robin (mixed):** linear combination of u and partial u/partial n on boundary
-- **Periodic:** u and its derivatives match at opposite ends
-- Well-posedness depends on matching the right boundary conditions to the PDE type
+**Separation of Variables (Videos: L6-L8):**
+- Ansatz u(x,t) = X(x)T(t) reduces the PDE to two ODEs linked by a separation constant
+- **Dirichlet BCs** (X(0) = X(L) = 0): X_n = sin(n pi x / L), lambda_n = (n pi / L)^2
+- **Neumann BCs** (X'(0) = X'(L) = 0): X_n = cos(n pi x / L); includes lambda_0 = 0 constant mode — temperature approaches uniform equilibrium (average of initial condition)
+- **Periodic BCs** (u and u_x match at opposite ends): both sin(2n pi x / L) and cos(2n pi x / L); natural setting for Fourier series on a circle
 
-**Initial Conditions and Well-Posedness:**
-- **Hadamard's conditions for well-posedness:** solution exists, is unique, and depends continuously on the data
-- Heat equation needs initial condition u(x,0) = f(x) plus boundary conditions
-- Ill-posed problems: small changes in data cause large changes in solution (e.g., backward heat equation)
+**Laplace's Equation (Videos: L9-L12):**
+- **On a rectangle:** separation u(x,y) = X(x)Y(y); homogeneous BCs on three sides + superposition for multiple nonhomogeneous sides
+- **On a disc:** polar coordinates; Poisson integral formula gives solution from boundary data
+- **Fluid flow outside a cylinder:** exterior domain; solutions involve r^{-n} terms decaying away from boundary
+- **Qualitative properties:** mean value property — value at any point = average on any surrounding circle; maximum principle — max/min only on boundary; uniqueness of Dirichlet problem
 
-**ML/alignment connection:** The heat equation is the mathematical foundation of the forward process in diffusion models (DDPM, score-based models). Adding noise to data is literally running the heat equation — it progressively destroys structure by diffusing information. Understanding the heat equation's smoothing and irreversibility properties explains why the reverse (denoising) process requires learning the score function.
+**ML/alignment connection:** The heat equation IS the forward process in diffusion models. Boundary conditions correspond to conditioning signals (text prompts, class labels). Laplace's equation describes equilibrium; the mean value property explains why regularized models produce smooth predictions. The maximum principle explains why adversarial examples live at distribution boundaries.
 
 ---
 
-### Lesson 30: Separation of Variables and Fourier Series
+### Lesson 30: Fourier Series and the Wave Equation (Videos: L13-L21)
 
-**Separation of Variables:**
-- Ansatz: assume u(x,t) = X(x)T(t) — the solution factors into spatial and temporal parts
-- Substitution into the PDE yields two ODEs (one in x, one in t) linked by a separation constant
-- Boundary conditions determine the allowed values of the separation constant (eigenvalue problem)
-- General solution is a (possibly infinite) superposition of separated solutions
+**Fourier Series (Videos: L13-L17):**
+- f(x) = a_0/2 + sum [a_n cos(n pi x / L) + b_n sin(n pi x / L)]
+- **Fourier coefficients** via orthogonal projection (inner products)
+- **Convergence:** pointwise, L^2, uniform; Gibbs phenomenon at discontinuities
+- **Parseval's theorem:** energy in physical space = energy in frequency space
+- **Sine and cosine series:** half-range expansions; sine series from Dirichlet BCs, cosine series from Neumann BCs
+- **Differentiating Fourier series:** term-by-term valid when series converges uniformly; smoothness determines coefficient decay rate
+- **Integrating Fourier series:** always valid for L^2-convergent series; improves convergence
+- **Complex Fourier series:** f(x) = sum c_n e^{i n pi x / L}; more compact; negative frequencies encode phase; connects to Fourier transform
 
-**Eigenvalue Problems (Sturm-Liouville Theory):**
-- X'' + lambda X = 0 with boundary conditions -> eigenvalues lambda_n and eigenfunctions X_n
-- Common cases:
-  - Dirichlet (X(0) = X(L) = 0): X_n = sin(n pi x / L), lambda_n = (n pi / L)^2
-  - Neumann (X'(0) = X'(L) = 0): X_n = cos(n pi x / L), lambda_n = (n pi / L)^2
-  - Periodic: X_n = sin, cos with lambda_n = (2n pi / L)^2
-- Eigenfunctions form a complete orthogonal set — any reasonable function can be expanded in them
+**The Wave Equation (Videos: L18-L21):**
+- u_{tt} = c^2 u_{xx}; derived from Newton's second law on a vibrating string; hyperbolic PDE
+- **Boundary conditions:** fixed ends (Dirichlet), free ends (Neumann), mixed; initial conditions specify both displacement u(x,0) and velocity u_t(x,0)
+- **Solving via separation of variables:** standing waves with temporal oscillation (contrast: exponential decay in heat equation)
+- **d'Alembert's solution:** u(x,t) = f(x - ct) + g(x + ct); superposition of traveling waves
+- **Key properties:** finite propagation speed, energy conservation, reversibility, superposition
+- **Characteristics:** x +/- ct = const; domain of dependence and range of influence
+- **Higher dimensions:** 2D membranes, 3D acoustics; Bessel functions for circular geometry; Huygens' principle
 
-**Fourier Series:**
-- f(x) = a_0/2 + sum_{n=1}^{infinity} [a_n cos(n pi x / L) + b_n sin(n pi x / L)]
-- **Fourier coefficients:** a_n = (2/L) integral_0^L f(x) cos(n pi x / L) dx, similarly for b_n
-- **Orthogonality** of sin and cos functions is the key property that makes Fourier series work
-- **Convergence:** pointwise (at continuity points), L^2 (in mean-square), uniform (for smooth functions)
-- **Gibbs phenomenon:** overshoot near discontinuities that doesn't disappear as more terms are added (but the overshoot narrows)
-- **Parseval's theorem:** energy in physical space = energy in frequency space (sum of squared coefficients)
-
-**Complex Fourier Series:**
-- f(x) = sum_{n=-infinity}^{infinity} c_n e^{i n pi x / L}
-- c_n = (1/2L) integral_{-L}^{L} f(x) e^{-i n pi x / L} dx
-- More compact notation; connects naturally to the Fourier transform
-
-**Solving the Heat Equation with Fourier Series:**
-- Expand initial condition in eigenfunctions: f(x) = sum b_n sin(n pi x / L)
-- Each mode evolves independently: u(x,t) = sum b_n e^{-k(n pi/L)^2 t} sin(n pi x / L)
-- High-frequency modes (large n) decay exponentially faster — this is the mathematical basis for smoothing
-
-**ML/alignment connection:** Fourier analysis is the mathematical foundation for understanding what neural networks learn at different scales. The spectral bias phenomenon — networks learn low-frequency components before high-frequency ones — directly mirrors how the heat equation damps high frequencies faster. Fourier features (random Fourier features, positional encodings in transformers) explicitly leverage this decomposition. Parseval's theorem connects time/spatial-domain and frequency-domain representations of signals.
+**ML/alignment connection:** Fourier analysis underlies spectral methods in ML — graph Fourier transform, positional encodings, spectral bias. Complex Fourier series is the form used in ML applications. Waves preserve information (ResNets, skip connections) while heat destroys it (plain deep networks) — the mathematical reason why residual architectures work.
 
 ---
 
-### Lesson 31: The Wave Equation — Vibrations and d'Alembert
+### Lesson 31: Eigenvalue Problems and Sturm-Liouville Theory (Videos: L22-L29)
 
-**The Wave Equation:**
-- u_{tt} = c^2 u_{xx} (1D), u_{tt} = c^2 grad^2 u (higher dimensions)
-- Models vibrating strings, membranes, sound waves, electromagnetic waves
-- Second-order in time (vs first-order for heat) -> qualitatively different behavior
+**Eigenvalue Problems in PDEs (Video: L22):**
+- Separation of variables always produces an eigenvalue problem L[X] = lambda X for the spatial part
+- Eigenvalues determine allowed frequencies; eigenfunctions determine spatial mode shapes
+- The general theory (Sturm-Liouville) guarantees real eigenvalues, orthogonal eigenfunctions, completeness
 
-**d'Alembert's Solution (Infinite Domain):**
-- General solution: u(x,t) = f(x - ct) + g(x + ct) — superposition of right- and left-traveling waves
-- f and g determined by initial conditions u(x,0) and u_t(x,0)
-- **d'Alembert's formula:** u(x,t) = (1/2)[phi(x-ct) + phi(x+ct)] + (1/2c) integral_{x-ct}^{x+ct} psi(s) ds
-  - where phi = initial displacement, psi = initial velocity
+**Sturm-Liouville Theory (Videos: L23, L25):**
+- -(p(x) y')' + q(x) y = lambda w(x) y on [a,b] with boundary conditions
+- Real eigenvalues lambda_1 < lambda_2 < ..., orthogonal eigenfunctions with respect to weight w(x)
+- Completeness: any reasonable function expandable in eigenfunctions (generalized Fourier series)
+- Unifies all classical eigenvalue problems: standard Fourier modes, Bessel functions, Legendre polynomials
 
-**Key Properties of the Wave Equation:**
-- **Finite propagation speed:** disturbances travel at speed c (contrast with heat equation's infinite speed)
-- **No smoothing:** sharp features propagate indefinitely (contrast with heat equation's diffusion)
-- **Energy conservation:** total energy (kinetic + potential) is conserved
-- **Reversible:** time-reversal symmetry (contrast with heat equation's irreversibility)
-- **Superposition principle:** waves pass through each other without interaction
+**Heat Flow in a Nonuniform Rod (Video: L24):**
+- Variable coefficients k(x), c(x), rho(x) yield a Sturm-Liouville problem -(k(x)X')' = lambda c(x) rho(x) X
+- Eigenfunctions no longer simple sines/cosines; depend on material properties
 
-**Separation of Variables for the Wave Equation:**
-- u(x,t) = X(x)T(t) yields X'' + lambda X = 0 and T'' + c^2 lambda T = 0
-- Standing waves: X_n(x) sin(omega_n t) or X_n(x) cos(omega_n t)
-- Natural frequencies: omega_n = c n pi / L (harmonics)
-- General solution as superposition of standing waves (normal modes)
+**The Rayleigh Quotient (Video: L26):**
+- R[y] = (integral [p(y')^2 + qy^2] dx) / (integral w y^2 dx)
+- Minimized by the first eigenfunction; min-max characterization of all eigenvalues
+- Infinite-dimensional version of the matrix Rayleigh quotient from Phase 1; directly connects to PCA
 
-**Vibrating Strings and Membranes:**
-- **Boundary conditions:** fixed ends, free ends, mixed
-- **Harmonics and overtones:** fundamental frequency and integer multiples
-- 2D wave equation on rectangular/circular domains
-- **Bessel functions** arise for circular geometry
+**Vibrations of a Nonuniform String (Video: L27):**
+- -(tau(x) X')' = lambda rho(x) X; natural frequencies omega_n = sqrt(lambda_n)
+- Non-uniform mass/tension distribution changes mode shapes and frequencies
 
-**Characteristics:**
-- **Characteristic curves** x +/- ct = const along which information propagates
-- The wave equation is hyperbolic, and characteristics define the domain of dependence and range of influence
-- Contrast with parabolic (heat) which has infinite speed of propagation
+**Eigenfunction Expansions (Video: L28):**
+- f(x) = sum c_n y_n(x) with coefficients via weighted inner products — generalizes Fourier series
+- Used to solve PDEs with variable coefficients
 
-**ML/alignment connection:** The wave equation's finite propagation speed and energy conservation contrast sharply with the heat equation's diffusion and dissipation. This distinction appears in neural network training: some signal propagation behaves wave-like (preserving information across layers, as in ResNets and skip connections) while other phenomena are diffusion-like (gradient smoothing, noise averaging). Understanding both regimes is essential for designing architectures that preserve or transform information appropriately.
+**Inhomogeneous Boundary Conditions (Video: L29):**
+- Decompose u(x,t) = v(x) + w(x,t): v satisfies the inhomogeneous BCs (steady-state), w satisfies homogeneous BCs
+- Initial condition for w: w(x,0) = f(x) - v(x), expandable in eigenfunctions
+
+**ML/alignment connection:** Sturm-Liouville is the infinite-dimensional spectral theorem — foundation for kernel PCA, spectral clustering, diffusion maps. The Rayleigh quotient connects to PCA and dimensionality reduction. Nonuniform problems correspond to non-uniform data distributions and variable learning rates. Inhomogeneous BC decomposition mirrors trend removal in signal processing.
 
 ---
 
-### Lesson 32: Helmholtz, Laplace, and Transport Equations
+### Lesson 32: Helmholtz Equation, Fourier Transform, and Infinite Domains (Videos: L30-L38)
 
-**Laplace's Equation and Harmonic Functions:**
-- grad^2 u = 0 — the prototypical elliptic PDE
-- Solutions are called harmonic functions
-- **Maximum principle:** harmonic functions attain their max and min on the boundary, never in the interior
-- **Mean value property:** u at any point = average of u on any surrounding sphere/circle
-- **Uniqueness:** given boundary values, the solution is unique
-- Solving by separation of variables on rectangles, circles (Fourier series in angular variable), spheres (spherical harmonics)
-- **Poisson's equation:** grad^2 u = f — the nonhomogeneous version; Green's functions provide solutions
+**The Helmholtz Equation (Video: L30):**
+- grad^2 u + k^2 u = 0; spatial eigenvalue problem from the wave equation after time separation
+- Resonant frequencies of a domain — the "drum problem" (Can you hear the shape of a drum?)
+- Solutions: sines/cosines (rectangular), Bessel functions (circular), spherical harmonics (spherical)
 
-**The Helmholtz Equation:**
-- grad^2 u + k^2 u = 0 — the spatial part of the wave equation after separating time
-- Eigenvalue problem: finding frequencies and mode shapes
-- Arises in acoustics, electromagnetics, quantum mechanics
-- Solutions depend on geometry: rectangular -> sines/cosines, circular -> Bessel functions, spherical -> spherical harmonics
+**Vibrating Circular Membranes (Video: L31):**
+- Polar separation yields Bessel's equation r^2 R'' + rR' + (k^2 r^2 - m^2)R = 0
+- Mode shapes J_m(k_{mn} r) cos(m theta); nodal lines as circles and diameters
+- Eigenvalues NOT integer multiples of fundamental — drums less "musical" than strings
 
-**The Transport Equation:**
-- u_t + c u_x = 0 — the simplest first-order PDE
-- Solution: u(x,t) = f(x - ct) — the initial profile translates at speed c
-- Method of characteristics: solve along curves dx/dt = c
-- Foundation for understanding more complex hyperbolic PDEs
-- **Nonlinear transport (Burgers' equation):** u_t + u u_x = 0 — wave steepening and shock formation
-- Adding viscosity: u_t + u u_x = nu u_{xx} (viscous Burgers') — competition between nonlinear steepening and diffusive smoothing
+**Eigenfunction Expansions and Resonance (Video: L32):**
+- Forced PDE problems: expand in eigenfunctions, each mode satisfies a forced oscillator ODE
+- **Resonance:** forcing frequency matching natural frequency causes unbounded amplitude growth (undamped)
+- Damping prevents blow-up but produces large amplitudes near resonance
 
-**Green's Functions:**
-- The response to a point source (delta function forcing)
-- Solution to Lu = f can be written as u(x) = integral G(x, xi) f(xi) d(xi)
-- Green's function encodes the geometry and boundary conditions of the domain
-- **Fundamental solutions:** Green's functions on infinite domains (no boundary)
-  - Laplace: G ~ ln|x-xi| (2D), G ~ 1/|x-xi| (3D)
-  - Heat: G = Gaussian kernel
-  - Wave: G supported on characteristic cones
+**The Heat Equation on an Infinite Line (Video: L33):**
+- No boundaries → continuous spectrum; fundamental solution is the Gaussian kernel G(x,t) = (4 pi alpha t)^{-1/2} exp(-x^2/(4 alpha t))
+- Solution via convolution with initial data — Gaussian blurring with width growing as sqrt(t)
 
-**Special Functions Arising in PDEs:**
-- **Bessel functions:** J_n(x), Y_n(x) — solutions to Bessel's equation, arise in circular/cylindrical geometry
-- **Legendre polynomials:** P_n(x) — arise in spherical geometry
-- **Spherical harmonics:** Y_l^m(theta, phi) — eigenfunctions of the Laplacian on the sphere
+**The Fourier Transform (Videos: L34, L36):**
+- F_hat(k) = integral f(x) e^{-ikx} dx; inverse: f(x) = (1/2pi) integral F_hat(k) e^{ikx} dk
+- Continuous limit of complex Fourier series as period → infinity
+- **Properties:** linearity, derivative property (FT[f'] = ik F_hat), convolution theorem (FT[f*g] = F_hat G_hat), Parseval's theorem, Gaussian → Gaussian
 
-**ML/alignment connection:** Laplace's equation and harmonic functions are the mathematical basis for understanding equilibrium states and steady-state solutions. The mean value property of harmonic functions is analogous to how well-generalized models produce predictions that are "averages" over local neighborhoods in input space. Green's functions provide the theoretical framework for kernel methods in ML — a kernel K(x, x') is essentially a Green's function, and Gaussian processes can be viewed through this lens.
+**Fourier Transform and the Heat Equation (Video: L35):**
+- FT converts heat equation to U_hat_t = -alpha k^2 U_hat → each frequency decays independently
+- Inverting recovers Gaussian convolution solution
+
+**Heat Equation on a Semi-Infinite Line (Video: L37):**
+- Method of images: odd extension (Dirichlet) or even extension (Neumann)
+- Error function erf(x) arises from integrating Gaussian kernel over half-line
+
+**Scattering and the Schrödinger Equation (Video: L38):**
+- Time-independent: -hbar^2/(2m) psi'' + V(x) psi = E psi — a Sturm-Liouville problem
+- Transmission/reflection coefficients; quantum tunneling through barriers
+- Connects PDE theory to quantum mechanics and quantum computing foundations
+
+**ML/alignment connection:** The Fourier transform is ubiquitous in ML — CNNs as convolutions, Fourier Neural Operator, spectral normalization, random Fourier features. The Gaussian fundamental solution IS the denoising kernel in diffusion models. Helmholtz eigenmodes connect to graph Laplacian spectral properties in GNNs. The Schrödinger equation provides the mathematical foundation for quantum ML.
 
 ---
 
-### Lesson 33: PDEs in ML — Diffusion Models, Numerical Methods, and Score Matching
+### Lesson 33: Method of Characteristics, Transport Equations, and PDEs in ML (Videos: L39-L45 + ML Synthesis)
 
-**Diffusion Models and the Forward Process:**
-- Forward process: dx = f(x,t)dt + g(t)dB_t — progressive noise addition via an SDE
-- This is equivalent to running a heat-like equation on the probability density
-- Noise schedule: how quickly structure is destroyed (linear, cosine, etc.)
-- At t = T: data distribution -> approximately Gaussian (all structure erased)
+**Method of Characteristics (Video: L39):**
+- Transport equation u_t + c u_x = 0: solution u(x,t) = u_0(x - ct) — profile translates at speed c
+- Convert PDE to ODEs along characteristic curves dx/dt = c where u is constant
+- Works for linear and quasilinear first-order PDEs
 
-**The Reverse Process and Score Matching:**
-- **Score function:** s(x,t) = grad_x log p_t(x) — the gradient of the log probability density
-- **Anderson's reverse-time SDE:** dx = [f(x,t) - g(t)^2 s(x,t)] dt + g(t) dB_t_bar
-- The reverse SDE requires knowing the score function at all times
-- **Score matching:** train a neural network s_theta(x,t) to approximate the score
-  - **Denoising score matching:** the score at noise level sigma equals E[-(x - x_clean)/sigma^2 | x]
-  - **Sliced score matching:** project to 1D for computational efficiency
-  - Training objective: minimize E[||s_theta(x,t) - grad_x log p_t(x)||^2]
+**Characteristics of the Wave Equation (Video: L40):**
+- Two families: x - ct = const and x + ct = const — d'Alembert's solution follows directly
+- Domain of dependence and range of influence; finite propagation speed
 
-**Probability Flow ODE:**
-- dx/dt = f(x,t) - (1/2)g(t)^2 s(x,t) — deterministic ODE with same marginal distributions as the SDE
-- Enables: exact likelihood computation, deterministic sampling, interpolation in latent space
-- Solved with standard ODE solvers (Euler, RK45, adaptive methods)
+**Boundary Reflections in the Wave Equation (Video: L41):**
+- Characteristics reflect at boundaries: inverted (Dirichlet) or same sign (Neumann)
+- Method of images converts bounded to infinite-domain problems
+- Multiple reflections create standing wave patterns
 
-**Fokker-Planck Equation:**
-- partial p/partial t = -div(f p) + (1/2) g^2 grad^2 p
-- Describes how the probability density p(x,t) evolves under the SDE
-- Drift term (f) transports probability; diffusion term (g^2 grad^2) spreads it
-- **Stationary distribution:** setting partial p/partial t = 0 gives the equilibrium density
-- For gradient flow with noise: p_eq proportional to exp(-L(x)/T) (Boltzmann distribution)
+**Modelling Traffic with PDEs (Video: L42):**
+- Conservation of cars: rho_t + (rho v(rho))_x = 0; nonlinear first-order PDE
+- Characteristics depend on the solution — different densities propagate at different speeds
+
+**Fanlike Characteristics (Video: L43):**
+- Rarefaction waves: characteristics diverge, creating smooth expansion waves
+- Traffic light turning green → smooth transition from high to low density
+
+**Shock Waves (Video: L44):**
+- Characteristics converge and cross → discontinuity (shock) forms
+- **Rankine-Hugoniot condition:** shock speed from conservation; **entropy condition** selects physical solution
+- Burgers' equation u_t + u u_x = 0 as canonical model; viscous Burgers' smooths shocks
+
+**The Eikonal Equation (Video: L45):**
+- |grad u| = 1/c(x); travel time of wavefronts; high-frequency limit of wave equation
+- Characteristics are rays (Snell's law); connects to Hamilton-Jacobi equation and level set methods
+
+**PDEs in ML — Diffusion Models and Score Matching (Block Synthesis):**
+- **Forward SDE:** dx = f(x,t)dt + g(t)dW — progressive noise addition
+- **Fokker-Planck equation:** describes probability density evolution under the SDE
+- **Score function:** s(x,t) = grad_x log p_t(x); **score matching** trains neural network to approximate it
+- **Reverse SDE:** dx = [f - g^2 s(x,t)]dt + g dW_bar; **probability flow ODE** for deterministic sampling
+- **Numerical discretization:** Euler-Maruyama, DPM-Solver, DDIM — better schemes for faster generation
 
 **Numerical Methods for PDEs:**
-- **Finite differences:** discretize derivatives on a grid
-  - Forward/backward/central differences for first derivatives
-  - Central difference for second derivatives
-  - Stability constraints: CFL condition for wave equation, von Neumann analysis for heat equation
-- **Finite elements:** approximate solution as sum of basis functions on a mesh
-- **Spectral methods:** expand in Fourier modes or other global basis functions — exponential convergence for smooth solutions
-- **Physics-Informed Neural Networks (PINNs):** embed PDE constraints in the loss function
-  - Loss = data fitting + PDE residual + boundary condition residual
-  - Mesh-free, can handle complex geometries, but training can be challenging
+- **Finite differences:** forward/backward/central differences; CFL condition; von Neumann stability analysis
+- **Finite elements:** basis functions on a mesh
+- **Spectral methods:** Fourier mode expansion; exponential convergence for smooth solutions
+- **PINNs:** embed PDE constraints in neural network loss function
 
 **Stochastic Dynamics in Training:**
-- **SGD as SDE:** dW = -grad L dt + sqrt(eta/B) dB_t (gradient flow + mini-batch noise)
-- **Noise covariance:** C = (eta/B) Sigma where Sigma is the gradient noise covariance
-- **Escape from local minima:** noise enables exploration of the loss landscape
-- **Sharp vs flat minima:** SGD noise preferentially destabilizes sharp minima -> implicit bias toward flat (generalizing) minima
-- **Edge of stability:** training at eta ~ 2/lambda_max — the top Hessian eigenvalue self-tunes to match the learning rate
+- **SGD as SDE:** gradient flow + mini-batch noise; escape from sharp minima; edge of stability
 
-**Neural Operators and PDE Solvers:**
-- **DeepONet, Fourier Neural Operator (FNO):** learn solution operators for families of PDEs
-- Map initial/boundary conditions to solutions without re-solving from scratch
-- Fourier Neural Operator: learn in Fourier space, capturing multi-scale interactions efficiently
-- Potential for accelerating scientific computing by orders of magnitude
+**Neural Operators:**
+- **DeepONet, Fourier Neural Operator (FNO):** learn PDE solution operators in Fourier space
 
-**ML/alignment connection:** Diffusion models (DDPM, score-based generative models) are the direct application of PDE theory to generative AI. The entire framework — forward diffusion as a heat equation, reverse generation as solving a learned SDE/ODE, score matching as the training objective — is built on the PDE concepts from this block. Understanding the mathematics ensures principled design choices in noise schedules, architectures, and sampling strategies. For alignment: understanding diffusion models mathematically is necessary for mechanistic interpretability of generative models and for understanding the training dynamics of these increasingly important systems.
+**ML/alignment connection:** Method of characteristics is the PDE analogue of mechanistic interpretability — tracing how inputs influence outputs. Shock formation models phase transitions in training (grokking, loss spikes). Transport equation connects to optimal transport theory and Wasserstein distance in generative models. Flow-matching models literally solve a transport equation. Diffusion models are the direct application of the entire PDE block to generative AI. Understanding the mathematics enables principled design of noise schedules, safety filters, and mechanistic interpretability of generative models.
 
 ---
 
 ## Block E: ML-Applied Calculus (Lessons 34-36)
 
-### Lesson 34: Matrix Calculus — Bridging to Backpropagation
+### Lesson 34: Scalar Derivatives, Partial Derivatives, and the Gradient
 
-**Scalar-by-Vector Derivatives:**
-- grad f for f: R^n -> R — the gradient is a vector of partial derivatives
-- grad (a^T x) = a
-- grad (x^T A x) = (A + A^T)x (= 2Ax when A is symmetric)
-- grad (||x||^2) = 2x
+**Scalar Derivative Rules (Review):**
+- Constant, power, sum, product, and chain rules
+- d/dx[f(g(x))] = f'(g(x)) g'(x) — the chain rule is the single most important rule for ML
 
-**Vector-by-Vector Derivatives (Jacobians):**
-- For F: R^n -> R^m, J_{ij} = partial F_i / partial x_j
-- J(Ax) = A
-- J(sigma(Wx + b)) = diag(sigma'(Wx + b)) W — the Jacobian of a neural network layer
+**Partial Derivatives:**
+- For f(x_1, ..., x_n): treat all variables except the target as constants, then differentiate normally
+- Notation: ∂f/∂x_i distinguishes from df/dx
+
+**The Gradient:**
+- ∇f = [∂f/∂x_1, ..., ∂f/∂x_n] — a row vector (numerator layout) collecting all partial derivatives
+- Direction of steepest ascent; magnitude = rate of change in that direction
+- Every call to loss.backward() computes this vector
+
+**ML/alignment connection:** The gradient is the fundamental object in all of deep learning. Understanding that it is just a vector of partial derivatives, assembled mechanically by the rules above, demystifies the training process.
+
+---
+
+### Lesson 35: Matrix Calculus — Jacobians, Element-wise Rules, and Chain Rules
+
+**The Jacobian Matrix:**
+- For f: R^n -> R^m, J has entry J_{ij} = ∂f_i/∂x_j, producing an m × n matrix (numerator layout)
+- The Jacobian generalizes the gradient: gradient is a special case where m = 1
 - **Numerator vs denominator layout conventions** — be consistent within a derivation
 
-**Matrix-by-Matrix and Trace Derivatives:**
-- partial/partial X tr(AX) = A^T
-- partial/partial X tr(X^T A X) = (A + A^T)X
-- partial/partial X tr(AXB) = A^T (partial/partial X)^T B^T — use the trace trick
-- **The trace trick:** scalar = tr(scalar); rearrange using tr(ABC) = tr(CAB) = tr(BCA)
+**Element-wise Operations (Diagonal Jacobians):**
+- When each output depends only on corresponding inputs, the Jacobian is diagonal
+- ∂(w + x)/∂w = I (identity)
+- ∂(w ⊙ x)/∂w = diag(x) (Hadamard product)
+- ∂(w ⊘ x)/∂w = diag(1/x_1, ..., 1/x_n) (element-wise division)
+
+**Scalar Expansion:**
+- y = zx: ∂y/∂x = zI, ∂y/∂z = x^T
+- y = x + z1: ∂y/∂x = I, ∂y/∂z = 1^T
+
+**Vector Sum Reduction:**
+- ∂(Σx_i)/∂x = 1^T (row vector of ones)
+- ∂(w·x)/∂x = w^T and ∂(w·x)/∂w = x^T (dot product gradient)
+- For L = Σf_i(x): ∂L/∂x = Σ(∂f_i/∂x)
+
+**The Chain Rules:**
+- Single-variable: df/dx = (df/dg)(dg/dx)
+- Total-derivative: ∂f/∂x = Σ_i (∂f/∂u_i)(∂u_i/∂x) — sums contributions from all paths
+- **Vector chain rule:** ∂f/∂x = (∂f/∂g)(∂g/∂x) — Jacobian multiplication; the master rule that degenerates to all others
+
+**ML/alignment connection:** The vector chain rule — Jacobian multiplication — IS backpropagation. Most layer Jacobians are diagonal (element-wise activations) or structured (linear layers give J = W), which is why backpropagation is efficient: you never materialize the full Jacobian.
+
+---
+
+### Lesson 36: Neural Network Gradients — From Neurons to Backpropagation
+
+**Gradient of a Single Neuron Activation:**
+- Neuron: f(w, x, b) = max(0, w·x + b) (ReLU activation)
+- ∂(w·x)/∂w = x^T, ∂(w·x)/∂x = w^T, ∂(w·x + b)/∂b = 1
+- ReLU derivative: 0 when inactive (u ≤ 0), 1 when active (u > 0) — piecewise gating
+- Full neuron gradient by chain rule: ∂f/∂w = x^T when active, 0 when inactive
+
+**Gradient of the Neural Network Loss Function:**
+- MSE loss: C = (1/N) Σ(ŷ_i - y_i)²
+- ∂C/∂w = (1/N) Σ (error_term)_i · x_i^T — summed over training examples
+- ∂C/∂b = (2/N) Σ (error when active, 0 when inactive)
+- Gradient descent update: w ← w - α(∂C/∂w), b ← b - α(∂C/∂b)
 
 **Computation Graphs and Automatic Differentiation:**
 - Neural networks as directed acyclic graphs (DAGs) of differentiable operations
-- Each node: stores value (forward pass) and local Jacobian (backward pass)
-- **Forward-mode autodiff:** propagate derivatives from inputs to outputs — efficient when few inputs
-- **Reverse-mode autodiff (backpropagation):** propagate derivatives from outputs to inputs — efficient when few outputs (one loss)
-- **For a network with n parameters and 1 loss: reverse mode costs O(1) per parameter, forward mode costs O(n)**
-- Building a tiny autograd engine (micrograd-style): define Value objects with data and grad, implement backward() for each operation
+- **Forward-mode autodiff:** propagate tangent vectors forward, one Jacobian column per pass
+- **Reverse-mode autodiff (backpropagation):** propagate adjoint vectors backward, one Jacobian row per pass
+- For 1 scalar loss and n parameters: reverse mode needs 1 pass, forward mode needs n passes
+- Start with ∂L/∂L = 1; at each node apply chain rule; for branching paths sum contributions
 
-**The Backward Pass in Detail:**
-- Start with dL/dL = 1
-- At each node, apply chain rule: dL/dx = dL/dy * dy/dx (local Jacobian)
-- For branching paths: sum the contributions (multivariate chain rule)
-- Gradient accumulation: each parameter's gradient is the sum over all paths from that parameter to the loss
-
-**Practical Considerations:**
-- Gradient checkpointing: trade compute for memory by recomputing intermediate values
-- Mixed precision: float16 forward, float32 gradients
-- Gradient clipping: cap ||grad|| to prevent exploding gradients
-
-**ML/alignment connection:** Matrix calculus is the language in which backpropagation is written. Every neural network training run computes exactly these derivatives, millions of times. Understanding the Jacobian structure of each layer type (linear, activation, attention) is necessary for diagnosing training pathologies (vanishing/exploding gradients) and for mechanistic interpretability — understanding what gradients tell us about what the network has learned.
-
----
-
-### Lesson 35: Optimization Algorithms — SGD through Adam
-
-**Vanilla Gradient Descent:**
-- W <- W - eta grad L(W)
-- Converges for convex problems with appropriate learning rate
-- For non-convex: converges to a critical point (not necessarily a minimum)
-
-**Stochastic Gradient Descent (SGD):**
-- Use mini-batch gradient estimate: g_t = (1/B) sum_{i in batch} grad L_i(W)
-- E[g_t] = grad L(W) — unbiased estimator of the full gradient
-- Variance of g_t proportional to 1/B
-- **Generalization benefits:** SGD noise acts as implicit regularization, biasing toward flat minima
-
-**Learning Rate Schedules:**
-- **Step decay:** reduce eta by a factor every N epochs
-- **Cosine annealing:** eta_t = eta_min + (1/2)(eta_max - eta_min)(1 + cos(pi t / T))
-- **Linear warmup:** gradually increase eta from 0 to target over first N steps
-- **Warmup + cosine decay:** the standard schedule for transformer training
-- **Cyclical learning rates:** oscillate eta to escape local minima
-- **One-cycle policy:** warmup -> high LR -> cooldown
-
-**Momentum Methods:**
-- **Classical momentum:** v_t = beta v_{t-1} + grad L(W_t); W_{t+1} = W_t - eta v_t
-  - Accumulates velocity in consistent gradient directions; damps oscillations
-  - Equivalent to a damped second-order ODE: heavy ball method
-- **Nesterov accelerated gradient (NAG):** evaluate gradient at the look-ahead position W - beta v
-  - Provides "corrective" step — better theoretical convergence for convex problems
-  - Nesterov achieves optimal convergence rate O(1/t^2) for convex problems (vs O(1/t) for vanilla GD)
-
-**Adaptive Learning Rate Methods:**
-- **AdaGrad:** divide each parameter's learning rate by sqrt(sum of squared past gradients)
-  - Good for sparse features; bad for non-sparse (learning rate decays to zero)
-- **RMSProp:** fix AdaGrad with exponential moving average: v_t = rho v_{t-1} + (1-rho) g_t^2
-  - Keeps a running average, so learning rate doesn't vanish
-- **Adam (Adaptive Moment Estimation):**
-  - First moment (mean): m_t = beta_1 m_{t-1} + (1 - beta_1) g_t
-  - Second moment (uncentered variance): v_t = beta_2 v_{t-1} + (1 - beta_2) g_t^2
-  - **Bias correction:** m_hat = m_t / (1 - beta_1^t), v_hat = v_t / (1 - beta_2^t)
-  - Update: W_{t+1} = W_t - eta m_hat / (sqrt(v_hat) + epsilon)
-  - Default hyperparameters: beta_1 = 0.9, beta_2 = 0.999, epsilon = 1e-8
-- **AdamW:** decouple weight decay from the adaptive learning rate
-  - Adam: grad includes the L2 penalty -> adapted differently for each parameter (incorrect)
-  - AdamW: apply weight decay directly to W, not through the gradient -> correct L2 regularization
-  - W_{t+1} = W_t - eta (m_hat / (sqrt(v_hat) + epsilon) + lambda W_t)
-
-**Second-Order Methods (Conceptual):**
-- **Newton's method:** W <- W - H^{-1} grad L — use curvature to take better steps
-  - Prohibitively expensive: H is n x n where n = number of parameters
-- **Natural gradient:** use Fisher information matrix instead of Hessian
-  - Accounts for geometry of the probability distribution space
-- **K-FAC:** Kronecker-factored approximate curvature — practical approximation to natural gradient
-- **L-BFGS:** limited-memory quasi-Newton method — approximates H^{-1} from recent gradient history; works well for small-to-medium problems
-
-**ML/alignment connection:** The choice of optimizer profoundly affects what solution a neural network converges to, not just how fast it gets there. Adam's adaptive per-parameter learning rates effectively precondition the gradient, making optimization less sensitive to the loss landscape's condition number. For alignment research: understanding how different optimizers explore the loss landscape differently is crucial because the minimum you converge to determines the model's generalization behavior and implicit biases.
-
----
-
-### Lesson 36: Loss Landscapes, Gradient Flow, and Training Dynamics
-
-**Loss Landscapes:**
-- The loss function L(W) as a surface over all parameters (typically millions/billions of dimensions)
-- **Landscape features:** local minima, global minima, saddle points, plateaus, ravines
-- **In high dimensions: saddle points dominate, not local minima** — random matrix theory shows that critical points with all-positive Hessian eigenvalues are exponentially rare
-- Hessian eigenvalue spectrum: bulk near zero (flat directions) + a few large eigenvalues (sharp directions)
-- **Loss landscape visualization:** low-dimensional projections (filter normalization, random directions) — informative but limited
-
-**Gradient Flow Analysis:**
-- dW/dt = -grad L(W) — the continuous-time limit of gradient descent
-- **Loss as Lyapunov function:** dL/dt = -||grad L||^2 <= 0 — loss always decreases along gradient flow
-- One-line proof: dL/dt = grad L . (dW/dt) = grad L . (-grad L) = -||grad L||^2
-- **Convergence to critical points:** gradient flow converges to the set where grad L = 0
-- **Stability of critical points:** determined by eigenvalues of the Hessian at that point
-
-**Implicit Regularization:**
-- Gradient descent from small initialization -> minimum-norm solution (for linear models)
-- For deep linear networks -> biases toward low-rank solutions (matrix factorization)
-- **Learning rate as temperature:** larger eta -> more noise -> escapes sharp minima, prefers flat ones
-- **SGD noise:** variance sigma^2 proportional to eta/B (noise scales with learning rate / batch size)
-- **Flat minima generalize better** (PAC-Bayes bound: flat minima are robust to weight perturbation)
-- **Label noise, dropout, data augmentation** as explicit regularization complementing implicit effects
-
-**Phase Transitions in Training:**
-- Sudden qualitative changes in loss or capability during training
-- **Grokking:** memorization phase -> sudden generalization long after training loss reaches zero
-- **Emergent capabilities:** skills that appear abruptly at certain model scales
-- **Mechanistic interpretation:** phase transitions correspond to the network discovering and committing to particular computational strategies (circuits)
-- **SLT perspective:** RLCT (Real Log Canonical Threshold) governs the geometry of singularities in the loss landscape; phase transitions correspond to transitions between singular regions
-- **Local Learning Coefficient (LLC):** an estimable version of the RLCT that tracks phase transitions during training in real time
-
-**Edge of Stability:**
-- Training at eta ~ 2/lambda_max: the top Hessian eigenvalue hovers near 2/eta
-- **Progressive sharpening:** early in training, lambda_max grows until it hits 2/eta
-- **Self-stabilization:** after reaching the edge, the network adjusts to keep lambda_max ~ 2/eta
-- This is an inherently discrete-time effect — gradient flow (continuous) cannot exhibit it
-- Implies gradient descent at finite learning rate explores a different set of minima than infinitesimal learning rate
-
-**Double Descent and Interpolation:**
-- **Classical bias-variance tradeoff:** increase model complexity -> train error decreases, test error U-shaped
-- **Modern double descent:** test error goes down, up (interpolation threshold), then down again as complexity increases further
-- **Epoch-wise double descent:** test error shows similar non-monotonic behavior over training time
-- Reconciliation: overparameterized models have many interpolating solutions; optimization selects simple (generalizing) ones
-
-**Condition Number and Optimization Geometry:**
-- Condition number kappa = lambda_max / lambda_min of the Hessian
-- High kappa -> elongated valleys -> gradient descent zigzags
-- **Preconditioning:** multiply gradient by H^{-1} (or approximation) to equalize curvature
-- Adam's per-parameter scaling is a diagonal approximation to preconditioning
-- **Loss landscape shaping:** batch normalization, skip connections, careful initialization all improve conditioning
-
-**ML/alignment connection:** Understanding loss landscapes and training dynamics is essential for alignment because the properties of the minimum a model converges to determine its behavior. Sharp minima may correspond to brittle, non-generalizing solutions, while flat minima tend to be more robust. Phase transitions (grokking, emergent capabilities) are directly relevant to alignment — sudden capability jumps could include dangerous capabilities. Singular Learning Theory provides a mathematical framework for predicting and understanding these transitions, connecting the geometry of the loss landscape to the model's learned structure.
+**ML/alignment connection:** This lesson makes backpropagation fully transparent as the mechanical application of the chain rule and Jacobian multiplication. The ReLU's piecewise derivative acts as a gate — inactive neurons contribute zero gradient, shaping which parameters get updated and creating path-dependent training dynamics essential to understand for alignment.
 
 ---
 

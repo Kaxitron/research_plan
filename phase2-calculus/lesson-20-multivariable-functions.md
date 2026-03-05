@@ -1,6 +1,6 @@
 # Lesson 20: Multivariable Functions, Limits, and Partial Derivatives
 
-[<- Previous](lesson-19-partial-derivatives.md) | [Back to TOC](../README.md) | [Next: Chain Rule & Gradients ->](lesson-21-multiple-integration.md)
+[<- Previous](lesson-19-3d-geometry.md) | [Back to TOC](../README.md) | [Next: Chain Rule & Gradients ->](lesson-21-chain-rule-gradients.md)
 
 ---
 

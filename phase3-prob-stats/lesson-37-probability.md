@@ -1,6 +1,6 @@
 # Lesson 37: Probability Distributions and Bayes' Theorem
 
-[← Loss Landscapes](../phase2-calculus/lesson-36-loss-landscapes.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-38-expectation.md)
+[← Neural Network Gradients](../phase2-calculus/lesson-36-neural-network-gradients.md) | [Back to TOC](../README.md) | [Next: Expectation →](lesson-38-expectation.md)
 
 ---
 

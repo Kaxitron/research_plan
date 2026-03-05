@@ -276,11 +276,14 @@
 - Phase line analysis and qualitative behavior
 - Applications: exponential growth/decay, logistic equation
 
-### Lesson 16: Higher-Order ODEs
-- Linear systems dx/dt = Ax, solutions via eigenvalues
-- Phase portrait classification: stable/unstable nodes, saddles, spirals, centers
-- Matrix exponential, Jacobian linearization, Hartman-Grobman theorem
-- Basins of attraction, separatrices, condition number and convergence
+### Lesson 16: Higher-Order ODEs, Mechanical Vibrations, and Power Series Solutions
+- Characteristic equation for constant-coefficient ODEs: three cases (distinct real, repeated, complex)
+- Higher-order constant-coefficient ODEs via higher-degree characteristic polynomials
+- Wronskian and linear independence of solutions; Abel's theorem
+- Mechanical vibrations: undamped, overdamped, critically damped, underdamped, forced, resonance
+- Undetermined coefficients and variation of parameters for nonhomogeneous equations
+- Power series solutions: assume y = sum a_n x^n, find recurrence relations
+- Ordinary vs singular points; Airy's equation as canonical example
 
 ### Lesson 17: Laplace Transform
 - Definition, linearity, transforms of common functions
@@ -296,95 +299,108 @@
 
 ### Block B: Multivariable Calculus (Lessons 19–23)
 
-### Lesson 19: Partial Derivatives and Gradients
-- Partial derivatives, gradient vector, directional derivatives
-- Gradients perpendicular to contour lines, steepest ascent
-- Gradient field visualization, multivariable chain rule
-- Critical points, second derivative test, concavity and inflection points
+### Lesson 19: 3D Geometry, Curves, and Curvature
+- Lines and planes in 3D, parametric and symmetric equations
+- Vector-valued functions r(t), tangent vectors, arc length
+- Curvature kappa, osculating circle, TNB (Frenet-Serret) frame
+- Reparameterization by arc length, geometry vs kinematics
 
-### Lesson 20: Chain Rule and Jacobians
+### Lesson 20: Multivariable Functions, Limits, and Partial Derivatives
+- Functions f: R^n -> R, domain, range, level curves and surfaces
+- Limits and continuity in several variables
+- Partial derivatives, gradient vector, higher-order partials
+- Gradients perpendicular to contour lines, steepest ascent
+
+### Lesson 21: The Chain Rule, Directional Derivatives, and Gradients
 - Single-variable and multivariable chain rule
 - Jacobian matrix: derivative of vector-to-vector functions
+- Directional derivatives, gradient field visualization
 - Computation graphs, forward pass vs backward pass
-- Reverse-mode autodiff vs forward-mode, backprop engine (micrograd)
 
-### Lesson 21: Multiple Integration
+### Lesson 22: Optimization, Taylor Expansions, and the Implicit Function Theorem
+- Critical points, Hessian matrix, second derivative test
+- Lagrange multipliers, the Lagrangian, KKT conditions
+- Taylor expansion: zeroth, first, second order approximations
+- Multivariate Taylor: local landscape as quadratic form of the Hessian
+- Implicit function theorem, failure at singularities (bifurcation points, SLT)
+- Loss landscapes, saddle points, convex optimization
+
+### Lesson 23: Multiple Integration and Change of Variables
 - Double/triple integrals, iterated integration, Fubini's theorem
 - Change of variables, Jacobian determinant as local stretching
 - Polar/spherical coordinates, the Gaussian integral via polar coordinates
 - Monte Carlo integration, importance sampling, reparameterization trick
 
-### Lesson 22: Taylor Expansions and the Implicit Function Theorem
-- Taylor expansion: zeroth, first, second order approximations
-- Multivariate Taylor: local landscape as quadratic form of the Hessian
-- Implicit function theorem, failure at singularities (bifurcation points, SLT)
-- Big-O notation, Newton's method, scaling laws in asymptotic notation
-
-### Lesson 23: Optimization and Lagrange Multipliers
-- Gradient descent, SGD, learning rate, momentum, Adam
-- Lagrange multipliers, the Lagrangian, KKT conditions
-- Regularization as soft constraint, duality, convex optimization
-- Loss landscapes, saddle points, bias-variance, double descent, grokking
-
 ### Block C: Vector Calculus (Lessons 24–27, 28)
 
 ### Lesson 24: Line Integrals
-- Scalar and vector line integrals, path parameterization
-- Work as line integral of force field
-- Conservative fields, path independence, potential functions
-- Fundamental theorem for line integrals
+- Parametric curves, tangent vectors, reparameterization, arc length parameterization
+- Scalar line integrals: accumulating a scalar field along a curve
+- Line integrals in 2D and 3D
+- Distinguishing types of line integrals: scalar (ds) vs component (dx, dy, dz)
+- Piecewise-smooth curves
 
 ### Lesson 25: Vector Fields
+- Vector fields in 2D and 3D, gradient vector fields and potential functions
 - Divergence: sources and sinks, div(F) = nabla . F
-- Curl: rotation/circulation, curl(F) = nabla x F
-- Irrotational and solenoidal fields
-- Physical and ML interpretations (flow fields, gradient fields)
+- Curl in 2D (scalar curl): circulation density
+- Line integral of a vector field (work), line integrals w.r.t. x, y, z
+- Flux integrals with components
+- Fundamental theorem for line integrals, path independence
+- Conservative field test, exact and closed forms
+- Finding potential functions, simply connected domains
 
 ### Lesson 26: Green's Theorem
-- Relating line integrals to double integrals over enclosed region
-- Circulation and flux forms of Green's theorem
-- Applications: area computation, verifying conservative fields
-- Connection to fundamental theorem of calculus in higher dimensions
+- Green's theorem (circulation form): boundary circulation = interior curl integral
+- Green's theorem (flux/divergence form): boundary flux = interior divergence integral
+- Composite (multiply-connected) regions: domains with holes, boundary orientations
+- The Laplacian, harmonic functions
+- Applications: area computation, fluid flow, electrostatics
 
 ### Lesson 27: Surface Integrals
-- Parameterized surfaces, surface area element
+- Parametric surfaces, visualizing and understanding surfaces in 3D
+- Surface area element, normal vectors via cross product
+- Why curl is useful: spider criteria for conservative fields
+- The 3D curl test for conservative fields (curl F = 0)
 - Scalar and vector surface integrals (flux)
-- Orientation of surfaces, normal vectors
-- Applications to physics and probability on manifolds
+- Orientation of surfaces, orientability (Mobius strip)
 
 ### Lesson 28: Stokes' Theorem and the Divergence Theorem
 - Stokes' theorem: circulation integral = curl flux through surface
+- Computing Stokes' theorem: converting between surface and line integrals
 - Divergence theorem: flux through closed surface = divergence integral over volume
+- Finding sources and sinks using the divergence theorem
 - Generalized Stokes' theorem unifying FTC, Green's, classical Stokes', divergence
 - Differential forms (conceptual), connections to topology and gauge theory
 
 ### Block D: PDEs (Lessons 29–33)
 
-### Lesson 29: Heat Equation
+### Lesson 29: Heat Equation, Separation of Variables, and Laplace's Equation
 - u_t = k nabla^2 u, diffusion as Gaussian blurring
-- Solution via convolution with Gaussian kernel
+- Separation of variables, boundary conditions (Dirichlet, Neumann)
+- Laplace equation (steady-state heat), maximum principle
 - Forward process of diffusion models as progressive noise addition
-- Boundary conditions (Dirichlet, Neumann), maximum principle
 
-### Lesson 30: Separation of Variables and Fourier Series
-- Separation of variables for linear PDEs
+### Lesson 30: Fourier Series and the Wave Equation
 - Fourier series: representing functions as sums of sinusoids
 - Fourier coefficients, convergence, Gibbs phenomenon
-- High-frequency modes decay fastest (coarse-to-fine generation)
-
-### Lesson 31: Wave Equation
 - u_tt = c^2 nabla^2 u, traveling wave solutions, d'Alembert's formula
 - Standing waves, normal modes, superposition
-- Energy conservation in wave systems
-- Signal propagation and information flow analogies
 
-### Lesson 32: Helmholtz, Laplace, and Transport Equations
-- Laplace equation (steady-state heat), harmonic functions
+### Lesson 31: Eigenvalue Problems and Sturm-Liouville Theory
+- Sturm-Liouville eigenvalue problems, orthogonal eigenfunctions
+- Regular and singular Sturm-Liouville problems
+- Eigenfunction expansions, completeness
+- Connections to spectral methods in ML
+
+### Lesson 32: Helmholtz Equation, Fourier Transform, and Infinite Domains
 - Helmholtz equation (frequency-domain wave), eigenvalue problems
-- Transport equation, method of characteristics
+- Fourier transform for PDEs on infinite domains
+- Laplace equation in polar/spherical coordinates
 - Connections to spectral methods and graph Laplacians in ML
 
-### Lesson 33: PDEs in ML
+### Lesson 33: Method of Characteristics, Transport Equations, and PDEs in ML
+- Transport equation, method of characteristics
 - Fokker-Planck equation: probability evolution during SGD
 - Score function, score matching, reverse SDE for diffusion models
 - Probability flow ODE, continuous normalizing flows
@@ -392,23 +408,25 @@
 
 ### Block E: ML Calculus (Lessons 34–36)
 
-### Lesson 34: Matrix Calculus
-- Gradient vector, Jacobian matrix, Hessian matrix
-- Key matrix calculus results: d/dx(Ax), d/dx(x^T A x), d/dX tr(AX)
-- Hessian eigenvalues as curvature, condition number and zigzag SGD
-- Taylor linearization: f(x+d) ~ f(x) + nabla f^T d (why gradient descent works)
+### Lesson 34: Scalar Derivatives, Partial Derivatives, and the Gradient
+- Scalar derivative rules review: constant, power, sum, product, chain
+- Partial derivatives: treat all variables except target as constants
+- The gradient: nabla f = [df/dx_1, ..., df/dx_n] — row vector of all partials
+- Gradient as direction of steepest ascent
 
-### Lesson 35: Optimization Algorithms
-- Gradient descent, SGD, mini-batch estimates
-- Momentum, Nesterov acceleration, Adam optimizer
-- Convexity vs non-convexity, learning rate schedules
-- Implicit regularization, edge of stability, SGD noise as temperature
+### Lesson 35: Matrix Calculus — Jacobians, Element-wise Rules, and Chain Rules
+- Jacobian matrix: J_{ij} = df_i/dx_j for f: R^n -> R^m (m x n, numerator layout)
+- Element-wise operations yield diagonal Jacobians: d(w circ x)/dw = diag(x)
+- Scalar expansion and vector sum reduction rules
+- Dot product gradient: d(w . x)/dw = x^T, d(w . x)/dx = w^T
+- Vector chain rule: df/dx = (df/dg)(dg/dx) — Jacobian multiplication IS backpropagation
 
-### Lesson 36: Loss Landscapes and Gradient Flow
-- Loss landscapes in high dimensions: saddle points dominate
-- Gradient flow dW/dt = -nabla L, Lyapunov analysis
-- Neural ODEs, adjoint method, ResNets as Euler steps
-- SDEs for SGD, Fokker-Planck steady state, simulated annealing
+### Lesson 36: Neural Network Gradients — From Neurons to Backpropagation
+- Gradient of neuron activation: f = max(0, w . x + b), chain rule through ReLU
+- Gradient of MSE loss w.r.t. weights and bias
+- ReLU gating: zero gradient when inactive, pass-through when active
+- Computation graphs, forward-mode vs reverse-mode autodiff
+- Reverse mode = backpropagation: 1 backward pass for all parameters
 
 ---
 
@@ -651,7 +669,7 @@
 - The bitter lesson (Rich Sutton): scale wins over cleverness
 - Emergent capabilities, measurement artifact debate, grokking as phase transition
 
-### Lesson 59: Attention Mechanism
+### Lesson 59: Attention — Dot Products in Action
 - Query, Key, Value vectors: Q = xW_Q, K = xW_K, V = xW_V
 - Attention scores: QK^T/sqrt(d_k), softmax as probability distribution
 - Multi-head attention, causal/autoregressive masking
