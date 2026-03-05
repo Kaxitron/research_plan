@@ -60,6 +60,8 @@
 - [37. Inverse Function Derivatives](#37-inverse-function-derivatives)
 - [38. Polar Coordinates](#38-polar-coordinates)
 - [39. Taylor's Theorem — Remainder Forms](#39-taylors-theorem--remainder-forms)
+- [40. First-Order ODEs — Solution Methods](#40-first-order-odes--solution-methods)
+- [41. Exact Equations and Integrating Factors for Non-Exact Equations](#41-exact-equations-and-integrating-factors-for-non-exact-equations)
 
 ### [Key Identities Quick Reference](#key-identities-quick-reference)
 
@@ -1239,6 +1241,88 @@ To go from "compute derivatives" to $\sum$ notation:
 
 ---
 
+## 40. First-Order ODEs — Solution Methods
+
+### Separable Equations
+
+**Form:** $g(y)\,dy = f(x)\,dx$
+
+**Method:** Isolate all $y$-terms (including $dy$) on one side, all $x$-terms (including $dx$) on the other, then integrate both sides:
+
+$$\int g(y)\,dy = \int f(x)\,dx + C$$
+
+**When to use:** Whenever you can algebraically separate variables to opposite sides.
+
+### First-Order Linear Equations (Integrating Factor)
+
+**Standard form:** $y' + P(x)\,y = Q(x)$
+
+**Integrating factor:** $\mu(x) = e^{\int P(x)\,dx}$
+
+**Solution:**
+
+$$y = \frac{1}{\mu(x)}\left[\int \mu(x)\,Q(x)\,dx + C\right]$$
+
+**Why it works:** The condition for $\mu$ to turn the left side into $\frac{d}{dx}[\mu y]$ is $\mu' = \mu P(x)$, which is itself a separable ODE. So the method bootstraps: solve an easy separable ODE to find $\mu$, then use $\mu$ to crack the harder linear ODE.
+
+**Key insight:** Multiplying by $\mu$ is conceptually the same as **preconditioning** in optimization — reshaping a hard problem into a well-behaved one.
+
+### Bernoulli Equations
+
+**Form:** $y' + P(x)\,y = Q(x)\,y^n$
+
+The $y^n$ term on the right makes this nonlinear.
+
+**Substitution:** $v = y^{1-n}$
+
+This converts the Bernoulli equation into a first-order linear equation in $v$, which you solve with the integrating factor method, then substitute back to get $y$.
+
+**Special cases:** $n = 0$ gives a standard linear equation; $n = 1$ gives a separable equation.
+
+---
+
+## 41. Exact Equations and Integrating Factors for Non-Exact Equations
+
+### Exact Equations
+
+**Form:** $M(x,y)\,dx + N(x,y)\,dy = 0$
+
+**Exactness test:** $\dfrac{\partial M}{\partial y} = \dfrac{\partial N}{\partial x}$
+
+If this holds, there exists a function $F(x,y)$ such that $dF = M\,dx + N\,dy$, and the solution is $F(x,y) = C$.
+
+**Intuition:** The equation says $dF = 0$, meaning the solution curves are level curves (contours) of $F$. This is implicit differentiation in reverse — implicit differentiation goes from $F(x,y) = C$ to the ODE; solving exact equations goes from the ODE back to $F(x,y) = C$.
+
+**Method to find $F$:**
+
+1. Integrate $\frac{\partial F}{\partial x} = M$ with respect to $x$ → get $F = (\text{something}) + g(y)$
+2. Differentiate result with respect to $y$, set equal to $N$ → solve for $g'(y)$
+3. Integrate $g'(y)$ to get $g(y)$, substitute back into $F$
+
+(You can equivalently start by integrating $N$ with respect to $y$ and using $M$ to find the leftover $h(x)$.)
+
+### Integrating Factors for Non-Exact Equations
+
+When $\frac{\partial M}{\partial y} \neq \frac{\partial N}{\partial x}$, multiply the equation by $\mu$ to make it exact.
+
+**Case 1 — $\mu$ depends only on $x$:** If
+
+$$\frac{\dfrac{\partial M}{\partial y} - \dfrac{\partial N}{\partial x}}{N} = h(x) \quad \text{(function of } x \text{ only)}$$
+
+then $\mu(x) = e^{\int h(x)\,dx}$.
+
+**Case 2 — $\mu$ depends only on $y$:** If
+
+$$\frac{\dfrac{\partial N}{\partial x} - \dfrac{\partial M}{\partial y}}{M} = k(y) \quad \text{(function of } y \text{ only)}$$
+
+then $\mu(y) = e^{\int k(y)\,dy}$.
+
+**Derivation:** Requiring $\frac{\partial(\mu M)}{\partial y} = \frac{\partial(\mu N)}{\partial x}$ and assuming $\mu$ depends on one variable only yields a separable ODE for $\mu$. Same bootstrap pattern as the linear integrating factor.
+
+After finding $\mu$, multiply through and solve the now-exact equation using the standard method above.
+
+---
+
 ## Key Identities Quick Reference
 
 | Identity | Meaning |
@@ -1285,6 +1369,7 @@ To go from "compute derivatives" to $\sum$ notation:
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus through Lesson 21)*
+
 
 
 
