@@ -38,6 +38,7 @@
 
 **[Calculus — Ordinary Differential Equations](#calculus--ordinary-differential-equations)**
 - [Classifying Equilibria of Autonomous ODEs — Two Methods](#classifying-equilibria-of-autonomous-odes--two-methods)
+- [Repeated Roots — Where xe^(rx) Comes From](#repeated-roots--where-xerx-comes-from)
 
 **[Calculus — Multivariable](#calculus--multivariable)**
 - [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
@@ -338,13 +339,27 @@ Newton's method finds zeros. That's all it does. The optimization trick: minimiz
 
 ### Classifying Equilibria of Autonomous ODEs — Two Methods
 
-For $dy/dt = f(y)$ with equilibrium $f(y^*) = 0$, two ways to determine stability:
+For dy/dt = f(y) with equilibrium f(y\*) = 0, two ways to determine stability:
 
-**Method 1 — Sign checking:** Evaluate $f(y)$ at test points above and below $y^*$. If both sides push toward $y^*$ (positive below, negative above), it's **stable**. If both push away, it's **unstable**.
+**Method 1 — Sign checking:** Evaluate f(y) at test points above and below y\*. If both sides push toward y\* (positive below, negative above), it's **stable**. If both push away, it's **unstable**.
 
-**Method 2 — Derivative shortcut:** Compute $f'(y^*)$ (derivative of $f$ with respect to $y$, not $t$). Negative → **stable**, positive → **unstable**. This works because $f'(y^*)$ tells you whether the rate-of-change function is decreasing through zero (arrows flip from "toward" to "toward" = stable) or increasing through zero (arrows flip from "away" to "away" = unstable). Under the hood, you're linearizing: near $y^*$, the displacement $u = y - y^*$ satisfies $du/dt \approx f'(y^*) \cdot u$, which is exponential decay (stable) or growth (unstable).
+**Method 2 — Derivative shortcut:** Compute f'(y\*) (derivative of f with respect to y, not t). Negative → **stable**, positive → **unstable**. This works because f'(y\*) tells you whether the rate-of-change function is decreasing through zero (arrows converge = stable) or increasing through zero (arrows diverge = unstable). Under the hood, you're linearizing: near y\*, the displacement u = y − y\* satisfies du/dt ≈ f'(y\*) · u, which is exponential decay (stable) or growth (unstable).
 
-**ML version:** For gradient flow $dw/dt = -L'(w)$, the shortcut gives $f'(w^*) = -L''(w^*)$. Stability condition $f' < 0$ becomes $L'' > 0$ — positive curvature = loss minimum = stable. This is the second derivative test repackaged as dynamical stability.
+**ML version:** For gradient flow dw/dt = −L'(w), the shortcut gives f'(w\*) = −L''(w\*). Stability condition f' < 0 becomes L'' > 0 — positive curvature = loss minimum = stable. This is the second derivative test repackaged as dynamical stability.
+
+### Repeated Roots — Where xe^(rx) Comes From
+
+When a second-order ODE ay'' + by' + cy = 0 has a repeated characteristic root r, the quadratic ar² + br + c = 0 touches zero at only one point. There is no second value s ≠ r satisfying the polynomial, so the exponential guess is exhausted after giving us just y₁ = e^(rx).
+
+The second solution comes from a limit argument. With distinct roots r₁ and r₂, the difference (e^(r₂x) − e^(r₁x)) / (r₂ − r₁) is a valid solution (linear combination scaled by a constant). Now slide r₂ → r₁. That difference quotient is literally the definition of differentiating e^(rx) with respect to r:
+
+d/dr [e^(rx)] = x · e^(rx)
+
+So xe^(rx) is what the second exponential *degenerates into* when the two roots collide. It's not a lucky guess — it's the unique limit of the distinct-roots solution as the gap closes.
+
+Why it's independent: the Wronskian of e^(rx) and xe^(rx) is e^(2rx), which is never zero. The polynomial factor x introduces growth that no constant multiple of e^(rx) can replicate.
+
+**ML connection:** The repeated root case corresponds to critical damping in optimizer dynamics — the system decays as fast as possible without oscillating. For SGD with momentum, this is the ideal tuning point.
 
 ---
 
