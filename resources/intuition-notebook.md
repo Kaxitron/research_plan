@@ -22,16 +22,31 @@
 - [Null space lives in the INPUT space, not the output space](#null-space-lives-in-the-input-space-not-the-output-space)
 - [Miscellaneous Thoughts](#miscellaneous-thoughts)
 
-**[Calculus](#calculus)**
+**[Calculus — Fundamentals](#calculus--fundamentals)**
 - [The derivative is literally rise/run — just infinitely zoomed in](#the-derivative-is-literally-riserun--just-infinitely-zoomed-in)
 - [Geometric understanding of derivatives, the product rule, and the chain rule](#geometric-understanding-of-derivatives-the-product-rule-and-the-chain-rule)
-- [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
 - [Riemann Sums — What they really are](#riemann-sums--what-they-really-are)
 - [Trig Sub — Converting back from double angles](#trig-sub--converting-back-from-double-angles)
 - [The Gaussian Integral and the Standard Normal — Why √(2π) and not √π](#the-gaussian-integral-and-the-standard-normal--why-2π-and-not-π)
+- [Series convergence — the decision algorithm](#series-convergence--the-decision-algorithm)
+- [The Integral Test — why comparing to an integral works](#the-integral-test--why-comparing-to-an-integral-works)
+- [Which convergence test for which series — pattern matching guide](#which-convergence-test-for-which-series--pattern-matching-guide)
 - [Taylor Series -- Polynomial Approximation as Derivative Matching](#taylor-series----polynomial-approximation-as-derivative-matching)
 - [Taylor Remainder -- What Each Piece Means Visually](#taylor-remainder----what-each-piece-means-visually)
 - [Why Taylors Theorem Is True](#why-taylors-theorem-is-true----repeated-integration-by-parts)
+- [Newton's Method for Optimization — Root-Finding One Level Up](#newtons-method-for-optimization--root-finding-one-level-up)
+
+**[Calculus — Ordinary Differential Equations](#calculus--ordinary-differential-equations)**
+- [Classifying Equilibria of Autonomous ODEs — Two Methods](#classifying-equilibria-of-autonomous-odes--two-methods)
+
+**[Calculus — Multivariable](#calculus--multivariable)**
+- [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
+
+**[Calculus — Vector Calculus](#calculus--vector-calculus)**
+
+**[Calculus — Partial Differential Equations](#calculus--partial-differential-equations)**
+
+**[Calculus — Matrix Calculus & Optimization](#calculus--matrix-calculus--optimization)**
 
 **[Statistics & Regression](#statistics--regression)**
 - [Least squares IS projection — and the residuals prove it](#least-squares-is-projection--and-the-residuals-prove-it)
@@ -107,7 +122,7 @@ The null space of an m×n matrix is a subspace of ℝⁿ (the column count = inp
 
 ---
 
-## Calculus
+## Calculus — Fundamentals
 
 ### The derivative is literally rise/run — just infinitely zoomed in
 
@@ -124,8 +139,6 @@ This fraction view is what makes the chain rule obvious: df/dg · dg/dx = df/dx 
 
 The derivative of x² comes from a square growing by dx on each side — two strips of x·dx plus a negligible corner. For 1/x, a rectangle with constant area 1 gets wider, so its height *must* shrink — the negative sign in -1/x² is geometric necessity. The product rule is two strips on a rectangle where both sides change. The chain rule is cascading nudges through a pipeline of number lines, each function scaling the nudge by its own derivative.
 
-### The gradient is perpendicular to contour lines and points uphill
-If you're standing on a hillside, the gradient tells you the steepest uphill direction. Gradient descent goes opposite — steepest downhill. The shape of the contour lines (elongated vs. circular) determines how hard optimization is. Circular = easy (condition number ≈ 1). Elongated = hard (high condition number). This is why preconditioning and Adam optimizer help.
 
 ### Riemann Sums — What they really are
 
@@ -319,6 +332,47 @@ Start from FTC: f(x) = f(a) + integral of f'(t) dt. Apply integration by parts w
 
 Newton's method finds zeros. That's all it does. The optimization trick: minimizing g(x) means finding where g'(x) = 0, which is a root-finding problem. Apply Newton to f(x) = g'(x) and the second derivative g''(x) appears naturally as f'(x). You're still just finding zeros — but of the derivative, not the original function. This is the conceptual bridge to all second-order optimizers in ML: training a neural network = finding zeros of ∇L(w), which is Newton's method applied to the gradient. The Hessian appears because it's the derivative of the gradient.
 
+---
+
+## Calculus — Ordinary Differential Equations
+
+### Classifying Equilibria of Autonomous ODEs — Two Methods
+
+For $dy/dt = f(y)$ with equilibrium $f(y^*) = 0$, two ways to determine stability:
+
+**Method 1 — Sign checking:** Evaluate $f(y)$ at test points above and below $y^*$. If both sides push toward $y^*$ (positive below, negative above), it's **stable**. If both push away, it's **unstable**.
+
+**Method 2 — Derivative shortcut:** Compute $f'(y^*)$ (derivative of $f$ with respect to $y$, not $t$). Negative → **stable**, positive → **unstable**. This works because $f'(y^*)$ tells you whether the rate-of-change function is decreasing through zero (arrows flip from "toward" to "toward" = stable) or increasing through zero (arrows flip from "away" to "away" = unstable). Under the hood, you're linearizing: near $y^*$, the displacement $u = y - y^*$ satisfies $du/dt \approx f'(y^*) \cdot u$, which is exponential decay (stable) or growth (unstable).
+
+**ML version:** For gradient flow $dw/dt = -L'(w)$, the shortcut gives $f'(w^*) = -L''(w^*)$. Stability condition $f' < 0$ becomes $L'' > 0$ — positive curvature = loss minimum = stable. This is the second derivative test repackaged as dynamical stability.
+
+---
+
+## Calculus — Multivariable
+
+### The gradient is perpendicular to contour lines and points uphill
+If you're standing on a hillside, the gradient tells you the steepest uphill direction. Gradient descent goes opposite — steepest downhill. The shape of the contour lines (elongated vs. circular) determines how hard optimization is. Circular = easy (condition number ≈ 1). Elongated = hard (high condition number). This is why preconditioning and Adam optimizer help.
+
+---
+
+## Calculus — Vector Calculus
+
+*(To be filled during Block C)*
+
+---
+
+## Calculus — Partial Differential Equations
+
+*(To be filled during Block D)*
+
+---
+
+## Calculus — Matrix Calculus & Optimization
+
+*(To be filled during Block E)*
+
+---
+
 ## Statistics & Regression
 
 ### Least squares IS projection — and the residuals prove it
@@ -384,6 +438,6 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-*Last updated: March 2026 -- through Lesson 13 Part 14 (Newton's Method)*
+*Last updated: March 2026 -- through Lesson 16 Part 1 (Autonomous ODEs & Phase Lines)*
 
 
