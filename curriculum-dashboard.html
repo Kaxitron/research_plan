@@ -1074,6 +1074,60 @@
   .progress-modal-logged td {
     padding: 3px 6px; color: var(--text); border-bottom: 1px solid var(--border);
   }
+  .cal-hours-summary {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 12px 0 4px;
+  }
+  .cal-hours-total {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-1);
+    margin-bottom: 8px;
+  }
+  .cal-hours-total .label {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+  .cal-hours-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cal-hours-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cal-hours-row .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cal-hours-row .phase-name {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .cal-hours-row .phase-hrs {
+    color: var(--text-bright);
+    font-weight: 600;
+  }
+  .cal-hours-none {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
   .hours-log-detail {
     font-size: 12px;
     font-family: 'JetBrains Mono', monospace;
@@ -2869,6 +2923,7 @@ function cycleStatus(id, ev) {
 
   // Complete → not-started (remove completion record and log entries)
   if (prevStatus === 'complete') {
+    if (!confirm(`Reset "${lesson.title}" back to not started? This will remove all logged hours for this lesson.`)) return;
     const paceData = loadPaceData();
     delete paceData.completions[id];
     savePaceData(paceData);
@@ -3695,8 +3750,9 @@ function renderCalendar() {
     if (isToday) classes += ' today';
     if (isSelected) classes += ' selected';
 
+    const dayHrs = getLoggedHoursForDate(dk);
     html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
-    html += `<div class="cal-day-num">${d}</div>`;
+    html += `<div class="cal-day-num">${d}${dayHrs > 0 ? `<span style="float:right;font-size:9px;font-weight:600;color:var(--accent-1)">${Math.round(dayHrs * 10) / 10}h</span>` : ''}</div>`;
 
     dayLessons.forEach(lesson => {
       const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
@@ -3809,6 +3865,36 @@ function showDayPicker(dk) {
     </div>
     <div class="detail-title">${dateStr}</div>
   </div>`;
+
+  // Hours worked summary
+  const dayLogEntries = getLogEntriesForDate(dk);
+  const dayTotalHours = dayLogEntries.reduce((s, e) => s + e.hours, 0);
+  html += `<div class="cal-hours-summary">`;
+  if (dayTotalHours > 0) {
+    html += `<div class="cal-hours-total">${Math.round(dayTotalHours * 10) / 10}h<span class="label">worked</span></div>`;
+    // Group by phase
+    const phaseHours = {};
+    dayLogEntries.forEach(e => {
+      const lesson = LESSONS.find(l => String(l.id) === String(e.lessonId));
+      if (!lesson) return;
+      const phase = PHASES.find(p => p.id === lesson.phase);
+      if (!phase) return;
+      if (!phaseHours[phase.id]) phaseHours[phase.id] = { name: phase.name, color: phase.color, hours: 0 };
+      phaseHours[phase.id].hours += e.hours;
+    });
+    html += `<div class="cal-hours-breakdown">`;
+    Object.values(phaseHours).sort((a, b) => b.hours - a.hours).forEach(p => {
+      html += `<div class="cal-hours-row">
+        <span class="dot" style="background:${p.color}"></span>
+        <span class="phase-name">${p.name}</span>
+        <span class="phase-hrs">${Math.round(p.hours * 10) / 10}h</span>
+      </div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="cal-hours-none">No hours logged</div>`;
+  }
+  html += `</div>`;
 
   // Scheduled for this day
   if (dayItems.length > 0) {
