@@ -6,7 +6,7 @@
 
 *⚠️ When adding a new cheat sheet item, place it in the correct phase and block section below. Also add a corresponding link in the Table of Contents. Calculus items go into one of the six blocks (Fundamentals, ODEs, Multivariable, Vector Calculus, PDEs, Matrix Calculus). Probability items go into Phase 3, and so on.*
 
-*⚠️ GitHub markdown does not reliably render LaTeX. Use plain text for math (e.g., `e^(rx)`, `y*`, `f'(x)`) instead of `$...$` or `$$...$$`. Existing LaTeX in older sections may not display correctly on GitHub.*
+*⚠️ GitHub markdown can mangle LaTeX that contains characters GitHub interprets as formatting (e.g., `*` for bold/italic). Escape these with backslashes (e.g., `y\*` instead of `y*` inside LaTeX) or use plain text math when LaTeX won't render cleanly.*
 
 ---
 
