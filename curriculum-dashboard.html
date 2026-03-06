@@ -1081,11 +1081,43 @@
     padding: 0 16px;
   }
   .hours-log-detail .log-total { color: var(--accent-1); }
-  .hours-log-detail .log-breakdown {
+  .hours-log-detail .log-date-group {
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+  .hours-log-detail .log-date-header {
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .hours-log-detail .log-date-total {
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .hours-log-detail .log-session-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: var(--text-dim);
     font-size: 11px;
-    margin-top: 2px;
-    padding-left: 16px;
+    padding: 1px 0 1px 12px;
+  }
+  .hours-log-detail .log-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 10px;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .hours-log-detail .log-session-row:hover .log-delete-btn {
+    opacity: 1;
+  }
+  .hours-log-detail .log-delete-btn:hover {
+    color: #f87171;
   }
 </style>
 </head>
@@ -3056,15 +3088,21 @@ function selectLesson(id) {
       html += `<div class="log-total">\ud83d\udcdd Hours logged: ${totalLogged}h</div>`;
     }
     const byDate = {};
-    logEntries.forEach(e => { if (!byDate[e.date]) byDate[e.date] = 0; byDate[e.date] += e.hours; });
+    logEntries.forEach(e => { if (!byDate[e.date]) byDate[e.date] = []; byDate[e.date].push(e); });
     const dateEntries = Object.entries(byDate).sort((a, b) => a[0].localeCompare(b[0]));
     if (dateEntries.length > 0) {
       const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const breakdown = dateEntries.map(([d, h]) => {
+      dateEntries.forEach(([d, entries]) => {
         const parts = d.split('-');
-        return `${months[parseInt(parts[1])-1]} ${parseInt(parts[2])}: ${h}h`;
-      }).join(' \u00b7 ');
-      html += `<div class="log-breakdown">${breakdown}</div>`;
+        const dayTotal = entries.reduce((s, e) => s + e.hours, 0);
+        const dateLabel = `${months[parseInt(parts[1])-1]} ${parseInt(parts[2])}`;
+        html += `<div class="log-date-group">`;
+        html += `<div class="log-date-header">${dateLabel} <span class="log-date-total">${dayTotal}h</span></div>`;
+        entries.forEach(e => {
+          html += `<div class="log-session-row"><span>${e.hours}h</span><button class="log-delete-btn" onclick="event.stopPropagation();deleteLogEntryAndRefresh(${e.id})" title="Delete entry">\u2715</button></div>`;
+        });
+        html += `</div>`;
+      });
     }
     html += `</div>`;
   }
