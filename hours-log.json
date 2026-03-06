@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "lessonId": 2,
+    "hours": 2.4,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 2,
+    "lessonId": 3,
+    "hours": 2.4,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 3,
+    "lessonId": 4,
+    "hours": 2.7,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 4,
+    "lessonId": 5,
+    "hours": 2.4,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 5,
+    "lessonId": 6,
+    "hours": 2.7,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 6,
+    "lessonId": 7,
+    "hours": 2,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 7,
+    "lessonId": 8,
+    "hours": 3,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 8,
+    "lessonId": 9,
+    "hours": 3,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 9,
+    "lessonId": 10,
+    "hours": 2.4,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 10,
+    "lessonId": 11,
+    "hours": 2.4,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 11,
+    "lessonId": 12,
+    "hours": 2.7,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z",
+    "seeded": true
+  },
+  {
+    "id": 13,
+    "lessonId": 14,
+    "hours": 2,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T06:30:50.950Z"
+  },
+  {
+    "id": 14,
+    "lessonId": 15,
+    "hours": 3.5,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T07:50:15.965Z"
+  },
+  {
+    "id": 15,
+    "lessonId": 13,
+    "hours": 25,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T08:21:07.793Z"
+  },
+  {
+    "id": 16,
+    "lessonId": 15,
+    "hours": 0.2,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T09:24:48.437Z"
+  },
+  {
+    "id": 17,
+    "lessonId": "cs01",
+    "hours": 0.5,
+    "date": "2026-03-05",
+    "timestamp": "2026-03-05T22:04:52.115Z"
+  },
+  {
+    "id": 18,
+    "lessonId": 16,
+    "hours": 4,
+    "date": "2026-03-06",
+    "timestamp": "2026-03-06T05:28:56.649Z"
+  },
+  {
+    "id": 19,
+    "lessonId": 16,
+    "hours": 0.5,
+    "date": "2026-03-06",
+    "timestamp": "2026-03-06T06:15:33.234Z"
+  },
+  {
+    "id": 20,
+    "lessonId": "cs01",
+    "hours": 0.5,
+    "date": "2026-03-06",
+    "timestamp": "2026-03-06T06:58:51.430Z"
+  }
+]
