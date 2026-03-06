@@ -1311,7 +1311,19 @@ The $y^n$ term on the right makes this nonlinear.
 
 **Substitution:** $v = y^{1-n}$
 
-This converts the Bernoulli equation into a first-order linear equation in $v$, which you solve with the integrating factor method, then substitute back to get $y$.
+This converts the Bernoulli equation into a first-order linear equation in $v$:
+
+$$v' + (1-n)P(x)\,v = (1-n)Q(x)$$
+
+**Critical detail:** The factor $(1-n)$ multiplies *both* $P(x)$ and $Q(x)$ in the transformed equation. The integrating factor and solution formula use these transformed coefficients:
+
+$$\mu(x) = e^{\int (1-n)P(x)\,dx}$$
+
+$$v = \frac{1}{\mu(x)}\left[\int \mu(x) \cdot (1-n)Q(x)\,dx + C\right]$$
+
+Then substitute back: $y = v^{1/(1-n)}$.
+
+**Common mistake:** Using the original $P(x)$ and $Q(x)$ from the Bernoulli equation directly in the integrating factor formula, forgetting the $(1-n)$ multiplier on both.
 
 **Special cases:** $n = 0$ gives a standard linear equation; $n = 1$ gives a separable equation.
 
