@@ -66,6 +66,7 @@
 #### [Ordinary Differential Equations](#ordinary-differential-equations)
 - [40. First-Order ODEs — Solution Methods](#40-first-order-odes--solution-methods)
 - [41. Exact Equations and Integrating Factors for Non-Exact Equations](#41-exact-equations-and-integrating-factors-for-non-exact-equations)
+- [42. Constant-Coefficient Homogeneous Linear ODEs](#42-constant-coefficient-homogeneous-linear-odes)
 
 #### [Multivariable Calculus](#multivariable-calculus)
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1368,6 +1369,62 @@ then $\mu(y) = e^{\int k(y)\,dy}$.
 **Derivation:** Requiring $\frac{\partial(\mu M)}{\partial y} = \frac{\partial(\mu N)}{\partial x}$ and assuming $\mu$ depends on one variable only yields a separable ODE for $\mu$. Same bootstrap pattern as the linear integrating factor.
 
 After finding $\mu$, multiply through and solve the now-exact equation using the standard method above.
+
+---
+
+## 42. Constant-Coefficient Homogeneous Linear ODEs
+
+**Form:** $ay'' + by' + cy = 0$ (extends to any order)
+
+**Method:** Guess $y = e^{rx}$. Since $y' = re^{rx}$ and $y'' = r^2 e^{rx}$, substituting and dividing by $e^{rx} \neq 0$ gives the **characteristic equation:**
+
+$$ar^2 + br + c = 0$$
+
+The discriminant $\Delta = b^2 - 4ac$ determines three cases:
+
+### Case 1: Distinct Real Roots ($\Delta > 0$)
+
+Two real roots $r_1 \neq r_2$:
+
+$$y = c_1 e^{r_1 x} + c_2 e^{r_2 x}$$
+
+**Behavior:** Two exponential modes evolving at different rates. No oscillation.
+
+### Case 2: Repeated Root ($\Delta = 0$)
+
+One root $r = -b/(2a)$:
+
+$$y = c_1 e^{rx} + c_2\, x\, e^{rx} = (c_1 + c_2 x)e^{rx}$$
+
+**Why $xe^{rx}$:** The quadratic has only one root, so the exponential guess is exhausted. The second solution arises as $\lim_{r_2 \to r_1} \frac{e^{r_2 x} - e^{r_1 x}}{r_2 - r_1} = \frac{\partial}{\partial r}e^{rx} = xe^{rx}$.
+
+### Case 3: Complex Conjugate Roots ($\Delta < 0$)
+
+Roots $r = \alpha \pm \beta i$ where $\alpha = -b/(2a)$ and $\beta = \sqrt{4ac - b^2}/(2a)$:
+
+$$y = e^{\alpha x}(c_1 \cos\beta x + c_2 \sin\beta x)$$
+
+**Why sines and cosines:** Euler's formula $e^{i\theta} = \cos\theta + i\sin\theta$ converts the complex exponentials into real-valued oscillating solutions. $\alpha$ controls exponential growth/decay; $\beta$ controls oscillation frequency.
+
+### Higher-Order Extension
+
+For an $n$th-order constant-coefficient ODE, the characteristic equation is an $n$th-degree polynomial with $n$ roots (counting multiplicity). The same three cases apply to each root:
+
+- Each distinct real root $r$ contributes $e^{rx}$
+- A root $r$ with multiplicity $m$ contributes $e^{rx}, xe^{rx}, x^2 e^{rx}, \ldots, x^{m-1}e^{rx}$
+- Each complex pair $\alpha \pm \beta i$ contributes $e^{\alpha x}\cos\beta x$ and $e^{\alpha x}\sin\beta x$
+
+The general solution always has exactly $n$ arbitrary constants.
+
+### Physical Interpretation (Damped Oscillator)
+
+The equation $m\ddot{x} + b\dot{x} + kx = 0$ (mass-spring-damper) has characteristic equation $mr^2 + br + k = 0$. The three cases correspond to:
+
+| Case | Condition | Behavior |
+|------|-----------|----------|
+| Distinct real ($\Delta > 0$) | $b^2 > 4mk$ | **Overdamped** — slow exponential decay, no oscillation |
+| Repeated real ($\Delta = 0$) | $b^2 = 4mk$ | **Critically damped** — fastest non-oscillatory decay |
+| Complex ($\Delta < 0$) | $b^2 < 4mk$ | **Underdamped** — oscillates while decaying |
 
 ---
 
