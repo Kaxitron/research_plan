@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Math",
+    "hours": 4
+  },
+  {
+    "name": "CS Foundations",
+    "hours": 1
+  },
+  {
+    "name": "Book Writing",
+    "hours": 3
+  }
+]
