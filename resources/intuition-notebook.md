@@ -6,7 +6,7 @@
 
 > **📌 Maintenance rule:** When adding a new intuition entry, also add a matching link in the Table of Contents below, under the appropriate section. Keep the TOC in sync with the content.
 
-> **⚠️ Formatting rule:** GitHub markdown does not reliably render LaTeX. Use plain text for math (e.g., `e^(rx)`, `y*`, `f'(x)`) instead of `$...$` or `$$...$$`. Existing LaTeX in older sections may not display correctly on GitHub.
+> **⚠️ Formatting rule:** GitHub markdown can mangle LaTeX that contains characters GitHub interprets as formatting (e.g., `*` for bold/italic). Escape these with backslashes (e.g., `y\*` instead of `y*` inside LaTeX) or use plain text math when LaTeX won't render cleanly.
 
 ---
 
