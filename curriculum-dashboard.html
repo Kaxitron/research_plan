@@ -796,6 +796,13 @@
   }
   .cal-pool-chip:hover { border-color: var(--border-bright); filter: brightness(1.2); }
   .cal-pool-chip.dragging { opacity: 0.5; }
+  .cal-chip[draggable="true"] { cursor: grab; }
+  .cal-chip[draggable="true"]:active { cursor: grabbing; }
+  .cal-chip[draggable="true"] > * { pointer-events: none; }
+  .cal-chip.dragging { opacity: 0.3; }
+  .cal-day.drag-over { border-color: var(--accent-5); background: rgba(56,189,248,0.08); }
+  .cal-chip.drag-over-above { border-top: 2px solid var(--accent-5); margin-top: -1px; }
+  .cal-chip.drag-over-below { border-bottom: 2px solid var(--accent-5); margin-bottom: -1px; }
   .cal-day.drag-over { border-color: var(--accent-5) !important; background: rgba(56,189,248,0.1) !important; }
 
   /* Picker in detail panel */
@@ -1641,8 +1648,8 @@ const LESSONS = [
     id: 19, phase: 'p2', title: '3D Geometry, Curves, and Curvature',
     status: 'not-started', hours: '9–11h', label: '19',
     prereqs: [18], crossPhaseLinks: [],
-    conceptChecks: ['Gradient as steepest ascent', 'Directional derivatives', 'Tangent planes'],
-    failureModes: ['Not connecting gradient to loss surface geometry'],
+    conceptChecks: ['Lines and planes in 3D', 'Parameterization and arc length', 'Curvature and osculating circle', 'TNB (Frenet-Serret) frame'],
+    failureModes: ['Not connecting curvature to loss landscape geometry'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus' }],
     projects: [],
   },
@@ -1650,8 +1657,8 @@ const LESSONS = [
     id: 20, phase: 'p2', title: 'Multivariable Functions, Limits, and Partial Derivatives',
     status: 'not-started', hours: '10–12h', label: '20',
     prereqs: [19], crossPhaseLinks: [],
-    conceptChecks: ['Chain rule = backpropagation', 'Jacobian as total derivative', 'Hessian matrix'],
-    failureModes: ['Not seeing Jacobian composition as the backward pass'],
+    conceptChecks: ['Level curves as contour maps', 'Path test for multivariable limits', 'Partial derivatives', 'Differentiability vs having partials'],
+    failureModes: ['Not seeing level curves as loss contours in parameter space'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus' }],
     projects: [],
   },
@@ -1659,8 +1666,8 @@ const LESSONS = [
     id: 21, phase: 'p2', title: 'The Chain Rule, Directional Derivatives, and Gradients',
     status: 'not-started', hours: '10–12h', label: '21',
     prereqs: [20], crossPhaseLinks: [7],
-    conceptChecks: ['Double/triple integrals', 'Jacobian determinant', 'Gaussian integral', 'Monte Carlo integration'],
-    failureModes: ['Not connecting Jacobian to the determinant from Lesson 7'],
+    conceptChecks: ['Chain rule = Jacobian multiplication', 'Directional derivatives via gradient dot product', 'Gradient as steepest ascent', 'Tangent plane as linear approximation'],
+    failureModes: ['Not seeing Jacobian composition as the backward pass'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus: Multiple Integrals and Change of Variables' }],
     projects: [],
   },
@@ -1668,7 +1675,7 @@ const LESSONS = [
     id: 22, phase: 'p2', title: 'Optimization, Taylor Expansions, and the Implicit Function Theorem',
     status: 'not-started', hours: '10–12h', label: '22',
     prereqs: [21], crossPhaseLinks: [],
-    conceptChecks: ['Multivariate Taylor expansion', 'Hessian IS 2nd-order term', 'IFT and SLT preview'],
+    conceptChecks: ['Critical points via Hessian eigenvalues', 'Lagrange multipliers', 'KKT conditions', 'Multivariate Taylor expansion', 'IFT and SLT preview'],
     failureModes: ['Not seeing Taylor as the foundation of ALL optimization analysis'],
     mvl: [{ type: 'Watch', text: '3Blue1Brown — Taylor series' }],
     projects: [],
@@ -1677,8 +1684,8 @@ const LESSONS = [
     id: 23, phase: 'p2', title: 'Multiple Integration and Change of Variables',
     status: 'not-started', hours: '10–12h', label: '23',
     prereqs: [22], crossPhaseLinks: [],
-    conceptChecks: ['Critical points via Hessian', 'Lagrange multipliers', 'KKT conditions', 'Regularization ↔ constraint'],
-    failureModes: ['Not seeing regularization as constraint in disguise'],
+    conceptChecks: ['Double/triple integrals', 'Change of variables and Jacobian determinant', 'Gaussian integral', 'Monte Carlo integration'],
+    failureModes: ['Not connecting Jacobian determinant to the determinant from Lesson 7'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus: Lagrange Multipliers and Optimization' }],
     projects: [
       { label: 'PY', text: 'Block B Capstone — Multivariable Optimization Lab (3h): (1) Implement gradient descent on 2D loss surfaces with 3D visualization (matplotlib surface + contour plots). (2) Compute Jacobians and Hessians numerically; implement Newton\'s method using the Hessian. (3) Build a Lagrange multiplier solver for constrained optimization. (4) Demonstrate numerically that L2 regularization \u2194 constrained optimization (show equivalent solutions). (5) Implement Monte Carlo integration for a 10-dimensional integral and compare with analytical result.' },
@@ -3751,12 +3758,12 @@ function renderCalendar() {
     if (isSelected) classes += ' selected';
 
     const dayHrs = getLoggedHoursForDate(dk);
-    html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
+    html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="if(!this.contains(event.relatedTarget))this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
     html += `<div class="cal-day-num">${d}${dayHrs > 0 ? `<span style="float:right;font-size:9px;font-weight:600;color:var(--accent-1)">${Math.round(dayHrs * 10) / 10}h</span>` : ''}</div>`;
 
-    dayLessons.forEach(lesson => {
+    dayLessons.forEach((lesson, idx) => {
       const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
-      html += `<div class="cal-chip" style="background:${color}22;color:${color}" onclick="event.stopPropagation();${lesson.repeatable ? '' : `calChipClick(${fmtId(lesson.id)},'${dk}')`}" title="${lesson.title} — right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
+      html += `<div class="cal-chip" style="background:${color}22;color:${color}" draggable="true" ondragstart="calChipDragStart(event,${fmtId(lesson.id)},'${dk}')" ondragend="calChipDragEnd(event)" ondragover="calChipDragOver(event,${idx})" ondragleave="calChipDragLeave(event)" ondrop="calChipDrop(event,${fmtId(lesson.id)},'${dk}',${idx})" onclick="event.stopPropagation();${lesson.repeatable ? '' : `calChipClick(${fmtId(lesson.id)},'${dk}')`}" title="${lesson.title} — drag to move, right-click to remove" oncontextmenu="event.preventDefault();event.stopPropagation();calRemoveLesson(${fmtId(lesson.id)},'${dk}')">`;
       html += `<span class="cal-chip-num">${lesson.label || lesson.id}</span>`;
       html += `<span class="cal-chip-title">${lesson.title}</span>`;
       html += `</div>`;
@@ -4006,11 +4013,102 @@ function calPoolClick(lessonId) {
 }
 
 // Drag and drop
+let calDragSourceDate = null;   // non-null when dragging FROM a day cell (not pool)
+let calChipDropIndex = null;    // insertion index for reordering within a day
+
 function calDragStart(ev, lessonId) {
   calDragLesson = lessonId;
+  calDragSourceDate = null;     // from pool
   ev.dataTransfer.effectAllowed = 'move';
+  ev.dataTransfer.setData('text/plain', String(lessonId));
   ev.target.classList.add('dragging');
   setTimeout(() => { if (ev.target) ev.target.classList.remove('dragging'); }, 200);
+}
+
+// Drag a chip that's already placed on a day
+function calChipDragStart(ev, lessonId, sourceDk) {
+  ev.stopPropagation();
+  calDragLesson = lessonId;
+  calDragSourceDate = sourceDk;
+  ev.dataTransfer.effectAllowed = 'move';
+  ev.dataTransfer.setData('text/plain', String(lessonId));
+  ev.target.classList.add('dragging');
+}
+
+function calChipDragEnd(ev) {
+  ev.target.classList.remove('dragging');
+  calDragLesson = null;
+  calDragSourceDate = null;
+  calChipDropIndex = null;
+  // Clean up any lingering drag-over classes
+  document.querySelectorAll('.drag-over, .drag-over-above, .drag-over-below').forEach(el => {
+    el.classList.remove('drag-over', 'drag-over-above', 'drag-over-below');
+  });
+}
+
+// Hovering over an existing chip inside a day (for reorder indicator)
+function calChipDragOver(ev, idx) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  const chip = ev.currentTarget;
+  const rect = chip.getBoundingClientRect();
+  const midY = rect.top + rect.height / 2;
+  // Show insertion indicator above or below
+  chip.classList.remove('drag-over-above', 'drag-over-below');
+  if (ev.clientY < midY) {
+    chip.classList.add('drag-over-above');
+    calChipDropIndex = idx;
+  } else {
+    chip.classList.add('drag-over-below');
+    calChipDropIndex = idx + 1;
+  }
+}
+
+function calChipDragLeave(ev) {
+  ev.currentTarget.classList.remove('drag-over-above', 'drag-over-below');
+}
+
+// Drop directly onto a chip (reorder within same day or insert at position)
+function calChipDrop(ev, targetLessonId, dk, idx) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  ev.currentTarget.classList.remove('drag-over-above', 'drag-over-below');
+  ev.currentTarget.closest('.cal-day')?.classList.remove('drag-over');
+
+  if (calDragLesson === null) return;
+  if (calDragLesson === '__review-problems-pick__') {
+    calDragLesson = null;
+    calDragSourceDate = null;
+    showPhasePicker(dk);
+    return;
+  }
+
+  const cal = loadCalendar();
+  const insertAt = calChipDropIndex != null ? calChipDropIndex : idx;
+
+  // Remove from source day if dragging from a day cell
+  if (calDragSourceDate) {
+    if (cal[calDragSourceDate]) {
+      cal[calDragSourceDate] = cal[calDragSourceDate].filter(id => id !== calDragLesson);
+      if (cal[calDragSourceDate].length === 0) delete cal[calDragSourceDate];
+    }
+  }
+
+  // Add to target day at the specified position
+  if (!cal[dk]) cal[dk] = [];
+  // Remove if already present in target (handles same-day reorder)
+  const existingIdx = cal[dk].indexOf(calDragLesson);
+  if (existingIdx !== -1) cal[dk].splice(existingIdx, 1);
+  // Adjust insert index if we removed an item before it in the same array
+  const adjustedIdx = (existingIdx !== -1 && existingIdx < insertAt) ? insertAt - 1 : insertAt;
+  cal[dk].splice(Math.min(adjustedIdx, cal[dk].length), 0, calDragLesson);
+
+  saveCalendar(cal);
+  calDragLesson = null;
+  calDragSourceDate = null;
+  calChipDropIndex = null;
+  renderCalendar();
+  if (calSelectedDate === dk) showDayPicker(dk);
 }
 
 function calDrop(ev, dk) {
@@ -4018,17 +4116,27 @@ function calDrop(ev, dk) {
   ev.target.closest('.cal-day')?.classList.remove('drag-over');
   if (calDragLesson !== null) {
     if (calDragLesson === '__review-problems-pick__') {
-      // Dropping "Review Problems" — prompt for phase
       calDragLesson = null;
+      calDragSourceDate = null;
       showPhasePicker(dk);
       return;
     }
     const cal = loadCalendar();
-    // Add to this day (don't remove from other days — lessons can span multiple days)
+
+    // Remove from source day if dragging from a day cell
+    if (calDragSourceDate) {
+      if (cal[calDragSourceDate]) {
+        cal[calDragSourceDate] = cal[calDragSourceDate].filter(id => id !== calDragLesson);
+        if (cal[calDragSourceDate].length === 0) delete cal[calDragSourceDate];
+      }
+    }
+
+    // Add to target day (append at end when dropping on the day cell itself)
     if (!cal[dk]) cal[dk] = [];
     if (!cal[dk].includes(calDragLesson)) cal[dk].push(calDragLesson);
     saveCalendar(cal);
     calDragLesson = null;
+    calDragSourceDate = null;
     renderCalendar();
     if (calSelectedDate === dk) showDayPicker(dk);
   }
