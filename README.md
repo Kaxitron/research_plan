@@ -14,8 +14,8 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| cs01 | [Python Refresher — Getting Your Hands Dirty Again](phase0-cs-foundations/lesson-cs01-python-refresher.md) | ⬜ Not Started |
-| cs02 | [C++ Refresher — Memory, Pointers, and the STL](phase0-cs-foundations/lesson-cs02-cpp-refresher.md) | ⬜ Not Started |
+| cs01 | [Python Refresher — Getting Your Hands Dirty Again](phase0-cs-foundations/lesson-cs01-python-refresher.md) | ✅ Complete |
+| cs02 | [C++ Refresher — Memory, Pointers, and the STL](phase0-cs-foundations/lesson-cs02-cpp-refresher.md) | 🔄 In Progress |
 | cs03 | [Object-Oriented Programming — Classes in Python & C++](phase0-cs-foundations/lesson-cs03-oop.md) | ⬜ Not Started |
 | cs04 | [Arrays, Strings, and Hashing](phase0-cs-foundations/lesson-cs04-arrays-hashing.md) | ⬜ Not Started |
 | cs05 | [Linked Lists, Stacks, and Queues](phase0-cs-foundations/lesson-cs05-linked-lists-stacks-queues.md) | ⬜ Not Started |
