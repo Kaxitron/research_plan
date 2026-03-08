@@ -14,16 +14,16 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| CS-01 | [Python Refresher — Getting Your Hands Dirty Again](phase0-cs-foundations/lesson-cs01-python-refresher.md) | ☐ |
-| CS-02 | [C++ Refresher — Memory, Pointers, and the STL](phase0-cs-foundations/lesson-cs02-cpp-refresher.md) | ☐ |
-| CS-03 | [Object-Oriented Programming — Classes in Python & C++](phase0-cs-foundations/lesson-cs03-oop.md) | ☐ |
-| CS-04 | [Arrays, Strings, and Hashing](phase0-cs-foundations/lesson-cs04-arrays-hashing.md) | ☐ |
-| CS-05 | [Linked Lists, Stacks, and Queues](phase0-cs-foundations/lesson-cs05-linked-lists-stacks-queues.md) | ☐ |
-| CS-06 | [Trees and Graphs](phase0-cs-foundations/lesson-cs06-trees-graphs.md) | ☐ |
-| CS-07 | [Sorting and Searching — Complexity in Action](phase0-cs-foundations/lesson-cs07-sorting-searching.md) | ☐ |
-| CS-08 | [Recursion and Dynamic Programming](phase0-cs-foundations/lesson-cs08-recursion-dp.md) | ☐ |
-| CS-09 | [Discrete Math Essentials — Logic, Counting, and Graphs](phase0-cs-foundations/lesson-cs09-discrete-math.md) | ☐ |
-| CS-10 | [Computer Organization — How Code Actually Runs](phase0-cs-foundations/lesson-cs10-computer-organization.md) | ☐ |
+| cs01 | [Python Refresher — Getting Your Hands Dirty Again](phase0-cs-foundations/lesson-cs01-python-refresher.md) | ⬜ Not Started |
+| cs02 | [C++ Refresher — Memory, Pointers, and the STL](phase0-cs-foundations/lesson-cs02-cpp-refresher.md) | ⬜ Not Started |
+| cs03 | [Object-Oriented Programming — Classes in Python & C++](phase0-cs-foundations/lesson-cs03-oop.md) | ⬜ Not Started |
+| cs04 | [Arrays, Strings, and Hashing](phase0-cs-foundations/lesson-cs04-arrays-hashing.md) | ⬜ Not Started |
+| cs05 | [Linked Lists, Stacks, and Queues](phase0-cs-foundations/lesson-cs05-linked-lists-stacks-queues.md) | ⬜ Not Started |
+| cs06 | [Trees and Graphs](phase0-cs-foundations/lesson-cs06-trees-graphs.md) | ⬜ Not Started |
+| cs07 | [Sorting and Searching — Complexity in Action](phase0-cs-foundations/lesson-cs07-sorting-searching.md) | ⬜ Not Started |
+| cs08 | [Recursion and Dynamic Programming](phase0-cs-foundations/lesson-cs08-recursion-dp.md) | ⬜ Not Started |
+| cs09 | [Discrete Math Essentials — Logic, Counting, and Graphs](phase0-cs-foundations/lesson-cs09-discrete-math.md) | ⬜ Not Started |
+| cs10 | [Computer Organization — How Code Actually Runs](phase0-cs-foundations/lesson-cs10-computer-organization.md) | ⬜ Not Started |
 
 ### ML Tools (11–15h)
 
@@ -238,7 +238,7 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | | Resource | |
 |---|--------|--------|
-| — | [Your First Research Project](phase7-research/research-guide.md) | ☐ |
+| — | [Your First Research Project](phase7-research/research-guide.md) | ⬜ Not Started |
 
 ---
 
