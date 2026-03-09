@@ -54,32 +54,55 @@ class ListNode:
 
 **Build from scratch first:** before solving LeetCode problems, implement a singly linked list class with `insert_head`, `insert_tail`, `delete`, `search`, `reverse`, and `print_list`. Do the same for a stack and queue class. Then move to the problems below.
 
+### Linked List Patterns
+
+**When to use:** problems involving pointer manipulation, merging sorted sequences, cycle detection, or restructuring node order in-place.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 1 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | In-place reversal | Easy |
+| 2 | [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) | Dummy head + merge | Easy |
+| 3 | [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Fast/slow pointers | Easy |
+| 4 | [Reorder List](https://leetcode.com/problems/reorder-list/) | Composite: find middle + reverse + merge | Medium |
+| 5 | [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Fast/slow pointers with offset | Medium |
+| 6 | [Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | Hash map or interleave | Medium |
+| 7 | [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | Dummy head + traversal with carry | Medium |
+| 8 | [Find The Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) | Fast/slow pointers (Floyd's cycle detection) | Medium |
+| 9 | [LRU Cache](https://leetcode.com/problems/lru-cache/) | Hash map + doubly linked list | Medium |
+| 10 | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | Dummy head + merge (heap or divide & conquer) | Hard |
+| 11 | [Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/) | In-place reversal + counting | Hard |
+
+### Stack Patterns
+
+**When to use:** problems requiring matching/balancing (parentheses, tags), evaluating expressions, tracking "next greater/smaller" via monotonic stacks, or designing data structures with O(1) auxiliary queries.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 12 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Matching/balancing | Easy |
+| 13 | [Min Stack](https://leetcode.com/problems/min-stack/) | Design: stack with extra capability | Medium |
+| 14 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Expression evaluation | Medium |
+| 15 | [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | Matching/balancing + backtracking | Medium |
+| 16 | [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | Monotonic stack | Medium |
+| 17 | [Car Fleet](https://leetcode.com/problems/car-fleet/) | Sort + monotonic stack | Medium |
+| 18 | [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic stack | Hard |
+
+### Heap / Priority Queue Patterns
+
+**When to use:** problems asking for the k-th largest/smallest, maintaining a running median, or greedy scheduling where you always process the highest-priority item next.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 19 | [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | Top-k (min-heap of size k) | Easy |
+| 20 | [Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | Greedy scheduling (max-heap) | Easy |
+| 21 | [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | Top-k (min/max heap) | Medium |
+| 22 | [Task Scheduler](https://leetcode.com/problems/task-scheduler/) | Greedy scheduling (max-heap + greedy) | Medium |
+| 23 | [Design Twitter](https://leetcode.com/problems/design-twitter/) | Top-k (heap + hash map + OOP) | Medium |
+| 24 | [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) | Two heaps (min + max) | Hard |
+
+### Cross-Topic Problems
+
 | # | Problem | Category | Pattern | Difficulty |
 |---|---------|----------|---------|------------|
-| 1 | [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) | Linked List | In-place reversal | Easy |
-| 2 | [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) | Linked List | Dummy head + merge | Easy |
-| 3 | [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) | Linked List | Fast/slow pointers | Easy |
-| 4 | [Reorder List](https://leetcode.com/problems/reorder-list/) | Linked List | Find middle + reverse + merge | Medium |
-| 5 | [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Linked List | Two pointers with offset | Medium |
-| 6 | [Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) | Linked List | Hash map or interleave | Medium |
-| 7 | [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) | Linked List | Linked list traversal + carry | Medium |
-| 8 | [Find The Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) | Linked List | Floyd's cycle detection | Medium |
-| 9 | [LRU Cache](https://leetcode.com/problems/lru-cache/) | Linked List | Hash map + doubly linked list | Medium |
-| 10 | [Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) | Linked List | Heap or divide & conquer | Hard |
-| 11 | [Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/) | Linked List | In-place reversal + counting | Hard |
-| 12 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Stack | Stack matching | Easy |
-| 13 | [Min Stack](https://leetcode.com/problems/min-stack/) | Stack | Stack design | Medium |
-| 14 | [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack | Stack evaluation | Medium |
-| 15 | [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/) | Stack | Stack / backtracking | Medium |
-| 16 | [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | Stack | Monotonic stack | Medium |
-| 17 | [Car Fleet](https://leetcode.com/problems/car-fleet/) | Stack | Sort + monotonic stack | Medium |
-| 18 | [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Stack | Monotonic stack | Hard |
-| 19 | [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | Heap / Priority Queue | Min heap of size k | Easy |
-| 20 | [Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) | Heap / Priority Queue | Max heap | Easy |
-| 21 | [K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/) | Heap / Priority Queue | Min/max heap | Medium |
-| 22 | [Task Scheduler](https://leetcode.com/problems/task-scheduler/) | Heap / Priority Queue | Max heap + greedy | Medium |
-| 23 | [Design Twitter](https://leetcode.com/problems/design-twitter/) | Heap / Priority Queue | Heap + hash map + OOP | Medium |
-| 24 | [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) | Heap / Priority Queue | Two heaps (min + max) | Hard |
 | 25 | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) | 1-D DP | Fibonacci variant | Easy |
 | 26 | [Happy Number](https://leetcode.com/problems/happy-number/) | Math & Geometry | Cycle detection (Floyd's) | Easy |
 | 27 | [Subsets](https://leetcode.com/problems/subsets/) | Backtracking | Include/exclude recursion | Medium |

@@ -83,28 +83,56 @@ def binary_search(arr, target):
 
 ## 🔨 Practice Problems (NeetCode 150)
 
-| # | Problem | Category | Pattern | Difficulty |
-|---|---------|----------|---------|------------|
-| 1 | Implement merge sort from scratch | Implementation | Divide & conquer | — |
-| 2 | Implement binary search from scratch | Implementation | Binary search | — |
-| 3 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | Implementation | Dutch national flag / 3-way partition | Medium |
-| 4 | [Binary Search](https://leetcode.com/problems/binary-search/) | Binary Search | Basic binary search | Easy |
-| 5 | [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | Binary Search | Binary search on grid | Medium |
-| 6 | [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | Binary Search | Binary search on answer | Medium |
-| 7 | [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | Binary Search | Modified binary search | Medium |
-| 8 | [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary Search | Modified binary search | Medium |
-| 9 | [Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Binary Search | Binary search on timestamps | Medium |
-| 10 | [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary Search | Binary search on partition | Hard |
-| 11 | [Insert Interval](https://leetcode.com/problems/insert-interval/) | Intervals | Merge overlapping | Medium |
-| 12 | [Merge Intervals](https://leetcode.com/problems/merge-intervals/) | Intervals | Sort + sweep | Medium |
-| 13 | [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | Intervals | Greedy interval scheduling | Medium |
-| 14 | [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) | Intervals | Sort + overlap check | Easy |
-| 15 | [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) | Intervals | Min heap / sweep line | Medium |
-| 16 | [Minimum Interval to Include Each Query](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Intervals | Sort + min heap | Hard |
-| 17 | [Jump Game](https://leetcode.com/problems/jump-game/) | Greedy | Greedy reachability | Medium |
-| 18 | [Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | Greedy | Greedy + sort + hash map | Medium |
-| 19 | [Gas Station](https://leetcode.com/problems/gas-station/) | Greedy | Greedy circular scan | Medium |
-| 20 | [Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) | Heap | Quickselect / partition | Medium |
+### Implementation Warm-ups
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 1 | Implement merge sort from scratch | Divide & conquer | — |
+| 2 | Implement binary search from scratch | Standard binary search | — |
+| 3 | [Sort Colors](https://leetcode.com/problems/sort-colors/) | Dutch national flag / 3-way partition | Medium |
+
+### Binary Search Variants
+
+**When to use:** sorted data, rotated/shifted sorted data, or any monotonic condition where you can binary search on the answer rather than on an array index.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 4 | [Binary Search](https://leetcode.com/problems/binary-search/) | Standard binary search | Easy |
+| 5 | [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) | Binary search on matrix | Medium |
+| 6 | [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | Binary search on answer | Medium |
+| 7 | [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | Modified binary search | Medium |
+| 8 | [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Modified binary search | Medium |
+| 9 | [Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/) | Binary search on answer | Medium |
+| 10 | [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary search on partition | Hard |
+
+### Intervals
+
+**When to use:** problems involving ranges, overlaps, or scheduling. Almost always start by sorting by start (or end) time.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 11 | [Insert Interval](https://leetcode.com/problems/insert-interval/) | Sort + merge | Medium |
+| 12 | [Merge Intervals](https://leetcode.com/problems/merge-intervals/) | Sort + merge | Medium |
+| 13 | [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy scheduling | Medium |
+| 14 | [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) | Sort + merge | Easy |
+| 15 | [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) | Sweep line / heap | Medium |
+| 16 | [Minimum Interval to Include Each Query](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Sweep line / heap | Hard |
+
+### Greedy
+
+**When to use:** locally optimal choice leads to globally optimal. No backtracking needed. Look for single-pass solutions with a running state.
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 17 | [Jump Game](https://leetcode.com/problems/jump-game/) | Greedy reachability | Medium |
+| 18 | [Hand of Straights](https://leetcode.com/problems/hand-of-straights/) | Greedy filtering | Medium |
+| 19 | [Gas Station](https://leetcode.com/problems/gas-station/) | Greedy scan | Medium |
+
+### Sorting + Selection
+
+| # | Problem | Pattern | Difficulty |
+|---|---------|---------|------------|
+| 20 | [Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/) | Quickselect / partition | Medium |
 
 ## 🔗 ML Connection
 

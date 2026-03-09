@@ -1,0 +1,754 @@
+{
+  "active": {
+    "1-01": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 1,
+      "next_review": "2026-03-09",
+      "last_review": "2026-03-08"
+    },
+    "1-02": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-03": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-04": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-05": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-06": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-07": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-08": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-09": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-10": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-11": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-12": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-13": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-14": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-15": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-16": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-17": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-18": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-19": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-20": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-21": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-22": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-23": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-24": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-25": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-26": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-27": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-28": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-29": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-30": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-31": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-32": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-33": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-34": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-35": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-36": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-37": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-38": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-39": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-40": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-41": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-42": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-43": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-44": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-45": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-46": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-47": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-48": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-49": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-50": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-51": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-52": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-53": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-54": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-55": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-56": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-57": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-58": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-59": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-60": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-61": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-62": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-63": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-64": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "1-65": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-01": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-02": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-03": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-04": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-05": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-06": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-07": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-08": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-09": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-10": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-11": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-12": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-13": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-14": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-15": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-16": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-17": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-18": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-19": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-20": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-21": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-22": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-23": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-24": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-25": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-26": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-27": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-28": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-29": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-30": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-31": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-32": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-33": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-34": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-35": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-36": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-37": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-38": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-39": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-40": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-41": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    },
+    "2A-42": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "",
+      "last_review": ""
+    }
+  },
+  "version": 1
+}
