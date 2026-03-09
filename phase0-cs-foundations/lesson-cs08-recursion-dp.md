@@ -32,7 +32,17 @@ def fibonacci(n):
 
 ### Dynamic Programming — Cache the Repeated Work
 
-**The key question:** does this problem have *overlapping subproblems* (same sub-computation done multiple times) and *optimal substructure* (optimal solution built from optimal sub-solutions)?
+**DP requires BOTH conditions:**
+
+1. **Overlapping subproblems** — the same sub-computation is repeated multiple times
+2. **Optimal substructure** — the optimal solution is built from optimal sub-solutions
+
+**What if you only have one?**
+- **Only substructure, no overlap** → **divide and conquer** (e.g., merge sort). Subproblems don't repeat, so there's nothing to cache.
+- **Only overlap, no substructure** → DP doesn't apply. E.g., longest simple path in a graph — you revisit nodes, but the best path through node A depends on which nodes you've already visited, so it can't decompose cleanly.
+- **Neither** → brute force / backtracking.
+
+**The quick test:** Can I define the answer in terms of smaller versions of the same problem? (→ substructure). Do those smaller versions get recomputed? (→ overlap). Both yes → DP.
 
 **Top-down (memoization):** recursive, but cache results.
 ```python
@@ -101,12 +111,397 @@ def fibonacci(n):
 | Single row | 2D DP where each row depends only on previous row (grid paths, knapsack) |
 | Rolling array | Keep only last 2 rows instead of full table |
 
-### Common DP Categories
+### Recursion Patterns in the Wild
 
-- **1D DP:** climbing stairs, house robber, coin change
-- **2D DP:** longest common subsequence, edit distance, grid paths
-- **Knapsack:** 0/1 knapsack, unbounded knapsack, subset sum
-- **String DP:** palindromes, edit distance, regex matching
+#### Linear Recursion
+One recursive call. Reduces by one element each time. Easy to convert to iteration.
+```python
+def factorial(n):
+    if n <= 1: return 1
+    return n * factorial(n - 1)
+```
+**Seen in:** linked list traversal, array processing, tail-recursive algorithms.
+
+#### Binary/Tree Recursion
+Two (or more) recursive calls. Creates a tree of calls. Often leads to DP.
+```python
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)    # two branches
+```
+**Seen in:** fibonacci, tree traversals, divide and conquer, mergesort.
+
+#### Divide and Conquer
+Split into independent halves, solve each, combine results. NOT DP — subproblems don't overlap.
+```python
+def merge_sort(arr):
+    if len(arr) <= 1: return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])       # independent halves
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+```
+**Seen in:** merge sort, quicksort, binary search, closest pair of points.
+
+#### Backtracking
+Try a choice, recurse, undo. Explores all valid configurations.
+```python
+def backtrack(state):
+    if goal: record solution; return
+    for choice in choices:
+        if valid(choice):
+            make(choice)
+            backtrack(next_state)
+            undo(choice)
+```
+**Seen in:** permutations, combinations, constraint satisfaction (N-Queens, Sudoku), partition problems.
+
+**Backtracking subtypes:**
+
+| Subtype | Question at each step | Example |
+|---------|----------------------|---------|
+| Include/exclude | Do I take this element or skip it? | Subsets, Partition Equal Subset Sum |
+| Choice from remaining | Which unused element goes here? | Permutations |
+| Combinations with reuse | Which element from index onward? (can repeat) | Combination Sum |
+| Combinations without reuse | Which element from index onward? (no repeat, skip dups) | Combination Sum II, Subsets II |
+| Partitioning | Where do I cut? | Palindrome Partitioning |
+| Grid exploration | Which direction? (with visited tracking) | Word Search |
+| Constraint placement | Where does this piece go? | N-Queens, Sudoku Solver |
+| Bucket assignment | Which group does this item join? | Partition to K Equal Sum Subsets |
+
+#### Generate and Test
+Generate candidates recursively, test validity. Simpler than backtracking (no pruning during generation).
+```python
+def generate_subsets(nums, i=0, current=[]):
+    if i == len(nums):
+        if is_valid(current): results.append(current[:])
+        return
+    generate_subsets(nums, i+1, current)             # skip
+    generate_subsets(nums, i+1, current + [nums[i]])  # include
+```
+**Seen in:** brute-force subset/permutation generation. Usually upgraded to backtracking with pruning.
+
+---
+
+### DP Pattern Catalog
+
+#### Pattern 1: Fibonacci / Linear Recurrence
+**Shape:** `dp[i]` depends on `dp[i-1]`, `dp[i-2]`, (maybe `dp[i-3]`...).
+
+**How to recognize:** each step has a fixed small number of previous states to consider. Often the problem says "ways to reach step i" or "cost to reach step i."
+
+```python
+# Template
+dp[0] = base
+dp[1] = base
+for i in range(2, n+1):
+    dp[i] = f(dp[i-1], dp[i-2])
+```
+
+**Space optimize:** two variables.
+
+| Problem | Recurrence |
+|---------|-----------|
+| Climbing Stairs | `dp[i] = dp[i-1] + dp[i-2]` |
+| Min Cost Climbing Stairs | `dp[i] = cost[i] + min(dp[i-1], dp[i-2])` |
+| Decode Ways | `dp[i] = dp[i-1] (if valid single) + dp[i-2] (if valid pair)` |
+| Tribonacci | `dp[i] = dp[i-1] + dp[i-2] + dp[i-3]` |
+
+---
+
+#### Pattern 2: Take or Skip
+**Shape:** `dp[i] = max(take this item, skip this item)`.
+
+**How to recognize:** items in a sequence, taking one affects which neighbors you can take. "Maximum/minimum value without taking adjacent elements."
+
+```python
+# Template
+dp[0] = val[0]
+dp[1] = max(val[0], val[1])
+for i in range(2, n):
+    dp[i] = max(dp[i-1], dp[i-2] + val[i])
+```
+
+**Space optimize:** two variables.
+
+| Problem | Recurrence |
+|---------|-----------|
+| House Robber | `dp[i] = max(dp[i-1], dp[i-2] + nums[i])` |
+| House Robber II (circular) | Run House Robber twice: `nums[0:n-1]` and `nums[1:n]` |
+| Delete and Earn | Sort + frequency count, then House Robber on values |
+
+---
+
+#### Pattern 3: Min/Max Cost to Reach Target
+**Shape:** `dp[target]` = min/max cost. Try all ways to reach `target` from smaller values.
+
+**How to recognize:** "minimum number of X to make Y", "fewest coins", "minimum steps."
+
+```python
+# Template
+dp = [float('inf')] * (target + 1)
+dp[0] = 0
+for i in range(1, target + 1):
+    for option in options:
+        if i - option >= 0:
+            dp[i] = min(dp[i], dp[i - option] + 1)
+```
+
+| Problem | Recurrence |
+|---------|-----------|
+| Coin Change | `dp[amount] = min(dp[amount - coin] + 1)` for each coin |
+| Perfect Squares | `dp[n] = min(dp[n - k*k] + 1)` for each perfect square k*k ≤ n |
+
+---
+
+#### Pattern 4: Count Ways to Reach Target
+**Shape:** same as Pattern 3 but summing instead of min/max.
+
+**How to recognize:** "how many ways", "number of combinations that sum to."
+
+```python
+# Template
+dp = [0] * (target + 1)
+dp[0] = 1
+for i in range(1, target + 1):
+    for option in options:
+        if i - option >= 0:
+            dp[i] += dp[i - option]
+```
+
+| Problem | Recurrence |
+|---------|-----------|
+| Climbing Stairs | `dp[i] += dp[i-1] + dp[i-2]` |
+| Coin Change II | `dp[amount] += dp[amount - coin]` (loop coins outer to avoid order-dependence) |
+| Combination Sum IV | `dp[target] += dp[target - num]` for each num |
+
+**Subtle distinction — order matters:**
+- Coins outer loop, amount inner → combinations (unordered): `{1,2}` and `{2,1}` are same
+- Amount outer loop, coins inner → permutations (ordered): `{1,2}` and `{2,1}` are different
+
+---
+
+#### Pattern 5: Longest Increasing Subsequence (LIS)
+**Shape:** `dp[i]` = best answer ending at index `i`. Compare against all `j < i`.
+
+**How to recognize:** "longest subsequence with property X", "maximum length chain."
+
+```python
+# Template: O(n^2)
+dp = [1] * n
+for i in range(1, n):
+    for j in range(i):
+        if nums[j] < nums[i]:
+            dp[i] = max(dp[i], dp[j] + 1)
+return max(dp)
+```
+
+Note: there's an O(n log n) solution using binary search + patience sorting.
+
+| Problem | Variation |
+|---------|----------|
+| Longest Increasing Subsequence | Standard LIS |
+| Number of Longest Increasing Subsequence | Track count alongside length |
+| Russian Doll Envelopes | Sort + LIS on second dimension |
+
+---
+
+#### Pattern 6: Boolean/Reachability DP
+**Shape:** `dp[i]` = True/False, can we reach state `i`?
+
+**How to recognize:** "can you partition", "is it possible", "can you make."
+
+```python
+# Template (0/1 knapsack style)
+dp = [False] * (target + 1)
+dp[0] = True
+for num in nums:
+    for s in range(target, num - 1, -1):   # reverse to avoid reuse
+        dp[s] = dp[s] or dp[s - num]
+```
+
+| Problem | Variation |
+|---------|----------|
+| Partition Equal Subset Sum | `dp[sum/2]` reachable? |
+| Word Break | `dp[i] = any(dp[j] and s[j:i] in dict)` |
+| Target Sum | `dp[offset + target]` after +/- decisions |
+
+---
+
+#### Pattern 7: Two-String DP
+**Shape:** `dp[i][j]` = answer for `s1[:i]` vs `s2[:j]`. Fill table left-to-right, top-to-bottom.
+
+**How to recognize:** two sequences/strings being compared, matched, or transformed.
+
+```python
+# Template (LCS)
+dp = [[0] * (n+1) for _ in range(m+1)]
+for i in range(1, m+1):
+    for j in range(1, n+1):
+        if s1[i-1] == s2[j-1]:
+            dp[i][j] = dp[i-1][j-1] + 1       # chars match
+        else:
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1])  # skip one
+```
+
+| Problem | State meaning | Match case | Mismatch case |
+|---------|--------------|------------|---------------|
+| Longest Common Subsequence | length of LCS | `dp[i-1][j-1] + 1` | `max(dp[i-1][j], dp[i][j-1])` |
+| Edit Distance | min operations | `dp[i-1][j-1]` (no op) | `1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])` |
+| Distinct Subsequences | # ways t appears in s | `dp[i-1][j-1] + dp[i-1][j]` | `dp[i-1][j]` |
+| Interleaving String | can interleave? | `dp[i-1][j] or dp[i][j-1]` | depends on which string matches |
+| Regular Expression Matching | does s match p? | `dp[i-1][j-1]` | handle `*` with `dp[i][j-2]` or `dp[i-1][j]` |
+
+**Space optimize:** single row (since each row only depends on the previous row).
+
+---
+
+#### Pattern 8: Grid DP
+**Shape:** `dp[i][j]` = answer at cell (i,j). Fill top-to-bottom, left-to-right.
+
+**How to recognize:** 2D grid, can only move right/down (or limited directions), count paths or min cost.
+
+```python
+# Template
+dp = [[0] * cols for _ in range(rows)]
+dp[0][0] = base
+for i in range(rows):
+    for j in range(cols):
+        if i > 0: dp[i][j] += dp[i-1][j]   # from above
+        if j > 0: dp[i][j] += dp[i][j-1]   # from left
+```
+
+| Problem | What dp[i][j] stores |
+|---------|---------------------|
+| Unique Paths | # ways to reach (i,j) |
+| Minimum Path Sum | min cost to reach (i,j) |
+| Dungeon Game | min HP needed at (i,j) — fill bottom-right to top-left |
+
+---
+
+#### Pattern 9: Knapsack
+**Shape:** `dp[i][w]` = best value using first `i` items with weight limit `w`.
+
+**How to recognize:** items with weight/cost and value, capacity constraint, maximize/count.
+
+**0/1 Knapsack** (each item once):
+```python
+for i in range(n):
+    for w in range(capacity, weight[i] - 1, -1):  # reverse!
+        dp[w] = max(dp[w], dp[w - weight[i]] + value[i])
+```
+
+**Unbounded Knapsack** (items reusable):
+```python
+for i in range(n):
+    for w in range(weight[i], capacity + 1):       # forward!
+        dp[w] = max(dp[w], dp[w - weight[i]] + value[i])
+```
+
+The **direction of the inner loop** is the key difference: reverse for 0/1 (prevent reuse), forward for unbounded (allow reuse).
+
+| Problem | Type |
+|---------|------|
+| Partition Equal Subset Sum | 0/1 knapsack (boolean) |
+| Target Sum | 0/1 knapsack (count) |
+| Coin Change | Unbounded knapsack (min) |
+| Coin Change II | Unbounded knapsack (count) |
+
+---
+
+#### Pattern 10: Interval DP
+**Shape:** `dp[i][j]` = answer for subarray/substring `[i..j]`. Fill by increasing length.
+
+**How to recognize:** "optimal way to split/merge a range", result depends on how you partition an interval.
+
+```python
+# Template
+for length in range(2, n+1):
+    for i in range(n - length + 1):
+        j = i + length - 1
+        for k in range(i, j):    # try every split point
+            dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j] + cost(i, j))
+```
+
+| Problem | What you're splitting |
+|---------|---------------------|
+| Burst Balloons | Which balloon to burst last in range [i..j] |
+| Matrix Chain Multiplication | Where to split the chain of matrices |
+| Minimum Cost Tree From Leaf Values | How to pair up leaves |
+
+---
+
+#### Pattern 11: State Machine DP
+**Shape:** `dp[i][state]` = best value at step `i` in a given state. States are a small enum (holding, not holding, cooldown, etc).
+
+**How to recognize:** you're making sequential decisions with constraints on transitions (cooldown, limited transactions, modes).
+
+```python
+# Template (buy/sell with cooldown)
+hold = -prices[0]     # holding stock
+sold = 0              # just sold (cooldown next)
+rest = 0              # not holding, free to buy
+for price in prices[1:]:
+    new_hold = max(hold, rest - price)    # buy or keep holding
+    new_sold = hold + price               # sell
+    new_rest = max(rest, sold)            # do nothing or come off cooldown
+    hold, sold, rest = new_hold, new_sold, new_rest
+```
+
+| Problem | States |
+|---------|--------|
+| Buy/Sell Stock with Cooldown | hold, sold, rest |
+| Buy/Sell Stock with Transaction Fee | hold, cash |
+| Buy/Sell Stock with K Transactions | `dp[k][hold/cash]` |
+| Best Time to Buy/Sell Stock III | `dp[transaction#][hold/cash]` |
+
+---
+
+#### Pattern 12: DFS + Memoization on Grid/Graph
+**Shape:** `memo[i][j]` (or `memo[node]`) = answer starting from this position. Top-down only — no natural bottom-up order.
+
+**How to recognize:** "longest path from any cell", "number of paths with constraints", DAG-like structure where you memoize from each starting point.
+
+```python
+@cache
+def dfs(i, j):
+    best = 1
+    for di, dj in directions:
+        ni, nj = i + di, j + dj
+        if in_bounds(ni, nj) and grid[ni][nj] > grid[i][j]:
+            best = max(best, 1 + dfs(ni, nj))
+    return best
+```
+
+| Problem | What you're memoizing |
+|---------|---------------------|
+| Longest Increasing Path in a Matrix | Longest path starting from (i,j) |
+| Number of Paths with Max Score | Paths from (0,0) to (m,n) with max sum |
+
+---
+
+### How to Identify Which DP Pattern You're Facing
+
+```
+Is it a single sequence/array?
+├── Does dp[i] depend on dp[i-1], dp[i-2]?  →  Pattern 1 (Fibonacci)
+├── Take current or skip it?                  →  Pattern 2 (Take/Skip)
+├── Min cost to reach a target?               →  Pattern 3 (Min/Max to Reach)
+├── Count ways to reach target?               →  Pattern 4 (Count Ways)
+├── Longest subsequence with property?         →  Pattern 5 (LIS)
+├── Can I reach / is it possible?              →  Pattern 6 (Boolean)
+└── Items with weight + capacity?              →  Pattern 9 (Knapsack)
+
+Are there two strings/sequences?               →  Pattern 7 (Two-String)
+
+Is it a 2D grid with limited movement?         →  Pattern 8 (Grid)
+
+Am I splitting a range optimally?              →  Pattern 10 (Interval)
+
+Am I making sequential decisions with modes?   →  Pattern 11 (State Machine)
+
+Is it DFS on a grid/graph with repeated visits? → Pattern 12 (DFS + Memo)
+```
 
 ## Watch
 
