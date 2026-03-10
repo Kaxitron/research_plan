@@ -54,9 +54,7 @@
     "cs02"
   ],
   "2026-03-09": [
-    "review-problems-p1",
-    17,
-    "cs03"
+    16
   ],
   "2026-03-12": [
     "review-intuition"
@@ -65,7 +63,10 @@
     "review-problems-p2"
   ],
   "2026-03-08": [
-    16,
-    "cs02"
+    "cs02",
+    "cs08"
+  ],
+  "2026-03-11": [
+    "review-problems-p1"
   ]
 }
