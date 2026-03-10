@@ -112,6 +112,664 @@ def bfs(graph, start):
 - DFS: path finding, cycle detection, topological sort, backtracking
 - BFS: shortest path (unweighted), level-by-level exploration
 
+---
+
+## 🧩 Detailed Pattern Reference
+
+### Tree DFS Patterns
+
+There are three fundamental ways DFS communicates information through a tree. Every tree DFS problem uses one (or a combination) of these.
+
+#### Pattern 1: "Return Value Up" DFS
+
+The function returns a computed value that the parent node uses to build its own answer. Information flows from leaves upward to the root.
+
+**How to recognize:**
+- The question asks about a property of the whole tree (height, depth, is it balanced, is it symmetric).
+- Each node needs information from both subtrees before it can answer.
+- The words "maximum depth," "diameter," "balanced," or "same tree" appear.
+
+**Template:**
+```python
+def dfs(node):
+    if not node:
+        return BASE_VALUE  # e.g., 0 for depth, True for balanced
+
+    left = dfs(node.left)
+    right = dfs(node.right)
+
+    # Combine children's results to produce this node's result
+    return COMBINE(left, right, node.val)
+```
+
+**Variations:**
+
+| Problem | Base value | Combine logic |
+|---------|-----------|---------------|
+| Max depth | `return 0` | `return 1 + max(left, right)` |
+| Balanced tree | `return 0` (height); return `-1` for unbalanced | If either child is `-1` or `abs(left - right) > 1`, return `-1`; else `1 + max(left, right)` |
+| Same tree | `return True` (both None) | `return node1.val == node2.val and left and right` |
+| Invert tree | `return None` | Swap `node.left, node.right = right, left`; return `node` |
+
+#### Pattern 2: "Pass Value Down" DFS
+
+Pass running state as a parameter from parent to child. Information flows from root downward to leaves.
+
+**How to recognize:**
+- The answer depends on the path from root to current node.
+- You need to enforce constraints that tighten as you go deeper (BST bounds, running max).
+- The words "path sum," "good nodes," "validate," or "root-to-leaf" appear.
+
+**Template:**
+```python
+def dfs(node, state_from_parent):
+    if not node:
+        return BASE_VALUE
+
+    # Use state_from_parent to make decisions at this node
+    new_state = UPDATE(state_from_parent, node.val)
+
+    left = dfs(node.left, new_state)
+    right = dfs(node.right, new_state)
+    return COMBINE(left, right)
+```
+
+**Variations:**
+
+| Problem | State passed down | Update logic |
+|---------|------------------|--------------|
+| Path sum (root-to-leaf) | `remaining_sum` | `remaining_sum - node.val`; at leaf, check `== 0` |
+| Good nodes | `max_so_far` | `max(max_so_far, node.val)`; count if `node.val >= max_so_far` |
+| Validate BST | `(low, high)` bounds | Left child gets `(low, node.val)`, right gets `(node.val, high)` |
+| LCA of BST | implicit — the BST property | If both targets < node, go left; both > node, go right; else found |
+
+#### Pattern 3: "Global State" DFS
+
+Update an external (nonlocal/class-level) variable during traversal. The DFS return value computes one thing, but the answer is tracked separately in the global variable.
+
+**How to recognize:**
+- The answer is not the root's return value but rather the best value found at *any* node.
+- The problem asks for a "maximum" or "best" across all possible sub-paths.
+- Classic signals: "maximum path sum," "diameter," "longest path."
+
+**Template:**
+```python
+def solve(root):
+    best = BASE_VALUE  # nonlocal or self.best
+
+    def dfs(node):
+        nonlocal best
+        if not node:
+            return 0
+
+        left = dfs(node.left)
+        right = dfs(node.right)
+
+        # Update global answer (considers paths through this node)
+        best = max(best, GLOBAL_COMBINE(left, right, node.val))
+
+        # Return value to parent (single-branch contribution)
+        return RETURN_COMBINE(left, right, node.val)
+
+    dfs(root)
+    return best
+```
+
+**Variations:**
+
+| Problem | Global combine | Return to parent |
+|---------|---------------|-----------------|
+| Diameter | `max(best, left + right)` | `1 + max(left, right)` |
+| Max path sum | `max(best, left + right + node.val)` | `max(node.val + max(left, right), 0)` (clamp negatives) |
+| Longest univalue path | `max(best, left + right)` where left/right only count if same value | Matching-side length + 1, or 0 |
+
+#### Pattern 4: Level-Order BFS
+
+Process the tree level by level using a queue. The key trick is `for _ in range(len(queue))` to separate levels.
+
+**How to recognize:**
+- The problem explicitly asks about "levels," "depth," or "right/left side view."
+- You need the minimum depth (BFS finds it first).
+- You need to process all nodes at the same depth together.
+
+**Template:**
+```python
+from collections import deque
+
+def level_order(root):
+    if not root:
+        return []
+    queue = deque([root])
+    result = []
+    while queue:
+        level_size = len(queue)  # snapshot before processing
+        level = []
+        for _ in range(level_size):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level)
+    return result
+```
+
+**Variations:**
+
+| Problem | What to do per level |
+|---------|---------------------|
+| Level order traversal | Collect all vals into `level` list |
+| Right side view | Only keep `level[-1]` (last node per level) |
+| Average of levels | `sum(level) / len(level)` |
+| Minimum depth | Return depth when you hit the first leaf |
+| Zigzag traversal | Reverse every other level |
+
+#### Pattern 5: BST-Specific Techniques
+
+BSTs give you a total ordering for free. Exploit it.
+
+**How to recognize:**
+- The input is explicitly a BST.
+- The problem involves searching, validating, finding kth element, or finding closest value.
+
+**Key properties to exploit:**
+
+| Technique | When to use | Core idea |
+|-----------|------------|-----------|
+| Inorder = sorted | Kth smallest, convert BST to sorted list | Inorder traversal visits nodes in ascending order |
+| Binary search on tree | Search/insert/delete, LCA | Compare target with `node.val` to choose left or right |
+| Bounds propagation | Validate BST | Pass `(low, high)` down; left child must be `< node.val`, right must be `>` |
+| Inorder with early stop | Kth smallest without full traversal | Count visits; stop at k |
+
+**Inorder with counter template (kth smallest):**
+```python
+def kth_smallest(root, k):
+    count = 0
+    result = None
+
+    def inorder(node):
+        nonlocal count, result
+        if not node or result is not None:
+            return
+        inorder(node.left)
+        count += 1
+        if count == k:
+            result = node.val
+            return
+        inorder(node.right)
+
+    inorder(root)
+    return result
+```
+
+---
+
+### Graph Patterns
+
+#### Pattern 6: Grid DFS/BFS
+
+Treat a 2D grid as an implicit graph where each cell has up to 4 neighbors.
+
+**How to recognize:**
+- Input is a 2D matrix/grid.
+- The problem asks about connected regions, islands, area, or flood fill.
+
+**Template (DFS):**
+```python
+def grid_dfs(grid):
+    rows, cols = len(grid), len(grid[0])
+    visited = set()
+
+    def dfs(r, c):
+        if (r < 0 or r >= rows or c < 0 or c >= cols
+                or (r, c) in visited or grid[r][c] == WALL):
+            return 0
+        visited.add((r, c))
+        size = 1
+        for dr, dc in [(0,1), (0,-1), (1,0), (-1,0)]:
+            size += dfs(r + dr, c + dc)
+        return size
+
+    # Example: count islands
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == LAND and (r, c) not in visited:
+                dfs(r, c)
+                count += 1
+    return count
+```
+
+**Template (BFS):**
+```python
+from collections import deque
+
+def grid_bfs(grid, start_r, start_c):
+    rows, cols = len(grid), len(grid[0])
+    queue = deque([(start_r, start_c)])
+    visited = {(start_r, start_c)}
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in [(0,1), (0,-1), (1,0), (-1,0)]:
+            nr, nc = r + dr, c + dc
+            if (0 <= nr < rows and 0 <= nc < cols
+                    and (nr, nc) not in visited
+                    and grid[nr][nc] != WALL):
+                visited.add((nr, nc))
+                queue.append((nr, nc))
+```
+
+**Variations:**
+
+| Problem | Modification |
+|---------|-------------|
+| Number of islands | Outer loop starts DFS on each unvisited land cell; count components |
+| Max area of island | DFS returns `size`; track max |
+| Surrounded regions | Start DFS from border O's; mark them safe; flip remaining O's |
+| Word search | DFS + backtracking; remove from visited after exploring |
+| Longest increasing path | DFS + memoization; only move to strictly greater neighbors |
+
+#### Pattern 7: Multi-Source BFS
+
+Start BFS from multiple cells simultaneously. All sources are added to the queue at time 0, and the BFS wavefront expands outward from all of them in parallel.
+
+**How to recognize:**
+- Multiple starting points spread outward at the same time (rotting oranges, fire spreading).
+- You need to find cells reachable from any of a set of border cells (pacific atlantic).
+- The problem asks for the minimum time/distance from *any* source to all other cells.
+
+**Template:**
+```python
+from collections import deque
+
+def multi_source_bfs(grid):
+    rows, cols = len(grid), len(grid[0])
+    queue = deque()
+    visited = set()
+
+    # Step 1: enqueue ALL sources at once
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == SOURCE:
+                queue.append((r, c, 0))  # (row, col, distance/time)
+                visited.add((r, c))
+
+    # Step 2: standard BFS from all sources simultaneously
+    max_dist = 0
+    while queue:
+        r, c, dist = queue.popleft()
+        max_dist = max(max_dist, dist)
+        for dr, dc in [(0,1), (0,-1), (1,0), (-1,0)]:
+            nr, nc = r + dr, c + dc
+            if (0 <= nr < rows and 0 <= nc < cols
+                    and (nr, nc) not in visited
+                    and grid[nr][nc] != WALL):
+                visited.add((nr, nc))
+                queue.append((nr, nc, dist + 1))
+
+    return max_dist
+```
+
+**Variations:**
+
+| Problem | Sources | Direction |
+|---------|---------|-----------|
+| Rotting oranges | All rotten cells | Forward from sources; track time |
+| Pacific atlantic | Border cells (two separate BFS runs) | Reverse: flow uphill from ocean borders; intersect reachable sets |
+| Walls and gates | All gate cells | Forward from gates; first visit = shortest distance |
+| 01 matrix | All 0-cells | Forward from zeros; first visit gives nearest-zero distance |
+
+#### Pattern 8: Topological Sort
+
+Order nodes in a directed acyclic graph (DAG) so that for every edge u -> v, u comes before v.
+
+**How to recognize:**
+- Dependencies or prerequisites ("take course A before course B").
+- The problem asks "is there a valid ordering?" or "return the ordering."
+- Cycle detection in a directed graph.
+
+**Approach 1: Kahn's Algorithm (BFS-based) -- preferred for most problems:**
+```python
+from collections import deque, defaultdict
+
+def topo_sort_kahn(num_nodes, edges):
+    graph = defaultdict(list)
+    in_degree = [0] * num_nodes
+
+    for u, v in edges:
+        graph[u].append(v)
+        in_degree[v] += 1
+
+    queue = deque([i for i in range(num_nodes) if in_degree[i] == 0])
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    if len(order) == num_nodes:
+        return order        # valid topological order
+    else:
+        return []           # cycle detected — not a DAG
+```
+
+**Approach 2: DFS-based (postorder reverse):**
+```python
+def topo_sort_dfs(num_nodes, edges):
+    graph = defaultdict(list)
+    for u, v in edges:
+        graph[u].append(v)
+
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = [WHITE] * num_nodes
+    order = []
+    has_cycle = False
+
+    def dfs(node):
+        nonlocal has_cycle
+        if has_cycle:
+            return
+        color[node] = GRAY
+        for neighbor in graph[node]:
+            if color[neighbor] == GRAY:
+                has_cycle = True
+                return
+            if color[neighbor] == WHITE:
+                dfs(neighbor)
+        color[node] = BLACK
+        order.append(node)
+
+    for i in range(num_nodes):
+        if color[i] == WHITE:
+            dfs(i)
+
+    if has_cycle:
+        return []
+    return order[::-1]  # reverse postorder = topological order
+```
+
+**When to use which approach:**
+
+| Criterion | Kahn's (BFS) | DFS-based |
+|-----------|-------------|-----------|
+| Need the ordering | Returns it directly | Reverse postorder |
+| Cycle detection | `len(order) < num_nodes` | Gray-to-gray edge |
+| Parallel scheduling (levels) | Natural: process by "rounds" of zero in-degree | Harder to extract levels |
+| Simpler to implement | Usually yes | Slightly more code |
+
+#### Pattern 9: Cycle Detection
+
+**In directed graphs (DFS 3-coloring):**
+
+**How to recognize:** "Can all courses be completed?" / "Is there a circular dependency?"
+
+The 3-color approach from topological sort handles this. A cycle exists if DFS encounters a GRAY node (currently on the recursion stack).
+
+```python
+# Uses the same WHITE/GRAY/BLACK coloring as DFS topo sort above.
+# Cycle exists if you ever visit a GRAY neighbor.
+```
+
+**In undirected graphs (Union-Find or parent tracking):**
+
+**How to recognize:** "Find the redundant edge" / "Is the graph a valid tree?"
+
+Option A -- Parent tracking in DFS:
+```python
+def has_cycle_undirected(graph, n):
+    visited = set()
+
+    def dfs(node, parent):
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor == parent:
+                continue
+            if neighbor in visited:
+                return True   # cycle found
+            if dfs(neighbor, node):
+                return True
+        return False
+
+    for i in range(n):
+        if i not in visited:
+            if dfs(i, -1):
+                return True
+    return False
+```
+
+Option B -- Union-Find (see Pattern 10).
+
+#### Pattern 10: Union-Find (Disjoint Set Union)
+
+Track connected components. Supports near-O(1) union and find with path compression + union by rank.
+
+**How to recognize:**
+- "Are these two nodes connected?"
+- "How many connected components?"
+- Dynamically adding edges and querying connectivity.
+- Cycle detection in undirected graphs (if union returns False, the edge creates a cycle).
+
+**Template:**
+```python
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.components = n
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # path compression
+        return self.parent[x]
+
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False  # already connected (cycle if adding edge)
+        # union by rank
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.components -= 1
+        return True
+```
+
+**Variations:**
+
+| Problem | How Union-Find is used |
+|---------|----------------------|
+| Redundant connection | Add edges one by one; first edge where `union` returns `False` is the answer |
+| Number of provinces | Union all edges; return `self.components` |
+| Accounts merge | Union accounts sharing an email |
+| Min cost to connect all points (Kruskal's MST) | Sort edges by weight; union greedily; stop when 1 component |
+
+#### Pattern 11: Dijkstra's Algorithm
+
+Shortest path in a weighted graph with non-negative edge weights. Uses a min-heap (priority queue).
+
+**How to recognize:**
+- Weighted graph with non-negative weights.
+- "Shortest path," "minimum cost," "minimum time" to reach a node.
+- Grid problems where movement cost varies per cell.
+
+**Template:**
+```python
+import heapq
+from collections import defaultdict
+
+def dijkstra(n, edges, source):
+    graph = defaultdict(list)
+    for u, v, w in edges:
+        graph[u].append((v, w))
+        # graph[v].append((u, w))  # uncomment for undirected
+
+    dist = [float('inf')] * n
+    dist[source] = 0
+    heap = [(0, source)]  # (distance, node)
+
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue  # stale entry, skip
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+
+    return dist
+```
+
+**Variations:**
+
+| Problem | Modification |
+|---------|-------------|
+| Network delay time | Run Dijkstra from source; answer is `max(dist)` |
+| Swim in rising water | Edge weight = `max(grid[r][c], grid[nr][nc])`; minimize the max along path |
+| Path with minimum effort | Edge weight = abs difference in heights; minimize the max effort along path |
+| Cheapest flights within k stops | Use Bellman-Ford instead (Dijkstra does not handle hop constraints well) |
+
+#### When to Use BFS vs DFS vs Dijkstra
+
+| Scenario | Algorithm | Why |
+|----------|-----------|-----|
+| Unweighted shortest path | BFS | First visit = shortest distance; O(V+E) |
+| Explore all paths / backtrack | DFS | Natural recursion; easy to undo choices |
+| Weighted non-negative shortest path | Dijkstra | Greedy with min-heap; O((V+E) log V) |
+| Weighted with negative edges | Bellman-Ford | Relaxes all edges V-1 times; O(VE) |
+| Weighted with negative edges (all pairs) | Floyd-Warshall | DP over all pairs; O(V^3) |
+| Detect cycles (directed) | DFS (3-color) | Gray-to-gray = back edge = cycle |
+| Detect cycles (undirected) | Union-Find or DFS with parent | Union returning False = cycle |
+| Dependency ordering | Topological sort (Kahn's or DFS) | Only valid on DAGs |
+| Connected components (static) | DFS or BFS | One traversal per component |
+| Connected components (dynamic) | Union-Find | Efficient incremental merging |
+
+---
+
+### Trie Pattern
+
+#### Pattern 12: Trie (Prefix Tree)
+
+A tree where each node represents one character of a string. Paths from root to a node spell out prefixes.
+
+**How to recognize:**
+- Prefix matching ("find all words starting with...").
+- Autocomplete / search suggestions.
+- Need to check if any prefix of a word exists in a dictionary.
+- Word search on a grid with a dictionary (trie + backtracking).
+
+**Node structure and template:**
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}      # char -> TrieNode
+        self.is_end = False     # marks end of a complete word
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+        node.is_end = True
+
+    def search(self, word):
+        """Returns True if the exact word exists."""
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        """Returns True if any word starts with prefix."""
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children:
+                return False
+            node = node.children[ch]
+        return True
+```
+
+**When tries beat hash maps:**
+
+| Criterion | Trie | Hash Set/Map |
+|-----------|------|-------------|
+| Prefix queries ("any word starts with X?") | O(len(prefix)) -- natural | O(N * avg_len) -- must check all words |
+| Exact word lookup | O(len(word)) | O(len(word)) average -- tie |
+| Memory for many words sharing prefixes | Shared prefixes save space | Each word stored independently |
+| Wildcard search (`.` matches any char) | DFS through children at wildcard positions | Must enumerate all possibilities |
+| Word Search II (grid + dictionary) | Prune entire branches when prefix not found | Cannot prune; check each word independently |
+
+**Rule of thumb:** Use a trie when the problem involves *prefix relationships* between words or *pruning search paths* based on partial matches. Use a hash set when you only need exact lookups.
+
+---
+
+### Pattern Decision Tree
+
+Use this to pick your approach when you see a new tree/graph problem:
+
+```
+Is the input a TREE or a GRAPH?
+│
+├── TREE
+│   ├── Is it a BST?
+│   │   ├── Yes → Exploit ordering: inorder = sorted, binary search to navigate,
+│   │   │         bounds propagation to validate
+│   │   └── No → General binary tree (continue below)
+│   │
+│   ├── Does the problem ask about levels/depth/views?
+│   │   ├── Yes → Level-order BFS (Pattern 4)
+│   │   └── No → DFS (continue below)
+│   │
+│   ├── Does each node need info from its children?
+│   │   └── Yes → "Return value up" DFS (Pattern 1)
+│   │
+│   ├── Does each node need info from the root/path above it?
+│   │   └── Yes → "Pass value down" DFS (Pattern 2)
+│   │
+│   └── Is the answer the best value found at ANY node (not just root)?
+│       └── Yes → "Global state" DFS (Pattern 3)
+│
+├── GRAPH (or GRID)
+│   ├── Is it a 2D grid?
+│   │   ├── Connected components / flood fill → Grid DFS (Pattern 6)
+│   │   ├── Simultaneous spread from multiple sources → Multi-source BFS (Pattern 7)
+│   │   └── Weighted movement cost → Dijkstra on grid (Pattern 11)
+│   │
+│   ├── Are there dependencies / ordering constraints?
+│   │   └── Yes → Topological sort (Pattern 8)
+│   │
+│   ├── Need shortest path?
+│   │   ├── Unweighted → BFS
+│   │   ├── Weighted, non-negative → Dijkstra (Pattern 11)
+│   │   └── Weighted, negative or hop-limited → Bellman-Ford
+│   │
+│   ├── Need to detect cycles?
+│   │   ├── Directed graph → DFS 3-coloring (Pattern 9)
+│   │   └── Undirected graph → Union-Find (Pattern 10) or DFS with parent
+│   │
+│   ├── Need connected components dynamically?
+│   │   └── Yes → Union-Find (Pattern 10)
+│   │
+│   └── Need minimum spanning tree?
+│       └── Yes → Kruskal's (sort edges + Union-Find) or Prim's (min-heap)
+│
+└── STRING PREFIX problem?
+    └── Yes → Trie (Pattern 12)
+```
+
+---
+
 ## 📺 Watch
 
 1. **NeetCode — Trees playlist** — follow the NeetCode 150 roadmap

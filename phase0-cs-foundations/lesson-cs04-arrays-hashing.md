@@ -32,6 +32,42 @@ One pointer at each end, move inward. Or one slow, one fast.
 - **Three pointers:** extension for 3-element problems (3Sum, sort colors).
 - **Use when:** sorted array, finding pairs, comparing from both ends, in-place operations.
 
+**How to recognize:** the input is sorted (or you can sort it), you need to find pairs/triplets satisfying a condition, or you need to do in-place operations on an array without extra space.
+
+**General template:**
+
+```python
+# Opposite ends
+def two_pointer_opposite(arr):
+    left, right = 0, len(arr) - 1
+    while left < right:
+        current = arr[left] + arr[right]  # or some comparison
+        if current == target:
+            return (left, right)
+        elif current < target:
+            left += 1       # need larger value
+        else:
+            right -= 1      # need smaller value
+
+# Fast / slow
+def two_pointer_fast_slow(arr):
+    slow = 0
+    for fast in range(len(arr)):
+        if some_condition(arr[fast]):
+            arr[slow] = arr[fast]
+            slow += 1
+    return slow  # new length of processed portion
+```
+
+**Two Pointer subtypes:**
+
+| Subtype | Description | Example Problems |
+|---------|-------------|-----------------|
+| Opposite ends | Left and right converge inward; works on sorted arrays or when comparing extremes | Two Sum II, Container With Most Water, Valid Palindrome, Trapping Rain Water |
+| Fast / slow | Slow pointer marks "write position", fast scans ahead; used for in-place dedup and partitioning | Remove Duplicates, Move Zeroes, Remove Element |
+| Three pointers | Fix one pointer, two-pointer scan the rest; or three-way partition (Dutch national flag) | 3Sum, Sort Colors (Dutch National Flag) |
+| Merge two sorted | One pointer per sorted input, advance the smaller; used for merging and intersection | Merge Sorted Arrays, Intersection of Two Arrays |
+
 ### Sliding Window
 
 Maintain a window [left, right] over the array. Expand right, shrink left.
@@ -39,6 +75,52 @@ Maintain a window [left, right] over the array. Expand right, shrink left.
 - **Fixed-size window:** window of size k slides across (permutation check).
 - **Window + frequency map:** track character/element counts in the window (longest repeating character replacement).
 - **Use when:** "find the longest/shortest subarray/substring with property X."
+
+**How to recognize:** the problem asks for a contiguous subarray or substring, and you need to optimize its length (longest/shortest) subject to some constraint. Keywords: "subarray", "substring", "contiguous", "at most k", "window."
+
+**General template:**
+
+```python
+# Variable-size sliding window
+def sliding_window_variable(arr):
+    left = 0
+    best = 0
+    window_state = {}  # frequency map, sum, etc.
+    for right in range(len(arr)):
+        # 1. Expand: add arr[right] to window state
+        update_state(window_state, arr[right])
+
+        # 2. Shrink: while window is invalid, remove from left
+        while not is_valid(window_state):
+            remove_from_state(window_state, arr[left])
+            left += 1
+
+        # 3. Update answer with current valid window
+        best = max(best, right - left + 1)
+    return best
+
+# Fixed-size sliding window
+def sliding_window_fixed(arr, k):
+    window_state = {}
+    for right in range(len(arr)):
+        update_state(window_state, arr[right])
+
+        if right >= k:
+            remove_from_state(window_state, arr[right - k])
+
+        if right >= k - 1:
+            check_answer(window_state)
+```
+
+**Sliding Window subtypes:**
+
+| Subtype | Description | Example Problems |
+|---------|-------------|-----------------|
+| Variable-size (maximize) | Expand right always, shrink left when invalid; track longest valid window | Longest Substring Without Repeating Characters, Longest Repeating Character Replacement |
+| Variable-size (minimize) | Expand right until valid, then shrink left to find shortest valid window | Minimum Window Substring |
+| Fixed-size | Window always has exactly k elements; slide by adding right and removing left | Permutation in String, Find All Anagrams in a String |
+| Window + frequency map | Maintain a character/element count inside the window; compare against a target frequency map | Minimum Window Substring, Permutation in String, Longest Repeating Character Replacement |
+| Window + distinct count | Track number of distinct elements; shrink when exceeding k distinct | Fruits Into Baskets, Longest Substring with At Most K Distinct Characters |
 
 ### Hashing (Frequency Counting & Lookup)
 
@@ -49,12 +131,56 @@ Hash map from element → count, or hash set for existence checks.
 - **Grouping:** hash map key → list of matching items (group anagrams).
 - **Use when:** "have I seen this?", "how many times?", "find complement/pair."
 
+**How to recognize:** you need O(1) lookup or counting. The problem involves finding pairs, checking membership, counting frequencies, or grouping items by some derived key. Any time brute force uses a nested loop to "search for something," a hash map can likely eliminate the inner loop.
+
+**General templates:**
+
+```python
+# Complement lookup (Two Sum pattern)
+def complement_lookup(nums, target):
+    seen = {}  # value -> index
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+
+# Frequency counting
+from collections import Counter
+def frequency_pattern(items):
+    freq = Counter(items)
+    # Now use freq for comparisons, top-k, etc.
+
+# Grouping by key
+from collections import defaultdict
+def group_by_key(items):
+    groups = defaultdict(list)
+    for item in items:
+        key = derive_key(item)  # e.g., sorted(item), tuple of char counts
+        groups[key].append(item)
+    return list(groups.values())
+```
+
+**Hashing subtypes:**
+
+| Subtype | Description | Example Problems |
+|---------|-------------|-----------------|
+| Complement lookup | Store seen values; for each new value, check if its complement (target - value) exists | Two Sum, Two Sum II (also solvable with two pointers), 4Sum II |
+| Frequency counting | Count occurrences of each element; compare counts, find top-k, or verify anagrams | Valid Anagram, Top K Frequent Elements, Sort Characters By Frequency |
+| Grouping by key | Map a derived key to a list of items sharing that key; the key is often a sorted string or count tuple | Group Anagrams, Isomorphic Strings |
+| Existence check (set) | Use a hash set for O(1) "have I seen this?" checks; often replaces an O(n) inner loop | Contains Duplicate, Longest Consecutive Sequence, Happy Number |
+| Prefix sum + hash map | Store prefix sums in a map; check if `prefix[j] - target` was seen to find subarrays summing to target | Subarray Sum Equals K, Contiguous Array |
+
 ### Prefix Sum / Prefix Products
 
 Precompute cumulative sums for O(1) range queries.
 - `prefix[i] = sum(arr[0..i])`, then `sum(arr[l..r]) = prefix[r] - prefix[l-1]`
 - **Prefix/suffix products:** left and right product arrays (product of array except self).
 - **Use when:** range queries, cumulative operations, "subarray sum equals X."
+
+**How to recognize:** the problem involves range sums, subarray sums, or asks "how many subarrays sum to X." Also useful when you need both a left-to-right and right-to-left accumulation (prefix/suffix products). Keywords: "sum of subarray", "range query", "product except self."
+
+**General templates:**
 
 ```python
 # Prefix sum — O(n) build, O(1) range query
@@ -64,7 +190,43 @@ def prefix_sum(nums):
         prefix[i + 1] = prefix[i] + nums[i]
     # sum of nums[l..r] inclusive = prefix[r+1] - prefix[l]
     return prefix
+
+# Prefix sum + hash map — count subarrays summing to target
+def subarray_sum(nums, target):
+    prefix_counts = {0: 1}  # prefix_sum -> count of times seen
+    current_sum = 0
+    result = 0
+    for num in nums:
+        current_sum += num
+        # If (current_sum - target) was a previous prefix sum,
+        # then the subarray between them sums to target
+        result += prefix_counts.get(current_sum - target, 0)
+        prefix_counts[current_sum] = prefix_counts.get(current_sum, 0) + 1
+    return result
+
+# Prefix / suffix products
+def product_except_self(nums):
+    n = len(nums)
+    result = [1] * n
+    left = 1
+    for i in range(n):
+        result[i] = left
+        left *= nums[i]
+    right = 1
+    for i in range(n - 1, -1, -1):
+        result[i] *= right
+        right *= nums[i]
+    return result
 ```
+
+**Prefix Sum subtypes:**
+
+| Subtype | Description | Example Problems |
+|---------|-------------|-----------------|
+| Basic prefix sum | Build cumulative sum array; answer range sum queries in O(1) | Range Sum Query, Running Sum of 1D Array |
+| Prefix sum + hash map | Store prefix sums in a map; find subarrays summing to a target by checking if `current - target` was seen | Subarray Sum Equals K, Contiguous Array |
+| Prefix / suffix products | Build left-product and right-product arrays; multiply them for "product except self" | Product of Array Except Self |
+| Prefix max / min | Track running max/min from left and right; useful for water-trapping or boundary problems | Trapping Rain Water (prefix max approach) |
 
 ### Monotonic Stack / Deque
 
@@ -72,6 +234,10 @@ A stack (or deque) that maintains increasing or decreasing order.
 - **Monotonic stack:** pop elements that break the ordering invariant; useful for "next greater/smaller element" problems.
 - **Monotonic deque:** maintain order within a sliding window for O(1) window max/min queries.
 - **Use when:** "next greater/smaller element", "maintain a window of max/min."
+
+**How to recognize:** the problem asks "for each element, find the next/previous greater/smaller element" or requires maintaining a max/min over a sliding window in O(n). Also applies to histogram-area problems and stock span calculations.
+
+**General templates:**
 
 ```python
 # Monotonic stack — next greater element in O(n)
@@ -83,7 +249,80 @@ def next_greater(nums):
             result[stack.pop()] = num
         stack.append(i)
     return result
+
+# Monotonic deque — sliding window maximum in O(n)
+from collections import deque
+def sliding_window_max(nums, k):
+    dq = deque()  # indices, values are decreasing
+    result = []
+    for i, num in enumerate(nums):
+        # Remove elements outside the window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+        # Maintain decreasing order
+        while dq and nums[dq[-1]] <= num:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+    return result
 ```
+
+**Monotonic Stack subtypes:**
+
+| Subtype | Description | Example Problems |
+|---------|-------------|-----------------|
+| Next greater element | Decreasing stack; pop when current > top to assign next-greater | Next Greater Element I/II, Daily Temperatures |
+| Next smaller element | Increasing stack; pop when current < top to assign next-smaller | Stock Span Problem (inverted) |
+| Histogram area | For each bar, find nearest shorter bar on left and right; area = height * width | Largest Rectangle in Histogram, Maximal Rectangle |
+| Monotonic deque (window max/min) | Deque maintains decreasing order; front is always the window max; popleft when out of range | Sliding Window Maximum |
+
+---
+
+### Pattern Decision Tree
+
+Use this to quickly identify which array/string technique to apply:
+
+```
+What does the problem ask for?
+│
+├── Pairs/triplets satisfying a condition?
+│   ├── Input sorted (or can sort)?           → Two Pointers (opposite ends)
+│   └── Input unsorted, can't sort?           → Hashing (complement lookup)
+│
+├── Longest/shortest contiguous subarray/substring?
+│   ├── Constraint on window contents?         → Sliding Window (variable-size)
+│   └── Window of fixed size k?                → Sliding Window (fixed-size)
+│
+├── Subarray sum equals / divisible by X?
+│   └── Use prefix sum + hash map              → Prefix Sum + Hashing
+│
+├── Range sum queries on a static array?
+│   └── Precompute cumulative sums             → Prefix Sum
+│
+├── "Have I seen this before?" / frequency / grouping?
+│   ├── Existence check                        → Hash Set
+│   ├── Count occurrences                      → Hash Map (Counter)
+│   └── Group by derived key                   → Hash Map (defaultdict(list))
+│
+├── Next/previous greater or smaller element?
+│   └── Monotonic Stack
+│
+├── Max/min over a sliding window?
+│   └── Monotonic Deque
+│
+├── In-place removal / partitioning?
+│   └── Two Pointers (fast/slow)
+│
+├── Product of array except self?
+│   └── Prefix / Suffix Products
+│
+└── Not sure?
+    ├── Try hashing first — it solves the most problems
+    └── If contiguous subarray → sliding window or prefix sum
+```
+
+---
 
 ## 📺 Watch
 
