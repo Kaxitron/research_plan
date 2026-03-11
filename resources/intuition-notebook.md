@@ -453,8 +453,15 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 **Positive definite vs Positive semi-definite:** PD = all eigenvalues > 0 (strict bowl, no flat directions). PSD = all eigenvalues ≥ 0 (bowl or flat, never saddle). Covariance matrices are always PSD. AᵀA is always PSD.
 
+## Dynamic Programming — "Best Up To" vs "Best Ending At"
+
+**DP subproblem definition — the key distinction:** If your decision at index $i$ depends only on position — like "skip the neighbor" in House Robber or "subtract a coin" in Coin Change — then "best up to $i$" works, because nearby dp values contain everything you need. But if your decision depends on the **actual value** of the last element you chose — like "is this number bigger than the previous one" in LIS, or "does this number divide the previous one" — then "best up to $i$" is useless because it hides which element you committed to. You need "best ending at $i$" so the subproblem exposes the last chosen value, letting you check whether the current element is compatible.
+
+**The test:** Can I make my decision knowing only position and nearby dp values? → "up to." Does the constraint compare the current element's value against the previous chosen element's value? → "ending at."
+
 ---
 
-*Last updated: March 2026 -- through Lesson 16 Part 1 (Autonomous ODEs & Phase Lines)*
+*Last updated: March 2026 -- through CS-08 (Recursion & DP)*
+
 
 
