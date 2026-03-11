@@ -461,7 +461,32 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-*Last updated: March 2026 -- through CS-08 (Recursion & DP)*
+## Lesson 16 — Higher-Order ODEs, Vibrations, and Power Series
+
+**Wronskian = determinant test for functions:** The Wronskian asks "at this point x, do the state vectors (y, y')^T form linearly independent columns?" Same Phase 1 tool, applied to function-and-derivative pairs instead of plain vectors.
+
+**Abel's theorem — all-or-nothing independence:** The Wronskian satisfies its own separable ODE: W' = -p(x)W, so W(x) = W(x_0) * exp(-∫p dx). Since the exponential is never zero, W is either always zero or never zero. Check one point, conclude everywhere. The key detail: it's p(x) (the y' coefficient), not q(x).
+
+**Spring-mass-damper = SGD with momentum:** The continuous limit of SGD with momentum is exactly the damped oscillator ODE. Mass = inertia, damping = momentum decay (1-β), spring constant = Hessian eigenvalue. Underdamped = β too high (oscillates around minimum). Overdamped = β too low (sluggish convergence). Critically damped = optimal β. The problem: different Hessian eigenvalues want different damping, but momentum gives one global β. This is why Adam exists — per-parameter adaptive damping.
+
+**Resonance = learning rate instability:** When the optimizer's effective frequency matches a Hessian eigenvalue direction, you get resonance — the loss explodes. The learning rate ceiling η < 2/λ_max is literally a resonance condition. Same math as a bridge shaking apart in wind.
+
+**Undetermined coefficients — self-reproducing families:** The method works because polynomials, exponentials, and trig functions form closed families under differentiation. Differentiating never leaves the family, so a finite guess template suffices. Functions like tan(x), ln(x), 1/x break this — their derivatives generate infinitely many new forms.
+
+**Overlap rule (multiply by x):** When your particular solution guess is already a homogeneous solution, it will produce zero on the left side. Multiplying by x bumps you out of the homogeneous solution space. For repeated roots, you may need to multiply by x twice.
+
+**Variation of parameters — the Wronskian's practical role:** The Wronskian matrix appears as the coefficient matrix of the 2x2 system for u_1' and u_2'. Its nonzero determinant (guaranteed by independence of solutions) means the system always has a unique solution via Cramer's rule.
+
+**Why the cancellation works in variation of parameters:** When you substitute y_p = u_1*y_1 + u_2*y_2 into the ODE, the terms without u-primes reconstruct the homogeneous equation for y_1 and y_2, which equals zero by definition. Only the u' terms survive. This is why we can use homogeneous solutions as building blocks for the particular solution.
+
+**Power series = solving for an infinite sequence:** Instead of finding a formula, assume y = Σ a_n x^n and let the ODE force relationships between coefficients. The function is defined by its series, not by a closed-form name. Same philosophy as neural networks: represent functions through computed parameters, not symbolic formulas.
+
+**Orphan terms in power series:** When variable coefficients like xy shift the power of x, the re-indexed sums start at different indices. Terms with no partner from the other sum are forced to zero independently of initial conditions. When sums line up (no shift), no orphans, and all coefficients depend on the free parameters a_0 and a_1.
+
+---
+
+*Last updated: March 2026 -- through Lesson 16 (Higher-Order ODEs)*
+
 
 
 
