@@ -1430,6 +1430,113 @@ The equation $m\ddot{x} + b\dot{x} + kx = 0$ (mass-spring-damper) has characteri
 
 ---
 
+## 43. The Wronskian
+
+**Definition:** For two solutions $y_1, y_2$:
+
+$$W(y_1, y_2) = \begin{vmatrix} y_1 & y_2 \\ y_1' & y_2' \end{vmatrix} = y_1 y_2' - y_1' y_2$$
+
+If $W \neq 0$, the solutions are linearly independent and form a fundamental solution set.
+
+**What it tests:** Whether the "state vectors" $(y, y')^T$ for each solution are linearly independent — same determinant test as Phase 1, applied to functions.
+
+**Abel's Theorem:** If $y_1, y_2$ solve $y'' + p(x)y' + q(x)y = 0$, then the Wronskian satisfies its own ODE: $W' = -p(x)W$, giving:
+
+$$W(x) = W(x_0)\, e^{-\int_{x_0}^{x} p(t)\,dt}$$
+
+Since the exponential is never zero, $W$ is either always zero or never zero. Check at one convenient point — if nonzero there, independent everywhere.
+
+**Key detail:** Abel's theorem uses $p(x)$ (the $y'$ coefficient), NOT $q(x)$ (the $y$ coefficient). The ODE must be in standard form (leading coefficient 1).
+
+**Higher order:** For $n$ solutions, the Wronskian is an $n \times n$ determinant using derivatives up to order $n-1$.
+
+---
+
+## 44. Resonance and Forced Vibrations
+
+**Forced spring-mass-damper:** $m\ddot{x} + b\dot{x} + kx = F_0 \cos(\omega t)$
+
+The full solution is $x = x_h + x_p$. The homogeneous part $x_h$ (transient) decays away if $b > 0$. The particular solution $x_p$ (steady state) persists at the driving frequency $\omega$.
+
+**Steady-state amplitude:**
+
+$$A(\omega) = \frac{F_0}{\sqrt{(k - m\omega^2)^2 + (b\omega)^2}}$$
+
+**Resonance** occurs when the driving frequency matches the natural frequency $\omega_0 = \sqrt{k/m}$. The $(k - m\omega^2)$ term vanishes, leaving only $b\omega$ in the denominator. Small damping → enormous amplitude. Zero damping → amplitude goes to infinity.
+
+**Beats:** When $\omega \approx \omega_0$ but not equal, the amplitude modulates slowly — a fast oscillation inside a slow envelope.
+
+**ML connection:** The Hessian eigenvalues set "natural frequencies" of the loss landscape. The learning rate ceiling $\eta < 2/\lambda_{\max}$ is a resonance condition — violating it drives the largest eigenvalue direction into resonance and training diverges.
+
+---
+
+## 45. Nonhomogeneous Equations — Undetermined Coefficients
+
+**Setup:** $ay'' + by' + cy = g(x)$. Solution: $y = y_h + y_p$.
+
+**Guessing rules for $y_p$:**
+
+| $g(x)$ | Guess |
+|---------|-------|
+| Polynomial degree $n$ | $A_n x^n + \cdots + A_0$ |
+| $e^{\alpha x}$ | $Ae^{\alpha x}$ |
+| $\sin\beta x$ or $\cos\beta x$ | $A\cos\beta x + B\sin\beta x$ (always include BOTH) |
+| $e^{\alpha x}\sin\beta x$ or $e^{\alpha x}\cos\beta x$ | $e^{\alpha x}(A\cos\beta x + B\sin\beta x)$ |
+| Products/sums of the above | Product/sum of corresponding guesses |
+
+**Overlap rule:** If your guess is already a homogeneous solution, multiply by $x$. If that's also a homogeneous solution (repeated roots), multiply by $x$ again. Keep going until the guess escapes the homogeneous solution space.
+
+**Limitations:** Only works for constant-coefficient ODEs where $g(x)$ is a polynomial, exponential, sine, cosine, or products thereof. Functions like $\tan x$, $\ln x$, $\sec x$, $1/x$ require variation of parameters instead.
+
+---
+
+## 46. Nonhomogeneous Equations — Variation of Parameters
+
+**Idea:** Let the constants in $y_h = c_1 y_1 + c_2 y_2$ become functions: $y_p = u_1(x) y_1 + u_2(x) y_2$.
+
+**The system** (ODE must be in standard form, leading coefficient 1):
+
+$$\begin{pmatrix} y_1 & y_2 \\ y_1' & y_2' \end{pmatrix} \begin{pmatrix} u_1' \\ u_2' \end{pmatrix} = \begin{pmatrix} 0 \\ g(x) \end{pmatrix}$$
+
+The matrix is the Wronskian matrix — its determinant $W \neq 0$ guarantees a unique solution.
+
+**Cramer's rule solution:**
+
+$$u_1' = \frac{-y_2\, g(x)}{W}, \qquad u_2' = \frac{y_1\, g(x)}{W}$$
+
+Then integrate $u_1'$ and $u_2'$, and assemble $y_p = u_1 y_1 + u_2 y_2$.
+
+**Why it works:** Substituting $y_p$ into the ODE, the terms involving $u_1$ and $u_2$ (without primes) reconstruct the homogeneous equation for $y_1$ and $y_2$, which equals zero. Only the $u_1'$ and $u_2'$ terms survive.
+
+**Common mistake:** Forgetting to put the ODE in standard form first. If the leading coefficient is $a \neq 1$, divide through so $g(x)$ in the formula is $g(x)/a$.
+
+**Advantage over undetermined coefficients:** Works for ANY $g(x)$, not just the "nice" families.
+
+---
+
+## 47. Power Series Solutions
+
+**When to use:** Variable-coefficient ODEs where the characteristic equation method doesn't apply (e.g. $y'' - xy = 0$).
+
+**Method:** Assume $y = \sum_{n=0}^{\infty} a_n x^n$. Compute $y'$ and $y''$ term by term, substitute into the ODE, re-index all sums to the same power of $x$, then match coefficients to get a recurrence relation for the $a_n$.
+
+**Key steps:**
+
+1. $y' = \sum_{n=1}^{\infty} n\, a_n x^{n-1}$, $y'' = \sum_{n=2}^{\infty} n(n-1)\, a_n x^{n-2}$
+2. Substitute into the ODE
+3. Re-index so all sums have the same power of $x$ (change of dummy variable)
+4. If sums start at different indices, separate the "orphan" terms
+5. Set each coefficient of $x^m$ to zero → recurrence relation
+6. Unroll with $a_0$ and $a_1$ as free constants (for 2nd-order ODEs)
+
+**Orphan terms:** When the ODE has variable coefficients like $xy$ or $x^2 y'$, these shift the power of $x$, causing sums to start at different indices after re-indexing. Terms with no partner are forced to zero by the equation itself, independent of initial conditions.
+
+**Ordinary vs singular points:** A point $x_0$ is ordinary if the coefficient functions (after dividing by the leading coefficient) are analytic there. Power series solutions are valid at ordinary points. At singular points, the Frobenius method ($y = x^r \sum a_n x^n$) is needed instead.
+
+**Canonical example — Airy's equation:** $y'' - xy = 0$ has no closed-form solution. Power series gives recurrence $a_{m+2} = a_{m-1}/((m+2)(m+1))$ with $a_2 = 0$ forced, producing two independent series (the Airy functions Ai and Bi) from chains starting at $a_0$ and $a_1$.
+
+---
+
 # Multivariable Calculus
 
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1516,10 +1623,17 @@ The equation $m\ddot{x} + b\dot{x} + kx = 0$ (mass-spring-damper) has characteri
 | $(f^{-1})'(y) = 1/f'(f^{-1}(y))$ | Inverse function derivative |
 | $p_Y(y) = p_X(g^{-1}(y)) \cdot \|(g^{-1})'(y)\|$ | 1D change of variables |
 | $dx\,dy = r\,dr\,d\theta$ | Polar Jacobian |
+| $W(y_1,y_2) = y_1 y_2' - y_1' y_2$ | Wronskian (independence test for solutions) |
+| $W' = -p(x)W$ | Abel's theorem (Wronskian ODE) |
+| $\omega_0 = \sqrt{k/m}$ | Natural frequency of spring-mass system |
+| $A(\omega) = F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}$ | Steady-state amplitude (resonance curve) |
+| $u_1' = -y_2 g/W$, $u_2' = y_1 g/W$ | Variation of parameters formulas |
+| $y = \sum a_n x^n$ → recurrence for $a_n$ | Power series solution method |
 
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs)*
+
 
 
 
