@@ -2,24 +2,24 @@
   "active": {
     "1-01": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 1,
-      "next_review": "2026-03-09",
-      "last_review": "2026-03-08"
+      "interval": 21,
+      "repetitions": 2,
+      "next_review": "2026-04-01",
+      "last_review": "2026-03-11"
     },
     "1-02": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-18",
+      "last_review": "2026-03-11"
     },
     "1-03": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-18",
+      "last_review": "2026-03-11"
     },
     "1-04": {
       "ease": 2.5,

@@ -5,6 +5,8 @@
 > **Interval schedule (SM-2 style):** 1 day → 3 days → 7 days → 14 days → 30 days → 60 days
 >
 > **Rating scale:** 0 (blackout) — 5 (perfect recall)
+>
+> **Topic criteria:** Every entry below supports concrete problems — computations, proofs, algorithm traces, or formula applications. Conceptual-only, awareness, and motivational topics have been removed.
 
 ---
 
@@ -33,6 +35,36 @@
 
 ---
 
+## Phase 0C: Discrete Math (Lesson CS-09)
+
+| # | Topic | Last Review | Next Review | Interval | Ease |
+|---|-------|-------------|-------------|----------|------|
+| 0C-01 | Combinatorics — permutations P(n,k), combinations C(n,k), with replacement | | | 1d | 2.5 |
+| 0C-02 | Binomial theorem — expand (a+b)^n, find specific coefficients | | | 1d | 2.5 |
+| 0C-03 | Inclusion-exclusion principle — |A ∪ B| = |A| + |B| − |A ∩ B| | | | 1d | 2.5 |
+| 0C-04 | Pigeonhole principle — prove existence via counting | | | 1d | 2.5 |
+| 0C-05 | Proof by mathematical induction — base case + inductive step | | | 1d | 2.5 |
+| 0C-06 | Propositional logic — truth tables, De Morgan's Laws, equivalences | | | 1d | 2.5 |
+| 0C-07 | Set operations — union, intersection, difference, complement, Cartesian product | | | 1d | 2.5 |
+| 0C-08 | Functions — injective, surjective, bijective; verify properties | | | 1d | 2.5 |
+| 0C-09 | Modular arithmetic — congruence, operations mod n, solving congruences | | | 1d | 2.5 |
+| 0C-10 | Graph theory — degree, paths, Euler's formula V − E + F = 2, bipartite test | | | 1d | 2.5 |
+| 0C-11 | Big-O analysis — determine time complexity of algorithms | | | 1d | 2.5 |
+| 0C-12 | Recurrence relations — Master theorem, T(n) = aT(n/b) + f(n) | | | 1d | 2.5 |
+
+---
+
+## Phase 0D: Computer Organization (Lesson CS-10)
+
+| # | Topic | Last Review | Next Review | Interval | Ease |
+|---|-------|-------------|-------------|----------|------|
+| 0D-01 | Decimal ↔ binary ↔ hexadecimal conversion | | | 1d | 2.5 |
+| 0D-02 | Two's complement — represent negative integers, signed arithmetic | | | 1d | 2.5 |
+| 0D-03 | IEEE 754 floating point — encode/decode sign + exponent + mantissa | | | 1d | 2.5 |
+| 0D-04 | Bitwise operations — AND, OR, XOR, NOT, left/right shift; bit masking | | | 1d | 2.5 |
+
+---
+
 ## Phase 1: Linear Algebra (Lessons 02–12)
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
@@ -40,72 +72,61 @@
 | 1-01 | Vectors as arrows vs ordered lists — geometric and algebraic viewpoints | | | 1d | 2.5 |
 | 1-02 | Vector operations — addition, scalar multiplication, linear combinations | | | 1d | 2.5 |
 | 1-03 | Magnitude ‖v‖, unit vectors v̂ = v/‖v‖, normalization | | | 1d | 2.5 |
-| 1-04 | Vectors as embeddings — words, tokens, and data points as high-dimensional vectors | | | 1d | 2.5 |
-| 1-05 | Component representation — standard basis vectors e₁, e₂, …, eₙ | | | 1d | 2.5 |
-| 1-06 | Linear combinations a₁v₁ + a₂v₂ + … + aₖvₖ — weights and weighted sums | | | 1d | 2.5 |
-| 1-07 | Span — the set of all linear combinations, generating a subspace | | | 1d | 2.5 |
-| 1-08 | Linear independence — no vector is a linear combination of the others | | | 1d | 2.5 |
-| 1-09 | Basis and dimension — minimal spanning set, dim = number of basis vectors | | | 1d | 2.5 |
-| 1-10 | Superposition hypothesis — neural nets encoding more features than dimensions | | | 1d | 2.5 |
-| 1-11 | Subspaces — definition, closure under addition and scalar multiplication | | | 1d | 2.5 |
-| 1-12 | Linear transformations — definition, L(αu + βv) = αL(u) + βL(v) | | | 1d | 2.5 |
-| 1-13 | Matrix as a linear transformation — columns are images of basis vectors | | | 1d | 2.5 |
-| 1-14 | Types of transforms — rotation, reflection, scaling, shear, projection | | | 1d | 2.5 |
-| 1-15 | Affine vs linear — translation breaks linearity, neural network layers as affine | | | 1d | 2.5 |
-| 1-16 | Non-square matrices change dimension — ℝⁿ → ℝᵐ where m ≠ n | | | 1d | 2.5 |
-| 1-17 | Matrix multiplication — four views: dot product, columns, rows, outer product | | | 1d | 2.5 |
-| 1-18 | Composition of transformations — AB means "apply B first, then A" | | | 1d | 2.5 |
-| 1-19 | Transpose Aᵀ — (AB)ᵀ = BᵀAᵀ, symmetric matrices | | | 1d | 2.5 |
-| 1-20 | Matrix inverse A⁻¹ — existence, (AB)⁻¹ = B⁻¹A⁻¹, computing via row reduction | | | 1d | 2.5 |
-| 1-21 | Properties — non-commutative, associative, distributive | | | 1d | 2.5 |
-| 1-22 | QK and OV circuits — attention as matrix compositions W_Q^T W_K and W_O W_V | | | 1d | 2.5 |
-| 1-23 | Column space C(A) and row space C(Aᵀ) — what the matrix can reach | | | 1d | 2.5 |
-| 1-24 | Null space N(A) and left null space N(Aᵀ) — what gets crushed to zero | | | 1d | 2.5 |
-| 1-25 | Rank — dim(column space) = dim(row space) = number of pivots | | | 1d | 2.5 |
-| 1-26 | Rank-nullity theorem — rank + nullity = n, information preserved vs destroyed | | | 1d | 2.5 |
-| 1-27 | Gaussian elimination — row reduction, pivots, RREF, solving Ax = b | | | 1d | 2.5 |
-| 1-28 | Low-rank structure in ML — attention heads (768→64→768), LoRA | | | 1d | 2.5 |
-| 1-29 | Four fundamental subspaces — orthogonality relations, complete picture | | | 1d | 2.5 |
-| 1-30 | Determinant — volume scaling factor, orientation (sign), det = 0 ↔ singular | | | 1d | 2.5 |
-| 1-31 | Determinant properties — det(AB) = det(A)det(B), det(Aᵀ) = det(A), det(cA) = cⁿdet(A) | | | 1d | 2.5 |
-| 1-32 | Computing determinants — cofactor expansion, row reduction to triangular form | | | 1d | 2.5 |
-| 1-33 | Jacobian determinant — det(J) as local volume change, normalizing flows, VAEs | | | 1d | 2.5 |
-| 1-34 | Vanishing/exploding gradients relate to Jacobian determinants near 0 or very large | | | 1d | 2.5 |
-| 1-35 | Eigenvalues and eigenvectors — Av = λv, stretching along invariant directions | | | 1d | 2.5 |
-| 1-36 | Characteristic equation det(A − λI) = 0, finding eigenspaces | | | 1d | 2.5 |
-| 1-37 | Diagonalization A = PDP⁻¹ — matrix powers Aⁿ = PDⁿP⁻¹ | | | 1d | 2.5 |
-| 1-38 | Special cases — symmetric (real eigenvalues, orthogonal eigenvectors), complex eigenvalues, repeated | | | 1d | 2.5 |
-| 1-39 | Eigenvalue facts — tr(A) = Σλ, det(A) = Πλ, eigenvalues of A⁻¹ are 1/λᵢ | | | 1d | 2.5 |
-| 1-40 | PCA and Hessian eigenvalues — directions of maximum variance, loss curvature | | | 1d | 2.5 |
-| 1-41 | SVD decomposition A = UΣVᵀ — exists for any matrix, any shape | | | 1d | 2.5 |
-| 1-42 | SVD components — V (input rotation), Σ (singular values σ₁ ≥ σ₂ ≥ …), U (output rotation) | | | 1d | 2.5 |
-| 1-43 | SVD properties — rank = nonzero σᵢ, connection to eigenvalues of AᵀA and AAᵀ | | | 1d | 2.5 |
-| 1-44 | Eckart-Young theorem — best rank-k approximation, truncated SVD | | | 1d | 2.5 |
-| 1-45 | SVD vs eigendecomposition — any matrix vs square only, for symmetric matrices they coincide | | | 1d | 2.5 |
-| 1-46 | SVD in ML — PCA, LoRA, image compression, low-rank attention | | | 1d | 2.5 |
-| 1-47 | Dot product — a·b = ‖a‖‖b‖cos θ, algebraic and geometric interpretations | | | 1d | 2.5 |
-| 1-48 | Cosine similarity — cos θ = a·b/(‖a‖‖b‖), similarity metric in embedding spaces | | | 1d | 2.5 |
-| 1-49 | Orthogonality — a·b = 0, orthonormal sets, orthogonal matrices QᵀQ = I | | | 1d | 2.5 |
-| 1-50 | Projections — proj_v(u) = (u·v/v·v)v, projection matrices P = A(AᵀA)⁻¹Aᵀ | | | 1d | 2.5 |
-| 1-51 | Least squares — minimize ‖Ax − b‖², normal equations AᵀAx = Aᵀb | | | 1d | 2.5 |
-| 1-52 | Linear regression as projection — ŷ = projection of y onto Col(A), R² as explained variance | | | 1d | 2.5 |
-| 1-53 | Gram-Schmidt orthogonalization — producing orthonormal basis, QR factorization | | | 1d | 2.5 |
-| 1-54 | Change of basis — same vector, different coordinates, conjugation P⁻¹AP | | | 1d | 2.5 |
-| 1-55 | Norms — L1 (sparsity), L2 (Euclidean), L∞ (max), Frobenius, spectral (σ₁) | | | 1d | 2.5 |
-| 1-56 | Special matrices — symmetric, PD, PSD, orthogonal, diagonal, triangular | | | 1d | 2.5 |
-| 1-57 | Cholesky decomposition A = LLᵀ — for PD matrices, sampling from multivariate Gaussians | | | 1d | 2.5 |
-| 1-58 | Trace — tr(A) = Σaᵢᵢ = Σλᵢ, cyclic property tr(AB) = tr(BA), ‖A‖²_F = tr(AᵀA) | | | 1d | 2.5 |
-| 1-59 | PCA — covariance matrix, eigenvectors = principal components, dimensionality reduction | | | 1d | 2.5 |
-| 1-60 | Inner product of functions — ⟨f,g⟩ = ∫f(x)g(x)dx, orthogonal functions, function spaces | | | 1d | 2.5 |
-| 1-61 | Regularization connections — L1 sparsity, L2 weight decay, gradient clipping norms | | | 1d | 2.5 |
-| 1-62 | Capstone: unified picture — any matrix = rotate → scale → rotate (SVD) | | | 1d | 2.5 |
-| 1-63 | Concept web — eigendecomposition ↔ SVD ↔ PCA ↔ least squares ↔ projections | | | 1d | 2.5 |
-| 1-64 | Neural networks as compositions of linear maps + nonlinearities | | | 1d | 2.5 |
-| 1-65 | Linear algebra in attention — softmax(QKᵀ/√d)V as weighted projection | | | 1d | 2.5 |
+| 1-04 | Component representation — standard basis vectors e₁, e₂, …, eₙ | | | 1d | 2.5 |
+| 1-05 | Linear combinations a₁v₁ + a₂v₂ + … + aₖvₖ — weights and weighted sums | | | 1d | 2.5 |
+| 1-06 | Span — the set of all linear combinations, generating a subspace | | | 1d | 2.5 |
+| 1-07 | Linear independence — no vector is a linear combination of the others | | | 1d | 2.5 |
+| 1-08 | Basis and dimension — minimal spanning set, dim = number of basis vectors | | | 1d | 2.5 |
+| 1-09 | Subspaces — definition, verify closure under addition and scalar multiplication | | | 1d | 2.5 |
+| 1-10 | Linear transformations — definition, verify L(αu + βv) = αL(u) + βL(v) | | | 1d | 2.5 |
+| 1-11 | Matrix as a linear transformation — columns are images of basis vectors | | | 1d | 2.5 |
+| 1-12 | Construct transformation matrix from geometric description (rotation, reflection, etc.) | | | 1d | 2.5 |
+| 1-13 | Types of transforms — rotation, reflection, scaling, shear, projection | | | 1d | 2.5 |
+| 1-14 | Non-square matrices change dimension — ℝⁿ → ℝᵐ where m ≠ n | | | 1d | 2.5 |
+| 1-15 | Matrix multiplication — four views: dot product, columns, rows, outer product | | | 1d | 2.5 |
+| 1-16 | Composition of transformations — AB means "apply B first, then A" | | | 1d | 2.5 |
+| 1-17 | Transpose Aᵀ — (AB)ᵀ = BᵀAᵀ, symmetric matrices | | | 1d | 2.5 |
+| 1-18 | Matrix inverse A⁻¹ — existence, (AB)⁻¹ = B⁻¹A⁻¹, computing via [A|I] row reduction | | | 1d | 2.5 |
+| 1-19 | Properties — non-commutative, associative, distributive | | | 1d | 2.5 |
+| 1-20 | Column space C(A) and row space C(Aᵀ) — what the matrix can reach | | | 1d | 2.5 |
+| 1-21 | Null space N(A) and left null space N(Aᵀ) — find null space basis from RREF | | | 1d | 2.5 |
+| 1-22 | Rank — dim(column space) = dim(row space) = number of pivots | | | 1d | 2.5 |
+| 1-23 | Rank-nullity theorem — rank + nullity = n, information preserved vs destroyed | | | 1d | 2.5 |
+| 1-24 | Gaussian elimination — row reduction to RREF, pivots, solving Ax = b | | | 1d | 2.5 |
+| 1-25 | Four fundamental subspaces — orthogonality relations, complete picture | | | 1d | 2.5 |
+| 1-26 | Determinant — volume scaling factor, orientation (sign), det = 0 ↔ singular | | | 1d | 2.5 |
+| 1-27 | Determinant properties — det(AB) = det(A)det(B), det(Aᵀ) = det(A), det(cA) = cⁿdet(A) | | | 1d | 2.5 |
+| 1-28 | Computing determinants — cofactor expansion, row reduction to triangular form | | | 1d | 2.5 |
+| 1-29 | Cramer's rule — solving small systems via determinants | | | 1d | 2.5 |
+| 1-30 | Eigenvalues and eigenvectors — Av = λv, stretching along invariant directions | | | 1d | 2.5 |
+| 1-31 | Characteristic equation det(A − λI) = 0, finding eigenspaces | | | 1d | 2.5 |
+| 1-32 | Diagonalization A = PDP⁻¹ — matrix powers Aⁿ = PDⁿP⁻¹ | | | 1d | 2.5 |
+| 1-33 | Special cases — symmetric (real eigenvalues, orthogonal eigenvectors), complex eigenvalues, repeated | | | 1d | 2.5 |
+| 1-34 | Eigenvalue facts — tr(A) = Σλ, det(A) = Πλ, eigenvalues of A⁻¹ are 1/λᵢ | | | 1d | 2.5 |
+| 1-35 | SVD decomposition A = UΣVᵀ — exists for any matrix, any shape | | | 1d | 2.5 |
+| 1-36 | SVD components — V (input rotation), Σ (singular values σ₁ ≥ σ₂ ≥ …), U (output rotation) | | | 1d | 2.5 |
+| 1-37 | SVD properties — rank = nonzero σᵢ, connection to eigenvalues of AᵀA and AAᵀ | | | 1d | 2.5 |
+| 1-38 | Eckart-Young theorem — best rank-k approximation, truncated SVD | | | 1d | 2.5 |
+| 1-39 | SVD vs eigendecomposition — any matrix vs square only, for symmetric they coincide | | | 1d | 2.5 |
+| 1-40 | Dot product — a·b = ‖a‖‖b‖cos θ, algebraic and geometric interpretations | | | 1d | 2.5 |
+| 1-41 | Cosine similarity — cos θ = a·b/(‖a‖‖b‖), similarity metric in embedding spaces | | | 1d | 2.5 |
+| 1-42 | Orthogonality — a·b = 0, orthonormal sets, orthogonal matrices QᵀQ = I | | | 1d | 2.5 |
+| 1-43 | Projection onto a vector — proj_v(u) = (u·v/v·v)v | | | 1d | 2.5 |
+| 1-44 | Projection onto a subspace — P = A(AᵀA)⁻¹Aᵀ, idempotent (P² = P) | | | 1d | 2.5 |
+| 1-45 | Least squares — minimize ‖Ax − b‖², normal equations AᵀAx = Aᵀb | | | 1d | 2.5 |
+| 1-46 | Gram-Schmidt orthogonalization — producing orthonormal basis | | | 1d | 2.5 |
+| 1-47 | QR factorization — decompose A = QR via Gram-Schmidt | | | 1d | 2.5 |
+| 1-48 | Change of basis — same vector, different coordinates, conjugation P⁻¹AP | | | 1d | 2.5 |
+| 1-49 | Norms — L1 (sparsity), L2 (Euclidean), L∞ (max), Frobenius, spectral (σ₁) | | | 1d | 2.5 |
+| 1-50 | Special matrices — symmetric, PD, PSD, orthogonal, diagonal, triangular | | | 1d | 2.5 |
+| 1-51 | Cholesky decomposition A = LLᵀ — for PD matrices, sampling from multivariate Gaussians | | | 1d | 2.5 |
+| 1-52 | Trace — tr(A) = Σaᵢᵢ = Σλᵢ, cyclic property tr(AB) = tr(BA), ‖A‖²_F = tr(AᵀA) | | | 1d | 2.5 |
+| 1-53 | PCA — covariance matrix, eigenvectors = principal components, dimensionality reduction | | | 1d | 2.5 |
+| 1-54 | Inner product of functions — ⟨f,g⟩ = ∫f(x)g(x)dx, orthogonal functions, function spaces | | | 1d | 2.5 |
 
 ---
 
-## Phase 2A: ODEs (Lessons 13–18)
+## Phase 2A: Calculus & ODEs (Lessons 13–18)
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
@@ -121,48 +142,56 @@
 | 2A-10 | Derivatives of trigonometric functions | | | 1d | 2.5 |
 | 2A-11 | Derivatives of inverse trig functions (arcsin, arctan, etc.) | | | 1d | 2.5 |
 | 2A-12 | ML activation function derivatives — sigmoid, tanh, ReLU, softplus | | | 1d | 2.5 |
-| 2A-13 | Evaluating limits — algebraic manipulation, squeeze theorem | | | 1d | 2.5 |
-| 2A-14 | L'Hôpital's rule — indeterminate forms 0/0, ∞/∞ | | | 1d | 2.5 |
-| 2A-15 | Continuity analysis — removable, jump, and essential discontinuities | | | 1d | 2.5 |
-| 2A-16 | Critical points, second derivative test, and concavity | | | 1d | 2.5 |
-| 2A-17 | Mean Value Theorem and Extreme Value Theorem | | | 1d | 2.5 |
-| 2A-18 | Basic antiderivatives — power, exponential, trigonometric | | | 1d | 2.5 |
-| 2A-19 | u-substitution integrals | | | 1d | 2.5 |
-| 2A-20 | Integration by parts | | | 1d | 2.5 |
-| 2A-21 | Partial fraction decomposition integrals | | | 1d | 2.5 |
-| 2A-22 | Trigonometric substitution integrals | | | 1d | 2.5 |
-| 2A-23 | Improper integrals — convergence and divergence | | | 1d | 2.5 |
-| 2A-24 | Definite integrals via FTC Part 2 | | | 1d | 2.5 |
-| 2A-25 | FTC Part 1 — differentiating ∫ₐˣ f(t)dt with variable bounds | | | 1d | 2.5 |
-| 2A-26 | Newton's method — root-finding via tangent line iteration | | | 1d | 2.5 |
-| 2A-27 | Polar coordinates — area and arc length in polar form | | | 1d | 2.5 |
-| 2A-28 | Sequences, series, and convergence tests | | | 1d | 2.5 |
-| 2A-29 | Taylor/Maclaurin series expansion and remainder estimation | | | 1d | 2.5 |
-| 2A-30 | ODE classification — order, linearity, autonomous; direction fields | | | 1d | 2.5 |
-| 2A-31 | Existence and uniqueness — Picard-Lindelöf theorem, Lipschitz condition | | | 1d | 2.5 |
-| 2A-32 | Separable equations — g(y)dy = f(x)dx | | | 1d | 2.5 |
-| 2A-33 | First-order linear ODEs — integrating factor μ = e^{∫P dx}, exact equations | | | 1d | 2.5 |
-| 2A-34 | Bernoulli and substitution methods — reduction to linear form | | | 1d | 2.5 |
-| 2A-35 | Euler's method — numerical stepping, connection to gradient descent | | | 1d | 2.5 |
-| 2A-36 | Phase line analysis — equilibria, stability (stable/unstable/semi-stable) | | | 1d | 2.5 |
-| 2A-37 | Logistic growth — dy/dt = ry(1−y/K), carrying capacity, sigmoid connection | | | 1d | 2.5 |
-| 2A-38 | Constant-coefficient second-order ODE — characteristic equation, three cases | | | 1d | 2.5 |
-| 2A-39 | Wronskian and fundamental solution sets — linear independence of solutions | | | 1d | 2.5 |
-| 2A-40 | Mechanical vibrations — free/damped/forced, underdamped/overdamped/critical | | | 1d | 2.5 |
-| 2A-41 | Resonance — frequency matching, unbounded growth | | | 1d | 2.5 |
-| 2A-42 | Undetermined coefficients — particular solutions for polynomial/exponential/trig forcing | | | 1d | 2.5 |
-| 2A-43 | Variation of parameters — general method, Wronskian-based formula | | | 1d | 2.5 |
-| 2A-44 | Power series solutions of ODEs — recurrence relations, singular points | | | 1d | 2.5 |
-| 2A-45 | Laplace transform — definition and common transform pairs | | | 1d | 2.5 |
-| 2A-46 | Transform of derivatives and converting ODEs to algebra | | | 1d | 2.5 |
-| 2A-47 | Convolution theorem and Dirac delta impulse response | | | 1d | 2.5 |
-| 2A-48 | Inverse Laplace via partial fractions and table lookup | | | 1d | 2.5 |
-| 2A-49 | Systems of ODEs — x' = Ax, eigenvalue method, matrix exponential | | | 1d | 2.5 |
-| 2A-50 | Phase portraits — node, spiral, saddle, center classification | | | 1d | 2.5 |
-| 2A-51 | Trace-determinant plane — classifying 2×2 systems | | | 1d | 2.5 |
-| 2A-52 | Stability of equilibria — asymptotically stable, unstable, marginally stable | | | 1d | 2.5 |
-| 2A-53 | Nonlinear systems linearization — Jacobian at equilibrium, Hartman-Grobman | | | 1d | 2.5 |
-| 2A-54 | Gradient flow — dx/dt = −∇f(x), gradient descent as discretized ODE | | | 1d | 2.5 |
+| 2A-13 | Derivative of inverse functions — (f⁻¹)'(a) = 1/f'(f⁻¹(a)) | | | 1d | 2.5 |
+| 2A-14 | Linearization — f(x) ≈ f(a) + f'(a)(x−a), approximate nearby values | | | 1d | 2.5 |
+| 2A-15 | Evaluating limits — algebraic manipulation, squeeze theorem | | | 1d | 2.5 |
+| 2A-16 | L'Hôpital's rule — indeterminate forms 0/0, ∞/∞ | | | 1d | 2.5 |
+| 2A-17 | Continuity analysis — removable, jump, and essential discontinuities | | | 1d | 2.5 |
+| 2A-18 | Critical points, second derivative test, and concavity | | | 1d | 2.5 |
+| 2A-19 | Applied optimization — min/max word problems (fence, box, etc.) | | | 1d | 2.5 |
+| 2A-20 | Related rates problems — chain rule applied to changing quantities | | | 1d | 2.5 |
+| 2A-21 | Mean Value Theorem and Extreme Value Theorem | | | 1d | 2.5 |
+| 2A-22 | Riemann sums — left, right, midpoint, trapezoidal approximation | | | 1d | 2.5 |
+| 2A-23 | Basic antiderivatives — power, exponential, trigonometric | | | 1d | 2.5 |
+| 2A-24 | u-substitution integrals | | | 1d | 2.5 |
+| 2A-25 | Integration by parts | | | 1d | 2.5 |
+| 2A-26 | Partial fraction decomposition integrals | | | 1d | 2.5 |
+| 2A-27 | Trigonometric substitution integrals | | | 1d | 2.5 |
+| 2A-28 | Improper integrals — convergence and divergence | | | 1d | 2.5 |
+| 2A-29 | Definite integrals via FTC Part 2 | | | 1d | 2.5 |
+| 2A-30 | FTC Part 1 — differentiating ∫ₐˣ f(t)dt with variable bounds | | | 1d | 2.5 |
+| 2A-31 | Arc length — ∫√(1+(dy/dx)²) dx | | | 1d | 2.5 |
+| 2A-32 | Volumes of revolution — disk/washer and shell methods | | | 1d | 2.5 |
+| 2A-33 | Newton's method — root-finding via tangent line iteration | | | 1d | 2.5 |
+| 2A-34 | Polar coordinates — area and arc length in polar form | | | 1d | 2.5 |
+| 2A-35 | Sequences, series, and convergence tests (ratio, root, comparison, integral, alternating) | | | 1d | 2.5 |
+| 2A-36 | Taylor/Maclaurin series expansion and remainder estimation | | | 1d | 2.5 |
+| 2A-37 | ODE classification — order, linearity, autonomous; direction fields | | | 1d | 2.5 |
+| 2A-38 | Separable equations — g(y)dy = f(x)dx | | | 1d | 2.5 |
+| 2A-39 | First-order linear ODEs — integrating factor μ = e^{∫P dx}, exact equations | | | 1d | 2.5 |
+| 2A-40 | Bernoulli and substitution methods — reduction to linear form | | | 1d | 2.5 |
+| 2A-41 | Euler's method — numerical stepping, connection to gradient descent | | | 1d | 2.5 |
+| 2A-42 | Phase line analysis — equilibria, stability (stable/unstable/semi-stable) | | | 1d | 2.5 |
+| 2A-43 | Logistic growth — dy/dt = ry(1−y/K), carrying capacity, sigmoid connection | | | 1d | 2.5 |
+| 2A-44 | Constant-coefficient second-order ODE — characteristic equation, three cases | | | 1d | 2.5 |
+| 2A-45 | Wronskian and fundamental solution sets — linear independence of solutions | | | 1d | 2.5 |
+| 2A-46 | Mechanical vibrations — free/damped/forced, underdamped/overdamped/critical | | | 1d | 2.5 |
+| 2A-47 | Resonance — frequency matching, unbounded growth | | | 1d | 2.5 |
+| 2A-48 | Undetermined coefficients — particular solutions for polynomial/exponential/trig forcing | | | 1d | 2.5 |
+| 2A-49 | Variation of parameters — general method, Wronskian-based formula | | | 1d | 2.5 |
+| 2A-50 | Power series solutions of ODEs — recurrence relations, singular points | | | 1d | 2.5 |
+| 2A-51 | Laplace transform — definition and common transform pairs | | | 1d | 2.5 |
+| 2A-52 | Transform of derivatives and converting ODEs to algebra | | | 1d | 2.5 |
+| 2A-53 | Convolution theorem and Dirac delta impulse response | | | 1d | 2.5 |
+| 2A-54 | Inverse Laplace via partial fractions and table lookup | | | 1d | 2.5 |
+| 2A-55 | Systems of ODEs — x' = Ax, eigenvalue method, matrix exponential | | | 1d | 2.5 |
+| 2A-56 | Phase portraits — node, spiral, saddle, center classification | | | 1d | 2.5 |
+| 2A-57 | Trace-determinant plane — classifying 2×2 systems | | | 1d | 2.5 |
+| 2A-58 | Stability of equilibria — asymptotically stable, unstable, marginally stable | | | 1d | 2.5 |
+| 2A-59 | Nonlinear systems linearization — Jacobian at equilibrium, Hartman-Grobman | | | 1d | 2.5 |
+| 2A-60 | Lyapunov function method — prove stability using V(x) with V̇ ≤ 0 | | | 1d | 2.5 |
+| 2A-61 | Bifurcation analysis — saddle-node, pitchfork, transcritical; find bifurcation points | | | 1d | 2.5 |
+| 2A-62 | Gradient flow — dx/dt = −∇f(x), gradient descent as discretized ODE | | | 1d | 2.5 |
 
 ---
 
@@ -187,16 +216,15 @@
 | 2B-15 | Tangent planes and linear approximation f(x) ≈ f(a) + ∇f(a)·(x-a) | | | 1d | 2.5 |
 | 2B-16 | Critical points — necessary condition ∇f = 0 | | | 1d | 2.5 |
 | 2B-17 | Hessian matrix and second derivative test (PD → min, ND → max, indefinite → saddle) | | | 1d | 2.5 |
-| 2B-18 | Saddle points dominate in high dimensions — random matrix theory prediction | | | 1d | 2.5 |
-| 2B-19 | Lagrange multipliers — ∇f = λ∇g, constrained optimization geometry | | | 1d | 2.5 |
-| 2B-20 | KKT conditions — inequality constraints, complementary slackness | | | 1d | 2.5 |
-| 2B-21 | Regularization-constraint equivalence: min L + λ‖w‖² ↔ min L s.t. ‖w‖² ≤ C | | | 1d | 2.5 |
-| 2B-22 | Multivariate Taylor expansion — 1st order (gradient), 2nd order (Hessian), Big-O notation | | | 1d | 2.5 |
-| 2B-23 | Implicit Function Theorem — when F(x,y)=0 defines y=g(x), singularity when ∂F/∂y = 0 | | | 1d | 2.5 |
-| 2B-24 | IFT failure and SLT — singularities where standard statistics breaks down | | | 1d | 2.5 |
-| 2B-25 | Double and triple integrals — iterated integrals, Fubini's theorem, setting up bounds | | | 1d | 2.5 |
-| 2B-26 | Change of variables — Jacobian determinant |det(J)|, polar/cylindrical/spherical coordinates | | | 1d | 2.5 |
-| 2B-27 | Monte Carlo integration — random sampling approximation, 1/√N convergence rate | | | 1d | 2.5 |
+| 2B-18 | Lagrange multipliers — ∇f = λ∇g, constrained optimization geometry | | | 1d | 2.5 |
+| 2B-19 | KKT conditions — inequality constraints, complementary slackness | | | 1d | 2.5 |
+| 2B-20 | Multivariate Taylor expansion — 1st order (gradient), 2nd order (Hessian), Big-O notation | | | 1d | 2.5 |
+| 2B-21 | Implicit Function Theorem — when F(x,y)=0 defines y=g(x), singularity when ∂F/∂y = 0 | | | 1d | 2.5 |
+| 2B-22 | Double and triple integrals — iterated integrals, Fubini's theorem, setting up bounds | | | 1d | 2.5 |
+| 2B-23 | Reversing order of integration — rewrite ∫∫ with swapped bounds | | | 1d | 2.5 |
+| 2B-24 | Change of variables — Jacobian determinant |det(J)|, polar/cylindrical/spherical coordinates | | | 1d | 2.5 |
+| 2B-25 | Gaussian integral via polar coordinates — ∫e^{−x²}dx = √π derivation | | | 1d | 2.5 |
+| 2B-26 | Importance sampling — weighted estimate E_p[f] via samples from q, weights p(x)/q(x) | | | 1d | 2.5 |
 
 ---
 
@@ -209,26 +237,21 @@
 | 2C-03 | Scalar line integrals — ∫_C f ds, integrating density along a curve | | | 1d | 2.5 |
 | 2C-04 | Line integral of a vector field (work) — ∫_C F · dr, path dependence | | | 1d | 2.5 |
 | 2C-05 | Vector fields — definition F: ℝⁿ → ℝⁿ, visualization, flow lines | | | 1d | 2.5 |
-| 2C-06 | Divergence — div F = ∇·F, sources/sinks, connection to trace of Jacobian | | | 1d | 2.5 |
-| 2C-07 | Curl — curl F = ∇×F, local rotation measure, 2D scalar vs 3D vector | | | 1d | 2.5 |
-| 2C-08 | Conservative fields — F = ∇φ, path independence, potential functions | | | 1d | 2.5 |
+| 2C-06 | Divergence — div F = ∇·F, compute for specific vector fields | | | 1d | 2.5 |
+| 2C-07 | Curl — curl F = ∇×F, compute for specific vector fields | | | 1d | 2.5 |
+| 2C-08 | Conservative fields — F = ∇φ, find potential functions by integration | | | 1d | 2.5 |
 | 2C-09 | Fundamental Theorem for Line Integrals — ∫_C ∇φ · dr = φ(B) − φ(A) | | | 1d | 2.5 |
 | 2C-10 | Testing conservativeness — curl F = 0 on simply connected domain, ∂P/∂y = ∂Q/∂x | | | 1d | 2.5 |
-| 2C-11 | Exact vs closed forms — closed (curl = 0) vs exact (has potential), topology matters | | | 1d | 2.5 |
-| 2C-12 | Green's theorem (circulation form) — ∮ P dx + Q dy = ∬ (∂Q/∂x − ∂P/∂y) dA | | | 1d | 2.5 |
-| 2C-13 | Green's theorem (flux/divergence form) — ∮ F·n ds = ∬ div(F) dA | | | 1d | 2.5 |
-| 2C-14 | Multiply-connected domains — holes obstruct conservativeness, winding number | | | 1d | 2.5 |
-| 2C-15 | The Laplacian ∇²f = div(grad f) — measures deviation from local average | | | 1d | 2.5 |
-| 2C-16 | Parametric surfaces r(u,v) — tangent vectors r_u, r_v, normal vector r_u × r_v | | | 1d | 2.5 |
-| 2C-17 | Surface area — ∬ ‖r_u × r_v‖ du dv, orientation and the Möbius strip | | | 1d | 2.5 |
-| 2C-18 | Flux integrals — ∬_S F · dS, flow through a surface | | | 1d | 2.5 |
-| 2C-19 | Stokes' theorem — ∮_C F · dr = ∬_S (∇×F) · dS | | | 1d | 2.5 |
-| 2C-20 | Divergence theorem — ∯_S F · dS = ∭_E (∇·F) dV | | | 1d | 2.5 |
-| 2C-21 | Unified hierarchy — FTC → FTLI → Green's → Stokes' → Divergence as ∫_{∂Ω} ω = ∫_Ω dω | | | 1d | 2.5 |
-| 2C-22 | Helmholtz decomposition — any vector field = curl-free + divergence-free | | | 1d | 2.5 |
-| 2C-23 | Vector calculus identities — curl(grad) = 0, div(curl) = 0, product rules | | | 1d | 2.5 |
-| 2C-24 | Flux integrals in 2D — ∫_C F·n̂ ds, measuring outward flow through a curve | | | 1d | 2.5 |
-| 2C-25 | Divergence and normalizing flows — d(log p)/dt = −div(f) for continuous flows | | | 1d | 2.5 |
+| 2C-11 | Green's theorem (circulation form) — ∮ P dx + Q dy = ∬ (∂Q/∂x − ∂P/∂y) dA | | | 1d | 2.5 |
+| 2C-12 | Green's theorem (flux/divergence form) — ∮ F·n ds = ∬ div(F) dA | | | 1d | 2.5 |
+| 2C-13 | The Laplacian ∇²f = div(grad f) — measures deviation from local average | | | 1d | 2.5 |
+| 2C-14 | Parametric surfaces r(u,v) — tangent vectors r_u, r_v, normal vector r_u × r_v | | | 1d | 2.5 |
+| 2C-15 | Surface area — ∬ ‖r_u × r_v‖ du dv | | | 1d | 2.5 |
+| 2C-16 | Flux integrals — ∬_S F · dS, flow through a surface | | | 1d | 2.5 |
+| 2C-17 | Stokes' theorem — ∮_C F · dr = ∬_S (∇×F) · dS | | | 1d | 2.5 |
+| 2C-18 | Divergence theorem — ∯_S F · dS = ∭_E (∇·F) dV | | | 1d | 2.5 |
+| 2C-19 | Vector calculus identities — curl(grad) = 0, div(curl) = 0, verify product rules | | | 1d | 2.5 |
+| 2C-20 | Flux integrals in 2D — ∫_C F·n̂ ds, measuring outward flow through a curve | | | 1d | 2.5 |
 
 ---
 
@@ -241,35 +264,28 @@
 | 2D-03 | Boundary conditions — Dirichlet, Neumann, Robin, Periodic | | | 1d | 2.5 |
 | 2D-04 | Separation of variables — u(x,t) = X(x)T(t), eigenvalue problems | | | 1d | 2.5 |
 | 2D-05 | Separation with different BCs — sine (Dirichlet), cosine (Neumann), both (Periodic) | | | 1d | 2.5 |
-| 2D-06 | Linearity and superposition — building complex solutions from simple ones | | | 1d | 2.5 |
-| 2D-07 | Well-posedness (Hadamard) — existence, uniqueness, continuous dependence | | | 1d | 2.5 |
-| 2D-08 | Equilibrium/steady-state — ∇²u = 0 (Laplace's equation), rectangle and disc solutions | | | 1d | 2.5 |
-| 2D-09 | Mean value property and maximum principle for harmonic functions | | | 1d | 2.5 |
-| 2D-10 | Fourier series — coefficients via inner products, convergence, half-range expansions | | | 1d | 2.5 |
-| 2D-11 | Complex Fourier series, Parseval's theorem, Gibbs phenomenon | | | 1d | 2.5 |
-| 2D-12 | Wave equation — derivation, u_tt = c²u_xx, standing waves | | | 1d | 2.5 |
-| 2D-13 | d'Alembert's solution — traveling waves f(x−ct) + g(x+ct) | | | 1d | 2.5 |
-| 2D-14 | Heat vs wave — diffusion (info loss) vs propagation (info preservation) | | | 1d | 2.5 |
-| 2D-15 | Sturm-Liouville eigenvalue problem — real eigenvalues, orthogonal eigenfunctions | | | 1d | 2.5 |
-| 2D-16 | Sturm-Liouville as infinite-dimensional spectral theorem | | | 1d | 2.5 |
-| 2D-17 | Rayleigh quotient — variational characterization, min-max principle | | | 1d | 2.5 |
-| 2D-18 | Eigenfunction expansions — generalized Fourier series | | | 1d | 2.5 |
-| 2D-19 | Inhomogeneous BCs — u = v + w (steady-state + transient) decomposition | | | 1d | 2.5 |
-| 2D-20 | Domain of dependence, range of influence — finite propagation speed | | | 1d | 2.5 |
-| 2D-21 | Energy conservation in the wave equation | | | 1d | 2.5 |
-| 2D-22 | Helmholtz equation ∇²u + k²u = 0 — resonant modes, Bessel functions | | | 1d | 2.5 |
-| 2D-23 | Heat equation on infinite line — Gaussian kernel, convolution with initial data | | | 1d | 2.5 |
-| 2D-24 | Fourier transform — definition F̂(k), continuous frequency decomposition | | | 1d | 2.5 |
-| 2D-25 | FT properties — derivative ↔ ik, convolution ↔ multiplication, shift, scaling | | | 1d | 2.5 |
-| 2D-26 | FT of Gaussian is Gaussian (reciprocal width); solving PDEs via FT | | | 1d | 2.5 |
-| 2D-27 | Semi-infinite domains — method of images, error function erf(x) | | | 1d | 2.5 |
-| 2D-28 | Method of characteristics — converting first-order PDEs to ODEs | | | 1d | 2.5 |
-| 2D-29 | Transport equation — u_t + cu_x = 0, traveling profiles | | | 1d | 2.5 |
-| 2D-30 | Nonlinear conservation laws — characteristic crossing, shock waves, Rankine-Hugoniot | | | 1d | 2.5 |
-| 2D-31 | Burgers' equation — canonical shock formation model | | | 1d | 2.5 |
-| 2D-32 | Forward SDE in diffusion models — dx = f dt + g dW, noise schedules (VP, VE) | | | 1d | 2.5 |
-| 2D-33 | Fokker-Planck, score function, score matching — probability density evolution | | | 1d | 2.5 |
-| 2D-34 | Reverse SDE and probability flow ODE — running diffusion backward for generation | | | 1d | 2.5 |
+| 2D-06 | Equilibrium/steady-state — ∇²u = 0 (Laplace's equation), rectangle and disc solutions | | | 1d | 2.5 |
+| 2D-07 | Mean value property and maximum principle for harmonic functions | | | 1d | 2.5 |
+| 2D-08 | Fourier series — compute coefficients via inner products, convergence | | | 1d | 2.5 |
+| 2D-09 | Complex Fourier series, Parseval's theorem, Gibbs phenomenon | | | 1d | 2.5 |
+| 2D-10 | Wave equation — derivation, u_tt = c²u_xx, standing waves | | | 1d | 2.5 |
+| 2D-11 | d'Alembert's solution — traveling waves f(x−ct) + g(x+ct) | | | 1d | 2.5 |
+| 2D-12 | Sturm-Liouville eigenvalue problem — real eigenvalues, orthogonal eigenfunctions | | | 1d | 2.5 |
+| 2D-13 | Rayleigh quotient — variational characterization, min-max principle | | | 1d | 2.5 |
+| 2D-14 | Eigenfunction expansions — generalized Fourier series | | | 1d | 2.5 |
+| 2D-15 | Inhomogeneous BCs — u = v + w (steady-state + transient) decomposition | | | 1d | 2.5 |
+| 2D-16 | Domain of dependence, range of influence — finite propagation speed | | | 1d | 2.5 |
+| 2D-17 | Energy conservation in the wave equation | | | 1d | 2.5 |
+| 2D-18 | Helmholtz equation ∇²u + k²u = 0 — resonant modes, Bessel functions | | | 1d | 2.5 |
+| 2D-19 | Heat equation on infinite line — Gaussian kernel, convolution with initial data | | | 1d | 2.5 |
+| 2D-20 | Fourier transform — definition F̂(k), continuous frequency decomposition | | | 1d | 2.5 |
+| 2D-21 | FT properties — derivative ↔ ik, convolution ↔ multiplication, shift, scaling | | | 1d | 2.5 |
+| 2D-22 | FT of Gaussian is Gaussian (reciprocal width); solving PDEs via FT | | | 1d | 2.5 |
+| 2D-23 | Semi-infinite domains — method of images, error function erf(x) | | | 1d | 2.5 |
+| 2D-24 | Method of characteristics — converting first-order PDEs to ODEs | | | 1d | 2.5 |
+| 2D-25 | Transport equation — u_t + cu_x = 0, traveling profiles | | | 1d | 2.5 |
+| 2D-26 | Nonlinear conservation laws — characteristic crossing, shock waves, Rankine-Hugoniot | | | 1d | 2.5 |
+| 2D-27 | Burgers' equation — canonical shock formation model | | | 1d | 2.5 |
 
 ---
 
@@ -277,23 +293,15 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 2E-01 | Scalar derivatives and partial derivatives for ML — neural network framing | | | 1d | 2.5 |
-| 2E-02 | Gradient vector — assembling partials, direction of steepest ascent | | | 1d | 2.5 |
-| 2E-03 | Element-wise operations — diagonal Jacobians (addition → I, Hadamard → diag(x)) | | | 1d | 2.5 |
-| 2E-04 | Scalar expansion ∂(zx)/∂x = zI and vector sum reduction ∂(Σx_i)/∂x = 1ᵀ | | | 1d | 2.5 |
-| 2E-05 | Dot product gradient — ∂(w·x)/∂w = xᵀ, ∂(w·x)/∂x = wᵀ | | | 1d | 2.5 |
-| 2E-06 | Jacobian matrix — m×n matrix for F: ℝⁿ→ℝᵐ, the total derivative | | | 1d | 2.5 |
-| 2E-07 | Vector chain rule — ∂f/∂x = (∂f/∂g)(∂g/∂x), Jacobian multiplication = backpropagation | | | 1d | 2.5 |
-| 2E-08 | Forward-mode vs reverse-mode autodiff — tangent vectors vs adjoint vectors | | | 1d | 2.5 |
-| 2E-09 | Why reverse mode dominates — one scalar loss, millions of parameters → one backward pass | | | 1d | 2.5 |
-| 2E-10 | Computation graphs — neural networks as DAGs of differentiable operations | | | 1d | 2.5 |
-| 2E-11 | Gradient accumulation — fan-out nodes sum incoming gradients | | | 1d | 2.5 |
-| 2E-12 | Single neuron gradient — ReLU piecewise derivative gates the gradient | | | 1d | 2.5 |
-| 2E-13 | Full network loss gradient — chain of Jacobians from loss back through layers | | | 1d | 2.5 |
-| 2E-14 | Softmax Jacobian — S_ij = s_i(δ_ij − s_j), cross-entropy simplification | | | 1d | 2.5 |
-| 2E-15 | Batch normalization gradient — chain rule through normalization statistics | | | 1d | 2.5 |
-| 2E-16 | Matrix calculus identities — ∂(xᵀAx)/∂x = (A+Aᵀ)x, ∂tr(AB)/∂A = Bᵀ | | | 1d | 2.5 |
-| 2E-17 | Hessian-vector products — second-order information without full Hessian | | | 1d | 2.5 |
+| 2E-01 | Element-wise operations — diagonal Jacobians (addition → I, Hadamard → diag(x)) | | | 1d | 2.5 |
+| 2E-02 | Scalar expansion ∂(zx)/∂x = zI and vector sum reduction ∂(Σx_i)/∂x = 1ᵀ | | | 1d | 2.5 |
+| 2E-03 | Dot product gradient — ∂(w·x)/∂w = xᵀ, ∂(w·x)/∂x = wᵀ | | | 1d | 2.5 |
+| 2E-04 | Single neuron gradient — ReLU piecewise derivative gates the gradient | | | 1d | 2.5 |
+| 2E-05 | Full network loss gradient — chain of Jacobians from loss back through layers | | | 1d | 2.5 |
+| 2E-06 | Softmax Jacobian — S_ij = s_i(δ_ij − s_j), cross-entropy simplification | | | 1d | 2.5 |
+| 2E-07 | Batch normalization gradient — chain rule through normalization statistics | | | 1d | 2.5 |
+| 2E-08 | Matrix calculus identities — ∂(xᵀAx)/∂x = (A+Aᵀ)x, ∂tr(AB)/∂A = Bᵀ | | | 1d | 2.5 |
+| 2E-09 | Hessian-vector products — second-order information without full Hessian | | | 1d | 2.5 |
 
 ---
 
@@ -301,26 +309,31 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 3A-01 | Probability axioms, conditional probability, independence | | | 1d | 2.5 |
-| 3A-02 | Bayes' theorem and the law of total probability | | | 1d | 2.5 |
-| 3A-03 | Discrete distributions (Bernoulli, Binomial, Poisson, Geometric, Categorical) | | | 1d | 2.5 |
-| 3A-04 | Continuous distributions (Uniform, Normal, Exponential, Multivariate Gaussian) | | | 1d | 2.5 |
+| 3A-01 | Probability axioms, conditional probability P(A|B), independence | | | 1d | 2.5 |
+| 3A-02 | Bayes' theorem — compute posterior from likelihood, prior, and evidence | | | 1d | 2.5 |
+| 3A-03 | Discrete distributions — Bernoulli, Binomial, Poisson, Geometric, Categorical | | | 1d | 2.5 |
+| 3A-04 | Continuous distributions — Uniform, Normal, Exponential, Multivariate Gaussian | | | 1d | 2.5 |
 | 3A-05 | CLT, Law of Large Numbers, change of variables for probability | | | 1d | 2.5 |
 | 3A-06 | Expectation — definition, linearity, Jensen's inequality | | | 1d | 2.5 |
-| 3A-07 | Variance, standard deviation, computational formula | | | 1d | 2.5 |
+| 3A-07 | Variance, standard deviation, computational formula Var(X) = E[X²] − (E[X])² | | | 1d | 2.5 |
 | 3A-08 | Covariance, correlation, covariance matrix | | | 1d | 2.5 |
 | 3A-09 | Moment generating functions and moments | | | 1d | 2.5 |
-| 3A-10 | MLE — likelihood, log-likelihood, cross-entropy as negative log-likelihood | | | 1d | 2.5 |
-| 3A-11 | Properties of MLE (consistency, asymptotic normality, efficiency) | | | 1d | 2.5 |
-| 3A-12 | EM algorithm and Gaussian Mixture Models | | | 1d | 2.5 |
-| 3A-13 | Information content and entropy | | | 1d | 2.5 |
-| 3A-14 | Cross-entropy and cross-entropy loss in ML | | | 1d | 2.5 |
-| 3A-15 | KL divergence — properties, asymmetry | | | 1d | 2.5 |
-| 3A-16 | Temperature and softmax | | | 1d | 2.5 |
-| 3A-17 | Mutual information and data processing inequality | | | 1d | 2.5 |
-| 3A-18 | Pointwise mutual information (PMI) and Word2Vec connection | | | 1d | 2.5 |
-| 3A-19 | Information bottleneck principle — compression vs preservation tradeoff in deep learning | | | 1d | 2.5 |
-| 3A-20 | Naive Bayes classifier and log-probability arithmetic — Laplace smoothing, log-space computation | | | 1d | 2.5 |
+| 3A-10 | Compute E[X] and Var(X) for named distributions (Binomial, Poisson, Normal, etc.) | | | 1d | 2.5 |
+| 3A-11 | Joint, marginal, conditional distributions — compute from joint PMF table | | | 1d | 2.5 |
+| 3A-12 | Conditional expectation E[X|Y] and law of total expectation E[X] = E[E[X|Y]] | | | 1d | 2.5 |
+| 3A-13 | Law of total variance — Var(X) = E[Var(X|Y)] + Var(E[X|Y]) | | | 1d | 2.5 |
+| 3A-14 | Indicator random variables — compute expectations via indicators | | | 1d | 2.5 |
+| 3A-15 | Change of variables for probability — p(y) = p(f⁻¹(y))·|det(J_f⁻¹)| | | | 1d | 2.5 |
+| 3A-16 | MLE — likelihood, log-likelihood, cross-entropy as negative log-likelihood | | | 1d | 2.5 |
+| 3A-17 | EM algorithm and Gaussian Mixture Models — E-step and M-step computation | | | 1d | 2.5 |
+| 3A-18 | K-means algorithm — step through assignment and centroid update | | | 1d | 2.5 |
+| 3A-19 | Information content and entropy — H(X) = −Σ P(x) log P(x), compute for distributions | | | 1d | 2.5 |
+| 3A-20 | Cross-entropy — H(P,Q) = −Σ P(x) log Q(x), cross-entropy loss in ML | | | 1d | 2.5 |
+| 3A-21 | KL divergence — D_KL(P‖Q), compute between two distributions, asymmetry | | | 1d | 2.5 |
+| 3A-22 | Temperature and softmax — compute softmax at different temperatures | | | 1d | 2.5 |
+| 3A-23 | Mutual information I(X;Y) = H(X) − H(X|Y) and data processing inequality | | | 1d | 2.5 |
+| 3A-24 | Pointwise mutual information (PMI) — log[P(x,y)/(P(x)P(y))], compute from data | | | 1d | 2.5 |
+| 3A-25 | Naive Bayes classifier and log-probability arithmetic — Laplace smoothing | | | 1d | 2.5 |
 
 ---
 
@@ -328,21 +341,17 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 3B-01 | Hypothesis testing — null/alternative, p-values, significance | | | 1d | 2.5 |
-| 3B-02 | Type I/II errors, statistical power, effect sizes | | | 1d | 2.5 |
-| 3B-03 | Confidence intervals and multiple comparisons corrections | | | 1d | 2.5 |
-| 3B-04 | P-hacking, garden of forking paths, file drawer effect | | | 1d | 2.5 |
+| 3B-01 | Hypothesis testing — null/alternative, compute p-values, significance decisions | | | 1d | 2.5 |
+| 3B-02 | Type I/II errors, statistical power = 1 − β | | | 1d | 2.5 |
+| 3B-03 | Confidence intervals — compute from sample data, interpret correctly | | | 1d | 2.5 |
+| 3B-04 | Bonferroni correction and multiple comparisons — adjust α for k tests | | | 1d | 2.5 |
 | 3B-05 | Base rate fallacy — confusing P(data|H₀) with P(H₀|data) | | | 1d | 2.5 |
-| 3B-06 | Experimental design — randomization, controls, blinding, pre-registration | | | 1d | 2.5 |
-| 3B-07 | Hierarchy of evidence — case reports → RCTs → systematic reviews → meta-analyses | | | 1d | 2.5 |
-| 3B-08 | Statistical fallacies — Simpson's paradox, ecological fallacy, survivor bias | | | 1d | 2.5 |
-| 3B-09 | Goodhart's Law and the replication crisis | | | 1d | 2.5 |
-| 3B-10 | Linear regression — OLS, R², multiple regression | | | 1d | 2.5 |
-| 3B-11 | Regularization — Ridge (L2), Lasso (L1), Elastic Net | | | 1d | 2.5 |
-| 3B-12 | Logistic regression and GLMs — single neuron with sigmoid = logistic regression | | | 1d | 2.5 |
-| 3B-13 | Common statistical tests — t-test, chi-squared, ANOVA, Mann-Whitney U | | | 1d | 2.5 |
-| 3B-14 | Regression diagnostics — linearity, homoscedasticity, multicollinearity | | | 1d | 2.5 |
-| 3B-15 | Robust standard errors (Huber-White) — inference when assumptions are violated | | | 1d | 2.5 |
+| 3B-06 | Effect sizes — Cohen's d = (μ₁−μ₂)/s_pooled, Pearson's r, odds ratio | | | 1d | 2.5 |
+| 3B-07 | Simpson's paradox — identify trend reversal when groups are combined | | | 1d | 2.5 |
+| 3B-08 | Linear regression — OLS, compute R², interpret coefficients | | | 1d | 2.5 |
+| 3B-09 | Regularization — Ridge (L2), Lasso (L1), Elastic Net | | | 1d | 2.5 |
+| 3B-10 | Logistic regression — P(y=1|x) = σ(βx), odds ratios OR = e^β | | | 1d | 2.5 |
+| 3B-11 | Common statistical tests — t-test, chi-squared, ANOVA, Mann-Whitney U | | | 1d | 2.5 |
 
 ---
 
@@ -352,25 +361,22 @@
 |---|-------|-------------|-------------|----------|------|
 | 3C-01 | Bayesian vs frequentist — posterior ∝ likelihood × prior | | | 1d | 2.5 |
 | 3C-02 | Prior types (informative, weakly informative, Jeffreys, maximum entropy) | | | 1d | 2.5 |
-| 3C-03 | Conjugate priors (Beta-Binomial, Normal-Normal, etc.) | | | 1d | 2.5 |
-| 3C-04 | MAP estimation and priors as regularization | | | 1d | 2.5 |
+| 3C-03 | Conjugate priors — compute posterior update (Beta-Binomial, Normal-Normal, etc.) | | | 1d | 2.5 |
+| 3C-04 | MAP estimation — argmax [log likelihood + log prior] = MLE + regularization | | | 1d | 2.5 |
 | 3C-05 | Sequential updating — today's posterior = tomorrow's prior | | | 1d | 2.5 |
 | 3C-06 | The computational problem — P(D) = ∫P(D|θ)P(θ)dθ is usually intractable | | | 1d | 2.5 |
-| 3C-07 | MCMC — Metropolis-Hastings, Gibbs sampling | | | 1d | 2.5 |
-| 3C-08 | MCMC diagnostics — trace plots, R-hat, effective sample size, burn-in | | | 1d | 2.5 |
-| 3C-09 | Hamiltonian Monte Carlo and NUTS | | | 1d | 2.5 |
-| 3C-10 | Variational inference — ELBO, mean-field approximation | | | 1d | 2.5 |
-| 3C-11 | VAE connection (encoder = variational params, loss = negative ELBO) | | | 1d | 2.5 |
-| 3C-12 | Laplace approximation — Gaussian at MAP with covariance = inverse Hessian | | | 1d | 2.5 |
-| 3C-13 | Marginal likelihood (evidence) and automatic Occam's razor | | | 1d | 2.5 |
-| 3C-14 | Bayes factors, BIC, WAIC, LOO-CV | | | 1d | 2.5 |
-| 3C-15 | BIC failure for neural networks — singular models, degenerate Fisher information | | | 1d | 2.5 |
-| 3C-16 | Free energy and SLT correction (RLCT replaces k/2) | | | 1d | 2.5 |
-| 3C-17 | Hierarchical models — partial pooling, shrinkage | | | 1d | 2.5 |
+| 3C-07 | MCMC — Metropolis-Hastings acceptance ratio, Gibbs sampling step | | | 1d | 2.5 |
+| 3C-08 | Hamiltonian Monte Carlo and NUTS — leapfrog integration | | | 1d | 2.5 |
+| 3C-09 | Variational inference — ELBO derivation, mean-field approximation | | | 1d | 2.5 |
+| 3C-10 | Laplace approximation — Gaussian at MAP with covariance = inverse Hessian | | | 1d | 2.5 |
+| 3C-11 | Marginal likelihood (evidence) and automatic Occam's razor | | | 1d | 2.5 |
+| 3C-12 | Bayes factors — BF₁₂ = P(D|M₁)/P(D|M₂), compute and interpret | | | 1d | 2.5 |
+| 3C-13 | BIC approximation — −2log P(D|θ̂) + k log n, compute for model comparison | | | 1d | 2.5 |
+| 3C-14 | Hierarchical models — partial pooling, shrinkage | | | 1d | 2.5 |
 
 ---
 
-## Phase 3D: Applied Statistics (Lessons 47–48)
+## Phase 3D: Causal Inference (Lessons 47–48)
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
@@ -381,11 +387,6 @@
 | 3D-05 | Controlling for confounders vs mediators vs colliders | | | 1d | 2.5 |
 | 3D-06 | Causal inference methods — instrumental variables, difference-in-differences | | | 1d | 2.5 |
 | 3D-07 | Regression discontinuity design and propensity score matching | | | 1d | 2.5 |
-| 3D-08 | Heritability (h²), twin studies, equal environments assumption | | | 1d | 2.5 |
-| 3D-09 | GWAS, polygenic scores, missing heritability, population stratification | | | 1d | 2.5 |
-| 3D-10 | Statistical adjudication of real-world empirical claims | | | 1d | 2.5 |
-| 3D-11 | Meta-analysis and forest plots — heterogeneity (I²), funnel plots, publication bias | | | 1d | 2.5 |
-| 3D-12 | Bradford Hill criteria for causation, epidemiology pitfalls | | | 1d | 2.5 |
 
 ---
 
@@ -401,22 +402,25 @@
 | 3E-06 | Applications — bounding sample means, uniform convergence, generalization bounds | | | 1d | 2.5 |
 | 3E-07 | Markov property — future depends only on present | | | 1d | 2.5 |
 | 3E-08 | Transition matrices and stationary distribution πP = π | | | 1d | 2.5 |
-| 3E-09 | Irreducibility, aperiodicity, ergodicity | | | 1d | 2.5 |
-| 3E-10 | Convergence theorem — ergodic chains converge to unique stationary distribution | | | 1d | 2.5 |
-| 3E-11 | Mixing time — how quickly chain approaches stationarity | | | 1d | 2.5 |
-| 3E-12 | Detailed balance (reversibility) and connection to MCMC | | | 1d | 2.5 |
-| 3E-13 | Fisher information I(θ) = E[(∂/∂θ log P)²] — curvature of log-likelihood | | | 1d | 2.5 |
-| 3E-14 | Cramér-Rao bound — Var(θ̂) ≥ 1/I(θ), fundamental precision limit | | | 1d | 2.5 |
-| 3E-15 | Fisher information matrix (multivariate) and singular Fisher info at NN symmetries | | | 1d | 2.5 |
-| 3E-16 | Exponential families — P(x|θ) = h(x)exp(η·T(x) − A(θ)), sufficient statistics | | | 1d | 2.5 |
-| 3E-17 | Common exponential families — Gaussian, Bernoulli, Poisson, Gamma, Beta | | | 1d | 2.5 |
-| 3E-18 | Natural gradient descent — Fisher information metric, parameter space geometry | | | 1d | 2.5 |
-| 3E-19 | PAC framework — Probably Approximately Correct, sample complexity | | | 1d | 2.5 |
-| 3E-20 | VC dimension — largest set shattered by hypothesis class | | | 1d | 2.5 |
-| 3E-21 | Fundamental theorem — finite VC dim ↔ PAC learnable | | | 1d | 2.5 |
-| 3E-22 | Rademacher complexity — data-dependent capacity measure | | | 1d | 2.5 |
-| 3E-23 | Generalization bounds — test error ≤ train error + complexity/√n | | | 1d | 2.5 |
-| 3E-24 | Union bound and PAC-Bayes bounds — tighter bounds for neural networks, connection to SLT | | | 1d | 2.5 |
+| 3E-09 | Compute n-step transition probabilities via matrix power Pⁿ | | | 1d | 2.5 |
+| 3E-10 | Irreducibility, aperiodicity, ergodicity | | | 1d | 2.5 |
+| 3E-11 | Convergence theorem — ergodic chains converge to unique stationary distribution | | | 1d | 2.5 |
+| 3E-12 | Mixing time — τ_mix ≈ 1/(1−λ₂), eigenvalue gap determines convergence | | | 1d | 2.5 |
+| 3E-13 | Detailed balance (reversibility) and connection to MCMC | | | 1d | 2.5 |
+| 3E-14 | PageRank — compute stationary distribution as dominant eigenvector of web graph | | | 1d | 2.5 |
+| 3E-15 | Score function s(θ) = ∂/∂θ log p(x|θ) — compute for specific distributions | | | 1d | 2.5 |
+| 3E-16 | Fisher information I(θ) = −E[∂²/∂θ² log p] — compute for specific distributions | | | 1d | 2.5 |
+| 3E-17 | Cramér-Rao bound — Var(θ̂) ≥ 1/I(θ), fundamental precision limit | | | 1d | 2.5 |
+| 3E-18 | Fisher information matrix (multivariate) and singular Fisher info at NN symmetries | | | 1d | 2.5 |
+| 3E-19 | Sufficient statistics via factorization theorem — find T(X) for given families | | | 1d | 2.5 |
+| 3E-20 | Exponential families — P(x|θ) = h(x)exp(η·T(x) − A(θ)), identify components | | | 1d | 2.5 |
+| 3E-21 | Common exponential families — Gaussian, Bernoulli, Poisson, Gamma, Beta | | | 1d | 2.5 |
+| 3E-22 | PAC framework — Probably Approximately Correct, sample complexity computation | | | 1d | 2.5 |
+| 3E-23 | VC dimension — compute for specific hypothesis classes (intervals, linear classifiers, etc.) | | | 1d | 2.5 |
+| 3E-24 | Fundamental theorem — finite VC dim ↔ PAC learnable | | | 1d | 2.5 |
+| 3E-25 | Rademacher complexity — data-dependent capacity measure | | | 1d | 2.5 |
+| 3E-26 | Generalization bounds — test error ≤ train error + complexity/√n | | | 1d | 2.5 |
+| 3E-27 | Union bound and PAC-Bayes bounds — compute sample complexity for given ε, δ | | | 1d | 2.5 |
 
 ---
 
@@ -425,29 +429,21 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 4A-01 | Neuron computation — output = activation(wᵀx + b), the atomic unit | | | 1d | 2.5 |
-| 4A-02 | Activation functions — step (original), sigmoid (smooth gate), ReLU (modern default) | | | 1d | 2.5 |
-| 4A-03 | Linear decision boundary — hyperplane wᵀx + b = 0 separates classes | | | 1d | 2.5 |
-| 4A-04 | Perceptron learning rule — convergence theorem for linearly separable data | | | 1d | 2.5 |
-| 4A-05 | XOR problem — single neuron can't solve it, motivating multi-layer networks | | | 1d | 2.5 |
-| 4A-06 | Loss functions — MSE (regression), cross-entropy (classification), loss landscape | | | 1d | 2.5 |
-| 4A-07 | Gradient descent — update rule θ ← θ − η∇L, learning rate tradeoffs | | | 1d | 2.5 |
-| 4A-08 | Batch, stochastic, and mini-batch SGD — noise helps escape local minima | | | 1d | 2.5 |
-| 4A-09 | Momentum — accumulate velocity, smooth oscillations | | | 1d | 2.5 |
-| 4A-10 | Adam optimizer — adaptive learning rates per parameter | | | 1d | 2.5 |
-| 4A-11 | Learning rate schedules — warmup, cosine decay, step decay | | | 1d | 2.5 |
-| 4A-12 | Micrograd — autograd engine, computation graphs, topological sort backward pass | | | 1d | 2.5 |
-| 4A-13 | Backprop = reverse-mode autodiff — forward pass caches, backward pass propagates gradients | | | 1d | 2.5 |
-| 4A-14 | Local gradients × upstream gradients = layer gradients | | | 1d | 2.5 |
-| 4A-15 | Computation graphs — DAGs, each node knows its local derivative | | | 1d | 2.5 |
-| 4A-16 | Gradient checking — finite differences to verify analytical gradients | | | 1d | 2.5 |
-| 4A-17 | Vanishing gradients — sigmoid squashes; exploding gradients — large weights amplify | | | 1d | 2.5 |
-| 4A-18 | Solutions — residual connections, normalization, careful initialization (Xavier/He), gradient clipping | | | 1d | 2.5 |
-| 4A-19 | Multi-layer networks — composition of affine + nonlinear, ReLU folds space | | | 1d | 2.5 |
-| 4A-20 | Universal approximation theorem — one hidden layer suffices but may need exponential width | | | 1d | 2.5 |
-| 4A-21 | Depth = compositionality — hierarchical features (edges → textures → parts → objects) | | | 1d | 2.5 |
-| 4A-22 | Embedding spaces and MLP language models (Bengio et al. 2003) | | | 1d | 2.5 |
-| 4A-23 | Regularization — dropout, weight decay, early stopping, data augmentation | | | 1d | 2.5 |
-| 4A-24 | Batch normalization and weight initialization — why proper scaling matters | | | 1d | 2.5 |
+| 4A-02 | Activation functions — step, sigmoid, ReLU; compute outputs and derivatives | | | 1d | 2.5 |
+| 4A-03 | Perceptron learning rule — convergence theorem for linearly separable data | | | 1d | 2.5 |
+| 4A-04 | Loss functions — MSE (regression), cross-entropy (classification), compute gradients | | | 1d | 2.5 |
+| 4A-05 | Gradient descent — update rule θ ← θ − η∇L, learning rate tradeoffs | | | 1d | 2.5 |
+| 4A-06 | Batch, stochastic, and mini-batch SGD — noise helps escape local minima | | | 1d | 2.5 |
+| 4A-07 | Momentum — accumulate velocity, smooth oscillations | | | 1d | 2.5 |
+| 4A-08 | Adam optimizer — adaptive learning rates per parameter | | | 1d | 2.5 |
+| 4A-09 | Forward pass by hand — compute network output given weights and input | | | 1d | 2.5 |
+| 4A-10 | Backprop by hand — compute gradients through a small network | | | 1d | 2.5 |
+| 4A-11 | Backprop = reverse-mode autodiff — forward pass caches, backward pass propagates gradients | | | 1d | 2.5 |
+| 4A-12 | Local gradients × upstream gradients = layer gradients | | | 1d | 2.5 |
+| 4A-13 | Gradient checking — finite differences to verify analytical gradients | | | 1d | 2.5 |
+| 4A-14 | Vanishing gradients — sigmoid squashes; exploding gradients — large weights amplify | | | 1d | 2.5 |
+| 4A-15 | Solutions — residual connections, normalization, Xavier/He initialization, gradient clipping | | | 1d | 2.5 |
+| 4A-16 | Xavier/He initialization — compute correct variance from fan_in, fan_out | | | 1d | 2.5 |
 
 ---
 
@@ -456,16 +452,9 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 4B-01 | Convolution — kernels, feature maps, stride, padding, parameter sharing | | | 1d | 2.5 |
-| 4B-02 | Pooling (max, average), receptive field, CNN architecture pattern | | | 1d | 2.5 |
-| 4B-03 | AlexNet and the deep learning revolution (2012) | | | 1d | 2.5 |
-| 4B-04 | Hierarchy of learned features (edges → textures → parts → objects) | | | 1d | 2.5 |
-| 4B-05 | Beyond AlexNet — VGGNet, ResNet, Vision Transformers | | | 1d | 2.5 |
-| 4B-06 | Kaplan scaling laws — power law in model size, data, compute | | | 1d | 2.5 |
-| 4B-07 | Chinchilla scaling — compute-optimal training, 20 tokens per parameter | | | 1d | 2.5 |
-| 4B-08 | Emergent capabilities and phase transitions in capability | | | 1d | 2.5 |
-| 4B-09 | Emergence debate — measurement artifact hypothesis | | | 1d | 2.5 |
-| 4B-10 | Grokking — delayed generalization as phase transition | | | 1d | 2.5 |
-| 4B-11 | Developmental interpretability — tracking representations at transitions | | | 1d | 2.5 |
+| 4B-02 | Compute output dimensions of conv layer — (W−K+2P)/S + 1 | | | 1d | 2.5 |
+| 4B-03 | Pooling (max, average), receptive field, CNN architecture pattern | | | 1d | 2.5 |
+| 4B-04 | Kaplan scaling laws — L(N) ∝ N^{−α}, power law in model size, data, compute | | | 1d | 2.5 |
 
 ---
 
@@ -474,18 +463,13 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 4C-01 | Query, Key, Value — three projections and scaled dot-product attention | | | 1d | 2.5 |
-| 4C-02 | Softmax attention weights and output as weighted sum of values | | | 1d | 2.5 |
+| 4C-02 | Compute attention output — softmax(QKᵀ/√d)V for small example | | | 1d | 2.5 |
 | 4C-03 | Multi-head attention — parallel heads, concatenation | | | 1d | 2.5 |
-| 4C-04 | Causal masking and cross-attention | | | 1d | 2.5 |
-| 4C-05 | Positional encodings — sinusoidal, learned, RoPE, ALiBi | | | 1d | 2.5 |
+| 4C-04 | Causal masking — construct and apply the attention mask | | | 1d | 2.5 |
+| 4C-05 | Positional encodings — sinusoidal PE(pos, dim) computation, learned, RoPE, ALiBi | | | 1d | 2.5 |
 | 4C-06 | Transformer block — LayerNorm, attention, residual, MLP | | | 1d | 2.5 |
-| 4C-07 | Residual stream as shared communication bus | | | 1d | 2.5 |
-| 4C-08 | MLP layers — expansion, gated variants (SwiGLU), knowledge storage | | | 1d | 2.5 |
-| 4C-09 | Embeddings, unembeddings, weight tying | | | 1d | 2.5 |
-| 4C-10 | QK circuit (where to look) and OV circuit (what to copy) | | | 1d | 2.5 |
-| 4C-11 | KV cache and autoregressive generation | | | 1d | 2.5 |
-| 4C-12 | Byte Pair Encoding (BPE) tokenization | | | 1d | 2.5 |
-| 4C-13 | Pre-norm vs post-norm transformer blocks — why pre-norm is standard | | | 1d | 2.5 |
+| 4C-07 | QK circuit (where to look) and OV circuit (what to copy) | | | 1d | 2.5 |
+| 4C-08 | Byte Pair Encoding (BPE) tokenization — step through the algorithm | | | 1d | 2.5 |
 
 ---
 
@@ -493,20 +477,8 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 4D-01 | What mechanistic interpretability is — reverse-engineering learned algorithms | | | 1d | 2.5 |
-| 4D-02 | Activation patching (causal tracing) — swap activations to measure causal importance | | | 1d | 2.5 |
-| 4D-03 | Direct logit attribution — trace logit contributions through residual stream | | | 1d | 2.5 |
-| 4D-04 | Probing and logit lens / tuned lens — what information is encoded at each layer | | | 1d | 2.5 |
-| 4D-05 | Steering vectors and activation engineering — modifying behavior at inference | | | 1d | 2.5 |
-| 4D-06 | TransformerLens, hooks, ablation studies — the tools of mech interp | | | 1d | 2.5 |
-| 4D-07 | Induction heads — the mechanism for in-context learning | | | 1d | 2.5 |
-| 4D-08 | Monosemantic vs polysemantic neurons — why most neurons respond to multiple concepts | | | 1d | 2.5 |
-| 4D-09 | Superposition hypothesis — more features than dimensions, non-orthogonal directions | | | 1d | 2.5 |
-| 4D-10 | Toy models of superposition — geometry, when superposition occurs | | | 1d | 2.5 |
-| 4D-11 | Sparse Autoencoders (SAEs) — overcomplete dictionary, L1 sparsity, finding interpretable features | | | 1d | 2.5 |
-| 4D-12 | Scaling monosemanticity — millions of features in Claude (deception, sycophancy, etc.) | | | 1d | 2.5 |
-| 4D-13 | Circuit discovery — Q/K/V-composition, attention pattern analysis | | | 1d | 2.5 |
-| 4D-14 | Known circuits — IOI (indirect object identification), greater-than circuit, successor heads | | | 1d | 2.5 |
+| 4D-01 | Direct logit attribution — trace logit contributions through residual stream | | | 1d | 2.5 |
+| 4D-02 | Superposition hypothesis — more features than dimensions, geometry of near-orthogonal packing | | | 1d | 2.5 |
 
 ---
 
@@ -514,25 +486,11 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 4E-01 | Diffusion models — forward/reverse process, denoising objective | | | 1d | 2.5 |
-| 4E-02 | Noise schedule, reparameterization trick, score matching | | | 1d | 2.5 |
-| 4E-03 | Conditioning and classifier-free guidance | | | 1d | 2.5 |
-| 4E-04 | Key architectures — DDPM, latent diffusion, U-Net, DiT | | | 1d | 2.5 |
-| 4E-05 | Video generation and temporal attention | | | 1d | 2.5 |
-| 4E-06 | RL framework — agent-environment loop, MDPs, policies | | | 1d | 2.5 |
-| 4E-07 | Value functions — V, Q, Bellman equations, discount factor | | | 1d | 2.5 |
-| 4E-08 | Policy gradient, REINFORCE, PPO | | | 1d | 2.5 |
-| 4E-09 | Actor-critic methods | | | 1d | 2.5 |
-| 4E-10 | Reward hacking, specification gaming, Goodhart's Law in RL | | | 1d | 2.5 |
-| 4E-11 | LLM pipeline — Stage 1: pre-training (next-token prediction, scaling) | | | 1d | 2.5 |
-| 4E-12 | LLM pipeline — Stage 2: SFT (instruction tuning, LoRA) | | | 1d | 2.5 |
-| 4E-13 | LLM pipeline — Stage 3: RLHF, DPO, Constitutional AI | | | 1d | 2.5 |
-| 4E-14 | LLM pipeline — Stage 4: deployment, inference, evaluation | | | 1d | 2.5 |
-| 4E-15 | The Bitter Lesson (Sutton) | | | 1d | 2.5 |
-| 4E-16 | DDPM training objective — simplified noise prediction loss ‖ε − ε_θ(x_t, t)‖² | | | 1d | 2.5 |
-| 4E-17 | Probability flow ODE and connection to neural ODEs | | | 1d | 2.5 |
-| 4E-18 | KL penalty in RLHF — preventing reward model over-optimization | | | 1d | 2.5 |
-| 4E-19 | Credit assignment problem — sparse rewards and attributing outcomes to actions | | | 1d | 2.5 |
+| 4E-01 | Noise schedule, reparameterization trick — compute gradients through sampling | | | 1d | 2.5 |
+| 4E-02 | DDPM training objective — simplified noise prediction loss ‖ε − ε_θ(x_t, t)‖² | | | 1d | 2.5 |
+| 4E-03 | Value functions V(s), Q(s,a) — Bellman equations, compute for small MDPs | | | 1d | 2.5 |
+| 4E-04 | Policy gradient — REINFORCE, compute ∇J(θ) for simple policy | | | 1d | 2.5 |
+| 4E-05 | PPO — clipped surrogate objective, actor-critic | | | 1d | 2.5 |
 
 ---
 
@@ -540,13 +498,9 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 4F-01 | Why standard statistics fails — singularities, many-to-one parameter map, singular Fisher information | | | 1d | 2.5 |
-| 4F-02 | Free energy F and the RLCT (Real Log Canonical Threshold) λ | | | 1d | 2.5 |
-| 4F-03 | Regular vs singular models — BIC (d/2) vs SLT (λ ≤ d/2) | | | 1d | 2.5 |
-| 4F-04 | Why overparameterized networks generalize — real complexity (RLCT) << parameter count | | | 1d | 2.5 |
-| 4F-05 | Phase transitions in training — grokking as transition from high-RLCT to low-RLCT region | | | 1d | 2.5 |
-| 4F-06 | Local Learning Coefficient (LLC) — empirical RLCT estimation, developmental interpretability | | | 1d | 2.5 |
-| 4F-07 | Resolution of singularities (Hironaka), blow-ups, Watanabe's theorem and zeta function poles | | | 1d | 2.5 |
+| 4F-01 | Free energy F and the RLCT (Real Log Canonical Threshold) λ | | | 1d | 2.5 |
+| 4F-02 | Regular vs singular models — BIC (d/2) vs SLT (λ ≤ d/2) | | | 1d | 2.5 |
+| 4F-03 | Resolution of singularities (Hironaka), blow-ups, Watanabe's theorem and zeta function poles | | | 1d | 2.5 |
 
 ---
 
@@ -555,23 +509,16 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 5A-01 | Turing machine definition — tape, head, states, transition function | | | 1d | 2.5 |
-| 5A-02 | Church-Turing thesis and universal Turing machine | | | 1d | 2.5 |
+| 5A-02 | Simulate Turing machine on input — trace execution step by step | | | 1d | 2.5 |
 | 5A-03 | Halting problem — undecidable, diagonalization proof | | | 1d | 2.5 |
 | 5A-04 | Rice's theorem — every non-trivial semantic property is undecidable | | | 1d | 2.5 |
-| 5A-05 | Decidability landscape — decidable, semi-decidable, undecidable | | | 1d | 2.5 |
-| 5A-06 | Reductions and Busy Beaver function — grows faster than any computable function | | | 1d | 2.5 |
-| 5A-07 | P (polynomial time) and NP (verifiable in polynomial time) | | | 1d | 2.5 |
-| 5A-08 | NP-complete (hardest in NP) and NP-hard; Cook-Levin theorem (SAT) | | | 1d | 2.5 |
-| 5A-09 | Key NP-complete problems — 3-SAT, graph coloring, TSP, subset sum, clique | | | 1d | 2.5 |
-| 5A-10 | Polynomial reductions — showing one problem is at least as hard as another | | | 1d | 2.5 |
-| 5A-11 | NP-hardness in ML — optimal NN training, feature selection, architecture search | | | 1d | 2.5 |
-| 5A-12 | PSPACE, circuit complexity, approximation and randomized algorithms (BPP) | | | 1d | 2.5 |
-| 5A-13 | Kolmogorov complexity K(x) — shortest program generating x | | | 1d | 2.5 |
-| 5A-14 | K(x) is uncomputable — related to halting problem | | | 1d | 2.5 |
-| 5A-15 | Invariance theorem — K independent of language up to constant | | | 1d | 2.5 |
-| 5A-16 | Connection to Shannon entropy — E[K(X)] ≈ H(X) | | | 1d | 2.5 |
-| 5A-17 | MDL principle and Solomonoff induction — universal prior P(x) = 2^{−K(x)} | | | 1d | 2.5 |
-| 5A-18 | AIXI — Solomonoff + expected utility = optimal but incomputable agent | | | 1d | 2.5 |
+| 5A-05 | Diagonalization argument — construct the diagonal string/function | | | 1d | 2.5 |
+| 5A-06 | P (polynomial time) and NP (verifiable in polynomial time) | | | 1d | 2.5 |
+| 5A-07 | NP-complete (hardest in NP) and NP-hard; Cook-Levin theorem (SAT) | | | 1d | 2.5 |
+| 5A-08 | Key NP-complete problems — 3-SAT, graph coloring, TSP, subset sum, clique | | | 1d | 2.5 |
+| 5A-09 | Polynomial reductions — show A ≤_p B, construct the reduction | | | 1d | 2.5 |
+| 5A-10 | Kolmogorov complexity K(x) — shortest program generating x | | | 1d | 2.5 |
+| 5A-11 | K(x) is uncomputable — related to halting problem | | | 1d | 2.5 |
 
 ---
 
@@ -580,23 +527,21 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 5B-01 | Group axioms — closure, associativity, identity, inverses; abelian vs non-abelian | | | 1d | 2.5 |
-| 5B-02 | Key examples — ℤ, ℝ*, permutation groups Sₙ, cyclic groups ℤₙ, matrix groups GL/SL/O/SO | | | 1d | 2.5 |
-| 5B-03 | Subgroups, cosets, Lagrange's theorem (|H| divides |G|) | | | 1d | 2.5 |
-| 5B-04 | Normal subgroups and quotient groups G/N | | | 1d | 2.5 |
-| 5B-05 | Homomorphisms, isomorphisms, kernel | | | 1d | 2.5 |
-| 5B-06 | First isomorphism theorem — G/ker(φ) ≅ im(φ) | | | 1d | 2.5 |
-| 5B-07 | Cayley's theorem — every group embeds in a permutation group | | | 1d | 2.5 |
-| 5B-08 | Rings — two operations (+, ×), examples (ℤ, R[x], matrices, ℤₙ) | | | 1d | 2.5 |
-| 5B-09 | Fields — every nonzero element invertible; examples (ℚ, ℝ, ℂ, 𝔽ₚ) | | | 1d | 2.5 |
-| 5B-10 | Ideals, quotient rings R/I, principal ideals | | | 1d | 2.5 |
-| 5B-11 | Polynomial rings — foundation for algebraic geometry | | | 1d | 2.5 |
-| 5B-12 | Modules, Noetherian rings, UFDs, PIDs — algebraic hierarchy | | | 1d | 2.5 |
-| 5B-13 | Group actions — orbits, stabilizers, orbit-stabilizer theorem | | | 1d | 2.5 |
-| 5B-14 | Burnside's lemma — counting distinct orbits via fixed points | | | 1d | 2.5 |
-| 5B-15 | Neural network symmetries — neuron permutation (Sₙ), weight rescaling, zero neurons | | | 1d | 2.5 |
-| 5B-16 | Symmetries create parameter space singularities — connection to SLT | | | 1d | 2.5 |
-| 5B-17 | Group representations and character theory — encoding groups as matrices | | | 1d | 2.5 |
-| 5B-18 | Equivariant neural networks — CNNs (translation), GNNs (permutation), steerable (rotation) | | | 1d | 2.5 |
+| 5B-02 | Key examples — ℤ, ℝ*, Sₙ, ℤₙ, GL/SL/O/SO; verify group axioms | | | 1d | 2.5 |
+| 5B-03 | Compute order of group element — smallest n where g^n = e | | | 1d | 2.5 |
+| 5B-04 | Construct Cayley table for small groups | | | 1d | 2.5 |
+| 5B-05 | Subgroups — verify subset is a subgroup, find all subgroups of finite group | | | 1d | 2.5 |
+| 5B-06 | Cosets and Lagrange's theorem — |H| divides |G|, compute cosets | | | 1d | 2.5 |
+| 5B-07 | Normal subgroups and quotient groups G/N — compute quotient | | | 1d | 2.5 |
+| 5B-08 | Homomorphisms, isomorphisms, kernel — verify and construct | | | 1d | 2.5 |
+| 5B-09 | First isomorphism theorem — G/ker(φ) ≅ im(φ) | | | 1d | 2.5 |
+| 5B-10 | Rings — two operations (+, ×), examples (ℤ, R[x], matrices, ℤₙ) | | | 1d | 2.5 |
+| 5B-11 | Fields — every nonzero element invertible; examples (ℚ, ℝ, ℂ, 𝔽ₚ) | | | 1d | 2.5 |
+| 5B-12 | Ideals — verify subset is an ideal, quotient rings R/I | | | 1d | 2.5 |
+| 5B-13 | Polynomial rings — division algorithm, factor theorem | | | 1d | 2.5 |
+| 5B-14 | Group actions — orbits, stabilizers, orbit-stabilizer theorem computation | | | 1d | 2.5 |
+| 5B-15 | Burnside's lemma — counting distinct orbits via fixed points | | | 1d | 2.5 |
+| 5B-16 | Group representations and character theory — encoding groups as matrices | | | 1d | 2.5 |
 
 ---
 
@@ -604,37 +549,30 @@
 
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
-| 5C-01 | Topological spaces — open/closed sets, axioms | | | 1d | 2.5 |
+| 5C-01 | Topological spaces — open/closed sets, axioms; prove a set is open/closed | | | 1d | 2.5 |
 | 5C-02 | Continuity as preimage of open sets; homeomorphism = topological equivalence | | | 1d | 2.5 |
 | 5C-03 | Metric spaces — topology from distance, balls as open sets | | | 1d | 2.5 |
-| 5C-04 | Compactness — Heine-Borel, extreme value theorem, sequential compactness | | | 1d | 2.5 |
-| 5C-05 | Connectedness and path-connectedness | | | 1d | 2.5 |
-| 5C-06 | Hausdorff spaces, basis for topology, subspace/product/quotient topologies | | | 1d | 2.5 |
-| 5C-07 | Homotopy — continuous deformation of maps; homotopy equivalence of spaces | | | 1d | 2.5 |
-| 5C-08 | Contractible spaces — homotopy equivalent to a point | | | 1d | 2.5 |
-| 5C-09 | Fundamental group π₁ — loops up to deformation; π₁(S¹)=ℤ, π₁(S²)=0, π₁(T²)=ℤ×ℤ | | | 1d | 2.5 |
-| 5C-10 | Simply connected spaces — π₁ = 0, no holes | | | 1d | 2.5 |
-| 5C-11 | Covering spaces — unwinding topological structure, classification by subgroups of π₁ | | | 1d | 2.5 |
-| 5C-12 | Loss landscape topology — holes, non-contractible loops, connected components as basins | | | 1d | 2.5 |
-| 5C-13 | Smooth manifolds — locally ℝⁿ, charts and atlases, transition maps | | | 1d | 2.5 |
-| 5C-14 | Examples — spheres, tori, Lie groups, weight space of neural networks | | | 1d | 2.5 |
-| 5C-15 | Tangent space T_pM and tangent bundle TM | | | 1d | 2.5 |
-| 5C-16 | Vector fields on manifolds — smooth assignment of tangent vectors | | | 1d | 2.5 |
-| 5C-17 | Riemannian metric — measuring lengths/angles/curvature; geodesics | | | 1d | 2.5 |
-| 5C-18 | Manifold hypothesis — real data lies on low-dimensional manifold; singularities = SLT | | | 1d | 2.5 |
-| 5C-19 | Algebraic varieties — solution sets of polynomial equations | | | 1d | 2.5 |
-| 5C-20 | Affine vs projective varieties; Hilbert's Nullstellensatz | | | 1d | 2.5 |
-| 5C-21 | Coordinate ring R[x]/I(V) and local ring at a singularity | | | 1d | 2.5 |
-| 5C-22 | Smooth vs singular points — Jacobian rank test | | | 1d | 2.5 |
-| 5C-23 | Types of singularities — nodes, cusps, self-intersections | | | 1d | 2.5 |
-| 5C-24 | Blow-ups — replacing singular points with projective spaces | | | 1d | 2.5 |
-| 5C-25 | Resolution of singularities (Hironaka) and RLCT computation via blow-ups | | | 1d | 2.5 |
-| 5C-26 | Differential forms — 0-forms (functions), 1-forms, 2-forms, k-forms | | | 1d | 2.5 |
-| 5C-27 | Wedge product ∧ — antisymmetric (dx∧dy = −dy∧dx) | | | 1d | 2.5 |
-| 5C-28 | Exterior derivative d — unifies gradient, curl, divergence; d² = 0 | | | 1d | 2.5 |
-| 5C-29 | Pullbacks — how forms transform under smooth maps (rigorous change of variables) | | | 1d | 2.5 |
-| 5C-30 | Generalized Stokes' theorem ∫_M dω = ∫_{∂M} ω — subsumes FTC, Green's, Stokes', Divergence | | | 1d | 2.5 |
-| 5C-31 | De Rham cohomology — measuring topological holes via closed-but-not-exact forms | | | 1d | 2.5 |
+| 5C-04 | Compactness — Heine-Borel (closed + bounded in ℝⁿ), apply to determine compactness | | | 1d | 2.5 |
+| 5C-05 | Connectedness and path-connectedness — prove/disprove for given spaces | | | 1d | 2.5 |
+| 5C-06 | Fundamental group π₁ — loops up to deformation; π₁(S¹)=ℤ, π₁(S²)=0, π₁(T²)=ℤ×ℤ | | | 1d | 2.5 |
+| 5C-07 | Simply connected spaces — π₁ = 0, no holes | | | 1d | 2.5 |
+| 5C-08 | Smooth manifolds — locally ℝⁿ, charts and atlases, transition maps | | | 1d | 2.5 |
+| 5C-09 | Tangent space T_pM and tangent bundle TM | | | 1d | 2.5 |
+| 5C-10 | Riemannian metric — measuring lengths/angles/curvature; geodesics | | | 1d | 2.5 |
+| 5C-11 | Algebraic varieties — solution sets of polynomial equations | | | 1d | 2.5 |
+| 5C-12 | Affine vs projective varieties; Hilbert's Nullstellensatz | | | 1d | 2.5 |
+| 5C-13 | Coordinate ring R[x]/I(V) and local ring at a singularity | | | 1d | 2.5 |
+| 5C-14 | Smooth vs singular points — Jacobian rank test, determine singularity | | | 1d | 2.5 |
+| 5C-15 | Types of singularities — nodes, cusps, self-intersections | | | 1d | 2.5 |
+| 5C-16 | Blow-ups — replacing singular points with projective spaces | | | 1d | 2.5 |
+| 5C-17 | Resolution of singularities (Hironaka) and RLCT computation via blow-ups | | | 1d | 2.5 |
+| 5C-18 | Compute RLCT for simple models — linear regression, reduced rank regression | | | 1d | 2.5 |
+| 5C-19 | Differential forms — 0-forms (functions), 1-forms, 2-forms, k-forms | | | 1d | 2.5 |
+| 5C-20 | Wedge product ∧ — antisymmetric, compute (adx + bdy) ∧ (cdx + ddy) | | | 1d | 2.5 |
+| 5C-21 | Exterior derivative d — compute d of specific forms; unifies grad, curl, div | | | 1d | 2.5 |
+| 5C-22 | Pullbacks — compute φ*ω under smooth map φ | | | 1d | 2.5 |
+| 5C-23 | Generalized Stokes' theorem ∫_M dω = ∫_{∂M} ω | | | 1d | 2.5 |
+| 5C-24 | De Rham cohomology — closed-but-not-exact forms detect topological holes | | | 1d | 2.5 |
 
 ---
 
@@ -645,14 +583,14 @@
 | 5D-01 | Propositional logic — connectives, truth tables, tautologies, satisfiability | | | 1d | 2.5 |
 | 5D-02 | Normal forms (CNF, DNF), logical equivalences | | | 1d | 2.5 |
 | 5D-03 | Predicate logic — quantifiers, terms, formulas, models | | | 1d | 2.5 |
-| 5D-04 | Soundness and completeness (Gödel's completeness theorem for FOL) | | | 1d | 2.5 |
-| 5D-05 | Formal verification, SAT/SMT solvers | | | 1d | 2.5 |
-| 5D-06 | Gödel numbering and self-referential sentences | | | 1d | 2.5 |
-| 5D-07 | Gödel's First Incompleteness Theorem | | | 1d | 2.5 |
-| 5D-08 | Gödel's Second Incompleteness Theorem | | | 1d | 2.5 |
-| 5D-09 | Diagonal lemma and Löb's theorem | | | 1d | 2.5 |
-| 5D-10 | Modal/provability logic (GL) and fixed-point theorem | | | 1d | 2.5 |
-| 5D-11 | Implications for alignment — self-reference, trust, Vingean reflection | | | 1d | 2.5 |
+| 5D-04 | Natural deduction proofs — derive conclusions from premises | | | 1d | 2.5 |
+| 5D-05 | Soundness and completeness (Gödel's completeness theorem for FOL) | | | 1d | 2.5 |
+| 5D-06 | Construct models — find interpretation satisfying/falsifying given sentences | | | 1d | 2.5 |
+| 5D-07 | Gödel numbering and self-referential sentences — encode a formula | | | 1d | 2.5 |
+| 5D-08 | Gödel's First Incompleteness Theorem | | | 1d | 2.5 |
+| 5D-09 | Gödel's Second Incompleteness Theorem | | | 1d | 2.5 |
+| 5D-10 | Diagonal lemma and Löb's theorem | | | 1d | 2.5 |
+| 5D-11 | Modal/provability logic (GL) and fixed-point theorem | | | 1d | 2.5 |
 | 5D-12 | Compactness theorem for FOL and nonstandard models | | | 1d | 2.5 |
 
 ---
@@ -662,75 +600,44 @@
 | # | Topic | Last Review | Next Review | Interval | Ease |
 |---|-------|-------------|-------------|----------|------|
 | 6A-01 | Normal form games — strategies, payoff matrices, dominant strategies | | | 1d | 2.5 |
-| 6A-02 | Nash equilibrium — pure and mixed strategies, Nash's theorem | | | 1d | 2.5 |
-| 6A-03 | Key games — Prisoner's Dilemma, Stag Hunt, Chicken | | | 1d | 2.5 |
-| 6A-04 | Iterated games, folk theorems, evolutionary game theory | | | 1d | 2.5 |
-| 6A-05 | Mechanism design — incentive compatibility, revelation principle | | | 1d | 2.5 |
-| 6A-06 | Auction theory (Vickrey, VCG) | | | 1d | 2.5 |
-| 6A-07 | Common knowledge, signaling games, Bayesian games | | | 1d | 2.5 |
-| 6A-08 | Expected utility theory — vNM axioms, risk preferences | | | 1d | 2.5 |
-| 6A-09 | CDT vs EDT vs FDT — three decision theories | | | 1d | 2.5 |
-| 6A-10 | Key thought experiments — Newcomb's, Smoking Lesion, Parfit's Hitchhiker | | | 1d | 2.5 |
-| 6A-11 | UDT, logical uncertainty, reflective stability | | | 1d | 2.5 |
-| 6A-12 | Embedded agency — agents as part of their environment | | | 1d | 2.5 |
-| 6A-13 | Anthropics — SSA, SIA, Sleeping Beauty problem | | | 1d | 2.5 |
-| 6A-14 | Simulation argument, Doomsday argument, Presumptuous Philosopher | | | 1d | 2.5 |
-| 6A-15 | Acausal reasoning and coordination between agents | | | 1d | 2.5 |
-| 6A-16 | Zero-sum vs positive-sum framing; minimax as adversarial robustness | | | 1d | 2.5 |
-| 6A-17 | Cheap talk vs costly signaling — when can "I am aligned" be trusted? | | | 1d | 2.5 |
-| 6A-18 | Counterfactual mugging and the Toxin Puzzle as FDT test cases | | | 1d | 2.5 |
-
----
-
-## Phase 6B: Alignment (Lessons 83–84)
-
-| # | Topic | Last Review | Next Review | Interval | Ease |
-|---|-------|-------------|-------------|----------|------|
-| 6B-01 | The core alignment problem — specifying and ensuring beneficial goals | | | 1d | 2.5 |
-| 6B-02 | Outer alignment — reward misspecification, Goodhart's Law, specification gaming | | | 1d | 2.5 |
-| 6B-03 | Inner alignment — mesa-optimization, mesa-objectives, distributional shift | | | 1d | 2.5 |
-| 6B-04 | Deceptive alignment — instrumentally motivated deception during training | | | 1d | 2.5 |
-| 6B-05 | Current techniques — RLHF, Constitutional AI, Debate, recursive reward modeling | | | 1d | 2.5 |
-| 6B-06 | Scalable oversight and interpretability-based safety | | | 1d | 2.5 |
-| 6B-07 | Threat models — power-seeking, treacherous turn, corrigibility, value lock-in | | | 1d | 2.5 |
-| 6B-08 | Formal frameworks — AIXI, logical induction, infra-Bayesianism, CIRL | | | 1d | 2.5 |
-| 6B-09 | Open problems — scalable oversight, ELK, deception detection, alignment tax | | | 1d | 2.5 |
-| 6B-10 | SLT for alignment — RLCT, phase transitions, developmental interpretability | | | 1d | 2.5 |
-| 6B-11 | Agent foundations — decision theory, embedded agency, Vingean reflection | | | 1d | 2.5 |
-| 6B-12 | Interpretability frontiers — SAEs at scale, causal scrubbing, automated circuit discovery | | | 1d | 2.5 |
-| 6B-13 | DPO and sleeper agents — preference optimization without reward model; safety training limitations | | | 1d | 2.5 |
-| 6B-14 | Gradual disempowerment — systemic misalignment via economic/cultural displacement | | | 1d | 2.5 |
+| 6A-02 | Nash equilibrium — find pure strategy NE from payoff matrix | | | 1d | 2.5 |
+| 6A-03 | Mixed strategy Nash equilibrium — compute for 2×2 games | | | 1d | 2.5 |
+| 6A-04 | Key games — Prisoner's Dilemma, Stag Hunt, Chicken; compute equilibria | | | 1d | 2.5 |
+| 6A-05 | Minimax — find optimal strategy in zero-sum games | | | 1d | 2.5 |
+| 6A-06 | Auction theory — Vickrey auction (second-price), determine winner and payment | | | 1d | 2.5 |
+| 6A-07 | Expected utility theory — vNM axioms, compute EU for decision problems | | | 1d | 2.5 |
+| 6A-08 | CDT vs EDT vs FDT — apply each to Newcomb's Problem, Smoking Lesion | | | 1d | 2.5 |
 
 ---
 
 ## Summary Statistics
 
-| Phase | Section | Topics | Lessons | Per Lesson |
-|-------|---------|--------|---------|------------|
-| 0B | CS Foundations (NeetCode Roadmap) | 18 | — | — |
-| 1 | Linear Algebra | 65 | 11 | 5.9 |
-| 2A | ODEs (incl. Calculus Fundamentals) | 54 | 6 | 9.0 |
-| 2B | Multivariable Calculus | 27 | 5 | 5.4 |
-| 2C | Vector Calculus | 25 | 5 | 5.0 |
-| 2D | PDEs | 34 | 5 | 6.8 |
-| 2E | ML-Applied Calculus | 17 | 3 | 5.7 |
-| 3A | Core Probability | 20 | 4 | 5.0 |
-| 3B | Frequentist Methods | 15 | 3 | 5.0 |
-| 3C | Bayesian Deep Dive | 17 | 3 | 5.7 |
-| 3D | Applied Statistics | 12 | 2 | 6.0 |
-| 3E | ML Theory Foundations | 24 | 4 | 6.0 |
-| 4A | Neural Networks & Optimization | 24 | 4 | 6.0 |
-| 4B | Architectures | 11 | 2 | 5.5 |
-| 4C | Transformers | 13 | 2 | 6.5 |
-| 4D | Mechanistic Interpretability | 14 | 2 | 7.0 |
-| 4E | Additional ML Topics | 19 | 3 | 6.3 |
-| 4F | Singular Learning Theory | 7 | 1 | 7.0 |
-| 5A | Computability & Complexity | 18 | 3 | 6.0 |
-| 5B | Abstract Algebra | 18 | 3 | 6.0 |
-| 5C | Topology & Geometry | 31 | 5 | 6.2 |
-| 5D | Formal Logic | 12 | 2 | 6.0 |
-| 6A | Game Theory & Decision Theory | 18 | 3 | 6.0 |
-| 6B | Alignment | 14 | 2 | 7.0 |
-| | | | | |
-| **Phase 2 Total** | | **157** | | |
-| **Grand Total** | | **571** | | |
+| Phase | Section | Topics |
+|-------|---------|--------|
+| 0B | CS Foundations (NeetCode Roadmap) | 18 |
+| 0C | Discrete Math (CS-09) | 12 |
+| 0D | Computer Organization (CS-10) | 4 |
+| 1 | Linear Algebra | 54 |
+| 2A | Calculus & ODEs | 62 |
+| 2B | Multivariable Calculus | 26 |
+| 2C | Vector Calculus | 20 |
+| 2D | PDEs | 27 |
+| 2E | ML-Applied Calculus | 9 |
+| 3A | Core Probability | 25 |
+| 3B | Frequentist Methods | 11 |
+| 3C | Bayesian Deep Dive | 14 |
+| 3D | Causal Inference | 7 |
+| 3E | ML Theory Foundations | 27 |
+| 4A | Neural Networks & Optimization | 16 |
+| 4B | Architectures | 4 |
+| 4C | Transformers | 8 |
+| 4D | Mechanistic Interpretability | 2 |
+| 4E | Additional ML Topics | 5 |
+| 4F | Singular Learning Theory | 3 |
+| 5A | Computability & Complexity | 11 |
+| 5B | Abstract Algebra | 16 |
+| 5C | Topology & Geometry | 24 |
+| 5D | Formal Logic | 12 |
+| 6A | Game Theory & Decision Theory | 8 |
+| | | |
+| **Grand Total** | | **469** |
