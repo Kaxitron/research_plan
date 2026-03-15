@@ -2541,7 +2541,7 @@ function saveHoursLog(log) {
 function addLogEntry(lessonId, hours, date, seeded) {
   const log = loadHoursLog();
   const now = new Date();
-  const dateStr = date || now.toISOString().slice(0, 10);
+  const dateStr = date || dateKey(now.getFullYear(), now.getMonth(), now.getDate());
   const id = log.length > 0 ? Math.max(...log.map(e => e.id)) + 1 : 1;
   const entry = { id, lessonId, hours, date: dateStr, timestamp: now.toISOString() };
   if (seeded) entry.seeded = true;
@@ -2707,16 +2707,27 @@ function showLogHoursModal() {
   const lessonSelect = document.getElementById('log-lesson-select');
   const hoursInput = document.getElementById('log-hours-input');
 
-  dateInput.value = new Date().toISOString().slice(0, 10);
+  const _now = new Date();
+  dateInput.value = dateKey(_now.getFullYear(), _now.getMonth(), _now.getDate());
   dateInput.onchange = () => renderLogModalEntries();
 
   let options = '';
   const inProgress = LESSONS.filter(l => l.status === 'in-progress');
+  const complete = LESSONS.filter(l => l.status === 'complete');
   const notStarted = LESSONS.filter(l => l.status === 'not-started');
 
   if (inProgress.length > 0) {
     options += '<optgroup label="In Progress">';
     inProgress.forEach(l => {
+      const phase = PHASES.find(p => p.id === l.phase);
+      options += `<option value="${l.id}">[${phase.name}] ${l.label || l.id}. ${l.title}</option>`;
+    });
+    options += '</optgroup>';
+  }
+
+  if (complete.length > 0) {
+    options += '<optgroup label="Complete">';
+    complete.forEach(l => {
       const phase = PHASES.find(p => p.id === l.phase);
       options += `<option value="${l.id}">[${phase.name}] ${l.label || l.id}. ${l.title}</option>`;
     });
@@ -4231,6 +4242,28 @@ function setBtnState(id, state, icon) {
 }
 
 // ── PUSH ──────────────────────────────────────
+
+// Helper: push a single file to GitHub, with one retry on 409 conflict
+async function pushFile(headers, path, content, message) {
+  const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, { headers });
+  const putBody = { message, content };
+  if (getResp.ok) { const data = await getResp.json(); putBody.sha = data.sha; }
+  let putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(putBody)
+  });
+  if (putResp.status === 409) {
+    const retry = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, { headers });
+    const retryData = await retry.json();
+    putBody.sha = retryData.sha;
+    putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify(putBody)
+    });
+  }
+  if (!putResp.ok) { const e = await putResp.json(); throw new Error(e.message || `${path} PUT failed: ${putResp.status}`); }
+}
+
 let _pushInProgress = false;
 async function pushToGithub() {
   if (_pushInProgress) return;
@@ -4241,104 +4274,55 @@ async function pushToGithub() {
     const token = getGhToken();
     if (!token) { _pushInProgress = false; setBtnState('push-btn', null, '⬆'); return; }
     const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+    const encode = str => btoa(unescape(encodeURIComponent(str)));
+    const errors = [];
 
     // ── 1. Update README lesson statuses ──
-    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
-    if (!getResp.ok) throw new Error(`README GET failed: ${getResp.status}`);
-    const fileData = await getResp.json();
-    let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
+    try {
+      const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
+      if (!getResp.ok) throw new Error(`README GET failed: ${getResp.status}`);
+      const fileData = await getResp.json();
+      let content = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\n/g, '')), c => c.charCodeAt(0)));
 
-    // Build status map — handles both numeric IDs (1,2,3...) and CS-prefix IDs (cs01,cs02...)
-    const statusMap = {};
-    LESSONS.forEach(l => {
-      const emoji = l.status === 'complete' ? '✅ Complete' :
-                    l.status === 'in-progress' ? '🔄 In Progress' : '⬜ Not Started';
-      statusMap[String(l.id)] = emoji;
-    });
-
-    // Replace status column in all table rows — matches both numeric and CS-prefix IDs
-    content = content.replace(
-      /^\| ([\w-]+) \| (.+?) \| (.+?) \|$/gm,
-      (match, id, lessonCol, statusCol) => {
-        const key = String(id).trim();
-        if (statusMap.hasOwnProperty(key)) {
-          return `| ${id} | ${lessonCol} | ${statusMap[key]} |`;
-        }
-        return match;
-      }
-    );
-
-    const encodedReadme = btoa(unescape(encodeURIComponent(content)));
-    let putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
-      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Push lesson progress from dashboard', content: encodedReadme, sha: fileData.sha })
-    });
-    if (putResp.status === 409) {
-      const retry = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, { headers });
-      const retryData = await retry.json();
-      putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_README_PATH}`, {
-        method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Push lesson progress from dashboard', content: encodedReadme, sha: retryData.sha })
+      const statusMap = {};
+      LESSONS.forEach(l => {
+        const emoji = l.status === 'complete' ? '✅ Complete' :
+                      l.status === 'in-progress' ? '🔄 In Progress' : '⬜ Not Started';
+        statusMap[String(l.id)] = emoji;
       });
+
+      content = content.replace(
+        /^\| ([\w-]+) \| (.+?) \| (.+?) \|$/gm,
+        (match, id, lessonCol, statusCol) => {
+          const key = String(id).trim();
+          if (statusMap.hasOwnProperty(key)) {
+            return `| ${id} | ${lessonCol} | ${statusMap[key]} |`;
+          }
+          return match;
+        }
+      );
+      await pushFile(headers, GH_README_PATH, encode(content), 'Push lesson progress from dashboard');
+    } catch(e) { errors.push(`README: ${e.message}`); }
+
+    // ── 2–5. Push data files (independent of README) ──
+    try { await pushFile(headers, GH_CALENDAR_PATH, encode(JSON.stringify(loadCalendar(), null, 2)), 'Push calendar data from dashboard'); }
+    catch(e) { errors.push(`Calendar: ${e.message}`); }
+
+    try { await pushFile(headers, GH_HOURS_PATH, encode(JSON.stringify(loadHoursLog(), null, 2)), 'Push hours log from dashboard'); }
+    catch(e) { errors.push(`Hours: ${e.message}`); }
+
+    try { await pushFile(headers, GH_PACE_PATH, encode(JSON.stringify(loadPaceData(), null, 2)), 'Push pace data from dashboard'); }
+    catch(e) { errors.push(`Pace: ${e.message}`); }
+
+    try { await pushFile(headers, GH_DAILYPLAN_PATH, encode(JSON.stringify(loadDailyPlan(), null, 2)), 'Push daily plan from dashboard'); }
+    catch(e) { errors.push(`Daily plan: ${e.message}`); }
+
+    if (errors.length === 0) {
+      setBtnState('push-btn', 'success', '✓');
+    } else {
+      setBtnState('push-btn', 'error', '✗');
+      alert(`Push partially failed:\n${errors.join('\n')}`);
     }
-    if (!putResp.ok) { const e = await putResp.json(); throw new Error(e.message || `README PUT failed: ${putResp.status}`); }
-
-    // ── 2. Push calendar data ──
-    const calendarData = loadCalendar();
-    const calJson = JSON.stringify(calendarData, null, 2);
-    const encodedCal = btoa(unescape(encodeURIComponent(calJson)));
-
-    // Try to get existing SHA for calendar file (may not exist yet)
-    const calGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_CALENDAR_PATH}`, { headers });
-    const calPutBody = { message: 'Push calendar data from dashboard', content: encodedCal };
-    if (calGet.ok) { const calData = await calGet.json(); calPutBody.sha = calData.sha; }
-
-    const calPut = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_CALENDAR_PATH}`, {
-      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(calPutBody)
-    });
-    if (!calPut.ok) { const e = await calPut.json(); throw new Error(e.message || `Calendar PUT failed: ${calPut.status}`); }
-
-    // ── 3. Push hours log ──
-    const hoursData = loadHoursLog();
-    const hoursJson = JSON.stringify(hoursData, null, 2);
-    const encodedHours = btoa(unescape(encodeURIComponent(hoursJson)));
-    const hoursGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_HOURS_PATH}`, { headers });
-    const hoursPutBody = { message: 'Push hours log from dashboard', content: encodedHours };
-    if (hoursGet.ok) { const hData = await hoursGet.json(); hoursPutBody.sha = hData.sha; }
-    const hoursPut = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_HOURS_PATH}`, {
-      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(hoursPutBody)
-    });
-    if (!hoursPut.ok) { const e = await hoursPut.json(); throw new Error(e.message || `Hours PUT failed: ${hoursPut.status}`); }
-
-    // ── 4. Push pace data ──
-    const paceData = loadPaceData();
-    const paceJson = JSON.stringify(paceData, null, 2);
-    const encodedPace = btoa(unescape(encodeURIComponent(paceJson)));
-    const paceGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PACE_PATH}`, { headers });
-    const pacePutBody = { message: 'Push pace data from dashboard', content: encodedPace };
-    if (paceGet.ok) { const pData = await paceGet.json(); pacePutBody.sha = pData.sha; }
-    const pacePut = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PACE_PATH}`, {
-      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(pacePutBody)
-    });
-    if (!pacePut.ok) { const e = await pacePut.json(); throw new Error(e.message || `Pace PUT failed: ${pacePut.status}`); }
-
-    // ── 5. Push daily plan ──
-    const dpData = loadDailyPlan();
-    const dpJson = JSON.stringify(dpData, null, 2);
-    const encodedDp = btoa(unescape(encodeURIComponent(dpJson)));
-    const dpGet = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_DAILYPLAN_PATH}`, { headers });
-    const dpPutBody = { message: 'Push daily plan from dashboard', content: encodedDp };
-    if (dpGet.ok) { const dData = await dpGet.json(); dpPutBody.sha = dData.sha; }
-    const dpPut = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_DAILYPLAN_PATH}`, {
-      method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(dpPutBody)
-    });
-    if (!dpPut.ok) { const e = await dpPut.json(); throw new Error(e.message || `Daily plan PUT failed: ${dpPut.status}`); }
-
-    setBtnState('push-btn', 'success', '✓');
     setTimeout(() => setBtnState('push-btn', null, '⬆'), 3000);
 
   } catch(e) {
