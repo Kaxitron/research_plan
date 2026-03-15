@@ -41,6 +41,10 @@
 **[Calculus — Ordinary Differential Equations](#calculus--ordinary-differential-equations)**
 - [Classifying Equilibria of Autonomous ODEs — Two Methods](#classifying-equilibria-of-autonomous-odes--two-methods)
 - [Repeated Roots — Where xe^(rx) Comes From](#repeated-roots--where-xerx-comes-from)
+- [The Laplace Transform Is Eigendecomposition for Calculus](#the-laplace-transform-is-eigendecomposition-for-calculus)
+- [Poles Tell the Whole Story — Stability From the s-Domain](#poles-tell-the-whole-story--stability-from-the-s-domain)
+- [F(s) Blowing Up vs y(t) Blowing Up — Two Different Things](#fs-blowing-up-vs-yt-blowing-up--two-different-things)
+- [The Derivative Property — Why Laplace Turns Calculus Into Algebra](#the-derivative-property--why-laplace-turns-calculus-into-algebra)
 
 **[Calculus — Multivariable](#calculus--multivariable)**
 - [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
@@ -485,7 +489,58 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-*Last updated: March 2026 -- through Lesson 16 (Higher-Order ODEs)*
+---
+
+## Lesson 17 — The Laplace Transform
+
+### The Laplace Transform Is Eigendecomposition for Calculus
+
+The eigenvectors of a matrix are the directions where the matrix acts by simple scaling: $Av = \lambda v$. The Laplace transform does the same thing for the operator $d/dt$. The eigenfunctions of differentiation are exponentials: $(d/dt) e^{st} = s \cdot e^{st}$. The eigenvalue is $s$.
+
+When you compute $F(s) = \int_0^\infty e^{-st} f(t)\,dt$, you're asking "how much of each eigenfunction $e^{st}$ is present in $f(t)$?" — the exact analog of decomposing a vector into eigenvector components. This is why the Laplace transform turns differential equations into algebraic equations: you've changed to a basis where the hard operator (differentiation) is diagonal — it just multiplies by $s$.
+
+**The gamma function connection:** The gamma function $\Gamma(n+1) = \int_0^\infty e^{-t} t^n\,dt$ is the Laplace transform of $t^n$ evaluated at $s = 1$. The $n!$ in the transform table entry $\mathcal{L}\\{t^n\\} = n!/s^{n+1}$ is literally the gamma function.
+
+**The resonance probe interpretation:** Each value of $s$ is a probe asking "how much do you resonate with $e^{st}$?" For most $s$, the answer is finite. At the **poles** (where $F(s) \to \infty$), the probe and signal are in perfect sync — their product neither grows nor decays, so the integral accumulates without bound. The pole reveals a natural exponential rate of the system.
+
+**Concrete example:** For $f(t) = e^{2t}$, the integrand is $e^{(2-s)t}$. When $s > 2$, the probe wins and the integral converges. When $s = 2$, perfect cancellation: the integrand is $e^0 = 1$ forever, and the integral of 1 over $[0, \infty)$ is infinite. That's the pole at $s = 2$.
+
+### Poles Tell the Whole Story — Stability From the s-Domain
+
+The parameter $s$ can be complex: $s = \sigma + i\omega$. The real part $\sigma$ controls growth/decay rate, the imaginary part $\omega$ controls oscillation frequency. Each basis function $e^{st}$ is a decaying or growing oscillation: $e^{st} = e^{\sigma t} \cdot e^{i\omega t}$.
+
+The Fourier transform is the special case where $\sigma = 0$ — only pure oscillations, no growth or decay. The Laplace transform maps out the entire complex plane, which is why it can handle signals like $e^{3t}$ that the Fourier transform chokes on.
+
+**Pole location determines solution behavior:**
+- **Negative real part** (left half-plane): mode decays → stable. Example: pole at $s = -2$ gives $e^{-2t}$.
+- **Zero real part** (imaginary axis): mode oscillates forever → marginally stable. Example: poles at $s = \pm 2i$ give $\sin(2t)$ and $\cos(2t)$.
+- **Positive real part** (right half-plane): mode grows → unstable. Example: pole at $s = 1 + 3i$ gives $e^t \cdot e^{3it}$ — a growing oscillation.
+
+Glance at the poles of $Y(s)$ and you immediately know whether the solution oscillates, grows, decays, or some combination — before you even invert back to the time domain.
+
+**ML connection:** "Will training converge?" is asking "do the eigenvalues of the system have negative real parts?" The learning rate ceiling $\eta < 2/\lambda_{\max}$ is a pole-placement condition — too large and you push poles into the right half-plane, causing training to diverge. Transfer function thinking (input → black box → output) is exactly how we think about neural network layers.
+
+### F(s) Blowing Up vs y(t) Blowing Up — Two Different Things
+
+$F(s)$ blows up at the poles — that's what a pole *is*. But this does NOT mean $y(t)$ blows up over time. The two are different questions:
+
+- $F(s)$ blowing up at $s = s_0$ means the transform integral diverges when probed at that specific frequency — the signal resonates perfectly with $e^{s_0 t}$.
+- $y(t)$ blowing up means the time-domain solution grows without bound as $t \to \infty$.
+
+Whether $y(t)$ blows up depends on the **real part** of the poles. Purely imaginary poles (e.g., $s = \pm 2i$) make $F(s)$ blow up at those points, but $y(t)$ just oscillates forever with constant amplitude — because $e^{2it}$ has no growth factor.
+
+### The Derivative Property — Why Laplace Turns Calculus Into Algebra
+
+$\mathcal{L}\\{f'(t)\\} = s\,F(s) - f(0)$. Taking a derivative in the time domain becomes multiplication by $s$, minus the initial condition.
+
+**Why this works:** Integration by parts with $u = e^{-st}$, $dv = f'(t)\,dt$. The exponential eigenfunction interacts cleanly with differentiation — pulling down a factor of $s$ — while the boundary term at $t = 0$ captures the initial condition automatically.
+
+**Why this is profound:** Every other ODE method handles initial conditions *after* finding the general solution. The Laplace transform absorbs them *during* the solve — they're part of the algebra from the start. The second derivative version $\mathcal{L}\\{f''(t)\\} = s^2 F(s) - s\,f(0) - f'(0)$ bakes in both $y(0)$ and $y'(0)$.
+
+**The eigenbasis perspective:** In the eigenbasis of differentiation, the derivative operator is diagonal — it just multiplies by $s$. This is exactly what diagonalizing a matrix does: $P^{-1}AP = D$ turns the operator into multiplication by eigenvalues. The Laplace transform is the infinite-dimensional version of that diagonalization.
+
+*Last updated: March 2026 -- through Lesson 17 (Laplace Transform)*
+
 
 
 
