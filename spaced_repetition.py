@@ -12,6 +12,7 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import date, timedelta
 from pathlib import Path
+from random import shuffle, randint
 
 # ── DPI awareness (before any tk window) ───────────────────────────────────
 try:
@@ -56,7 +57,8 @@ T = {
 }
 
 PHASE_ACCENT = {
-    '0B': T['blue'],   '1': T['green'],
+    '0B': T['blue'],   '0C': T['blue'],   '0D': T['blue'],
+    '1': T['green'],
     '2A': T['purple'], '2B': T['purple'], '2C': T['purple'],
     '2D': T['purple'], '2E': T['purple'],
     '3A': T['pink'],   '3B': T['pink'],   '3C': T['pink'],
@@ -64,7 +66,7 @@ PHASE_ACCENT = {
     '4A': T['yellow'], '4B': T['yellow'], '4C': T['yellow'],
     '4D': T['yellow'], '4E': T['yellow'], '4F': T['yellow'],
     '5A': T['orange'], '5B': T['orange'], '5C': T['orange'], '5D': T['orange'],
-    '6A': T['red'],    '6B': T['red'],
+    '6A': T['red'],
 }
 
 # ── SM-2 (stretched intervals for 10+ min practice problems) ───────────────
@@ -135,6 +137,7 @@ def load_progress():
 
 def save_progress(data):
     PROGRESS_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False), 'utf-8')
+
 
 
 # ── Custom toggle switch ──────────────────────────────────────────────────
@@ -511,16 +514,24 @@ class App:
                 tk.Label(top, text=bt, font=('Cascadia Code', 9),
                          fg=bf, bg=T['bg3'], padx=8, pady=2).pack(side='right')
 
-            # Topic text — no wraplength, let it fill available width
+            # Topic text + copy button
             tk.Label(row, text=topic['text'], font=('Segoe UI', 11),
                      fg=T['text'], bg=T['bg2'], anchor='w',
                      justify='left').pack(fill='x', padx=(54, 0), pady=(6, 0))
+            def _copy_manage(txt=topic['text'], r=row):
+                self.root.clipboard_clear()
+                self.root.clipboard_append(txt)
+            tk.Button(row, text="Copy", font=('Segoe UI', 9),
+                      fg=T['text3'], bg=T['bg3'], activebackground=T['bg4'],
+                      activeforeground=T['white'], bd=0, padx=8, pady=2,
+                      cursor='hand2', command=_copy_manage).pack(anchor='w', padx=(54, 0), pady=(4, 0))
 
     def _toggle(self, tid, on):
         active = self.progress.setdefault('active', {})
         if on:
+            nr = (date.today() + timedelta(days=randint(1, 14))).isoformat()
             active.setdefault(tid, {'ease': 2.5, 'interval': 1,
-                                     'repetitions': 0, 'next_review': '', 'last_review': ''})
+                                     'repetitions': 0, 'next_review': nr, 'last_review': ''})
         else:
             active.pop(tid, None)
         save_progress(self.progress)
@@ -538,8 +549,9 @@ class App:
         active = self.progress.setdefault('active', {})
         for t in sec['topics']:
             if activate:
+                nr = (date.today() + timedelta(days=randint(1, 14))).isoformat()
                 active.setdefault(t['id'], {'ease': 2.5, 'interval': 1,
-                                             'repetitions': 0, 'next_review': '', 'last_review': ''})
+                                             'repetitions': 0, 'next_review': nr, 'last_review': ''})
             else:
                 active.pop(t['id'], None)
         save_progress(self.progress)
@@ -567,7 +579,7 @@ class App:
                 days_until = (date.fromisoformat(nr) - date.today()).days
                 upcoming_q.append((days_until, tid, topic))
 
-        due_q.sort()
+        shuffle(due_q)
         upcoming_q.sort()
 
         self.due_cards = [(tid, t) for _, tid, t in due_q]
@@ -650,6 +662,23 @@ class App:
         tk.Label(topic_area, text=topic['text'], font=('Segoe UI', 22),
                  fg=T['white'], bg=T['bg2'], wraplength=850,
                  justify='left', anchor='w').pack(anchor='w', expand=True)
+
+        # Copy button — includes prompt for Claude
+        def _copy_topic(txt=topic['text'], sec=short_sec):
+            prompt = (f"Generate practice questions on the following topic that "
+                      f"would take about 5 minutes to complete. "
+                      f"Include a mix of conceptual and computational questions.\n\n"
+                      f"Section: {sec}\n"
+                      f"Topic: {txt}")
+            self.root.clipboard_clear()
+            self.root.clipboard_append(prompt)
+            copy_btn.configure(text="Copied!", fg=T['green'])
+            self.root.after(1500, lambda: copy_btn.configure(text="Copy Topic", fg=T['text2']))
+        copy_btn = tk.Button(topic_area, text="Copy Topic", font=('Segoe UI', 10),
+                             fg=T['text2'], bg=T['bg3'], activebackground=T['bg4'],
+                             activeforeground=T['white'], bd=0, padx=14, pady=5,
+                             cursor='hand2', command=_copy_topic)
+        copy_btn.pack(anchor='w', pady=(8, 0))
 
         # Divider
         tk.Frame(card, bg=T['border'], height=1).pack(fill='x', pady=(24, 20))

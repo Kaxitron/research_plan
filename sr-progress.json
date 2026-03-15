@@ -22,39 +22,39 @@
       "last_review": "2026-03-11"
     },
     "1-04": {
-      "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "ease": 2.6,
+      "interval": 14,
+      "repetitions": 1,
+      "next_review": "2026-03-28",
+      "last_review": "2026-03-14"
     },
     "1-05": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-21",
+      "last_review": "2026-03-14"
     },
     "1-06": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-21",
+      "last_review": "2026-03-14"
     },
     "1-07": {
-      "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "ease": 2.36,
+      "interval": 3,
+      "repetitions": 1,
+      "next_review": "2026-03-17",
+      "last_review": "2026-03-14"
     },
     "1-08": {
-      "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "ease": 2.36,
+      "interval": 3,
+      "repetitions": 1,
+      "next_review": "2026-03-17",
+      "last_review": "2026-03-14"
     },
     "1-09": {
       "ease": 2.5,
