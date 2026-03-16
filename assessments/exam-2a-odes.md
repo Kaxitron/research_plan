@@ -235,7 +235,7 @@ $$y'' + 4y = 8, \qquad y(0) = 0, \quad y'(0) = 0$$
 
 **(a)** State the convolution theorem: if $\mathcal{L}\{f\} = F(s)$ and $\mathcal{L}\{g\} = G(s)$, then $\mathcal{L}^{-1}\{F(s)\,G(s)\} = \;?$
 
-**(b)** Compute $\mathcal{L}^{-1}\!\left\{\frac{1}{s(s + 2)}\right\}$ by writing $\frac{1}{s(s+2)}$ as a product $F(s)\,G(s)$ and applying the convolution theorem. Verify your answer using partial fractions.
+**(b)** Compute $\mathcal{L}^{-1}\!\bigl\lbrace\frac{1}{s(s + 2)}\bigr\rbrace$ by writing $\frac{1}{s(s+2)}$ as a product $F(s)\,G(s)$ and applying the convolution theorem. Verify your answer using partial fractions.
 
 **(c)** The impulse response $h(t)$ of a system is defined as the output when the input is a Dirac delta $\delta(t)$. For the system:
 
