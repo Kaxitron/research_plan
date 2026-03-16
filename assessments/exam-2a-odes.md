@@ -7,9 +7,9 @@
 | | |
 |---|---|
 | **Time Allowed** | 90 minutes |
-| **Total Points** | 150 |
+| **Total Points** | 188 |
 | **Materials** | Pencil, paper, calculator (no CAS). No code. |
-| **Format** | 15 questions mixing computation and conceptual depth |
+| **Format** | 19 questions mixing computation and conceptual depth |
 
 > **Advice:** Show all work. Partial credit is generous for correct reasoning even with arithmetic errors. Geometric and qualitative explanations are valued alongside algebraic work.
 
@@ -247,7 +247,75 @@ find the transfer function $H(s) = Y(s)$. Then find $h(t)$ by inverting $H(s)$.
 
 ---
 
-## Q12 (12 pts) — Systems $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$: The Eigenvalue Method
+## Q12 (8 pts) — Bernoulli Equations
+
+**(a)** Solve the Bernoulli equation:
+
+$$y' + \frac{1}{x}\,y = x^2\,y^3, \qquad y(1) = 1$$
+
+Show the substitution $v = y^{1-n}$, derive the resulting linear ODE in $v$, and solve.
+
+**(b)** A common error in Bernoulli equations is applying the integrating factor formula with the original coefficients $P(x)$ and $Q(x)$ instead of the transformed ones. After the substitution $v = y^{-2}$, the ODE becomes $v' + (1-n)\,P(x)\,v = (1-n)\,Q(x)$. Write the transformed $P$ and $Q$ explicitly for part (a) and verify that both are multiplied by $(1-n)$.
+
+**(c)** In 1–2 sentences: why does the Bernoulli substitution work? What property of the equation allows a nonlinear ODE to be converted to a linear one?
+
+---
+
+## Q13 (10 pts) — Power Series Solutions
+
+Consider the ODE:
+
+$$y'' - xy' - y = 0, \qquad y(0) = 1, \quad y'(0) = 0$$
+
+**(a)** Assume $y = \sum_{n=0}^{\infty} a_n x^n$. Write out $y''$ and $xy'$ as power series. Identify which sums start at different indices.
+
+**(b)** Re-index both sums so that they are expressed in terms of $x^n$. Identify any orphan terms — terms where only one sum contributes because the other hasn't started yet.
+
+**(c)** Extract the recurrence relation for $a_{n+2}$ in terms of earlier coefficients. State for which values of $n$ it is valid.
+
+**(d)** Using the initial conditions $a_0 = 1$, $a_1 = 0$, compute $a_2, a_3, a_4, a_5$. Write the first four nonzero terms of the solution.
+
+**(e)** This ODE has variable coefficients (the $x$ in $xy'$). In 1–2 sentences, explain why the Laplace transform would not be effective here and why power series is the appropriate method.
+
+---
+
+## Q14 (10 pts) — Step Functions and the Second Shifting Theorem
+
+A system is modeled by:
+
+$$y' + 3y = 2\bigl(u_2(t) - u_5(t)\bigr), \qquad y(0) = 0$$
+
+This represents a system that receives a constant input of 2 that switches on at $t = 2$ and switches off at $t = 5$.
+
+**(a)** Take the Laplace transform of both sides. Express the right-hand side using the Laplace transform of the unit step function: $\mathcal{L}\{u_c(t)\} = e^{-cs}/s$.
+
+**(b)** Solve for $Y(s)$. Use partial fractions on each term.
+
+**(c)** Invert using the second shifting theorem: $\mathcal{L}^{-1}\{e^{-cs}\,F(s)\} = u_c(t)\,f(t-c)$. Write the complete piecewise solution for $y(t)$.
+
+**(d)** Describe qualitatively what $y(t)$ does in each of the three intervals: $0 \leq t < 2$, $2 \leq t < 5$, and $t \geq 5$. Sketch the solution.
+
+---
+
+## Q15 (10 pts) — Laplace Transform with Repeated Roots
+
+Solve using the Laplace transform:
+
+$$y'' + 6y' + 9y = 0, \qquad y(0) = 1, \quad y'(0) = 4$$
+
+**(a)** Take the Laplace transform and solve for $Y(s)$. You should get a denominator of $(s+3)^2$.
+
+**(b)** Rewrite the numerator in terms of $(s+3)$ using the substitution $u = s+3$ (so $s = u - 3$). Split the fraction into terms of the form $\frac{A}{u}$ and $\frac{B}{u^2}$.
+
+**(c)** Invert each term using the extended table entry $\mathcal{L}^{-1}\left\{\frac{n!}{(s-a)^{n+1}}\right\} = t^n e^{at}$.
+
+**(d)** Verify your solution satisfies both initial conditions.
+
+**(e)** A student solves this problem and gets $\sin$ and $\cos$ in their answer. Without seeing their work, what can you immediately conclude went wrong? *(Hint: think about what the characteristic roots tell you about the form of the solution.)*
+
+---
+
+## Q16 (12 pts) — Systems $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$: The Eigenvalue Method
 
 Consider the system $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ where:
 
@@ -269,7 +337,7 @@ $$\mathbf{x}(t) = c_1\,e^{\lambda_1 t}\,\mathbf{v}_1 + c_2\,e^{\lambda_2 t}\,\ma
 
 ---
 
-## Q13 (12 pts) — Phase Portrait Classification
+## Q17 (12 pts) — Phase Portrait Classification
 
 For each $2 \times 2$ matrix $A$ below, find the eigenvalues, classify the phase portrait type, and sketch the qualitative behavior of trajectories near the origin. State whether the origin is stable, unstable, or neither.
 
@@ -301,7 +369,7 @@ $$A = \begin{bmatrix} 0 & 1 \\ -4 & 0 \end{bmatrix}$$
 
 ---
 
-## Q14 (8 pts) — Matrix Exponentials
+## Q18 (8 pts) — Matrix Exponentials
 
 **(a)** Write the definition of the matrix exponential:
 
@@ -313,11 +381,11 @@ $$e^{At} = \;?$$
 
 **(c)** If $A$ is diagonalizable with $A = PDP^{-1}$, show that $e^{At} = P\,e^{Dt}\,P^{-1}$. What is $e^{Dt}$ when $D = \text{diag}(\lambda_1, \lambda_2)$?
 
-**(d)** For the matrix $A = \begin{bmatrix} -1 & 4 \\ -1 & 3 \end{bmatrix}$ from Q12, use the eigendecomposition to write $e^{At}$ in terms of the eigenvectors and eigenvalues. Verify that $\mathbf{x}(t) = e^{At}\,\mathbf{x}(0)$ matches your solution from Q12.
+**(d)** For the matrix $A = \begin{bmatrix} -1 & 4 \\ -1 & 3 \end{bmatrix}$ from Q16, use the eigendecomposition to write $e^{At}$ in terms of the eigenvectors and eigenvalues. Verify that $\mathbf{x}(t) = e^{At}\,\mathbf{x}(0)$ matches your solution from Q16.
 
 ---
 
-## Q15 (6 pts) — Synthesis: ODEs and Machine Learning
+## Q19 (6 pts) — Synthesis: ODEs and Machine Learning
 
 **(a)** A ResNet computes $\mathbf{x}_{l+1} = \mathbf{x}_l + f_\theta(\mathbf{x}_l)$, where $l$ is the layer index. Explain in 2–3 sentences why this is Euler's method applied to the ODE $\frac{d\mathbf{x}}{dt} = f_\theta(\mathbf{x})$, and what the "step size" $h$ equals in this analogy.
 
@@ -345,8 +413,9 @@ $$e^{At} = \;?$$
 3. Plot all trajectories on a single phase portrait with arrows showing direction of flow.
 4. Draw the eigenvectors as lines through the origin. Color them by stability (green for stable directions, red for unstable).
 5. Automatically classify and display the phase portrait type (stable node, unstable node, saddle, stable spiral, unstable spiral, center, degenerate node).
-6. Test your visualizer on each case from Q13.
+6. Test your visualizer on each case from Q17.
 
 **Stretch:** Add a slider for a parameter in the matrix (e.g., $A = \begin{bmatrix} -1 & \mu \\ -\mu & -1 \end{bmatrix}$) and watch the phase portrait change as you slide through a bifurcation (the transition from spiral to other types as $\mu$ varies).
 
 **Tools:** NumPy, Matplotlib, SciPy. No ML libraries needed.
+
