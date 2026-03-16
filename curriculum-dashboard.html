@@ -745,6 +745,9 @@
     font-weight: 600;
     color: var(--text-dim);
     margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
   }
   .cal-day.today .cal-day-num { color: var(--accent-5); }
   .cal-chip {
@@ -807,6 +810,34 @@
   .cal-chip.drag-over-above { border-top: 2px solid var(--accent-5); margin-top: -1px; }
   .cal-chip.drag-over-below { border-bottom: 2px solid var(--accent-5); margin-bottom: -1px; }
   .cal-day.drag-over { border-color: var(--accent-5) !important; background: rgba(56,189,248,0.1) !important; }
+
+  /* SR circle button on calendar days */
+  .cal-sr-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid #a78bfa;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+  .cal-sr-circle:hover { background: rgba(167,139,250,0.25); transform: scale(1.15); }
+  .cal-sr-circle.filled { background: #a78bfa; border-color: #a78bfa; }
+  .cal-sr-circle.filled:hover { background: #8b5cf6; border-color: #8b5cf6; }
+  .cal-sr-hrs {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    font-weight: 600;
+    color: #a78bfa;
+    margin-left: 2px;
+    vertical-align: middle;
+  }
 
   /* Picker in detail panel */
   .picker-lesson {
@@ -1342,18 +1373,17 @@ const PHASES = [
 
 // ─── Repeatable Review Activities (infinite placement on calendar) ───
 const REVIEW_ITEMS = [
-  { id: 'review-intuition', title: 'Review Intuition Notebook', label: '📓', color: '#a78bfa', repeatable: true, phase: '_review' },
+  { id: 'spaced-repetition', title: 'Spaced Repetition', label: '🔄', color: '#a78bfa', repeatable: true, phase: '_review' },
   { id: 'project-euler', title: 'Project Euler', label: '🧮', color: '#38bdf8', repeatable: true, phase: '_review' },
 ];
 
 function getReviewItem(id) {
-  if (id === 'review-intuition') return REVIEW_ITEMS[0];
+  if (id === 'spaced-repetition') return REVIEW_ITEMS[0];
   if (id === 'project-euler') return REVIEW_ITEMS[1];
+  // Legacy support for old review items
+  if (id === 'review-intuition') return REVIEW_ITEMS[0];
   const match = id.match(/^review-problems-(.+)$/);
-  if (match) {
-    const phase = PHASES.find(p => p.id === match[1]);
-    if (phase) return { id, title: `Review Problems: ${phase.name}`, label: '📝', color: phase.color, repeatable: true, phase: '_review' };
-  }
+  if (match) return REVIEW_ITEMS[0]; // Map old per-phase reviews to unified SR
   return null;
 }
 
@@ -1362,7 +1392,7 @@ function findItem(id) {
 }
 
 function isReviewItem(id) {
-  return id === 'review-intuition' || id === 'project-euler' || (typeof id === 'string' && id.startsWith('review-problems-'));
+  return id === 'spaced-repetition' || id === 'project-euler' || id === 'review-intuition' || (typeof id === 'string' && id.startsWith('review-problems-'));
 }
 
 const LESSONS = [
@@ -2565,6 +2595,23 @@ function getLoggedHoursForDate(dateStr) {
   return log.filter(e => e.date === dateStr).reduce((sum, e) => sum + e.hours, 0);
 }
 
+function getSrHoursForDate(dateStr) {
+  const log = loadHoursLog();
+  return log.filter(e => e.date === dateStr && (e.lessonId === 'spaced-repetition' || e.lessonId === 'review-intuition' || (typeof e.lessonId === 'string' && e.lessonId.startsWith('review-problems-')))).reduce((sum, e) => sum + e.hours, 0);
+}
+
+function promptSrHours(dk) {
+  const existing = getSrHoursForDate(dk);
+  const input = prompt(`Spaced Repetition — ${dk}\n${existing > 0 ? 'Already logged: ' + Math.round(existing*10)/10 + 'h\n' : ''}Enter hours to add (e.g. 0.5, 1, 1.5):`, '');
+  if (input === null || input.trim() === '') return;
+  let hours = parseFloat(input);
+  if (isNaN(hours) || hours <= 0) return;
+  hours = Math.round(hours * 2) / 2;
+  addLogEntry('spaced-repetition', hours, dk);
+  renderCalendar();
+  if (calSelectedDate === dk) showDayPicker(dk);
+}
+
 function getLogEntriesForDate(dateStr) {
   return loadHoursLog().filter(e => e.date === dateStr);
 }
@@ -2743,6 +2790,13 @@ function showLogHoursModal() {
     });
     options += '</optgroup>';
   });
+
+  // Review activities group
+  options += '<optgroup label="Review Activities">';
+  REVIEW_ITEMS.forEach(ri => {
+    options += `<option value="${ri.id}">${ri.label} ${ri.title}</option>`;
+  });
+  options += '</optgroup>';
 
   lessonSelect.innerHTML = options;
   hoursInput.value = '';
@@ -3772,8 +3826,9 @@ function renderCalendar() {
     if (isSelected) classes += ' selected';
 
     const dayHrs = getLoggedHoursForDate(dk);
+    const srHrs = getSrHoursForDate(dk);
     html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="if(!this.contains(event.relatedTarget))this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
-    html += `<div class="cal-day-num">${d}${dayHrs > 0 ? `<span style="float:right;font-size:9px;font-weight:600;color:var(--accent-1)">${Math.round(dayHrs * 10) / 10}h</span>` : ''}</div>`;
+    html += `<div class="cal-day-num"><button class="cal-sr-circle${srHrs > 0 ? ' filled' : ''}" onclick="event.stopPropagation();promptSrHours('${dk}')" title="Spaced Repetition${srHrs > 0 ? ': ' + Math.round(srHrs*10)/10 + 'h logged' : ': click to log review time'}"></button>${srHrs > 0 ? `<span class="cal-sr-hrs">${Math.round(srHrs*10)/10}</span>` : ''}<span style="flex:1;text-align:right">${d}${dayHrs > 0 ? `<span style="margin-left:4px;font-size:9px;font-weight:600;color:var(--accent-1)">${Math.round(dayHrs * 10) / 10}h</span>` : ''}</span></div>`;
 
     dayLessons.forEach((lesson, idx) => {
       const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
@@ -3822,18 +3877,18 @@ function renderCalendar() {
   html += `<div class="cal-unscheduled-label">REVIEW ACTIVITIES — place as many times as you want</div>`;
   html += `<div style="display:flex;flex-wrap:wrap;gap:0">`;
 
-  // Review Intuition Notebook
-  const riColor = '#a78bfa';
-  html += `<div class="cal-pool-chip" style="background:${riColor}15;color:${riColor}" draggable="true" ondragstart="calDragStart(event,'review-intuition')" onclick="calPoolClick('review-intuition')" title="Review your Intuition Notebook — placeable on any number of days">`;
-  html += `<span style="font-size:11px">📓</span>`;
-  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Review Intuition Notebook</span>`;
+  // Spaced Repetition (unified)
+  const srColor = '#a78bfa';
+  html += `<div class="cal-pool-chip" style="background:${srColor}15;color:${srColor}" draggable="true" ondragstart="calDragStart(event,'spaced-repetition')" onclick="calPoolClick('spaced-repetition')" title="Spaced Repetition review — also trackable via the ○ circle on each day">`;
+  html += `<span style="font-size:11px">🔄</span>`;
+  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Spaced Repetition</span>`;
   html += `</div>`;
 
-  // Review Problems: Phase X
-  const rpColor = '#f59e0b';
-  html += `<div class="cal-pool-chip" style="background:${rpColor}15;color:${rpColor}" draggable="true" ondragstart="calDragStartReviewProblems(event)" onclick="calPoolClickReviewProblems()" title="Review problems for a specific phase — you'll pick which phase">`;
-  html += `<span style="font-size:11px">📝</span>`;
-  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Review Problems: Phase X</span>`;
+  // Project Euler
+  const peColor = '#38bdf8';
+  html += `<div class="cal-pool-chip" style="background:${peColor}15;color:${peColor}" draggable="true" ondragstart="calDragStart(event,'project-euler')" onclick="calPoolClick('project-euler')" title="Project Euler practice — placeable on any number of days">`;
+  html += `<span style="font-size:11px">🧮</span>`;
+  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Project Euler</span>`;
   html += `</div>`;
 
   html += `</div></div>`;
@@ -3893,9 +3948,16 @@ function showDayPicker(dk) {
   html += `<div class="cal-hours-summary">`;
   if (dayTotalHours > 0) {
     html += `<div class="cal-hours-total">${Math.round(dayTotalHours * 10) / 10}h<span class="label">worked</span></div>`;
-    // Group by phase
+    // Group by phase + review activities
     const phaseHours = {};
     dayLogEntries.forEach(e => {
+      const reviewItem = getReviewItem(e.lessonId);
+      if (reviewItem) {
+        const key = '_' + reviewItem.id;
+        if (!phaseHours[key]) phaseHours[key] = { name: reviewItem.title, color: reviewItem.color, hours: 0 };
+        phaseHours[key].hours += e.hours;
+        return;
+      }
       const lesson = LESSONS.find(l => String(l.id) === String(e.lessonId));
       if (!lesson) return;
       const phase = PHASES.find(p => p.id === lesson.phase);
@@ -3960,25 +4022,23 @@ function showDayPicker(dk) {
   // Review activities section in day picker
   html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔁</span> Review Activities</div>`;
 
-  // Review Intuition Notebook
-  if (!dayLessonIds.includes('review-intuition')) {
-    html += `<div class="picker-lesson" onclick="calAddLesson('review-intuition','${dk}')">
-      <span class="picker-lesson-num" style="color:#a78bfa">📓</span>
-      <span>Review Intuition Notebook</span>
+  // Spaced Repetition
+  if (!dayLessonIds.includes('spaced-repetition')) {
+    html += `<div class="picker-lesson" onclick="calAddLesson('spaced-repetition','${dk}')">
+      <span class="picker-lesson-num" style="color:#a78bfa">🔄</span>
+      <span>Spaced Repetition</span>
       <span class="picker-hours"></span>
     </div>`;
   }
 
-  // Review Problems — one entry per phase not already on this day
-  PHASES.forEach(phase => {
-    const rpId = `review-problems-${phase.id}`;
-    if (dayLessonIds.includes(rpId)) return;
-    html += `<div class="picker-lesson" onclick="calAddLesson('${rpId}','${dk}')">
-      <span class="picker-lesson-num" style="color:${phase.color}">📝</span>
-      <span>Review Problems: ${phase.name}</span>
+  // Project Euler
+  if (!dayLessonIds.includes('project-euler')) {
+    html += `<div class="picker-lesson" onclick="calAddLesson('project-euler','${dk}')">
+      <span class="picker-lesson-num" style="color:#38bdf8">🧮</span>
+      <span>Project Euler</span>
       <span class="picker-hours"></span>
     </div>`;
-  });
+  }
 
   html += `</div>`;
 
