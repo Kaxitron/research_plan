@@ -1608,7 +1608,30 @@ Convolution in time = multiplication in $s$-domain.
 - Poles with zero real part (imaginary axis) → perpetual oscillation → **marginally stable**
 - Poles with positive real part (right half-plane) → growing modes → **unstable**
 
-**Transfer function:** For a system with input $X(s)$ and output $Y(s)$, the transfer function $H(s) = Y(s)/X(s)$ characterizes the system's input-output behavior entirely in the $s$-domain. Poles of $H(s)$ determine system stability.
+**Dirac delta function — sifting property:**
+
+$$\int_{-\infty}^{\infty} f(t)\,\delta(t - c)\, dt = f(c)$$
+
+The delta function "samples" $f$ at the spike location. $\delta(t)$ is zero everywhere except $t = 0$, where it's "infinite," with $\int \delta(t)\,dt = 1$.
+
+**Laplace transforms of delta:**
+
+$$\mathcal{L}\\{\delta(t)\\} = 1, \qquad \mathcal{L}\\{\delta(t - c)\\} = e^{-cs}$$
+
+**Transfer function and impulse response:** For a system with input $G(s)$ and output $Y(s)$:
+
+$$H(s) = \frac{Y(s)}{G(s)}, \qquad h(t) = \mathcal{L}^{-1}\\{H(s)\\}$$
+
+$H(s)$ is the transfer function; $h(t)$ is the impulse response (output when input is $\delta(t)$). For any input $g(t)$, the output is the convolution:
+
+$$y(t) = (h \* g)(t) = \int_0^t h(\tau)\, g(t - \tau)\, d\tau$$
+
+Poles of $H(s)$ determine system stability.
+
+**Laplace vs power series decision rule:**
+- Constant coefficients + IVP → Laplace (or characteristic equation)
+- Variable coefficients (e.g., $xy$, $x^2 y''$) → power series
+- Piecewise/impulsive forcing → Laplace
 
 ---
 
@@ -1704,10 +1727,17 @@ Convolution in time = multiplication in $s$-domain.
 | $A(\omega) = F_0/\sqrt{(k-m\omega^2)^2+(b\omega)^2}$ | Steady-state amplitude (resonance curve) |
 | $u_1' = -y_2 g/W$, $u_2' = y_1 g/W$ | Variation of parameters formulas |
 | $y = \sum a_n x^n$ → recurrence for $a_n$ | Power series solution method |
+| $\mathcal{L}\\{f'\\} = sF(s) - f(0)$ | Laplace derivative property |
+| $\mathcal{L}\\{e^{at}f(t)\\} = F(s-a)$ | First shifting theorem (s-shift) |
+| $\mathcal{L}\\{u_c(t)f(t-c)\\} = e^{-cs}F(s)$ | Second shifting theorem (t-shift) |
+| $\mathcal{L}\\{f \* g\\} = F(s) \cdot G(s)$ | Convolution theorem |
+| $\int f(t)\,\delta(t-c)\,dt = f(c)$ | Dirac delta sifting property |
+| $H(s) = Y(s)/G(s)$, $h(t) = \mathcal{L}^{-1}\\{H\\}$ | Transfer function / impulse response |
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs, through Lesson 17)*
+
 
 
 

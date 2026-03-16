@@ -539,7 +539,50 @@ $\mathcal{L}\\{f'(t)\\} = s\,F(s) - f(0)$. Taking a derivative in the time domai
 
 **The eigenbasis perspective:** In the eigenbasis of differentiation, the derivative operator is diagonal — it just multiplies by $s$. This is exactly what diagonalizing a matrix does: $P^{-1}AP = D$ turns the operator into multiplication by eigenvalues. The Laplace transform is the infinite-dimensional version of that diagonalization.
 
+### When to Use Laplace vs Power Series — The Decision Tree
+
+The Laplace transform works by decomposing into exponentials $e^{st}$, which are eigenfunctions of $d/dt$. But they're only eigenfunctions when the coefficients of the ODE are **constant**. If you have $t \cdot y''$, the Laplace transform of that product becomes a derivative of $Y(s)$ in the $s$-domain — you've traded one ODE for another, defeating the purpose.
+
+Variable coefficients like the $x$ in $y'' + xy = 0$ break the eigenstructure. No amount of algebraic cleverness will fix this — you need a fundamentally different approach (power series), building the solution coefficient by coefficient.
+
+**Decision rule:** Constant coefficients + IVP → Laplace (or characteristic equation). Variable coefficients → power series. Piecewise/impulsive forcing → Laplace is uniquely powerful.
+
+**ML connection:** This mirrors a recurring theme in ML — choosing the right representation for the problem. Fourier/spectral methods work beautifully when the problem has translation symmetry (constant coefficients), but you need local methods (like finite elements, or in this analogy power series) when the structure varies across the domain.
+
+### Power Series: Initial Conditions Are the Seeds, Recurrence Is the Growth Rule
+
+The recurrence relation generates $a_2, a_3, a_4, \ldots$ but it cannot generate $a_0$ or $a_1$. Those **always** come from the initial conditions: $y(0) = a_0$, $y'(0) = a_1$. The recurrence propagates from those seeds — it's a machine that takes the starting values and builds every subsequent coefficient from them.
+
+This is why power series solutions naturally have two free parameters ($a_0$ and $a_1$) when no initial conditions are given — exactly matching the two-parameter family of solutions for a second-order ODE.
+
+### Multiplying by $x$ Shifts the Recurrence Index Backward
+
+When $xy$ appears in an ODE, the multiplication by $x$ bumps every $x^n$ to $x^{n+1}$. Re-indexing to match powers of $x^n$ means substituting $n \to n-1$, so the coefficient of $x^n$ in the $xy$ term is $a_{n-1}$, not $a_n$.
+
+This "reach-back" is what creates the gap in the recurrence. For the Airy equation $y'' + xy = 0$, the recurrence connects $a_{n+2}$ to $a_{n-1}$ — a gap of **three** indices. Since $a_1 = 0$ and $a_2 = 0$ (from initial conditions and the orphan term), those zeros propagate through the $a_1$-chain and $a_2$-chain forever, leaving only every third coefficient nonzero.
+
+**Diagnostic:** If you got $a_n$ instead of $a_{n-1}$, you're solving $y'' + y = 0$ (no variable coefficient), which has the closed-form solution $\cos x$ — a completely different equation.
+
+### Orphan Terms Exist Because Sums Have Different Starting Indices
+
+When combining $y'' = \sum_{n=0}^{\infty} (n+2)(n+1) a_{n+2} x^n$ with $xy = \sum_{n=1}^{\infty} a_{n-1} x^n$, the first sum starts at $n = 0$ but the second starts at $n = 1$. At $n = 0$, only the $y''$ sum contributes — the $xy$ sum simply hasn't started yet. That lone $n = 0$ term is the **orphan**.
+
+The orphan produces a separate equation ($2a_2 = 0$) that is not part of the recurrence — it lives at a different value of $n$. The recurrence only governs $n \geq 1$, where both sums overlap and can be combined.
+
+**General principle:** Whenever you combine sums with different starting indices, check which terms have a partner and which are alone. The orphans give you extra equations; the overlap gives you the recurrence.
+
+### Direct Table Entry vs the Shifting Theorem
+
+$\frac{1}{s-a} \to e^{at}$ is a **fundamental table entry**, not a shifted version of something else. The first shifting theorem *extends* this base entry to handle products like $e^{at}\sin(\omega t)$ — cases where you recognize a known $s$-domain pattern that's been displaced from its usual position.
+
+**When to use the shifting theorem:** You see something like $\frac{s+1}{(s+3)^2 + 16}$ and recognize it as the $\frac{s}{s^2+16}$ pattern (which gives $\cos(4t)$) shifted by $a = -3$. The machinery of "complete the square, rewrite numerator in terms of $(s-a)$" is the shifting theorem in action.
+
+**When NOT to use it:** $\frac{1}{s+3}$ is already directly in the table as $e^{-3t}$. No shifting needed — you're reading the answer straight off.
+
+**The relationship:** $\frac{1}{s-a}$ is the entry the shifting theorem is *built on*. The theorem says "if you know $F(s) \to f(t)$, then $F(s-a) \to e^{at}f(t)$." The exponential table entry is the special case where $F(s) = 1/s$ (i.e., $f(t) = 1$).
+
 *Last updated: March 2026 -- through Lesson 17 (Laplace Transform)*
+
 
 
 
