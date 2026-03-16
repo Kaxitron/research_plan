@@ -69,6 +69,12 @@
 - [40. First-Order ODEs — Solution Methods](#40-first-order-odes--solution-methods)
 - [41. Exact Equations and Integrating Factors for Non-Exact Equations](#41-exact-equations-and-integrating-factors-for-non-exact-equations)
 - [42. Constant-Coefficient Homogeneous Linear ODEs](#42-constant-coefficient-homogeneous-linear-odes)
+- [43. The Wronskian](#43-the-wronskian)
+- [44. Resonance and Forced Vibrations](#44-resonance-and-forced-vibrations)
+- [45. Nonhomogeneous Equations — Undetermined Coefficients](#45-nonhomogeneous-equations--undetermined-coefficients)
+- [46. Nonhomogeneous Equations — Variation of Parameters](#46-nonhomogeneous-equations--variation-of-parameters)
+- [47. Power Series Solutions](#47-power-series-solutions)
+- [48. The Laplace Transform](#48-the-laplace-transform)
 
 #### [Multivariable Calculus](#multivariable-calculus)
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1537,6 +1543,75 @@ Then integrate $u_1'$ and $u_2'$, and assemble $y_p = u_1 y_1 + u_2 y_2$.
 
 ---
 
+## 48. The Laplace Transform
+
+**Definition:**
+
+$$\mathcal{L}\\{f(t)\\} = F(s) = \int_0^{\infty} e^{-st} f(t)\, dt$$
+
+**Core transform table:**
+
+| $f(t)$ | $F(s)$ | Convergence |
+|---|---|---|
+| $1$ | $1/s$ | $s > 0$ |
+| $t^n$ | $n!/s^{n+1}$ | $s > 0$ |
+| $e^{at}$ | $1/(s-a)$ | $s > a$ |
+| $\sin(\omega t)$ | $\omega/(s^2+\omega^2)$ | $s > 0$ |
+| $\cos(\omega t)$ | $s/(s^2+\omega^2)$ | $s > 0$ |
+| $u_c(t)$ (unit step) | $e^{-cs}/s$ | $s > 0$ |
+| $\delta(t)$ (Dirac delta) | $1$ | all $s$ |
+
+**Derivative property (converts ODEs to algebra):**
+
+$$\mathcal{L}\\{f'(t)\\} = sF(s) - f(0)$$
+
+$$\mathcal{L}\\{f''(t)\\} = s^2 F(s) - sf(0) - f'(0)$$
+
+Pattern: each derivative adds a power of $s$; each initial condition appears with the correct power of $s$ attached.
+
+**First shifting theorem (s-shift) — exponential modulation:**
+
+$$\mathcal{L}\\{e^{at}f(t)\\} = F(s - a)$$
+
+Multiplying by $e^{at}$ in time shifts the transform by $a$ in the $s$-domain. Shifts all poles horizontally by $a$.
+
+**Extended table via first shifting theorem:**
+
+| $f(t)$ | $F(s)$ |
+|---|---|
+| $e^{at}\sin(\omega t)$ | $\omega/((s-a)^2+\omega^2)$ |
+| $e^{at}\cos(\omega t)$ | $(s-a)/((s-a)^2+\omega^2)$ |
+| $t^n e^{at}$ | $n!/(s-a)^{n+1}$ |
+
+**Second shifting theorem (t-shift) — time delay:**
+
+$$\mathcal{L}\\{u_c(t) \cdot f(t-c)\\} = e^{-cs} F(s)$$
+
+Delaying a function by $c$ and switching it on at $t = c$ multiplies its transform by $e^{-cs}$.
+
+**Convolution theorem:**
+
+$$\mathcal{L}\\{(f \* g)(t)\\} = F(s) \cdot G(s)$$
+
+where $(f \* g)(t) = \int_0^t f(\tau)\, g(t - \tau)\, d\tau$.
+
+Convolution in time = multiplication in $s$-domain.
+
+**Solving an ODE — the four-step method:**
+1. Apply $\mathcal{L}$ to both sides; derivative property absorbs initial conditions automatically
+2. Solve the algebraic equation for $Y(s)$
+3. Partial fraction decomposition to break $Y(s)$ into table-recognizable pieces
+4. Invert each piece using the transform table: $y(t) = \mathcal{L}^{-1}\\{Y(s)\\}$
+
+**Pole analysis and stability:** The poles of $Y(s)$ (where the denominator = 0) determine solution behavior:
+- Poles with negative real part (left half-plane) → decaying modes → **stable**
+- Poles with zero real part (imaginary axis) → perpetual oscillation → **marginally stable**
+- Poles with positive real part (right half-plane) → growing modes → **unstable**
+
+**Transfer function:** For a system with input $X(s)$ and output $Y(s)$, the transfer function $H(s) = Y(s)/X(s)$ characterizes the system's input-output behavior entirely in the $s$-domain. Poles of $H(s)$ determine system stability.
+
+---
+
 # Multivariable Calculus
 
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1633,6 +1708,7 @@ Then integrate $u_1'$ and $u_2'$, and assemble $y_p = u_1 y_1 + u_2 y_2$.
 ---
 
 *Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs)*
+
 
 
 
