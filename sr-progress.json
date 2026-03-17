@@ -86,10 +86,10 @@
     },
     "1-13": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-23",
+      "last_review": "2026-03-16"
     },
     "1-14": {
       "ease": 2.5,
@@ -128,10 +128,10 @@
     },
     "1-19": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-23",
+      "last_review": "2026-03-16"
     },
     "1-20": {
       "ease": 2.5,
@@ -184,10 +184,10 @@
     },
     "1-27": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-23",
+      "last_review": "2026-03-16"
     },
     "1-28": {
       "ease": 2.5,
@@ -744,9 +744,93 @@
     },
     "2A-42": {
       "ease": 2.5,
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-23",
+      "last_review": "2026-03-16"
+    },
+    "2A-43": {
+      "ease": 2.5,
       "interval": 1,
       "repetitions": 0,
-      "next_review": "",
+      "next_review": "2026-03-27",
+      "last_review": ""
+    },
+    "2A-44": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-17",
+      "last_review": ""
+    },
+    "2A-45": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-22",
+      "last_review": ""
+    },
+    "2A-46": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-21",
+      "last_review": ""
+    },
+    "2A-47": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-30",
+      "last_review": ""
+    },
+    "2A-48": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-25",
+      "last_review": ""
+    },
+    "2A-49": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-28",
+      "last_review": ""
+    },
+    "2A-50": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-26",
+      "last_review": ""
+    },
+    "2A-51": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-22",
+      "last_review": ""
+    },
+    "2A-52": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-27",
+      "last_review": ""
+    },
+    "2A-53": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-23",
+      "last_review": ""
+    },
+    "2A-54": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-23",
       "last_review": ""
     }
   },

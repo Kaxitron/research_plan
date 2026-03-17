@@ -3827,8 +3827,9 @@ function renderCalendar() {
 
     const dayHrs = getLoggedHoursForDate(dk);
     const srHrs = getSrHoursForDate(dk);
+    const lessonHrs = Math.round((dayHrs - srHrs) * 10) / 10;
     html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="if(!this.contains(event.relatedTarget))this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
-    html += `<div class="cal-day-num"><button class="cal-sr-circle${srHrs > 0 ? ' filled' : ''}" onclick="event.stopPropagation();promptSrHours('${dk}')" title="Spaced Repetition${srHrs > 0 ? ': ' + Math.round(srHrs*10)/10 + 'h logged' : ': click to log review time'}"></button>${srHrs > 0 ? `<span class="cal-sr-hrs">${Math.round(srHrs*10)/10}</span>` : ''}<span style="flex:1;text-align:right">${d}${dayHrs > 0 ? `<span style="margin-left:4px;font-size:9px;font-weight:600;color:var(--accent-1)">${Math.round(dayHrs * 10) / 10}h</span>` : ''}</span></div>`;
+    html += `<div class="cal-day-num"><button class="cal-sr-circle${srHrs > 0 ? ' filled' : ''}" onclick="event.stopPropagation();promptSrHours('${dk}')" title="Spaced Repetition${srHrs > 0 ? ': ' + Math.round(srHrs*10)/10 + 'h logged' : ': click to log review time'}"></button>${srHrs > 0 ? `<span class="cal-sr-hrs">${Math.round(srHrs*10)/10}</span>` : ''}<span style="flex:1;text-align:right">${d}${lessonHrs > 0 ? `<span style="margin-left:4px;font-size:9px;font-weight:600;color:var(--accent-1)">${lessonHrs}h</span>` : ''}${srHrs > 0 ? `<span style="margin-left:2px;font-size:9px;font-weight:600;color:#a78bfa">${Math.round(srHrs*10)/10}h</span>` : ''}</span></div>`;
 
     dayLessons.forEach((lesson, idx) => {
       const color = lesson.repeatable ? lesson.color : getPhaseColor(lesson.phase);
