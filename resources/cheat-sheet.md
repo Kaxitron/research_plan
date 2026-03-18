@@ -75,6 +75,7 @@
 - [46. Nonhomogeneous Equations — Variation of Parameters](#46-nonhomogeneous-equations--variation-of-parameters)
 - [47. Power Series Solutions](#47-power-series-solutions)
 - [48. The Laplace Transform](#48-the-laplace-transform)
+- [49. Systems of ODEs and Phase Portraits](#49-systems-of-odes-and-phase-portraits)
 
 #### [Multivariable Calculus](#multivariable-calculus)
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1635,6 +1636,54 @@ Poles of $H(s)$ determine system stability.
 
 ---
 
+## 49. Systems of ODEs and Phase Portraits
+
+**Linear system in matrix form:**
+
+$$\frac{d\mathbf{x}}{dt} = A\mathbf{x}, \quad \mathbf{x}(0) = \mathbf{x}_0$$
+
+**Why it works:** Eigenvectors decouple the system. Substituting $\mathbf{z} = P^{-1}\mathbf{x}$ (where $P$ is the eigenvector matrix) transforms $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ into $\frac{d\mathbf{z}}{dt} = D\mathbf{z}$, a diagonal system. Each $z_i$ satisfies the separable ODE $\frac{dz_i}{dt} = \lambda_i z_i$, which gives $z_i(t) = z_i(0)\, e^{\lambda_i t}$. Transforming back: $\mathbf{x}(t) = P\mathbf{z}(t)$.
+
+**Solution via eigenvalues/eigenvectors (the shortcut):**
+
+If $A$ has eigenvalues $\lambda_1, \lambda_2$ with eigenvectors $\mathbf{v}_1, \mathbf{v}_2$:
+
+$$\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$$
+
+Find $c_1, c_2$ from initial conditions: $\mathbf{x}(0) = c_1\,\mathbf{v}_1 + c_2\,\mathbf{v}_2$.
+
+**Matrix exponential:**
+
+$$\mathbf{x}(t) = e^{At}\mathbf{x}_0, \quad \text{where} \quad e^{At} = I + At + \frac{(At)^2}{2!} + \frac{(At)^3}{3!} + \cdots$$
+
+If $A = PDP^{-1}$ (diagonalizable), then $e^{At} = P\, e^{Dt}\, P^{-1}$, where $e^{Dt} = \text{diag}(e^{\lambda_1 t}, e^{\lambda_2 t})$.
+
+**Phase portrait classification (2D):**
+
+| Eigenvalues | Portrait type | Stability |
+|---|---|---|
+| Both real negative | Stable node | Stable |
+| Both real positive | Unstable node | Unstable |
+| Real, opposite signs | Saddle point | Unstable |
+| $\alpha \pm \beta i$, $\alpha < 0$ | Stable spiral | Stable |
+| $\alpha \pm \beta i$, $\alpha > 0$ | Unstable spiral | Unstable |
+| $\pm \beta i$ (pure imaginary) | Center (closed orbits) | Marginally stable |
+
+**Key behaviors:**
+- Stable node: all trajectories → origin. Fast mode dies first, so trajectories align with the **slow** eigenvector on approach.
+- Unstable node: all trajectories flee origin. Slow mode dominates initially, trajectories align with the **fast** eigenvector as they escape.
+- Saddle: trajectories approach along the stable eigenvector, then escape along the unstable eigenvector. The stable eigenvector is the **separatrix**.
+- Spirals: rotation from the imaginary part $\beta$, growth/decay from the real part $\alpha$.
+- Centers: pure oscillation, no growth or decay.
+
+**Trace-determinant classification (shortcut):** For $\tau = \text{tr}(A) = \lambda_1 + \lambda_2$ and $\Delta = \det(A) = \lambda_1 \lambda_2$:
+- $\Delta < 0$ → saddle
+- $\Delta > 0$, $\tau < 0$ → stable (node if $\tau^2 > 4\Delta$, spiral if $\tau^2 < 4\Delta$)
+- $\Delta > 0$, $\tau > 0$ → unstable (node if $\tau^2 > 4\Delta$, spiral if $\tau^2 < 4\Delta$)
+- $\tau = 0$, $\Delta > 0$ → center
+
+---
+
 # Multivariable Calculus
 
 *Section not yet started — items will be added during lessons 19–23.*
@@ -1733,10 +1782,14 @@ Poles of $H(s)$ determine system stability.
 | $\mathcal{L}\\{f \* g\\} = F(s) \cdot G(s)$ | Convolution theorem |
 | $\int f(t)\,\delta(t-c)\,dt = f(c)$ | Dirac delta sifting property |
 | $H(s) = Y(s)/G(s)$, $h(t) = \mathcal{L}^{-1}\\{H\\}$ | Transfer function / impulse response |
+| $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$ | Eigenvalue method for systems |
+| $e^{At} = Pe^{Dt}P^{-1}$ | Matrix exponential via diagonalization |
+| $\tau = \text{tr}(A)$, $\Delta = \det(A)$ → phase portrait type | Trace-determinant classification |
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs, through Lesson 17)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs, through Lesson 18)*
+
 
 
 
