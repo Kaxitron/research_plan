@@ -581,7 +581,44 @@ $\frac{1}{s-a} \to e^{at}$ is a **fundamental table entry**, not a shifted versi
 
 **The relationship:** $\frac{1}{s-a}$ is the entry the shifting theorem is *built on*. The theorem says "if you know $F(s) \to f(t)$, then $F(s-a) \to e^{at}f(t)$." The exponential table entry is the special case where $F(s) = 1/s$ (i.e., $f(t) = 1$).
 
-*Last updated: March 2026 -- through Lesson 17 (Laplace Transform)*
+---
+
+---
+
+## Lesson 18 — Systems of ODEs and Phase Portraits
+
+### Eigenvectors Decouple Systems — The Chain That Connects Everything
+
+The entire method for solving $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ is one chain: **Coupled system** → diagonalize with eigenvectors → **decoupled system** → separate variables → **exponentials** → transform back.
+
+Each link uses something you already know: eigenvectors from Phase 1 decouple the directions, separation of variables from Lesson 15 solves each one, and superposition (linearity) from Lesson 16 lets you add them back together. The formula $\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$ isn't a guess — it's the inevitable result of diagonalizing. Each term is one independent mode: motion along eigenvector direction $\mathbf{v}$, at the exponential rate set by eigenvalue $\lambda$.
+
+The shortcut (write the solution directly, solve for $c_1, c_2$ from initial conditions) works because it skips the intermediate $\mathbf{z}$ coordinates and jumps to the end result. The full diagonalization route explains *why* it works; the shortcut just uses the fact.
+
+### Phase Portraits: Time Is Not An Axis
+
+The most common confusion with phase portraits: both axes are state variables ($x_1$ and $x_2$). Time is invisible — it's the parameter that moves you along a trajectory. Each curve is a path through state space, and the arrows show which direction $t$ is increasing. The portrait doesn't show *when* you're at each point, just *where* you go.
+
+Every trajectory in a phase portrait is the same system (same $A$, same eigenvalues) with different initial conditions (different $c_1, c_2$). The portrait is the complete picture: "for this system, here's what happens from every starting point."
+
+### Which Eigenvector Dominates — Fast vs Slow
+
+In a stable node ($\lambda_1 = -1$, $\lambda_2 = -4$): as $t \to \infty$, the fast mode $e^{-4t}$ dies first, leaving only the slow mode $e^{-t}$. So trajectories **approach** along the slow eigenvector. The fast mode is gone by the time you're near the origin.
+
+In an unstable node: the fast growing mode $e^{4t}$ dominates at large $t$, so trajectories **escape** along the fast eigenvector.
+
+In a saddle ($\lambda_1 = 1$, $\lambda_2 = -3$): the decaying mode pulls you toward the origin along the stable eigenvector, but eventually the growing mode takes over and you escape along the unstable eigenvector. The sign of $c_1$ determines which direction you escape — positive $c_1$ means $+\mathbf{v}_1$, negative means $-\mathbf{v}_1$.
+
+### Complex Eigenvalues = Rotation + Scaling
+
+$e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. The imaginary part $\beta$ controls rotation speed. The real part $\alpha$ controls whether the radius shrinks ($\alpha < 0$, stable spiral), grows ($\alpha > 0$, unstable spiral), or stays constant ($\alpha = 0$, center). This is the same damped oscillator from Lesson 16 — complex roots there gave $e^{\alpha t}(c_1\cos\beta t + c_2\sin\beta t)$, which is exactly a spiral in disguise.
+
+### The Matrix Exponential Is the Scalar Exponential Generalized
+
+$\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
+
+*Last updated: March 2026 -- through Lesson 18 (Systems of ODEs)*
+
 
 
 
