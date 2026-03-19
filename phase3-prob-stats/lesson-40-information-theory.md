@@ -135,7 +135,7 @@
 
 ### 💻 Coding Mini-Project: Huffman Encoder (~1.5h)
 
-See the full project spec: [capstone-huffman-encoder.pdf](capstone-huffman-encoder.pdf)
+See the full project spec: [lesson-40-capstone-project.pdf](lesson-40-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

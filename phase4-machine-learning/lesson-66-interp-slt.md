@@ -85,10 +85,46 @@
 
 ## Do
 
-- **Visualize a singularity:** Consider f(w_1, w_2) = (w_1 * w_2)^2. Plot this surface. Notice: it's zero along both axes (w_1 = 0 and w_2 = 0), forming a cross-shaped valley, not a simple bowl. The Hessian at the origin is the zero matrix -- it tells you nothing about the shape. This is what "singular" means.
-- **Parameter symmetry demo:** Train a small 2-layer network. After training, swap two hidden neurons (permute the weight matrix rows and corresponding columns). Show the loss is identical -- the model hasn't changed, only the parameterization has. Count how many such symmetries exist (n! for n hidden neurons).
-- **LLC tracking exercise:** If tools are available (e.g., from Timaeus), estimate the LLC during training of a small model. Plot it over training steps. Look for discontinuities corresponding to phase transitions.
-- **Key exercise:** Take a grokking demo. At the moment of grokking (sudden generalization), what happens to the internal structure? How would you interpret this as a phase transition between singularities?
+**1. Visualize a singularity**
+
+Plot the surface `f(w1, w2) = (w1 * w2)^2` using `matplotlib` 3D surface plot.
+
+Observe:
+- The function is zero along both axes (w1 = 0 and w2 = 0), forming a cross-shaped valley
+- This is NOT a simple bowl — the Hessian at the origin is the zero matrix
+- Compute the Hessian numerically at (0, 0) and at (1, 1). At the origin it should be all zeros; away from the origin it should be positive definite
+
+This cross-shaped valley is what "singular" means — the usual quadratic approximation breaks down completely.
+
+**2. Parameter symmetry demo**
+
+Train a small 2-layer network (e.g., 2-input, 4-hidden, 1-output with ReLU) on a simple regression task (e.g., `y = sin(x)`).
+
+After training:
+- Save the loss value
+- Swap hidden neurons 0 and 1: permute rows 0,1 of `W1` and the corresponding columns of `W2`
+- Recompute the loss — it should be identical (to machine precision)
+- Count total symmetries: for `n = 4` hidden neurons, there are `4! = 24` equivalent parameterizations
+
+Print: `"Loss before swap: {:.6f}, Loss after swap: {:.6f}, Total symmetries: 24"`
+
+**3. LLC tracking during grokking**
+
+Reproduce a grokking experiment: train a small transformer on modular addition (`(a + b) mod 97`). Use a tiny model (1-2 layers, ~10k parameters) with a large weight decay.
+
+The model should:
+- Memorize the training set quickly (training loss → 0 within ~100 epochs)
+- Generalize suddenly much later (~1000-5000 epochs — the "grokking" moment)
+
+Plot training loss AND test loss vs epoch on the same axes. The sudden drop in test loss is the phase transition.
+
+If LLC estimation tools are available (e.g., from the `devinterp` package), track the LLC during training and look for a discontinuity at the grokking point — the LLC should decrease sharply, indicating the model has found a simpler (lower effective complexity) solution.
+
+**4. Reflection (written, ~200 words)**
+
+At the moment of grokking, the model transitions from a memorization strategy (high RLCT, many parameters needed) to an algorithmic strategy (low RLCT, the modular addition circuit is simple). Write up:
+- What does this tell us about the relationship between loss landscape geometry and learned circuits?
+- Why might SLT be useful for alignment? (Hint: if deceptive behavior is functionally complex, it would have a higher RLCT than honest behavior)
 
 ## ML and Alignment Connection
 
@@ -101,6 +137,14 @@ SLT is one of the most promising mathematical frameworks for alignment because i
 3. **What it will do** (generalization behavior, predicted by the free energy)
 
 If we can measure a model's functional complexity precisely enough, we might detect deceptive strategies (which are functionally complex), predict capability emergence, and understand *why* certain training regimes produce aligned or misaligned models. SLT isn't there yet -- but it's the most mathematically principled approach to these questions that currently exists.
+
+---
+
+## Phase 4 Capstone Project — From Neurons to Alignment (~10-14h)
+
+The culminating project for Phase 4: build a transformer from scratch, train it on modular addition (observing grokking), reverse-engineer the learned algorithm using mechanistic interpretability, and investigate alignment-relevant questions.
+
+See the full project spec: [lesson-66-capstone-project.pdf](lesson-66-capstone-project.pdf)
 
 ---
 

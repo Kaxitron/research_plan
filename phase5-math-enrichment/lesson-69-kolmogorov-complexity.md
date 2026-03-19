@@ -51,4 +51,4 @@
 
 ## Block Capstone Project — Complexity, Compression & Learning (~3.5h)
 
-See the full project spec: [capstone-complexity-compression.pdf](capstone-complexity-compression.pdf)
+See the full project spec: [lesson-69-capstone-project.pdf](lesson-69-capstone-project.pdf)

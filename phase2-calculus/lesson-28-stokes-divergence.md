@@ -63,7 +63,7 @@ $$\nabla \times \mathbf{F} = \left( \frac{\partial R}{\partial y} - \frac{\parti
 
 ## Block C Capstone Project — Vector Calculus Theorem Verifier (~3.5h)
 
-See the full project spec with rendered math and diagrams: [capstone-vector-calculus.pdf](capstone-vector-calculus.pdf)
+See the full project spec with rendered math and diagrams: [lesson-28-capstone-project.pdf](lesson-28-capstone-project.pdf)
 
 ## ML & Alignment Connection
 

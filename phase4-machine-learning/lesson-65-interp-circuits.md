@@ -53,10 +53,47 @@
 
 ## Do
 
-- Replicate induction head finding in a 2-layer transformer using TransformerLens
-- Run activation patching on a simple task (e.g., indirect object identification)
-- Explore Anthropic's Neuronpedia or similar feature visualization tools
-- **SAE exercise:** train a sparse autoencoder on MLP activations from a small transformer. Examine the learned features -- do they correspond to interpretable concepts?
+**1. Replicate induction head finding**
+
+Using TransformerLens on a 2-layer attention-only model (`attn-only-2l`):
+
+```python
+from transformer_lens import HookedTransformer
+model = HookedTransformer.from_pretrained("attn-only-2l")
+```
+
+Feed in a repeated sequence like `"ABCABC"` and look for heads where position 4 (`A`) attends strongly to position 1 (`A`) — this is the induction pattern. An induction head has learned: "if I've seen this token before, attend to what came after it last time."
+
+Plot the attention pattern for each head. You should find at least one head with a clear diagonal stripe offset by the sequence repeat length.
+
+**2. Activation patching on indirect object identification**
+
+Use the IOI (Indirect Object Identification) task:
+- Clean prompt: `"When Mary and John went to the store, John gave a drink to"` → `"Mary"`
+- Corrupted prompt: swap `"Mary"` and `"John"` → now model should predict `"John"`
+
+Run both through the model. Patch activations from the clean run into the corrupted run, one attention head at a time. Measure how much each patch restores the correct prediction. Heads with large restoration are part of the IOI circuit.
+
+Record the top 5 most important heads — these form the core circuit.
+
+**3. Explore Neuronpedia / SAE features**
+
+Go to https://www.neuronpedia.org/ and browse sparse autoencoder features for GPT-2. Find examples of:
+- A monosemantic feature (responds to one clear concept, e.g., "mentions of dogs")
+- A polysemantic feature (responds to multiple unrelated concepts)
+- A feature related to safety/refusal behavior (if available)
+
+Write a short note on each (~2 sentences) describing what it responds to and how confident you are in the interpretation.
+
+**4. Train a sparse autoencoder on MLP activations**
+
+Using a small transformer (GPT-2 small or `attn-only-2l`):
+- Extract MLP activations from a middle layer on ~10,000 tokens
+- Build a sparse autoencoder: `encoder = Linear(d_model, d_sae)`, `decoder = Linear(d_sae, d_model)` where `d_sae = 4 * d_model`
+- Loss = reconstruction loss + `lambda * L1(encoder_output)` (sparsity penalty)
+- Train for 5000 steps
+
+After training, examine the top-activating tokens for 10 random features. Do any correspond to interpretable concepts (specific words, parts of speech, semantic categories)?
 
 ## ML and Alignment Connection
 

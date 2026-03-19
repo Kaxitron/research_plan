@@ -56,7 +56,7 @@
 
 ### 💻 Coding Mini-Project: Naive Bayes Text Classifier (~1.5h)
 
-See the full project spec: [capstone-naive-bayes.pdf](capstone-naive-bayes.pdf)
+See the full project spec: [lesson-37-capstone-project.pdf](lesson-37-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

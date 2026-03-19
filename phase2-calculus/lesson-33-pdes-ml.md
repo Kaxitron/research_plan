@@ -139,7 +139,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{t, x_0, \epsilon}\!\left[\big\| s_\theta(x_t
 
 ## Block D Capstone Project — PDE Solver & Mini Diffusion Model (~4h)
 
-See the full project spec with rendered math and diagrams: [capstone-pde-diffusion.pdf](capstone-pde-diffusion.pdf)
+See the full project spec with rendered math and diagrams: [lesson-33-capstone-project.pdf](lesson-33-capstone-project.pdf)
 
 ## ML and Alignment Connection
 

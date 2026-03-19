@@ -59,7 +59,7 @@ $$\int f(x) p(x) \, dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i), \quad x_i \sim
 
 ## Block B Capstone Project — Multivariable Calculus Optimization Lab (~4h)
 
-See the full project spec with rendered math and diagrams: [capstone-multivariable-lab.pdf](capstone-multivariable-lab.pdf)
+See the full project spec with rendered math and diagrams: [lesson-23-capstone-project.pdf](lesson-23-capstone-project.pdf)
 
 ## ML and Alignment Connection
 

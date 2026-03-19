@@ -1616,7 +1616,9 @@ const LESSONS = [
     conceptChecks: ['Integrate all concepts', 'Apply to ML scenario', 'Identify what tool for what problem'],
     failureModes: ['Compartmentalized knowledge that doesn\'t connect across topics'],
     mvl: [{ type: 'Do', text: 'Full integration exercise connecting vectors through SVD to ML applications' }],
-    projects: [],
+    projects: [
+      { label: 'PY', text: 'Phase 1 Capstone — Linear Algebra Visualization Suite (~3h): (1) Transform unit circle by matrix, overlay eigenvectors showing they only stretch. (2) SVD pipeline: 4-panel figure showing V^T rotate → Σ scale → U rotate. (3) Verify rank-nullity, projection idempotency, det=product of eigenvalues numerically.' },
+    ],
   },
   // ─── Phase 2: Calculus — ODE, Multivariable, Vector Calc, PDE, ML Calc ───
   // Block A: Ordinary Differential Equations (Trefor Bazett)
@@ -1673,7 +1675,7 @@ const LESSONS = [
     failureModes: ['Not connecting Hessian eigenvalues to training dynamics behavior'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — ODE Course' }],
     projects: [
-      { label: 'CPP', text: 'Block A Capstone — ODE System Solver & Training Dynamics (3h): (1) Implement Euler and RK4 ODE solvers in C++. (2) Solve dx/dt = Ax for 2\u00d72 systems — classify phase portraits (node, spiral, saddle) by eigenvalue type. (3) Simulate gradient descent as Euler\'s method on the gradient flow ODE dx/dt = \u2212\u2207f(x). (4) Show SGD with momentum as a discretized damped oscillator (2nd-order ODE). (5) Output trajectories to CSV, provide a Python plotting script.' },
+      { label: 'CPP', text: 'Block A Capstone — ODE System Solver & Training Dynamics (~4h): (1) Implement Euler and RK4 ODE solvers in C++. (2) Solve dx/dt = Ax for 2\u00d72 systems — classify phase portraits (node, spiral, saddle) by eigenvalue type. (3) Simulate gradient descent as Euler\'s method on the gradient flow ODE dx/dt = \u2212\u2207f(x). (4) Show SGD with momentum as a discretized damped oscillator (2nd-order ODE). (5) Output trajectories to CSV, provide a Python plotting script.' },
     ],
   },
   // Block B: Multivariable Calculus (Trefor Bazett)
@@ -1721,7 +1723,7 @@ const LESSONS = [
     failureModes: ['Not connecting Jacobian determinant to the determinant from Lesson 7'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus: Lagrange Multipliers and Optimization' }],
     projects: [
-      { label: 'PY', text: 'Block B Capstone — Multivariable Optimization Lab (3h): (1) Implement gradient descent on 2D loss surfaces with 3D visualization (matplotlib surface + contour plots). (2) Compute Jacobians and Hessians numerically; implement Newton\'s method using the Hessian. (3) Build a Lagrange multiplier solver for constrained optimization. (4) Demonstrate numerically that L2 regularization \u2194 constrained optimization (show equivalent solutions). (5) Implement Monte Carlo integration for a 10-dimensional integral and compare with analytical result.' },
+      { label: 'PY', text: 'Block B Capstone — Multivariable Optimization Lab (~4h): (1) Implement gradient descent on 2D loss surfaces with 3D visualization (matplotlib surface + contour plots). (2) Compute Jacobians and Hessians numerically; implement Newton\'s method using the Hessian. (3) Build a Lagrange multiplier solver for constrained optimization. (4) Demonstrate numerically that L2 regularization \u2194 constrained optimization (show equivalent solutions). (5) Implement Monte Carlo integration for a 10-dimensional integral and compare with analytical result.' },
     ],
   },
   // Block C: Vector Calculus (Trefor Bazett — 8 chapters)
@@ -1769,7 +1771,7 @@ const LESSONS = [
     failureModes: ['Not seeing the unified hierarchy: FTC → FTLI → Green\'s → Stokes\' → Divergence'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Vector Calculus Ch.7–8' }],
     projects: [
-      { label: 'PY', text: 'Block C Capstone — Vector Calculus Theorem Verifier (3h): (1) Numerically compute line integrals, surface integrals, and volume integrals. (2) Verify Green\'s theorem (both circulation and flux forms) on specific vector fields. (3) Verify Stokes\' theorem on a parameterized surface. (4) Verify the divergence theorem on a 3D region. (5) Visualize 2D/3D vector fields with matplotlib showing curl, divergence, and gradient fields. Demonstrate the unified hierarchy: FTC \u2192 FTLI \u2192 Green\'s \u2192 Stokes\' \u2192 Divergence.' },
+      { label: 'PY', text: 'Block C Capstone — Vector Calculus Theorem Verifier (~3.5h): (1) Numerically compute line integrals, surface integrals, and volume integrals. (2) Verify Green\'s theorem (both circulation and flux forms) on specific vector fields. (3) Verify Stokes\' theorem on a parameterized surface. (4) Verify the divergence theorem on a 3D region. (5) Visualize 2D/3D vector fields with matplotlib showing curl, divergence, and gradient fields. Demonstrate the unified hierarchy: FTC \u2192 FTLI \u2192 Green\'s \u2192 Stokes\' \u2192 Divergence.' },
     ],
   },
   // Block D: Partial Differential Equations (Jason Bramburger)
@@ -1817,7 +1819,7 @@ const LESSONS = [
     failureModes: ['Not seeing that DALL-E/Stable Diffusion literally solve PDEs'],
     mvl: [{ type: 'Watch', text: 'Yang Song — "Score-Based Generative Modeling" tutorial lecture' }],
     projects: [
-      { label: 'PY', text: 'Block D Capstone — PDE Solver & Mini Diffusion Model (4h): (1) Build finite difference solvers for the heat equation (u_t = \u03b1 u_xx) and wave equation (u_tt = c\u00b2 u_xx). (2) Visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side. (3) Implement forward diffusion as progressive Gaussian noise on 2D data (\u2261 heat equation). (4) Train a small score network s_\u03b8(x,t) \u2248 \u2207_x log p_t(x). (5) Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Connect every step to PDE theory.' },
+      { label: 'PY', text: 'Block D Capstone — PDE Solver & Mini Diffusion Model (~4h): (1) Build finite difference solvers for the heat equation (u_t = \u03b1 u_xx) and wave equation (u_tt = c\u00b2 u_xx). (2) Visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side. (3) Implement forward diffusion as progressive Gaussian noise on 2D data (\u2261 heat equation). (4) Train a small score network s_\u03b8(x,t) \u2248 \u2207_x log p_t(x). (5) Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Connect every step to PDE theory.' },
     ],
   },
   // Block E: Matrix Calculus for Deep Learning — Parr & Howard
@@ -1847,7 +1849,7 @@ const LESSONS = [
     failureModes: ['Not connecting the math to actual backpropagation code'],
     mvl: [{ type: 'Read', text: 'Parr & Howard — "The Matrix Calculus You Need for Deep Learning" §5–8' }],
     projects: [
-      { label: 'PY', text: 'Block E Capstone — Autodiff Engine (4h): (1) Build a reverse-mode autodiff engine in Python — Value class with computation graph, forward/backward for +, -, *, /, ReLU, tanh. (2) Train a 2-layer MLP on XOR. (3) Verify all gradients against finite differences.' },
+      { label: 'PY', text: 'Block E Capstone — Autodiff Engine (~4h): (1) Build a reverse-mode autodiff engine in Python — Value class with computation graph, forward/backward for +, -, *, /, ReLU, tanh. (2) Train a 2-layer MLP on XOR. (3) Verify all gradients against finite differences.' },
     ],
   },
   // ─── Phase 3: Probability & Statistics ───
@@ -1858,7 +1860,9 @@ const LESSONS = [
     conceptChecks: ['Discrete vs continuous distributions', 'Joint, marginal, conditional', 'Bayes\' theorem as update rule'],
     failureModes: ['Treating Bayes\' theorem as just a formula rather than a reasoning framework'],
     mvl: [{ type: 'Watch', text: '3Blue1Brown — Bayes theorem' }],
-    projects: [],
+    projects: [
+      { label: 'PY', text: 'Mini-Project — Naive Bayes Text Classifier (~1.5h): Build a working text classifier with no sklearn. Implement fit() with Laplace smoothing, predict() with log probabilities, predict_proba() with softmax. Train on 20 hand-written movie reviews, test on 4.' },
+    ],
   },
   {
     id: 38, phase: 'p3', title: 'Expectation, Variance, Covariance',
@@ -1885,7 +1889,9 @@ const LESSONS = [
     conceptChecks: ['Entropy as uncertainty', 'KL divergence as distance', 'Cross-entropy loss derivation', 'Mutual information'],
     failureModes: ['Not connecting cross-entropy loss to KL divergence to MLE'],
     mvl: [{ type: 'Watch', text: 'Welch Labs or 3Blue1Brown information theory content' }],
-    projects: [],
+    projects: [
+      { label: 'PY', text: 'Mini-Project — Huffman Encoder (~1.5h): Build a Huffman coder using heapq. Implement tree building, code assignment, encode/decode. Verify Shannon\'s source coding theorem: average code length should be within 1 bit of entropy.' },
+    ],
   },
   {
     id: 41, phase: 'p3', title: 'Hypothesis Testing and P-Values',
@@ -1991,7 +1997,9 @@ const LESSONS = [
       { type: 'Read', text: 'Levin, Peres & Wilmer "Markov Chains and Mixing Times" Ch.1–4 (free online)' },
       { type: 'Watch', text: 'Steve Brunton — Markov chains videos' },
     ],
-    projects: [],
+    projects: [
+      { label: 'PY', text: 'Mini-Project — Language Model as Markov Chain (~1.5h): Build a character-level n-gram model. Fit on Shakespeare, generate text at orders 1-3. Compute transition entropy per character. Plot 26×26 transition heatmap.' },
+    ],
   },
   {
     id: 51, phase: 'p3', title: 'Fisher Information and Exponential Families',
@@ -2155,7 +2163,9 @@ const LESSONS = [
       { type: 'Watch', text: 'Jesse Hoogland — SLT lectures' },
       { type: 'Read', text: 'Watanabe "Algebraic Geometry and SLT"' },
     ],
-    projects: [],
+    projects: [
+      { label: 'PY', text: 'Phase 4 Capstone — From Neurons to Alignment (10–14h): (1) Build a transformer from scratch in PyTorch. (2) Train on modular addition, observe grokking. (3) Reverse-engineer the learned circuit: attention patterns, Fourier features, ablation study. (4) Alignment investigation: detect memorization vs generalization mechanistically, surgical capability removal, reward hacking simulation.' },
+    ],
   },
   // ─── Phase 5: Extended Mathematical Foundations ───
   // Computability & Complexity
@@ -2184,7 +2194,9 @@ const LESSONS = [
     conceptChecks: ['K(x) as true complexity', 'Incomputability of K', 'Solomonoff prior = Occam\'s razor', 'AIXI — optimal but uncomputable and misaligned'],
     failureModes: ['Not connecting compression ↔ generalization ↔ learning'],
     mvl: [{ type: 'Read', text: 'Li & Vitanyi Ch.1–2' }],
-    projects: [{ label: 'PY', text: 'Block Capstone — Complexity, Compression & Learning (3h): Build a Universal Turing Machine simulator for small programs. Implement approximate Kolmogorov complexity via gzip compression ratio. Demonstrate the compression↔generalization connection by showing that models that compress training data well generalize better. Build a Solomonoff-style predictor that weights hypotheses by description length. Create a toy AIXI-like agent in a grid world that plans by enumerating short programs, and show why it\'s uncomputable in practice.' }],
+    projects: [
+      { label: 'CPP', text: 'Capstone — Complexity, Compression & Learning (~3.5h): (1) Build a Universal Turing Machine simulator in C++. (2) Estimate Kolmogorov complexity via gzip compression ratios. (3) Demonstrate compression↔generalization connection: models that compress better generalize better.' },
+    ],
   },
   // Abstract Algebra
   {
@@ -2212,7 +2224,9 @@ const LESSONS = [
     conceptChecks: ['Group actions and orbits', 'Orbit-stabilizer theorem', 'Neural network permutation symmetry', 'Equivariant architectures', 'Representations as matrices'],
     failureModes: ['Not connecting the orbit-stabilizer theorem to SLT singularities'],
     mvl: [{ type: 'Read', text: 'Bronstein et al. — "Geometric Deep Learning" (symmetry sections)' }],
-    projects: [{ label: 'PY', text: 'Block Capstone — Neural Network Symmetry Explorer (3h): Enumerate all permutation symmetries of a small MLP and verify each produces identical outputs. Implement the orbit-stabilizer theorem to count distinct weight configurations. Visualize the loss landscape along symmetry directions, showing flat valleys created by permutation invariance. Compute the Hessian at symmetric points and demonstrate rank degeneracy. Connect the number of symmetries to SLT singularity structure.' }],
+    projects: [
+      { label: 'CPP', text: 'Capstone — Neural Network Symmetry Explorer (~3.5h): (1) Enumerate S₃ permutation symmetries of a small MLP in C++. (2) Verify orbit-stabilizer theorem numerically. (3) Test convolutional equivariance in PyTorch. (4) Visualize loss landscape along symmetry directions.' },
+    ],
   },
   // Topology & Geometry
   {
@@ -2264,7 +2278,9 @@ const LESSONS = [
       { type: 'Watch', text: 'Jesse Hoogland & Murfet — SLT lectures' },
       { type: 'Read', text: 'Watanabe "Algebraic Geometry and SLT" Ch.1–4' },
     ],
-    projects: [{ label: 'PY', text: 'Block Capstone — Singularity Resolution & RLCT Calculator (3h): Visualize algebraic varieties (e.g., y²=x³, Whitney umbrella) and detect singular vs smooth points via Jacobian rank. Implement blow-up resolution for the cusp y²=x³ step by step, showing how the singularity becomes smooth. Compute the RLCT numerically for simple neural network models using Watanabe\'s formula. Compare RLCT values against naive parameter counting to show why singular models are preferred by Bayesian learning. Plot the free energy as a function of sample size for models with different RLCTs.' }],
+    projects: [
+      { label: 'CPP', text: 'Capstone — Singularity Resolution & RLCT Calculator (~3.5h): (1) Implement blow-up resolution for plane curve singularities in C++. (2) Visualize algebraic varieties with singular points marked. (3) Estimate RLCT numerically for a 1-hidden-unit ReLU network (should get ~0.25 vs BIC prediction of 1.0).' },
+    ],
   },
   // Formal Logic
   {
@@ -2286,7 +2302,9 @@ const LESSONS = [
       { type: 'Watch', text: 'Veritasium — "Math Has a Fatal Flaw"' },
       { type: 'Read', text: 'Yudkowsky & Herreshoff — "Tiling Agents for Self-Modifying AI"' },
     ],
-    projects: [{ label: 'CPP', text: 'Block Capstone — SAT Solver & Self-Reference Engine (3h): Build a DPLL SAT solver from scratch in C++. Encode graph coloring and Sudoku as SAT instances and solve them. Implement Gödel numbering to encode and decode logical formulas as integers. Construct self-referential sentences using the diagonal lemma — build a sentence that says "I am not provable." Demonstrate Löb\'s theorem implications: build a toy "trust checker" that tries to verify its own correctness and show why it necessarily fails, connecting to AI self-modification limits.' }],
+    projects: [
+      { label: 'CPP', text: 'Capstone — SAT Solver & Self-Reference Engine (~3.5h): (1) Build a DPLL SAT solver in C++ with unit propagation. (2) Implement Gödel numbering to encode/decode logical formulas. (3) Build a toy trust checker demonstrating Löb\'s theorem. (4) Essay on impossibility results and alignment.' },
+    ],
   },
   // ─── Phase 6: Alignment Theory ───
   {

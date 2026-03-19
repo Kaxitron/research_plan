@@ -1,0 +1,300 @@
+---
+title: "Phase 4 Capstone Project"
+subtitle: "From Neurons to Alignment: The Complete Pipeline"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & 10--14 hours (split across multiple sessions) \\
+\textbf{Language} & Python (PyTorch + TransformerLens) \\
+\textbf{Output} & Working transformer + interpretability analysis + alignment investigation \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+This project integrates everything from Phase 4: you build a transformer from scratch, train it on a task with a known algorithmic solution, reverse-engineer the learned circuits, and investigate whether alignment-relevant properties can be detected mechanistically.
+
+\begin{center}
+\begin{tikzpicture}[
+  >=Stealth,
+  every node/.style={font=\small},
+  box/.style={draw, rounded corners, minimum width=2.8cm, minimum height=0.9cm, align=center, fill=white},
+]
+  \node[box, fill=blue!8] (build) {Part 1\\Build};
+  \node[box, fill=green!8, right=1.2cm of build] (train) {Part 2\\Train};
+  \node[box, fill=orange!8, right=1.2cm of train] (interp) {Part 3\\Interpret};
+  \node[box, fill=red!8, right=1.2cm of interp] (align) {Part 4\\Align};
+
+  \draw[->, thick] (build) -- (train);
+  \draw[->, thick] (train) -- (interp);
+  \draw[->, thick] (interp) -- (align);
+
+  \node[below=0.3cm of build, font=\footnotesize, text=gray] {Lessons 53--60};
+  \node[below=0.3cm of train, font=\footnotesize, text=gray] {Lessons 54--58};
+  \node[below=0.3cm of interp, font=\footnotesize, text=gray] {Lessons 61, 65--66};
+  \node[below=0.3cm of align, font=\footnotesize, text=gray] {Lessons 63--64};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+# Part 1 --- Build a Transformer from Scratch (\~3h)
+
+**Goal:** Implement a small GPT-style transformer in PyTorch, without using any pre-built transformer modules.
+
+## 1a. Token embedding and positional encoding
+
+- Implement `nn.Embedding(vocab_size, d_model)` for token embeddings
+- Implement learned positional embeddings: `nn.Embedding(max_seq_len, d_model)`
+- The input to the first transformer block is the sum of both
+
+## 1b. Single attention head
+
+Implement `CausalSelfAttention`:
+\begin{align}
+Q &= XW_Q, \quad K = XW_K, \quad V = XW_V \\[4pt]
+\text{scores} &= \frac{QK^T}{\sqrt{d_k}} + \text{causal\_mask} \\[4pt]
+\text{attn} &= \text{softmax}(\text{scores}) \cdot V
+\end{align}
+
+The causal mask sets all entries above the diagonal to $-\infty$ before softmax.
+
+## 1c. Multi-head attention
+
+Split $d_\text{model}$ into $n_\text{heads}$ parallel heads, each with $d_k = d_\text{model} / n_\text{heads}$. Concatenate outputs and project through $W_O$.
+
+## 1d. Transformer block
+
+Stack: LayerNorm $\to$ Multi-Head Attention $\to$ Residual $\to$ LayerNorm $\to$ MLP $\to$ Residual.
+
+The MLP is: $\text{Linear}(d_\text{model}, 4 \cdot d_\text{model}) \to \text{GELU} \to \text{Linear}(4 \cdot d_\text{model}, d_\text{model})$.
+
+## 1e. Full GPT model
+
+Stack $n_\text{layers}$ transformer blocks. Final layer: LayerNorm $\to$ Linear($d_\text{model}$, vocab\_size) $\to$ logits.
+
+**Architecture for this project:**
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\texttt{n\_layers} & 2 \\
+\texttt{n\_heads} & 4 \\
+\texttt{d\_model} & 128 \\
+\texttt{d\_mlp} & 512 \\
+\texttt{max\_seq\_len} & 6 \\
+\texttt{vocab\_size} & task-dependent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Keep it small --- you need to be able to train it on a laptop and interpret every component.
+
+\newpage
+
+# Part 2 --- Train on an Algorithmic Task (\~2h)
+
+**Goal:** Train on a task with a known ground-truth algorithm, so you can verify your interpretability findings against the true solution.
+
+## 2a. The task: modular addition
+
+Given two numbers $a, b \in \{0, 1, \ldots, p-1\}$ where $p = 113$ (prime), predict $(a + b) \bmod p$.
+
+**Input format:** three tokens --- $[a, b, =]$ where $=$ is a special token.
+
+**Output:** the model predicts the answer token at the position after $=$.
+
+This task is ideal because:
+\begin{itemize}
+  \item The ground-truth algorithm is known (addition mod $p$)
+  \item It exhibits \textbf{grokking} --- the model memorizes first, then suddenly generalizes
+  \item The learned circuit (Fourier features + trig identity) is well-understood in the literature
+\end{itemize}
+
+## 2b. Dataset
+
+- Total examples: $p^2 = 12{,}769$ pairs
+- Train/test split: 30\% train, 70\% test (small training set forces generalization)
+- Shuffle training data each epoch
+
+## 2c. Training
+
+- Optimizer: AdamW with weight decay $= 1.0$ (high weight decay is critical for grokking)
+- Learning rate: $10^{-3}$
+- Train for 20{,}000+ epochs (grokking typically happens between 5{,}000--15{,}000 epochs)
+- Log training loss, test loss, and training/test accuracy every 100 epochs
+
+## 2d. Observe grokking
+
+Plot training and test accuracy vs.\ epoch. You should see:
+\begin{enumerate}
+  \item Training accuracy hits 100\% quickly ($\sim$500 epochs) --- the model \textbf{memorizes}
+  \item Test accuracy stays near chance ($\sim$1/113) for thousands more epochs
+  \item Test accuracy suddenly jumps to $\sim$100\% --- the model \textbf{grokks}
+\end{enumerate}
+
+Save model checkpoints at: (a) before memorization, (b) after memorization but before grokking, (c) after grokking. You'll analyze all three in Part 3.
+
+\textit{Save as} \texttt{grokking\_curves.png}\textit{.}
+
+\newpage
+
+# Part 3 --- Mechanistic Interpretability (\~3h)
+
+**Goal:** Reverse-engineer the algorithm the model learned after grokking.
+
+## 3a. Load into TransformerLens
+
+Convert your trained model weights into a \texttt{HookedTransformer} so you can use TransformerLens's analysis tools. Alternatively, add hooks to your own model to extract activations.
+
+## 3b. Attention pattern analysis
+
+For 50 random inputs, extract and average the attention patterns from each head. Plot as heatmaps.
+
+After grokking, you should see structured patterns:
+\begin{itemize}
+  \item Some heads attend from the $=$ position back to $a$ (reading the first operand)
+  \item Some heads attend from $=$ back to $b$ (reading the second operand)
+  \item The pattern should be crisp and consistent across inputs
+\end{itemize}
+
+Compare attention patterns \textbf{before} and \textbf{after} grokking. Before grokking (memorization phase), the patterns should be messy and input-dependent. After grokking, they should be clean and algorithmic.
+
+\textit{Save as} \texttt{attention\_before\_after.png}\textit{.}
+
+## 3c. Embedding analysis: Fourier features
+
+The known solution to modular addition uses Fourier features. After grokking, the embeddings for numbers $0, 1, \ldots, p-1$ should encode $\sin(2\pi k n / p)$ and $\cos(2\pi k n / p)$ for several frequencies $k$.
+
+- Extract the embedding matrix $E \in \mathbb{R}^{p \times d_\text{model}}$
+- Compute the discrete Fourier transform of each embedding dimension across the $p$ tokens
+- Plot the power spectrum --- you should see sharp peaks at specific frequencies
+
+\textit{Save as} \texttt{fourier\_features.png}\textit{.}
+
+## 3d. Direct logit attribution
+
+Decompose the output logits into contributions from:
+\begin{itemize}
+  \item Each attention head's output (via the OV circuit)
+  \item Each MLP layer
+  \item The token embeddings directly
+\end{itemize}
+
+Identify which components contribute most to the correct answer. After grokking, most of the ``work'' should be concentrated in 1--2 heads.
+
+## 3e. Ablation study
+
+For each attention head, zero out its output and measure the drop in test accuracy. Heads that cause a large drop when ablated are essential to the circuit. Heads with no effect are irrelevant.
+
+Create a table:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Head} & \textbf{Accuracy (intact)} & \textbf{Accuracy (ablated)} \\
+\midrule
+L0H0 & 99.8\% & ??? \\
+L0H1 & 99.8\% & ??? \\
+\ldots & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+# Part 4 --- Alignment Investigation (\~3h)
+
+**Goal:** Use your interpretability tools to investigate alignment-relevant questions.
+
+## 4a. Can you detect memorization vs.\ generalization mechanistically?
+
+You saved checkpoints at three stages: pre-memorization, post-memorization, post-grokking.
+
+For each checkpoint, compute:
+\begin{itemize}
+  \item Attention pattern entropy (are patterns sharp or diffuse?)
+  \item Embedding Fourier spectrum (are there clean frequency peaks?)
+  \item Weight norm per component
+\end{itemize}
+
+Create a figure showing how these metrics evolve across the three phases. The transition from memorization to generalization should be visible in the internal structure, not just the loss curve.
+
+\textit{Save as} \texttt{phase\_transition\_internals.png}\textit{.}
+
+## 4b. Targeted capability removal
+
+Pick one frequency $k$ that your Fourier analysis identified as important. Surgically ablate it:
+\begin{itemize}
+  \item Project the embeddings onto the $\sin(2\pi k n/p)$ and $\cos(2\pi k n/p)$ directions
+  \item Zero out those components
+  \item Measure accuracy on the full test set
+\end{itemize}
+
+The accuracy should drop significantly for inputs where this frequency matters, but remain high for others. This demonstrates \textbf{surgical capability removal} --- a key alignment technique (removing dangerous capabilities while preserving useful ones).
+
+## 4c. Reward hacking simulation
+
+Modify the training objective slightly: instead of predicting $(a + b) \bmod p$, add a ``reward bonus'' for outputting a specific wrong answer (e.g., always outputting 0 gets a small reward bonus).
+
+Train from the grokked checkpoint with this modified objective. Observe:
+\begin{itemize}
+  \item Does the model ``hack'' the reward (start outputting 0 more often)?
+  \item How quickly does it abandon the correct algorithm?
+  \item Can you detect the reward hacking mechanistically (changes in attention patterns, embedding structure)?
+\end{itemize}
+
+This is a miniature version of the RLHF reward hacking problem.
+
+## 4d. Write-up: connecting interpretability to alignment (\~500 words)
+
+Write a short essay answering:
+\begin{enumerate}
+  \item What did mechanistic analysis reveal that loss curves alone could not?
+  \item Could you detect the memorization $\to$ generalization transition from internal structure before seeing the test accuracy jump?
+  \item How would surgical ablation (Part 4b) apply to a real alignment scenario (e.g., removing a model's ability to generate harmful content while preserving helpfulness)?
+  \item What are the limitations of this approach for frontier models?
+\end{enumerate}
+
+\newpage
+
+# Deliverables
+
+\begin{enumerate}
+  \item \textbf{Working transformer} that trains to 100\% accuracy on modular addition via grokking
+  \item \texttt{grokking\_curves.png} --- training/test accuracy showing the grokking phenomenon
+  \item \texttt{attention\_before\_after.png} --- attention patterns pre- and post-grokking
+  \item \texttt{fourier\_features.png} --- embedding Fourier spectrum showing learned frequencies
+  \item Ablation table identifying the essential circuit components
+  \item \texttt{phase\_transition\_internals.png} --- mechanistic metrics across training phases
+  \item Surgical ablation results (accuracy impact of removing one Fourier frequency)
+  \item Reward hacking simulation results
+  \item Written essay connecting interpretability to alignment
+\end{enumerate}
+
+\vspace{2em}
+
+\begin{center}
+\textit{This project covers: architecture (Lessons 53--60), training dynamics (54--58),}\\
+\textit{mechanistic interpretability (61, 65), singular learning theory (66),}\\
+\textit{and alignment (63--64). Everything in Phase 4.}
+\end{center}

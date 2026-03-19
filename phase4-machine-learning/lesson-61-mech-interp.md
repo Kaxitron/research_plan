@@ -51,11 +51,42 @@
 
 ## Do
 
-- Install TransformerLens: `pip install transformer-lens`
-- Load GPT-2, extract activations using hooks, visualize attention patterns
-- Implement direct logit attribution: decompose a prediction into per-head and per-MLP contributions
-- Try activation patching on a simple task (e.g., indirect object identification)
-- Complete ARENA Chapter 1 mech interp tutorials on induction heads
+**1. Set up TransformerLens**
+
+```python
+pip install transformer-lens
+from transformer_lens import HookedTransformer
+model = HookedTransformer.from_pretrained("gpt2-small")
+```
+
+Run a simple prompt through the model and extract the logits. Verify you get reasonable next-token predictions.
+
+**2. Visualize attention patterns**
+
+For the prompt `"When Mary and John went to the store, John gave a drink to"`:
+- Extract attention patterns from all heads in all layers using `model.run_with_cache`
+- Plot attention heatmaps for 2-3 interesting heads (use `cv.attention.attention_patterns`)
+- Look for: heads that attend to the previous token, heads that attend to specific names, heads that attend to commas/periods
+
+**3. Direct logit attribution**
+
+Decompose the model's prediction into contributions from each component:
+- For a given prompt, compute the residual stream contribution of each attention head and MLP layer to the final logit
+- Identify which heads contribute most to the correct prediction
+- This tells you WHERE in the network the prediction is being made
+
+**4. Activation patching (if time allows)**
+
+On the "indirect object identification" task (`"When Mary and John went to the store, John gave a drink to"` → should predict `"Mary"`):
+- Run the clean prompt and a corrupted version (swap names)
+- Patch activations from the clean run into the corrupted run, one component at a time
+- Identify which heads are critical for the task — these form the "circuit"
+
+**5. ARENA tutorials**
+
+Complete the ARENA Chapter 1 mechanistic interpretability exercises on induction heads:
+- https://arena-ch1-transformers.streamlit.app/
+- These walk you through finding induction heads, the two-head induction circuit, and verification via ablation
 
 ## ML and Alignment Connection
 

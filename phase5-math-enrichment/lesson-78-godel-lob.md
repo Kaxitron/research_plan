@@ -72,7 +72,7 @@
 
 ## Block Capstone Project — SAT Solver & Self-Reference Engine (~3.5h)
 
-See the full project spec: [capstone-sat-self-reference.pdf](capstone-sat-self-reference.pdf)
+See the full project spec: [lesson-78-capstone-project.pdf](lesson-78-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

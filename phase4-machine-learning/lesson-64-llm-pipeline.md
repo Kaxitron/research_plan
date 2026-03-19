@@ -99,10 +99,39 @@ Each arrow is something you've learned. The entire pipeline is: probability theo
 
 ## Do
 
-- **Watch Karpathy's Deep Dive end to end.** Take notes on each stage. For each stage, write down which lesson in your curriculum covers the underlying math.
-- **Implement BPE tokenization from scratch** following Karpathy's Zero to Hero #8. Train it on a small corpus and examine the learned vocabulary.
-- **SFT vs. base model comparison:** Using any open model (GPT-2, Llama), compare base model and instruction-tuned model responses to the same prompts. See the qualitative difference SFT makes.
-- **Key exercise:** Design a complete training pipeline for an AI assistant that helps with medical questions. What data would you use for pre-training? SFT? What would your constitution look like? What could go wrong at each stage? Where are the alignment risks?
+**1. Watch Karpathy's "Deep Dive into LLMs" end to end**
+
+This is a ~3.5-hour video. Take notes organized by pipeline stage:
+- **Pre-training** (~0:00–1:00): data collection, tokenization, next-token prediction, scaling
+- **Post-training** (~1:00–2:00): SFT, RLHF, DPO, Constitutional AI
+- **Deployment** (~2:00–2:45): system prompts, tool use, safety filters
+- **Future** (~2:45–3:30): agents, reasoning, multimodal
+
+For each stage, write down which lesson in your curriculum covers the underlying math.
+
+**2. Implement BPE tokenizer from scratch — follow Karpathy ZtH #8**
+
+Follow Karpathy's tokenizer video and build a complete BPE implementation:
+- Start with a byte-level vocabulary (256 tokens)
+- Count all adjacent byte pairs in the training corpus
+- Merge the most frequent pair into a new token
+- Repeat for `num_merges` iterations (e.g., 256 merges → 512 token vocabulary)
+
+Test on a paragraph of English text. Print the token vocabulary — you should see common words and subwords appearing as single tokens.
+
+**3. SFT vs base model comparison**
+
+Using Hugging Face's `transformers` library, load both a base model (e.g., `gpt2`) and an instruction-tuned model (e.g., `gpt2` fine-tuned, or any open instruct model). Give both the same prompt: `"Explain what a neural network is in simple terms:"`
+
+Compare the outputs. The base model will likely continue the prompt as if it's part of a document. The instruction-tuned model will produce a helpful answer. This is what SFT does.
+
+**4. Pipeline design exercise (written)**
+
+Design a training pipeline for a medical AI assistant. Write up (~300 words):
+- What data for pre-training? (medical literature, clinical notes, general text)
+- What SFT examples? (doctor-patient conversations, medical Q&A)
+- What constitution/principles for RLHF? (accuracy over engagement, "I don't know" when uncertain, no diagnosis without disclaimers)
+- What could go wrong at each stage? (pre-training absorbs medical misinformation, SFT demonstrations have inconsistent advice, reward model prefers confident-sounding answers over accurate ones)
 
 ## ML and Alignment Connection
 

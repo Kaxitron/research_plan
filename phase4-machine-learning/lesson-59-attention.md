@@ -41,9 +41,43 @@
 
 ## Do
 
-- Implement single-head attention from scratch in NumPy
-- Compute an attention matrix for a small sequence, visualize as heatmap
-- Begin Karpathy's "Let's build GPT" (Lecture 7)
+**1. Implement single-head attention from scratch (NumPy)**
+
+Given an input matrix `X` of shape `(seq_len, d_model)`:
+
+```python
+Q = X @ W_Q  # (seq_len, d_k)
+K = X @ W_K  # (seq_len, d_k)
+V = X @ W_V  # (seq_len, d_v)
+scores = Q @ K.T / sqrt(d_k)  # (seq_len, seq_len)
+weights = softmax(scores, axis=-1)
+output = weights @ V  # (seq_len, d_v)
+```
+
+Initialize `W_Q, W_K, W_V` randomly. Run on a toy sequence of 5 vectors of dimension 8.
+
+**2. Visualize the attention matrix**
+
+Plot `weights` as a heatmap using `matplotlib.imshow`. Label axes with token positions. Each row shows where that position "looks" — the distribution should sum to 1 across columns.
+
+**3. Add causal masking**
+
+Before softmax, set all entries above the diagonal to `-inf`:
+```python
+mask = np.triu(np.ones((seq_len, seq_len)), k=1) * -1e9
+scores = scores + mask
+```
+
+Re-visualize. Now each position can only attend to itself and earlier positions — this is how GPT prevents "seeing the future."
+
+**4. Begin Karpathy's GPT build — follow ZtH #7 (0:00–0:45)**
+
+Start Karpathy's "Let's build GPT" video. In the first 45 minutes he sets up:
+- Character-level tokenization on Shakespeare
+- Bigram baseline model
+- Self-attention from scratch
+
+Type every line. Stop when he starts multi-head attention — that's Lesson 60.
 
 ## ML and Alignment Connection
 

@@ -39,10 +39,35 @@
 
 ## Do
 
-- Implement gradient descent from scratch on a simple 2-parameter function
-- Build the Value class from micrograd (following Karpathy)
-- Visualize the descent trajectory on a contour plot -- watch the parameters converge
-- Experiment with different learning rates: find the sweet spot, observe oscillation, observe divergence
+**1. Gradient descent on a bowl (pure Python, no libraries)**
+
+Define `f(x, y) = x^2 + 4*y^2` (an elliptical bowl). Implement gradient descent:
+```
+for step in range(200):
+    grad_x = 2*x
+    grad_y = 8*y
+    x -= lr * grad_x
+    y -= lr * grad_y
+```
+
+Start from `(4, 3)`. Print `(x, y, f(x,y))` every 20 steps. Watch it converge to `(0, 0)`.
+
+**2. Learning rate experiments**
+
+Run the same optimization with `lr = 0.01` (slow), `lr = 0.1` (good), `lr = 0.3` (oscillating), `lr = 0.6` (diverging). Plot all four trajectories on a contour plot of `f`. This directly connects to the ODE capstone — gradient descent IS Euler's method on `dx/dt = -∇f`.
+
+**3. Build the `Value` class — follow Karpathy ZtH #1 (0:00–1:00)**
+
+Follow the first hour of Karpathy's micrograd video. Type every line yourself. You're building:
+- `Value(data)` that stores a float and a gradient
+- Overloaded `+`, `*`, `**` that build a computation graph
+- A `_backward()` closure on each node storing the local chain rule
+
+At this point you should have a working `Value` that can compute `a*b + c` and propagate gradients backward through it.
+
+**4. Visualize your computation graph**
+
+For a small expression like `L = (a*b + c) * d`, draw the computation graph (on paper or with graphviz). Label each edge with the local gradient. Trace the backward pass manually and verify it matches `Value.grad`.
 
 ## ML & Alignment Connection
 

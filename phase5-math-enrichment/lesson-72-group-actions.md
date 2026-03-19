@@ -57,7 +57,7 @@
 
 ## Block Capstone Project — Neural Network Symmetry Explorer (~3.5h)
 
-See the full project spec: [capstone-symmetry-explorer.pdf](capstone-symmetry-explorer.pdf)
+See the full project spec: [lesson-72-capstone-project.pdf](lesson-72-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

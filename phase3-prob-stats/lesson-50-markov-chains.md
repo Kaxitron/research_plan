@@ -93,7 +93,7 @@ $$\pi(i) P(i \to j) = \pi(j) P(j \to i) \quad \text{for all } i, j$$
 
 ### 💻 Coding Mini-Project: Language Model as Markov Chain (~1.5h)
 
-See the full project spec: [capstone-markov-language-model.pdf](capstone-markov-language-model.pdf)
+See the full project spec: [lesson-50-capstone-project.pdf](lesson-50-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

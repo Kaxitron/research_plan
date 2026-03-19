@@ -75,7 +75,7 @@ For $A$ with trace $\tau = \lambda_1 + \lambda_2$ and determinant $\Delta = \lam
 
 ## Block A Capstone Project — ODE System Solver & Training Dynamics (~4h)
 
-See the full project spec with properly rendered math and diagrams: [capstone-ode-solver.pdf](capstone-ode-solver.pdf)
+See the full project spec with properly rendered math and diagrams: [lesson-18-capstone-project.pdf](lesson-18-capstone-project.pdf)
 
 ## ML and Alignment Connection
 

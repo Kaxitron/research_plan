@@ -71,7 +71,7 @@
 
 ## Block Capstone Project — Singularity Resolution & RLCT Calculator (~3.5h)
 
-See the full project spec with rendered math and diagrams: [capstone-singularity-rlct.pdf](capstone-singularity-rlct.pdf)
+See the full project spec with rendered math and diagrams: [lesson-76-capstone-project.pdf](lesson-76-capstone-project.pdf)
 
 ## 🔗 ML & Alignment Connection
 

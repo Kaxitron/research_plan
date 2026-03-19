@@ -55,9 +55,34 @@
 
 ## Do
 
-- **The Backprop Ninja exercise:** manually compute gradients through cross-entropy, linear layers, tanh, batchnorm -- no autograd
-- **Gradient checking:** implement numerical gradient checking (finite differences) and verify your analytical gradients match
-- **micrograd extension:** after completing Karpathy's micrograd, add support for a new operation (e.g., division, exp) and verify with gradient checking
+**1. Complete micrograd — follow Karpathy ZtH #1 (1:00–2:30)**
+
+Continue from where you left off in Lesson 54. In the second half, Karpathy adds:
+- `tanh` activation
+- Topological sort for the backward pass
+- `Neuron`, `Layer`, and `MLP` classes built on top of `Value`
+- Training loop on a small dataset
+
+Type every line. By the end you have a working neural network trained by backpropagation, built entirely from scratch.
+
+**2. The Backprop Ninja exercise — follow Karpathy ZtH #5**
+
+This is the hardest and most important exercise in Phase 4. Open Karpathy's ZtH #5 notebook and manually backpropagate through an entire character-level MLP:
+
+- Cross-entropy loss backward
+- Linear layer (`W @ x + b`) backward
+- Batch normalization backward
+- `tanh` activation backward
+
+No autograd — compute every gradient by hand using the chain rule. Then verify each gradient against PyTorch's `.grad`. Karpathy walks through each one in the video, but try each yourself first before watching.
+
+**3. Gradient checking**
+
+Implement numerical gradient checking: for each parameter `p`, compute `(L(p+h) - L(p-h)) / (2*h)` with `h=1e-6` and compare to the analytical gradient from your backward pass. The relative error should be `< 1e-5` for every parameter.
+
+**4. Extend micrograd**
+
+Add one new operation to your `Value` class that Karpathy didn't include (e.g., `exp`, `/`, or `log`). Implement both the forward computation and the backward gradient rule. Verify with gradient checking.
 
 ## ML and Alignment Connection
 

@@ -39,7 +39,7 @@ Any matrix transformation = align input with natural directions → scale each d
 ## 🔨 Do
 
 - **Integration exercise:** Take a 3×3 matrix. Compute its rank, determinant, eigenvalues, SVD, and condition number. For each, explain the geometric meaning.
-- **Capstone visualization:** See the full project spec: [capstone-linalg-visualization.pdf](capstone-linalg-visualization.pdf)
+- **Capstone visualization:** See the full project spec: [lesson-12-capstone-project.pdf](lesson-12-capstone-project.pdf)
 
 ## 📝 Phase 1 Final Exam + PCA Project
 

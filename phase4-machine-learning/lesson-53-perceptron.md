@@ -43,9 +43,37 @@
 
 ## Do
 
-- Implement a single neuron in Python (no libraries), train it on AND, OR, XOR
-- Discover that XOR *requires* a hidden layer -- this is why deep networks exist
-- Visualize the decision boundary for AND and OR, and show why no single line can separate XOR
+**1. Implement a single neuron from scratch (Python, no libraries)**
+
+Write a `Neuron` class with:
+- `weights`: list of floats, randomly initialized
+- `bias`: float
+- `forward(inputs)`: compute `sum(w*x for w,x in zip(weights, inputs)) + bias`, then apply a step function (return 1 if positive, 0 otherwise)
+
+**2. Train on AND and OR gates**
+
+Implement the perceptron learning rule:
+```
+for each (input, target):
+    prediction = neuron.forward(input)
+    error = target - prediction
+    weights += learning_rate * error * input
+    bias += learning_rate * error
+```
+
+Train until convergence on AND and OR truth tables. Print the learned weights and bias.
+
+**3. Attempt XOR — and fail**
+
+Try training on XOR: `(0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0`. The perceptron will NOT converge. Run for 1000 epochs and print the accuracy — it should stay at ~50-75%.
+
+**4. Visualize why XOR fails**
+
+Plot all four input points color-coded by class (0 = red, 1 = blue). Draw the decision boundary `w1*x1 + w2*x2 + b = 0` as a line. For AND and OR, the line separates the classes cleanly. For XOR, no single line can — this is the motivation for hidden layers.
+
+**5. Solve XOR with a 2-layer network**
+
+Manually construct a 2-layer network (2 hidden neurons + 1 output neuron) that solves XOR. Hint: one hidden neuron computes AND, the other computes OR, and the output computes the difference. Verify it produces correct outputs for all 4 inputs.
 
 ## ML & Alignment Connection
 

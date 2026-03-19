@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **Estimated Time** | 5 hours (can be split across sessions) |
+| **Estimated Time** | 15–20 hours (split across multiple sessions) |
 | **Prerequisites** | All lessons (0–84) and all exams completed |
 | **Materials** | Python, PyTorch, NumPy, Matplotlib. GPU recommended but not required. |
 | **Deliverable** | A GitHub repository with code, visualizations, and a written report |
@@ -25,7 +25,7 @@ The project has 7 stages. Each stage tells you what to build AND which lessons i
 
 ---
 
-## Stage 1: Architecture (45 min)
+## Stage 1: Architecture (~2h)
 **Phases used: 1 (Linear Algebra), 4 (Neural Networks)**
 
 Build a small transformer from scratch in PyTorch. No `nn.TransformerEncoder` — implement every component by hand.
@@ -50,7 +50,7 @@ Build a small transformer from scratch in PyTorch. No `nn.TransformerEncoder` �
 
 ---
 
-## Stage 2: Training (45 min)
+## Stage 2: Training (~2h)
 **Phases used: 2 (Calculus), 3 (Probability), 4 (Neural Networks)**
 
 Train your transformer on a dataset that has learnable structure.
@@ -78,7 +78,7 @@ Train your transformer on a dataset that has learnable structure.
 
 ---
 
-## Stage 3: Training Dynamics as a Dynamical System (30 min)
+## Stage 3: Training Dynamics as a Dynamical System (~2h)
 **Phases used: 2 (Calculus — ODEs), 5 (Topology)**
 
 Analyze the training process through the lens of dynamical systems theory.
@@ -100,7 +100,7 @@ Analyze the training process through the lens of dynamical systems theory.
 
 ---
 
-## Stage 4: Mechanistic Interpretability (60 min)
+## Stage 4: Mechanistic Interpretability (~3h)
 **Phases used: 1 (Linear Algebra), 4 (Interpretability)**
 
 Open the black box and find out what your model learned.
@@ -125,7 +125,7 @@ Open the black box and find out what your model learned.
 
 ---
 
-## Stage 5: Alignment Attempt (60 min)
+## Stage 5: Alignment Attempt (~3h)
 **Phases used: 3 (Probability/Statistics), 4 (Neural Networks), 6 (Alignment)**
 
 Attempt to steer the model's behavior toward a specified goal.
@@ -154,7 +154,7 @@ Attempt to steer the model's behavior toward a specified goal.
 
 ---
 
-## Stage 6: Mathematical Analysis (45 min)
+## Stage 6: Mathematical Analysis (~2h)
 **Phases used: 5 (Abstract Algebra, Topology, Logic), 4 (SLT)**
 
 Apply the deeper mathematical frameworks to understand your model.
@@ -173,7 +173,7 @@ Apply the deeper mathematical frameworks to understand your model.
 
 ---
 
-## Stage 7: The Report (45 min)
+## Stage 7: The Report (~2h)
 **All phases**
 
 Write a research-style report that connects everything.

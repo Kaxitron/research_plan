@@ -93,9 +93,41 @@
 
 ## Do
 
-- **GridWorld policy gradient:** Implement REINFORCE on a simple 5x5 grid. Agent starts at corner, goal at opposite corner, -2 reward per step. Watch the policy converge from random to shortest-path.
-- **Reward hacking demo:** Design a simple environment where the reward function has an exploit. Watch the agent find it. Then fix the reward function and see the agent learn the intended behavior. Feel Goodhart's Law in your gut.
-- **RLHF conceptual exercise:** Given a language model that produces two responses to "explain quantum physics," one accurate but dry, one engaging but slightly inaccurate -- how would a reward model score these? What happens if the reward model systematically prefers engagement over accuracy? Write up the alignment implications.
+**1. GridWorld REINFORCE**
+
+Build a 5×5 grid environment:
+- Agent starts at `(0, 0)`, goal at `(4, 4)`
+- Actions: up, down, left, right (clipped at boundaries)
+- Reward: `-1` per step, `+10` for reaching the goal
+- Episode ends when goal reached or 50 steps
+
+Implement REINFORCE:
+```python
+for episode in range(1000):
+    states, actions, rewards = run_episode(policy)
+    returns = compute_discounted_returns(rewards, gamma=0.99)
+    for s, a, G in zip(states, actions, returns):
+        log_prob = log(policy(s)[a])
+        loss -= log_prob * G
+    loss.backward()
+    optimizer.step()
+```
+
+Use a small MLP (2 hidden layers, 32 units) as the policy. Plot the average episode length over training — it should decrease from ~50 to ~8 (the shortest path).
+
+**2. Reward hacking demo**
+
+Modify the environment: instead of `+10` for reaching `(4,4)`, give `+1` for each unique cell visited. The agent should learn to explore rather than go to the goal. This is Goodhart's Law in action — the metric (cells visited) is not the objective (reach the goal).
+
+Now add `-0.5` per step alongside the exploration bonus. Does the agent now balance exploration with efficiency? This is the reward shaping problem.
+
+**3. RLHF conceptual exercise (written)**
+
+Write a short analysis (~200 words) in comments: a language model generates two responses to "explain quantum physics." Response A is accurate but dry. Response B is engaging but slightly wrong. Walk through:
+- How a reward model trained on human preferences might score each
+- What happens if the reward model systematically prefers engagement over accuracy
+- How KL penalty mitigates this (keeps the model near the accurate SFT baseline)
+- Why this is the core alignment challenge in RLHF
 
 ## ML and Alignment Connection
 

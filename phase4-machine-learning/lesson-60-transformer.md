@@ -53,9 +53,39 @@
 
 ## Do
 
-- Complete Karpathy's GPT build — type every line, run it, generate text
-- Optionally: ARENA Chapter 1 exercises (building GPT-3 from scratch)
-  - https://arena-ch1-transformers.streamlit.app/
+**1. Complete Karpathy's GPT build — follow ZtH #7 (full video)**
+
+Continue from Lesson 59 and build the complete GPT from scratch. Karpathy adds:
+- **Multi-head attention** (~0:45): split Q, K, V into `n_heads` parallel heads, concatenate outputs
+- **Feed-forward network** (~1:10): two linear layers with ReLU between them, applied per-position
+- **Residual connections** (~1:20): `x = x + attention(x)` and `x = x + ffn(x)` — the "residual stream"
+- **Layer normalization** (~1:25): normalize before each sub-layer (pre-norm)
+- **Stacking blocks** (~1:30): repeat the transformer block `n_layers` times
+- **Training** (~1:40): train on Shakespeare text with cross-entropy loss
+
+Type every line. By the end you have a working GPT that generates Shakespeare-like text.
+
+**2. Generate text and evaluate**
+
+Generate 500 characters from your trained model. It won't be Shakespeare, but it should produce:
+- Correctly structured lines (capitalization, line breaks)
+- English-like words (many real words mixed with plausible nonsense)
+- Some character names and stage directions
+
+Save a few generations — you'll compare to the makemore output from Lesson 56 to see the power of attention over fixed-context MLPs.
+
+**3. Experiment with architecture**
+
+Try varying one hyperparameter at a time and observe the effect on loss:
+- `n_heads`: 1 vs 4 vs 8 (more heads = better, up to a point)
+- `n_layers`: 1 vs 4 vs 6 (depth matters for compositional patterns)
+- `d_model`: 64 vs 128 vs 256 (wider = more capacity per layer)
+
+You don't need full training runs — just train for 2000 steps each and compare final loss.
+
+**4. Optional: GPT-2 reproduction — Karpathy ZtH #9**
+
+If time allows, follow Karpathy's ~4-hour GPT-2 reproduction video. This covers distributed training, weight loading from Hugging Face, and matching OpenAI's published numbers. This is optional but deeply educational if you want engineering experience.
 
 ## ML and Alignment Connection
 

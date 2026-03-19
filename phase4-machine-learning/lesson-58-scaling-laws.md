@@ -40,10 +40,26 @@
 
 ## Do
 
-- Plot scaling law curves from published data: loss vs parameter count, loss vs dataset size, loss vs compute
-- Fit power laws to the data and verify the exponents match published results
-- Reproduce the compute-optimal frontier from Chinchilla: for a given compute budget, what is the optimal model size and data ratio?
-- Discuss and write up: are emergent capabilities real or measurement artifacts? What evidence supports each view?
+**1. Plot scaling laws from published data**
+
+Using data from the Kaplan et al. paper (Table 1 or digitized from figures), create three log-log plots:
+- Test loss vs. parameter count (at fixed data and compute)
+- Test loss vs. dataset size (at fixed model and compute)
+- Test loss vs. compute budget (optimally allocated)
+
+Each should show a straight line on log-log axes — that's the power law.
+
+**2. Fit power laws**
+
+For each plot, fit `L(x) = a * x^(-alpha) + L_irreducible` using `scipy.optimize.curve_fit`. Print the exponents and compare to Kaplan's published values (α_N ≈ 0.076, α_D ≈ 0.095, α_C ≈ 0.050).
+
+**3. Reproduce the Chinchilla frontier**
+
+Using the Chinchilla paper's formula for compute-optimal training (`N_opt ∝ C^0.5`, `D_opt ∝ C^0.5`), plot the optimal model size and dataset size as functions of compute budget. Mark where GPT-3 (175B params, 300B tokens) and Chinchilla (70B params, 1.4T tokens) sit relative to the frontier. GPT-3 should be clearly above the optimal line (too large for its data budget).
+
+**4. Emergence discussion (written, ~200 words)**
+
+Write up in comments or a markdown cell: are emergent capabilities real discontinuities or measurement artifacts? Cite the Schaeffer et al. (2023) paper arguing they're artifacts of metric choice, and the Wei et al. response. Take a position and explain why it matters for alignment forecasting.
 
 ## ML & Alignment Connection
 

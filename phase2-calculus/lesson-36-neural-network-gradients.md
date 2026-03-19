@@ -82,7 +82,7 @@ Start with $\partial L / \partial L = 1$. At each node, apply the chain rule: $\
 
 ## Block E Capstone Project — Autodiff Engine (~4h)
 
-See the full project spec with rendered math and diagrams: [capstone-autodiff-engine.pdf](capstone-autodiff-engine.pdf)
+See the full project spec with rendered math and diagrams: [lesson-36-capstone-project.pdf](lesson-36-capstone-project.pdf)
 
 ## ML and Alignment Connection
 

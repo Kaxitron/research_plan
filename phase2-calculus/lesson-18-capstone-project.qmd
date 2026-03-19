@@ -136,11 +136,21 @@ Arrange as a $2\times 3$ **grid** (top row: stable node, unstable node, saddle; 
 \vspace{0.5em}
 \textit{This is your first deliverable figure --- save as} \texttt{phase\_portraits.png}\textit{.}
 
-# Part 3 --- Gradient Descent as a Dynamical System (Python, \~1.5h)
+# Part 3 --- Gradient Descent as a Dynamical System (\~1.5h)
 
-**Goal:** Show that gradient descent is Euler's method on a continuous ODE.
+**Goal:** Show that gradient descent is Euler's method on a continuous ODE --- and practice calling your C++ solver from Python as a pipeline.
 
-## 3a. Gradient flow vs.\ gradient descent
+## 3a. Extend the C++ solver for custom systems
+
+Add a command-line interface to your C++ binary so Python can call it:
+
+```
+./ode_solver --matrix "-50,0,0,-1" --x0 "8,8" --dt 0.01 --tf 2.0 --output grad_flow.csv
+```
+
+The matrix entries define $A$ in $\dot{\mathbf{x}} = A\mathbf{x}$. This is a small addition --- just parse the arguments and feed them to the same RK4 function you already built.
+
+## 3b. Gradient flow via the C++ solver
 
 Define a 2D quadratic loss with condition number $\kappa = 50$:
 $$\mathcal{L}(\mathbf{x}) = \frac{1}{2}\,\mathbf{x}^T\! H\,\mathbf{x}, \qquad H = \begin{pmatrix} 50 & 0 \\ 0 & 1 \end{pmatrix}$$
@@ -148,19 +158,36 @@ $$\mathcal{L}(\mathbf{x}) = \frac{1}{2}\,\mathbf{x}^T\! H\,\mathbf{x}, \qquad H 
 The \textbf{continuous gradient flow} ODE is:
 $$\frac{d\mathbf{x}}{dt} = -\nabla\mathcal{L} = -H\mathbf{x}$$
 
-Solve this with RK4 (reimplement in NumPy --- a few lines) from $\mathbf{x}_0 = (8, 8)$.
+This is $\dot{\mathbf{x}} = A\mathbf{x}$ with $A = -H$. Call your C++ solver from Python:
+
+```python
+import subprocess, pandas as pd
+
+subprocess.run([
+    "./ode_solver",
+    "--matrix", "-50,0,0,-1",
+    "--x0", "8,8",
+    "--dt", "0.01", "--tf", "2.0",
+    "--output", "grad_flow.csv"
+])
+flow = pd.read_csv("grad_flow.csv")
+```
+
+This is the pipeline pattern: C++ does the numerics, Python does the analysis. You'll see this constantly in scientific computing and ML infrastructure.
+
+## 3c. Discrete gradient descent (Python)
 
 \textbf{Discrete gradient descent} is:
 $$\mathbf{x}_{k+1} = \mathbf{x}_k - \eta\, H\,\mathbf{x}_k$$
 
-This is literally Euler's method on the gradient flow with step size $\eta$. Run two learning rates from the same $\mathbf{x}_0$:
+This is literally Euler's method on the gradient flow ODE with step size $\eta$. Implement this in a simple Python loop (it's just a matrix multiply per step). Run two learning rates from $\mathbf{x}_0 = (8,8)$:
 
 | Learning rate | Behavior | Why |
 |:--------------|:---------|:----|
 | $\eta = 0.005$ | Slow, smooth convergence | Well within stability |
 | $\eta = 0.035$ | Zigzags along the steep direction | Near stability limit |
 
-**Produce one figure** with loss contour ellipses, the continuous flow path, and both discrete GD paths overlaid. This should make the Euler--GD connection click visually.
+**Produce one figure** with loss contour ellipses, the continuous flow path (from C++ via CSV), and both discrete GD paths (from Python) overlaid. This should make the Euler--GD connection click visually.
 
 \vspace{0.5em}
 

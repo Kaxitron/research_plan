@@ -36,14 +36,49 @@
 
 ## Do
 
-- **Implement a simple 2D diffusion model from scratch:**
-  1. Define a 2D target distribution (e.g., a mixture of Gaussians or a spiral)
-  2. Implement the forward noise schedule: progressively add noise over T steps
-  3. Train a small neural network (MLP) to predict the noise at each timestep
-  4. Implement the reverse sampling loop: start from pure noise, iteratively denoise
-  5. Visualize: plot the generated samples and compare to the target distribution
-- **Noise schedule experiment:** try different noise schedules (linear, cosine) and observe how they affect sample quality and training stability
-- **Score visualization:** for the 2D case, plot the learned score field (gradient arrows) at different noise levels. Watch how the field points toward data modes at low noise and becomes uniform at high noise.
+**1. Create a 2D target distribution**
+
+Generate 1000 points from a mixture of 4 Gaussians centered at `(±2, ±2)` with `σ = 0.3`. Plot them — you should see four clear clusters.
+
+**2. Implement forward diffusion**
+
+Define a linear noise schedule: `β_t` linearly from 0.0001 to 0.02 over `T = 200` steps. Compute `α_bar_t = cumulative product of (1 - β_t)`.
+
+The forward process: `x_t = sqrt(α_bar_t) * x_0 + sqrt(1 - α_bar_t) * ε` where `ε ~ N(0, I)`.
+
+Plot the data at `t = 0, 50, 100, 150, 200`. The clusters should progressively blur into a uniform Gaussian cloud.
+
+**3. Train a noise predictor**
+
+Build a small MLP (3 hidden layers, 128 units, ReLU) that takes `(x_t, t)` as input and predicts the noise `ε` that was added.
+
+Training loop:
+```python
+for step in range(5000):
+    t = random timestep
+    x_0 = random batch from data
+    eps = random noise
+    x_t = sqrt(alpha_bar[t]) * x_0 + sqrt(1 - alpha_bar[t]) * eps
+    eps_pred = model(x_t, t)
+    loss = MSE(eps_pred, eps)
+```
+
+Use Adam with `lr = 1e-3`. The loss should decrease steadily.
+
+**4. Reverse diffusion (sampling)**
+
+Starting from `x_T ~ N(0, I)`, iteratively denoise:
+```python
+for t in reversed(range(T)):
+    eps_pred = model(x_t, t)
+    x_{t-1} = (1/sqrt(α_t)) * (x_t - β_t/sqrt(1-α_bar_t) * eps_pred) + sqrt(β_t) * z
+```
+
+Generate 1000 new samples. Plot alongside the original data — if training worked, you should see four clusters in roughly the same locations.
+
+**5. Score field visualization**
+
+For a grid of points, plot the predicted noise `ε_θ(x, t)` as arrows at several noise levels (`t = 10, 50, 100, 190`). At low noise, arrows should point toward the nearest cluster center. At high noise, the field should be nearly uniform.
 
 ## ML and Alignment Connection
 

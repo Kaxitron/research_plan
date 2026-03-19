@@ -41,10 +41,23 @@
 
 ## Do
 
-- Implement a simple CNN from scratch (conv layer + pooling + fully connected)
-- Train on MNIST or CIFAR-10
-- Visualize learned filters at each layer -- what patterns does the network discover?
-- Compare parameter count to an equivalent fully-connected network -- appreciate why weight sharing matters
+**1. Implement a Conv2d layer from scratch (Python/NumPy)**
+
+Write a function that takes an input image (H×W×C), a filter bank (num_filters×kH×kW×C), and computes the convolution output. Use nested loops — this is slow but makes the operation completely transparent. Verify against `torch.nn.Conv2d` on a small test input.
+
+**2. Build a minimal CNN in PyTorch**
+
+Stack: `Conv2d(1, 16, 3) → ReLU → MaxPool2d(2) → Conv2d(16, 32, 3) → ReLU → MaxPool2d(2) → Flatten → Linear → Softmax`
+
+Train on MNIST for 5 epochs. You should hit >98% accuracy.
+
+**3. Visualize learned filters**
+
+After training, extract and plot the 16 first-layer filters as grayscale images. They should look like edge detectors at various orientations. Compare to random (untrained) filters — training clearly discovers meaningful patterns.
+
+**4. Parameter efficiency comparison**
+
+Count parameters in your CNN. Then build a fully-connected network with roughly the same architecture (matching layer dimensions). Compare parameter counts — the CNN should have 10-100× fewer parameters, demonstrating why weight sharing matters.
 
 ## ML & Alignment Connection
 

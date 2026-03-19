@@ -44,10 +44,40 @@
 
 ## Do
 
-- Build a 3+ layer MLP for character-level language modeling (following makemore)
-- Monitor activation statistics across layers -- plot histograms of activations at each layer during training
-- Implement BatchNorm from scratch and compare training with/without it
-- Visualize what happens to the activation distribution as you go deeper, before and after BatchNorm
+**1. Build makemore (bigram model) — follow Karpathy ZtH #2**
+
+Follow Karpathy's makemore Lecture 2 from scratch:
+- Load a dataset of names
+- Build a character-level bigram model using a 27×27 count matrix
+- Convert counts to probabilities, sample new names
+- Reframe as a neural network: one-hot input → embedding → logits → softmax → cross-entropy loss
+- Train with gradient descent
+
+This is your first real language model. It's terrible — but it generates pronounceable gibberish.
+
+**2. MLP language model — follow Karpathy ZtH #3**
+
+Follow makemore Part 2 to build an MLP character-level model:
+- Embedding layer: characters → learned vectors
+- Hidden layer(s) with tanh activation
+- Output layer → softmax → cross-entropy
+
+Train on the names dataset. Generate samples — they should be noticeably better than the bigram model.
+
+**3. Activation diagnostics — follow Karpathy ZtH #4**
+
+This is where you see WHY deep networks are hard to train. Following Karpathy's Lecture 4:
+- Plot histograms of activations at each layer during training. Are they saturated (all near ±1 for tanh)? Are they dead (all zero for ReLU)?
+- Plot histograms of gradients at each layer. Are they vanishing? Exploding?
+- Implement Kaiming initialization (`std = sqrt(2/fan_in)` for ReLU) and show it fixes the activation distributions
+
+**4. Implement BatchNorm from scratch**
+
+Following Karpathy ZtH #4:
+- Compute running mean and variance during training
+- Normalize activations: `x_hat = (x - mean) / sqrt(var + eps)`
+- Learn scale and shift: `y = gamma * x_hat + beta`
+- Compare training curves with and without BatchNorm — BatchNorm should converge faster and be less sensitive to learning rate
 
 ## ML & Alignment Connection
 
