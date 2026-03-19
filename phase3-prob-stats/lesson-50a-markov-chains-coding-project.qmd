@@ -1,5 +1,5 @@
 ---
-title: "Coding Mini-Project"
+title: "Markov Chains Coding Project"
 subtitle: "Language Model as Markov Chain"
 format:
   pdf:
