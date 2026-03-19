@@ -1,0 +1,200 @@
+---
+title: "Exam 2D: Partial Differential Equations"
+subtitle: "Lessons 29--33 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Classification, Boundary Conditions, and the Maximum Principle
+
+Consider the second-order linear PDE $Au_{xx} + Bu_{xy} + Cu_{yy} + \text{(lower order)} = 0$, classified by the discriminant $\Delta = B^2 - 4AC$.
+
+**(a)** Classify each PDE as elliptic, parabolic, or hyperbolic. For each, identify $A$, $B$, $C$, and compute $\Delta$.
+
+\begin{enumerate}[label=(\roman*)]
+  \item $3u_{xx} + 2u_{xy} - u_{yy} = 0$
+  \item $u_{xx} + 6u_{xy} + 9u_{yy} = 0$
+  \item $u_{xx} + u_{yy} + u = 0$
+  \item $u_{tt} = 4u_{xx} - 2u_t$
+\end{enumerate}
+
+**(b)** A metal rod of length $L$ satisfies the heat equation $u_t = k\,u_{xx}$ on $[0, L]$. Write the mathematical form of each boundary condition and give its physical meaning:
+
+\begin{enumerate}[label=(\roman*)]
+  \item Dirichlet at $x = 0$ with $u(0,t) = T_0$
+  \item Neumann at $x = L$ with $u_x(L,t) = 0$
+  \item Robin at $x = L$ with $u_x(L,t) + h\bigl(u(L,t) - T_{\text{amb}}\bigr) = 0$
+\end{enumerate}
+
+**(c)** State the maximum principle for Laplace's equation $\nabla^2 u = 0$ on a bounded domain $\Omega$. A colleague proposes a harmonic function on the unit disk satisfying $u = 1$ on the boundary but having a maximum value of $2$ at the center. Use the maximum principle to explain why this is impossible.
+
+---
+
+## Q2 (10 pts) --- Separation of Variables and the Heat Equation
+
+Solve the heat equation $u_t = u_{xx}$ on $[0, \pi]$ with Dirichlet boundary conditions $u(0,t) = u(\pi, t) = 0$ and initial condition $u(x, 0) = \sin(x) + 3\sin(2x)$.
+
+**(a)** Assume $u(x,t) = X(x)\,T(t)$. Substitute into the PDE and separate: show that $\dfrac{T'}{T} = \dfrac{X''}{X} = -\lambda$.
+
+**(b)** Apply the boundary conditions to $X$. Derive the eigenvalues $\lambda_n = n^2$ and eigenfunctions $X_n(x) = \sin(nx)$ for $n = 1, 2, 3, \ldots$
+
+**(c)** Solve the $T$ equation for each $n$ and write the general solution $u(x,t) = \displaystyle\sum_{n=1}^{\infty} b_n\,e^{-n^2 t}\sin(nx)$.
+
+**(d)** Determine the coefficients $b_n$ from the initial condition. Write the complete solution in closed form.
+
+**(e)** Compare the decay rates of the two modes in your solution. At what time $t^*$ has the $n=2$ mode decayed to $1\%$ of the $n=1$ mode's amplitude? Explain physically why higher-frequency modes decay faster---relate this to the heat equation acting as a low-pass filter.
+
+---
+
+## Q3 (10 pts) --- Fourier Series, Parseval's Theorem, and Sturm-Liouville Theory
+
+**(a)** Compute the Fourier sine series of $f(x) = x(\pi - x)$ on $[0, \pi]$. The coefficients are $b_n = \dfrac{2}{\pi}\displaystyle\int_0^{\pi} x(\pi - x)\sin(nx)\,dx$. Show that $b_n = 0$ for even $n$ and $b_n = \dfrac{8}{n^3\pi}$ for odd $n$. *(Compute $b_1$, $b_3$, and $b_5$ explicitly.)*
+
+**(b)** Apply Parseval's theorem to your Fourier sine series:
+$$\frac{2}{\pi}\int_0^{\pi}\bigl[x(\pi - x)\bigr]^2\,dx = \sum_{n=1}^{\infty} b_n^2$$
+Evaluate the left side. Then use the known values of $b_n$ to derive a closed-form expression for $\displaystyle\sum_{k=0}^{\infty}\frac{1}{(2k+1)^6}$.
+
+**(c)** The eigenvalue problem $X'' + \lambda\,X = 0$ with $X(0) = X(\pi) = 0$ is a Sturm-Liouville problem of the form $\dfrac{d}{dx}\bigl[p(x)\,X'\bigr] + q(x)\,X + \lambda\,w(x)\,X = 0$. Identify $p(x)$, $q(x)$, and $w(x)$.
+
+**(d)** State the Rayleigh quotient for this Sturm-Liouville problem and verify that substituting $X_1(x) = \sin(x)$ yields $\lambda_1 = 1$. Explain why the Rayleigh quotient guarantees $\lambda_1 \leq \lambda_2 \leq \lambda_3 \leq \cdots$ and why the first eigenvalue is the smallest.
+
+---
+
+## Q4 (10 pts) --- The Wave Equation: d'Alembert, Characteristics, and Standing Waves
+
+Consider the wave equation $u_{tt} = 4\,u_{xx}$ (so $c = 2$).
+
+**(a)** **d'Alembert's formula:** On the real line with initial displacement $u(x,0) = e^{-x^2}$ and zero initial velocity $u_t(x,0) = 0$, write the solution using d'Alembert's formula:
+$$u(x,t) = \frac{1}{2}\bigl[f(x - ct) + f(x + ct)\bigr]$$
+Sketch the solution at times $t = 0$, $t = 1$, and $t = 2$, describing what happens to the initial Gaussian.
+
+**(b)** What are the characteristic lines for this equation in the $(x,t)$-plane? Draw the domain of dependence for the point $(3, 1)$: the interval on the $x$-axis that determines $u(3, 1)$.
+
+**(c)** **Standing waves on a bounded domain:** Now consider $u_{tt} = 4\,u_{xx}$ on $[0, \pi]$ with $u(0,t) = u(\pi,t) = 0$ and initial conditions $u(x,0) = \sin(3x)$, $u_t(x,0) = 0$. Using separation of variables, show the solution is $u(x,t) = \cos(6t)\sin(3x)$. What is the frequency and period of this standing wave?
+
+**(d)** Energy conservation: define $E(t) = \dfrac{1}{2}\displaystyle\int_0^{\pi}\bigl(u_t^2 + 4\,u_x^2\bigr)\,dx$. Compute $E(t)$ for the solution in part (c) and verify it is constant in time. Contrast this with the heat equation, where energy (measured by $\|u\|^2 = \int u^2\,dx$) decays over time.
+
+---
+
+## Q5 (10 pts) --- Fourier Transform, Heat Kernel, and the Error Function
+
+**(a)** The Fourier transform of $f(x)$ is $\hat{f}(\xi) = \displaystyle\int_{-\infty}^{\infty} f(x)\,e^{-2\pi i \xi x}\,dx$. Show that the heat equation $u_t = k\,u_{xx}$ transforms to $\hat{u}_t = -4\pi^2 k\,\xi^2\,\hat{u}$ in Fourier space. Solve this ODE for $\hat{u}(\xi, t)$ in terms of $\hat{u}(\xi, 0)$.
+
+**(b)** The heat kernel (fundamental solution) on the infinite line is:
+$$G(x, t) = \frac{1}{\sqrt{4\pi k t}}\,e^{-x^2/(4kt)}$$
+Using part (a), show that $\hat{G}(\xi, t) = e^{-4\pi^2 k\,\xi^2\,t}$, confirming that $G$ is a Gaussian in both $x$ and $\xi$ space.
+
+**(c)** The general solution on the infinite line is the convolution $u(x,t) = \displaystyle\int_{-\infty}^{\infty} G(x - y, t)\,f(y)\,dy$ where $f(y) = u(y,0)$. For the initial condition
+$$u(x,0) = \begin{cases} 1 & \text{if } |x| \leq 1 \\ 0 & \text{otherwise}\end{cases}$$
+write the solution in terms of the error function $\operatorname{erf}(z) = \dfrac{2}{\sqrt{\pi}}\displaystyle\int_0^{z}e^{-s^2}\,ds$. *(Hint: split the convolution integral and make the substitution $s = \frac{x - y}{\sqrt{4kt}}$.)*
+
+**(d)** Describe the behavior of $u(x, t)$ as $t \to 0^+$ and as $t \to \infty$. At what rate does the maximum value $u(0, t)$ decay for large $t$? Explain why the heat kernel's width $\sim\!\sqrt{t}$ is a signature of diffusive processes.
+
+---
+
+## Q6 (10 pts) --- Helmholtz Equation and Eigenfunction Expansions
+
+**(a)** The Helmholtz equation $\nabla^2 U + k^2 U = 0$ arises from seeking time-harmonic solutions $u(\mathbf{x}, t) = U(\mathbf{x})\,e^{i\omega t}$ to the wave equation $u_{tt} = c^2\nabla^2 u$. Show the substitution yields the Helmholtz equation and identify $k$ in terms of $\omega$ and $c$.
+
+**(b)** On a rectangular membrane $[0, a] \times [0, b]$ with $U = 0$ on the boundary, use separation of variables $U(x,y) = X(x)\,Y(y)$ to find the eigenvalues and eigenfunctions. Show that:
+$$k_{mn}^2 = \pi^2\!\left(\frac{m^2}{a^2} + \frac{n^2}{b^2}\right), \qquad U_{mn}(x,y) = \sin\!\left(\frac{m\pi x}{a}\right)\sin\!\left(\frac{n\pi y}{b}\right)$$
+
+**(c)** For a square membrane $a = b = 1$, find two distinct pairs $(m,n)$ that give the same eigenvalue $k^2$. This phenomenon is called degeneracy. Explain what degeneracy means for the vibration modes: if $k_{mn}^2 = k_{m'n'}^2$, what linear combinations of eigenfunctions are also solutions?
+
+**(d)** Using the Sturm-Liouville framework, explain why the eigenfunctions $\{U_{mn}\}$ form a complete orthogonal set on $[0,a] \times [0,b]$, and state the orthogonality relation explicitly. How does completeness guarantee that any (sufficiently regular) initial displacement of the membrane can be decomposed into these modes?
+
+---
+
+## Q7 (10 pts) --- Method of Characteristics and Shock Formation
+
+**(a)** Solve the transport equation $u_t + 3u_x = 0$ with initial condition $u(x, 0) = \sin(x)$ using the method of characteristics. State the characteristic curves, verify your solution by direct substitution, and describe the motion of the initial profile.
+
+**(b)** Now consider the inviscid Burgers equation $u_t + u\,u_x = 0$ with initial condition:
+$$u(x, 0) = \begin{cases} 1 & x < 0 \\ 1 - x & 0 \leq x \leq 1 \\ 0 & x > 1 \end{cases}$$
+Find the characteristic curves for each region. Show that characteristics from $x_0 \in [0, 1]$ are $x = x_0 + (1 - x_0)\,t$ and determine the time $t_s$ at which characteristics first cross (shock formation).
+
+**(c)** The Rankine-Hugoniot condition states that the shock speed is $\dot{s} = \dfrac{f(u_L) - f(u_R)}{u_L - u_R}$ where $f(u) = u^2/2$ is the flux for Burgers' equation. For the shock at time $t_s$, the states on each side are $u_L = 1$ and $u_R = 0$. Compute the shock speed.
+
+**(d)** Conservation laws of the form $u_t + f(u)_x = 0$ can develop shocks even from smooth initial data. Explain in 2--3 sentences why nonlinearity (the dependence of wave speed on $u$) causes characteristics to cross, and why the classical solution ceases to exist at the shock time. What is the mathematical distinction between a classical solution and a weak solution?
+
+---
+
+## Q8 (10 pts) --- The Fokker-Planck Equation and Probability Density Evolution
+
+The stochastic process $dX_t = \mu(X_t)\,dt + \sigma\,dW_t$ has probability density $p(x,t)$ satisfying the Fokker-Planck equation:
+$$\frac{\partial p}{\partial t} = -\frac{\partial}{\partial x}\bigl[\mu(x)\,p\bigr] + \frac{\sigma^2}{2}\,\frac{\partial^2 p}{\partial x^2}$$
+
+**(a)** Identify the advection (drift) and diffusion terms. When $\mu = 0$, the Fokker-Planck equation reduces to the heat equation---verify this. When $\sigma = 0$, it reduces to a transport equation---write this explicitly and state what it means for the density evolution.
+
+**(b)** For the Ornstein-Uhlenbeck process $dX_t = -\theta X_t\,dt + \sigma\,dW_t$ ($\theta > 0$), write the Fokker-Planck equation. Find the stationary solution $p_{\infty}(x)$ by setting $\partial p/\partial t = 0$ and solving the resulting ODE. Show that $p_{\infty}$ is Gaussian with mean $0$ and variance $\sigma^2/(2\theta)$.
+
+**(c)** Explain the physical roles of $\theta$ and $\sigma$ in determining the stationary distribution. What happens to the variance as $\theta \to 0^+$? As $\sigma \to 0^+$? Relate to the balance between drift (which concentrates the density) and diffusion (which spreads it).
+
+**(d)** The Fokker-Planck equation can be written as a continuity equation $\partial_t p = -\partial_x J$ where $J = \mu\,p - \frac{\sigma^2}{2}\,\partial_x p$ is the probability current. At stationarity $J = \text{const}$. For the OU process on $\mathbb{R}$ with $p \to 0$ as $|x| \to \infty$, show that $J = 0$ (detailed balance) and explain why this means every point has zero net probability flux.
+
+---
+
+## Q9 (10 pts) --- The Score Function, Forward SDEs, and Reverse-Time Dynamics
+
+Let $p(x,t)$ be a smooth, strictly positive probability density evolving under the Fokker-Planck equation. Define the score function $s(x,t) = \partial_x \log p(x,t)$.
+
+**(a)** Compute the score explicitly for $p(x) = \dfrac{1}{\sqrt{2\pi}\,\sigma}\,e^{-(x-\mu)^2/(2\sigma^2)}$. In what direction does the score point relative to the mean? What is the score at $x = \mu$?
+
+**(b)** Show that the score satisfies $s = \dfrac{\partial_x p}{p}$. Then, starting from the pure diffusion Fokker-Planck equation $\partial_t p = D\,\partial_{xx} p$, derive the PDE that $s$ satisfies:
+$$\frac{\partial s}{\partial t} = D\,\frac{\partial^2 s}{\partial x^2} + 2D\,s\,\frac{\partial s}{\partial x}$$
+*(Hint: differentiate $\log p$ with respect to $t$ and $x$, using the identity $\partial_t(\partial_x \log p) = \partial_x\!\left(\frac{\partial_t p}{p}\right)$.)*
+
+**(c)** Consider the forward SDE $dX_t = -\frac{\beta}{2}\,X_t\,dt + \sqrt{\beta}\,dW_t$ for constant $\beta > 0$. The transition density is $p(x_t \mid x_0) = \mathcal{N}\!\bigl(\alpha_t\,x_0,\;\sigma_t^2\bigr)$ where $\alpha_t = e^{-\beta t/2}$ and $\sigma_t^2 = 1 - e^{-\beta t}$. Show that $p(x_t \mid x_0) \to \mathcal{N}(0, 1)$ as $t \to \infty$, regardless of $x_0$. Interpret: why does the SDE "forget" its initial condition?
+
+**(d)** Anderson's theorem (1982) states that the reverse-time SDE corresponding to $dX_t = f(X_t, t)\,dt + g(t)\,dW_t$ is:
+$$dX_t = \bigl[f(X_t, t) - g(t)^2\,s(X_t, t)\bigr]\,dt + g(t)\,d\bar{W}_t$$
+where $s(x,t) = \partial_x \log p(x,t)$ and $\bar{W}_t$ is a reverse-time Brownian motion. Write the reverse SDE explicitly for the forward process in part (c). Explain why the score $s$ is the key quantity needed to reverse the dynamics.
+
+---
+
+## Q10 (10 pts) --- Synthesis: From Heat Equation to Probability Flow
+
+This question ties together the major themes of the exam: the heat equation, Fourier analysis, characteristics, Fokker-Planck dynamics, and the score function.
+
+**(a)** Consider the Fokker-Planck equation from Q8:
+$$\frac{\partial p}{\partial t} = \frac{\partial}{\partial x}\!\left(\frac{\beta}{2}\,x\,p\right) + \frac{\beta}{2}\,\frac{\partial^2 p}{\partial x^2}$$
+Show that when the drift is absent ($\beta x$ term removed), this is just the heat equation for $p$, and its solution involves convolution with the heat kernel from Q5. What role does the drift term play in preventing the density from spreading to infinity?
+
+**(b)** The probability flow ODE associated with the SDE $dX_t = f(X_t)\,dt + g(t)\,dW_t$ is the deterministic ODE:
+$$\frac{dX}{dt} = f(X, t) - \frac{1}{2}\,g(t)^2\,s(X, t)$$
+which generates the same time-dependent marginal densities $p(x,t)$ as the original SDE. For the forward SDE from Q9(c), write the probability flow ODE explicitly. Explain why this ODE is deterministic yet produces a family of densities $p(x,t)$ that matches the stochastic process.
+
+**(c)** The method of characteristics from Q7 solves first-order PDEs by tracing trajectories. The probability flow ODE defines trajectories in $(x,t)$-space along which probability is transported. Contrast this with the characteristics of the transport equation $u_t + c\,u_x = 0$: in both cases information travels along curves, but the probability flow ODE's velocity field depends on $s(x,t)$---the global structure of the density. Explain in 2--3 sentences why this dependence on the score makes the probability flow fundamentally different from a simple transport equation.
+
+**(d)** In Q2 we saw that the heat equation acts as a low-pass filter, preferentially damping high-frequency Fourier modes ($e^{-n^2 t}$ decay). The Fokker-Planck equation similarly smooths the probability density over time. If we could reverse this smoothing---recovering the original density from the smoothed one---we would need to know which frequencies were lost and by how much. Explain in 3--4 sentences how the score function $s(x,t) = \partial_x \log p(x,t)$ encodes exactly this information, and why knowing $s$ at all times is equivalent to knowing $p$ (up to normalization) at all times. Connect your answer to the role of the score in the reverse-time SDE from Q9(d).

@@ -1,0 +1,378 @@
+---
+title: "Exam 2E: ML-Applied Calculus --- Answer Key"
+subtitle: "Lessons 34--36"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear reasoning. Partial credit is generous for correct setup with arithmetic errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- Gradient Computation and Steepest Ascent
+
+**(a)** $L(w_1, w_2) = w_1^2 w_2 + e^{-w_2}\sin(w_1)$.
+
+$$\frac{\partial L}{\partial w_1} = 2w_1 w_2 + e^{-w_2}\cos(w_1)$$
+
+$$\frac{\partial L}{\partial w_2} = w_1^2 - e^{-w_2}\sin(w_1)$$
+
+**(b)** At $(w_1, w_2) = (\pi/2,\; 0)$:
+
+$$\frac{\partial L}{\partial w_1} = 2 \cdot \frac{\pi}{2} \cdot 0 + e^{0}\cos(\pi/2) = 0 + 1 \cdot 0 = 0$$
+
+$$\frac{\partial L}{\partial w_2} = \frac{\pi^2}{4} - e^{0}\sin(\pi/2) = \frac{\pi^2}{4} - 1 \approx 1.467$$
+
+$$\nabla L = \left(0,\;\; \frac{\pi^2}{4} - 1\right)$$
+
+**(c)** $L$ increases most rapidly in the gradient direction: $\hat{\mathbf{u}} = \dfrac{\nabla L}{|\nabla L|} = (0, 1)$ (since the first component is zero).
+
+Magnitude of steepest increase: $|\nabla L| = \dfrac{\pi^2}{4} - 1 \approx 1.467$.
+
+**(d)** $D_{\mathbf{u}}L = \nabla L \cdot \mathbf{u} = \left(0,\; \frac{\pi^2}{4} - 1\right) \cdot \frac{1}{\sqrt{2}}(1, -1) = \frac{1}{\sqrt{2}}\left(0 - \frac{\pi^2}{4} + 1\right) = -\frac{1}{\sqrt{2}}\left(\frac{\pi^2}{4} - 1\right) \approx -1.037$.
+
+Since $D_{\mathbf{u}}L < 0$, stepping in direction $\mathbf{u}$ **decreases** $L$.
+
+**(e)** The gradient $\nabla L$ points in the direction of maximum local increase of $L$. Therefore $-\nabla L$ is the direction of maximum local \textit{decrease}. For any unit vector $\mathbf{u}$, the directional derivative $D_{\mathbf{u}}L = \nabla L \cdot \mathbf{u} \geq -|\nabla L|$, with equality when $\mathbf{u} = -\nabla L / |\nabla L|$.
+
+This strategy can fail globally because steepest descent only uses first-order local information: it knows the slope at the current point but nothing about curvature or distant parts of the landscape. This leads to zigzag trajectories in ravines (high condition number) and potential convergence to saddle points rather than true minima.
+
+---
+
+## Q2 --- Jacobians and the Vector Chain Rule
+
+**(a)**
+$$J_{\mathbf{f}}(u, v) = \begin{pmatrix} 2u & 1 \\ v & u \end{pmatrix}, \qquad J_{\mathbf{g}}(x, y) = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
+
+**(b)** At $(x, y) = (2, 1)$: $\mathbf{g}(2, 1) = (3, 1)$.
+
+$$J_{\mathbf{f}}(3, 1) = \begin{pmatrix} 6 & 1 \\ 1 & 3 \end{pmatrix}$$
+
+$$J_{\mathbf{f} \circ \mathbf{g}} = J_{\mathbf{f}}(3, 1) \cdot J_{\mathbf{g}}(2, 1) = \begin{pmatrix} 6 & 1 \\ 1 & 3 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = \begin{pmatrix} 7 & 5 \\ 4 & -2 \end{pmatrix}$$
+
+**(c)** Direct computation: $\mathbf{g}(x,y) = (x+y,\; x-y)$, so
+
+$$\mathbf{f}\bigl(\mathbf{g}(x,y)\bigr) = \bigl((x+y)^2 + (x-y),\;\; (x+y)(x-y)\bigr) = \bigl(x^2 + 2xy + y^2 + x - y,\;\; x^2 - y^2\bigr)$$
+
+$$J = \begin{pmatrix} 2x + 2y + 1 & 2x + 2y - 1 \\ 2x & -2y \end{pmatrix}$$
+
+At $(2, 1)$:
+
+$$J = \begin{pmatrix} 7 & 5 \\ 4 & -2 \end{pmatrix} \quad \checkmark$$
+
+**(d)** In a neural network, each layer $\ell$ maps $\mathbb{R}^{n_\ell} \to \mathbb{R}^{n_{\ell+1}}$ with Jacobian of shape $n_{\ell+1} \times n_\ell$. The chain rule gives $J_{\text{net}} = J_L \cdot J_{L-1} \cdots J_1$, where each product is a valid matrix multiplication because the output dimension of layer $\ell$ (columns of $J_\ell$... actually rows of $J_{\ell+1}$) matches the input dimension of layer $\ell+1$. The final Jacobian maps input perturbations $\delta\mathbf{x} \in \mathbb{R}^{n_0}$ to output perturbations $\delta\mathbf{y} \in \mathbb{R}^{n_L}$. The intermediate dimensions must match because each Jacobian multiplication contracts over the shared dimension --- the output space of one layer must equal the input space of the next.
+
+---
+
+## Q3 --- Numerator vs.\ Denominator Layout and Element-wise Operations
+
+**(a)** $\mathbf{f}(x_1, x_2, x_3) = (x_1 x_2 + x_3,\; x_2^2 - x_1)$.
+
+**Numerator layout** ($2 \times 3$):
+
+$$J = \begin{pmatrix} x_2 & x_1 & 1 \\ -1 & 2x_2 & 0 \end{pmatrix}$$
+
+**Denominator layout** ($3 \times 2$): the transpose of the above:
+
+$$J^T = \begin{pmatrix} x_2 & -1 \\ x_1 & 2x_2 \\ 1 & 0 \end{pmatrix}$$
+
+**(b)** Since $\sigma$ acts element-wise, $\dfrac{\partial \sigma(\mathbf{z})_i}{\partial z_j} = 0$ for $i \neq j$ and $\sigma'(z_i)$ for $i = j$. Thus:
+
+$$J_\sigma = \begin{pmatrix} \sigma'(z_1) & 0 & \cdots & 0 \\ 0 & \sigma'(z_2) & \cdots & 0 \\ \vdots & & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma'(z_n) \end{pmatrix} = \operatorname{diag}\bigl(\sigma'(z_1), \ldots, \sigma'(z_n)\bigr)$$
+
+The off-diagonal entries vanish because output $i$ depends only on input $i$. $\square$
+
+**(c)** For ReLU, $\sigma(z) = \max(0, z)$:
+
+- $z > 0$: $\sigma'(z) = 1$ (the identity region)
+- $z < 0$: $\sigma'(z) = 0$ (the zero region)
+- $z = 0$: the left derivative is 0 and the right derivative is 1, so $\sigma'(0)$ is undefined (the function has a corner). In practice, this point has measure zero under continuous distributions, and the convention $\sigma'(0) = 0$ is used.
+
+**(d)** $\mathbf{a} = \sigma(\mathbf{z})$ where $\mathbf{z} = W\mathbf{x} + \mathbf{b}$. By the chain rule:
+
+$$\frac{\partial \mathbf{a}}{\partial \mathbf{x}} = \frac{\partial \sigma}{\partial \mathbf{z}} \cdot \frac{\partial \mathbf{z}}{\partial \mathbf{x}} = \operatorname{diag}\bigl(\sigma'(\mathbf{z})\bigr) \cdot W$$
+
+Dimensions: $\operatorname{diag}(\sigma'(\mathbf{z}))$ is $m \times m$, $W$ is $m \times n$, so the result is $m \times n$. This maps perturbations in $\mathbf{x} \in \mathbb{R}^n$ to perturbations in $\mathbf{a} \in \mathbb{R}^m$. The diagonal matrix acts as a "gate" that selectively passes or blocks each row of $W$ depending on whether the corresponding neuron is active.
+
+---
+
+## Q4 --- Single-Neuron Backpropagation
+
+**(a)** Forward pass with $w_1 = 2$, $w_2 = -1$, $b = 1$, $x_1 = 3$, $x_2 = 1$, $y = 4$:
+
+$$z = 2(3) + (-1)(1) + 1 = 6 - 1 + 1 = 6$$
+$$a = \text{ReLU}(6) = 6$$
+$$L = \frac{1}{2}(6 - 4)^2 = \frac{1}{2}(4) = 2$$
+
+**(b)** Local derivatives:
+
+$$\frac{\partial L}{\partial a} = a - y = 6 - 4 = 2$$
+
+$$\frac{\partial a}{\partial z} = 1 \quad \text{(since } z = 6 > 0\text{)}$$
+
+$$\frac{\partial z}{\partial w_1} = x_1 = 3, \qquad \frac{\partial z}{\partial w_2} = x_2 = 1, \qquad \frac{\partial z}{\partial b} = 1$$
+
+**(c)** Full gradients via chain rule:
+
+$$\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial z}{\partial w_1} = 2 \cdot 1 \cdot 3 = \mathbf{6}$$
+
+$$\frac{\partial L}{\partial w_2} = 2 \cdot 1 \cdot 1 = \mathbf{2}$$
+
+$$\frac{\partial L}{\partial b} = 2 \cdot 1 \cdot 1 = \mathbf{2}$$
+
+**(d)** With $x_2 = 8$: $z = 2(3) + (-1)(8) + 1 = 6 - 8 + 1 = -1 < 0$.
+
+Since $z < 0$, $\text{ReLU}(z) = 0$, so $a = 0$ and $\dfrac{\partial a}{\partial z} = 0$.
+
+All parameter gradients become **zero**:
+
+$$\frac{\partial L}{\partial w_1} = (\hat{y} - y) \cdot \underbrace{0}_{\text{ReLU gate}} \cdot x_1 = 0, \qquad \frac{\partial L}{\partial w_2} = 0, \qquad \frac{\partial L}{\partial b} = 0$$
+
+The ReLU gate is "closed," blocking all gradient flow. When this happens across many layers simultaneously, no gradient signal reaches the early-layer weights. This is the **dying ReLU problem** (a specific form of the vanishing gradient problem), where neurons become permanently inactive and cease learning.
+
+---
+
+## Q5 --- Computation Graphs and Forward vs.\ Reverse Mode
+
+**(a)** Forward pass with $x = 2$, $w_1 = 3$, $w_2 = -1$:
+
+$$n_1 = x \cdot w_1 = 2 \cdot 3 = 6$$
+$$n_2 = n_1 + w_2 = 6 + (-1) = 5$$
+$$L = n_2^2 = 25$$
+
+Computation graph: $x, w_1 \to [\times] \to n_1$, then $n_1, w_2 \to [+] \to n_2$, then $n_2 \to [\text{square}] \to L$.
+
+**(b)** Reverse mode (backward pass):
+
+$$\frac{\partial L}{\partial L} = 1$$
+
+$$\frac{\partial L}{\partial n_2} = 2n_2 = 2(5) = 10$$
+
+$$\frac{\partial L}{\partial n_1} = \frac{\partial L}{\partial n_2} \cdot \frac{\partial n_2}{\partial n_1} = 10 \cdot 1 = 10$$
+
+$$\frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial n_2} \cdot \frac{\partial n_2}{\partial w_2} = 10 \cdot 1 = \mathbf{10}$$
+
+$$\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial n_1} \cdot \frac{\partial n_1}{\partial w_1} = 10 \cdot x = 10 \cdot 2 = \mathbf{20}$$
+
+One backward pass yields gradients for **both** parameters. $\checkmark$
+
+**(c)** Forward mode for $\dfrac{\partial L}{\partial w_1}$:
+
+- Seed: $\dot{w}_1 = 1$, $\dot{w}_2 = 0$, $\dot{x} = 0$.
+- $\dot{n}_1 = \dot{x} \cdot w_1 + x \cdot \dot{w}_1 = 0 + 2 \cdot 1 = 2$
+- $\dot{n}_2 = \dot{n}_1 + \dot{w}_2 = 2 + 0 = 2$
+- $\dot{L} = 2n_2 \cdot \dot{n}_2 = 2(5)(2) = \mathbf{20}$ $\checkmark$
+
+Forward mode for $\dfrac{\partial L}{\partial w_2}$ (separate pass):
+
+- Seed: $\dot{w}_1 = 0$, $\dot{w}_2 = 1$.
+- $\dot{n}_1 = 0$
+- $\dot{n}_2 = 0 + 1 = 1$
+- $\dot{L} = 2(5)(1) = \mathbf{10}$ $\checkmark$
+
+Two forward passes needed for two parameters.
+
+**(d)** For training neural networks: we have $P$ parameters (often millions) and 1 scalar loss. Reverse mode computes all $P$ gradients in **one backward pass**, while forward mode would require $P$ separate passes. This makes reverse mode (backpropagation) $P$ times more efficient.
+
+If a network had 1 input and $K$ outputs, **forward mode** would be more efficient: one forward pass gives the derivatives of all $K$ outputs with respect to the single input, whereas reverse mode would need $K$ backward passes (one seeded from each output).
+
+---
+
+## Q6 --- MSE Loss Gradient and Two-Layer Network
+
+**(a)** The chain rule decomposition:
+
+$$\frac{\partial L}{\partial w_1} = \underbrace{(\hat{y} - y)}_{\partial L / \partial \hat{y}} \cdot \underbrace{w_2}_{\partial \hat{y}/\partial h} \cdot \underbrace{\sigma'(z_1)}_{\partial h / \partial z_1} \cdot \underbrace{x}_{\partial z_1 / \partial w_1}$$
+
+Each factor in order: MSE loss derivative $\to$ output-layer weight (scales the gradient) $\to$ ReLU gate (passes or blocks) $\to$ input value (determines gradient magnitude).
+
+**(b)** Forward pass with $w_1 = 1$, $b_1 = 0$, $w_2 = 2$, $b_2 = -1$, $x = 3$, $y = 7$:
+
+$$z_1 = w_1 x + b_1 = 1(3) + 0 = 3$$
+$$h = \text{ReLU}(3) = 3$$
+$$\hat{y} = w_2 h + b_2 = 2(3) + (-1) = 5$$
+$$L = \frac{1}{2}(5 - 7)^2 = \frac{1}{2}(4) = 2$$
+
+Backward pass:
+
+$$\frac{\partial L}{\partial w_2} = (\hat{y} - y) \cdot h = (5 - 7)(3) = (-2)(3) = \mathbf{-6}$$
+
+$$\frac{\partial L}{\partial w_1} = (\hat{y} - y) \cdot w_2 \cdot \sigma'(z_1) \cdot x = (-2)(2)(1)(3) = \mathbf{-12}$$
+
+**(c)** The gradient for $w_1$ (first layer) passes through multiplicative factors $w_2$ and $\sigma'(z_1)$ that the gradient for $w_2$ (second layer) does not encounter. With many layers, the gradient passes through many such factors: $\dfrac{\partial L}{\partial w_1} \propto \prod_{\ell=1}^{L} w_\ell \cdot \sigma'(z_\ell)$.
+
+If $|w_\ell \sigma'(z_\ell)| < 1$ at each layer, this product shrinks exponentially --- the **vanishing gradient problem**. Sigmoid has $\sigma'(z) \leq 1/4$, which compounds the shrinkage. ReLU has $\sigma'(z) = 1$ for active neurons, so it contributes a factor of exactly 1 and does not shrink the gradient. This is the primary reason ReLU replaced sigmoid in deep networks.
+
+**(d)** The batch MSE loss: $L = \frac{1}{2N}\sum_{i=1}^N (\hat{y}_i - y_i)^2$.
+
+$$\frac{\partial L}{\partial w_2} = \frac{1}{2N}\sum_{i=1}^N 2(\hat{y}_i - y_i) \cdot \frac{\partial \hat{y}_i}{\partial w_2} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i) \cdot h_i \qquad \square$$
+
+SGD approximates this sum using a random mini-batch of size $B \ll N$ because: (1) computing the full-batch gradient requires a forward and backward pass for every training example, which is expensive when $N$ is large; (2) the mini-batch gradient is an unbiased estimator of the full-batch gradient; and (3) the noise in mini-batch gradients provides implicit regularization that helps escape sharp minima and improves generalization.
+
+---
+
+## Q7 --- SGD, Momentum, and Adam
+
+**(a)** Vanilla SGD: $\mathbf{w}_{t+1} = \mathbf{w}_t - \eta \nabla L(\mathbf{w}_t)$.
+
+Maximum stable learning rate: $\eta < 2/\lambda_{\max} = 2/200 = 0.01$.
+
+With $\eta = 0.01$, progress along the flat direction ($\lambda_2 = 1$) is $\eta \lambda_2 = 0.01$ per step --- extremely slow. Meanwhile, the trajectory oscillates back and forth across the steep direction, producing a **zigzag pattern** that makes little net progress along the ravine floor.
+
+**(b)** Momentum update:
+
+$$\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla L(\mathbf{w}_t)$$
+$$\mathbf{w}_{t+1} = \mathbf{w}_t - \eta \mathbf{v}_t$$
+
+The ball analogy: momentum accumulates velocity. The gradient component across the ravine oscillates in sign (alternating positive and negative), so the velocity in that direction **averages toward zero** over successive steps. The gradient component along the ravine floor is consistent in sign, so velocity **accumulates**, accelerating progress. Momentum effectively filters out the oscillatory component and amplifies the consistent component.
+
+**(c)** Adam update:
+
+$$m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t, \qquad v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2$$
+$$\hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \qquad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}$$
+$$\mathbf{w}_{t+1} = \mathbf{w}_t - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \varepsilon}$$
+
+Parameters with **sparse, intermittent gradients** receive larger effective learning rates. The denominator $\sqrt{\hat{v}_t}$ is the RMS of recent gradients: sparse gradients produce a small $\hat{v}_t$, making the effective step $\eta / \sqrt{\hat{v}_t}$ **large**. Parameters with consistently large gradients have large $\hat{v}_t$, producing a **smaller** effective step. Adam naturally up-weights rare but informative gradient signals.
+
+**(d)** $L(w) = \frac{1}{2}w^2$, $\nabla L(w) = w$.
+
+**Vanilla SGD** ($\eta = 0.1$):
+
+- $w_0 = 5$: $w_1 = 5 - 0.1(5) = 4.5$
+- $w_1 = 4.5$: $w_2 = 4.5 - 0.1(4.5) = 4.05$
+- $L(w_2) = \frac{1}{2}(4.05)^2 = 8.20125$
+
+**Momentum** ($\eta = 0.1$, $\beta = 0.9$, $v_0 = 0$):
+
+- Step 1: $v_1 = 0.9(0) + 5 = 5$, $w_1 = 5 - 0.1(5) = 4.5$
+- Step 2: $v_2 = 0.9(5) + 4.5 = 9.0$, $w_2 = 4.5 - 0.1(9.0) = 3.6$
+- $L(w_2) = \frac{1}{2}(3.6)^2 = 6.48$
+
+Momentum reaches a lower loss: $6.48 < 8.20125$. The accumulated velocity in $v_t$ produces a larger effective step, converging faster on this simple quadratic.
+
+---
+
+## Q8 --- Loss Landscape Geometry
+
+**(a)** Eigenvalues $\{10, 3, 0.5, -0.2, -4\}$: this is a **saddle point** (mixed signs).
+
+**Index** = number of negative eigenvalues = **2**.
+
+Condition number: $\kappa = \dfrac{\max|\lambda_i|}{\min|\lambda_i|} = \dfrac{10}{0.2} = \mathbf{50}$.
+
+**(b)** $P(\text{all positive}) = (1/2)^{100} = 2^{-100} \approx 10^{-30}$.
+
+In 100 dimensions, the probability that all eigenvalues share the same sign is astronomically small, so essentially every critical point is a saddle point. The fraction of saddle points among all critical points approaches 1 exponentially fast with dimension.
+
+**(c)** Key consequence of convexity: **every local minimum is a global minimum**, so any descent method that finds a critical point with zero gradient has found the global solution.
+
+The loss of a multi-layer ReLU network is **not convex**. The composition of linear layers with nonlinear activations creates a highly non-convex function with many saddle points. More concretely, permuting the hidden neurons of any layer produces a different weight vector with the same loss --- this symmetry alone guarantees multiple equivalent minima and hence non-convexity.
+
+**(d)** $\kappa = 100 / 0.01 = 10{,}000$.
+
+Iterations $\sim O\bigl(\kappa \ln(1/\epsilon)\bigr) = O\bigl(10{,}000 \cdot \ln(10^6)\bigr) = O(10{,}000 \cdot 6\ln 10) \approx O(10{,}000 \cdot 13.82) \approx 138{,}000$ iterations.
+
+A large condition number makes optimization difficult because the learning rate must be set small enough for stability in the steepest direction ($\eta < 2/\lambda_{\max}$), but then progress along the flattest direction ($\propto \eta \lambda_{\min}$) is agonizingly slow. The optimizer takes many tiny steps in the flat direction while being constrained by the steep direction --- the convergence rate is governed by the ratio $\lambda_{\max}/\lambda_{\min}$, not by either eigenvalue alone.
+
+---
+
+## Q9 --- Learning Rates, Initialization, and Gradient Clipping
+
+**(a)** At random initialization, weights are essentially random, so gradients are noisy and unreliable --- their direction may be far from the true descent direction. A small initial learning rate prevents catastrophically large updates based on these poor early gradients. For Adam specifically, the running moment estimates $m_t$ and $v_t$ are initialized at zero and require several steps to accumulate reliable statistics; warmup gives the optimizer time to "calibrate" before taking large steps.
+
+**(b)** Evaluating the cosine schedule:
+
+- $t = 0$: $\eta_0 = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(1 + \cos 0) = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(2) = \eta_{\max}$
+- $t = T/2$: $\eta_{T/2} = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(1 + \cos(\pi/2)) = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(1) = \frac{\eta_{\max} + \eta_{\min}}{2}$
+- $t = T$: $\eta_T = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(1 + \cos\pi) = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})(0) = \eta_{\min}$
+
+The cosine curve has a very gentle slope near $t = T$ (the derivative of $\cos(\pi t/T)$ goes to zero as $t \to T$), so the learning rate decreases very slowly in the final phase. This allows the optimizer to make fine adjustments and settle precisely into a minimum without overshooting --- unlike a step-down schedule, which creates abrupt transients.
+
+**(c)** Given $z = \sum_{j=1}^n w_j a_j$ with $w_j$ and $a_j$ independent, zero-mean:
+
+$$\operatorname{Var}(z) = \operatorname{Var}\!\left(\sum_{j=1}^n w_j a_j\right) = \sum_{j=1}^n \operatorname{Var}(w_j a_j)$$
+
+For independent zero-mean random variables: $\operatorname{Var}(w_j a_j) = \operatorname{Var}(w_j)\operatorname{Var}(a_j) = \sigma_w^2 \sigma_a^2$. Therefore:
+
+$$\operatorname{Var}(z) = n \sigma_w^2 \sigma_a^2 \qquad \square$$
+
+Setting $\sigma_w^2 = 1/n$ gives $\operatorname{Var}(z) = \sigma_a^2$, preserving variance through the layer (Xavier).
+
+He initialization doubles the variance ($\sigma_w^2 = 2/n$) because ReLU sets roughly half the activations to zero. If $a_j = \text{ReLU}(z_j)$ and $z_j$ is symmetric around zero, then $E[a_j^2] = \frac{1}{2}E[z_j^2]$ (only the positive half survives). The factor of 2 compensates for this halving, so that $\operatorname{Var}(z_{\text{next}}) = n \cdot \frac{2}{n} \cdot \frac{1}{2}\sigma_a^2 = \sigma_a^2$.
+
+**(d)** **Gradient clipping scenario:** During training, the loss surface may have a steep cliff (common in recurrent networks or near pathological regions of the landscape). A single step takes the model to a region with an enormous gradient, leading to a catastrophically large update that destabilizes training or causes numerical overflow. Gradient clipping caps $\|\nabla L\|$ at threshold $\tau$, preventing the single-step blowup while preserving the descent direction.
+
+**Gradient normalization** always sets $\|\nabla L\| = \tau$, regardless of the original magnitude. This means even when the gradient is naturally small (near a minimum where fine-grained updates are needed), the step size is forced to be $\tau$ --- potentially overshooting the minimum. The downside is that normalization removes all information about gradient magnitude, making it impossible for the optimizer to take smaller steps as it approaches convergence.
+
+---
+
+## Q10 --- Synthesis: Backpropagation Through a Mini-Network
+
+**(a)** Forward pass with $W = \begin{pmatrix} 1 & -1 \\ 2 & 1 \end{pmatrix}$, $\mathbf{v} = (1, -1)$, $\mathbf{x} = (2, 1)$, $y = 3$:
+
+$$z_1 = 1(2) + (-1)(1) = 1, \qquad z_2 = 2(2) + 1(1) = 5$$
+$$a_1 = \text{ReLU}(1) = 1, \qquad a_2 = \text{ReLU}(5) = 5$$
+$$\hat{y} = 1(1) + (-1)(5) = 1 - 5 = -4$$
+$$L = \frac{1}{2}(-4 - 3)^2 = \frac{1}{2}(49) = 24.5$$
+
+**(b)** Backward pass:
+
+$$\frac{\partial L}{\partial \hat{y}} = \hat{y} - y = -4 - 3 = -7$$
+
+Output layer gradients:
+
+$$\frac{\partial L}{\partial v_1} = \frac{\partial L}{\partial \hat{y}} \cdot a_1 = (-7)(1) = \mathbf{-7}$$
+
+$$\frac{\partial L}{\partial v_2} = \frac{\partial L}{\partial \hat{y}} \cdot a_2 = (-7)(5) = \mathbf{-35}$$
+
+Backpropagate to hidden layer:
+
+$$\frac{\partial L}{\partial a_1} = \frac{\partial L}{\partial \hat{y}} \cdot v_1 = (-7)(1) = -7$$
+
+$$\frac{\partial L}{\partial a_2} = \frac{\partial L}{\partial \hat{y}} \cdot v_2 = (-7)(-1) = 7$$
+
+Through ReLU gates ($z_1 = 1 > 0$, so gate$_1 = 1$; $z_2 = 5 > 0$, so gate$_2 = 1$):
+
+$$\frac{\partial L}{\partial z_1} = -7 \cdot 1 = -7, \qquad \frac{\partial L}{\partial z_2} = 7 \cdot 1 = 7$$
+
+Hidden layer weight gradients:
+
+$$\frac{\partial L}{\partial w_{11}} = \frac{\partial L}{\partial z_1} \cdot x_1 = (-7)(2) = \mathbf{-14}$$
+
+$$\frac{\partial L}{\partial w_{12}} = \frac{\partial L}{\partial z_1} \cdot x_2 = (-7)(1) = \mathbf{-7}$$
+
+$$\frac{\partial L}{\partial w_{21}} = \frac{\partial L}{\partial z_2} \cdot x_1 = (7)(2) = \mathbf{14}$$
+
+$$\frac{\partial L}{\partial w_{22}} = \frac{\partial L}{\partial z_2} \cdot x_2 = (7)(1) = \mathbf{7}$$
+
+**(c)** The Jacobian $\dfrac{\partial \mathbf{a}}{\partial \mathbf{x}} = \operatorname{diag}\bigl(\sigma'(z_1), \sigma'(z_2)\bigr) \cdot W$.
+
+Both $z_1 = 1 > 0$ and $z_2 = 5 > 0$, so both ReLU gates are open:
+
+$$\frac{\partial \mathbf{a}}{\partial \mathbf{x}} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & -1 \\ 2 & 1 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ 2 & 1 \end{pmatrix}$$
+
+Since both gates are open, the Jacobian equals $W$ itself. The hidden representation responds linearly to input perturbations, with the weight matrix determining the sensitivity directions. A perturbation $\delta\mathbf{x} = (1, 0)$ changes $\mathbf{a}$ by $(1, 2)$; a perturbation $(0, 1)$ changes $\mathbf{a}$ by $(-1, 1)$.
+
+**(d)** Neither neuron is dead in this example: both $z_1 = 1 > 0$ and $z_2 = 5 > 0$, so both neurons are active.
+
+However, if the weights or inputs were such that $z_i < 0$ for some neuron $i$, then $a_i = 0$ and the ReLU gate is closed. All gradients flowing through that neuron are multiplied by $\sigma'(z_i) = 0$:
+
+$$\frac{\partial L}{\partial w_{i1}} = \frac{\partial L}{\partial z_i} \cdot x_1 = 0, \qquad \frac{\partial L}{\partial w_{i2}} = \frac{\partial L}{\partial z_i} \cdot x_2 = 0$$
+
+With zero gradients, the weights never update and the neuron remains dead permanently. **He initialization** ($w_{ij} \sim \mathcal{N}(0, 2/n_{\text{in}})$) reduces this risk by ensuring the pre-activations $z_i$ have sufficient variance to be positive for roughly half the training inputs at initialization. Small initial biases (e.g., $b = 0.01 > 0$) can also shift the distribution of $z_i$ slightly positive, further reducing the probability of dead neurons at the start of training.

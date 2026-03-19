@@ -1,8 +1,27 @@
-# 🏔 The Alignment Researcher's Gauntlet
+---
+title: "The Alignment Researcher's Gauntlet"
+subtitle: "Comprehensive Capstone Project --- All Phases"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
 
 ## Comprehensive Capstone Project — All Phases
-
----
 
 | | |
 |---|---|
@@ -13,7 +32,7 @@
 
 > *"You've spent hundreds of hours building mathematical foundations, understanding neural networks, exploring interpretability, and studying alignment theory. This project asks you to use ALL of it — not in isolation, but woven together the way real alignment research demands."*
 
----
+***
 
 ## The Scenario
 
@@ -21,7 +40,7 @@ You are investigating a small transformer language model that exhibits a concern
 
 You will work with GPT-2 small (124M parameters) via TransformerLens throughout.
 
----
+***
 
 ## Part 1: Mathematical Foundations (45 min)
 
@@ -50,7 +69,7 @@ Take GPT-2 small's embedding matrix (50257 × 768).
 2. For a specific prompt where the model is sycophantic vs. truthful, compute the KL divergence between the sycophantic output distribution and the truthful output distribution. Interpret: how "far apart" are these behaviors in information-theoretic terms?
 3. **Bayesian framing:** If you have a prior P(sycophantic) and observe the model's behavior on N test cases, write the posterior update. How many observations would you need to be 95% confident the model is sycophantic (vs. randomly wrong)?
 
----
+***
 
 ## Part 2: Neural Network Mechanics (60 min)
 
@@ -77,7 +96,7 @@ Take GPT-2 small's embedding matrix (50257 × 768).
 2. Identify which heads appear to be doing positional attention (diagonal patterns), which are doing content-based attention, and which might be induction heads.
 3. Compute the OV circuit (W_O @ W_V) for one identified attention head. What is its rank? Interpret: what kind of information does this head move from values to the residual stream?
 
----
+***
 
 ## Part 3: Mechanistic Investigation (90 min)
 
@@ -102,7 +121,7 @@ Take GPT-2 small's embedding matrix (50257 × 768).
 2. If you computed the Local Learning Coefficient (LLC) for the circuit's parameters, would you expect it to be higher or lower than for a truthfulness circuit? Justify using the relationship between LLC, functional complexity, and generalization.
 3. **Phase transition speculation:** At what point during training might sycophancy emerge? Would you expect it to appear gradually or as a phase transition? Connect to the scaling/emergence literature.
 
----
+***
 
 ## Part 4: Mathematical Enrichment Connections (30 min)
 
@@ -118,7 +137,7 @@ Take GPT-2 small's embedding matrix (50257 × 768).
 1. **Permutation symmetry:** GPT-2 small has 12 heads per layer. If you permuted the heads within a layer (and correspondingly permuted W_O), would the model's behavior change? What group describes this symmetry? What does this imply about the "true" number of distinct models in weight space?
 2. **Topological intuition:** The loss landscape near the sycophancy solution likely has a specific structure. Is the set of weight configurations that produce sycophantic behavior likely to be a point, a line, a surface, or a higher-dimensional manifold? Connect to the concept of degeneracy in SLT.
 
----
+***
 
 ## Part 5: Alignment Analysis & Proposed Fix (45 min)
 
@@ -143,7 +162,7 @@ Write a 1-page technical proposal for mitigating the sycophancy behavior you've 
 3. **Predict failure modes** of your intervention — what could go wrong? Use concepts from the alignment literature (Goodhart, mesa-optimization, distributional shift)
 4. **Connect to at least 5 different lessons** from across the curriculum, showing how each concept informs your approach
 
----
+***
 
 ## Deliverables
 
@@ -156,7 +175,7 @@ Write a 1-page technical proposal for mitigating the sycophancy behavior you've 
 | Part 5: Alignment Analysis & Fix | Written proposal + any supporting code | ~2h |
 | **Total** | | **~10–12 hours** |
 
----
+***
 
 ## Grading Rubric
 
@@ -175,6 +194,6 @@ Write a 1-page technical proposal for mitigating the sycophancy behavior you've 
 | C (60–74%) | Completed all parts but missing key connections or mathematical depth |
 | Below 60% | Significant gaps — revisit weak phases before attempting research |
 
----
+***
 
 *"The goal of this project is not to produce a perfect analysis — it's to demonstrate that you can bring together mathematical foundations, neural network understanding, interpretability techniques, and alignment reasoning to investigate a real problem. This is what alignment research looks like."*

@@ -1,0 +1,202 @@
+---
+title: "Exam 2B: Multivariable Calculus"
+subtitle: "Lessons 19--23 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \usepackage{tikz}
+      \usetikzlibrary{arrows.meta}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Curves, Curvature, and Geometry
+
+The helix $\mathbf{r}(t) = (\cos t,\; \sin t,\; t)$ for $t \in [0, 4\pi]$ traces two full loops rising through 3D space.
+
+**(a)** Compute the tangent vector $\mathbf{r}'(t)$ and the speed $|\mathbf{r}'(t)|$. Is this a unit-speed parameterization? If not, what constant would you divide $\mathbf{r}'(t)$ by to get the unit tangent $\mathbf{T}$?
+
+**(b)** Compute the arc length of the helix from $t = 0$ to $t = 4\pi$.
+
+**(c)** The curvature of a space curve is $\kappa = \dfrac{|\mathbf{r}' \times \mathbf{r}''|}{|\mathbf{r}'|^3}$. Compute $\mathbf{r}''(t)$, the cross product $\mathbf{r}' \times \mathbf{r}''$, and the curvature $\kappa$. What is the radius of the osculating circle?
+
+**(d)** For a circle of radius $R$ in the plane, the curvature is $\kappa = 1/R$. The helix has the same curvature as a circle of what radius? Explain intuitively why the helix has lower curvature than the unit circle despite having the same projection onto the $xy$-plane. *(Hint: the climb "straightens" the curve.)*
+
+---
+
+## Q2 (10 pts) --- Multivariable Functions, Limits, and Contours
+
+Consider $f(x, y) = \dfrac{x^2 y}{x^4 + y^2}$.
+
+**(a)** Approach the origin along the path $y = mx$ (for constant $m \neq 0$). Compute $\lim_{x \to 0} f(x, mx)$. What do you get?
+
+**(b)** Now approach along the path $y = x^2$. Compute $\lim_{x \to 0} f(x, x^2)$. What do you get?
+
+**(c)** Using parts (a) and (b), does $\lim_{(x,y) \to (0,0)} f(x,y)$ exist? Justify.
+
+**(d)** Sketch (or describe) three level curves of $f$ near the origin: $f = 0$, $f = 1/4$, and $f = 1/2$. The level set $f = 1/2$ passes through the origin along the parabola $y = x^2$ --- explain why this is consistent with your answer to part (b).
+
+**(e)** Compute $\dfrac{\partial f}{\partial x}(0, 0)$ and $\dfrac{\partial f}{\partial y}(0, 0)$ using the limit definition of partial derivatives (not the quotient rule). Both partials exist at the origin despite $f$ being discontinuous there. What does this say about the relationship between having partial derivatives and being differentiable?
+
+---
+
+## Q3 (10 pts) --- The Gradient and Directional Derivatives
+
+Let $f(x, y) = x^2 + 4y^2$ (an elliptical paraboloid).
+
+**(a)** Compute $\nabla f(x, y)$. Evaluate at the point $P = (2, 1)$.
+
+**(b)** In what direction from $P$ does $f$ increase most rapidly? What is the rate of increase in that direction?
+
+**(c)** Compute the directional derivative $D_{\mathbf{u}} f(P)$ in the direction $\mathbf{u} = \frac{1}{\sqrt{2}}(1, 1)$.
+
+**(d)** Find all unit directions $\mathbf{u}$ at $P$ such that $D_{\mathbf{u}} f = 0$. Explain geometrically: what is the relationship between these directions and the level curve $f = 8$ passing through $P$?
+
+**(e)** Write the equation of the tangent plane to $z = f(x,y)$ at $P$. This tangent plane is the \textbf{linear approximation} $L(x,y) = f(P) + \nabla f(P) \cdot (\mathbf{x} - P)$. Compute $L(2.1, 1.05)$ and compare to the true value $f(2.1, 1.05)$. What is the approximation error?
+
+---
+
+## Q4 (10 pts) --- The Chain Rule and Jacobians
+
+Define $g: \mathbb{R}^2 \to \mathbb{R}^2$ by $g(u, v) = (u^2 - v^2,\; 2uv)$ and $h: \mathbb{R}^2 \to \mathbb{R}$ by $h(x, y) = x^2 + y^2$.
+
+**(a)** Compute the Jacobian matrix $J_g(u,v)$.
+
+**(b)** Compute the gradient $\nabla h(x, y)$ (which is the $1 \times 2$ Jacobian of $h$).
+
+**(c)** Using the chain rule $J_{h \circ g} = J_h \cdot J_g$, compute the Jacobian of the composition $h(g(u,v))$ at $(u,v) = (1, 1)$. Verify by computing $h(g(u,v))$ directly, simplifying, and differentiating.
+
+**(d)** $g(u,v)$ is actually complex multiplication: if $z = u + iv$, then $g$ computes $(u+iv)^2 = (u^2 - v^2) + i(2uv)$. The Jacobian $J_g$ has a special structure --- it is a scaled rotation matrix. Verify this: show that $\det(J_g) = (2u)^2 + (2v)^2 = 4|z|^2$ and that $J_g^T J_g$ is a scalar multiple of the identity. What does this mean geometrically about how $g$ transforms small shapes?
+
+---
+
+## Q5 (10 pts) --- Critical Points and the Hessian
+
+Consider $f(x, y) = x^3 - 3xy + y^3$.
+
+**(a)** Find all critical points by solving $\nabla f = \mathbf{0}$.
+
+**(b)** Compute the Hessian matrix $H(x,y) = \begin{pmatrix} f_{xx} & f_{xy} \\ f_{yx} & f_{yy} \end{pmatrix}$.
+
+**(c)** Classify each critical point using the Hessian. For each, state:
+\begin{itemize}
+  \item The eigenvalues of $H$
+  \item Whether $H$ is positive definite, negative definite, or indefinite
+  \item Whether the critical point is a local min, local max, or saddle
+\end{itemize}
+
+**(d)** In a high-dimensional optimization problem with $d = 100$ parameters, a critical point is a saddle if \textbf{even one} Hessian eigenvalue is negative. If each eigenvalue is equally likely to be positive or negative, what fraction of critical points are true local minima? Express as a power of 2. What does this say about the relative abundance of saddle points in high-dimensional landscapes?
+
+---
+
+## Q6 (10 pts) --- Taylor Expansion and Approximation Quality
+
+Let $f(x,y) = e^{x}\sin(y)$.
+
+**(a)** Compute the second-order Taylor expansion of $f$ about the origin $(0, 0)$:
+$$f(x,y) \approx f(0,0) + f_x x + f_y y + \frac{1}{2}\!\left(f_{xx}x^2 + 2f_{xy}xy + f_{yy}y^2\right)$$
+
+**(b)** Write the quadratic approximation in matrix form:
+$$f(\mathbf{x}) \approx f(\mathbf{0}) + \nabla f(\mathbf{0})^T \mathbf{x} + \frac{1}{2}\mathbf{x}^T H(\mathbf{0})\, \mathbf{x}$$
+
+Identify $\nabla f(\mathbf{0})$ and $H(\mathbf{0})$ explicitly.
+
+**(c)** Compute the true value $f(0.1, 0.2)$ and your quadratic approximation at the same point. What is the absolute error? Express the error order using Big-O notation: the error should be $O(\|\mathbf{x}\|^3)$ --- verify this is consistent with your numerical result.
+
+**(d)** At a critical point where $\nabla f = \mathbf{0}$, the first-order term vanishes and the local shape of $f$ is entirely determined by the Hessian's quadratic form $\frac{1}{2}\mathbf{x}^T H \mathbf{x}$. Explain in 2--3 sentences why the eigenvalues of $H$ determine whether the critical point is a bowl (min), a dome (max), or a saddle.
+
+---
+
+## Q7 (10 pts) --- Lagrange Multipliers and Constrained Optimization
+
+Find the maximum and minimum of $f(x, y) = x + 2y$ subject to the constraint $g(x, y) = x^2 + y^2 - 1 = 0$.
+
+**(a)** State the Lagrange condition: $\nabla f = \lambda \nabla g$. Write out the system of equations (including the constraint).
+
+**(b)** Solve the system. Find all candidate points $(x, y)$ and the corresponding values of $\lambda$.
+
+**(c)** Evaluate $f$ at each candidate and identify the maximum and minimum.
+
+**(d)** Interpret geometrically: the constraint $x^2 + y^2 = 1$ is a circle. The level curves of $f = x + 2y$ are straight lines. The extrema occur where a level line is \textbf{tangent} to the circle. Sketch this: draw the circle, the optimal level lines, and verify that $\nabla f$ is parallel to $\nabla g$ at the tangent points.
+
+**(e)** The Lagrange multiplier $\lambda$ measures the \textbf{sensitivity} of the optimum to the constraint. If we change the constraint to $x^2 + y^2 = 1 + \epsilon$, the optimal value shifts by approximately $\lambda \epsilon$. Verify this numerically: solve the problem with $x^2 + y^2 = 1.01$ and compare the shift in $f^*$ to $\lambda \cdot 0.01$.
+
+---
+
+## Q8 (10 pts) --- Double Integrals and Change of Variables
+
+**(a)** Compute the double integral $\displaystyle\iint_D (x^2 + y^2)\, dA$ where $D$ is the disk $x^2 + y^2 \leq 4$.
+
+Set this up in polar coordinates. State the substitution, the Jacobian factor, and the new bounds. Evaluate.
+
+**(b)** For a general change of variables $(x, y) = T(u, v)$, the area element transforms as $dA = |det(J_T)|\, du\, dv$ where $J_T$ is the Jacobian matrix of $T$. For polar coordinates $T(r, \theta) = (r\cos\theta,\; r\sin\theta)$:
+\begin{itemize}
+  \item Compute $J_T$
+  \item Show $\det(J_T) = r$, confirming that $dA = r\, dr\, d\theta$
+\end{itemize}
+
+**(c)** This Jacobian determinant is the same determinant from linear algebra (Lesson 7) --- it measures how $T$ locally stretches area. Near the origin ($r \approx 0$), the factor $r$ is small, meaning polar coordinates \textbf{compress} area near the center. Near $r = 2$, the factor is larger. Explain intuitively why this compression makes sense: what happens to the ``width'' of a thin radial strip at small $r$ vs.\ large $r$?
+
+**(d)** Compute $\displaystyle\iint_D e^{-(x^2 + y^2)}\, dA$ over the same disk $D$. *(This is a truncated Gaussian integral.)*
+
+---
+
+## Q9 (10 pts) --- The Gaussian Integral and Monte Carlo
+
+**(a)** Prove the Gaussian integral:
+$$I = \int_{-\infty}^{\infty} e^{-x^2}\, dx = \sqrt{\pi}$$
+
+\textit{Method:} compute $I^2 = \iint_{\mathbb{R}^2} e^{-(x^2 + y^2)}\, dx\, dy$ by converting to polar coordinates. Then take the square root.
+
+**(b)** Using part (a), show that the standard normal density $\varphi(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$ integrates to 1. *(Hint: substitute $u = x/\sqrt{2}$.)*
+
+**(c)** \textbf{Monte Carlo integration:} to estimate $I_D = \iint_D f(x,y)\, dA$ over a region $D$ with area $A_D$, we can sample $N$ random points uniformly in $D$ and compute:
+$$\hat{I}_D = A_D \cdot \frac{1}{N}\sum_{i=1}^{N} f(x_i, y_i)$$
+
+For the integral in Q8(d), describe how you would set up the Monte Carlo estimate. What is the expected convergence rate as a function of $N$?
+
+**(d)** Monte Carlo converges at rate $O(1/\sqrt{N})$ regardless of dimension $d$. Traditional quadrature on a grid in $d$ dimensions requires $n^d$ points for $n$ points per axis. At what dimension $d$ does Monte Carlo become more efficient than a grid with $n = 10$ points per axis and $N = 10{,}000$ samples?
+
+---
+
+## Q10 (10 pts) --- Synthesis: Optimization on a Surface
+
+A hiker stands at position $(1, 2)$ on a terrain whose elevation is $h(x, y) = 10 - x^2 - 2y^2 + xy$.
+
+**(a)** Compute $\nabla h(1, 2)$. Is the hiker at a critical point? In which direction should she walk to ascend most steeply?
+
+**(b)** Compute the Hessian $H$ of $h$. Find its eigenvalues. Is the terrain's curvature the same in all directions at this point? What are the principal directions of curvature?
+
+**(c)** The hiker takes a step of size $\eta = 0.1$ in the gradient direction: $\mathbf{x}_1 = \mathbf{x}_0 + \eta \nabla h(\mathbf{x}_0)$. Compute $\mathbf{x}_1$ and $h(\mathbf{x}_1)$. Compare $h(\mathbf{x}_1)$ to the linear prediction $h(\mathbf{x}_0) + \eta |\nabla h|^2$.
+
+**(d)** Find the summit (critical point) of this terrain. Classify it using the Hessian. What is the maximum elevation?
+
+**(e)** The terrain has a ridge line where constrained maximum elevation occurs along the path $y = 2x$. Use Lagrange multipliers (with the constraint $y - 2x = 0$) to find the highest point on this ridge. What is $\lambda$, and what does its sign tell you about whether the constraint helps or hurts the optimization?

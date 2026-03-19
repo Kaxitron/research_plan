@@ -1,0 +1,209 @@
+---
+title: "Exam 3B: Bayesian and Advanced Statistics"
+subtitle: "Lessons 44--52 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Bayesian Foundations and Sequential Updating
+
+A sensor reports whether a manufactured part is defective. Let $\theta$ denote the true defect rate. You begin with a $\text{Beta}(2, 8)$ prior reflecting a prior belief that $\theta$ is around $0.2$.
+
+**(a)** Write Bayes' theorem in the form $p(\theta \mid D) \propto p(D \mid \theta)\, p(\theta)$. Identify each term by name. State the conjugate likelihood family for the Beta prior and explain why conjugacy is computationally convenient.
+
+**(b)** You test $n = 20$ parts and observe $k = 6$ defects. Using conjugacy, derive the posterior distribution. Compute the posterior mean and the MAP estimate. *(Recall: for $\text{Beta}(\alpha, \beta)$, the mean is $\alpha/(\alpha + \beta)$ and the mode is $(\alpha - 1)/(\alpha + \beta - 2)$.)*
+
+**(c)** A second batch of $n = 30$ parts yields $k = 3$ defects. Starting from the posterior in (b) as your new prior, derive the updated posterior. Verify that this equals what you would have obtained by processing all 50 parts at once. State the general principle this illustrates about sequential Bayesian updating.
+
+**(d)** Compare the MLE from all 50 observations to the posterior mean from (c). In 2--3 sentences, explain when and why the Bayesian and frequentist point estimates diverge, and under what conditions they converge.
+
+---
+
+## Q2 (10 pts) --- MAP Estimation and Regularization
+
+Consider a linear regression model $y_i = \mathbf{w}^\top \mathbf{x}_i + \varepsilon_i$ with $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$, so the likelihood for $n$ observations is
+
+$$p(\mathbf{y} \mid \mathbf{w}) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(y_i - \mathbf{w}^\top \mathbf{x}_i)^2}{2\sigma^2}\right).$$
+
+**(a)** Show that maximizing the log-likelihood is equivalent to minimizing the sum of squared residuals $\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2$.
+
+**(b)** Now place a Gaussian prior $p(\mathbf{w}) = \prod_j \mathcal{N}(w_j \mid 0, \tau^2)$. Show that the MAP estimate $\mathbf{w}_{\text{MAP}} = \arg\max_{\mathbf{w}} \bigl[\log p(\mathbf{y} \mid \mathbf{w}) + \log p(\mathbf{w})\bigr]$ is equivalent to Ridge regression with regularization parameter $\lambda = \sigma^2 / \tau^2$.
+
+**(c)** What prior distribution on $\mathbf{w}$ yields L1 regularization (Lasso) under MAP estimation? In terms of the prior's shape, explain why Lasso promotes sparsity while Ridge does not.
+
+**(d)** A practitioner uses weight decay during model training and claims it is "just an optimization trick." Reinterpret weight decay as a Bayesian statement about the prior on parameters. What does a small weight-decay coefficient imply about the prior variance, and what does it say about our implicit beliefs about good parameter configurations?
+
+---
+
+## Q3 (10 pts) --- MCMC and Approximate Inference
+
+**(a)** The Metropolis--Hastings algorithm proposes a candidate $\theta'$ from a proposal distribution $q(\theta' \mid \theta)$ and accepts it with probability
+
+$$\alpha = \min\!\left(1,\; \frac{p(\theta' \mid D)\, q(\theta \mid \theta')}{p(\theta \mid D)\, q(\theta' \mid \theta)}\right).$$
+
+Show that the normalizing constant $p(D)$ cancels in this ratio, so we only need the unnormalized posterior. For a symmetric random-walk proposal where $q(\theta' \mid \theta) = q(\theta \mid \theta')$, simplify the acceptance ratio.
+
+**(b)** Gibbs sampling updates each parameter $\theta_j$ by sampling from its full conditional $p(\theta_j \mid \theta_{-j}, D)$. State one advantage of Gibbs over generic Metropolis--Hastings, and one scenario where Gibbs performs poorly. *(Hint: think about correlations.)*
+
+**(c)** Hamiltonian Monte Carlo (HMC) augments the parameter space with a momentum variable and simulates Hamiltonian dynamics. In 2--3 sentences, explain why HMC explores high-dimensional posteriors more efficiently than a random-walk Metropolis, and state the key tuning parameter that controls trajectory length.
+
+**(d)** Variational inference approximates $p(\theta \mid D)$ by a tractable family $q_\phi(\theta)$ by maximizing the Evidence Lower Bound (ELBO):
+
+$$\text{ELBO}(\phi) = \mathbb{E}_{q_\phi}\!\bigl[\log p(D \mid \theta)\bigr] - \mathrm{KL}\!\bigl(q_\phi(\theta) \,\|\, p(\theta)\bigr).$$
+
+Prove that $\text{ELBO}(\phi) \leq \log p(D)$ for all $\phi$, and identify the gap. When would Laplace approximation (a Gaussian centered at the MAP with covariance from the inverse Hessian) be a reasonable substitute for full variational inference?
+
+---
+
+## Q4 (10 pts) --- Model Comparison and Occam's Razor
+
+**(a)** The marginal likelihood (evidence) for model $M$ is
+
+$$p(D \mid M) = \int p(D \mid \theta, M)\, p(\theta \mid M)\, d\theta.$$
+
+Explain in 3--4 sentences why this integral automatically implements Occam's razor: why does a model with unnecessary complexity receive a lower marginal likelihood, even if it fits the data perfectly?
+
+**(b)** The Bayes factor comparing model $M_1$ to $M_2$ is $\mathrm{BF}_{12} = p(D \mid M_1) / p(D \mid M_2)$. Suppose $\mathrm{BF}_{12} = 150$. Interpret this number. If the prior odds are $p(M_1)/p(M_2) = 1/3$, compute the posterior odds and state which model is preferred.
+
+**(c)** The Bayesian Information Criterion approximates $-2\log p(D \mid M) \approx -2\log p(D \mid \hat{\theta}) + k \log n$, where $k$ is the number of parameters and $n$ the sample size. Derive this approximation starting from a Laplace approximation to the marginal likelihood integral. *(Hint: approximate the integrand as a Gaussian around $\hat{\theta}$, and note that the log-determinant of the Hessian scales as $k \log n$ for large $n$.)*
+
+**(d)** You are comparing two models on the same dataset. Model A has 5 parameters and BIC $= 340$. Model B has 20 parameters and BIC $= 310$. Which does BIC prefer? In 2--3 sentences, explain what this means in terms of the complexity--fit tradeoff and why BIC can prefer a more complex model when the improvement in fit is large enough.
+
+---
+
+## Q5 (10 pts) --- Causal Inference and Graphical Models
+
+**(a)** Consider the following causal structure among four variables. Draw the DAG:
+
+- $Z$ causes $X$ and $Y$ (i.e., $Z \to X$ and $Z \to Y$)
+- $X$ causes $Y$ (i.e., $X \to Y$)
+- $X$ and $Y$ both cause $W$ (i.e., $X \to W$ and $Y \to W$)
+
+Classify each of the following as a confounder, mediator, or collider with respect to the causal effect of $X$ on $Y$: (i) $Z$, (ii) the direct path $X \to Y$, (iii) $W$.
+
+**(b)** Define the Average Treatment Effect (ATE) using the potential outcomes framework: $\text{ATE} = \mathbb{E}[Y(1) - Y(0)]$. Explain in 2--3 sentences why we cannot directly observe this quantity for any individual and how randomized experiments solve this problem.
+
+**(c)** An observational study estimates the effect of a new teaching method ($X$) on test scores ($Y$). You suspect that student motivation ($Z$) is a confounder. Using the backdoor criterion, explain what must be conditioned on to identify the causal effect, and write the adjustment formula:
+
+$$p(Y \mid \operatorname{do}(X = x)) = \sum_z p(Y \mid X = x, Z = z)\, p(Z = z).$$
+
+State one assumption that must hold for this formula to yield a valid causal estimate.
+
+**(d)** An economist studies the effect of education ($X$) on income ($Y$), using geographic proximity to a college ($I$) as an instrumental variable. State the two key conditions that $I$ must satisfy to be a valid instrument. Draw a DAG showing $I$, $X$, $Y$, and a confounder $U$ (ability), and explain on the graph why direct regression of $Y$ on $X$ gives a biased estimate while the IV approach does not.
+
+---
+
+## Q6 (10 pts) --- Effect Sizes, Meta-Analysis, and Study Design
+
+**(a)** A study reports that a new drug reduces blood pressure by $4$ mmHg with $p = 0.001$ and $n = 5000$. A second study finds a reduction of $12$ mmHg with $p = 0.08$ and $n = 30$. Compute Cohen's $d$ for each study assuming a pooled standard deviation of $s = 15$ mmHg. Which study provides stronger evidence for a clinically meaningful effect? Explain why statistical significance and practical significance can diverge.
+
+**(b)** You want to combine $K = 5$ studies estimating the same treatment effect $\mu$, with study $i$ reporting estimate $\hat{\mu}_i$ and standard error $\text{SE}_i$. Write the fixed-effects meta-analytic estimator as a weighted average:
+
+$$\hat{\mu}_{\text{FE}} = \frac{\sum_{i=1}^K w_i \hat{\mu}_i}{\sum_{i=1}^K w_i}, \qquad w_i = \frac{1}{\text{SE}_i^2}.$$
+
+Why are studies with smaller standard errors weighted more heavily? State one assumption of the fixed-effects model and name the alternative when this assumption is violated.
+
+**(c)** A random-effects meta-analysis introduces between-study variance $\tau^2$, so that $w_i^* = 1/(\text{SE}_i^2 + \tau^2)$. If $\tau^2 = 0$, we recover fixed effects. If $\tau^2$ is very large, what happens to the weights? In 2--3 sentences, explain why this makes the random-effects estimate more conservative (wider confidence intervals).
+
+**(d)** A colleague proposes a study with $n = 10$ per group, no pre-registration, and five different outcome measures. List three specific design flaws and explain how each one inflates the false-positive rate. Describe how you would redesign the study to produce more credible results.
+
+---
+
+## Q7 (10 pts) --- Concentration Inequalities and Sub-Gaussian Variables
+
+Let $X_1, \ldots, X_n$ be independent random variables.
+
+**(a)** State the Markov inequality for a nonneg.\ random variable $X \geq 0$: $\Pr(X \geq t) \leq \mathbb{E}[X] / t$. Derive the Chebyshev inequality $\Pr(|X - \mu| \geq t) \leq \sigma^2 / t^2$ by applying Markov to $(X - \mu)^2$.
+
+**(b)** The Hoeffding inequality states that if $X_i \in [a_i, b_i]$ are independent, then
+
+$$\Pr\!\left(\left|\frac{1}{n}\sum_{i=1}^n X_i - \mu\right| \geq t\right) \leq 2\exp\!\left(-\frac{2n^2 t^2}{\sum_{i=1}^n (b_i - a_i)^2}\right).$$
+
+For $n$ i.i.d.\ Bernoulli($p$) variables, specialize this bound. How many coin flips are needed to estimate $p$ within $\pm 0.01$ with probability at least $0.95$?
+
+**(c)** A random variable $X$ with mean $\mu$ is $\sigma$-sub-Gaussian if $\mathbb{E}\!\bigl[e^{s(X - \mu)}\bigr] \leq e^{s^2 \sigma^2 / 2}$ for all $s \in \mathbb{R}$. Prove that a bounded random variable $X \in [a, b]$ is sub-Gaussian with parameter $\sigma = (b - a)/2$. *(Hint: use the Hoeffding lemma, or simply state and apply it.)*
+
+**(d)** You have $m$ models and want to guarantee that the best model on a validation set of size $n$ is within $\varepsilon$ of its true performance. Using the union bound and Hoeffding, show that the required sample size is $n = O\!\bigl(\varepsilon^{-2} \log m\bigr)$. Explain the role of the $\log m$ factor: why does checking more models require more data, and why is the dependence only logarithmic?
+
+---
+
+## Q8 (10 pts) --- Markov Chains, Stationarity, and Mixing
+
+Consider a Markov chain on states $\{1, 2, 3\}$ with transition matrix
+
+$$P = \begin{pmatrix} 0.5 & 0.3 & 0.2 \\ 0.2 & 0.6 & 0.2 \\ 0.1 & 0.3 & 0.6 \end{pmatrix}.$$
+
+**(a)** Verify that $P$ is a valid stochastic matrix. Starting from $\boldsymbol{\pi}_0 = (1, 0, 0)$, compute $\boldsymbol{\pi}_1 = \boldsymbol{\pi}_0 P$ and $\boldsymbol{\pi}_2 = \boldsymbol{\pi}_1 P$ (the distribution after one and two steps).
+
+**(b)** A stationary distribution $\boldsymbol{\pi}$ satisfies $\boldsymbol{\pi} P = \boldsymbol{\pi}$ with $\sum_i \pi_i = 1$. Set up the system of linear equations and solve for $\boldsymbol{\pi}$. *(You may use any valid method: substitution, row reduction, or eigenvector computation.)*
+
+**(c)** Define ergodicity for a Markov chain. State two sufficient conditions (in terms of the chain's structure) that guarantee the chain converges to its unique stationary distribution from any initial state. Is the chain above ergodic? Justify briefly.
+
+**(d)** The mixing time $t_{\text{mix}}(\varepsilon)$ is the smallest $t$ such that $\|P^t(\mathbf{x}, \cdot) - \boldsymbol{\pi}\|_{\text{TV}} \leq \varepsilon$ for all starting states $\mathbf{x}$. The spectral gap $\gamma = 1 - \lambda_2$, where $\lambda_2$ is the second-largest eigenvalue of $P$, controls mixing: $t_{\text{mix}} = O(1/\gamma)$. Explain in 2--3 sentences why a small spectral gap means slow mixing, and connect this to the challenge of sampling from multimodal distributions using MCMC.
+
+---
+
+## Q9 (10 pts) --- Score Function, Fisher Information, and the Cram\'{e}r--Rao Bound
+
+Let $X_1, \ldots, X_n \sim \mathcal{N}(\mu, \sigma^2)$ with $\sigma^2$ known. The log-likelihood is
+
+$$\ell(\mu) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (X_i - \mu)^2.$$
+
+**(a)** Compute the score function $s(\mu) = \dfrac{\partial \ell}{\partial \mu}$ and verify that $\mathbb{E}[s(\mu)] = 0$ when evaluated at the true parameter. In one sentence, explain why this property holds in general (not just for Gaussians).
+
+**(b)** Compute the Fisher information $I(\mu) = \mathbb{E}\!\bigl[s(\mu)^2\bigr] = -\mathbb{E}\!\left[\dfrac{\partial^2 \ell}{\partial \mu^2}\right]$. Show that $I(\mu) = n / \sigma^2$.
+
+**(c)** The Cram\'{e}r--Rao lower bound states that for any unbiased estimator $\hat{\mu}$,
+
+$$\operatorname{Var}(\hat{\mu}) \geq \frac{1}{I(\mu)}.$$
+
+Using your result from (b), show that $\operatorname{Var}(\hat{\mu}) \geq \sigma^2 / n$. Verify that the sample mean $\bar{X}$ achieves this bound (i.e., it is efficient).
+
+**(d)** For a general exponential family $p(x \mid \theta) = h(x) \exp\!\bigl(\eta(\theta) \cdot T(x) - A(\theta)\bigr)$, the Fisher information is $I(\theta) = A''(\theta)$ (the second derivative of the log-partition function). In 2--3 sentences, explain why the Fisher information matrix defines a natural Riemannian metric on the parameter space, and how the natural gradient $\tilde{\nabla} L = I(\theta)^{-1} \nabla L$ differs from the ordinary gradient in terms of what it measures.
+
+---
+
+## Q10 (10 pts) --- PAC Learning, VC Dimension, and Generalization Bounds
+
+**(a)** State the PAC learning definition: a concept class $\mathcal{C}$ is PAC learnable if there exists an algorithm $A$ and a polynomial $p(\cdot, \cdot)$ such that for all $\varepsilon, \delta > 0$ and all distributions $\mathcal{D}$, given $n \geq p(1/\varepsilon, 1/\delta)$ samples, $A$ outputs a hypothesis $h$ with $\Pr\!\bigl[R(h) - R^* \leq \varepsilon\bigr] \geq 1 - \delta$. In your own words, explain what the parameters $\varepsilon$ and $\delta$ control.
+
+**(b)** The VC dimension $d_{\mathrm{VC}}$ of a hypothesis class $\mathcal{H}$ is the size of the largest set of points that $\mathcal{H}$ can shatter. Show that the VC dimension of the class of linear classifiers in $\mathbb{R}^2$ (lines) is $3$: (i) exhibit 3 points that can be shattered, and (ii) argue that no set of 4 points in general position can be shattered.
+
+**(c)** The VC generalization bound states that with probability at least $1 - \delta$,
+
+$$R(h) \leq \hat{R}_n(h) + O\!\left(\sqrt{\frac{d_{\mathrm{VC}} \log(n / d_{\mathrm{VC}}) + \log(1/\delta)}{n}}\right).$$
+
+Interpret each term. If $d_{\mathrm{VC}} = 50$ and you want the generalization gap to be at most $0.05$, roughly how large must $n$ be? *(An order-of-magnitude estimate suffices.)*
+
+**(d)** Rademacher complexity $\mathfrak{R}_n(\mathcal{H}) = \mathbb{E}\!\left[\sup_{h \in \mathcal{H}} \frac{1}{n}\sum_{i=1}^n \sigma_i h(x_i)\right]$, where $\sigma_i$ are i.i.d.\ Rademacher variables ($\pm 1$ with equal probability), provides a data-dependent complexity measure. In 3--4 sentences, explain the intuition: why does the ability to correlate with random noise indicate overfitting capacity? State one advantage of Rademacher complexity over VC dimension as a measure of hypothesis class richness.

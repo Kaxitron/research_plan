@@ -1,0 +1,413 @@
+---
+title: "Exam 2D: Partial Differential Equations --- Answer Key"
+subtitle: "Lessons 29--33"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Partial credit is generous for correct reasoning with arithmetic errors. Conceptual insight matters as much as mechanical computation. For Fourier coefficient computations, full setup of the integral with correct limits and integrand earns most of the credit even if arithmetic slips occur.
+
+---
+
+## Q1 --- Classification, Boundary Conditions, and the Maximum Principle
+
+**(a)**
+
+**(i)** $3u_{xx} + 2u_{xy} - u_{yy} = 0$: $A = 3$, $B = 2$, $C = -1$.
+
+$\Delta = B^2 - 4AC = 4 - 4(3)(-1) = 4 + 12 = 16 > 0$. $\checkmark$ **Hyperbolic.**
+
+**(ii)** $u_{xx} + 6u_{xy} + 9u_{yy} = 0$: $A = 1$, $B = 6$, $C = 9$.
+
+$\Delta = 36 - 4(1)(9) = 36 - 36 = 0$. $\checkmark$ **Parabolic.**
+
+**(iii)** $u_{xx} + u_{yy} + u = 0$: $A = 1$, $B = 0$, $C = 1$. The term $+u$ is lower order and does not affect classification.
+
+$\Delta = 0 - 4(1)(1) = -4 < 0$. $\checkmark$ **Elliptic.** (This is the Helmholtz equation $\nabla^2 u + u = 0$.)
+
+**(iv)** $u_{tt} = 4u_{xx} - 2u_t$, rewritten as $4u_{xx} - u_{tt} - 2u_t = 0$. With variables $(x, t)$: $A = 4$, $B = 0$, $C = -1$.
+
+$\Delta = 0 - 4(4)(-1) = 16 > 0$. $\checkmark$ **Hyperbolic.** (Damped wave equation.)
+
+**(b)**
+
+**(i)** **Dirichlet:** $u(0, t) = T_0$. The left end of the rod is held at fixed temperature $T_0$ (e.g., immersed in a heat bath).
+
+**(ii)** **Neumann:** $u_x(L, t) = 0$. The right end is perfectly insulated --- zero heat flux means no energy enters or leaves through that boundary.
+
+**(iii)** **Robin:** $u_x(L, t) + h\bigl(u(L, t) - T_{\mathrm{amb}}\bigr) = 0$, i.e., $u_x = -h(u - T_{\mathrm{amb}})$. This is Newton's law of cooling: the heat flux at the boundary is proportional to the temperature difference between the rod's end and the ambient environment, with convection coefficient $h$.
+
+**(c)** **Maximum Principle:** If $u$ is harmonic ($\nabla^2 u = 0$) on a bounded domain $\Omega$, then $u$ attains its maximum and minimum values on the boundary $\partial\Omega$, not in the interior (unless $u$ is constant).
+
+The proposed function has $u = 1$ everywhere on the boundary but $u(0,0) = 2$ in the interior. This violates the maximum principle, since $2 > 1 = \max_{\partial\Omega} u$. No such harmonic function can exist. Indeed, the mean value property requires $u(\text{center}) = \frac{1}{2\pi}\int_0^{2\pi} u(1,\theta)\,d\theta = 1$, confirming $u(0,0) = 1$, not $2$.
+
+---
+
+## Q2 --- Separation of Variables and the Heat Equation
+
+**(a)** Assume $u(x,t) = X(x)\,T(t)$. Substituting into $u_t = u_{xx}$:
+
+$$X(x)\,T'(t) = X''(x)\,T(t)$$
+
+Divide by $X(x)\,T(t)$:
+
+$$\frac{T'(t)}{T(t)} = \frac{X''(x)}{X(x)}$$
+
+The left side depends only on $t$, the right only on $x$, so both equal a constant $-\lambda$:
+
+$$\frac{T'}{T} = \frac{X''}{X} = -\lambda \qquad\implies\qquad X'' + \lambda X = 0, \quad T' + \lambda T = 0$$
+
+**(b)** From $X(0) = 0$ and $X(\pi) = 0$: The general solution of $X'' + \lambda X = 0$ for $\lambda > 0$ is $X = A\cos(\sqrt{\lambda}\,x) + B\sin(\sqrt{\lambda}\,x)$.
+
+$X(0) = 0 \implies A = 0$. Then $X(\pi) = B\sin(\sqrt{\lambda}\,\pi) = 0$. For $B \neq 0$: $\sqrt{\lambda} = n$, so:
+
+$$\boxed{\lambda_n = n^2, \qquad X_n(x) = \sin(nx), \quad n = 1, 2, 3, \ldots}$$
+
+**(c)** For each $n$: $T' + n^2 T = 0 \implies T_n(t) = e^{-n^2 t}$. General solution:
+
+$$u(x,t) = \sum_{n=1}^{\infty} b_n\,e^{-n^2 t}\sin(nx)$$
+
+**(d)** At $t = 0$: $u(x,0) = \sum b_n \sin(nx) = \sin(x) + 3\sin(2x)$.
+
+By orthogonality: $b_1 = 1$, $b_2 = 3$, and $b_n = 0$ for all $n \geq 3$.
+
+$$\boxed{u(x,t) = e^{-t}\sin(x) + 3\,e^{-4t}\sin(2x)}$$
+
+**(e)** The $n = 1$ mode decays as $e^{-t}$ (amplitude $1 \cdot e^{-t}$); the $n = 2$ mode decays as $e^{-4t}$ (amplitude $3 \cdot e^{-4t}$). The ratio of amplitudes is:
+
+$$\frac{3\,e^{-4t}}{e^{-t}} = 3\,e^{-3t}$$
+
+Setting this equal to $0.01$: $3\,e^{-3t^*} = 0.01 \implies e^{-3t^*} = 1/300 \implies t^* = \frac{\ln 300}{3} \approx 1.90$.
+
+**Physical explanation:** The heat equation damps the $n$-th Fourier mode at rate $e^{-n^2 t}$. Higher frequencies ($n$ large) have shorter spatial wavelengths, producing steeper gradients, which drive faster heat flow and therefore faster smoothing. The heat equation acts as a **low-pass filter**: fine-scale features are erased first, and only the coarsest modes survive at large times.
+
+---
+
+## Q3 --- Fourier Series, Parseval's Theorem, and Sturm-Liouville Theory
+
+**(a)** The Fourier sine coefficients of $f(x) = x(\pi - x)$ on $[0,\pi]$:
+
+$$b_n = \frac{2}{\pi}\int_0^{\pi} x(\pi - x)\sin(nx)\,dx = \frac{2}{\pi}\int_0^{\pi}(\pi x - x^2)\sin(nx)\,dx$$
+
+Integrating by parts twice (or using standard integral tables):
+
+$$b_n = \frac{4}{n^3\pi}\bigl[1 - (-1)^n\bigr]$$
+
+For even $n$: $1 - (-1)^n = 0$, so $b_n = 0$.
+
+For odd $n$: $1 - (-1)^n = 2$, so $b_n = \dfrac{8}{n^3\pi}$.
+
+$$\boxed{b_1 = \frac{8}{\pi} \approx 2.546, \qquad b_3 = \frac{8}{27\pi} \approx 0.0943, \qquad b_5 = \frac{8}{125\pi} \approx 0.0204}$$
+
+**(b)** Left side:
+
+$$\frac{2}{\pi}\int_0^{\pi}\bigl[x(\pi - x)\bigr]^2\,dx = \frac{2}{\pi}\int_0^{\pi}(\pi^2 x^2 - 2\pi x^3 + x^4)\,dx$$
+
+$$= \frac{2}{\pi}\left[\frac{\pi^2 \cdot \pi^3}{3} - \frac{2\pi \cdot \pi^4}{4} + \frac{\pi^5}{5}\right] = \frac{2}{\pi}\cdot\pi^5\left[\frac{1}{3} - \frac{1}{2} + \frac{1}{5}\right] = 2\pi^4\cdot\frac{1}{30} = \frac{\pi^4}{15}$$
+
+Right side: only odd $n$ contribute:
+
+$$\sum_{n \text{ odd}} b_n^2 = \sum_{k=0}^{\infty}\left(\frac{8}{(2k+1)^3\pi}\right)^2 = \frac{64}{\pi^2}\sum_{k=0}^{\infty}\frac{1}{(2k+1)^6}$$
+
+Setting them equal:
+
+$$\frac{\pi^4}{15} = \frac{64}{\pi^2}\sum_{k=0}^{\infty}\frac{1}{(2k+1)^6}$$
+
+$$\boxed{\sum_{k=0}^{\infty}\frac{1}{(2k+1)^6} = \frac{\pi^6}{960}}$$
+
+(This is consistent with $\zeta(6) = \pi^6/945$ and the identity $\sum_{\text{odd}} 1/n^6 = (1 - 2^{-6})\,\zeta(6) = \frac{63}{64}\cdot\frac{\pi^6}{945} = \frac{\pi^6}{960}$.)
+
+**(c)** The Sturm-Liouville form is $\frac{d}{dx}[p\,X'] + q\,X + \lambda\,w\,X = 0$. For $X'' + \lambda X = 0$:
+
+$$\boxed{p(x) = 1, \qquad q(x) = 0, \qquad w(x) = 1}$$
+
+**(d)** The Rayleigh quotient for this Sturm-Liouville problem is:
+
+$$\lambda = \frac{-[p\,X\,X']_0^{\pi} + \int_0^{\pi} p\,(X')^2\,dx - \int_0^{\pi} q\,X^2\,dx}{\int_0^{\pi} w\,X^2\,dx}$$
+
+With $p = w = 1$, $q = 0$, and Dirichlet BCs ($X(0) = X(\pi) = 0$, so the boundary term vanishes):
+
+$$\lambda = \frac{\int_0^{\pi}(X')^2\,dx}{\int_0^{\pi} X^2\,dx}$$
+
+For $X_1(x) = \sin(x)$: $X_1'(x) = \cos(x)$.
+
+$$\lambda_1 = \frac{\int_0^{\pi}\cos^2(x)\,dx}{\int_0^{\pi}\sin^2(x)\,dx} = \frac{\pi/2}{\pi/2} = 1 \qquad\checkmark$$
+
+The Rayleigh quotient is minimized by the first eigenfunction (by the min-max theorem). Among all functions satisfying the boundary conditions, $X_1 = \sin(x)$ minimizes the ratio of "gradient energy" to "total energy," giving the smallest eigenvalue $\lambda_1 = 1$. Higher eigenfunctions oscillate more rapidly, producing larger numerators and therefore $\lambda_1 \leq \lambda_2 \leq \lambda_3 \leq \cdots$.
+
+---
+
+## Q4 --- The Wave Equation: d'Alembert, Characteristics, and Standing Waves
+
+**(a)** With $c = 2$, $u(x,0) = e^{-x^2}$, and $u_t(x,0) = 0$, d'Alembert's formula gives:
+
+$$\boxed{u(x,t) = \frac{1}{2}\bigl[e^{-(x-2t)^2} + e^{-(x+2t)^2}\bigr]}$$
+
+At $t = 0$: a single Gaussian centered at the origin. At $t = 1$: two half-amplitude Gaussians centered at $x = \pm 2$. At $t = 2$: the two peaks have separated further to $x = \pm 4$. The initial pulse splits into two counter-propagating pulses, each carrying half the amplitude, moving at speed $c = 2$ in opposite directions.
+
+**(b)** The characteristics are lines of the form $x - 2t = \text{const}$ and $x + 2t = \text{const}$ (slope $\pm 1/2$ in the $(x,t)$-plane).
+
+The domain of dependence for $(3, 1)$: the solution at $(3,1)$ depends on the initial data at points $x$ satisfying $3 - 2(1) \leq x \leq 3 + 2(1)$, i.e., $x \in [1, 5]$.
+
+**(c)** Separation of variables yields $u(x,t) = \sum [a_n\cos(2nt) + b_n\sin(2nt)]\sin(nx)$. From $u(x,0) = \sin(3x)$: $a_3 = 1$, all others zero. From $u_t(x,0) = 0$: all $b_n = 0$.
+
+$$\boxed{u(x,t) = \cos(6t)\sin(3x)}$$
+
+Frequency: $\omega = 6$. Period: $T = 2\pi/6 = \pi/3$. This is the third harmonic standing wave --- the string vibrates with three half-wavelengths across $[0,\pi]$.
+
+**(d)** Compute each piece:
+
+$$u_t = -6\sin(6t)\sin(3x), \qquad u_x = 3\cos(6t)\cos(3x)$$
+
+$$u_t^2 = 36\sin^2(6t)\sin^2(3x), \qquad 4\,u_x^2 = 36\cos^2(6t)\cos^2(3x)$$
+
+$$E(t) = \frac{1}{2}\int_0^{\pi}\bigl[36\sin^2(6t)\sin^2(3x) + 36\cos^2(6t)\cos^2(3x)\bigr]\,dx$$
+
+Using $\int_0^{\pi}\sin^2(3x)\,dx = \int_0^{\pi}\cos^2(3x)\,dx = \pi/2$:
+
+$$E(t) = \frac{1}{2}\cdot 36 \cdot\frac{\pi}{2}\bigl[\sin^2(6t) + \cos^2(6t)\bigr] = \frac{1}{2}\cdot 36\cdot\frac{\pi}{2} = \boxed{9\pi}$$
+
+This is constant in time, confirming energy conservation. By contrast, for the heat equation with solution $u = e^{-t}\sin(x)$, $\|u\|^2 = \int_0^{\pi} e^{-2t}\sin^2(x)\,dx = \frac{\pi}{2}\,e^{-2t}$, which decays exponentially. The wave equation conserves energy (kinetic $\leftrightarrow$ potential exchange), while the heat equation dissipates it through irreversible smoothing.
+
+---
+
+## Q5 --- Fourier Transform, Heat Kernel, and the Error Function
+
+**(a)** Apply the Fourier transform to $u_t = k\,u_{xx}$. Since $\widehat{u_{xx}} = (2\pi i\xi)^2\,\hat{u} = -4\pi^2\xi^2\,\hat{u}$:
+
+$$\hat{u}_t = -4\pi^2 k\,\xi^2\,\hat{u}$$
+
+This is a first-order ODE in $t$ for each fixed $\xi$, with solution:
+
+$$\boxed{\hat{u}(\xi, t) = \hat{u}(\xi, 0)\,e^{-4\pi^2 k\,\xi^2\,t}}$$
+
+Each Fourier mode decays exponentially, with higher frequencies ($|\xi|$ large) decaying faster.
+
+**(b)** The heat kernel $G(x,t) = \frac{1}{\sqrt{4\pi kt}}\,e^{-x^2/(4kt)}$ is a Gaussian in $x$ with variance $2kt$. Its Fourier transform is:
+
+$$\hat{G}(\xi, t) = \int_{-\infty}^{\infty}\frac{1}{\sqrt{4\pi kt}}\,e^{-x^2/(4kt)}\,e^{-2\pi i\xi x}\,dx$$
+
+Using the standard result that the Fourier transform of $\frac{1}{\sqrt{2\pi}\,\sigma}e^{-x^2/(2\sigma^2)}$ is $e^{-2\pi^2\sigma^2\xi^2}$ with $\sigma^2 = 2kt$:
+
+$$\boxed{\hat{G}(\xi, t) = e^{-4\pi^2 k\,\xi^2\,t}}$$
+
+This matches the decay factor from part (a), confirming that $G$ is the fundamental solution. $G$ is a Gaussian in both $x$-space (width $\sim\sqrt{t}$) and $\xi$-space (width $\sim 1/\sqrt{t}$), consistent with the Fourier uncertainty principle.
+
+**(c)** The solution is:
+
+$$u(x,t) = \int_{-1}^{1}\frac{1}{\sqrt{4\pi kt}}\,e^{-(x-y)^2/(4kt)}\,dy$$
+
+Substitute $s = \frac{x - y}{\sqrt{4kt}}$, so $dy = -\sqrt{4kt}\,ds$. When $y = -1$: $s = \frac{x+1}{\sqrt{4kt}}$; when $y = 1$: $s = \frac{x-1}{\sqrt{4kt}}$.
+
+$$u(x,t) = \frac{1}{\sqrt{\pi}}\int_{(x-1)/\sqrt{4kt}}^{(x+1)/\sqrt{4kt}} e^{-s^2}\,ds$$
+
+Using $\operatorname{erf}(z) = \frac{2}{\sqrt{\pi}}\int_0^z e^{-s^2}\,ds$:
+
+$$\boxed{u(x,t) = \frac{1}{2}\left[\operatorname{erf}\!\left(\frac{x+1}{\sqrt{4kt}}\right) - \operatorname{erf}\!\left(\frac{x-1}{\sqrt{4kt}}\right)\right]}$$
+
+**(d)** As $t \to 0^+$: the heat kernel narrows to a delta function, so $u(x,t) \to u(x,0)$ (the step function). The error functions approach $\pm 1$ sharply, recovering the original rectangular profile.
+
+As $t \to \infty$: the Gaussian kernel broadens, smearing the initial data across the entire line. The solution flattens toward zero. At $x = 0$:
+
+$$u(0, t) = \operatorname{erf}\!\left(\frac{1}{\sqrt{4kt}}\right) \sim \frac{2}{\sqrt{\pi}}\cdot\frac{1}{\sqrt{4kt}} = \frac{1}{\sqrt{\pi kt}}$$
+
+for large $t$. So $u(0,t)$ decays as $t^{-1/2}$. The heat kernel's width grows as $\sqrt{t}$ because diffusion is a random walk process: after time $t$, particles have taken $\sim t$ independent steps, and by the central limit theorem the spread is $\sim\sqrt{t}$. This $\sqrt{t}$ scaling is the universal signature of diffusive transport.
+
+---
+
+## Q6 --- Helmholtz Equation and Eigenfunction Expansions
+
+**(a)** Substitute $u(\mathbf{x}, t) = U(\mathbf{x})\,e^{i\omega t}$ into $u_{tt} = c^2\nabla^2 u$:
+
+$$-\omega^2\,U\,e^{i\omega t} = c^2\,(\nabla^2 U)\,e^{i\omega t}$$
+
+Cancel $e^{i\omega t}$:
+
+$$\nabla^2 U + \frac{\omega^2}{c^2}\,U = 0$$
+
+This is the **Helmholtz equation** $\nabla^2 U + k^2 U = 0$ with $\boxed{k = \omega/c}$ (the wavenumber, relating spatial frequency to temporal frequency and wave speed).
+
+**(b)** Set $U(x,y) = X(x)\,Y(y)$ in $U_{xx} + U_{yy} + k^2 U = 0$:
+
+$$\frac{X''}{X} + \frac{Y''}{Y} + k^2 = 0 \implies \frac{X''}{X} = -\mu^2, \quad \frac{Y''}{Y} = -\nu^2, \quad \mu^2 + \nu^2 = k^2$$
+
+With $X(0) = X(a) = 0$: $X_m(x) = \sin(m\pi x/a)$, $\mu_m = m\pi/a$.
+
+With $Y(0) = Y(b) = 0$: $Y_n(y) = \sin(n\pi y/b)$, $\nu_n = n\pi/b$.
+
+$$\boxed{k_{mn}^2 = \pi^2\!\left(\frac{m^2}{a^2} + \frac{n^2}{b^2}\right), \qquad U_{mn}(x,y) = \sin\!\left(\frac{m\pi x}{a}\right)\sin\!\left(\frac{n\pi y}{b}\right)}$$
+
+**(c)** For $a = b = 1$: $k_{mn}^2 = \pi^2(m^2 + n^2)$. Then $k_{1,2}^2 = 5\pi^2 = k_{2,1}^2$, so the pairs $(1,2)$ and $(2,1)$ give the same eigenvalue.
+
+**Degeneracy** means two (or more) linearly independent eigenfunctions share the same eigenvalue. Any linear combination $\alpha\,U_{1,2} + \beta\,U_{2,1} = \alpha\sin(\pi x)\sin(2\pi y) + \beta\sin(2\pi x)\sin(\pi y)$ is also an eigenfunction with the same eigenvalue $5\pi^2$. These combinations produce vibration patterns that are mixtures of the two degenerate modes --- the membrane can vibrate in a two-dimensional family of mode shapes at that frequency.
+
+**(d)** By Sturm-Liouville theory (extended to two dimensions), the operator $-\nabla^2$ with Dirichlet boundary conditions is self-adjoint with respect to the $L^2$ inner product on $[0,a]\times[0,b]$. The eigenfunctions satisfy:
+
+$$\int_0^a\!\int_0^b U_{mn}(x,y)\,U_{m'n'}(x,y)\,dx\,dy = \begin{cases} \frac{ab}{4} & (m,n) = (m',n') \\ 0 & \text{otherwise}\end{cases}$$
+
+**Completeness** guarantees that any square-integrable function $g(x,y)$ on the rectangle can be expanded as $g = \sum_{m,n} c_{mn}\,U_{mn}$ with coefficients $c_{mn} = \frac{4}{ab}\iint g\,U_{mn}\,dx\,dy$. This means any initial displacement of the membrane --- no matter how complex --- decomposes uniquely into a superposition of the standing-wave modes $U_{mn}$, each vibrating at its natural frequency $\omega_{mn} = c\,k_{mn}$.
+
+---
+
+## Q7 --- Method of Characteristics and Shock Formation
+
+**(a)** For $u_t + 3u_x = 0$, the characteristics satisfy $\frac{dx}{dt} = 3$, giving $x = 3t + x_0$. Along each characteristic $\frac{du}{dt} = 0$, so $u$ is constant:
+
+$$u(x,t) = u(x - 3t, 0) = \sin(x - 3t)$$
+
+**Verification:** $u_t = -3\cos(x - 3t)$, $u_x = \cos(x - 3t)$. Then $u_t + 3u_x = -3\cos + 3\cos = 0$. $\checkmark$
+
+The initial sine wave translates rigidly to the right at speed $3$, without any change in shape or amplitude.
+
+**(b)** Along a characteristic starting at $x_0$, $u$ is constant at $u(x_0, 0)$, and the characteristic speed is $dx/dt = u(x_0, 0)$.
+
+- **Region $x_0 < 0$:** $u = 1$, characteristics are $x = x_0 + t$ (speed $1$).
+- **Region $0 \leq x_0 \leq 1$:** $u = 1 - x_0$, characteristics are $x = x_0 + (1-x_0)\,t$.
+- **Region $x_0 > 1$:** $u = 0$, characteristics are $x = x_0$ (stationary).
+
+In the middle region, solving for $x_0$: $x_0 = \frac{x - t}{1 - t}$. The Jacobian $\partial x/\partial x_0 = 1 - t$ vanishes at $t = 1$, meaning characteristics converge and cross.
+
+$$\boxed{t_s = 1}$$
+
+At $t = 1$, all characteristics from $x_0 \in [0,1]$ converge to the single point $x = 1$.
+
+**(c)** The flux for Burgers' equation is $f(u) = u^2/2$. With $u_L = 1$ and $u_R = 0$:
+
+$$\dot{s} = \frac{f(u_L) - f(u_R)}{u_L - u_R} = \frac{1/2 - 0}{1 - 0} = \boxed{\frac{1}{2}}$$
+
+The shock propagates to the right at speed $1/2$, which is the average of the speeds on either side.
+
+**(d)** In a nonlinear conservation law, the wave speed $f'(u)$ depends on $u$ itself. Where $u$ is larger, the wave travels faster, so parts of the wave "overtake" slower parts ahead. This causes the wave profile to steepen until characteristics cross, at which point two different values of $u$ would be assigned to the same point in space --- the classical (smooth) solution becomes multi-valued and ceases to exist.
+
+A **classical solution** is a smooth ($C^1$) function satisfying the PDE pointwise everywhere. A **weak solution** satisfies the PDE in an integral (distributional) sense, allowing discontinuities such as shocks. Weak solutions are selected by entropy conditions that pick the physically relevant discontinuity.
+
+---
+
+## Q8 --- The Fokker-Planck Equation and Probability Density Evolution
+
+**(a)** The **advection (drift) term** is $-\partial_x[\mu(x)\,p]$: it transports probability along the drift field $\mu(x)$.
+
+The **diffusion term** is $\frac{\sigma^2}{2}\,\partial_{xx} p$: it spreads probability, smoothing the density.
+
+When $\mu = 0$: $\partial_t p = \frac{\sigma^2}{2}\,\partial_{xx} p$. This is the **heat equation** with diffusion coefficient $D = \sigma^2/2$. $\checkmark$
+
+When $\sigma = 0$: $\partial_t p = -\partial_x[\mu(x)\,p]$. This is the **transport/continuity equation** $\partial_t p + \partial_x(\mu\,p) = 0$. It means the density is carried along by the drift $\mu$ without any spreading --- probability moves as a "fluid" with velocity field $\mu(x)$.
+
+**(b)** For the OU process $dX_t = -\theta X_t\,dt + \sigma\,dW_t$, the Fokker-Planck equation is:
+
+$$\frac{\partial p}{\partial t} = \frac{\partial}{\partial x}(\theta x\,p) + \frac{\sigma^2}{2}\,\frac{\partial^2 p}{\partial x^2}$$
+
+At stationarity ($\partial_t p = 0$):
+
+$$0 = \theta\,\frac{\partial}{\partial x}(x\,p_\infty) + \frac{\sigma^2}{2}\,p_\infty''$$
+
+Expanding: $0 = \theta\,p_\infty + \theta x\,p_\infty' + \frac{\sigma^2}{2}\,p_\infty''$. Try $p_\infty = C\,e^{-x^2/(2\sigma_\infty^2)}$:
+
+$p_\infty' = -\frac{x}{\sigma_\infty^2}\,p_\infty$, \quad $p_\infty'' = \left(\frac{x^2}{\sigma_\infty^4} - \frac{1}{\sigma_\infty^2}\right)p_\infty$.
+
+Substituting and collecting terms:
+
+$$\left(\theta - \frac{\sigma^2}{2\sigma_\infty^2}\right)p_\infty + \left(-\frac{\theta}{\sigma_\infty^2} + \frac{\sigma^2}{2\sigma_\infty^4}\right)x^2\,p_\infty = 0$$
+
+Both coefficients must vanish. From the constant term: $\sigma_\infty^2 = \sigma^2/(2\theta)$. The $x^2$ coefficient then also vanishes. $\checkmark$
+
+$$\boxed{p_\infty(x) = \frac{1}{\sqrt{2\pi\,\sigma^2/(2\theta)}}\,\exp\!\left(-\frac{\theta\,x^2}{\sigma^2}\right) = \mathcal{N}\!\left(0,\;\frac{\sigma^2}{2\theta}\right)}$$
+
+**(c)** The drift strength $\theta$ pulls the process toward $x = 0$ (mean reversion); the noise strength $\sigma$ pushes it outward. The stationary variance $\sigma^2/(2\theta)$ reflects the balance:
+
+- As $\theta \to 0^+$: the restoring force vanishes, the diffusion spreads freely, and $\operatorname{Var} \to \infty$. There is no stationary distribution on $\mathbb{R}$ (the process is pure Brownian motion).
+- As $\sigma \to 0^+$: noise vanishes, and $\operatorname{Var} \to 0$. The stationary distribution concentrates at the origin as $\delta(x)$ --- the deterministic system $\dot{x} = -\theta x$ always returns to $0$.
+
+**(d)** The probability current is $J = -\theta x\,p - \frac{\sigma^2}{2}\,p'$. At stationarity $J = \text{const}$ everywhere. Since $p_\infty(x) \to 0$ and $p_\infty'(x) \to 0$ as $|x| \to \infty$, we have $J \to 0$ at infinity, so the constant is $J = 0$ everywhere.
+
+$J = 0$ means **detailed balance**: at every point $x$, the probability flux due to drift ($-\theta x\,p$, which pushes probability toward the origin) exactly cancels the diffusive flux ($-\frac{\sigma^2}{2}\,p'$, which pushes probability outward along the density gradient). There is no net transport of probability anywhere --- the system is in true thermodynamic equilibrium.
+
+---
+
+## Q9 --- The Score Function, Forward SDEs, and Reverse-Time Dynamics
+
+**(a)** For $p(x) = \frac{1}{\sqrt{2\pi}\,\sigma}\,e^{-(x-\mu)^2/(2\sigma^2)}$:
+
+$$\log p(x) = -\frac{1}{2}\log(2\pi\sigma^2) - \frac{(x-\mu)^2}{2\sigma^2}$$
+
+$$\boxed{s(x) = \partial_x \log p = -\frac{x - \mu}{\sigma^2} = \frac{\mu - x}{\sigma^2}}$$
+
+The score **points toward the mean** $\mu$. When $x > \mu$, $s < 0$ (points left, toward $\mu$). When $x < \mu$, $s > 0$ (points right, toward $\mu$). At $x = \mu$: $s = 0$. The magnitude $|s| = |x - \mu|/\sigma^2$ increases with distance from the mean and decreases with larger variance.
+
+**(b)** Since $s = \partial_x \log p = \frac{p_x}{p}$, we compute $\partial_t s = \partial_t \partial_x \log p = \partial_x\!\left(\frac{p_t}{p}\right)$.
+
+From the heat equation $p_t = D\,p_{xx}$:
+
+$$\frac{p_t}{p} = D\,\frac{p_{xx}}{p}$$
+
+We need $\partial_x\!\left(\frac{p_{xx}}{p}\right)$. Using $\frac{p_{xx}}{p} = s_x + s^2$ (since $p_{xx}/p = (p_x/p)_x + (p_x/p)^2 = s_x + s^2$):
+
+$$\frac{p_t}{p} = D\,(s_x + s^2)$$
+
+$$\partial_t s = \partial_x\!\left(\frac{p_t}{p}\right) = D\,\partial_x(s_x + s^2) = D\,s_{xx} + 2D\,s\,s_x$$
+
+$$\boxed{\frac{\partial s}{\partial t} = D\,\frac{\partial^2 s}{\partial x^2} + 2D\,s\,\frac{\partial s}{\partial x}}$$
+
+This is a **nonlinear** (Burgers-type) PDE for the score, even though the original Fokker-Planck equation for $p$ is linear.
+
+**(c)** As $t \to \infty$: $\alpha_t = e^{-\beta t/2} \to 0$ and $\sigma_t^2 = 1 - e^{-\beta t} \to 1$. Therefore:
+
+$$p(x_t \mid x_0) = \mathcal{N}(\alpha_t\,x_0,\;\sigma_t^2) \to \mathcal{N}(0, 1)$$
+
+regardless of $x_0$. The mean $\alpha_t x_0 \to 0$ (the signal is exponentially damped) while the variance $\sigma_t^2 \to 1$ (noise fills in). The SDE "forgets" its initial condition because the drift $-\frac{\beta}{2}x$ exponentially contracts the signal toward zero while the noise $\sqrt{\beta}\,dW_t$ continuously injects fresh randomness. After sufficient time, the noise dominates completely and all initial conditions converge to the same equilibrium distribution $\mathcal{N}(0,1)$.
+
+**(d)** The forward SDE has $f(x,t) = -\frac{\beta}{2}\,x$ and $g(t) = \sqrt{\beta}$. By Anderson's theorem, the reverse SDE is:
+
+$$dX_t = \left[-\frac{\beta}{2}\,X_t - \beta\,s(X_t, t)\right]dt + \sqrt{\beta}\,d\bar{W}_t$$
+
+or equivalently:
+
+$$\boxed{dX_t = -\frac{\beta}{2}\bigl[X_t + 2\,s(X_t, t)\bigr]\,dt + \sqrt{\beta}\,d\bar{W}_t}$$
+
+The score $s(x,t) = \partial_x \log p(x,t)$ is the key quantity because it encodes the **direction and magnitude toward higher probability density** at each point $(x,t)$. In the forward process, information is destroyed as the density smooths out. The reverse process must reconstruct this lost structure, and the score tells it exactly which direction to "un-diffuse" --- steering trajectories away from low-density regions and toward the peaks of the original data distribution. Without the score, the reverse dynamics would simply be another forward diffusion, unable to concentrate probability into the structured patterns of the original density.
+
+---
+
+## Q10 --- Synthesis: From Heat Equation to Probability Flow
+
+**(a)** Setting the drift to zero (removing $\frac{\beta}{2}x\,p$), the Fokker-Planck equation becomes:
+
+$$\frac{\partial p}{\partial t} = \frac{\beta}{2}\,\frac{\partial^2 p}{\partial x^2}$$
+
+This is the heat equation with diffusion coefficient $D = \beta/2$, whose solution is the convolution of $p(x,0)$ with the heat kernel $G(x,t) = \frac{1}{\sqrt{2\pi\beta t}}\,e^{-x^2/(2\beta t)}$ from Q5.
+
+Without drift, the density spreads indefinitely: $\operatorname{Var}(X_t) = \operatorname{Var}(X_0) + \beta t \to \infty$. The **drift term** $\partial_x(\frac{\beta}{2}x\,p)$ provides a restoring force that pushes probability mass back toward the origin. It competes with the diffusion, and their balance produces the finite-variance stationary distribution $\mathcal{N}(0,1)$ found in Q8. Without the drift, the density would spread to a flat (improper) distribution, never reaching equilibrium.
+
+**(b)** The probability flow ODE for the forward SDE $dX_t = -\frac{\beta}{2}X_t\,dt + \sqrt{\beta}\,dW_t$ is:
+
+$$\boxed{\frac{dX}{dt} = -\frac{\beta}{2}\,X - \frac{\beta}{2}\,s(X, t)}$$
+
+or equivalently $\frac{dX}{dt} = -\frac{\beta}{2}\bigl[X + s(X,t)\bigr]$.
+
+This ODE is deterministic --- given an initial condition $X(0) = x_0$, the trajectory is uniquely determined. Yet the **ensemble** of trajectories (over all initial conditions drawn from $p(x,0)$) produces exactly the same time-dependent marginal density $p(x,t)$ as the stochastic process. This works because the ODE's velocity field is constructed (via the score) so that the continuity equation $\partial_t p + \partial_x(v\,p) = 0$ holds with the same $p(x,t)$ that solves the Fokker-Planck equation. Individual trajectories differ between the SDE and ODE, but the statistical distribution they generate at each time $t$ is identical.
+
+**(c)** In the transport equation $u_t + c\,u_x = 0$, the wave speed $c$ is a **fixed constant** (or depends only on $(x,t)$, not on $u$). Each point moves along its characteristic independently of all other points. By contrast, the probability flow ODE's velocity $v(x,t) = -\frac{\beta}{2}[x + s(x,t)]$ depends on the **score** $s = \partial_x \log p$, which encodes the global shape of the entire probability density. Changing the density anywhere changes $s$ everywhere, so each trajectory is influenced by the collective behavior of all other trajectories. This makes the probability flow a **nonlocal** transport: unlike the simple transport equation where characteristics are determined by local data alone, the probability flow ODE couples every trajectory to the full distribution.
+
+**(d)** The forward process (heat equation / Fokker-Planck) smooths $p(x,t)$ by damping high-frequency Fourier modes at rate $e^{-n^2 t}$ (as in Q2). To reverse this, one must know at each time $t$ which frequencies have been damped and by how much, in order to amplify them back to their original magnitudes. The score $s(x,t) = \partial_x \log p(x,t)$ encodes exactly this: since $\log p$ can be reconstructed from $s$ by spatial integration (up to a normalization constant), knowing $s$ at all $(x,t)$ is equivalent to knowing $p$ at all $(x,t)$. And knowing $p$ is equivalent to knowing the full frequency content of the density at every time.
+
+In the reverse SDE (Q9d), the score appears as the term that steers trajectories toward high-density regions --- it provides the "gradient information" that tells the reverse dynamics where the original structures were before they were smoothed away. Without the score, the reverse process would have no way to distinguish which smoothed density came from which original distribution, since the heat equation maps many distinct initial conditions to similar smoothed profiles. The score resolves this ambiguity: it is the precise mathematical object that makes the forward diffusion invertible.
+
+---
+
+**End of Answer Key --- Total: 100 points**

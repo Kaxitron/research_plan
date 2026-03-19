@@ -1,0 +1,444 @@
+---
+title: "Exam 3A: Probability and Frequentist Statistics --- Answer Key"
+subtitle: "Lessons 37--43"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear reasoning. Partial credit is generous for correct setup with arithmetic errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- Probability Foundations and Bayes' Theorem
+
+**(a)** The sample space is $\{D, \neg D\}$ (disease or no disease). The priors are:
+
+$$P(D) = \frac{1}{500} = 0.002, \qquad P(\neg D) = 1 - 0.002 = 0.998$$
+
+Verification: $P(D) + P(\neg D) = 0.002 + 0.998 = 1$. $\checkmark$
+
+**(b)** By Bayes' theorem:
+
+$$P(D \mid +) = \frac{P(+ \mid D)\, P(D)}{P(+)}$$
+
+where $P(+) = P(+ \mid D)\,P(D) + P(+ \mid \neg D)\,P(\neg D)$.
+
+- Likelihood: $P(+ \mid D) = 0.98$ (sensitivity)
+- Prior: $P(D) = 0.002$
+- False positive rate: $P(+ \mid \neg D) = 1 - 0.95 = 0.05$
+
+$$P(+) = (0.98)(0.002) + (0.05)(0.998) = 0.00196 + 0.04990 = 0.05186$$
+
+$$P(D \mid +) = \frac{0.00196}{0.05186} \approx \mathbf{0.0378}$$
+
+Only about 3.8\% of those who test positive actually have the disease.
+
+**(c)** Mathematically, the posterior is low because the prior $P(D)$ is very small (1 in 500). The false positive rate of 5\% applied to the enormous healthy population ($\neg D$) generates far more false alarms than the 98\% detection rate produces true positives from the tiny diseased population. Intuitively, the "haystack" of healthy people swamps the "needle" of sick people. The cognitive bias is **base rate neglect**: people focus on the test's 98\% accuracy and ignore the rarity of the disease (the prior).
+
+**(d)** Using the posterior from (b) as the new prior: $P(D) = 0.0378$, $P(\neg D) = 0.9622$.
+
+$$P(+) = (0.98)(0.0378) + (0.05)(0.9622) = 0.03704 + 0.04811 = 0.08515$$
+
+$$P(D \mid {+}{+}) = \frac{0.03704}{0.08515} \approx \mathbf{0.435}$$
+
+After two positive tests, the probability rises to approximately 43.5\%. Sequential Bayesian updating is powerful: each piece of evidence rationally updates our belief. The first test shifts us from 0.2\% to 3.8\%; the second shifts us from 3.8\% to 43.5\%. A third positive test would push the probability well above 90\%. This demonstrates how Bayesian reasoning accumulates evidence incrementally.
+
+---
+
+## Q2 --- Expectation, Variance, and the Covariance Matrix
+
+**(a)** First compute the marginals.
+
+$P(X_1 = -1) = 0.10 + 0.15 + 0.05 = 0.30$, $P(X_1 = 0) = 0.05 + 0.20 + 0.10 = 0.35$, $P(X_1 = 1) = 0.05 + 0.10 + 0.20 = 0.35$.
+
+$$E[X_1] = (-1)(0.30) + (0)(0.35) + (1)(0.35) = -0.30 + 0 + 0.35 = \mathbf{0.05}$$
+
+$$E[X_1^2] = (1)(0.30) + (0)(0.35) + (1)(0.35) = 0.65$$
+
+$$\operatorname{Var}(X_1) = 0.65 - (0.05)^2 = 0.65 - 0.0025 = \mathbf{0.6475}$$
+
+$P(X_2 = 0) = 0.10 + 0.05 + 0.05 = 0.20$, $P(X_2 = 1) = 0.15 + 0.20 + 0.10 = 0.45$, $P(X_2 = 2) = 0.05 + 0.10 + 0.20 = 0.35$.
+
+$$E[X_2] = (0)(0.20) + (1)(0.45) + (2)(0.35) = 0 + 0.45 + 0.70 = \mathbf{1.15}$$
+
+$$E[X_2^2] = (0)(0.20) + (1)(0.45) + (4)(0.35) = 0 + 0.45 + 1.40 = 1.85$$
+
+$$\operatorname{Var}(X_2) = 1.85 - (1.15)^2 = 1.85 - 1.3225 = \mathbf{0.5275}$$
+
+**(b)** Compute $E[X_1 X_2]$:
+
+$$E[X_1 X_2] = \sum_{x_1, x_2} x_1 x_2 \, P(x_1, x_2)$$
+
+$$= (-1)(0)(0.10) + (-1)(1)(0.15) + (-1)(2)(0.05) + (0)(0)(0.05) + (0)(1)(0.20)$$
+$$+ (0)(2)(0.10) + (1)(0)(0.05) + (1)(1)(0.10) + (1)(2)(0.20)$$
+
+$$= 0 - 0.15 - 0.10 + 0 + 0 + 0 + 0 + 0.10 + 0.40 = 0.25$$
+
+$$\operatorname{Cov}(X_1, X_2) = E[X_1 X_2] - E[X_1]E[X_2] = 0.25 - (0.05)(1.15) = 0.25 - 0.0575 = \mathbf{0.1925}$$
+
+$$\rho_{12} = \frac{\operatorname{Cov}(X_1, X_2)}{\sqrt{\operatorname{Var}(X_1)\operatorname{Var}(X_2)}} = \frac{0.1925}{\sqrt{(0.6475)(0.5275)}} = \frac{0.1925}{\sqrt{0.3416}} = \frac{0.1925}{0.5845} \approx \mathbf{0.329}$$
+
+A moderate positive correlation.
+
+**(c)** The covariance matrix is:
+
+$$\Sigma = \begin{pmatrix} 0.6475 & 0.1925 \\ 0.1925 & 0.5275 \end{pmatrix}$$
+
+Eigenvalues: $\det(\Sigma - \lambda I) = (0.6475 - \lambda)(0.5275 - \lambda) - (0.1925)^2 = 0$.
+
+$$\lambda^2 - 1.1750\lambda + (0.6475 \cdot 0.5275 - 0.0371) = 0$$
+
+$$\lambda^2 - 1.1750\lambda + (0.3416 - 0.0371) = 0$$
+
+$$\lambda^2 - 1.1750\lambda + 0.3045 = 0$$
+
+$$\lambda = \frac{1.1750 \pm \sqrt{1.3806 - 1.2180}}{2} = \frac{1.1750 \pm \sqrt{0.1626}}{2} = \frac{1.1750 \pm 0.4032}{2}$$
+
+$$\lambda_1 \approx \mathbf{0.7891}, \qquad \lambda_2 \approx \mathbf{0.3859}$$
+
+The eigenvectors of $\Sigma$ represent the **principal axes of the data ellipse** --- the directions of maximum and minimum variance. The eigenvalues are the variances along those principal directions.
+
+**(d)** Total variance $= \operatorname{tr}(\Sigma) = 0.6475 + 0.5275 = 1.1750$ (equivalently, $\lambda_1 + \lambda_2 \approx 0.7891 + 0.3859 = 1.1750$). $\checkmark$
+
+First PC captures $\lambda_1 / (\lambda_1 + \lambda_2) = 0.7891 / 1.1750 \approx \mathbf{67.2\%}$ of total variance.
+
+---
+
+## Q3 --- Maximum Likelihood Estimation
+
+**(a)** The likelihood for $n = 5$ i.i.d.\ observations from $\mathcal{N}(\mu, \sigma^2)$:
+
+$$L(\mu, \sigma^2 \mid \mathbf{x}) = \prod_{i=1}^{5} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right)$$
+
+**(b)** Taking the log:
+
+$$\ell(\mu, \sigma^2) = -\frac{n}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^{n}(x_i - \mu)^2$$
+
+Two reasons to prefer log-likelihood: (1) products become sums, which are numerically stable (avoids underflow from multiplying many small probabilities); (2) sums are easier to differentiate than products.
+
+**(c)** Differentiating with respect to $\mu$:
+
+$$\frac{\partial \ell}{\partial \mu} = \frac{1}{\sigma^2}\sum_{i=1}^{n}(x_i - \mu) = 0$$
+
+$$\sum_{i=1}^{n} x_i - n\mu = 0 \implies \hat{\mu} = \frac{1}{n}\sum_{i=1}^{n} x_i = \frac{1 + 3 + 2 + 5 + 4}{5} = \frac{15}{5} = \mathbf{3}$$
+
+**(d)** The MLE for the variance is:
+
+$$\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i - \hat{\mu})^2 = \frac{(1-3)^2 + (3-3)^2 + (2-3)^2 + (5-3)^2 + (4-3)^2}{5} = \frac{4 + 0 + 1 + 4 + 1}{5} = \frac{10}{5} = \mathbf{2}$$
+
+This is **biased**: $E[\hat{\sigma}^2] = \frac{n-1}{n}\sigma^2 < \sigma^2$. The unbiased correction divides by $n - 1$ instead of $n$, giving $s^2 = 10/4 = 2.5$. The bias matters for small $n$ because $\frac{n-1}{n}$ is far from 1 (e.g., $4/5 = 0.8$ for $n = 5$), so the MLE systematically underestimates the true variance.
+
+**(e)** The log of a sum, $\ln\!\left(\sum_k \pi_k \mathcal{N}(x_i \mid \mu_k, \sigma_k^2)\right)$, does not simplify because the log does not pass through the sum. Each data point could belong to any component, and we do not know which --- this introduces latent (hidden) variables.
+
+The **Expectation-Maximization (EM)** algorithm resolves this with two alternating steps: (1) the **E-step** computes the posterior probability (responsibility) that each data point belongs to each component, given current parameter estimates; (2) the **M-step** updates the parameters ($\mu_k$, $\sigma_k^2$, $\pi_k$) to maximize the expected log-likelihood under those responsibilities. EM is guaranteed to increase the likelihood at each iteration and converges to a local maximum.
+
+---
+
+## Q4 --- Information Theory
+
+**(a)** $P = (0.5,\; 0.25,\; 0.125,\; 0.125)$.
+
+$$H(X) = -\sum_i p_i \log_2 p_i = -\bigl(0.5\log_2 0.5 + 0.25\log_2 0.25 + 0.125\log_2 0.125 + 0.125\log_2 0.125\bigr)$$
+
+$$= -\bigl(0.5(-1) + 0.25(-2) + 0.125(-3) + 0.125(-3)\bigr) = -(-0.5 - 0.5 - 0.375 - 0.375)$$
+
+$$= \mathbf{1.75 \text{ bits}}$$
+
+Interpretation: on average, you need 1.75 yes/no questions to identify the outcome. This matches the intuition of a variable-length code: the most likely outcome ($p = 0.5$) needs 1 bit, the next needs 2 bits, and the two least likely each need 3 bits. The weighted average is $0.5(1) + 0.25(2) + 0.125(3) + 0.125(3) = 1.75$.
+
+**(b)** Cross-entropy: $H(P, Q) = -\sum_x p(x) \ln q(x)$.
+
+KL divergence: $D_{\mathrm{KL}}(P \,\|\, Q) = \sum_x p(x) \ln \dfrac{p(x)}{q(x)}$.
+
+Proof of decomposition:
+
+$$H(P, Q) = -\sum_x p(x) \ln q(x) = -\sum_x p(x) \ln p(x) + \sum_x p(x) \ln \frac{p(x)}{q(x)}$$
+
+$$= H(P) + D_{\mathrm{KL}}(P \,\|\, Q) \qquad \square$$
+
+(We added and subtracted $\sum p(x) \ln p(x)$.)
+
+**(c)** During training, $P$ is the true data distribution (fixed). Since $H(P)$ is a constant that does not depend on model parameters, minimizing $H(P, Q)$ over $Q$ is equivalent to minimizing $D_{\mathrm{KL}}(P \,\|\, Q)$. KL divergence measures how different $Q$ is from $P$, and equals zero if and only if $Q = P$. So cross-entropy loss drives the model distribution toward the data distribution --- this is why it is the natural loss for classification.
+
+**(d)** Standard softmax ($\tau = 1$) with $\mathbf{z} = (2, 1, 0)$:
+
+$$\text{Denominat.} = e^2 + e^1 + e^0 = 7.389 + 2.718 + 1.000 = 11.107$$
+
+$$\text{softmax}_1 = \left(\frac{7.389}{11.107},\; \frac{2.718}{11.107},\; \frac{1.000}{11.107}\right) \approx (0.665,\; 0.245,\; 0.090)$$
+
+With $\tau = 0.5$: logits become $\mathbf{z}/0.5 = (4, 2, 0)$.
+
+$$\text{Denom.} = e^4 + e^2 + e^0 = 54.598 + 7.389 + 1.000 = 62.987$$
+
+$$\text{softmax}_{0.5} = \left(\frac{54.598}{62.987},\; \frac{7.389}{62.987},\; \frac{1.000}{62.987}\right) \approx (0.867,\; 0.117,\; 0.016)$$
+
+As $\tau \to 0^+$: the distribution concentrates all mass on the largest logit (becomes a hard $\arg\max$). The entropy approaches 0. As $\tau \to \infty$: all logits $z_i / \tau \to 0$, so the distribution approaches uniform. The entropy approaches $\ln K$ (maximum entropy). Temperature controls the "sharpness" of the distribution: low temperature = confident/peaked, high temperature = uncertain/flat.
+
+---
+
+## Q5 --- Hypothesis Testing
+
+**(a)** $H_0$: $\mu_1 - \mu_2 = 0$ (the preprocessing method has no effect). $H_1$: $\mu_1 - \mu_2 > 0$ (the method improves accuracy). This is a **one-sided** test (we are testing for improvement specifically).
+
+**(b)**
+
+$$z = \frac{0.83 - 0.80}{\sqrt{0.04^2/25 + 0.05^2/25}} = \frac{0.03}{\sqrt{0.0016/25 + 0.0025/25}} = \frac{0.03}{\sqrt{0.000064 + 0.000100}}$$
+
+$$= \frac{0.03}{\sqrt{0.000164}} = \frac{0.03}{0.01281} \approx \mathbf{2.342}$$
+
+**(c)** At $\alpha = 0.05$: $p = 0.0154 < 0.05$, so we **reject $H_0$**. There is statistically significant evidence that the preprocessing method improves accuracy.
+
+At $\alpha = 0.01$: $p = 0.0154 > 0.01$, so we **do not reject $H_0$**. The result is not significant at the 1\% level. This illustrates that the conclusion depends on the chosen significance threshold.
+
+**(d)** A $p$-value **is**: the probability of observing a test statistic at least as extreme as the one obtained, assuming $H_0$ is true.
+
+It is **not**: (1) the probability that $H_0$ is true, (2) the probability that the result occurred by chance.
+
+If 20 methods were tested, the **multiple comparisons problem** arises: even if no method works, we expect $20 \times 0.05 = 1$ false positive by chance. The **Bonferroni correction** adjusts the threshold: use $\alpha' = 0.05/20 = 0.0025$ per test. Since $p = 0.0154 > 0.0025$, the result would no longer be significant after correction.
+
+**(e)** The standard error of the difference is $\text{SE} = 0.01281$ (from part b).
+
+$$\text{95\% CI} = (\bar{x}_1 - \bar{x}_2) \pm 1.96 \times \text{SE} = 0.03 \pm 1.96(0.01281) = 0.03 \pm 0.0251$$
+
+$$\text{95\% CI} = \mathbf{(0.0049,\; 0.0551)}$$
+
+The CI does not contain 0, consistent with rejecting $H_0$ at $\alpha = 0.05$.
+
+Cohen's $d$ provides information about the **magnitude** of the effect, not just whether it exists:
+
+$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_p} \quad \text{where} \quad s_p = \sqrt{\frac{s_1^2 + s_2^2}{2}} = \sqrt{\frac{0.0016 + 0.0025}{2}} = \sqrt{0.00205} = 0.0453$$
+
+$$d = \frac{0.03}{0.0453} \approx \mathbf{0.66}$$
+
+This is a **medium** effect size (by Cohen's benchmarks: 0.2 = small, 0.5 = medium, 0.8 = large). The $p$-value alone tells us the effect is unlikely to be zero, but Cohen's $d$ tells us the improvement is meaningfully large relative to the variability --- a practically important distinction.
+
+---
+
+## Q6 --- Experimental Design and Statistical Fallacies
+
+**(a)** From weakest to strongest:
+
+1. **Anecdotal report** --- individual stories with no controls, no systematic data collection. Subject to every form of bias.
+2. **Observational study** --- systematic data collection on existing groups. Advantage over anecdotes: large sample, measurable effect sizes. Weakness: cannot establish causation (confounders present).
+3. **Randomized controlled trial (RCT)** --- subjects randomly assigned to treatment/control. Advantage: randomization balances confounders (both known and unknown), enabling causal inference.
+4. **Systematic review / meta-analysis** --- combines multiple RCTs quantitatively. Advantage: larger effective sample size, more robust conclusions, can detect effects too small for any individual study.
+
+**(b)** The fallacy is **correlation does not imply causation**. The likely confounder is **temperature/season**: hot weather causes both increased ice cream consumption and increased swimming, which leads to more drownings. Ice cream and drowning are correlated because they share a common cause, not because one causes the other.
+
+To isolate a causal effect, you would need to run a randomized experiment (e.g., randomly assign some swimmers to eat ice cream and others not, then compare drowning rates) --- but this is ethically impractical. In practice, you would use regression to control for temperature and season, or use a natural experiment or instrumental variable approach.
+
+**(c)** Suppose there are two disease categories: a mild disease and a severe disease.
+
+| | Hospital A (deaths/patients) | Hospital A rate | Hospital B (deaths/patients) | Hospital B rate |
+|---|---|---|---|---|
+| Mild | 5/500 | 1.0\% | 10/200 | 5.0\% |
+| Severe | 100/500 | 20.0\% | 190/800 | 23.75\% |
+| **Overall** | **105/1000** | **10.5\%** | **200/1000** | **20.0\%** |
+
+Wait --- this has A better overall too. Let me adjust to create the paradox.
+
+| | Hospital A (deaths/patients) | Hospital A rate | Hospital B (deaths/patients) | Hospital B rate |
+|---|---|---|---|---|
+| Mild | 3/100 | 3\% | 30/800 | 3.75\% |
+| Severe | 60/900 | 6.67\% | 8/100 | 8\% |
+| **Overall** | **63/1000** | **6.3\%** | **38/900** | **4.22\%** |
+
+Hospital A has a lower mortality rate within *each* disease category (3\% < 3.75\% for mild; 6.67\% < 8\% for severe), but a **higher** overall mortality rate (6.3\% > 4.22\%).
+
+The lurking variable is **case severity mix**: Hospital A treats far more severe cases (900/1000) than Hospital B (100/900). Since severe cases have higher mortality regardless of hospital, this skews Hospital A's aggregate rate upward.
+
+**(d)** This is **survivorship bias**. The VC firm is only reporting on companies that survived long enough to be evaluated --- they are ignoring all the companies that failed and were removed from the portfolio. If 500 companies were initially funded and 400 failed, but the "80\% profitable" statistic is calculated only from the 100 survivors, the true success rate is $80/500 = 16\%$, not 80\%. Survivorship bias systematically over-estimates success by excluding failures from the denominator.
+
+---
+
+## Q7 --- Linear Regression
+
+**(a)** Design matrix, response, and parameter vectors:
+
+$$X = \begin{pmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \\ 1 & 4 \\ 1 & 5 \end{pmatrix}, \qquad \mathbf{y} = \begin{pmatrix} 2 \\ 3 \\ 6 \\ 8 \\ 11 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \end{pmatrix}$$
+
+**(b)** Compute the normal equations:
+
+$$X^\top X = \begin{pmatrix} 5 & 15 \\ 15 & 55 \end{pmatrix}, \qquad X^\top \mathbf{y} = \begin{pmatrix} 30 \\ 112 \end{pmatrix}$$
+
+Solving $(X^\top X)\hat{\boldsymbol{\beta}} = X^\top \mathbf{y}$:
+
+$$\det(X^\top X) = 5(55) - 15(15) = 275 - 225 = 50$$
+
+$$(X^\top X)^{-1} = \frac{1}{50}\begin{pmatrix} 55 & -15 \\ -15 & 5 \end{pmatrix}$$
+
+$$\hat{\boldsymbol{\beta}} = \frac{1}{50}\begin{pmatrix} 55 & -15 \\ -15 & 5 \end{pmatrix}\begin{pmatrix} 30 \\ 112 \end{pmatrix} = \frac{1}{50}\begin{pmatrix} 1650 - 1680 \\ -450 + 560 \end{pmatrix} = \frac{1}{50}\begin{pmatrix} -30 \\ 110 \end{pmatrix} = \begin{pmatrix} -0.6 \\ 2.2 \end{pmatrix}$$
+
+$$\hat{\beta}_0 = \mathbf{-0.6}, \qquad \hat{\beta}_1 = \mathbf{2.2}$$
+
+The fitted model is $\hat{y} = -0.6 + 2.2x$.
+
+**(c)** Predicted values: $\hat{y}_1 = 1.6$, $\hat{y}_2 = 3.8$, $\hat{y}_3 = 6.0$, $\hat{y}_4 = 8.2$, $\hat{y}_5 = 10.4$.
+
+Residuals: $\hat{\varepsilon} = (0.4,\; -0.8,\; 0.0,\; -0.2,\; 0.6)$.
+
+$$\text{RSS} = 0.16 + 0.64 + 0.00 + 0.04 + 0.36 = \mathbf{1.20}$$
+
+$\bar{y} = 30/5 = 6$.
+
+$$\text{TSS} = (2-6)^2 + (3-6)^2 + (6-6)^2 + (8-6)^2 + (11-6)^2 = 16 + 9 + 0 + 4 + 25 = 54$$
+
+$$R^2 = 1 - \frac{1.20}{54} = 1 - 0.0222 = \mathbf{0.978}$$
+
+The model explains 97.8\% of the variance in $y$. Excellent fit.
+
+**(d)** Under $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$, the likelihood of the data is:
+
+$$L(\boldsymbol{\beta}, \sigma^2) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(y_i - \mathbf{x}_i^\top \boldsymbol{\beta})^2}{2\sigma^2}\right)$$
+
+$$\ell(\boldsymbol{\beta}, \sigma^2) = -\frac{n}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \mathbf{x}_i^\top \boldsymbol{\beta})^2$$
+
+To maximize $\ell$ with respect to $\boldsymbol{\beta}$, only the second term matters (the first is constant in $\boldsymbol{\beta}$). Maximizing $-\frac{1}{2\sigma^2}\|\mathbf{y} - X\boldsymbol{\beta}\|^2$ is equivalent to **minimizing** $\|\mathbf{y} - X\boldsymbol{\beta}\|^2$, which is exactly the OLS objective. Therefore $\hat{\boldsymbol{\beta}}_{\text{MLE}} = \hat{\boldsymbol{\beta}}_{\text{OLS}} = (X^\top X)^{-1}X^\top \mathbf{y}$. $\square$
+
+---
+
+## Q8 --- Logistic Regression and Generalized Linear Models
+
+**(a)** Start from $P(Y=1 \mid x) = \sigma(\eta)$ where $\eta = \beta_0 + \beta_1 x$ and $\sigma(\eta) = \frac{1}{1+e^{-\eta}}$.
+
+Then $P(Y=0 \mid x) = 1 - \sigma(\eta) = \frac{e^{-\eta}}{1 + e^{-\eta}}$.
+
+The odds ratio:
+
+$$\frac{P(Y=1 \mid x)}{P(Y=0 \mid x)} = \frac{1/(1+e^{-\eta})}{e^{-\eta}/(1+e^{-\eta})} = \frac{1}{e^{-\eta}} = e^{\eta}$$
+
+Taking the log:
+
+$$\ln \frac{P(Y=1 \mid x)}{P(Y=0 \mid x)} = \eta = \beta_0 + \beta_1 x \qquad \square$$
+
+**(b)** For independent Bernoulli observations:
+
+$$L(\beta_0, \beta_1) = \prod_{i=1}^n \hat{p}_i^{\,y_i}(1 - \hat{p}_i)^{1-y_i}$$
+
+where $\hat{p}_i = \sigma(\beta_0 + \beta_1 x_i)$.
+
+Log-likelihood:
+
+$$\ell = \sum_{i=1}^n \bigl[y_i \ln \hat{p}_i + (1 - y_i)\ln(1 - \hat{p}_i)\bigr]$$
+
+**(c)** Using the fact that $\frac{d\sigma}{d\eta} = \sigma(\eta)(1 - \sigma(\eta))$ and $\frac{\partial \eta_i}{\partial \beta_1} = x_i$:
+
+$$\frac{\partial \ell}{\partial \beta_1} = \sum_{i=1}^n \left[\frac{y_i}{\hat{p}_i} - \frac{1-y_i}{1-\hat{p}_i}\right] \hat{p}_i(1-\hat{p}_i)\, x_i$$
+
+$$= \sum_{i=1}^n \left[\frac{y_i(1-\hat{p}_i) - (1-y_i)\hat{p}_i}{\hat{p}_i(1-\hat{p}_i)}\right]\hat{p}_i(1-\hat{p}_i)\, x_i$$
+
+$$= \sum_{i=1}^n (y_i - y_i\hat{p}_i - \hat{p}_i + y_i\hat{p}_i)\, x_i = \sum_{i=1}^n (y_i - \hat{p}_i)\, x_i \qquad \square$$
+
+There is no closed-form solution because $\hat{p}_i = \sigma(\beta_0 + \beta_1 x_i)$ is a nonlinear function of the parameters. Setting the gradient to zero yields a system of transcendental equations that cannot be solved algebraically. Instead, iterative methods such as **gradient descent** or **Newton--Raphson** (iteratively reweighted least squares) are used.
+
+**(d)** The three components of a GLM:
+
+| Component | Linear Regression | Logistic Regression |
+|---|---|---|
+| **Random** (distribution of $Y$) | $Y \sim \mathcal{N}(\mu, \sigma^2)$ | $Y \sim \text{Bernoulli}(p)$ |
+| **Systematic** (linear predictor) | $\eta = X\boldsymbol{\beta}$ | $\eta = X\boldsymbol{\beta}$ |
+| **Link function** ($g$ s.t.\ $g(\mu) = \eta$) | Identity: $g(\mu) = \mu$ | Logit: $g(p) = \ln\!\frac{p}{1-p}$ |
+
+Both models share the same systematic component ($\eta = X\boldsymbol{\beta}$); they differ in the assumed distribution and the link function that connects the expected response to the linear predictor.
+
+---
+
+## Q9 --- The MLE--Information Theory--Regression Bridge
+
+**(a)** Cross-entropy for one example with one-hot label $\mathbf{p}$ ($p_c = 1$, all others 0) and model output $\mathbf{q}$:
+
+$$H(\mathbf{p}, \mathbf{q}) = -\sum_{k=1}^K p_k \ln q_k = -\ln q_c$$
+
+since only the $k = c$ term survives. $\square$
+
+For $n$ training examples, the total cross-entropy loss is $\mathcal{L} = -\sum_{i=1}^n \ln q_{c_i}$.
+
+This is exactly the **negative log-likelihood**: each example contributes $\ln P(y_i = c_i \mid \mathbf{x}_i; \theta) = \ln q_{c_i}$, so:
+
+$$\mathcal{L} = -\sum_{i=1}^n \ln P(y_i \mid \mathbf{x}_i; \theta) = -\ln L(\theta)$$
+
+Minimizing $\mathcal{L}$ is maximizing $L(\theta)$, which is **maximum likelihood estimation**. $\square$
+
+**(b)** Under $y_i = \mathbf{x}_i^\top \boldsymbol{\beta} + \varepsilon_i$ with $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$:
+
+$$\ell(\boldsymbol{\beta}) = -\frac{n}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \mathbf{x}_i^\top\boldsymbol{\beta})^2$$
+
+Maximizing over $\boldsymbol{\beta}$ requires minimizing $\sum_i (y_i - \mathbf{x}_i^\top \boldsymbol{\beta})^2 = \|\mathbf{y} - X\boldsymbol{\beta}\|^2$, which yields the OLS estimator $\hat{\boldsymbol{\beta}} = (X^\top X)^{-1}X^\top \mathbf{y}$. $\square$
+
+The unifying principle: **cross-entropy loss for classification and MSE loss for regression are both instances of negative log-likelihood under different distributional assumptions** (categorical for classification, Gaussian for regression).
+
+**(c)** Mutual information $I(X; Y) = H(X) - H(X \mid Y)$ measures the **reduction in uncertainty** about $X$ when $Y$ is observed. Equivalently, it is the amount of information $Y$ provides about $X$ (and vice versa, since $I(X;Y) = I(Y;X)$).
+
+Proof that $I(X; Y) = D_{\mathrm{KL}}(P(X,Y) \,\|\, P(X)P(Y))$:
+
+$$I(X;Y) = \sum_{x,y} P(x,y) \ln \frac{P(x,y)}{P(x)P(y)}$$
+
+This is by definition $D_{\mathrm{KL}}(P(X,Y) \,\|\, P(X)P(Y))$. $\square$
+
+Since KL divergence is non-negative and equals zero if and only if the two distributions are identical, $I(X; Y) = 0$ if and only if $P(X, Y) = P(X)P(Y)$, which is the definition of independence.
+
+**(d)** Two reasons $R^2 = 0.95$ on training data does not guarantee good performance on new data:
+
+1. **Overfitting / multiple comparisons (L41):** If many models or features were tried, the best-performing one on training data will have an inflated $R^2$ due to fitting noise rather than signal. This is a form of the multiple comparisons problem --- the model that "wins" on training data may not replicate on held-out data.
+
+2. **Selection bias / non-representative data (L42):** If the training data is not representative of the population where the model will be deployed (e.g., survivorship bias in the training sample, or confounders that differ between training and deployment contexts), then even a genuinely good in-sample fit will not transfer. Correlation in the training data does not imply the same causal structure holds in the deployment environment.
+
+---
+
+## Q10 --- Synthesis: From Data to Decisions
+
+**(a)** The test statistic for the difference in means:
+
+$$z = \frac{\bar{x}_T - \bar{x}_C}{\sqrt{s_T^2/n_T + s_C^2/n_C}} = \frac{8.5 - 5.0}{\sqrt{144/100 + 121/100}} = \frac{3.5}{\sqrt{1.44 + 1.21}} = \frac{3.5}{\sqrt{2.65}} = \frac{3.5}{1.628} \approx \mathbf{2.150}$$
+
+The 95\% confidence interval:
+
+$$(\bar{x}_T - \bar{x}_C) \pm 1.96 \times \text{SE} = 3.5 \pm 1.96(1.628) = 3.5 \pm 3.191$$
+
+$$\text{95\% CI} = \mathbf{(0.309,\; 6.691)}$$
+
+The CI does not contain 0, consistent with the significant result.
+
+**(b)** At $\alpha = 0.05$: $p \approx 0.026 < 0.05$, so we **reject $H_0$**. There is statistically significant evidence that the drug reduces blood pressure more than placebo.
+
+At $\alpha = 0.01$: $p \approx 0.026 > 0.01$, so we **do not reject $H_0$**.
+
+The tension: choosing a smaller $\alpha$ reduces the probability of a Type I error (false positive --- declaring the drug effective when it is not) but increases the probability of a Type II error (false negative --- failing to detect a real effect). In clinical trials, this tradeoff must balance patient safety (avoiding approval of ineffective drugs) against the cost of missing a beneficial treatment. There is no objectively "correct" $\alpha$; the choice depends on the relative consequences of each error type.
+
+**(c)** Pooled standard deviation:
+
+$$s_p = \sqrt{\frac{s_T^2 + s_C^2}{2}} = \sqrt{\frac{144 + 121}{2}} = \sqrt{132.5} \approx 11.51$$
+
+Cohen's $d$:
+
+$$d = \frac{\bar{x}_T - \bar{x}_C}{s_p} = \frac{3.5}{11.51} \approx \mathbf{0.304}$$
+
+By conventional benchmarks (0.2 = small, 0.5 = medium, 0.8 = large), this is a **small-to-medium** effect size. While statistically significant, the practical significance is questionable: a 3.5 mmHg additional reduction in blood pressure, relative to a standard deviation of about 11.5 mmHg, is a modest effect. Whether this is clinically meaningful depends on the medical context --- for some patients, even small reductions in blood pressure confer meaningful risk reduction.
+
+**(d)** The single-hospital setting threatens **external validity** (generalizability): excellent patient compliance at this hospital may not be representative of the broader patient population. In a less compliant population, adherence to the drug regimen might be lower, reducing the observed effect.
+
+Two additional biases from L42:
+
+1. **Selection bias:** If patients who enrolled in the trial were healthier, more motivated, or otherwise different from the general patient population (e.g., volunteers tend to be more health-conscious), the trial results may not generalize. The treatment effect observed in selected participants may overstate the benefit in the broader population.
+
+2. **Base rate neglect:** When interpreting the result "the drug is effective" ($p = 0.026$), people may ignore the prior probability that any given drug candidate works. If only 10\% of candidate drugs in this therapeutic class are truly effective, a single $p = 0.026$ result has a non-trivial chance of being a false positive --- the positive predictive value of the trial depends on the base rate of effective drugs, not just the $p$-value.
+
+**(e)** Simply counting "significant" trials is flawed because: (1) different $\alpha$ levels mean different thresholds, so the significance labels are not comparable; (2) a trial with $p = 0.049$ and one with $p = 0.001$ both count as "significant at $\alpha = 0.05$" but convey very different evidential strength; (3) this approach discards the magnitude of the effect and the precision of each estimate.
+
+A proper meta-analysis should examine the **effect sizes** and their **confidence intervals** across all trials. Methods such as fixed-effects or random-effects meta-analysis weight each trial by its precision (inverse variance), producing a pooled effect estimate and overall confidence interval. This approach uses all the quantitative information from each trial rather than reducing each to a binary significant/not-significant label, and can detect effects that no individual trial was powered to find.

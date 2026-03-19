@@ -1,8 +1,27 @@
-# Final Project: The Alignment Observatory
+---
+title: "The Alignment Observatory"
+subtitle: "Final Project --- Build, Train, Interpret, and Align"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
 
 **A Comprehensive Integration Across All Phases — Build, Train, Interpret, and Align a Language Model**
-
----
 
 | | |
 |---|---|
@@ -15,7 +34,7 @@
 >
 > This project is the proof that you built it.
 
----
+***
 
 ## Overview
 
@@ -23,7 +42,7 @@ You will build a small transformer language model from scratch, train it, analyz
 
 The project has 7 stages. Each stage tells you what to build AND which lessons it draws from.
 
----
+***
 
 ## Stage 1: Architecture (~2h)
 **Phases used: 1 (Linear Algebra), 4 (Neural Networks)**
@@ -48,7 +67,7 @@ Build a small transformer from scratch in PyTorch. No `nn.TransformerEncoder` �
 1. Compute the rank of your embedding matrix at initialization (before training). What do you expect it to be? (Lesson 6)
 2. What is the computational complexity of attention as a function of sequence length n and dimension d? Where does the bottleneck come from? (Lesson 68: computational complexity)
 
----
+***
 
 ## Stage 2: Training (~2h)
 **Phases used: 2 (Calculus), 3 (Probability), 4 (Neural Networks)**
@@ -76,7 +95,7 @@ Train your transformer on a dataset that has learnable structure.
 2. At the end of training, estimate the Hessian's top eigenvalue using the power method. What does this tell you about the local curvature? (Lesson 8: eigenvalues, Lesson 36: loss landscapes)
 3. If you chose the arithmetic dataset: does grokking occur? At what step? (Lesson 23: stability, Lesson 66: SLT phase transitions)
 
----
+***
 
 ## Stage 3: Training Dynamics as a Dynamical System (~2h)
 **Phases used: 2 (Calculus — ODEs), 5 (Topology)**
@@ -98,7 +117,7 @@ Analyze the training process through the lens of dynamical systems theory.
 1. At convergence, the system reaches a fixed point of the ODE. What are the eigenvalues of the Jacobian at this point? (Lesson 18: linear systems, Lesson 23: stability)
 2. If you observe oscillation near convergence, what does this tell you about the Hessian eigenvalues? (Lesson 23: stability)
 
----
+***
 
 ## Stage 4: Mechanistic Interpretability (~3h)
 **Phases used: 1 (Linear Algebra), 4 (Interpretability)**
@@ -123,7 +142,7 @@ Open the black box and find out what your model learned.
 1. The embedding space has d_model dimensions but the SVD reveals an effective rank of r < d_model. What does this mean in terms of superposition? (Lesson 65: superposition)
 2. If you find an attention head that implements a simple pattern (e.g., "attend to the previous token"), express this as a matrix equation: what must W_Q and W_K satisfy? (Lesson 5: matrix operations)
 
----
+***
 
 ## Stage 5: Alignment Attempt (~3h)
 **Phases used: 3 (Probability/Statistics), 4 (Neural Networks), 6 (Alignment)**
@@ -152,7 +171,7 @@ Attempt to steer the model's behavior toward a specified goal.
 2. Your reward model has finite accuracy. Using concepts from Lesson 42 (experimental design) and Lesson 41 (hypothesis testing), how confident are you that the observed improvement is real and not a reward model artifact?
 3. Could your model have learned to game the reward model rather than genuinely satisfy the criterion? Describe what this would look like and how you'd detect it. (Lesson 83: alignment problem — Goodhart's Law)
 
----
+***
 
 ## Stage 6: Mathematical Analysis (~2h)
 **Phases used: 5 (Abstract Algebra, Topology, Logic), 4 (SLT)**
@@ -171,7 +190,7 @@ Apply the deeper mathematical frameworks to understand your model.
 - Persistence diagrams before/after alignment
 - Written reflection on logical limits (1 page)
 
----
+***
 
 ## Stage 7: The Report (~2h)
 **All phases**
@@ -201,7 +220,7 @@ Write a research-style report that connects everything.
 | Written report connecting to curriculum concepts | 10 |
 | **Total** | **100** |
 
----
+***
 
 ## Phase-by-Lesson Coverage Map
 
@@ -221,7 +240,7 @@ Every lesson in the curriculum appears at least once in this project:
 | **Phase 5** | 73–79 | Stage 6 (topology, logical limits) |
 | **Phase 6** | 80–84 | Stage 5 (alignment), Stage 6 (reflection) |
 
----
+***
 
 *This is the culmination of your mathematical journey toward alignment research. The skills you demonstrate here — building, analyzing, interpreting, aligning, and reasoning about the limits of each approach — are the exact skills the field needs.*
 

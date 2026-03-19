@@ -1,0 +1,383 @@
+---
+title: "Exam 2C: Vector Calculus --- Answer Key"
+subtitle: "Lessons 24--28"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+## Q1 --- Parametric Curves, Line Integrals, and Work
+
+**(a)** $\mathbf{r}'(t) = (-2\sin t,\; 2\cos t,\; 3)$.
+
+Speed: $|\mathbf{r}'(t)| = \sqrt{4\sin^2 t + 4\cos^2 t + 9} = \sqrt{4 + 9} = \sqrt{13}$.
+
+**(b)** $L = \int_0^{2\pi} |\mathbf{r}'(t)|\, dt = \int_0^{2\pi} \sqrt{13}\, dt = 2\pi\sqrt{13}$.
+
+**(c)** Along the helix, $x^2 + y^2 = 4\cos^2 t + 4\sin^2 t = 4$. So $\rho = 4$ everywhere on $C$.
+
+$$M = \int_C \rho\, ds = \int_0^{2\pi} 4 \cdot \sqrt{13}\, dt = 8\pi\sqrt{13}$$
+
+**(d)** $\mathbf{F}(\mathbf{r}(t)) = (2\sin t,\; -2\cos t,\; 1)$ and $\mathbf{r}'(t) = (-2\sin t,\; 2\cos t,\; 3)$.
+
+$$\mathbf{F} \cdot \mathbf{r}' = -4\sin^2 t - 4\cos^2 t + 3 = -4 + 3 = -1$$
+
+$$W = \int_0^{2\pi} (-1)\, dt = -2\pi$$
+
+$W < 0$: the field opposes the particle's motion along this helical path --- the particle must do work against the field. The $-4$ contribution comes from the rotational component $(y, -x, 0)$ working against the counterclockwise helical winding, while the $+3$ comes from the upward $z$-component assisting the climb. The net effect is opposition.
+
+---
+
+## Q2 --- Conservative Fields and the Fundamental Theorem of Line Integrals
+
+**(a)** $\nabla \times \mathbf{F} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \partial_x & \partial_y & \partial_z \\ 2xy + z^2 & x^2 + 2yz & 2xz + y^2 \end{vmatrix}$
+
+$= \mathbf{i}(2y - 2y) - \mathbf{j}(2z - 2z) + \mathbf{k}(2x - 2x) = \mathbf{0}$.
+
+Since $\nabla \times \mathbf{F} = \mathbf{0}$ and the domain is all of $\mathbb{R}^3$ (simply connected), $\mathbf{F}$ is conservative.
+
+**(b)** We need $\varphi_x = 2xy + z^2$, so $\varphi = x^2 y + xz^2 + g(y, z)$.
+
+$\varphi_y = x^2 + g_y = x^2 + 2yz$, so $g_y = 2yz$, giving $g = y^2 z + h(z)$.
+
+$\varphi_z = 2xz + y^2 + h'(z) = 2xz + y^2$, so $h'(z) = 0$, $h = C$.
+
+$$\varphi(x, y, z) = x^2 y + xz^2 + y^2 z$$
+
+**(c)** $\int_C \mathbf{F} \cdot d\mathbf{r} = \varphi(1, 2, 3) - \varphi(0, 0, 0) = (1 \cdot 2 + 1 \cdot 9 + 4 \cdot 3) - 0 = 2 + 9 + 12 = 23$.
+
+**(d)** $G_1 = \frac{-y}{x^2 + y^2}$, $G_2 = \frac{x}{x^2 + y^2}$.
+
+$\frac{\partial G_1}{\partial y} = \frac{-(x^2 + y^2) + y \cdot 2y}{(x^2 + y^2)^2} = \frac{y^2 - x^2}{(x^2 + y^2)^2}$.
+
+$\frac{\partial G_2}{\partial x} = \frac{(x^2 + y^2) - x \cdot 2x}{(x^2 + y^2)^2} = \frac{y^2 - x^2}{(x^2 + y^2)^2}$.
+
+These are equal. $\checkmark$
+
+On the unit circle: $\mathbf{r}(t) = (\cos t, \sin t)$, $\mathbf{r}'(t) = (-\sin t, \cos t)$.
+
+$\mathbf{G}(\mathbf{r}(t)) = (-\sin t, \cos t)$.
+
+$\mathbf{G} \cdot \mathbf{r}' = \sin^2 t + \cos^2 t = 1$.
+
+$$\oint_C \mathbf{G} \cdot d\mathbf{r} = \int_0^{2\pi} 1\, dt = 2\pi \neq 0$$
+
+The domain $\mathbb{R}^2 \setminus \{(0,0)\}$ is \textbf{not simply connected} --- it has a hole at the origin. The equality of mixed partials guarantees conservativeness only on simply connected domains. Here, any closed curve that winds around the origin encloses the singularity, and the curl test fails.
+
+---
+
+## Q3 --- Divergence, Curl, and Physical Interpretation
+
+**(a)** $\operatorname{div}(\mathbf{v}) = \frac{\partial}{\partial x}(x^2 - y) + \frac{\partial}{\partial y}(xy + y) = 2x + x + 1 = 3x + 1$.
+
+At $(1, 1)$: $\operatorname{div}(\mathbf{v}) = 4 > 0$. The fluid is \textbf{expanding} (acting as a source).
+
+**(b)** $\operatorname{curl}(\mathbf{v}) = \frac{\partial}{\partial x}(xy + y) - \frac{\partial}{\partial y}(x^2 - y) = y + 1$.
+
+At $(1, 1)$: $\operatorname{curl}(\mathbf{v}) = 2 > 0$. The fluid is rotating \textbf{counterclockwise}.
+
+**(c)** $\mathbf{v}$ is a gradient field only if $\operatorname{curl}(\mathbf{v}) = 0$ everywhere. Since $\operatorname{curl}(\mathbf{v}) = y + 1 \neq 0$ in general (e.g., at $(1,1)$ it equals 2), $\mathbf{v}$ is \textbf{not} a gradient field.
+
+**(d)** $\operatorname{div}(\mathbf{v}) = 3x + 1 = 0$ when $x = -1/3$. The incompressibility locus is the vertical line $x = -1/3$.
+
+**(e)** Since $\mathbf{v}$ is not a gradient field, we work with $f(x,y) = x^3 - 3xy^2$.
+
+$\nabla f = (3x^2 - 3y^2,\; -6xy)$, so $\mathbf{w} = (3x^2 - 3y^2,\; -6xy)$.
+
+$\nabla^2 f = f_{xx} + f_{yy} = 6x + (-6x) = 0$. $\checkmark$ So $f$ is harmonic.
+
+Physically, $\nabla^2 f = 0$ means $\operatorname{div}(\mathbf{w}) = 0$: the flow $\mathbf{w}$ is \textbf{incompressible}. There are no sources or sinks anywhere --- fluid neither accumulates nor depletes at any point. This is the defining property of harmonic functions: their gradient flows are divergence-free.
+
+---
+
+## Q4 --- Green's Theorem: Circulation and Flux
+
+**(a)** Green's theorem (circulation): $\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_D \left(\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y}\right) dA$.
+
+$\frac{\partial F_2}{\partial x} = \frac{\partial}{\partial x}(-xy^2) = -y^2$, $\quad \frac{\partial F_1}{\partial y} = \frac{\partial}{\partial y}(x^2 y) = x^2$.
+
+$$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_D (-y^2 - x^2)\, dA = -\iint_D (x^2 + y^2)\, dA$$
+
+In polar: $-\int_0^{2\pi}\!\int_0^1 r^2 \cdot r\, dr\, d\theta = -2\pi \cdot \frac{1}{4} = -\frac{\pi}{2}$.
+
+**(b)** Green's theorem (flux): $\oint_C \mathbf{F} \cdot \mathbf{n}\, ds = \iint_D \left(\frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y}\right) dA = \iint_D \operatorname{div}(\mathbf{F})\, dA$.
+
+$\operatorname{div}(\mathbf{F}) = 2xy + (-2xy) = 0$.
+
+$$\oint_C \mathbf{F} \cdot \mathbf{n}\, ds = \iint_D 0\, dA = 0$$
+
+**(c)** $\mathbf{r}(t) = (\cos t, \sin t)$, $\mathbf{r}'(t) = (-\sin t, \cos t)$.
+
+$\mathbf{F}(\mathbf{r}(t)) = (\cos^2 t \sin t,\; -\cos t \sin^2 t)$.
+
+$\mathbf{F} \cdot \mathbf{r}' = -\cos^2 t \sin^2 t - \cos^2 t \sin^2 t = -2\cos^2 t \sin^2 t = -\frac{1}{2}\sin^2(2t)$.
+
+$$\int_0^{2\pi} -\frac{1}{2}\sin^2(2t)\, dt = -\frac{1}{2} \cdot \pi = -\frac{\pi}{2} \qquad \checkmark$$
+
+**(d)** If $f$ is harmonic, then $\nabla^2 f = \operatorname{div}(\nabla f) = 0$ everywhere in $D$. By the flux form of Green's theorem:
+
+$$\oint_C \nabla f \cdot \mathbf{n}\, ds = \iint_D \operatorname{div}(\nabla f)\, dA = \iint_D \nabla^2 f\, dA = 0$$
+
+In electrostatics, $\mathbf{E} = -\nabla V$ where $V$ is the electric potential. In a charge-free region, $\nabla^2 V = 0$ (Laplace's equation), so the net electric flux through any closed curve (in 2D) or surface (in 3D) bounding a charge-free region is zero.
+
+---
+
+## Q5 --- Parametric Surfaces and Surface Area
+
+**(a)** $\mathbf{r}_x = (1, 0, -2x)$, $\quad \mathbf{r}_y = (0, 1, -2y)$.
+
+**(b)** $\mathbf{r}_x \times \mathbf{r}_y = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 1 & 0 & -2x \\ 0 & 1 & -2y \end{vmatrix} = (0 \cdot(-2y) - (-2x)\cdot 1)\,\mathbf{i} - (1\cdot(-2y) - (-2x)\cdot 0)\,\mathbf{j} + (1\cdot 1 - 0\cdot 0)\,\mathbf{k} = (2x,\; 2y,\; 1)$.
+
+Purely vertical when $2x = 0$ and $2y = 0$, i.e., at the apex $(0, 0, 1)$. At the rim $x^2 + y^2 = 1$, the normal is $(2x, 2y, 1)$ with a significant horizontal component --- the surface is tilted at $\approx 63.4°$ from vertical.
+
+**(c)** $|\mathbf{r}_x \times \mathbf{r}_y| = \sqrt{4x^2 + 4y^2 + 1}$.
+
+In polar: $x = r\cos\theta$, $y = r\sin\theta$:
+
+$$\text{Area} = \int_0^{2\pi}\!\int_0^1 \sqrt{4r^2 + 1}\; r\, dr\, d\theta = 2\pi \int_0^1 r\sqrt{4r^2 + 1}\, dr$$
+
+Let $u = 4r^2 + 1$, $du = 8r\, dr$:
+
+$$= 2\pi \cdot \frac{1}{8}\int_1^5 \sqrt{u}\, du = \frac{\pi}{4} \cdot \frac{2}{3}u^{3/2}\Big|_1^5 = \frac{\pi}{6}(5\sqrt{5} - 1)$$
+
+**(d)** $T(x,y,z) = z = 1 - x^2 - y^2$ on $S$.
+
+$$\iint_S T\, dS = \iint_D (1 - x^2 - y^2)\sqrt{4x^2 + 4y^2 + 1}\, dA$$
+
+In polar:
+
+$$= \int_0^{2\pi}\!\int_0^1 (1 - r^2)\sqrt{4r^2 + 1}\; r\, dr\, d\theta = 2\pi \int_0^1 r(1 - r^2)\sqrt{4r^2 + 1}\, dr$$
+
+Let $u = 4r^2 + 1$, so $r^2 = (u-1)/4$, $r\, dr = du/8$, and $1 - r^2 = 1 - (u-1)/4 = (5 - u)/4$:
+
+$$= 2\pi \int_1^5 \frac{5 - u}{4} \cdot \sqrt{u} \cdot \frac{du}{8} = \frac{\pi}{16}\int_1^5 (5u^{1/2} - u^{3/2})\, du$$
+
+$$= \frac{\pi}{16}\left[\frac{10}{3}u^{3/2} - \frac{2}{5}u^{5/2}\right]_1^5 = \frac{\pi}{16}\left[\left(\frac{10}{3}\cdot 5\sqrt{5} - \frac{2}{5}\cdot 25\sqrt{5}\right) - \left(\frac{10}{3} - \frac{2}{5}\right)\right]$$
+
+$$= \frac{\pi}{16}\left[\left(\frac{50\sqrt{5}}{3} - 10\sqrt{5}\right) - \frac{44}{15}\right] = \frac{\pi}{16}\left[\frac{20\sqrt{5}}{3} - \frac{44}{15}\right] = \frac{\pi}{16}\cdot\frac{100\sqrt{5} - 44}{15} = \frac{\pi(25\sqrt{5} - 11)}{60}$$
+
+---
+
+## Q6 --- Flux Integrals and Orientability
+
+**(a)** $\mathbf{r}_\theta = (-2\sin\phi\sin\theta,\; 2\sin\phi\cos\theta,\; 0)$.
+
+$\mathbf{r}_\phi = (2\cos\phi\cos\theta,\; 2\cos\phi\sin\theta,\; -2\sin\phi)$.
+
+$$\mathbf{r}_\theta \times \mathbf{r}_\phi = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ -2\sin\phi\sin\theta & 2\sin\phi\cos\theta & 0 \\ 2\cos\phi\cos\theta & 2\cos\phi\sin\theta & -2\sin\phi \end{vmatrix}$$
+
+$= \mathbf{i}(2\sin\phi\cos\theta \cdot (-2\sin\phi) - 0) - \mathbf{j}((-2\sin\phi\sin\theta)(-2\sin\phi) - 0) + \mathbf{k}((-2\sin\phi\sin\theta)(2\cos\phi\sin\theta) - (2\sin\phi\cos\theta)(2\cos\phi\cos\theta))$
+
+$= (-4\sin^2\phi\cos\theta,\; -4\sin^2\phi\sin\theta,\; -4\sin\phi\cos\phi)$
+
+$= -4\sin\phi\,(\sin\phi\cos\theta,\; \sin\phi\sin\theta,\; \cos\phi)$.
+
+**(b)** The vector $(\sin\phi\cos\theta, \sin\phi\sin\theta, \cos\phi)$ points radially outward. The factor $-4\sin\phi$ is negative (since $\sin\phi > 0$ for $\phi \in (0, \pi/2]$). Therefore $\mathbf{r}_\theta \times \mathbf{r}_\phi$ points \textbf{inward}.
+
+For the outward orientation, use $d\mathbf{S} = -(\mathbf{r}_\theta \times \mathbf{r}_\phi)\, d\theta\, d\phi = 4\sin\phi(\sin\phi\cos\theta,\; \sin\phi\sin\theta,\; \cos\phi)\, d\theta\, d\phi$.
+
+**(c)** $\mathbf{F}(\mathbf{r}) = (0, 0, 2\cos\phi)$.
+
+$$\mathbf{F} \cdot d\mathbf{S} = (0, 0, 2\cos\phi) \cdot 4\sin\phi(\sin\phi\cos\theta,\; \sin\phi\sin\theta,\; \cos\phi)\, d\theta\, d\phi = 8\sin\phi\cos^2\phi\, d\theta\, d\phi$$
+
+$$\iint_S \mathbf{F} \cdot d\mathbf{S} = \int_0^{2\pi}\!\int_0^{\pi/2} 8\sin\phi\cos^2\phi\, d\phi\, d\theta = 2\pi \cdot 8 \int_0^{\pi/2} \sin\phi\cos^2\phi\, d\phi$$
+
+$= 16\pi \left[-\frac{\cos^3\phi}{3}\right]_0^{\pi/2} = 16\pi \cdot \frac{1}{3} = \frac{16\pi}{3}$.
+
+**(d)** On the disk $z = 0$ with $\mathbf{n} = (0, 0, -1)$: $\mathbf{F} = (0, 0, 0)$ since $z = 0$, so the flux through the disk is $0$.
+
+Total flux out of the closed region = $\frac{16\pi}{3} + 0 = \frac{16\pi}{3}$.
+
+Verification via divergence theorem: $\nabla \cdot \mathbf{F} = 0 + 0 + 1 = 1$.
+
+The region $E$ is the upper half of the ball $x^2 + y^2 + z^2 \leq 4$, $z \geq 0$, with volume $V = \frac{1}{2}\cdot\frac{4}{3}\pi(2)^3 = \frac{16\pi}{3}$.
+
+$$\iiint_E 1\, dV = \frac{16\pi}{3} \qquad \checkmark$$
+
+---
+
+## Q7 --- Stokes' Theorem and Curl in 3D
+
+**(a)** The plane $z = 4 - x - 2y$ intersects the coordinate planes at:
+\begin{itemize}
+  \item $x = 0, y = 0 \Rightarrow z = 4$: vertex $(0, 0, 4)$
+  \item $x = 0, z = 0 \Rightarrow y = 2$: vertex $(0, 2, 0)$
+  \item $y = 0, z = 0 \Rightarrow x = 4$: vertex $(4, 0, 0)$
+\end{itemize}
+
+The boundary $\partial S$ is the triangle with these three vertices.
+
+**(b)** $\nabla \times \mathbf{F} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \partial_x & \partial_y & \partial_z \\ y^2 & xz & z^2 \end{vmatrix} = \mathbf{i}(0 - x) - \mathbf{j}(0 - 0) + \mathbf{k}(z - 2y) = (-x,\; 0,\; z - 2y)$.
+
+**(c)** The plane $z = 4 - x - 2y$ has upward normal from $\mathbf{r}(x,y) = (x, y, 4 - x - 2y)$:
+
+$\mathbf{r}_x \times \mathbf{r}_y = (1, 0, -1) \times (0, 1, -2) = (0\cdot(-2) - (-1)\cdot 1,\; (-1)\cdot 0 - 1\cdot(-2),\; 1\cdot 1 - 0\cdot 0) = (1, 2, 1)$.
+
+The $z$-component is positive, so this is upward-oriented. $\checkmark$
+
+$d\mathbf{S} = (1, 2, 1)\, dx\, dy$.
+
+On $S$: $z = 4 - x - 2y$, so $\nabla \times \mathbf{F} = (-x,\; 0,\; 4 - x - 2y - 2y) = (-x,\; 0,\; 4 - x - 4y)$.
+
+$$(\nabla \times \mathbf{F}) \cdot d\mathbf{S} = (-x)(1) + 0(2) + (4 - x - 4y)(1) = -x + 4 - x - 4y = 4 - 2x - 4y$$
+
+The projection of the triangle onto the $xy$-plane: from $(0,0)$, $(4,0)$, $(0,2)$. Bounds: $0 \leq x \leq 4$, $0 \leq y \leq 2 - x/2$.
+
+$$\iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S} = \int_0^4\!\int_0^{2 - x/2} (4 - 2x - 4y)\, dy\, dx$$
+
+Inner integral:
+
+$$\int_0^{2 - x/2} (4 - 2x - 4y)\, dy = \left[(4-2x)y - 2y^2\right]_0^{2 - x/2}$$
+
+$= (4-2x)(2-x/2) - 2(2-x/2)^2 = (2-x/2)\left[(4-2x) - 2(2-x/2)\right]$
+
+$= (2-x/2)\left[4 - 2x - 4 + x\right] = (2-x/2)(-x) = -x(2 - x/2) = -2x + x^2/2$.
+
+$$\int_0^4 \left(-2x + \frac{x^2}{2}\right) dx = \left[-x^2 + \frac{x^3}{6}\right]_0^4 = -16 + \frac{64}{6} = -16 + \frac{32}{3} = \frac{-48 + 32}{3} = -\frac{16}{3}$$
+
+**(d)** Edge 1: $(4, 0, 0) \to (0, 0, 4)$. Parameterize: $\mathbf{r}_1(t) = (4 - 4t, 0, 4t)$, $t \in [0, 1]$, $\mathbf{r}_1'(t) = (-4, 0, 4)$.
+
+$\mathbf{F} = (0, (4-4t)(4t), 16t^2) = (0, 16t - 16t^2, 16t^2)$.
+
+$\mathbf{F} \cdot \mathbf{r}_1' = 0 + 0 + 64t^2 = 64t^2$.
+
+$I_1 = \int_0^1 64t^2\, dt = 64/3$.
+
+Edge 2: $(0, 0, 4) \to (0, 2, 0)$. Parameterize: $\mathbf{r}_2(t) = (0, 2t, 4 - 4t)$, $t \in [0, 1]$, $\mathbf{r}_2'(t) = (0, 2, -4)$.
+
+$\mathbf{F} = (4t^2, 0, (4-4t)^2) = (4t^2, 0, 16(1-t)^2)$.
+
+$\mathbf{F} \cdot \mathbf{r}_2' = 0 + 0 - 64(1-t)^2$.
+
+$I_2 = \int_0^1 -64(1-t)^2\, dt = -64/3$.
+
+Edge 3: $(0, 2, 0) \to (4, 0, 0)$. Parameterize: $\mathbf{r}_3(t) = (4t, 2 - 2t, 0)$, $t \in [0, 1]$, $\mathbf{r}_3'(t) = (4, -2, 0)$.
+
+$\mathbf{F} = ((2-2t)^2, 0, 0)$.
+
+$\mathbf{F} \cdot \mathbf{r}_3' = 4(2-2t)^2 = 16(1-t)^2$.
+
+$I_3 = \int_0^1 16(1-t)^2\, dt = 16/3$.
+
+Total: $64/3 - 64/3 + 16/3 = 16/3$.
+
+Wait --- we need the correct orientation. Counterclockwise as viewed from above means the vertices should be traversed as $(4,0,0) \to (0,2,0) \to (0,0,4) \to (4,0,0)$.
+
+Let me recompute with correct orientation.
+
+Edge 1: $(4, 0, 0) \to (0, 2, 0)$. Parameterize: $\mathbf{r}_1(t) = (4-4t, 2t, 0)$, $t \in [0, 1]$, $\mathbf{r}_1' = (-4, 2, 0)$.
+
+$\mathbf{F} = (4t^2, 0, 0)$. $\quad \mathbf{F} \cdot \mathbf{r}_1' = -16t^2$.
+
+$I_1 = \int_0^1 -16t^2\, dt = -16/3$.
+
+Edge 2: $(0, 2, 0) \to (0, 0, 4)$. Parameterize: $\mathbf{r}_2(t) = (0, 2 - 2t, 4t)$, $t \in [0, 1]$, $\mathbf{r}_2' = (0, -2, 4)$.
+
+$\mathbf{F} = ((2-2t)^2, 0, 16t^2)$. $\quad \mathbf{F} \cdot \mathbf{r}_2' = 0 + 0 + 64t^2$.
+
+$I_2 = \int_0^1 64t^2\, dt = 64/3$.
+
+Edge 3: $(0, 0, 4) \to (4, 0, 0)$. Parameterize: $\mathbf{r}_3(t) = (4t, 0, 4 - 4t)$, $t \in [0, 1]$, $\mathbf{r}_3' = (4, 0, -4)$.
+
+$\mathbf{F} = (0, 4t(4-4t), (4-4t)^2)$. $\quad \mathbf{F} \cdot \mathbf{r}_3' = 0 + 0 - 4(4-4t)^2 = -64(1-t)^2$.
+
+$I_3 = \int_0^1 -64(1-t)^2\, dt = -64/3$.
+
+Total: $-16/3 + 64/3 - 64/3 = -16/3$. $\checkmark$
+
+---
+
+## Q8 --- The Divergence Theorem and Physical Conservation
+
+**(a)** $\nabla \cdot \mathbf{F} = 3x^2 + 3y^2 + 3z^2 = 3(x^2 + y^2 + z^2) = 3\rho^2$ (in spherical coordinates).
+
+**(b)** In spherical coordinates:
+
+$$\iiint_E 3\rho^2 \cdot \rho^2 \sin\phi\, d\rho\, d\phi\, d\theta = 3\int_0^{2\pi}\!\int_0^{\pi}\!\int_0^1 \rho^4 \sin\phi\, d\rho\, d\phi\, d\theta$$
+
+$$= 3 \cdot 2\pi \cdot 2 \cdot \frac{1}{5} = \frac{12\pi}{5}$$
+
+(Using $\int_0^{2\pi} d\theta = 2\pi$, $\int_0^{\pi} \sin\phi\, d\phi = 2$, $\int_0^1 \rho^4\, d\rho = 1/5$.)
+
+**(c)** $\nabla \cdot \mathbf{v} = \frac{\partial}{\partial x}(az) + \frac{\partial}{\partial y}(bx) + \frac{\partial}{\partial z}(cy) = 0 + 0 + 0 = 0$ for \textbf{all values} of $a, b, c$.
+
+The field $\mathbf{v} = (az, bx, cy)$ is automatically incompressible for any constants $a, b, c$ because each component depends only on a different variable from the one being differentiated.
+
+**(d)** The electric field $\mathbf{E} = \frac{q}{4\pi\varepsilon_0}\frac{\hat{\mathbf{r}}}{r^2}$ has a singularity at $r = 0$: $|\mathbf{E}| \to \infty$ as $r \to 0$. The divergence theorem requires $\mathbf{F}$ to be continuously differentiable throughout the entire volume $E$, but $\mathbf{E}$ is undefined (infinite) at the origin. The divergence $\nabla \cdot \mathbf{E}$ is zero everywhere except the origin, where it is a Dirac delta: $\nabla \cdot \mathbf{E} = \frac{q}{\varepsilon_0}\delta^3(\mathbf{r})$. The standard divergence theorem cannot handle this distributional singularity without modification (e.g., excluding a small ball around the origin).
+
+---
+
+## Q9 --- Connecting the Integral Theorems
+
+**(a)** The FTC says: integrating $f'$ (a derivative) over the interval $[a, b]$ gives the net change $f(b) - f(a)$ at the boundary points. The FTLI generalizes this by replacing $[a, b]$ with an arbitrary curve $C$ from $A$ to $B$, replacing $f'$ with $\nabla\varphi$ (the multivariable derivative), and obtaining $\varphi(B) - \varphi(A)$ (the net change at the endpoints). The integral of the derivative over the interior equals the function values at the boundary --- same principle, higher dimension.
+
+**(b)** Green's theorem is Stokes' theorem applied to a \textbf{flat surface} $S$ lying in the $xy$-plane. The surface is the planar region $D$ bounded by $C$, with normal $\mathbf{n} = \mathbf{k} = (0, 0, 1)$ (upward). The 3D curl $\nabla \times \mathbf{F}$ for a 2D field $\mathbf{F} = (P, Q, 0)$ has only a $\mathbf{k}$-component: $\nabla \times \mathbf{F} = (0, 0, Q_x - P_y)$. Dotting with $\mathbf{n} = \mathbf{k}$ gives $Q_x - P_y$, which is exactly the integrand in Green's theorem.
+
+**(c)** The integral of a "derivative" of a quantity over a region equals the integral of the original quantity over the boundary of that region.
+
+**(d)** $\mathbf{F} = (-y, x)$. $\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} = 1 - (-1) = 2$.
+
+$$\oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_D 2\, dA = 2 \cdot \text{Area}(D) = 2 \cdot 1 = 2$$
+
+Direct verification:
+
+Bottom: $(0,0) \to (1,0)$: $\mathbf{r}(t) = (t, 0)$, $\mathbf{r}'=(1,0)$, $\mathbf{F} = (0, t)$, $\mathbf{F}\cdot\mathbf{r}' = 0$. Integral $= 0$.
+
+Right: $(1,0) \to (1,1)$: $\mathbf{r}(t) = (1, t)$, $\mathbf{r}'=(0,1)$, $\mathbf{F} = (-t, 1)$, $\mathbf{F}\cdot\mathbf{r}' = 1$. Integral $= 1$.
+
+Top: $(1,1) \to (0,1)$: $\mathbf{r}(t) = (1-t, 1)$, $\mathbf{r}'=(-1,0)$, $\mathbf{F} = (-1, 1-t)$, $\mathbf{F}\cdot\mathbf{r}' = 1$. Integral $= 1$.
+
+Left: $(0,1) \to (0,0)$: $\mathbf{r}(t) = (0, 1-t)$, $\mathbf{r}'=(0,-1)$, $\mathbf{F} = (-(1-t), 0)$, $\mathbf{F}\cdot\mathbf{r}' = 0$. Integral $= 0$.
+
+Total: $0 + 1 + 1 + 0 = 2$. $\checkmark$
+
+---
+
+## Q10 --- Synthesis: Electromagnetic Verification
+
+**(a)** $\nabla \cdot \mathbf{E} = \frac{\partial}{\partial x}(yz) + \frac{\partial}{\partial y}(xz) + \frac{\partial}{\partial z}(xy) = 0 + 0 + 0 = 0$. $\checkmark$
+
+By the divergence theorem, $\oiint_S \mathbf{E} \cdot d\mathbf{S} = \iiint_E \nabla \cdot \mathbf{E}\, dV = 0$ for any closed surface $S$ bounding a region $E$. The net electric flux through any closed surface in this region is zero, consistent with the absence of charges.
+
+**(b)** $\nabla \times \mathbf{E} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ \partial_x & \partial_y & \partial_z \\ yz & xz & xy \end{vmatrix} = \mathbf{i}(x - x) - \mathbf{j}(y - y) + \mathbf{k}(z - z) = \mathbf{0}$.
+
+$\nabla \times \mathbf{E} = \mathbf{0}$, so the field is conservative (electrostatic). $\checkmark$
+
+Finding $V$: $\mathbf{E} = -\nabla V$, so $\nabla V = (-yz, -xz, -xy)$.
+
+$V_x = -yz \Rightarrow V = -xyz + g(y,z)$.
+
+$V_y = -xz + g_y = -xz \Rightarrow g_y = 0 \Rightarrow g = h(z)$.
+
+$V_z = -xy + h'(z) = -xy \Rightarrow h'(z) = 0 \Rightarrow h = C$.
+
+$$V(x, y, z) = -xyz$$
+
+Verification: $-\nabla V = -(-yz, -xz, -xy) = (yz, xz, xy) = \mathbf{E}$. $\checkmark$
+
+**(c)** By the divergence theorem: $\oiint_S \mathbf{E} \cdot d\mathbf{S} = \iiint_E \nabla \cdot \mathbf{E}\, dV = \iiint_E 0\, dV = 0$.
+
+No face integrals needed.
+
+**(d)** Stokes' theorem: $\oint_C \mathbf{E} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{E}) \cdot d\mathbf{S} = \iint_S \mathbf{0} \cdot d\mathbf{S} = 0$.
+
+Via FTLI: Since $\mathbf{E} = -\nabla V$ is conservative and $C$ is a closed curve (starts and ends at $(0,0,1)$):
+
+$$\oint_C \mathbf{E} \cdot d\mathbf{r} = -[V(\text{end}) - V(\text{start})] = -[V(0,0,1) - V(0,0,1)] = 0$$
+
+Both methods give $0$. This is consistent because $\nabla \times \mathbf{E} = \mathbf{0}$ (Stokes' gives zero surface integral) and the FTLI gives $\varphi(B) - \varphi(A) = 0$ for any closed curve ($A = B$). For a conservative field, the circulation around every closed curve vanishes --- this is the defining equivalence: $\nabla \times \mathbf{F} = \mathbf{0}$ $\iff$ $\mathbf{F}$ is conservative $\iff$ $\oint_C \mathbf{F} \cdot d\mathbf{r} = 0$ for all closed $C$.

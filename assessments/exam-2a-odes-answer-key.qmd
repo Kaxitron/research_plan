@@ -1,0 +1,739 @@
+---
+title: "Exam 2A: Ordinary Differential Equations --- Answer Key"
+subtitle: "Lessons 14--18"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+**The Path to AI Alignment — Lessons 14–18 Comprehensive Assessment**
+
+> **Grading philosophy:** Partial credit is generous for correct reasoning with arithmetic errors. Conceptual insight matters as much as mechanical computation. The ML-connection parts reward thoughtful analogies — there is no single "right" phrasing, so any answer demonstrating genuine understanding earns full marks.
+
+***
+
+### Question 1 (8 pts) — ODE Classification
+
+**(a)** $\dfrac{dy}{dt} = 3y - y^2$
+
+- **Order:** 1st order (highest derivative is $y'$)
+- **Linearity:** **Nonlinear** (the $y^2$ term makes $y$ appear nonlinearly)
+- **Autonomy:** **Autonomous** (no explicit dependence on $t$)
+
+**(b)** $y'' + 4y' + 3y = \sin(t)$
+
+- **Order:** 2nd order (highest derivative is $y''$)
+- **Linearity:** **Linear** (all $y, y', y''$ appear to the first power, no products of them)
+- **Autonomy:** **Non-autonomous** (the forcing term $\sin(t)$ depends explicitly on $t$)
+
+**(c)** $y''' = yy''$
+
+- **Order:** 3rd order (highest derivative is $y'''$)
+- **Linearity:** **Nonlinear** (the product $yy''$ is nonlinear)
+- **Autonomy:** **Autonomous** (no explicit $t$ dependence)
+
+**(d)** $\dfrac{dy}{dt} = e^{-t}y + t^2$
+
+- **Order:** 1st order
+- **Linearity:** **Linear** ($y$ appears only to the first power; the coefficients $e^{-t}$ and $t^2$ depend on $t$, not on $y$)
+- **Autonomy:** **Non-autonomous** (the coefficients $e^{-t}$ and $t^2$ depend explicitly on $t$)
+
+**(e)** The linearity distinction matters because **linear ODEs satisfy the superposition principle**: if $y_1$ and $y_2$ are solutions to the homogeneous equation, then $c_1 y_1 + c_2 y_2$ is also a solution. This enables systematic solution methods (characteristic equations, variation of parameters, Laplace transforms). **Nonlinear ODEs have no general closed-form solution technique** — each must be attacked individually, and phenomena like finite-time blow-up and chaos can occur.
+
+***
+
+### Question 2 (10 pts) — Direction Fields, Fixed Points, and Existence
+
+$$\frac{dy}{dt} = y(2 - y)(y - 1)$$
+
+**(a)** Setting $\dfrac{dy}{dt} = 0$:
+
+$$y(2 - y)(y - 1) = 0$$
+
+**Fixed points: $y = 0$, $y = 1$, $y = 2$.**
+
+**(b)** Sign analysis of $f(y) = y(2-y)(y-1)$ in each interval:
+
+| Interval | Sign of $y$ | Sign of $(2-y)$ | Sign of $(y-1)$ | Sign of $f(y)$ | Direction |
+|---|---|---|---|---|---|
+| $(-\infty, 0)$ | $-$ | $+$ | $-$ | $+$ | $\uparrow$ |
+| $(0, 1)$ | $+$ | $+$ | $-$ | $-$ | $\downarrow$ |
+| $(1, 2)$ | $+$ | $+$ | $+$ | $+$ | $\uparrow$ |
+| $(2, \infty)$ | $+$ | $-$ | $+$ | $-$ | $\downarrow$ |
+
+Stability conclusions:
+
+- **$y = 0$: Stable** (arrows point toward it from above, toward it from below)
+- **$y = 1$: Unstable** (arrows point away from it in both directions)
+- **$y = 2$: Stable** (arrows point toward it from both sides)
+
+**(c)** Direction field sketch description: horizontal tick marks at $y = 0, 1, 2$ (the fixed points). Between $y = 0$ and $y = 1$, arrows point downward (toward 0). Between $y = 1$ and $y = 2$, arrows point upward (toward 2). Above $y = 2$, arrows point downward (toward 2). Below $y = 0$, arrows point upward (toward 0). Solution curves starting between 0 and 1 flow down to 0; curves starting between 1 and 2 flow up to 2.
+
+**(d)** $f(y) = y(2-y)(y-1)$ is a polynomial, so it is **continuously differentiable everywhere**. By the Picard--Lindelof theorem, $\partial f / \partial y$ is continuous (it exists and is bounded on any bounded interval), so $f$ is Lipschitz on bounded regions. This guarantees **existence and uniqueness** of solutions. Consequence: **solution curves in the direction field can never cross**, because if two solutions passed through the same point, uniqueness would be violated.
+
+**(e)** Consider $\dfrac{dy}{dt} = y^{1/3}$ with $y(0) = 0$.
+
+Both $y(t) = 0$ (the trivial solution) and
+
+$$y(t) = \left(\frac{2t}{3}\right)^{3/2}$$
+
+satisfy the ODE and the initial condition. Uniqueness fails because $f(y) = y^{1/3}$ has
+
+$$\frac{\partial f}{\partial y} = \frac{1}{3} y^{-2/3}$$
+
+which **blows up at $y = 0$** — it is not continuous there. The Lipschitz condition (and hence the hypothesis of the uniqueness theorem) is violated at the initial point.
+
+***
+
+### Question 3 (10 pts) — Separable Equations
+
+**(a)** $\dfrac{dy}{dx} = xy^2$, $\quad y(0) = 1$
+
+Separate variables:
+
+$$\frac{dy}{y^2} = x\,dx$$
+
+Integrate both sides:
+
+$$-\frac{1}{y} = \frac{x^2}{2} + C$$
+
+Apply IC $y(0) = 1$: $-1 = 0 + C$, so $C = -1$.
+
+$$-\frac{1}{y} = \frac{x^2}{2} - 1 = \frac{x^2 - 2}{2}$$
+
+$$\boxed{y = \frac{2}{2 - x^2}}$$
+
+**(b)** The solution **blows up** when the denominator vanishes:
+
+$$2 - x^2 = 0 \implies x = \pm\sqrt{2}$$
+
+For the solution with $y(0) = 1 > 0$, the relevant blow-up occurs at **$x = \sqrt{2}$**. The solution is only valid on $(-\sqrt{2},\, \sqrt{2})$. This is a finite-time blow-up — the solution reaches infinity in finite "time," a phenomenon impossible for linear ODEs.
+
+**(c)** $\dfrac{dy}{dt} = 2y\!\left(1 - \dfrac{y}{10}\right)$, $\quad y(0) = 1$
+
+This is the logistic equation with growth rate $r = 2$ and carrying capacity $K = 10$. Separate and use partial fractions:
+
+$$\frac{dy}{y(1 - y/10)} = 2\,dt$$
+
+$$\frac{10\,dy}{y(10 - y)} = 2\,dt$$
+
+Partial fractions: $\dfrac{10}{y(10-y)} = \dfrac{1}{y} + \dfrac{1}{10-y}$
+
+$$\int \left(\frac{1}{y} + \frac{1}{10 - y}\right) dy = \int 2\,dt$$
+
+$$\ln|y| - \ln|10 - y| = 2t + C_0$$
+
+$$\ln\!\left(\frac{y}{10-y}\right) = 2t + C_0$$
+
+Apply IC $y(0) = 1$: $\ln(1/9) = C_0$, so $C_0 = -\ln 9$.
+
+$$\frac{y}{10 - y} = \frac{1}{9}e^{2t}$$
+
+Solve for $y$:
+
+$$\boxed{y(t) = \frac{10}{1 + 9e^{-2t}}}$$
+
+**(d)** The carrying capacity $K = 10$ represents the **saturation level**. As $y \to 10$, the growth rate $dy/dt \to 0$ and the population levels off.
+
+**ML analogy:** In training, this mirrors how model performance (accuracy, reward signal) initially improves rapidly but then saturates. Early gradient updates produce large gains; later updates yield diminishing returns as the model approaches its capacity to fit the data. The logistic curve is the prototypical "diminishing returns" shape seen in learning curves.
+
+***
+
+### Question 4 (10 pts) — Integrating Factors and Exact Equations
+
+**(a)** $\dfrac{dy}{dx} + 2y = e^{-x}$, $\quad y(0) = 3$
+
+Integrating factor: $\mu(x) = e^{\int 2\,dx} = e^{2x}$.
+
+Multiply through:
+
+$$\frac{d}{dx}\bigl[e^{2x} y\bigr] = e^{2x} \cdot e^{-x} = e^{x}$$
+
+Integrate:
+
+$$e^{2x} y = e^{x} + C$$
+
+$$y = e^{-x} + Ce^{-2x}$$
+
+Apply IC $y(0) = 3$: $3 = 1 + C$, so $C = 2$.
+
+$$\boxed{y = e^{-x} + 2e^{-2x}}$$
+
+**(b)** $(2xy + 3)\,dx + (x^2 + 4y)\,dy = 0$
+
+Check exactness: $M = 2xy + 3$, $N = x^2 + 4y$.
+
+$$\frac{\partial M}{\partial y} = 2x, \qquad \frac{\partial N}{\partial x} = 2x$$
+
+Since $\dfrac{\partial M}{\partial y} = \dfrac{\partial N}{\partial x}$, the equation is **exact**.
+
+Find potential function $F(x,y)$:
+
+$$F = \int M\,dx = \int (2xy + 3)\,dx = x^2 y + 3x + g(y)$$
+
+$$\frac{\partial F}{\partial y} = x^2 + g'(y) = N = x^2 + 4y \implies g'(y) = 4y \implies g(y) = 2y^2$$
+
+**Solution:** $\boxed{x^2 y + 3x + 2y^2 = C}$
+
+**(c)** $(y+1)\,dx - x\,dy = 0$
+
+Rewrite as $\dfrac{dy}{dx} = \dfrac{y+1}{x}$, or in standard form: $\dfrac{y+1}{x}\,dx - dy = 0$... Let's work with the original. We have $M = y+1$, $N = -x$.
+
+$$\frac{\partial M}{\partial y} = 1, \qquad \frac{\partial N}{\partial x} = -1$$
+
+Not exact. Try integrating factor $\mu = 1/x^2$:
+
+$$\frac{y+1}{x^2}\,dx - \frac{1}{x}\,dy = 0$$
+
+Check: $M^* = (y+1)/x^2$, $N^* = -1/x$.
+
+$$\frac{\partial M^*}{\partial y} = \frac{1}{x^2}, \qquad \frac{\partial N^*}{\partial x} = \frac{1}{x^2}$$
+
+Now exact. Find $F$:
+
+$$F = \int N^*\,dy = \int -\frac{1}{x}\,dy = -\frac{y}{x} + h(x)$$
+
+$$\frac{\partial F}{\partial x} = \frac{y}{x^2} + h'(x) = M^* = \frac{y+1}{x^2} = \frac{y}{x^2} + \frac{1}{x^2}$$
+
+$$h'(x) = \frac{1}{x^2} \implies h(x) = -\frac{1}{x}$$
+
+**Solution:** $\boxed{-\dfrac{y}{x} - \dfrac{1}{x} = C}$, equivalently $\boxed{y + 1 = Cx}$ (absorbing the sign into the constant).
+
+**(d)** The integrating factor concept has direct analogues in ML:
+
+- **Attention mechanisms** reweight input tokens by learned importance scores, transforming a hard aggregation problem into a tractable weighted sum — just as $\mu(x)$ reweights an ODE to make it exact.
+- **Importance sampling** in reinforcement learning multiplies samples by density ratios to correct for off-policy data, making biased estimates unbiased.
+- **Preconditioning** in optimization (e.g., Adam's per-parameter scaling) transforms the loss landscape to equalize curvature, analogous to how an integrating factor transforms an ODE into a form where the solution is immediate.
+
+***
+
+### Question 5 (12 pts) — Euler's Method IS Gradient Descent
+
+**(a)** $\dfrac{dy}{dt} = -4y$, $\quad y(0) = 3$
+
+This is a first-order linear ODE with constant coefficients. The solution is:
+
+$$\boxed{y(t) = 3e^{-4t}}$$
+
+At $t = 1$: $y(1) = 3e^{-4} \approx 0.0549$.
+
+**(b)** Euler's method with $h = 0.25$: $y_{n+1} = y_n + h(-4y_n) = y_n(1 - 4h) = y_n(1 - 1) = 0$.
+
+| $n$ | $t_n$ | $y_n$ |
+|---|---|---|
+| 0 | 0 | 3 |
+| 1 | 0.25 | **0** |
+| 2 | 0.50 | 0 |
+| 3 | 0.75 | 0 |
+| 4 | 1.00 | 0 |
+
+**Euler gives $y(1) \approx 0$. Exact value: $3e^{-4} \approx 0.0549$.** The step size is at the critical boundary — the amplification factor is exactly 0, so the method kills the solution in one step rather than letting it decay gradually.
+
+**(c)** Euler's method with $h = 0.6$: amplification factor $= 1 - 4(0.6) = -1.4$.
+
+| $n$ | $t_n$ | $y_n$ |
+|---|---|---|
+| 0 | 0.0 | 3 |
+| 1 | 0.6 | $3(-1.4) = -4.2$ |
+| 2 | 1.2 | $-4.2(-1.4) = 5.88$ |
+| 3 | 1.8 | $5.88(-1.4) = -8.232$ |
+| 4 | 2.4 | $-8.232(-1.4) = 11.525$ |
+
+**The solution oscillates in sign and grows in magnitude.** The method is unstable — it diverges despite the true solution decaying to zero. This is numerical instability caused by too large a step size.
+
+**(d)** Stability condition for Euler's method on $y' = \lambda y$ (with $\lambda = -4$):
+
+$$|1 + h\lambda| < 1 \implies |1 - 4h| < 1$$
+
+$$-1 < 1 - 4h < 1$$
+
+From the right inequality: $1 - 4h < 1 \implies h > 0$ (trivially satisfied).
+
+From the left inequality: $1 - 4h > -1 \implies 4h < 2 \implies h < 1/2$.
+
+$$\boxed{0 < h < \frac{1}{2}}$$
+
+Part (b) has $h = 0.25 = 1/4$: right at the boundary $|1 - 1| = 0 < 1$, so stable but overshoots to zero. Part (c) has $h = 0.6 > 1/2$: $|1 - 2.4| = 1.4 > 1$, so **unstable**.
+
+**(e)** Loss $L = 2w^2$, so $\dfrac{dL}{dw} = 4w$.
+
+**Gradient descent:**
+
+$$w_{t+1} = w_t - \eta \cdot 4w_t = w_t(1 - 4\eta)$$
+
+**Gradient flow ODE:**
+
+$$\frac{dw}{dt} = -\frac{dL}{dw} = -4w$$
+
+**Euler's method on the gradient flow** with step size $h$:
+
+$$w_{n+1} = w_n + h(-4w_n) = w_n(1 - 4h)$$
+
+**Setting $h = \eta$, the Euler update is identical to the GD update.** Gradient descent is literally Euler's method applied to the gradient flow ODE. The learning rate plays the role of the numerical step size.
+
+**(f)** From part (d), stability requires $h < 1/2$. Since $\eta = h$:
+
+$$\boxed{\eta_{\max} = \frac{1}{2}}$$
+
+For the general quadratic $L = \frac{1}{2}\lambda w^2$, the gradient flow is $w' = -\lambda w$ and the stability bound is $\eta < 2/\lambda$. In higher dimensions, $\lambda$ becomes the largest eigenvalue of the Hessian, giving $\eta < 2/\lambda_{\max}$.
+
+**Exceeding $\eta_{\max}$:** The optimization oscillates and diverges — weights bounce back and forth with growing magnitude, exactly as in part (c). This is why learning rate tuning is critical in practice: too large means divergence, too small means painfully slow convergence.
+
+***
+
+### Question 6 (10 pts) — Characteristic Equation
+
+**(a)** $y'' - 5y' + 6y = 0$, $\quad y(0) = 2$, $y'(0) = 1$
+
+Characteristic equation: $r^2 - 5r + 6 = 0 \implies (r-2)(r-3) = 0 \implies r = 2, 3$.
+
+General solution: $y = c_1 e^{2t} + c_2 e^{3t}$.
+
+Apply ICs:
+
+$$c_1 + c_2 = 2$$
+$$2c_1 + 3c_2 = 1$$
+
+From the first: $c_1 = 2 - c_2$. Substitute: $2(2 - c_2) + 3c_2 = 1 \implies 4 + c_2 = 1 \implies c_2 = -3$, $c_1 = 5$.
+
+$$\boxed{y = 5e^{2t} - 3e^{3t}}$$
+
+**(b)** $y'' + 4y' + 4y = 0$
+
+Characteristic equation: $r^2 + 4r + 4 = 0 \implies (r+2)^2 = 0 \implies r = -2$ (repeated root).
+
+$$\boxed{y = (c_1 + c_2 t)e^{-2t}}$$
+
+The factor of $t$ in the second solution arises because with a repeated root, we need a second linearly independent solution. The standard approach (reduction of order) yields $te^{-2t}$.
+
+**(c)** $y'' + 2y' + 5y = 0$
+
+Characteristic equation: $r^2 + 2r + 5 = 0 \implies r = \dfrac{-2 \pm \sqrt{4 - 20}}{2} = -1 \pm 2i$.
+
+$$\boxed{y = e^{-t}(c_1 \cos 2t + c_2 \sin 2t)}$$
+
+**(d)** This is a **damped oscillation**. The $e^{-t}$ envelope causes the amplitude to decay exponentially while the $\cos 2t$ and $\sin 2t$ terms produce oscillation at angular frequency $\omega = 2$.
+
+Interpreted as a mass-spring-dashpot system $my'' + by' + ky = 0$: **$m = 1$, $b = 2$, $k = 5$**. The system is underdamped since $b^2 = 4 < 4mk = 20$ (equivalently, the roots are complex with negative real part).
+
+**(e)** In SGD with momentum $\beta$, the update rule is:
+
+$$v_{t+1} = \beta v_t - \eta \nabla L, \qquad w_{t+1} = w_t + v_{t+1}$$
+
+This is a second-order difference equation (it depends on both $w_t$ and $v_t$, i.e., the current position and velocity). The momentum parameter $\beta$ is **inversely related to damping**: high $\beta$ (close to 1) means low damping, producing underdamped (oscillatory) behavior — the optimizer overshoots and oscillates around the minimum before settling. Low $\beta$ means high damping — overdamped behavior, slow but steady convergence. The analogy to part (d) is precise: $\beta \approx 1$ corresponds to small $b$, giving oscillatory trajectories.
+
+***
+
+### Question 7 (12 pts) — Undetermined Coefficients and Variation of Parameters
+
+**(a)** $y'' - 3y' + 2y = 4e^{3t}$
+
+Homogeneous solution: $r^2 - 3r + 2 = 0 \implies r = 1, 2$. So $y_h = c_1 e^t + c_2 e^{2t}$.
+
+Since $e^{3t}$ is not a homogeneous solution, try $y_p = Ae^{3t}$.
+
+$$y_p'' - 3y_p' + 2y_p = 9Ae^{3t} - 9Ae^{3t} + 2Ae^{3t} = 2Ae^{3t} = 4e^{3t}$$
+
+$$A = 2$$
+
+$$\boxed{y_p = 2e^{3t}}$$
+
+**(b)** $y'' - 3y' + 2y = 5e^{2t}$
+
+Now $e^{2t}$ **is** a homogeneous solution (corresponding to $r = 2$), so we must multiply by $t$. Try $y_p = Ate^{2t}$.
+
+$$y_p' = A(1 + 2t)e^{2t}, \qquad y_p'' = A(4 + 4t)e^{2t}$$
+
+Substitute:
+
+$$A(4 + 4t)e^{2t} - 3A(1 + 2t)e^{2t} + 2A \cdot t \cdot e^{2t} = 5e^{2t}$$
+
+$$A\bigl[(4 + 4t) - 3(1 + 2t) + 2t\bigr]e^{2t} = 5e^{2t}$$
+
+$$A\bigl[4 + 4t - 3 - 6t + 2t\bigr]e^{2t} = A \cdot 1 \cdot e^{2t} = 5e^{2t}$$
+
+$$A = 5$$
+
+$$\boxed{y_p = 5te^{2t}}$$
+
+**(c)** $y'' + y = \sec(t)$
+
+The homogeneous solutions are $y_1 = \cos t$ and $y_2 = \sin t$. Since $\sec(t)$ is not of the form handled by undetermined coefficients, use **variation of parameters**.
+
+Wronskian:
+
+$$W = \begin{vmatrix} \cos t & \sin t \\ -\sin t & \cos t \end{vmatrix} = \cos^2 t + \sin^2 t = 1$$
+
+The formulas give:
+
+$$u_1' = -\frac{y_2 \cdot g(t)}{W} = -\sin(t)\sec(t) = -\tan(t)$$
+
+$$u_2' = \frac{y_1 \cdot g(t)}{W} = \cos(t)\sec(t) = 1$$
+
+Integrate:
+
+$$u_1 = \int -\tan t\,dt = \ln|\cos t|$$
+
+$$u_2 = \int 1\,dt = t$$
+
+$$\boxed{y_p = \cos(t)\ln|\cos t| + t\sin(t)}$$
+
+**(d)** **Why does undetermined coefficients sometimes fail?** It relies on the **annihilator method**: the guess works only when the forcing function $g(t)$ is itself a solution of some constant-coefficient homogeneous ODE (polynomials, exponentials, sines/cosines, and their products). Functions like $\sec(t)$, $\tan(t)$, $\ln(t)$, $1/t$, etc., cannot be annihilated by any constant-coefficient operator.
+
+**Variation of parameters** has no such restriction — it works for any continuous $g(t)$ because it uses the fundamental solution set $y_1, y_2$ directly and reduces the problem to integration. The trade-off is that the resulting integrals may not have closed forms.
+
+***
+
+### Question 8 (10 pts) — Resonance
+
+$$y'' + 9y = F_0 \cos(\omega t), \qquad y(0) = 0,\; y'(0) = 0$$
+
+**(a)** For $\omega \neq 3$: the natural frequency is $\omega_0 = 3$, so no resonance.
+
+Try $y_p = A\cos(\omega t)$. Substituting:
+
+$$-A\omega^2 \cos(\omega t) + 9A\cos(\omega t) = F_0 \cos(\omega t)$$
+
+$$A(9 - \omega^2) = F_0 \implies A = \frac{F_0}{9 - \omega^2}$$
+
+General solution (applying ICs):
+
+$$y = c_1\cos 3t + c_2\sin 3t + \frac{F_0}{9 - \omega^2}\cos(\omega t)$$
+
+$y(0) = 0$: $c_1 + \dfrac{F_0}{9 - \omega^2} = 0 \implies c_1 = -\dfrac{F_0}{9 - \omega^2}$.
+
+$y'(0) = 0$: $3c_2 = 0 \implies c_2 = 0$.
+
+$$\boxed{y(t) = \frac{F_0}{9 - \omega^2}\bigl(\cos(\omega t) - \cos(3t)\bigr)}$$
+
+**(b)** For $\omega = 3$ (resonance): $\cos(3t)$ is already a homogeneous solution, so we multiply by $t$. Try $y_p = At\sin(3t)$.
+
+Differentiating and substituting (or using the standard resonance result):
+
+$$A = \frac{F_0}{2 \cdot 3} = \frac{F_0}{6}$$
+
+$$\boxed{y_p = \frac{F_0 t}{6}\sin(3t)}$$
+
+The amplitude **grows linearly with $t$** — the system absorbs energy without bound.
+
+**(c)** At resonance, the **driving frequency matches the natural frequency** ($\omega = \omega_0 = 3$). Each cycle of forcing pushes the system "in sync" with its natural oscillation, pumping energy in at exactly the right time. This is like pushing a swing at its natural frequency — each push adds energy, and the amplitude grows without limit (in the undamped case, linearly in $t$).
+
+**(d)** With damping ($y'' + by' + 9y = F_0\cos(\omega t)$, $b > 0$): there is **no blow-up**. Damping dissipates energy, and a steady state is reached where energy input from the forcing balances energy dissipated by damping. The steady-state amplitude is finite (though it peaks near $\omega = \omega_0$, the peak is bounded). This is the difference between mathematical resonance (infinite amplitude) and physical resonance (large but finite amplitude).
+
+**(e)** In ML optimization:
+
+- **Resonance** is analogous to **learning rate / momentum oscillations**: if the optimizer's "step frequency" matches a curvature scale of the loss landscape, the weights can oscillate with growing amplitude — training diverges.
+- **Damping mechanisms** include **weight decay** (adds a friction term $-\lambda w$ to the gradient), **gradient clipping** (caps the maximum "force"), and **learning rate schedules** (reduce step size over time). These prevent the optimizer from resonating with the loss landscape and ensure convergence to a steady state.
+
+***
+
+### Question 9 (10 pts) — Laplace Transform Fundamentals
+
+**(a)** From the definition:
+
+$$\mathcal{L}\bigl\lbrace e^{3t}\bigr\rbrace = \int_0^\infty e^{-st} e^{3t}\,dt = \int_0^\infty e^{-(s-3)t}\,dt = \left[-\frac{e^{-(s-3)t}}{s-3}\right]_0^\infty = \boxed{\frac{1}{s-3}}, \quad s > 3$$
+
+The integral converges only when $s - 3 > 0$, giving the region of convergence $s > 3$.
+
+**(b)** We know $\mathcal{L}\bigl\lbrace t^2 \bigr\rbrace = \dfrac{2!}{s^3} = \dfrac{2}{s^3}$.
+
+By the **first shifting theorem** (s-shift): $\mathcal{L}\bigl\lbrace e^{at}f(t)\bigr\rbrace = F(s - a)$.
+
+With $f(t) = t^2$ and $a = -1$:
+
+$$\boxed{\mathcal{L}\bigl\lbrace t^2 e^{-t}\bigr\rbrace = \frac{2}{(s+1)^3}}, \quad s > -1$$
+
+**(c)** Derivative properties:
+
+$$\mathcal{L}\bigl\lbrace y'\bigr\rbrace = sY(s) - y(0)$$
+
+$$\boxed{\mathcal{L}\bigl\lbrace y''\bigr\rbrace = s^2 Y(s) - sy(0) - y'(0)}$$
+
+Each differentiation in the time domain corresponds to multiplication by $s$, minus initial condition terms that "peel off."
+
+**(d)** The derivative property is what makes the Laplace transform powerful for ODEs. **Differentiation (hard) becomes multiplication by $s$ (easy).** A linear ODE with constant coefficients:
+
+$$a_n y^{(n)} + \cdots + a_1 y' + a_0 y = g(t)$$
+
+transforms into a **polynomial equation** in $Y(s)$:
+
+$$\bigl(a_n s^n + \cdots + a_1 s + a_0\bigr) Y(s) = G(s) + \text{(IC terms)}$$
+
+This is purely algebraic — solve for $Y(s)$ by division, decompose with partial fractions, and invert. The Laplace transform converts a calculus problem into an algebra problem.
+
+***
+
+### Question 10 (10 pts) — Solving ODEs with Laplace Transform
+
+$$y'' + 4y = 8, \qquad y(0) = 0,\; y'(0) = 0$$
+
+**(a)** Take the Laplace transform of both sides:
+
+$$\mathcal{L}\bigl\lbrace y''\bigr\rbrace + 4\mathcal{L}\bigl\lbrace y\bigr\rbrace = \mathcal{L}\bigl\lbrace 8\bigr\rbrace$$
+
+$$\bigl[s^2 Y(s) - s \cdot 0 - 0\bigr] + 4Y(s) = \frac{8}{s}$$
+
+$$\boxed{(s^2 + 4)\,Y(s) = \frac{8}{s}}$$
+
+**(b)** Solve for $Y(s)$:
+
+$$\boxed{Y(s) = \frac{8}{s(s^2 + 4)}}$$
+
+**(c)** Partial fraction decomposition:
+
+$$\frac{8}{s(s^2 + 4)} = \frac{A}{s} + \frac{Bs + C}{s^2 + 4}$$
+
+Multiply through by $s(s^2 + 4)$:
+
+$$8 = A(s^2 + 4) + (Bs + C)s$$
+
+Set $s = 0$: $8 = 4A \implies A = 2$.
+
+Expand: $8 = As^2 + 4A + Bs^2 + Cs = (A + B)s^2 + Cs + 4A$.
+
+Match coefficients: $A + B = 0 \implies B = -2$; $C = 0$; $4A = 8$ (consistent).
+
+$$\boxed{Y(s) = \frac{2}{s} - \frac{2s}{s^2 + 4}}$$
+
+**(d)** Invert term by term:
+
+$$\mathcal{L}^{-1}\!\left\lbrace\frac{2}{s}\right\rbrace = 2, \qquad \mathcal{L}^{-1}\!\left\lbrace\frac{2s}{s^2 + 4}\right\rbrace = 2\cos(2t)$$
+
+$$\boxed{y(t) = 2 - 2\cos(2t)}$$
+
+**(e)** Verification:
+
+$$y'(t) = 4\sin(2t), \qquad y''(t) = 8\cos(2t)$$
+
+$$y'' + 4y = 8\cos(2t) + 4\bigl[2 - 2\cos(2t)\bigr] = 8\cos(2t) + 8 - 8\cos(2t) = 8 \;\checkmark$$
+
+$$y(0) = 2 - 2\cos(0) = 2 - 2 = 0 \;\checkmark$$
+
+$$y'(0) = 4\sin(0) = 0 \;\checkmark$$
+
+***
+
+### Question 11 (10 pts) — Convolution and Impulse Response
+
+**(a)** The **convolution theorem** states:
+
+$$\mathcal{L}^{-1}\bigl\lbrace F(s)\,G(s)\bigr\rbrace = (f * g)(t) = \int_0^t f(\tau)\,g(t - \tau)\,d\tau$$
+
+Multiplication in the $s$-domain corresponds to convolution in the time domain.
+
+**(b)** $H(s) = \dfrac{1}{s(s+2)}$
+
+Let $F(s) = \dfrac{1}{s}$ (so $f(t) = 1$) and $G(s) = \dfrac{1}{s+2}$ (so $g(t) = e^{-2t}$).
+
+**Convolution method:**
+
+$$(f * g)(t) = \int_0^t 1 \cdot e^{-2\tau}\,d\tau = \left[-\frac{e^{-2\tau}}{2}\right]_0^t = -\frac{e^{-2t}}{2} + \frac{1}{2} = \frac{1 - e^{-2t}}{2}$$
+
+**Partial fractions method:**
+
+$$\frac{1}{s(s+2)} = \frac{1/2}{s} - \frac{1/2}{s+2}$$
+
+$$\mathcal{L}^{-1} = \frac{1}{2} - \frac{1}{2}e^{-2t} = \frac{1 - e^{-2t}}{2}$$
+
+**Both methods agree.** $\checkmark$
+
+**(c)** $H(s) = \dfrac{1}{s^2 + 3s + 2} = \dfrac{1}{(s+1)(s+2)}$
+
+Partial fractions:
+
+$$\frac{1}{(s+1)(s+2)} = \frac{1}{s+1} - \frac{1}{s+2}$$
+
+Impulse response (inverse Laplace transform):
+
+$$\boxed{h(t) = e^{-t} - e^{-2t}}$$
+
+This is the system's response to a Dirac delta input $\delta(t)$. It characterizes the system completely: the response to any input $g(t)$ is given by $(h * g)(t)$.
+
+**(d)** In a neural network, the **transfer function** is analogous to the **Jacobian of the layer-to-output map**. Consider a perturbation $\delta x_k$ at layer $k$. It propagates through layers $k+1, k+2, \ldots, L$ via:
+
+$$\delta x_L = \left(\prod_{i=k+1}^{L} J_i\right) \delta x_k$$
+
+This product of Jacobians acts like a transfer function: it encodes how each intermediate layer attenuates, amplifies, or transforms the "signal." The impulse response $h(t)$ is the continuous-time analogue — a small perturbation at time $0$ propagates through the system, and $h(t)$ tells you how it appears at time $t$. This is precisely why **vanishing/exploding gradients** occur: if the "transfer function" (product of Jacobians) has magnitude much less than or greater than 1, signals die out or blow up, just as a system with poles in the right/left half-plane amplifies or attenuates impulses.
+
+***
+
+### Question 12 (12 pts) — Systems: Eigenvalue Method
+
+$$A = \begin{bmatrix} -1 & 4 \\ -1 & 3 \end{bmatrix}$$
+
+**(a)** Characteristic polynomial:
+
+$$\det(A - \lambda I) = (-1 - \lambda)(3 - \lambda) - (-1)(4) = \lambda^2 - 2\lambda + 3 + 4 - 3 = \lambda^2 - 2\lambda + 1$$
+
+Wait — let me compute carefully:
+
+$$(-1 - \lambda)(3 - \lambda) + 4 = -3 + \lambda - 3\lambda + \lambda^2 + 4 = \lambda^2 - 2\lambda + 1 = (\lambda - 1)^2$$
+
+$$\boxed{\lambda = 1 \text{ (repeated, algebraic multiplicity 2)}}$$
+
+**(b)** Find eigenvector: $(A - I)\mathbf{v} = \mathbf{0}$:
+
+$$A - I = \begin{bmatrix} -2 & 4 \\ -1 & 2 \end{bmatrix}$$
+
+Both rows give $-v_1 + 2v_2 = 0$, so $v_1 = 2v_2$. Taking $v_2 = 1$:
+
+$$\mathbf{v} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$$
+
+Only one linearly independent eigenvector (geometric multiplicity 1), so the eigenvalue is **defective**. We need a **generalized eigenvector** $\mathbf{w}$ satisfying $(A - I)\mathbf{w} = \mathbf{v}$:
+
+$$\begin{bmatrix} -2 & 4 \\ -1 & 2 \end{bmatrix} \mathbf{w} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$$
+
+From the second row: $-w_1 + 2w_2 = 1$, so $w_1 = 2w_2 - 1$. Choose $w_2 = 1$: $w_1 = 1$.
+
+$$\boxed{\mathbf{w} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}}$$
+
+**(c)** General solution for a defective repeated eigenvalue:
+
+$$\boxed{\mathbf{x}(t) = c_1 e^{t}\begin{pmatrix} 2 \\ 1 \end{pmatrix} + c_2 e^{t}\left[t\begin{pmatrix} 2 \\ 1 \end{pmatrix} + \begin{pmatrix} 1 \\ 1 \end{pmatrix}\right]}$$
+
+**(d)** Apply IC $\mathbf{x}(0) = (3, 1)^T$:
+
+$$\mathbf{x}(0) = c_1\begin{pmatrix} 2 \\ 1 \end{pmatrix} + c_2\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 3 \\ 1 \end{pmatrix}$$
+
+$$2c_1 + c_2 = 3, \qquad c_1 + c_2 = 1$$
+
+Subtract: $c_1 = 2$, so $c_2 = -1$.
+
+$$\mathbf{x}(t) = 2e^t\begin{pmatrix} 2 \\ 1 \end{pmatrix} - e^t\left[t\begin{pmatrix} 2 \\ 1 \end{pmatrix} + \begin{pmatrix} 1 \\ 1 \end{pmatrix}\right]$$
+
+$$\boxed{\mathbf{x}(t) = e^t\begin{pmatrix} 3 - 2t \\ 1 - t \end{pmatrix}}$$
+
+Verify: at $t = 0$, $\mathbf{x}(0) = (3, 1)^T$ $\checkmark$.
+
+**(e)** Since $\lambda = 1 > 0$, the fixed point at the origin is **unstable**. The phase portrait is a **degenerate (defective) unstable node**. All trajectories are tangent to the single eigenvector direction $(2, 1)$ and grow as $te^t$ — polynomial times exponential growth. Unlike a proper node (two independent eigenvectors), the defective node has trajectories that curve before aligning with the eigenvector direction.
+
+**(f)** If the eigenvalues of the system matrix were interpreted as eigenvalues of the **Hessian** of a loss function at a critical point, then both eigenvalues being $\lambda = 1 > 0$ means the Hessian is positive definite. The critical point is a **local minimum**. Since the eigenvalue is repeated, the Hessian (locally) is a scaled identity matrix, meaning **equal curvature in all directions** — the level sets are approximately circular (isotropic), and gradient descent converges at the same rate regardless of direction. This is the ideal scenario for optimization: no ill-conditioning.
+
+***
+
+### Question 13 (12 pts) — Phase Portrait Classification
+
+**(a)** $\lambda_1 = -3$, $\lambda_2 = -1$: Both eigenvalues real and **negative**.
+
+Classification: **Stable node.** All trajectories approach the origin as $t \to \infty$. Trajectories approach along the slow eigenvector direction ($\lambda_2 = -1$, slower decay) and are tangent to it near the origin. Far from the origin, trajectories align more with the fast eigenvector direction ($\lambda_1 = -3$, faster decay).
+
+**(b)** $\lambda_1 = 2$, $\lambda_2 = -1$: Eigenvalues are real with **opposite signs**.
+
+Classification: **Saddle point.** Unstable along the eigenvector for $\lambda_1 = 2$ (trajectories flee the origin), stable along the eigenvector for $\lambda_2 = -1$ (trajectories approach the origin). Generic trajectories approach along the stable direction, then veer away along the unstable direction. The origin is **unstable** (almost all trajectories eventually diverge).
+
+**(c)** $A = \begin{bmatrix} -1 & 2 \\ -2 & -1 \end{bmatrix}$
+
+Eigenvalues: $\lambda = -1 \pm 2i$ (complex with negative real part).
+
+Classification: **Stable spiral (spiral sink).** Trajectories spiral inward toward the origin. The real part $-1$ controls the decay rate; the imaginary part $\pm 2$ controls the rotation frequency. The rotation direction (counterclockwise) can be determined from the off-diagonal entries of $A$.
+
+**(d)** $A = \begin{bmatrix} 0 & 1 \\ -4 & 0 \end{bmatrix}$
+
+Eigenvalues: $\lambda^2 + 4 = 0 \implies \lambda = \pm 2i$ (purely imaginary).
+
+Classification: **Center.** Trajectories are **closed ellipses** around the origin. The system is **Lyapunov stable** (nearby trajectories stay nearby) but **not asymptotically stable** (they never converge to the origin). The origin is neutrally stable — solutions oscillate forever with constant amplitude.
+
+**(e)** ML optimization analogies:
+
+| Phase Portrait | Optimization Interpretation |
+|---|---|
+| **(a) Stable node** | Converging to optimum — both weight directions decrease the loss. Training converges monotonically. |
+| **(b) Saddle point** | Saddle in the loss landscape — one weight direction reduces loss, the other increases it. The optimizer must escape along the unstable direction. |
+| **(c) Stable spiral** | Oscillatory convergence — weights spiral toward the optimum, overshooting and correcting. Typical of SGD with momentum. |
+| **(d) Center** | Perpetual oscillation — the loss never converges. Weights cycle endlessly. This can occur with a learning rate that is too large or with certain adversarial training dynamics (e.g., GAN training). |
+
+***
+
+### Question 14 (8 pts) — Matrix Exponentials
+
+**(a)** The matrix exponential is defined by the power series:
+
+$$\boxed{e^{At} = I + At + \frac{A^2 t^2}{2!} + \frac{A^3 t^3}{3!} + \cdots = \sum_{k=0}^{\infty} \frac{(At)^k}{k!}}$$
+
+This directly generalizes the scalar exponential $e^{at} = \sum a^k t^k / k!$
+
+**(b)** If $A = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$, then:
+
+$$A^2 = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = \mathbf{0}$$
+
+Since $A^2 = \mathbf{0}$ (nilpotent of index 2), all higher powers vanish and the series terminates:
+
+$$\boxed{e^{At} = I + At = \begin{bmatrix} 1 & t \\ 0 & 1 \end{bmatrix}}$$
+
+**(c)** If $A$ is diagonalizable with $A = PDP^{-1}$ where $D = \text{diag}(\lambda_1, \lambda_2)$:
+
+$$A^k = PD^kP^{-1}$$
+
+so the series becomes:
+
+$$e^{At} = P\left(\sum_{k=0}^{\infty} \frac{D^k t^k}{k!}\right)P^{-1} = Pe^{Dt}P^{-1}$$
+
+where
+
+$$\boxed{e^{Dt} = \begin{bmatrix} e^{\lambda_1 t} & 0 \\ 0 & e^{\lambda_2 t} \end{bmatrix}}$$
+
+This is the most practical computation method: diagonalize, exponentiate each eigenvalue separately, transform back.
+
+**(d)** For the matrix from Q12 with repeated eigenvalue $\lambda = 1$, the Jordan decomposition is $A = PJP^{-1}$ where $J = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$.
+
+Write $J = I + N$ where $N = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}$ is nilpotent ($N^2 = 0$). Since $I$ and $N$ commute:
+
+$$e^{Jt} = e^{It} \cdot e^{Nt} = e^t(I + Nt) = e^t\begin{bmatrix} 1 & t \\ 0 & 1 \end{bmatrix}$$
+
+Then:
+
+$$\boxed{e^{At} = P\,e^{Jt}\,P^{-1} = P\,e^t\begin{bmatrix} 1 & t \\ 0 & 1 \end{bmatrix}P^{-1}}$$
+
+where $P = \begin{bmatrix} 2 & 1 \\ 1 & 1 \end{bmatrix}$ (columns are the eigenvector and generalized eigenvector from Q12).
+
+***
+
+### Question 15 (6 pts) — Synthesis
+
+**(a)** A ResNet layer computes:
+
+$$\mathbf{x}_{l+1} = \mathbf{x}_l + f(\mathbf{x}_l)$$
+
+This is exactly **Euler's method with step size $h = 1$** applied to the ODE:
+
+$$\frac{d\mathbf{x}}{dt} = f(\mathbf{x})$$
+
+Each layer corresponds to one time step. The "depth" of the network corresponds to the total integration time. This is why deeper ResNets approximate continuous dynamics — they are discretizations of a Neural ODE.
+
+**(b)** Under gradient flow $\dfrac{dW}{dt} = -\nabla L$, the loss evolves as:
+
+$$\frac{dL}{dt} = \nabla L \cdot \frac{dW}{dt} = \nabla L \cdot (-\nabla L) = -\|\nabla L\|^2$$
+
+Since $\|\nabla L\|^2 \geq 0$:
+
+$$\boxed{\frac{dL}{dt} = -\|\nabla L\|^2 \leq 0}$$
+
+**The loss is a Lyapunov function for the gradient flow.** It is non-increasing along every trajectory, guaranteeing that the system moves toward (or stays at) critical points. The flow can only stop where $\nabla L = 0$ — at critical points of the loss. This is the rigorous justification for why gradient-based training "works": the ODE structure guarantees descent.
+
+**(c)** ODE-to-ML dictionary:
+
+| ODE Concept | ML Analogue |
+|---|---|
+| Euler's method with step size $h$ | Gradient descent with learning rate $\eta$ |
+| Fixed points of the ODE | Critical points of the loss ($\nabla L = 0$) |
+| Eigenvalues of the Jacobian $Df$ | Eigenvalues of the Hessian $\nabla^2 L$ (curvature of loss) |
+| Stable node | Local minimum (convergent training) |
+| Saddle point in phase portrait | Saddle point in loss landscape |
+| Resonance (forcing at natural frequency) | LR/momentum oscillation when update frequency matches landscape curvature |
+
+This dictionary is not merely a metaphor — it is a **mathematical identity**. Gradient descent literally is a numerical ODE method, learning rates literally are step sizes, and the stability theory of ODEs literally governs whether training converges or diverges. The entire apparatus of dynamical systems theory applies directly to understanding and improving optimization in deep learning.

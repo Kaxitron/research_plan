@@ -1,0 +1,195 @@
+---
+title: "Exam 4A: Neural Networks and Machine Learning"
+subtitle: "Lessons 53--64 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Perceptrons, Activation Functions, and Linear Separability
+
+A single perceptron computes $\hat{y} = \sigma(\mathbf{w}^\top \mathbf{x} + b)$ where $\sigma$ is an activation function.
+
+**(a)** Consider a perceptron with weights $\mathbf{w} = (2, -1)$ and bias $b = -1$ using the step activation $\sigma(z) = \mathbf{1}[z \geq 0]$. Compute the output for each of the four Boolean inputs $(x_1, x_2) \in \{(0,0),\,(0,1),\,(1,0),\,(1,1)\}$. Which Boolean function does this perceptron implement?
+
+**(b)** The XOR function outputs 1 for $(0,1)$ and $(1,0)$ and 0 otherwise. Plot these four points in the $(x_1, x_2)$ plane, labeling their XOR values. Prove that no single line $w_1 x_1 + w_2 x_2 + b = 0$ can separate the two classes by deriving a contradiction from the four inequalities that such a line must satisfy.
+
+**(c)** Describe a two-layer network (give explicit weights and biases) that computes XOR. Verify by evaluating all four inputs through both layers.
+
+**(d)** Sketch the graphs of step, sigmoid $\sigma(z) = \frac{1}{1+e^{-z}}$, and ReLU $\sigma(z) = \max(0,z)$. For each, state the range and whether the function is differentiable everywhere. In 2--3 sentences, explain why sigmoid was historically preferred over step functions for training, and why ReLU later supplanted sigmoid in deep networks.
+
+---
+
+## Q2 (10 pts) --- Loss Functions and Gradient Descent Dynamics
+
+**(a)** For a single training pair $(y, \hat{y})$ with $y \in \{0,1\}$ and $\hat{y} = \sigma(z)$ (sigmoid output), write the binary cross-entropy loss $\mathcal{L}_{\text{BCE}}$ and the MSE loss $\mathcal{L}_{\text{MSE}}$. Compute $\dfrac{\partial \mathcal{L}_{\text{BCE}}}{\partial z}$ and $\dfrac{\partial \mathcal{L}_{\text{MSE}}}{\partial z}$, using the fact that $\sigma'(z) = \sigma(z)(1 - \sigma(z))$.
+
+**(b)** Evaluate both derivatives at $y = 1$, $z = -5$ (so $\sigma(z) \approx 0.0067$). Which loss produces a larger gradient magnitude? Explain in 2--3 sentences why this matters for learning from confident wrong predictions.
+
+**(c)** A model is trained with SGD on a dataset of $N = 10{,}000$ samples. Compare three strategies: (i) full-batch gradient descent, (ii) mini-batch SGD with batch size $B = 64$, (iii) stochastic gradient descent with $B = 1$. For each, state the number of gradient computations per epoch and discuss the trade-off between gradient noise and computational efficiency.
+
+**(d)** Write the SGD update rule with learning rate $\eta$. Starting from $w = 4$ on the loss surface $L(w) = w^4 - 8w^2 + 16 = (w^2 - 4)^2$, compute two update steps with $\eta = 0.01$. Identify all critical points of $L(w)$ and classify each as a local minimum or local maximum. Is gradient descent guaranteed to find the global minimum from $w = 4$?
+
+---
+
+## Q3 (10 pts) --- Backpropagation, Vanishing Gradients, and Residual Connections
+
+Consider a 3-layer network:
+$$z_1 = w_1 x, \quad a_1 = \tanh(z_1), \quad z_2 = w_2 a_1, \quad a_2 = \tanh(z_2), \quad z_3 = w_3 a_2, \quad L = \tfrac{1}{2}(z_3 - y)^2$$
+
+Use $x = 1$, $w_1 = 0.5$, $w_2 = 0.5$, $w_3 = 0.5$, $y = 1$.
+
+**(a)** Compute the full forward pass: find $z_1, a_1, z_2, a_2, z_3$, and $L$. (Use $\tanh(0.5) \approx 0.4621$ and $\tanh(0.2311) \approx 0.2269$.)
+
+**(b)** Using the chain rule on the computation graph, compute $\dfrac{\partial L}{\partial w_3}$, $\dfrac{\partial L}{\partial w_2}$, and $\dfrac{\partial L}{\partial w_1}$. Use $\tanh'(z) = 1 - \tanh^2(z)$.
+
+**(c)** Compute the ratio $\left|\dfrac{\partial L}{\partial w_1}\right| / \left|\dfrac{\partial L}{\partial w_3}\right|$. In a network with $D$ layers where each layer contributes a multiplicative factor $|w_i \cdot \tanh'(z_i)| < 1$, how does the gradient at layer 1 scale with depth? Name this pathology.
+
+**(d)** A residual connection modifies the architecture so that $a_\ell = \tanh(w_\ell a_{\ell-1}) + a_{\ell-1}$. Write the expression for $\dfrac{\partial a_\ell}{\partial a_{\ell-1}}$ with the residual connection. Explain in 2--3 sentences why the additive "+1" term prevents the gradient product from shrinking exponentially, even when $|w_\ell \cdot \tanh'(z_\ell)| \ll 1$.
+
+---
+
+## Q4 (10 pts) --- Universal Approximation, Depth, and Representation Learning
+
+**(a)** The Universal Approximation Theorem states that a single hidden layer with enough neurons can approximate any continuous function on a compact set to arbitrary precision. Consider the function $f(x) = |x|$ on $[-1, 1]$. Show explicitly that $|x| = \text{ReLU}(x) + \text{ReLU}(-x)$, and thereby construct a one-hidden-layer ReLU network (give $W^{(1)}, \mathbf{b}^{(1)}, \mathbf{w}^{(2)}, b^{(2)}$) that computes $|x|$ exactly.
+
+**(b)** A ReLU network with $L$ layers and $n$ neurons per layer can create up to $O(n^L)$ linear regions in its input space, whereas a single-layer network with $nL$ neurons creates only $O(nL)$ regions. A certain function requires $10^6$ linear regions to approximate well. Compare the resources needed: (i) a 1-layer network, (ii) a 10-layer network with $n$ neurons per layer. Find $n$ for case (ii) by solving $n^{10} = 10^6$.
+
+**(c)** BatchNorm normalizes activations: $\hat{a}_i = \dfrac{a_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$, then scales and shifts: $\tilde{a}_i = \gamma \hat{a}_i + \beta$. Explain two benefits of this operation: one related to training dynamics (internal covariate shift) and one related to gradient flow. Why are $\gamma$ and $\beta$ learnable rather than fixed?
+
+**(d)** Representation learning means each layer builds progressively more abstract features. For an image classifier, describe what features a CNN might learn at layers 1, 3, and 5 (from low to high). Explain in 2--3 sentences why a model trained on ImageNet can be fine-tuned for medical imaging with relatively little data --- what does this reveal about the representations learned?
+
+---
+
+## Q5 (10 pts) --- Convolutions, Pooling, and CNN Architecture
+
+**(a)** A 1D convolution applies a kernel $\mathbf{k} = (k_0, k_1, k_2)$ to an input signal $\mathbf{x} = (x_0, x_1, x_2, x_3, x_4)$ with stride 1 and no padding. Write the formula for the output $(y_0, y_1, y_2)$ and compute the result for $\mathbf{k} = (1, 0, -1)$ and $\mathbf{x} = (2, 5, 3, 8, 1)$. What kind of feature does this kernel detect?
+
+**(b)** A 2D convolutional layer has input of shape $32 \times 32 \times 3$ (height $\times$ width $\times$ channels), uses 16 filters of size $5 \times 5$, stride 1, and padding 2. Compute: (i) the output spatial dimensions, (ii) the total number of learnable parameters (including biases), (iii) the output shape.
+
+**(c)** Explain the concept of **weight sharing** in CNNs. A fully connected layer processing the same $32 \times 32 \times 3$ input to produce the same number of outputs as part (b) would require how many parameters? Compare with your answer from (b) and explain why weight sharing is essential for image processing.
+
+**(d)** After the convolutional layer in (b), $2 \times 2$ max pooling with stride 2 is applied. What is the output shape? In 2--3 sentences, explain how pooling contributes to translation invariance and why modern architectures (e.g., all-convolutional nets or vision transformers) sometimes remove pooling entirely.
+
+---
+
+## Q6 (10 pts) --- Scaling Laws, Compute-Optimal Training, and Emergence
+
+**(a)** Kaplan et al.\ (2020) found that language model cross-entropy loss follows power laws:
+$$L(N) \approx \left(\frac{N_c}{N}\right)^{\alpha_N}, \qquad L(D) \approx \left(\frac{D_c}{D}\right)^{\alpha_D}$$
+where $N$ is parameter count and $D$ is dataset size (in tokens). With $\alpha_N \approx 0.076$ and $\alpha_D \approx 0.095$, which is more efficient at reducing loss: increasing parameters by $10\times$ or data by $10\times$? Compute $10^{-\alpha_N}$ and $10^{-\alpha_D}$ to justify your answer.
+
+**(b)** The Chinchilla paper (Hoffmann et al., 2022) argued that for a fixed compute budget $C$, the optimal allocation satisfies $N_{\text{opt}} \propto C^{a}$ and $D_{\text{opt}} \propto C^{b}$ with $a \approx b \approx 0.5$. This means parameters and data should scale **equally**. Kaplan et al.\ had originally suggested scaling $N$ faster than $D$. If you have a compute budget that allows training a 70B-parameter model on 300B tokens (Kaplan-style) OR a 10B-parameter model on 2T tokens (Chinchilla-style), which achieves lower loss according to the Chinchilla finding, and why?
+
+**(c)** **Emergent capabilities** are abilities that appear abruptly at a certain model scale. Give two specific examples of tasks where small models score near-chance and large models score near-perfectly. In 2--3 sentences, explain the "mirage" critique: how might the appearance of emergence depend on the choice of evaluation metric rather than a true phase transition in capability?
+
+**(d)** A lab is planning a training run with a total compute budget of $C = 6 \times 10^{23}$ FLOPs. Under the Chinchilla-optimal ratio of approximately 20 tokens per parameter, compute the optimal model size $N_{\text{opt}}$ and dataset size $D_{\text{opt}}$. If each training step processes a batch of $B = 2 \times 10^6$ tokens and costs approximately $6NB$ FLOPs, estimate the number of training steps.
+
+---
+
+## Q7 (10 pts) --- Attention Mechanism and Multi-Head Attention
+
+**(a)** Given queries $Q$, keys $K$, and values $V$ (all $n \times d_k$ matrices for a sequence of length $n$), the scaled dot-product attention is:
+$$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V$$
+
+For a 3-token sequence with $d_k = 2$:
+$$Q = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 1 & 1 \end{pmatrix}, \quad K = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 0.5 & 0.5 \end{pmatrix}, \quad V = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 0.5 & 0.5 \end{pmatrix}$$
+
+Compute the raw score matrix $S = QK^\top / \sqrt{d_k}$. Apply softmax row-wise to get the attention weight matrix $A$. (You may leave softmax values in terms of exponentials if exact computation is unwieldy, but simplify where possible.)
+
+**(b)** Explain why dividing by $\sqrt{d_k}$ is necessary. If $q_i$ and $k_j$ are random vectors with entries drawn i.i.d.\ from $\mathcal{N}(0,1)$, show that $\mathbb{E}[q_i \cdot k_j] = 0$ and $\text{Var}(q_i \cdot k_j) = d_k$. What happens to the softmax output when the variance of its inputs is large?
+
+**(c)** In **causal (autoregressive) masking**, position $i$ can only attend to positions $j \leq i$. Write the masked score matrix $S'$ from part (a), setting future positions to $-\infty$. Explain why this masking is essential for language model training but not needed for encoder-only models like BERT.
+
+**(d)** Multi-head attention runs $h$ separate attention heads in parallel, each with its own $W_Q^{(i)}, W_K^{(i)}, W_V^{(i)}$ of shape $d_{\text{model}} \times d_k$ where $d_k = d_{\text{model}} / h$. The outputs are concatenated and projected. If $d_{\text{model}} = 512$ and $h = 8$, state $d_k$ and the total number of parameters in the multi-head attention layer (including the output projection $W_O$, but excluding biases). Why might multiple heads be better than a single head with the full $d_k = d_{\text{model}}$?
+
+---
+
+## Q8 (10 pts) --- Transformer Architecture and Mechanistic Interpretability
+
+**(a)** A transformer block consists of: (1) multi-head self-attention with residual connection and layer norm, (2) feed-forward MLP with residual connection and layer norm. Write the two equations for a pre-norm transformer block, where layer norm is applied before each sub-layer:
+$$\mathbf{x}' = \mathbf{x} + \text{Attn}(\text{LN}(\mathbf{x}))$$
+In the **residual stream** view, each attention head and MLP reads from the residual stream and writes an additive update. If a transformer has $L$ layers with $h$ heads each, how many total components write to the residual stream (counting each head and each MLP separately)?
+
+**(b)** **Token embeddings** map discrete tokens to continuous vectors. If the vocabulary has $V = 50{,}000$ tokens and $d_{\text{model}} = 768$, how many parameters are in the embedding matrix? **Positional encodings** add position information. The original sinusoidal encoding uses $\text{PE}(pos, 2i) = \sin(pos / 10000^{2i/d})$ and $\text{PE}(pos, 2i+1) = \cos(pos / 10000^{2i/d})$. Compute $\text{PE}(0, \cdot)$ and $\text{PE}(1, \cdot)$ for $d = 4$ (i.e., compute all 4 components for positions 0 and 1). Why can the model distinguish different positions from these encodings?
+
+**(c)** **Logit lens** interprets intermediate residual stream states by projecting them through the unembedding matrix $W_U$ to get a distribution over the vocabulary at each layer. If $\mathbf{r}_\ell$ is the residual stream at layer $\ell$, the logit lens computes $\text{softmax}(W_U \mathbf{r}_\ell)$. Explain in 2--3 sentences what a researcher learns by examining how the predicted token distribution evolves from layer 0 to layer $L$. How does this relate to the concept of **iterative inference**?
+
+**(d)** **Activation patching** (causal tracing) works as follows: (1) run a clean forward pass and record all activations, (2) run a corrupted forward pass (e.g., with a different input), (3) patch a single clean activation into the corrupted run and measure the effect on the output. If patching the residual stream at layer 8, position 5 restores 90\% of the clean output probability, what can we conclude about that (layer, position) pair? In 2--3 sentences, contrast activation patching with **probing** (training a linear classifier on activations) in terms of what each method reveals about the model.
+
+---
+
+## Q9 (10 pts) --- Diffusion Models and Reinforcement Learning
+
+**(a)** In a Denoising Diffusion Probabilistic Model (DDPM), the forward process adds Gaussian noise over $T$ steps:
+$$q(\mathbf{x}_t \mid \mathbf{x}_{t-1}) = \mathcal{N}(\mathbf{x}_t;\; \sqrt{1 - \beta_t}\,\mathbf{x}_{t-1},\; \beta_t \mathbf{I})$$
+Using the reparameterization with $\alpha_t = 1 - \beta_t$ and $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$, write the closed-form expression for $q(\mathbf{x}_t \mid \mathbf{x}_0)$. Explain in 1--2 sentences why this closed form is useful for training: how does it let us jump directly to any noise level without iterating?
+
+**(b)** The reverse process learns $p_\theta(\mathbf{x}_{t-1} \mid \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1};\; \boldsymbol{\mu}_\theta(\mathbf{x}_t, t),\; \sigma_t^2 \mathbf{I})$. In the $\epsilon$-prediction formulation, the network predicts the noise $\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)$ and the simplified training objective is:
+$$\mathcal{L}_{\text{simple}} = \mathbb{E}_{t, \mathbf{x}_0, \boldsymbol{\epsilon}}\left[\|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\|^2\right]$$
+Describe the training procedure in 3--4 steps (sample $\mathbf{x}_0$, sample $t$, etc.). Why does the model need the time step $t$ as a conditioning input?
+
+**(c)** A Markov Decision Process (MDP) is defined by the tuple $(S, A, P, R, \gamma)$. Define each component. Write the objective of reinforcement learning in terms of the expected discounted return $J(\pi) = \mathbb{E}_\pi\!\left[\sum_{t=0}^\infty \gamma^t r_t\right]$. The REINFORCE algorithm estimates the policy gradient as:
+$$\nabla_\theta J \approx \frac{1}{N}\sum_{i=1}^N \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t^{(i)} \mid s_t^{(i)}) \, G_t^{(i)}$$
+where $G_t^{(i)} = \sum_{k=t}^T \gamma^{k-t} r_k^{(i)}$. Explain in 2--3 sentences why REINFORCE has high variance and how a baseline $b(s_t)$ subtracted from $G_t$ reduces variance without introducing bias.
+
+**(d)** **PPO** (Proximal Policy Optimization) uses a clipped surrogate objective:
+$$L^{\text{CLIP}} = \mathbb{E}_t\!\left[\min\!\left(r_t(\theta)\hat{A}_t,\; \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t\right)\right]$$
+where $r_t(\theta) = \pi_\theta(a_t \mid s_t) / \pi_{\theta_{\text{old}}}(a_t \mid s_t)$. Explain why unconstrained policy updates (without clipping) are dangerous. In the context of RLHF for language models, explain **reward hacking**: give a concrete example of how a language model might exploit a learned reward model, and connect this to Goodhart's Law.
+
+---
+
+## Q10 (10 pts) --- The LLM Training Pipeline: From Tokens to Deployment
+
+**(a)** **BPE tokenization** builds a vocabulary by iteratively merging the most frequent pair of tokens. Starting with the character-level vocabulary $\{a, b, c, d\}$ and the corpus:
+
+\begin{center}
+\texttt{a b c a b d a b c a b c a b d}
+\end{center}
+
+Perform the first two BPE merges. After each merge, show the updated corpus and the new vocabulary entry. Explain in 1--2 sentences why BPE is preferred over character-level or word-level tokenization.
+
+**(b)** The standard LLM pipeline has four stages. For each stage below, state the objective function being optimized and describe in 1--2 sentences what the model learns:
+
+- **Pre-training** (next-token prediction on a large corpus)
+- **Supervised Fine-Tuning (SFT)** on instruction-response pairs
+- **RLHF** (Reinforcement Learning from Human Feedback) using PPO
+- **DPO** (Direct Preference Optimization) as an alternative to RLHF
+
+**(c)** In RLHF, a reward model $r_\phi$ is trained on human preference data: given two responses $y_w \succ y_l$ to a prompt $x$, the Bradley-Terry loss is:
+$$\mathcal{L}_{\text{RM}} = -\log \sigma\bigl(r_\phi(x, y_w) - r_\phi(x, y_l)\bigr)$$
+Explain why this loss encourages the reward model to assign higher scores to preferred responses. The policy is then optimized with:
+$$\max_\theta \; \mathbb{E}_{x, y \sim \pi_\theta}\!\left[r_\phi(x, y)\right] - \beta \, \text{KL}\!\left[\pi_\theta \,\|\, \pi_{\text{ref}}\right]$$
+What role does the KL penalty play? What happens if $\beta$ is too small?
+
+**(d)** **Constitutional AI (CAI)** replaces some human feedback with AI-generated feedback based on a set of principles. Describe the two-phase CAI process (critique-revision and RL from AI feedback). In 3--4 sentences, discuss one advantage and one risk of using AI feedback instead of human feedback. Connect your answer to the broader challenge of ensuring that deployed models are aligned with human values across diverse contexts.

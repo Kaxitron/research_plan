@@ -1,0 +1,227 @@
+---
+title: "Exam 4B: Mechanistic Interpretability"
+subtitle: "Lessons 61, 65--66 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across Lessons 61, 65, and 66. Partial credit is generous for correct reasoning with arithmetic errors. ML-specific terminology and references to interpretability tools are expected.*
+
+\newpage
+
+## Q1 (10 pts) --- Activation Patching and Causal Tracing
+
+A language model processes the prompt "The Eiffel Tower is located in" and correctly predicts "Paris." A researcher applies **activation patching**: she runs the model on a corrupted prompt ("The Colosseum is located in"), caches all activations, then restores individual activations from the clean run one at a time and measures recovery of the "Paris" prediction.
+
+**(a)** Define the **logit difference** metric: $\Delta_{\text{logit}} = \text{logit}(\text{Paris}) - \text{logit}(\text{Rome})$. Explain why this is preferable to raw probability as a patching metric. *(Hint: think about softmax saturation.)*
+
+**(b)** The researcher finds that restoring the residual stream at layer 9, position 5 ("Tower") recovers 72\% of the clean logit difference. Restoring layer 9, position 8 ("in") recovers only 4\%. Interpret both findings in terms of **information localization** in the residual stream.
+
+**(c)** Activation patching establishes a **causal** claim, not merely a correlational one. In 2--3 sentences, explain the difference: what can activation patching tell us that probing alone cannot?
+
+**(d)** A colleague suggests patching all of layer 9 simultaneously rather than individual positions. Explain why this coarse-grained patch is less informative. What is the trade-off between patching granularity and computational cost?
+
+---
+
+## Q2 (10 pts) --- Logit Lens, Tuned Lens, and Direct Logit Attribution
+
+Consider a transformer with $L$ layers. After layer $\ell$, the residual stream at the final token position is $\mathbf{r}^{(\ell)} \in \mathbb{R}^d$. The unembedding matrix is $W_U \in \mathbb{R}^{V \times d}$.
+
+**(a)** The **logit lens** computes $\text{logits}^{(\ell)} = W_U \, \mathbf{r}^{(\ell)}$. Explain what this reveals about the model's "evolving prediction" across layers. Why might the logit lens give misleading results at early layers?
+
+**(b)** The **tuned lens** instead computes $\text{logits}^{(\ell)} = W_U \bigl(A^{(\ell)} \mathbf{r}^{(\ell)} + \mathbf{b}^{(\ell)}\bigr)$ where $A^{(\ell)}$ and $\mathbf{b}^{(\ell)}$ are learned affine parameters per layer. What problem does this solve? How are these parameters trained, and why is an affine map (rather than a deep network) appropriate?
+
+**(c)** **Direct logit attribution** decomposes the final residual stream as:
+
+$$\mathbf{r}^{(L)} = \mathbf{r}^{(0)} + \sum_{\ell=1}^{L} \bigl(\mathbf{a}^{(\ell)} + \mathbf{m}^{(\ell)}\bigr)$$
+
+where $\mathbf{a}^{(\ell)}$ is the output of the attention sublayer and $\mathbf{m}^{(\ell)}$ is the output of the MLP sublayer at layer $\ell$. The logit for token $t$ is $\text{logit}_t = \mathbf{w}_t^\top \mathbf{r}^{(L)}$ where $\mathbf{w}_t$ is the $t$-th row of $W_U$. Show that the logit decomposes as:
+
+$$\text{logit}_t = \mathbf{w}_t^\top \mathbf{r}^{(0)} + \sum_{\ell=1}^{L} \bigl(\mathbf{w}_t^\top \mathbf{a}^{(\ell)} + \mathbf{w}_t^\top \mathbf{m}^{(\ell)}\bigr)$$
+
+and explain why this lets us attribute the model's prediction to individual components.
+
+**(d)** A researcher finds that $\mathbf{w}_{\text{Paris}}^\top \mathbf{a}^{(9)}$ contributes $+4.2$ to the "Paris" logit while $\mathbf{w}_{\text{Paris}}^\top \mathbf{m}^{(9)}$ contributes $-0.3$. What does this tell us about the roles of attention vs.\ the MLP at layer 9 for this prediction?
+
+---
+
+## Q3 (10 pts) --- TransformerLens, Hooks, and Steering Vectors
+
+TransformerLens provides **hook points** at every intermediate computation in the model. A hook is a function $h: \mathbb{R}^{B \times T \times d} \to \mathbb{R}^{B \times T \times d}$ that intercepts and optionally modifies an activation tensor during the forward pass.
+
+**(a)** Write pseudocode for a hook function that, given a **steering vector** $\mathbf{s} \in \mathbb{R}^d$ and a scalar coefficient $\alpha$, adds $\alpha \mathbf{s}$ to the residual stream at layer $\ell$ and position $p$. Be explicit about tensor indexing.
+
+**(b)** A researcher extracts the mean residual-stream activations for 200 prompts about "happiness" ($\bar{\mathbf{r}}_{\text{happy}}$) and 200 prompts about "sadness" ($\bar{\mathbf{r}}_{\text{sad}}$), both at layer 12, final token. She defines the steering vector $\mathbf{s} = \bar{\mathbf{r}}_{\text{happy}} - \bar{\mathbf{r}}_{\text{sad}}$. Explain the geometric intuition: what direction does $\mathbf{s}$ point in activation space, and why does adding $\alpha \mathbf{s}$ to a new prompt's residual stream steer the model's outputs?
+
+**(c)** Steering with $\alpha = 5$ produces coherent happy text. With $\alpha = 50$, the model outputs gibberish. Explain why excessively large steering coefficients break the model, referencing the distribution of activations the model was trained on.
+
+**(d)** Compare **steering vectors** (modifying activations at inference time) with **probing** (training a classifier on frozen activations). One intervenes, the other observes. What type of claim can each support? Which provides stronger evidence that a direction in activation space is causally used by the model?
+
+---
+
+## Q4 (10 pts) --- The Residual Stream and Induction Heads
+
+**(a)** The **residual stream** is the central communication channel of a transformer: each layer reads from it and writes back to it. Formally, if layer $\ell$ computes $f^{(\ell)}$, then $\mathbf{r}^{(\ell)} = \mathbf{r}^{(\ell-1)} + f^{(\ell)}\bigl(\mathbf{r}^{(\ell-1)}\bigr)$. Explain why this architecture enables "skip connections" and why it means every layer can, in principle, communicate with every later layer directly (not just the adjacent one).
+
+**(b)** An **induction head** implements the following algorithm: "if token $A$ was followed by token $B$ earlier in the context, and $A$ appears again now, predict $B$." This requires a two-head circuit:
+
+- **Head 1** (previous-token head, early layer): attends from position $i$ to position $i-1$, copying information about the previous token into the residual stream.
+- **Head 2** (induction head, later layer): uses $Q$-$K$ matching to find an earlier position where the same previous-token information appears, then copies the next token via the $OV$ circuit.
+
+Draw or describe the information flow for the sequence $[...\; X\; Y\; ...\; X\; ?]$. Specifically: at position $?$, which position does Head 2 attend to, and why?
+
+**(c)** In the $QK$ circuit of Head 2, the query at position $?$ is derived from $X$ (the current token). The key at some earlier position must also encode information about $X$. Explain why the previous-token head (Head 1) is essential: without it, the key at the first occurrence of $Y$ would encode information about $Y$, not about $X$.
+
+**(d)** Induction heads are observed to form during a **phase transition** in training, accompanied by a sudden drop in loss on repeated-token sequences. From the perspective of Singular Learning Theory (Lesson 66), what kind of event is this? What would you expect to observe in the Local Learning Coefficient (LLC) at this transition?
+
+---
+
+## Q5 (10 pts) --- Superposition and Toy Models
+
+Consider a toy model of superposition: a linear encoder-decoder pair $\mathbf{h} = W^\top \mathbf{x}$ then $\hat{\mathbf{x}} = W\mathbf{h}$, where $\mathbf{x} \in \mathbb{R}^n$ is a sparse input with $n$ features, $\mathbf{h} \in \mathbb{R}^m$ is the hidden representation with $m < n$, and $W \in \mathbb{R}^{m \times n}$. The loss is $L = \mathbb{E}\bigl[\|\mathbf{x} - WW^\top\mathbf{x}\|^2\bigr]$.
+
+**(a)** If $m \geq n$, the model can set $WW^\top = I_n$ and achieve zero loss. When $m < n$, zero loss is impossible. In the absence of sparsity (every feature always active), the optimal $W$ projects onto the top-$m$ principal components. Explain why.
+
+**(b)** Now suppose features are **sparse**: feature $i$ is nonzero with probability $S_i \ll 1$, independently. Intuitively explain why the model may prefer to represent $n > m$ features in $m$ dimensions (superposition) rather than faithfully representing only $m$ features. What determines whether a feature "earns" its place in the representation?
+
+**(c)** The columns of $W$ are the feature directions in $\mathbb{R}^m$. If $n = 5$ features are packed into $m = 2$ dimensions, the column vectors $\mathbf{w}_1, \ldots, \mathbf{w}_5 \in \mathbb{R}^2$ cannot all be orthogonal. The interference between features $i$ and $j$ is proportional to $|\mathbf{w}_i^\top \mathbf{w}_j|^2$. Explain why the model arranges feature vectors as a **uniform arrangement** (maximally spread out, e.g., vertices of a regular polygon) rather than clustering them.
+
+**(d)** **Polysemanticity** refers to a single neuron activating for multiple unrelated concepts. Explain how superposition causes polysemanticity: if a neuron's activation is $h_k = \mathbf{w}_k^\top \mathbf{x} = \sum_{i=1}^n W_{ki} x_i$, why does sparsity make this tolerable in practice?
+
+---
+
+## Q6 (10 pts) --- Sparse Autoencoders for Mechanistic Interpretability
+
+A **Sparse Autoencoder** (SAE) is trained to decompose a model's internal activations. Given an activation vector $\mathbf{x} \in \mathbb{R}^d$ from some layer of a pretrained model, the SAE computes:
+
+$$\mathbf{z} = \text{ReLU}\bigl(W_{\text{enc}}(\mathbf{x} - \mathbf{b}_{\text{dec}}) + \mathbf{b}_{\text{enc}}\bigr), \qquad \hat{\mathbf{x}} = W_{\text{dec}}\,\mathbf{z} + \mathbf{b}_{\text{dec}}$$
+
+The training loss is:
+
+$$\mathcal{L} = \|\mathbf{x} - \hat{\mathbf{x}}\|_2^2 + \lambda \|\mathbf{z}\|_1$$
+
+where $\mathbf{z} \in \mathbb{R}^D$ with $D \gg d$ (the SAE dictionary is overcomplete).
+
+**(a)** Explain the role of each loss term. Why is $L^1$ regularization (rather than $L^2$) used on $\mathbf{z}$? What geometric property of the $L^1$ ball encourages sparsity?
+
+**(b)** The dictionary has $D = 16{,}384$ elements for a residual stream of dimension $d = 768$. The expansion factor is $D/d \approx 21\times$. Explain why we want $D \gg d$ if we believe the model uses superposition to represent many more features than its residual-stream dimension.
+
+**(c)** After training, each column $\mathbf{d}_j$ of $W_{\text{dec}}$ (with $\|\mathbf{d}_j\| = 1$) represents a learned **feature direction**. The activation $z_j$ measures how strongly feature $j$ fires on a given input. A researcher examines dictionary element $j = 4021$ and finds it fires strongly on inputs containing the word "enzyme" or "catalysis" but not on unrelated biology terms. She labels this a **monosemantic** feature. What does monosemantic mean in this context, and how does it contrast with the polysemantic neurons of the original model?
+
+**(d)** An SAE has a **reconstruction--sparsity trade-off** controlled by $\lambda$. Sketch qualitatively what happens to the number of active features $\|\mathbf{z}\|_0$ and the reconstruction error $\|\mathbf{x} - \hat{\mathbf{x}}\|^2$ as $\lambda$ increases from 0 to $\infty$. What practical strategy is used to select $\lambda$?
+
+---
+
+## Q7 (10 pts) --- Feature Circuits and Composition
+
+Mechanistic interpretability aims to identify **circuits**: subgraphs of the full computational graph that implement specific behaviors.
+
+**(a)** Define a **feature circuit** in the context of sparse autoencoders. Specifically, if SAE features at layer $\ell$ are $\{z_j^{(\ell)}\}$ and at layer $\ell+1$ are $\{z_k^{(\ell+1)}\}$, what does it mean to say that feature $j$ at layer $\ell$ "connects to" feature $k$ at layer $\ell+1$?
+
+**(b)** The **QK circuit** of an attention head computes attention scores: $\text{score}_{ij} = \mathbf{x}_i^\top W_Q^\top W_K \mathbf{x}_j$. The **OV circuit** determines what information is moved: $\text{output}_i = \sum_j \alpha_{ij} W_O W_V \mathbf{x}_j$ where $\alpha_{ij}$ are the attention weights. Explain why the low-rank matrix $W_{QK} = W_Q^\top W_K$ determines "where to look" while $W_{OV} = W_O W_V$ determines "what to move."
+
+**(c)** In the induction circuit of Q4, head composition occurs: the output of Head 1 (previous-token head) becomes part of the input to Head 2's QK circuit. This is called **Q-composition** or **K-composition** depending on which matrix (query or key) reads the earlier head's output. If Head 1 writes a representation of token $X$ into position $Y$'s residual stream, and Head 2's \textit{key} circuit at position $Y$ reads this, which type of composition is this? Justify.
+
+**(d)** A researcher identifies a "gender bias circuit" in a model: a set of 3 attention heads and 2 MLP layers that, when ablated, eliminate gendered pronoun predictions while leaving other capabilities intact. Explain why circuit-level analysis like this is more actionable for AI safety than simply measuring the model's bias on a benchmark dataset.
+
+---
+
+## Q8 (10 pts) --- Singularities and Why Standard Statistics Fails
+
+In classical statistics, the Bayesian Information Criterion (BIC) approximates the marginal likelihood (model evidence) as:
+
+$$\log p(\mathcal{D} \mid \mathcal{M}) \approx \log p(\mathcal{D} \mid \hat{w}) - \frac{d}{2}\log n$$
+
+where $\hat{w}$ is the MLE, $d$ is the parameter count, and $n$ is the sample size.
+
+**(a)** BIC relies on a Laplace approximation at $\hat{w}$, which requires the **Fisher information matrix** $I(w) = -\mathbb{E}\!\left[\frac{\partial^2}{\partial w_i \partial w_j}\log p(\mathcal{D} \mid w)\right]$ to be positive definite at $\hat{w}$. A model is called **regular** if $I(w)$ is positive definite for all $w$ in the parameter space and **singular** if $I(w)$ is degenerate (has zero eigenvalues) at or near the true parameter. Which type is a neural network, and why?
+
+**(b)** Give two explicit symmetries in neural networks that create singularities in the Fisher information:
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Neuron permutation symmetry:} If a hidden layer has $k$ neurons, describe how permuting them produces $k!$ distinct parameter vectors mapping to the same function.
+  \item \textbf{Weight--bias rescaling:} For a ReLU network, if we multiply all incoming weights of neuron $j$ by $\alpha > 0$ and divide all outgoing weights by $\alpha$, the network function is unchanged. Write this transformation explicitly for a single hidden neuron with input weight vector $\mathbf{w}_j$, bias $b_j$, and output weight $v_j$.
+\end{enumerate}
+
+**(c)** A symmetry means multiple parameter values $w$ yield the same model output $f(x; w)$. Explain why this implies $I(w)$ has zero eigenvalues along the symmetry direction. *(Hint: if $w$ and $w + \epsilon \mathbf{u}$ produce identical predictions, what is $\frac{\partial}{\partial \epsilon}\log p(\mathcal{D} \mid w + \epsilon \mathbf{u})$?)*
+
+**(d)** Beyond exact symmetries, neural networks also have **approximate singularities** near configurations where neurons are nearly dead (weights close to zero). Explain why "neuron death" (a weight vector shrinking to $\mathbf{0}$) creates a singularity even though it is not an exact permutation or rescaling symmetry.
+
+---
+
+## Q9 (10 pts) --- The RLCT and Free Energy in Singular Learning Theory
+
+In Singular Learning Theory (SLT), the marginal likelihood (free energy) for a singular model with $n$ data points is:
+
+$$F_n = -\log p(\mathcal{D}_n) \approx nL_n(\hat{w}) + \lambda \log n - (m-1)\log\log n + O(1)$$
+
+where $\lambda$ is the **Real Log Canonical Threshold (RLCT)** and $m$ is its multiplicity.
+
+**(a)** Compare this to BIC: $F_n^{\text{BIC}} \approx nL_n(\hat{w}) + \frac{d}{2}\log n$. The BIC uses $\frac{d}{2}$ (half the parameter count) as the complexity penalty. SLT replaces this with $\lambda$. State the key inequality relating $\lambda$ and $d$, and explain its significance for understanding why overparameterized neural networks (where $d$ is very large) can still generalize well.
+
+**(b)** The RLCT $\lambda$ measures the **effective dimensionality** of the model near the optimal parameters. Geometrically, it relates to how sharply the loss function $K(w) = \text{KL}\bigl(q(x) \,\|\, p(x \mid w)\bigr)$ rises as you move away from the set of optimal parameters $W_0 = \{w : K(w) = 0\}$. If $W_0$ is a smooth manifold of dimension $s$ embedded in $\mathbb{R}^d$, what is $\lambda$ in terms of $d$ and $s$? Explain why a larger symmetry group (larger $s$) leads to a smaller $\lambda$.
+
+**(c)** Consider two models:
+
+- Model A: $\lambda_A = 2.5$, parameter count $d_A = 100$
+- Model B: $\lambda_B = 8.0$, parameter count $d_B = 50$
+
+According to SLT, which model has lower effective complexity? Explain why Model A might generalize better than Model B despite having twice as many parameters.
+
+**(d)** The free energy $F_n$ acts as a **model selection criterion** in Bayesian learning. The $\lambda \log n$ term penalizes complexity. For two candidate models, the one with lower $F_n$ is preferred. If both models achieve the same training loss $L_n(\hat{w})$, derive a condition on the sample size $n$ for which Model A (from part (c)) is preferred over Model B.
+
+---
+
+## Q10 (10 pts) --- Phase Transitions, LLC, and Developmental Interpretability
+
+During training, a neural network's parameters $w_t$ move through parameter space. The **Local Learning Coefficient** (LLC), denoted $\hat{\lambda}(w_t)$, estimates the RLCT of the loss landscape near the current parameters at training step $t$.
+
+**(a)** The LLC is estimated via a local version of the free energy: one draws samples $w$ from a tempered posterior concentrated near $w_t$ and measures how the local loss landscape curves. Intuitively, a **high LLC** means the model is in a region where many parameter directions increase the loss (high effective dimension), while a **low LLC** means many directions are "flat" (the model has found a low-complexity solution). Explain why a decreasing LLC during training indicates the model is finding and exploiting structure in the data.
+
+**(b)** **Grokking** is the phenomenon where a model first memorizes training data (achieving low training loss but high test loss), then suddenly generalizes (test loss drops sharply) after many additional training steps. Interpret grokking as a **phase transition** in the SLT framework: what is the model's LLC doing during the memorization phase, and what happens to it at the moment of generalization?
+
+**(c)** A researcher trains a small transformer on modular addition ($a + b \mod 113$) and observes:
+
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Training step} & \textbf{Train loss} & $\hat{\lambda}$ \\
+\midrule
+0--5{,}000 & decreasing & 12.4 \\
+5{,}000--20{,}000 & $\approx 0$ (memorized) & 11.8 \\
+20{,}000--22{,}000 & $\approx 0$ & drops to 3.1 \\
+22{,}000+ & $\approx 0$ & stable $\approx 3.2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The model generalizes (test accuracy jumps from 20\% to 99\%) at step 20{,}000. Interpret this trajectory: what is happening at each phase, and why does the LLC drop coincide with generalization?
+
+**(d)** **Developmental interpretability** combines mechanistic interpretability (what circuits does the model use?) with SLT (what phase is the model in?). A researcher tracking both the LLC and the presence of specific circuits (e.g., a "modular arithmetic circuit") during training might observe the circuit forming precisely when the LLC drops. Explain why this combination is more powerful than either approach alone, and describe one concrete experiment (in 2--3 sentences) that would test whether a specific circuit is responsible for a phase transition.

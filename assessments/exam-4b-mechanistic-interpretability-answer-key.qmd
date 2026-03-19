@@ -1,0 +1,239 @@
+---
+title: "Exam 4B: Mechanistic Interpretability --- Answer Key"
+subtitle: "Lessons 61, 65--66"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct technical content and clear reasoning. Partial credit is generous for correct setup with minor errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit. For questions involving SLT, correct use of the formal framework (RLCT, free energy, phase transitions) is required for full marks.
+
+\newpage
+
+## Q1 --- Activation Patching and Causal Tracing
+
+**(a)** The logit difference $\Delta_{\text{logit}} = \text{logit}(\text{Paris}) - \text{logit}(\text{Rome})$ measures the model's preference for "Paris" over "Rome" on a linear scale, before the softmax nonlinearity is applied. Raw probabilities suffer from **softmax saturation**: when the model is confident, the probability of the top token may be 0.998 vs.\ 0.001, and small but meaningful changes in the logits produce negligible changes in the probabilities. The logit difference is linear in the model's internal computations (since the residual stream is added through linearly) and thus faithfully tracks the effect of patching interventions without compression artifacts from the softmax. $\checkmark$
+
+**(b)** Restoring layer 9, position 5 ("Tower") recovers 72\% of the logit difference, indicating that **most of the information needed for the "Paris" prediction is concentrated in the residual stream at the "Tower" position by layer 9**. The model has already moved the relevant factual information (Eiffel Tower $\to$ Paris) to this position by this layer. Restoring position 8 ("in") recovers only 4\%, meaning the final-token position carries very little of the critical information at this layer --- the information has not yet been moved from the subject position to the prediction position. This is consistent with the model using later-layer attention heads to move information from the subject token to the final position. $\checkmark$
+
+**(c)** **Probing** trains a classifier on frozen activations and asks: "is the information present here?" But the information might be present yet never used by the model's downstream computations. A probe might find "Paris" encoded at a position where the model never reads it. **Activation patching** intervenes on the computation: by replacing an activation and observing that the output changes, we establish that the model's computation **causally depends** on that activation. This is the difference between correlation ("Paris info is here") and causation ("the model uses the Paris info from here to make its prediction"). $\checkmark$
+
+**(d)** Patching all of layer 9 simultaneously tells us "layer 9 matters," but it cannot distinguish which positions, heads, or subcomponents within layer 9 are responsible. The information could be concentrated in a single attention head at one position, or distributed across many components --- the coarse patch conflates these cases. The trade-off: fine-grained patching (individual heads, positions, or even individual neurons) provides more precise localization but requires $O(\text{layers} \times \text{positions} \times \text{heads})$ forward passes, each involving a separate patching intervention. In practice, researchers often use a hierarchical approach: coarse patching to identify important layers, then fine-grained patching within those layers. $\checkmark$
+
+---
+
+## Q2 --- Logit Lens, Tuned Lens, and Direct Logit Attribution
+
+**(a)** The logit lens applies the unembedding matrix $W_U$ to intermediate residual-stream states, converting them to a vocabulary distribution at each layer. This reveals how the model's "current best prediction" evolves through the layers --- early layers might predict a broad semantic category, while later layers narrow to the specific correct token. The logit lens can give misleading results at early layers because the residual stream at layer $\ell$ is optimized to be a useful input to layer $\ell+1$, **not** to be directly interpretable via the unembedding matrix $W_U$. The representation basis may differ significantly from the unembedding basis in early layers, causing the logit lens to show apparently random or meaningless predictions even though the residual stream contains useful information in a different basis. $\checkmark$
+
+**(b)** The tuned lens solves the **representation mismatch** problem by learning a per-layer affine transformation $A^{(\ell)}\mathbf{r}^{(\ell)} + \mathbf{b}^{(\ell)}$ that maps the layer-$\ell$ residual stream into the basis expected by the unembedding matrix. The parameters $A^{(\ell)}$ and $\mathbf{b}^{(\ell)}$ are trained to minimize cross-entropy loss on a held-out dataset (predicting the correct next token from the intermediate residual stream). An affine map is appropriate because the residual stream's relationship to the unembedding space is approximately linear (it is the result of linear additions from each sublayer), so a deep network would overfit and potentially "decode" information that the model's actual forward pass does not use. $\checkmark$
+
+**(c)** The decomposition follows directly from linearity of the dot product. Since:
+
+$$\mathbf{r}^{(L)} = \mathbf{r}^{(0)} + \sum_{\ell=1}^{L}\bigl(\mathbf{a}^{(\ell)} + \mathbf{m}^{(\ell)}\bigr)$$
+
+we have:
+
+$$\text{logit}_t = \mathbf{w}_t^\top \mathbf{r}^{(L)} = \mathbf{w}_t^\top\!\left[\mathbf{r}^{(0)} + \sum_{\ell=1}^{L}\bigl(\mathbf{a}^{(\ell)} + \mathbf{m}^{(\ell)}\bigr)\right] = \mathbf{w}_t^\top \mathbf{r}^{(0)} + \sum_{\ell=1}^{L}\bigl(\mathbf{w}_t^\top \mathbf{a}^{(\ell)} + \mathbf{w}_t^\top \mathbf{m}^{(\ell)}\bigr) \quad \square$$
+
+Each term $\mathbf{w}_t^\top \mathbf{a}^{(\ell)}$ or $\mathbf{w}_t^\top \mathbf{m}^{(\ell)}$ is a scalar that measures how much that specific component (attention or MLP at layer $\ell$) contributed to the logit of token $t$. Because the residual stream is additive and the logit is a linear function of it, we get exact (not approximate) attribution of the final logit to individual components. $\checkmark$
+
+**(d)** The attention sublayer at layer 9 contributes $+4.2$ to the "Paris" logit --- it is **actively promoting** the correct prediction, likely by moving factual information from the subject token to the prediction position. The MLP sublayer at layer 9 contributes $-0.3$, slightly suppressing the "Paris" prediction. This is a near-zero contribution, suggesting the MLP at this layer is not centrally involved in this particular factual recall task (or is performing a minor calibration). The dominant mechanism for this prediction at layer 9 is the attention heads, not the MLP. $\checkmark$
+
+---
+
+## Q3 --- TransformerLens, Hooks, and Steering Vectors
+
+**(a)** Pseudocode:
+
+```
+def steering_hook(activation, hook):
+    # activation has shape [batch, seq_len, d_model]
+    # s is the steering vector, shape [d_model]
+    # alpha is the scalar coefficient
+    # p is the target position index
+    activation[:, p, :] = activation[:, p, :] + alpha * s
+    return activation
+```
+
+The key details: (1) the hook receives the full activation tensor and must return the modified tensor; (2) the steering vector is added only at position $p$, not all positions; (3) the batch dimension is preserved by indexing with `[:, p, :]`. $\checkmark$
+
+**(b)** The steering vector $\mathbf{s} = \bar{\mathbf{r}}_{\text{happy}} - \bar{\mathbf{r}}_{\text{sad}}$ points in the direction in activation space that maximally separates "happiness" activations from "sadness" activations (the difference of class means, analogous to Fisher's linear discriminant direction). Geometrically, this direction represents the axis along which the model's internal representation distinguishes happiness from sadness. Adding $\alpha\mathbf{s}$ to a new prompt's residual stream moves its representation along this axis toward the "happy" region. Downstream layers then process this modified activation as if the input were more happiness-related, shifting the model's generated text accordingly. The linearity of the residual stream means this additive intervention composes naturally with the model's existing computation. $\checkmark$
+
+**(c)** The model was trained on natural text, so its activations lie in a specific region of $\mathbb{R}^d$ --- the "typical set" of activation vectors. Adding $\alpha\mathbf{s}$ with moderate $\alpha$ keeps the modified activation within or near this typical set, so downstream layers process it normally. With $\alpha = 50$, the activation is pushed far outside the distribution of activations the model has ever encountered during training. The LayerNorm and nonlinearities in subsequent layers are not calibrated for inputs of this magnitude, causing unpredictable behavior: attention patterns become degenerate, MLP activations saturate, and the output degrades to gibberish. This is analogous to evaluating any function far outside its training distribution. $\checkmark$
+
+**(d)** **Probing** demonstrates that information is **encoded** (represented) in a particular direction in activation space. It supports the claim: "the model's activations contain information about concept $X$ at this layer." However, a probe can find information that the model never uses downstream (a "correlational ghost").
+
+**Steering** demonstrates that a direction is **causally operative**: modifying the activation along this direction changes the model's behavior. It supports the claim: "the model's computation depends on the value of the activation along this direction."
+
+Steering provides **stronger evidence** for causal usage, because it establishes an interventionist causal relationship (changing the activation changes the output), not just a statistical association. However, probing can detect more subtle representations that might be difficult to steer cleanly, so the two methods are complementary. $\checkmark$
+
+---
+
+## Q4 --- The Residual Stream and Induction Heads
+
+**(a)** The residual stream architecture $\mathbf{r}^{(\ell)} = \mathbf{r}^{(\ell-1)} + f^{(\ell)}\bigl(\mathbf{r}^{(\ell-1)}\bigr)$ means each layer's contribution is **added** to the running sum. This creates skip connections automatically: the output $\mathbf{r}^{(L)}$ is the sum of the initial embedding $\mathbf{r}^{(0)}$ plus every layer's output. Information written by layer 2 remains in the residual stream at layer 10 (assuming no later layer explicitly cancels it), so layer 10 can read what layer 2 wrote without any intermediate layer explicitly relaying it. This "broadcast" mechanism is why the residual stream functions as a shared communication channel --- any layer can write a message that any later layer can read directly. $\checkmark$
+
+**(b)** For the sequence $[\ldots\; X\; Y\; \ldots\; X\; ?]$:
+
+1. **Head 1 (previous-token head)** operates in an early layer. At the position of $Y$ (first occurrence), Head 1 attends to position $X$ (the previous token) and writes a representation of $X$ into $Y$'s residual stream. So after Head 1, the residual stream at position $Y$ contains information about both $Y$ itself and its predecessor $X$.
+
+2. **Head 2 (induction head)** operates in a later layer. At position $?$, the query is derived from the current token $X$. Head 2 searches earlier positions for keys that encode "$X$ was the previous token." Thanks to Head 1, the position of $Y$ (first occurrence) has exactly this information in its key. So **Head 2 at position $?$ attends to the position of $Y$ (the first occurrence)** and copies $Y$ via the OV circuit, predicting $Y$ as the next token. $\checkmark$
+
+**(c)** Without Head 1, the key at the position of the first $Y$ would encode information about $Y$ itself (the token embedding plus positional information). The query at position $?$ is derived from $X$. The QK match would look for positions whose key matches $X$ --- but $Y$'s key encodes $Y$, not $X$, so there would be no strong match at the correct position. Head 1 solves this by enriching $Y$'s residual stream with information about $X$ (the previous token). After Head 1, the key at position $Y$ encodes a mixture of $Y$ and $X$, enabling Head 2's QK circuit to match on the $X$ component. Without this composition, the induction mechanism cannot work. $\checkmark$
+
+**(d)** From the perspective of SLT, the formation of induction heads is a **phase transition**: the model moves from one basin (or singularity) in the loss landscape to another, qualitatively different one. Before the transition, the model uses simpler strategies (e.g., bigram statistics); after the transition, it has acquired a structured circuit (the induction circuit) that implements a more efficient algorithm. At the moment of the phase transition, the **LLC should drop sharply**: the model transitions from a high-complexity solution (high effective dimension, many parameters actively contributing to the fit) to a lower-complexity solution (the induction circuit uses fewer effective degrees of freedom to achieve better loss). The drop in LLC corresponds to the model finding a more efficient (lower-complexity, better-generalizing) representation. $\checkmark$
+
+---
+
+## Q5 --- Superposition and Toy Models
+
+**(a)** The loss $L = \mathbb{E}\bigl[\|\mathbf{x} - WW^\top\mathbf{x}\|^2\bigr]$ is the reconstruction error of projecting $\mathbf{x}$ through the $m$-dimensional bottleneck. When all features are always active (no sparsity), minimizing reconstruction error of random vectors is equivalent to PCA: the optimal $W$ projects onto the subspace spanned by the top-$m$ eigenvectors of $\mathbb{E}[\mathbf{x}\mathbf{x}^\top]$ (the covariance matrix). This is the Eckart--Young theorem: the best rank-$m$ approximation to a matrix (in Frobenius norm) is its truncated SVD. Any other $m$-dimensional subspace captures less variance and incurs higher reconstruction error. $\checkmark$
+
+**(b)** When features are sparse, the expected interference cost between two features is proportional to $S_i \cdot S_j \cdot |\mathbf{w}_i^\top \mathbf{w}_j|^2$ --- both features must be simultaneously active for interference to occur. If $S_i, S_j \ll 1$, this probability is very small, so the cost of packing both features into the same low-dimensional space is low. Meanwhile, the benefit of representing feature $i$ is proportional to its importance (variance or frequency). The model will include a feature in the representation if its **benefit** (reduced loss from representing it when active) exceeds its **cost** (interference with other features when co-active). Sparse features "earn their place" when they are important enough to be worth representing but rarely co-occur with other features, making the interference tolerable. $\checkmark$
+
+**(c)** The model wants to minimize the worst-case interference between any pair of features, because interference causes reconstruction error whenever two features are simultaneously active. If the column vectors were clustered together, the angles between nearby vectors would be small, producing large dot products $|\mathbf{w}_i^\top \mathbf{w}_j|$ and high interference for those pairs. A uniform arrangement (e.g., vertices of a regular polygon in $\mathbb{R}^2$ for $n = 5$ features) **maximizes the minimum angle** between any pair of vectors, distributing the interference as evenly and minimally as possible. This is the solution to the Thomson problem / Tammes problem in coding theory: how to arrange $n$ unit vectors in $\mathbb{R}^m$ to minimize maximum pairwise dot products. $\checkmark$
+
+**(d)** A single neuron's activation $h_k = \sum_{i=1}^n W_{ki}x_i$ is a weighted sum over all features. With superposition, $W_{ki} \neq 0$ for many features $i$, so $h_k$ responds to multiple features --- it is **polysemantic**. However, sparsity makes this tolerable: on any given input, only a small number of features $x_i$ are nonzero. So even though $h_k$ is a function of many features in principle, on a typical input it is dominated by the one or two active features, and the contributions from inactive features are exactly zero. The neuron acts as a reliable detector of each feature individually, failing only in the rare case when multiple features that share the neuron happen to co-activate. The probability of this collision is $O(S_i S_j)$, which is small when sparsity is high. $\checkmark$
+
+---
+
+## Q6 --- Sparse Autoencoders for Mechanistic Interpretability
+
+**(a)** The **reconstruction term** $\|\mathbf{x} - \hat{\mathbf{x}}\|_2^2$ ensures the SAE faithfully represents the original activation --- the dictionary elements and their activations must combine to reconstruct the input. The **sparsity term** $\lambda\|\mathbf{z}\|_1$ penalizes the total magnitude of the activations, encouraging most entries of $\mathbf{z}$ to be exactly zero. $L^1$ rather than $L^2$ is used because the $L^1$ ball $\{z : \|z\|_1 \leq C\}$ has **corners aligned with the coordinate axes**: in 2D, it is a diamond shape whose vertices lie on the axes. The gradient of $\|z\|_1$ pushes components toward exactly zero (it applies constant pressure regardless of magnitude), while $L^2$ regularization applies weaker pressure near zero and rarely produces exact sparsity. The combination encourages the SAE to find a small number of dictionary elements that explain each activation, corresponding to the small number of features the model is actually using for that input. $\checkmark$
+
+**(b)** If the model represents $F \gg d$ features via superposition in a $d$-dimensional residual stream, we need the SAE dictionary to have at least $F$ elements to have one element per feature. Setting $D \gg d$ provides enough dictionary elements to assign a separate direction to each feature that the model has compressed into $d$ dimensions. With $D = 16{,}384$ and $d = 768$, the SAE can potentially resolve up to $16{,}384$ distinct features. If we used $D = d$, the SAE would just learn another basis for the same $d$-dimensional space, unable to "unsuperpose" the compressed representation. The overcomplete dictionary ($D/d \approx 21\times$) gives the SAE the capacity to decompose superposed representations into individual monosemantic features. $\checkmark$
+
+**(c)** A **monosemantic** feature responds to a single, coherent concept --- in this case, dictionary element $j = 4021$ activates specifically for enzyme/catalysis-related content and not for other biology topics. This means the SAE has successfully disentangled this concept into its own dedicated dictionary element with a specific direction $\mathbf{d}_{4021}$ in activation space. This contrasts with the polysemantic neurons of the original model, where a single neuron might activate for "enzymes," "cooking recipes," and "chemical reactions" simultaneously (because all three concepts share a direction due to superposition). The SAE's learned dictionary decomposes these superposed signals into separate, interpretable features, each with its own activation $z_j$. $\checkmark$
+
+**(d)** As $\lambda$ increases from 0:
+
+- At $\lambda = 0$: no sparsity pressure. The SAE uses many active features ($\|\mathbf{z}\|_0$ is large, potentially $\sim D$) and achieves near-zero reconstruction error.
+- As $\lambda$ increases: the sparsity penalty forces more entries of $\mathbf{z}$ to zero, so $\|\mathbf{z}\|_0$ decreases monotonically. Reconstruction error increases because fewer dictionary elements are available to represent each input.
+- At $\lambda \to \infty$: $\mathbf{z} = \mathbf{0}$, no features fire, and reconstruction error equals $\|\mathbf{x} - \mathbf{b}_{\text{dec}}\|^2$ (just the bias).
+
+The practical strategy is to sweep $\lambda$ over a range and select the value that achieves a good balance: low enough reconstruction error to faithfully represent the model's activations (measured by loss recovered, i.e., how much the model's performance degrades when SAE reconstructions replace real activations) while maintaining enough sparsity that individual features are interpretable. Some researchers use the "L0 vs.\ loss recovered" Pareto frontier and choose a point on the knee of the curve. $\checkmark$
+
+---
+
+## Q7 --- Feature Circuits and Composition
+
+**(a)** A **feature circuit** is a subgraph connecting SAE features across layers. Feature $z_j^{(\ell)}$ "connects to" feature $z_k^{(\ell+1)}$ if the activation of $z_j^{(\ell)}$ causally influences the activation of $z_k^{(\ell+1)}$ through the model's intervening computation (attention and MLP sublayers between layers $\ell$ and $\ell+1$). Concretely, this means: (1) the dictionary direction $\mathbf{d}_j^{(\ell)}$ is written into the residual stream when feature $j$ fires; (2) this direction is read by the model's weights at the next layer; and (3) the result contributes to activating feature $k$ at layer $\ell+1$. These connections can be identified by activation patching on individual SAE features or by computing the Jacobian $\partial z_k^{(\ell+1)} / \partial z_j^{(\ell)}$. $\checkmark$
+
+**(b)** The $W_{QK} = W_Q^\top W_K$ matrix computes the **attention score** between a query token and a key token: $\text{score}_{ij} = \mathbf{x}_i^\top W_{QK}\,\mathbf{x}_j$. This is a bilinear form that measures **compatibility** between positions --- it determines which positions attend to which, i.e., "where to look." The matrix $W_{QK}$ acts as a matching function: positions whose query-key product is large will have high attention weight.
+
+The $W_{OV} = W_O W_V$ matrix determines what information is **extracted** from attended positions and how it is written into the residual stream: $\text{output}_i = \sum_j \alpha_{ij}\,W_{OV}\,\mathbf{x}_j$. Each attended position contributes $W_{OV}\mathbf{x}_j$ weighted by $\alpha_{ij}$. So $W_{OV}$ is a linear map that selects which aspects of the source representation to copy and how to transform them --- i.e., "what to move." $\checkmark$
+
+**(c)** This is **K-composition**. Head 1 writes a representation of token $X$ into the residual stream at position $Y$. Head 2's **key** circuit at position $Y$ reads this enriched residual stream (which now contains information about $X$). The key at position $Y$ is $\mathbf{k}_Y = W_K \mathbf{r}_Y^{(\text{after Head 1})}$, and the $X$-information from Head 1 flows through $W_K$ into the key. Head 2's query at position $?$ (derived from $X$) then matches this key. Since it is the **key** circuit that reads Head 1's output, this is K-composition (as opposed to Q-composition, where the earlier head's output would flow through the query matrix). $\checkmark$
+
+**(d)** A benchmark measures the model's bias on a set of test cases but provides no insight into **why** the model exhibits bias or **how** to fix it. Knowing that the model predicts "he" for doctors 70\% of the time tells us there is a problem but not where in the model the problem lives.
+
+Circuit-level analysis identifies the specific computational components responsible: "these 3 attention heads and 2 MLP layers implement the gender bias." This is more actionable because:
+
+1. **Targeted intervention:** We can surgically ablate or fine-tune just those 5 components, rather than retraining the entire model or applying blunt post-hoc corrections.
+2. **Verification:** After intervention, we can verify that the circuit is no longer active, providing mechanistic assurance (not just behavioral assurance) that the bias is removed.
+3. **Transfer:** Understanding the circuit generalizes --- if we know the mechanism, we can check for similar circuits in other models or predict when the bias will manifest on novel inputs not in the benchmark.
+4. **Root cause:** Circuit analysis reveals whether the bias comes from attention patterns (where the model looks), value circuits (what information it moves), or MLP layers (how it processes features), enabling fundamentally different remediation strategies. $\checkmark$
+
+---
+
+## Q8 --- Singularities and Why Standard Statistics Fails
+
+**(a)** Neural networks are **singular** models. The Fisher information matrix $I(w)$ is degenerate (not positive definite) at many points in parameter space, including near optimal parameters. This occurs because multiple distinct parameter vectors $w$ produce the same input-output function $f(x; w)$. The Laplace approximation underlying BIC assumes $I(\hat{w})$ is full-rank so that the posterior concentrates in a Gaussian around $\hat{w}$ --- but when $I(\hat{w})$ has zero eigenvalues, the posterior is not Gaussian: it extends along the degenerate directions, the Laplace integral diverges, and the $\frac{d}{2}\log n$ penalty is incorrect. $\checkmark$
+
+**(b)**
+
+**(i) Neuron permutation symmetry:** Consider a hidden layer with $k$ neurons. Each neuron $j$ has incoming weights $\mathbf{w}_j$ and outgoing weight $v_j$. If we apply any permutation $\sigma \in S_k$ to the neurons --- relabeling neuron $j$ as neuron $\sigma(j)$ and simultaneously permuting all associated weights --- the network computes the same function: $f(x; w) = \sum_{j=1}^k v_j\,\sigma(w_j^\top x + b_j) = \sum_{j=1}^k v_{\sigma^{-1}(j)}\,\sigma(w_{\sigma^{-1}(j)}^\top x + b_{\sigma^{-1}(j)})$. There are $k!$ such permutations, so each function is represented by at least $k!$ distinct parameter vectors. For a network with multiple hidden layers of sizes $k_1, k_2, \ldots$, the symmetry group has order $k_1!\, k_2!\, \cdots$
+
+**(ii) Weight--bias rescaling:** For a ReLU neuron, $\text{ReLU}(\alpha z) = \alpha\,\text{ReLU}(z)$ for any $\alpha > 0$. So if we transform:
+
+$$\mathbf{w}_j \mapsto \alpha\,\mathbf{w}_j, \qquad b_j \mapsto \alpha\, b_j, \qquad v_j \mapsto v_j / \alpha$$
+
+then the neuron's output is $v_j\,\text{ReLU}(\mathbf{w}_j^\top \mathbf{x} + b_j) \mapsto (v_j/\alpha)\,\text{ReLU}(\alpha\mathbf{w}_j^\top\mathbf{x} + \alpha b_j) = (v_j/\alpha)\cdot\alpha\,\text{ReLU}(\mathbf{w}_j^\top\mathbf{x} + b_j) = v_j\,\text{ReLU}(\mathbf{w}_j^\top\mathbf{x} + b_j)$. The function is unchanged for any $\alpha > 0$, giving a continuous family (a one-dimensional manifold) of equivalent parameters per neuron. $\checkmark$
+
+**(c)** If $w$ and $w + \epsilon\mathbf{u}$ produce identical model outputs for all inputs $x$, then $p(x \mid w + \epsilon\mathbf{u}) = p(x \mid w)$ for all $x$. Therefore:
+
+$$\frac{\partial}{\partial\epsilon}\log p(\mathcal{D} \mid w + \epsilon\mathbf{u})\bigg|_{\epsilon=0} = 0$$
+
+for any dataset $\mathcal{D}$. This means the score function $\nabla_w \log p(x \mid w)$ has zero component along $\mathbf{u}$. The Fisher information matrix is $I(w) = \mathbb{E}[(\nabla_w \log p)(\nabla_w \log p)^\top]$, so:
+
+$$\mathbf{u}^\top I(w)\,\mathbf{u} = \mathbb{E}\bigl[(\mathbf{u}^\top \nabla_w \log p)^2\bigr] = 0$$
+
+Thus $I(w)\mathbf{u} = \mathbf{0}$: the direction $\mathbf{u}$ is in the null space of $I(w)$, confirming $I(w)$ has a zero eigenvalue. $\square$
+
+**(d)** When a neuron's weight vector $\mathbf{w}_j \to \mathbf{0}$ and $b_j \to 0$, the neuron's output becomes $v_j \cdot \text{ReLU}(\mathbf{0}^\top\mathbf{x} + 0) = 0$ regardless of $v_j$ and regardless of the input. At this point, the outgoing weight $v_j$ becomes a **free parameter** that does not affect the function. Changing $v_j$ produces a different parameter vector with the same function output, so the Fisher information has a zero eigenvalue in the $v_j$ direction. Similarly, the direction of $\mathbf{w}_j$ becomes irrelevant (only its magnitude matters, and that magnitude is zero), creating additional flat directions. This is not a symmetry in the classical sense (it is not a group action on the full parameter space) but it is a **degenerate critical point** where the parameter-to-function map loses rank. Such points are prevalent in neural networks because weight decay and regularization push parameters toward zero. $\checkmark$
+
+---
+
+## Q9 --- The RLCT and Free Energy in Singular Learning Theory
+
+**(a)** The key inequality is:
+
+$$\lambda \leq \frac{d}{2}$$
+
+where $d$ is the number of parameters. BIC uses $\frac{d}{2}$ as the complexity penalty, but the true complexity $\lambda$ can be much smaller. For overparameterized networks with $d$ very large (e.g., millions of parameters), BIC would assign an enormous complexity penalty and predict terrible generalization. But SLT shows that the actual complexity is $\lambda$, which can be much smaller than $\frac{d}{2}$ because the symmetries, singularities, and redundancies in the parameter space reduce the effective degrees of freedom. This is why large neural networks can generalize well despite having far more parameters than training examples: the parameter count $d$ dramatically overstates the model's effective complexity. $\checkmark$
+
+**(b)** If the set of optimal parameters $W_0$ is a smooth manifold of dimension $s$, then the model has $s$ "redundant" (flat) directions and $d - s$ "informative" directions. The RLCT is:
+
+$$\lambda = \frac{d - s}{2}$$
+
+This is because the loss function $K(w)$ is zero on the $s$-dimensional manifold $W_0$ and rises in the $d - s$ transverse directions. The effective dimension of the model is $d - s$, and the RLCT captures half of this (following the convention of the $\frac{d}{2}\log n$ term in BIC). A larger symmetry group creates a higher-dimensional manifold $W_0$ (larger $s$), which subtracts more from $d$ and produces a **smaller** $\lambda$. In the general singular case, $W_0$ may not be a smooth manifold (it can be a singular algebraic variety), and $\lambda$ captures the geometry more subtly via resolution of singularities, but the intuition holds: more redundancy means smaller effective complexity. $\checkmark$
+
+**(c)** According to SLT, the effective complexity is determined by $\lambda$, not $d$. Model A has $\lambda_A = 2.5$ and Model B has $\lambda_B = 8.0$. **Model A has lower effective complexity** ($2.5 < 8.0$) despite having twice as many parameters ($d_A = 100$ vs.\ $d_B = 50$).
+
+Model A might generalize better because the SLT free energy penalty is $\lambda\log n$, not $\frac{d}{2}\log n$. Model A's 100 parameters have massive redundancy ($\lambda_A = 2.5 \ll d_A/2 = 50$), meaning the model's parameter-to-function map has a large degenerate subspace --- only about 5 effective dimensions are actually used. Model B's 50 parameters are more efficiently utilized ($\lambda_B = 8.0$ vs.\ $d_B/2 = 25$), but the effective complexity is still higher. The Bayesian posterior concentrates more tightly around the optimal singularity for Model A, providing a stronger Occam's razor effect and better generalization. $\checkmark$
+
+**(d)** Setting equal training loss terms, Model A is preferred when:
+
+$$F_A < F_B \implies \lambda_A \log n < \lambda_B \log n$$
+
+Since $\lambda_A = 2.5 < \lambda_B = 8.0$, we have $\lambda_A\log n < \lambda_B\log n$ for **all** $n > 1$.
+
+More precisely, the full free energy comparison is:
+
+$$nL_n(\hat{w}_A) + \lambda_A\log n < nL_n(\hat{w}_B) + \lambda_B\log n$$
+
+If $L_n(\hat{w}_A) = L_n(\hat{w}_B)$ (same training loss), then we need:
+
+$$\lambda_A\log n < \lambda_B\log n \implies 2.5\log n < 8.0\log n$$
+
+This holds for any $n > 1$ (since $\log n > 0$). So under equal training loss, Model A is always preferred regardless of sample size. The lower-RLCT model receives a smaller complexity penalty at every sample size. $\checkmark$
+
+---
+
+## Q10 --- Phase Transitions, LLC, and Developmental Interpretability
+
+**(a)** During training, the model moves through parameter space seeking regions of low loss. A high LLC means the model is in a region with high effective dimensionality --- many parameter directions matter for the loss, suggesting the model is using a complex, possibly unstructured representation (e.g., memorization, where each training example requires its own "slot"). A decreasing LLC means the model is transitioning to regions where fewer effective dimensions are needed to explain the data equally well. This happens when the model discovers **structure**: a pattern or algorithm that compresses the data, making many previously necessary parameters redundant. The flat directions in the loss landscape (which lower the LLC) correspond to symmetries in the learned solution --- the model has found a more efficient representation. $\checkmark$
+
+**(b)** During the **memorization phase**, the model has essentially stored training examples using a high-dimensional, unstructured representation. The LLC is high because many parameters are independently contributing to fitting individual training examples --- there is little redundancy. The model sits in a high-effective-dimension region of parameter space.
+
+At the **generalization transition** (the grokking moment), the model discovers a structured algorithm (e.g., a Fourier-based representation for modular addition). The LLC **drops sharply** because the structured solution has far fewer effective degrees of freedom: instead of $N$ independent memorized entries, the model uses an algorithm that can be parameterized with far fewer effective dimensions. The phase transition is a movement from a high-$\lambda$ singularity to a low-$\lambda$ singularity in the loss landscape. The model's representation fundamentally reorganizes, trading a high-complexity memorization solution for a low-complexity generalization solution. $\checkmark$
+
+**(c)** Interpreting the trajectory phase by phase:
+
+- **Steps 0--5,000:** Training loss decreases as the model learns to fit the training data, likely by memorization. LLC is high ($\approx 12.4$) --- the model is using many effective degrees of freedom, consistent with a memorization strategy. Test accuracy remains low.
+
+- **Steps 5,000--20,000:** Training loss is near zero (fully memorized), and LLC stays high ($\approx 11.8$). The model has memorized the training set but has not yet discovered the generalizing algorithm. It sits in a high-complexity basin. The slight LLC decrease (12.4 $\to$ 11.8) may reflect minor simplifications in the memorized representation.
+
+- **Steps 20,000--22,000:** The **phase transition.** The LLC drops dramatically from 11.8 to 3.1 while training loss remains at zero. The model discovers the modular arithmetic circuit --- a structured algorithm that achieves the same training loss with far fewer effective parameters. Test accuracy jumps from 20\% to 99\% because the structured solution generalizes. The LLC drop is the signature of this transition: the model moves from a high-dimensional singularity to a low-dimensional one.
+
+- **Steps 22,000+:** The model has settled into the generalizing solution. LLC stabilizes at $\approx 3.2$, reflecting the low effective complexity of the learned modular arithmetic algorithm. $\checkmark$
+
+**(d)** **Mechanistic interpretability alone** tells us what circuits exist at a given snapshot but not when or why they formed. **SLT/LLC alone** tells us that a phase transition occurred (complexity dropped) but not what computational structure was acquired. **Together**, they provide a complete developmental narrative: "at step 20,000, the LLC dropped from 11.8 to 3.1 (SLT), and simultaneously a modular arithmetic circuit using Fourier features appeared in layers 1--2 (mechanistic interpretability), and this circuit is the reason the model generalizes."
+
+A concrete experiment: train a small transformer on modular addition while tracking the LLC at every checkpoint. At each checkpoint, also run activation patching on the model's internal representations, specifically testing for the presence of Fourier-basis features (known to be the mechanism for modular arithmetic generalization). Plot both the LLC curve and the "Fourier feature strength" curve on the same time axis. If the Fourier features emerge precisely when the LLC drops, this provides strong evidence that the formation of this specific circuit is responsible for the phase transition. To establish causation, one could additionally ablate the Fourier features (zero out the relevant SAE dictionary elements) at a post-transition checkpoint and verify that the LLC increases back toward its pre-transition value, confirming that the circuit is responsible for the low-complexity representation. $\checkmark$

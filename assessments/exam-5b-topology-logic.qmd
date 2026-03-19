@@ -1,0 +1,189 @@
+---
+title: "Exam 5B: Topology and Formal Logic"
+subtitle: "Lessons 73--79 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator or CAS needed. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers the most abstract material in the curriculum. The unifying thread: topology gives structure to the spaces where optimization lives, algebraic geometry resolves the singularities SLT studies, exterior calculus provides the integration machinery, and logic reveals fundamental limits on self-referential reasoning about safety. Partial credit is generous for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Point-Set Topology and Compactness
+
+Let $X = \mathbb{R}$ with the standard topology (open sets are unions of open intervals).
+
+**(a)** Classify each of the following subsets of $\mathbb{R}$ as open, closed, both, or neither. Justify each answer in one sentence.
+
+- $A = (0, 1)$
+- $B = [0, 1]$
+- $C = [0, 1)$
+- $D = \mathbb{R}$
+
+**(b)** State the definition of a **Hausdorff space** (the $T_2$ separation axiom). Verify that $\mathbb{R}$ with the standard topology is Hausdorff by exhibiting separating neighborhoods for two arbitrary distinct points $x < y$.
+
+**(c)** State the **Heine--Borel theorem** for $\mathbb{R}^n$. Using it, determine which of the following are compact: (i) $[0, 1]^n$, (ii) $(0, 1)^n$, (iii) $\{x \in \mathbb{R}^n : \|x\| \leq R\}$, (iv) $\mathbb{R}^n$ itself.
+
+**(d)** A loss function $L : \mathbb{R}^d \to \mathbb{R}$ is continuous and the parameter space $W = \mathbb{R}^d$ is not compact. Explain why the **extreme value theorem** does not directly guarantee that $L$ attains a global minimum. Then explain how adding an $\ell^2$ regularization term $\lambda\|w\|^2$ effectively recovers the compactness needed for the theorem to apply. *(Hint: consider the sublevel sets $\{w : L(w) + \lambda\|w\|^2 \leq c\}$.)*
+
+---
+
+## Q2 (10 pts) --- Continuity, Connectedness, and Topological Invariants
+
+**(a)** A function $f : X \to Y$ between topological spaces is **continuous** if for every open set $U \subseteq Y$, the preimage $f^{-1}(U)$ is open in $X$. Consider $f : \mathbb{R} \to \mathbb{R}$ given by $f(x) = x^2$. Use the preimage definition to show that $f$ is continuous by verifying that $f^{-1}((a, b))$ is open in $\mathbb{R}$ for any interval $(a, b)$ with $0 \leq a < b$.
+
+**(b)** A topological space $X$ is **connected** if it cannot be partitioned into two non-empty disjoint open sets. Show that the set $S = \{x \in \mathbb{R} : x^2 < 4\}$ is connected, but $T = \{x \in \mathbb{R} : x^2 > 4\}$ is disconnected. Identify the connected components of $T$.
+
+**(c)** The **continuous image of a connected set is connected**. Use this theorem to prove that if $L : W \to \mathbb{R}$ is continuous and $W$ is connected, then the image $L(W)$ is an interval.
+
+**(d)** Suppose the set of global minima $M^* = \{w \in W : L(w) = L^*\}$ is disconnected with two connected components $M_1^*$ and $M_2^*$. Explain what this means for gradient-based training: can gradient descent continuously move from a minimum in $M_1^*$ to one in $M_2^*$ without increasing the loss? Why does the mode connectivity conjecture (that minima found by SGD are often connected by low-loss paths) matter for understanding neural network loss landscapes?
+
+---
+
+## Q3 (10 pts) --- Homotopy, Fundamental Groups, and Covering Spaces
+
+**(a)** Let $f, g : X \to Y$ be continuous maps. State the definition of a **homotopy** $H$ from $f$ to $g$. When $f$ and $g$ are loops based at $x_0 \in X$, what additional condition must $H$ satisfy?
+
+**(b)** State $\pi_1(X, x_0)$ for each of the following spaces. In each case, give an intuitive one-sentence explanation of what the generators represent.
+
+- (i) $\mathbb{R}^2$
+- (ii) $S^1$ (the circle)
+- (iii) $T^2 = S^1 \times S^1$ (the torus)
+- (iv) $S^2$ (the 2-sphere)
+
+**(c)** The **winding number** of a loop $\gamma : [0, 1] \to \mathbb{C} \setminus \{0\}$ around the origin is given by
+
+$$n(\gamma, 0) = \frac{1}{2\pi i} \oint_\gamma \frac{dz}{z}.$$
+
+Compute the winding number for $\gamma(t) = e^{2\pi i k t}$ where $k$ is a nonzero integer. Explain why loops with different winding numbers are not homotopic in $\mathbb{C} \setminus \{0\}$.
+
+**(d)** A **covering space** $p : \widetilde{X} \to X$ is a continuous surjection such that every point $x \in X$ has a neighborhood $U$ whose preimage $p^{-1}(U)$ is a disjoint union of open sets each mapped homeomorphically onto $U$. Describe the universal covering space of $S^1$ and explain how the fiber $p^{-1}(x_0)$ over a basepoint relates to $\pi_1(S^1)$.
+
+---
+
+## Q4 (10 pts) --- Smooth Manifolds, Charts, and Tangent Spaces
+
+**(a)** Define a **smooth $n$-manifold**. Specifically: what is a chart $(U, \varphi)$, what does it mean for two charts to be **smoothly compatible**, and what is an atlas?
+
+**(b)** The unit sphere $S^2 = \{(x, y, z) \in \mathbb{R}^3 : x^2 + y^2 + z^2 = 1\}$ is a 2-manifold. Consider the chart $\varphi_N : S^2 \setminus \{N\} \to \mathbb{R}^2$ given by **stereographic projection** from the north pole $N = (0, 0, 1)$:
+
+$$\varphi_N(x, y, z) = \left(\frac{x}{1 - z},\; \frac{y}{1 - z}\right).$$
+
+Why is a single chart insufficient to cover all of $S^2$? Write down the domain of a second chart $\varphi_S$ (projection from the south pole) that, together with $\varphi_N$, forms an atlas.
+
+**(c)** The **tangent space** $T_p M$ at a point $p$ on an $n$-manifold $M$ is an $n$-dimensional vector space. For $S^2$ at the north pole $N = (0, 0, 1)$, describe $T_N S^2$ geometrically. If $f : S^2 \to \mathbb{R}$ is a smooth function, what does $df_p \in T_p^* S^2$ represent?
+
+**(d)** In **Riemannian gradient descent** on a manifold $(M, g)$, the update $w_{t+1} = \exp_{w_t}(-\eta \operatorname{grad} L(w_t))$ replaces the Euclidean gradient step. Explain the roles of (i) the Riemannian metric $g$ in defining $\operatorname{grad} L$, and (ii) the exponential map $\exp$ in producing a point back on $M$. Why is this necessary when the parameter space has curvature (e.g., the space of positive-definite matrices)?
+
+---
+
+## Q5 (10 pts) --- Exterior Algebra and Differential Forms
+
+**(a)** Let $V = \mathbb{R}^3$ with standard basis $\{e_1, e_2, e_3\}$ and dual basis $\{dx, dy, dz\}$. Define the **wedge product** $\alpha \wedge \beta$ for $\alpha, \beta \in \Lambda^1(V^*)$. Verify the **antisymmetry** property $dx \wedge dy = -dy \wedge dx$ and conclude that $dx \wedge dx = 0$.
+
+**(b)** Compute the following wedge products:
+
+- (i) $(2\,dx + 3\,dy) \wedge (dx - dy)$
+- (ii) $dx \wedge dy \wedge dz$ applied to the vectors $(e_1, e_2, e_3)$ (i.e., evaluate the 3-form on the standard basis triple)
+
+**(c)** A **differential $k$-form** on $\mathbb{R}^n$ is a smooth assignment of a $k$-covector at each point. The **exterior derivative** $d : \Omega^k \to \Omega^{k+1}$ satisfies $d^2 = 0$. Let $\omega = xy\,dx + z^2\,dy$ be a 1-form on $\mathbb{R}^3$. Compute $d\omega$.
+
+**(d)** Show that $d(d\omega) = 0$ for the $\omega$ in part (c), verifying $d^2 = 0$ explicitly. In 2--3 sentences, explain why the property $d^2 = 0$ is the foundation of **de Rham cohomology** and how it parallels the identity $\nabla \times (\nabla f) = \mathbf{0}$ from vector calculus.
+
+---
+
+## Q6 (10 pts) --- Generalized Stokes' Theorem and Integration
+
+The **generalized Stokes' theorem** states: for a smooth oriented $k$-manifold-with-boundary $M$ and a $(k-1)$-form $\omega$,
+
+$$\int_M d\omega = \int_{\partial M} \omega.$$
+
+**(a)** Let $\omega = f(x)\,dx$ be a 0-form (i.e., just a function $f$), and let $M = [a, b]$. Show that Stokes' theorem reduces to the **Fundamental Theorem of Calculus**: $\int_a^b f'(x)\,dx = f(b) - f(a)$.
+
+**(b)** Let $\omega = P\,dx + Q\,dy$ be a 1-form on $\mathbb{R}^2$, and let $M$ be a region $D \subseteq \mathbb{R}^2$ with boundary $\partial D$. Compute $d\omega$ and show that Stokes' theorem reduces to **Green's theorem**:
+
+$$\oint_{\partial D} P\,dx + Q\,dy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx\,dy.$$
+
+**(c)** Let $\omega = xz\,dy \wedge dz + yz\,dz \wedge dx + z^2\,dx \wedge dy$ be a 2-form on $\mathbb{R}^3$. Compute $d\omega$. If $M$ is the unit ball $B^3 = \{x^2 + y^2 + z^2 \leq 1\}$ and $\partial M = S^2$, state what Stokes' theorem tells you about the relationship between $\int_{S^2} \omega$ and $\int_{B^3} d\omega$.
+
+**(d)** Explain in 3--4 sentences why the generalized Stokes' theorem is considered one of the most important results in mathematics. How does it unify the Fundamental Theorem of Calculus, Green's theorem, the classical Stokes' theorem, and the Divergence theorem into a single statement?
+
+---
+
+## Q7 (10 pts) --- Algebraic Varieties, Singularities, and the RLCT
+
+**(a)** Define an **algebraic variety** $V(I)$ for an ideal $I \subseteq \mathbb{R}[x_1, \ldots, x_n]$. State the **Jacobian rank test** for determining whether a point $p \in V$ is smooth or singular.
+
+**(b)** For each variety at the origin, compute the Jacobian, determine whether the origin is smooth or singular, and describe the geometry:
+
+- (i) $V_1 = \{(x, y) \in \mathbb{R}^2 : y^2 - x^2 = 0\}$ (node)
+- (ii) $V_2 = \{(x, y) \in \mathbb{R}^2 : y^2 - x^3 = 0\}$ (cusp)
+
+**(c)** To resolve the node $V_1$, perform a **blow-up** at the origin by substituting $y = tx$ into $y^2 - x^2 = 0$. Factor out the exceptional divisor ($x^2 = 0$), write the strict transform, and verify that the singularity has been resolved (two distinct smooth points on the exceptional divisor). *(Hint: $t^2 x^2 - x^2 = x^2(t^2 - 1) = 0$.)*
+
+**(d)** The **real log-canonical threshold (RLCT)** of $f(w) = w^{2k}$ in one dimension is determined by the convergence of $\int_0^1 w^{-2kt}\,dw$. Show this integral converges if and only if $t < \frac{1}{2k}$, and conclude $\lambda = \frac{1}{2k}$. Compute $\lambda$ for $k = 1, 2, 3$ and compare each to the "regular" value $d/2 = 1/2$. What does $\lambda < d/2$ mean for model complexity in Singular Learning Theory?
+
+---
+
+## Q8 (10 pts) --- Propositional Logic, SAT, and Truth Tables
+
+**(a)** Translate the following into propositional logic, defining your variables clearly: *"If the model is deceptive and passes all behavioral tests, then either interpretability reveals the deception or the model is unsafe."*
+
+**(b)** Construct the truth table for the formula $\varphi = (P \to Q) \wedge (\neg Q \to R)$. Identify all satisfying assignments. Is $\varphi$ a tautology, satisfiable but not a tautology, or unsatisfiable?
+
+**(c)** Show using a truth table that $P \to Q$ is logically equivalent to $\neg P \lor Q$. Then prove the **resolution rule**: from clauses $(P \lor Q)$ and $(\neg P \lor R)$, derive $Q \lor R$. Explain why resolution is sound.
+
+**(d)** A SAT instance encodes: "The model uses feature $F_1$ OR feature $F_2$" as $(F_1 \lor F_2)$, "If $F_1$ is used, the output is safe" as $(\neg F_1 \lor S)$, and "The output is NOT safe" as $(\neg S)$. Write these as a conjunction of clauses. Apply resolution repeatedly to determine whether this instance is satisfiable. If satisfiable, give the assignment; if not, derive the empty clause $\square$.
+
+---
+
+## Q9 (10 pts) --- G\"{o}del's Incompleteness, L\"{o}b's Theorem, and Self-Reference
+
+**(a)** State **G\"{o}del's first incompleteness theorem**. What are the two hypotheses on the formal system $\mathcal{S}$ (expressiveness and consistency) and what is the conclusion?
+
+**(b)** The **diagonal lemma** states: for any formula $\psi(x)$ in $\mathcal{S}$, there exists a sentence $G$ such that $\mathcal{S} \vdash G \leftrightarrow \psi(\ulcorner G \urcorner)$, where $\ulcorner G \urcorner$ is the G\"{o}del number of $G$. Use this with $\psi(x) = \neg\operatorname{Prov}(x)$ (where $\operatorname{Prov}$ is the provability predicate) to construct the G\"{o}del sentence $G$, and explain why $G$ is true but unprovable in $\mathcal{S}$ (assuming $\mathcal{S}$ is consistent).
+
+**(c)** **G\"{o}del's second incompleteness theorem** states that $\mathcal{S} \nvdash \operatorname{Con}(\mathcal{S})$ (a consistent system cannot prove its own consistency). **L\"{o}b's theorem** strengthens this: if $\mathcal{S} \vdash \bigl(\Box P \to P\bigr)$, then $\mathcal{S} \vdash P$ (where $\Box P$ abbreviates $\operatorname{Prov}(\ulcorner P \urcorner)$). Show that G\"{o}del's second theorem follows from L\"{o}b's theorem by setting $P = \bot$ (falsehood). *(Hint: $\operatorname{Con}(\mathcal{S})$ is $\neg\Box\bot$, and $\Box\bot \to \bot$ is equivalent to $\neg\Box\bot$.)*
+
+**(d)** The **L\"{o}bian obstacle** to AI self-trust: an AI system reasoning in $\mathcal{S}$ might attempt to establish "If I can prove I am safe ($\Box \text{Safe}$), then I am safe (Safe)." By L\"{o}b's theorem, this requires $\mathcal{S} \vdash \text{Safe}$ outright. Explain in 3--4 sentences why this creates a fundamental barrier to formal self-verification of safety. Then describe one proposed approach to circumventing this obstacle (e.g., probabilistic trust, weaker logical frameworks, or multi-agent verification).
+
+---
+
+## Q10 (10 pts) --- Capstone Synthesis: From Topology to Alignment
+
+This question traces the complete arc from geometric structure to logical limits.
+
+**(a)** A neural network's parameter space $W = \mathbb{R}^d$ carries the standard topology. The loss $L : W \to \mathbb{R}$ is continuous. For a threshold $\varepsilon > 0$, the sublevel set $S_\varepsilon = \{w \in W : L(w) \leq \varepsilon\}$ is a closed subset of $W$. Explain using concepts from Q1--Q2 why, if $L$ has a regularizer making sublevel sets bounded, then $S_\varepsilon$ is compact. Why does the topology (connectedness, fundamental group) of $S_\varepsilon$ matter for understanding how gradient descent navigates the loss landscape?
+
+**(b)** The singularity structure of the loss at minima determines the RLCT $\lambda$. In the free energy formula $F_n \approx \lambda \ln n - (m - 1) \ln \ln n + \text{const}$, $\lambda$ replaces the classical $d/2$ from regular (non-singular) models. For a model with $d = 10$ parameters where the true RLCT is $\lambda = 2$ (due to singularities from symmetry), compute the ratio of the BIC penalty $\frac{d}{2}\ln n$ to the SLT penalty $\lambda \ln n$ at $n = 10{,}000$ data points. What does this ratio tell you about how much classical model selection overestimates complexity?
+
+**(c)** The generalized Stokes' theorem $\int_M d\omega = \int_{\partial M} \omega$ connects local and global information. In 2--3 sentences, draw an analogy between this "local-to-global" principle and the way SLT uses local singularity structure (blow-ups, RLCT) to determine global model behavior (generalization, phase transitions). Why is it significant that both frameworks extract global conclusions from local data?
+
+**(d)** An alignment researcher has a neural network model $\mathcal{M}$ and wants to formally verify the safety property $\text{Safe}(\mathcal{M})$. Drawing on the entire arc of this exam, explain in 4--5 sentences what G\"{o}del's and L\"{o}b's theorems say about the limits of such formal verification. Then explain what SLT (RLCT, free energy) can contribute to alignment that formal logic cannot, and vice versa. Conclude with one sentence on why a complete mathematical approach to alignment requires BOTH geometric and logical tools.

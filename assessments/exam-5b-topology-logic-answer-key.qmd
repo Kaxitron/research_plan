@@ -1,0 +1,414 @@
+---
+title: "Exam 5B: Topology and Formal Logic --- Answer Key"
+subtitle: "Lessons 73--79"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear reasoning. Partial credit is generous for correct setup with minor errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- Point-Set Topology and Compactness
+
+**(a)**
+
+- $A = (0, 1)$: **Open.** Every point $x \in (0,1)$ has a neighborhood $(x - \delta, x + \delta) \subseteq (0, 1)$ for sufficiently small $\delta$.
+- $B = [0, 1]$: **Closed.** Its complement $(-\infty, 0) \cup (1, \infty)$ is open (a union of open sets).
+- $C = [0, 1)$: **Neither.** Not open because $0$ has no open neighborhood contained in $C$; not closed because $1$ is a limit point not in $C$.
+- $D = \mathbb{R}$: **Both** (clopen). $\mathbb{R}$ is open by definition (the whole space is always open) and closed because its complement $\varnothing$ is open.
+
+*Scoring: 0.5 pts each classification + justification.* $\checkmark$
+
+**(b)** A topological space $X$ is **Hausdorff** ($T_2$) if for every pair of distinct points $x, y \in X$, there exist disjoint open sets $U, V$ with $x \in U$ and $y \in V$.
+
+For $\mathbb{R}$ with the standard topology: given $x < y$, let $\varepsilon = (y - x)/2 > 0$. Set $U = (x - \varepsilon, x + \varepsilon)$ and $V = (y - \varepsilon, y + \varepsilon)$. Then $U \cap V = \varnothing$ because any $z \in U$ satisfies $z < x + \varepsilon = (x + y)/2$ while any $z \in V$ satisfies $z > y - \varepsilon = (x + y)/2$. $\checkmark$
+
+*Scoring: 1 pt definition, 1.5 pts verification.* $\checkmark$
+
+**(c)** **Heine--Borel theorem:** A subset of $\mathbb{R}^n$ is compact if and only if it is **closed and bounded**.
+
+- (i) $[0, 1]^n$: **Compact.** Closed (product of closed sets) and bounded ($\|x\|_\infty \leq 1$).
+- (ii) $(0, 1)^n$: **Not compact.** Bounded but not closed (boundary points like $(0, 0, \ldots)$ are limit points not in the set).
+- (iii) $\{x : \|x\| \leq R\}$: **Compact.** Closed (preimage of $[0, R]$ under the continuous norm) and bounded.
+- (iv) $\mathbb{R}^n$: **Not compact.** Closed but unbounded.
+
+*Scoring: 1 pt theorem, 0.5 pts each classification.* $\checkmark$
+
+**(d)** The extreme value theorem requires compactness: a continuous function on a compact set attains its max and min. Since $\mathbb{R}^d$ is not compact (unbounded), $L$ need not attain a minimum --- the infimum could be approached only as $\|w\| \to \infty$.
+
+Adding $\ell^2$ regularization: the modified loss $\tilde{L}(w) = L(w) + \lambda\|w\|^2$ satisfies $\tilde{L}(w) \to \infty$ as $\|w\| \to \infty$ (the quadratic term dominates). Therefore the sublevel sets $\{w : \tilde{L}(w) \leq c\}$ are both closed (preimage of $(-\infty, c]$ under a continuous function) and bounded (since $\lambda\|w\|^2 \leq c$ forces $\|w\| \leq \sqrt{c/\lambda}$). By Heine--Borel, these sublevel sets are compact, and the extreme value theorem guarantees $\tilde{L}$ attains its minimum on any such set. $\checkmark$
+
+*Scoring: 1.5 pts explanation of failure, 1.5 pts regularization argument.* $\checkmark$
+
+---
+
+## Q2 --- Continuity, Connectedness, and Topological Invariants
+
+**(a)** For $f(x) = x^2$ and $(a, b)$ with $0 \leq a < b$:
+
+$$f^{-1}((a, b)) = \{x \in \mathbb{R} : a < x^2 < b\} = (-\sqrt{b}, -\sqrt{a}) \cup (\sqrt{a}, \sqrt{b}).$$
+
+This is a union of two open intervals (or one interval $(-\sqrt{b}, \sqrt{b})$ if $a = 0$), which is open in $\mathbb{R}$. Since every open set in $\mathbb{R}$ is a union of open intervals, and $f^{-1}$ of any such interval is open, $f$ is continuous. $\checkmark$
+
+*Scoring: 2 pts for correct preimage computation, 1 pt for conclusion.* $\checkmark$
+
+**(b)** $S = \{x : x^2 < 4\} = (-2, 2)$: this is a single open interval, hence **connected** (intervals in $\mathbb{R}$ are connected).
+
+$T = \{x : x^2 > 4\} = (-\infty, -2) \cup (2, \infty)$: these are two disjoint non-empty open sets whose union is $T$, so $T$ is **disconnected**. The connected components are $(-\infty, -2)$ and $(2, \infty)$. $\checkmark$
+
+*Scoring: 1.5 pts each.* $\checkmark$
+
+**(c)** Since $L$ is continuous and $W$ is connected, the image $L(W)$ is a connected subset of $\mathbb{R}$. The connected subsets of $\mathbb{R}$ are exactly the intervals (possibly unbounded, possibly degenerate). Therefore $L(W)$ is an interval.
+
+*Formally:* If $a, b \in L(W)$ with $a < b$, then for any $c$ with $a < c < b$, the Intermediate Value Theorem guarantees some $w \in W$ with $L(w) = c$, so $c \in L(W)$. $\checkmark$
+
+*Scoring: 2 pts.* $\checkmark$
+
+**(d)** If $M^*$ is disconnected with components $M_1^*$ and $M_2^*$, there is no continuous path from a minimum in $M_1^*$ to one in $M_2^*$ staying entirely within $M^*$ (i.e., at loss $L^*$). Gradient descent, which follows a continuous trajectory, would need to increase the loss to cross between components --- the minima are separated by a "barrier."
+
+The **mode connectivity conjecture** posits that minima found by SGD from different random initializations are typically connected by paths of nearly constant loss. This matters because: (1) it suggests the effective loss landscape for SGD is simpler than the full landscape, (2) it enables techniques like model averaging and ensembling along connecting paths, and (3) it implies SGD finds minima in a single "basin" rather than fundamentally different solutions. $\checkmark$
+
+*Scoring: 1.5 pts disconnected explanation, 1.5 pts mode connectivity.* $\checkmark$
+
+---
+
+## Q3 --- Homotopy, Fundamental Groups, and Covering Spaces
+
+**(a)** A **homotopy** from $f$ to $g$ is a continuous map $H : X \times [0, 1] \to Y$ such that $H(x, 0) = f(x)$ and $H(x, 1) = g(x)$ for all $x \in X$. It continuously deforms $f$ into $g$ through a family of maps $H_t(x) = H(x, t)$.
+
+For loops based at $x_0$: $H$ must additionally satisfy $H(x_0, t) = f(x_0) = g(x_0)$ for all $t \in [0, 1]$ --- the basepoint stays fixed throughout the deformation. $\checkmark$
+
+**(b)**
+
+- (i) $\pi_1(\mathbb{R}^2, x_0) = \{e\}$ (trivial). Every loop can be continuously shrunk to a point because $\mathbb{R}^2$ is contractible --- straight-line homotopy $H(s, t) = (1-t)\gamma(s) + t x_0$ works.
+- (ii) $\pi_1(S^1, x_0) \cong \mathbb{Z}$. The generator is a single loop around the circle; the integer counts the **winding number** (how many times and in which direction the loop wraps).
+- (iii) $\pi_1(T^2, x_0) \cong \mathbb{Z} \times \mathbb{Z}$. The two generators are loops around each "hole" of the torus: one around the meridian circle and one around the longitudinal circle.
+- (iv) $\pi_1(S^2, x_0) = \{e\}$ (trivial). Every loop on the sphere can be shrunk to a point --- intuitively, any loop avoids at least one point, and $S^2$ minus a point is homeomorphic to $\mathbb{R}^2$.
+
+*Scoring: 0.5 pts each group, 0.5 pts each explanation.* $\checkmark$
+
+**(c)** For $\gamma(t) = e^{2\pi i k t}$, parametrize: $z = e^{2\pi i k t}$, $dz = 2\pi i k \, e^{2\pi i k t}\,dt$, so $\dfrac{dz}{z} = 2\pi i k\,dt$.
+
+$$n(\gamma, 0) = \frac{1}{2\pi i} \int_0^1 2\pi i k\,dt = k.$$
+
+The winding number is $k$. Loops with different winding numbers are not homotopic because the winding number is a **homotopy invariant**: it is constant on homotopy classes (being a continuous integer-valued function on connected sets of loops). Since $\pi_1(\mathbb{C} \setminus \{0\}) \cong \pi_1(S^1) \cong \mathbb{Z}$, the winding number is a complete invariant --- it classifies homotopy classes. $\checkmark$
+
+*Scoring: 1.5 pts computation, 1 pt explanation.* $\checkmark$
+
+**(d)** The universal covering space of $S^1$ is $\widetilde{X} = \mathbb{R}$, with covering map $p : \mathbb{R} \to S^1$ given by $p(t) = e^{2\pi i t}$. This "unwinds" the circle into the real line.
+
+The fiber over a basepoint $x_0 = 1 \in S^1$ is $p^{-1}(1) = \mathbb{Z} \subseteq \mathbb{R}$ (all integers). This fiber is in bijection with $\pi_1(S^1) \cong \mathbb{Z}$: each integer $n$ in the fiber corresponds to the homotopy class of the loop that winds $n$ times. More generally, for any covering space, the fiber over the basepoint has cardinality equal to the index of $p_*(\pi_1(\widetilde{X}))$ in $\pi_1(X)$; for the universal cover ($\pi_1(\widetilde{X})$ trivial), the fiber bijects with $\pi_1(X)$ itself. $\checkmark$
+
+*Scoring: 1 pt covering space description, 1.5 pts fiber--fundamental group connection.* $\checkmark$
+
+---
+
+## Q4 --- Smooth Manifolds, Charts, and Tangent Spaces
+
+**(a)** A **smooth $n$-manifold** is a topological space $M$ (Hausdorff, second-countable) equipped with an atlas of smoothly compatible charts covering $M$.
+
+- A **chart** $(U, \varphi)$ consists of an open set $U \subseteq M$ and a homeomorphism $\varphi : U \to \varphi(U) \subseteq \mathbb{R}^n$ to an open subset of $\mathbb{R}^n$.
+- Two charts $(U, \varphi)$ and $(V, \psi)$ are **smoothly compatible** if the transition map $\psi \circ \varphi^{-1} : \varphi(U \cap V) \to \psi(U \cap V)$ is a smooth ($C^\infty$) diffeomorphism.
+- An **atlas** is a collection of charts $\{(U_\alpha, \varphi_\alpha)\}$ such that $\bigcup_\alpha U_\alpha = M$ and all charts are pairwise smoothly compatible.
+
+$\checkmark$
+
+**(b)** A single chart $\varphi_N$ is defined on $S^2 \setminus \{N\}$, which excludes the north pole $N = (0, 0, 1)$. No chart can cover all of $S^2$ because $S^2$ is compact while $\mathbb{R}^2$ is not, so there is no homeomorphism between them. (Alternatively: removing a single point from $S^2$ gives a non-compact space homeomorphic to $\mathbb{R}^2$, confirming the excluded point cannot be in the domain.)
+
+The second chart: $\varphi_S : S^2 \setminus \{S\} \to \mathbb{R}^2$ where $S = (0, 0, -1)$ is the south pole, defined by
+
+$$\varphi_S(x, y, z) = \left(\frac{x}{1 + z},\; \frac{y}{1 + z}\right).$$
+
+Together, $\{(S^2 \setminus \{N\}, \varphi_N),\; (S^2 \setminus \{S\}, \varphi_S)\}$ covers all of $S^2$ since every point is in at least one domain. $\checkmark$
+
+**(c)** Geometrically, $T_N S^2$ is the plane tangent to the sphere at the north pole: the horizontal plane $\{(x, y, 1) : x, y \in \mathbb{R}\} \cong \mathbb{R}^2$ passing through $N$. It consists of all velocity vectors of curves on $S^2$ passing through $N$.
+
+$df_p \in T_p^* S^2$ is the **differential** (or exterior derivative) of $f$ at $p$ --- a linear functional on $T_p S^2$ that gives the directional derivative of $f$ in any tangent direction: $df_p(v) = v(f)$ for $v \in T_p S^2$. It encodes the "rate of change of $f$ in each direction on the manifold." $\checkmark$
+
+**(d)**
+
+- (i) The **Riemannian metric** $g$ defines an inner product $g_p(\cdot, \cdot)$ on each tangent space $T_p M$. The Riemannian gradient $\operatorname{grad} L(w)$ is defined by $g_w(\operatorname{grad} L, v) = dL_w(v)$ for all $v \in T_w M$. It converts the covector $dL$ into a tangent vector using the metric, accounting for the geometry of the space.
+- (ii) The **exponential map** $\exp_w : T_w M \to M$ maps a tangent vector to the point reached by following the geodesic (shortest path on $M$) starting at $w$ in that direction. This is necessary because $w - \eta \nabla L$ would leave the manifold --- the exponential map "projects" the update back onto $M$ while respecting its curvature.
+
+This is necessary for spaces like the manifold of positive-definite matrices $S_{++}^n$, where the Euclidean gradient step $W - \eta G$ may produce a matrix that is no longer positive-definite. The Riemannian approach follows geodesics on $S_{++}^n$ (which have a known closed form), guaranteeing the iterate remains in the feasible set. $\checkmark$
+
+*Scoring: 2 pts (a), 2.5 pts (b), 2.5 pts (c), 3 pts (d).* $\checkmark$
+
+---
+
+## Q5 --- Exterior Algebra and Differential Forms
+
+**(a)** The **wedge product** $\alpha \wedge \beta$ of two 1-forms (linear functionals) is the alternating bilinear form defined by
+
+$$(\alpha \wedge \beta)(v, w) = \alpha(v)\beta(w) - \alpha(w)\beta(v).$$
+
+Antisymmetry: $(dx \wedge dy)(v, w) = dx(v)\,dy(w) - dx(w)\,dy(v)$, while $(dy \wedge dx)(v, w) = dy(v)\,dx(w) - dy(w)\,dx(v)$, which is the negative. So $dx \wedge dy = -dy \wedge dx$.
+
+Setting $\alpha = \beta = dx$: $dx \wedge dx = -dx \wedge dx$, so $2(dx \wedge dx) = 0$, hence $dx \wedge dx = 0$. $\checkmark$
+
+**(b)**
+
+**(i):**
+
+$$(2\,dx + 3\,dy) \wedge (dx - dy)$$
+$$= 2\,dx \wedge dx - 2\,dx \wedge dy + 3\,dy \wedge dx - 3\,dy \wedge dy$$
+$$= 0 - 2\,dx \wedge dy + 3(-dx \wedge dy) - 0$$
+$$= -5\,dx \wedge dy.$$
+
+**(ii):** $dx \wedge dy \wedge dz$ evaluated on $(e_1, e_2, e_3)$:
+
+$$(dx \wedge dy \wedge dz)(e_1, e_2, e_3) = \det \begin{pmatrix} dx(e_1) & dx(e_2) & dx(e_3) \\ dy(e_1) & dy(e_2) & dy(e_3) \\ dz(e_1) & dz(e_2) & dz(e_3) \end{pmatrix} = \det \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} = 1.$$
+
+$\checkmark$
+
+**(c)** $\omega = xy\,dx + z^2\,dy$. Apply $d$:
+
+$$d\omega = d(xy) \wedge dx + d(z^2) \wedge dy.$$
+
+Compute each:
+
+- $d(xy) = y\,dx + x\,dy$, so $d(xy) \wedge dx = (y\,dx + x\,dy) \wedge dx = y\,dx \wedge dx + x\,dy \wedge dx = 0 + x\,dy \wedge dx = -x\,dx \wedge dy$.
+- $d(z^2) = 2z\,dz$, so $d(z^2) \wedge dy = 2z\,dz \wedge dy = -2z\,dy \wedge dz$.
+
+Therefore:
+
+$$d\omega = -x\,dx \wedge dy - 2z\,dy \wedge dz.$$
+
+$\checkmark$
+
+**(d)** Compute $d(d\omega) = d(-x\,dx \wedge dy - 2z\,dy \wedge dz)$:
+
+- $d(-x\,dx \wedge dy) = -dx \wedge dx \wedge dy = 0$ (since $dx \wedge dx = 0$).
+- $d(-2z\,dy \wedge dz) = -2\,dz \wedge dy \wedge dz = 0$ (since $dz \wedge dz = 0$).
+
+So $d^2\omega = 0$. $\checkmark$
+
+The property $d^2 = 0$ means that every exact form ($d\alpha$) is automatically closed ($d(d\alpha) = 0$). **De Rham cohomology** measures the gap: the $k$-th cohomology group $H^k_{\text{dR}}(M) = \ker d_k / \operatorname{im} d_{k-1}$ consists of closed $k$-forms modulo exact ones. Non-trivial cohomology detects "topological holes" --- closed forms that are not exact correspond to obstructions in the topology. The vector calculus identity $\nabla \times (\nabla f) = \mathbf{0}$ is the special case $d^2 = 0$ for 0-forms in $\mathbb{R}^3$: every gradient field is curl-free. $\checkmark$
+
+---
+
+## Q6 --- Generalized Stokes' Theorem and Integration
+
+**(a)** Let $M = [a, b]$, so $\partial M = \{a, b\}$ with orientations: $b$ positive, $a$ negative. The 0-form is $\omega = f$, and $d\omega = f'(x)\,dx$.
+
+Stokes' theorem gives:
+
+$$\int_{[a,b]} f'(x)\,dx = \int_{\partial [a,b]} f = f(b) - f(a).$$
+
+This is the **Fundamental Theorem of Calculus**. $\checkmark$
+
+**(b)** $\omega = P\,dx + Q\,dy$. Compute $d\omega$:
+
+$$d\omega = dP \wedge dx + dQ \wedge dy = \left(\frac{\partial P}{\partial y}\,dy\right) \wedge dx + \left(\frac{\partial Q}{\partial x}\,dx\right) \wedge dy$$
+
+(dropping $dP/dx \cdot dx \wedge dx = 0$ and $dQ/dy \cdot dy \wedge dy = 0$ terms)
+
+$$= -\frac{\partial P}{\partial y}\,dx \wedge dy + \frac{\partial Q}{\partial x}\,dx \wedge dy = \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx \wedge dy.$$
+
+Stokes' theorem:
+
+$$\oint_{\partial D} P\,dx + Q\,dy = \int_D d\omega = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx\,dy.$$
+
+This is **Green's theorem**. $\checkmark$
+
+**(c)** Compute $d\omega$ where $\omega = xz\,dy \wedge dz + yz\,dz \wedge dx + z^2\,dx \wedge dy$:
+
+- $d(xz\,dy \wedge dz) = (z\,dx + x\,dz) \wedge dy \wedge dz = z\,dx \wedge dy \wedge dz$ (the $dz \wedge \cdots \wedge dz$ term vanishes).
+- $d(yz\,dz \wedge dx) = (z\,dy + y\,dz) \wedge dz \wedge dx = z\,dy \wedge dz \wedge dx = z\,dx \wedge dy \wedge dz$ (after cyclic reordering with sign).
+- $d(z^2\,dx \wedge dy) = 2z\,dz \wedge dx \wedge dy = 2z\,dx \wedge dy \wedge dz$ (cyclic reordering).
+
+$$d\omega = (z + z + 2z)\,dx \wedge dy \wedge dz = 4z\,dx \wedge dy \wedge dz.$$
+
+Stokes' theorem says:
+
+$$\int_{S^2} \omega = \int_{B^3} d\omega = \int_{B^3} 4z\,dx \wedge dy \wedge dz.$$
+
+By symmetry ($z$ is an odd function and $B^3$ is symmetric about $z = 0$), $\int_{B^3} 4z\,dV = 0$, so $\int_{S^2} \omega = 0$. $\checkmark$
+
+**(d)** The generalized Stokes' theorem $\int_M d\omega = \int_{\partial M} \omega$ is a single equation that, by choosing the dimension and ambient space appropriately, specializes to:
+
+- **Dimension 1** ($M = [a,b]$): Fundamental Theorem of Calculus.
+- **Dimension 2** ($M$ a region in $\mathbb{R}^2$): Green's theorem.
+- **Dimension 2** ($M$ a surface in $\mathbb{R}^3$): Classical Stokes' theorem (curl form).
+- **Dimension 3** ($M$ a solid in $\mathbb{R}^3$): Divergence theorem.
+
+Its power lies in connecting **local** information (the derivative $d\omega$ in the interior) to **global** information (the integral of $\omega$ on the boundary). This "boundary operator is dual to the exterior derivative" relationship ($\partial \leftrightarrow d$) is one of the deepest structural principles in mathematics, linking differential calculus, topology, and geometry into a single framework. $\checkmark$
+
+---
+
+## Q7 --- Algebraic Varieties, Singularities, and the RLCT
+
+**(a)** An **algebraic variety** $V(I)$ is the set of common zeros of all polynomials in an ideal $I$:
+
+$$V(I) = \{p \in \mathbb{R}^n : f(p) = 0 \text{ for all } f \in I\}.$$
+
+**Jacobian rank test:** Given generators $f_1, \ldots, f_k$ of $I$, form the Jacobian matrix
+
+$$J(p) = \begin{pmatrix} \partial f_i / \partial x_j \end{pmatrix}_{i,j}.$$
+
+If $V$ has codimension $c$ (dimension $n - c$), then $p \in V$ is **smooth** if $\operatorname{rank} J(p) = c$, and **singular** if $\operatorname{rank} J(p) < c$. $\checkmark$
+
+**(b)**
+
+**(i)** $V_1$: $f(x,y) = y^2 - x^2$. Jacobian: $J = (-2x,\; 2y)$.
+
+At origin: $J(0,0) = (0, 0)$, rank $= 0 < 1$ (codimension 1). The origin is **singular** (a **node**). Geometrically: $y^2 - x^2 = (y - x)(y + x) = 0$, two lines $y = x$ and $y = -x$ crossing transversally. $\checkmark$
+
+**(ii)** $V_2$: $f(x,y) = y^2 - x^3$. Jacobian: $J = (-3x^2,\; 2y)$.
+
+At origin: $J(0,0) = (0, 0)$, rank $= 0 < 1$. The origin is **singular** (a **cusp**). Geometrically: a single curve with a sharp point (both branches share the same tangent direction $y = 0$ at the origin, unlike the node). $\checkmark$
+
+**(c)** Blow-up of $V_1$ at the origin: substitute $y = tx$ into $y^2 - x^2 = 0$:
+
+$$t^2 x^2 - x^2 = x^2(t^2 - 1) = 0.$$
+
+Factor out the **exceptional divisor** $x^2 = 0$ (which corresponds to the entire preimage of the origin). The **strict transform** is $t^2 - 1 = 0$, giving $t = \pm 1$.
+
+These are two distinct points on the exceptional divisor (the $t$-axis), corresponding to the two branches $y = x$ (slope $t = 1$) and $y = -x$ (slope $t = -1$). The strict transform is smooth at both points (it is a pair of distinct points on a line, each with non-vanishing derivative). The singularity is **resolved**: a single blow-up separates the crossing branches. $\checkmark$
+
+**(d)** For $f(w) = w^{2k}$:
+
+$$\int_0^1 w^{-2kt}\,dw = \left[\frac{w^{1 - 2kt}}{1 - 2kt}\right]_0^1 = \frac{1}{1 - 2kt}$$
+
+provided $1 - 2kt > 0$, i.e., $t < \dfrac{1}{2k}$. At $w = 0$, the integrand $w^{-2kt} \to \infty$ when $2kt \geq 1$, so the integral diverges for $t \geq \dfrac{1}{2k}$. The pole of the zeta function is at $t = \dfrac{1}{2k}$, so $\lambda = \dfrac{1}{2k}$.
+
+Specific values:
+
+| $k$ | $f(w)$ | $\lambda = \frac{1}{2k}$ | Regular value $d/2$ | Ratio $\lambda / (d/2)$ |
+|-----|---------|--------------------------|----------------------|-------------------------|
+| 1 | $w^2$ | $1/2$ | $1/2$ | 1 (regular) |
+| 2 | $w^4$ | $1/4$ | $1/2$ | $1/2$ |
+| 3 | $w^6$ | $1/6$ | $1/2$ | $1/3$ |
+
+When $\lambda < d/2$, the model has **lower effective complexity** than parameter counting suggests. In SLT's free energy $F_n \approx \lambda \ln n$, the smaller $\lambda$ means a weaker complexity penalty, predicting better generalization. Flatter minima (higher-order vanishing of the loss) correspond to smaller RLCT and thus "simpler" effective models. $\checkmark$
+
+---
+
+## Q8 --- Propositional Logic, SAT, and Truth Tables
+
+**(a)** Define: $D$ = "model is deceptive," $B$ = "passes all behavioral tests," $I$ = "interpretability reveals the deception," $S$ = "model is safe."
+
+$$(D \wedge B) \to (I \lor \neg S)$$
+
+$\checkmark$
+
+**(b)** Truth table for $\varphi = (P \to Q) \wedge (\neg Q \to R)$:
+
+| $P$ | $Q$ | $R$ | $P \to Q$ | $\neg Q$ | $\neg Q \to R$ | $\varphi$ |
+|-----|-----|-----|-----------|---------|----------------|-----------|
+| T | T | T | T | F | T | **T** |
+| T | T | F | T | F | T | **T** |
+| T | F | T | F | T | T | **F** |
+| T | F | F | F | T | F | **F** |
+| F | T | T | T | F | T | **T** |
+| F | T | F | T | F | T | **T** |
+| F | F | T | T | T | T | **T** |
+| F | F | F | T | T | F | **F** |
+
+Satisfying assignments: $(T,T,T)$, $(T,T,F)$, $(F,T,T)$, $(F,T,F)$, $(F,F,T)$. Five out of eight rows. $\varphi$ is **satisfiable but not a tautology** (rows 3, 4, 8 falsify it). $\checkmark$
+
+**(c)** Truth table showing $P \to Q \equiv \neg P \lor Q$:
+
+| $P$ | $Q$ | $P \to Q$ | $\neg P \lor Q$ |
+|-----|-----|-----------|-----------------|
+| T | T | T | T |
+| T | F | F | F |
+| F | T | T | T |
+| F | F | T | T |
+
+All rows match. $\checkmark$
+
+**Resolution rule:** Given clauses $(P \lor Q)$ and $(\neg P \lor R)$:
+
+- If $P$ is true: from $(\neg P \lor R)$ we get $R$, so $Q \lor R$ holds.
+- If $P$ is false: from $(P \lor Q)$ we get $Q$, so $Q \lor R$ holds.
+
+In either case $Q \lor R$ is true. Formally: $(P \lor Q) \wedge (\neg P \lor R) \models Q \lor R$. Resolution is **sound** because whenever both premises are true, the resolvent is true (we exhausted both cases for the resolved variable). $\checkmark$
+
+**(d)** Clauses:
+
+1. $F_1 \lor F_2$ (model uses $F_1$ or $F_2$)
+2. $\neg F_1 \lor S$ (if $F_1$ then safe)
+3. $\neg S$ (not safe)
+
+Apply resolution:
+
+- **Step 1:** Resolve clauses 2 and 3 on $S$: $(\neg F_1 \lor S)$ and $(\neg S)$ yield $\neg F_1$.
+- **Step 2:** Resolve clause 1 and $\neg F_1$ on $F_1$: $(F_1 \lor F_2)$ and $(\neg F_1)$ yield $F_2$.
+
+We obtain $F_2$ but no contradiction yet. Since no further resolution produces $\square$, the instance is **satisfiable**. A satisfying assignment: $F_1 = \text{False}$, $F_2 = \text{True}$, $S = \text{False}$.
+
+*Verification:* Clause 1: $F \lor T = T$ $\checkmark$. Clause 2: $T \lor F = T$ $\checkmark$. Clause 3: $T$ $\checkmark$. $\checkmark$
+
+---
+
+## Q9 --- G\"{o}del's Incompleteness, L\"{o}b's Theorem, and Self-Reference
+
+**(a)** **G\"{o}del's first incompleteness theorem:** If $\mathcal{S}$ is a formal system that is (1) **sufficiently expressive** (can represent basic arithmetic / primitive recursive functions) and (2) **consistent** (does not prove both $P$ and $\neg P$ for any $P$), then $\mathcal{S}$ is **incomplete**: there exists a sentence $G$ in the language of $\mathcal{S}$ such that neither $G$ nor $\neg G$ is provable in $\mathcal{S}$. $\checkmark$
+
+**(b)** By the diagonal lemma with $\psi(x) = \neg\operatorname{Prov}(x)$, there exists a sentence $G$ with
+
+$$\mathcal{S} \vdash G \leftrightarrow \neg\operatorname{Prov}(\ulcorner G \urcorner).$$
+
+So $G$ "says" **"I am not provable in $\mathcal{S}$."**
+
+- **$G$ is true:** Suppose $G$ is false. Then $\neg G$ holds, so $\operatorname{Prov}(\ulcorner G \urcorner)$ holds (by the biconditional), meaning $\mathcal{S}$ proves $G$. But $\mathcal{S}$ is consistent and only proves truths, so $G$ would be true --- contradiction. Therefore $G$ must be **true**.
+- **$G$ is unprovable:** Since $G$ is true, $\neg\operatorname{Prov}(\ulcorner G \urcorner)$ holds (by the biconditional), meaning $\mathcal{S}$ does NOT prove $G$. So $G$ is **unprovable**. $\checkmark$
+
+**(c)** L\"{o}b's theorem: $\mathcal{S} \vdash (\Box P \to P) \implies \mathcal{S} \vdash P$.
+
+Set $P = \bot$ (falsehood). Then L\"{o}b says: if $\mathcal{S} \vdash (\Box\bot \to \bot)$, then $\mathcal{S} \vdash \bot$.
+
+Now $\Box\bot \to \bot$ is logically equivalent to $\neg\Box\bot$, which is $\operatorname{Con}(\mathcal{S})$ (the statement "I do not prove a contradiction"). So:
+
+$$\text{If } \mathcal{S} \vdash \operatorname{Con}(\mathcal{S}), \text{ then } \mathcal{S} \vdash \bot.$$
+
+By contrapositive: if $\mathcal{S}$ is consistent ($\mathcal{S} \nvdash \bot$), then $\mathcal{S} \nvdash \operatorname{Con}(\mathcal{S})$. This is G\"{o}del's second incompleteness theorem. $\checkmark$
+
+**(d)** The L\"{o}bian obstacle: an AI reasoning in a formal system $\mathcal{S}$ might attempt: "I will trust my own safety proofs --- if I can prove Safe ($\Box\text{Safe}$), then I am indeed safe (Safe)." But L\"{o}b's theorem says that if $\mathcal{S}$ can prove this conditional $\Box\text{Safe} \to \text{Safe}$, then $\mathcal{S}$ already proves $\text{Safe}$ outright. Since safety is precisely what the system is trying to establish (not something it already has), it cannot prove the conditional either. The bootstrap fails: the system cannot go from "my proofs are trustworthy" to a safety guarantee without already possessing that guarantee. This is a fundamental barrier because any sufficiently powerful self-referential system encounters it --- it is not a limitation of a particular proof strategy but of formal self-verification itself.
+
+**One proposed approach:** *Probabilistic trust / bounded verification.* Instead of demanding a deductive proof of safety (which L\"{o}b blocks), the system can maintain a probabilistic belief in its own safety, updated via evidence (testing, interpretability, formal proofs of partial properties). This sidesteps L\"{o}b because probabilistic confidence is not a formal proof within $\mathcal{S}$ --- it operates at a meta-level where the theorem does not apply. Other approaches include using weaker logical systems that lack the self-referential power triggering L\"{o}b, or multi-agent verification where system A reasons about system B (cross-system trust avoids self-reference). $\checkmark$
+
+---
+
+## Q10 --- Capstone Synthesis: From Topology to Alignment
+
+**(a)** If $L$ has a regularizer making sublevel sets bounded (e.g., $\ell^2$ penalty), then $S_\varepsilon = \{w : L(w) \leq \varepsilon\}$ is closed (preimage of $(-\infty, \varepsilon]$ under the continuous function $L$) and bounded (by the regularizer). By the Heine--Borel theorem, $S_\varepsilon$ is **compact**.
+
+The topology of $S_\varepsilon$ matters because:
+
+- **Connectedness** determines whether gradient descent can smoothly move between different low-loss regions. If $S_\varepsilon$ is disconnected, training from different initializations may converge to fundamentally different solutions in isolated components.
+- **Fundamental group** ($\pi_1$) detects "holes" in $S_\varepsilon$: non-contractible loops indicate regions of high loss surrounded by low-loss terrain, which can trap or redirect gradient flow. As $\varepsilon$ changes, the topology of $S_\varepsilon$ changes at critical values (Morse theory), corresponding to critical points of $L$. $\checkmark$
+
+**(b)** BIC penalty: $\dfrac{d}{2}\ln n = \dfrac{10}{2}\ln 10000 = 5 \ln 10000 = 5 \times 4\ln 10 \approx 5 \times 9.2103 = 46.05$.
+
+SLT penalty: $\lambda \ln n = 2 \ln 10000 = 2 \times 4\ln 10 \approx 2 \times 9.2103 = 18.42$.
+
+Ratio: $\dfrac{d/2}{\lambda} = \dfrac{5}{2} = 2.5$.
+
+Classical model selection (BIC) **overestimates** the effective complexity by a factor of $2.5$. It would penalize the model $2.5\times$ too harshly, potentially preferring an overly simple model. The RLCT, by accounting for the singular geometry of the loss landscape, gives the correct effective dimension. $\checkmark$
+
+**(c)** Stokes' theorem extracts global information (a boundary integral) from local information (the exterior derivative in the interior). Similarly, SLT uses **local** singularity data --- the geometry of the loss function near critical points, as revealed by blow-ups and the resulting exponents --- to determine **global** model behavior: the free energy, generalization error, and phase transition thresholds that govern the entire learning process. The significance of both frameworks is that one need not understand the entirety of a complex object (manifold or loss landscape) to make global predictions; carefully analyzing the right local features (boundary data or singularity type) suffices. $\checkmark$
+
+**(d)** G\"{o}del's theorems establish that any sufficiently powerful formal system used by an AI cannot prove all true statements about its own behavior (first theorem) and cannot prove its own consistency (second theorem). L\"{o}b's theorem further shows that self-referential trust --- "if I can prove I am safe, then I am safe" --- cannot bootstrap a safety guarantee. This means **formal verification of AI safety has inherent blind spots**: there will always be safety-relevant properties that the system cannot certify about itself.
+
+SLT and the RLCT contribute what logic cannot: **quantitative predictions about what models learn and how they generalize**. The RLCT measures effective model complexity, predicts phase transitions (sudden capability gains), and explains why overparameterized networks generalize well --- all empirical phenomena that formal logic does not address. Conversely, formal logic contributes what geometry cannot: it delineates the **boundaries of provability and verification**, telling us which safety properties are in principle certifiable and which require alternative approaches (empirical testing, interpretability, multi-agent oversight).
+
+A complete mathematical approach to alignment requires both geometric tools (to understand and predict model behavior) and logical tools (to understand the limits of formal guarantees about that behavior). $\checkmark$

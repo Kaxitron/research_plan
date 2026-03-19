@@ -1,0 +1,178 @@
+---
+title: "Exam 2C: Vector Calculus"
+subtitle: "Lessons 24--28 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Parametric Curves, Line Integrals, and Work
+
+A wire in 3D has the shape of the helix $\mathbf{r}(t) = (2\cos t,\; 2\sin t,\; 3t)$ for $t \in [0, 2\pi]$. The wire's linear mass density is $\rho(x, y, z) = x^2 + y^2$.
+
+**(a)** Compute the tangent vector $\mathbf{r}'(t)$ and the speed $|\mathbf{r}'(t)|$.
+
+**(b)** Compute the total arc length of the wire.
+
+**(c)** Compute the total mass of the wire via the scalar line integral $M = \int_C \rho\, ds$.
+
+**(d)** An electric field $\mathbf{F}(x, y, z) = (y,\; -x,\; 1)$ acts on a charged particle that traverses this helix from $t = 0$ to $t = 2\pi$. Compute the work $W = \int_C \mathbf{F} \cdot d\mathbf{r}$. Interpret the sign of $W$: does the field help or hinder the particle's motion along this path?
+
+---
+
+## Q2 (10 pts) --- Conservative Fields and the Fundamental Theorem of Line Integrals
+
+Let $\mathbf{F}(x, y, z) = (2xy + z^2,\; x^2 + 2yz,\; 2xz + y^2)$.
+
+**(a)** Compute $\nabla \times \mathbf{F}$. What does the result tell you about whether $\mathbf{F}$ is conservative?
+
+**(b)** Find a potential function $\varphi(x, y, z)$ such that $\nabla \varphi = \mathbf{F}$.
+
+**(c)** Using the Fundamental Theorem of Line Integrals, compute $\int_C \mathbf{F} \cdot d\mathbf{r}$ where $C$ is any smooth path from $(0, 0, 0)$ to $(1, 2, 3)$.
+
+**(d)** A second field $\mathbf{G}(x, y) = \left(\dfrac{-y}{x^2 + y^2},\; \dfrac{x}{x^2 + y^2}\right)$ is defined on $\mathbb{R}^2 \setminus \{(0,0)\}$. Show that $\dfrac{\partial G_1}{\partial y} = \dfrac{\partial G_2}{\partial x}$, yet $\mathbf{G}$ is not conservative. Compute $\oint_C \mathbf{G} \cdot d\mathbf{r}$ around the unit circle $x^2 + y^2 = 1$ (counterclockwise) to demonstrate this. Why does the equality of mixed partials fail to guarantee conservativeness here?
+
+---
+
+## Q3 (10 pts) --- Divergence, Curl, and Physical Interpretation
+
+Consider the velocity field of a fluid: $\mathbf{v}(x, y) = (x^2 - y,\; xy + y)$.
+
+**(a)** Compute $\operatorname{div}(\mathbf{v}) = \nabla \cdot \mathbf{v}$. At the point $(1, 1)$, is the fluid expanding or compressing?
+
+**(b)** Compute $\operatorname{curl}(\mathbf{v}) = \dfrac{\partial v_2}{\partial x} - \dfrac{\partial v_1}{\partial y}$ (the scalar curl for a 2D field). At $(1, 1)$, is the fluid rotating clockwise or counterclockwise?
+
+**(c)** Is $\mathbf{v}$ a gradient field? Justify using the curl computation.
+
+**(d)** Find all points $(x, y)$ where $\operatorname{div}(\mathbf{v}) = 0$ (the incompressibility locus). Describe this set geometrically.
+
+**(e)** The Laplacian of a scalar function $f$ satisfies $\nabla^2 f = \operatorname{div}(\nabla f)$. If $\mathbf{v} = \nabla f$ for some $f$, then $\nabla^2 f = \operatorname{div}(\mathbf{v})$. Is $\mathbf{v}$ a gradient field? If not, find a different velocity field $\mathbf{w} = \nabla f$ where $f(x,y) = x^3 - 3xy^2$ and verify that $\nabla^2 f = 0$ (i.e., $f$ is harmonic). What does this mean physically about the flow $\mathbf{w}$?
+
+---
+
+## Q4 (10 pts) --- Green's Theorem: Circulation and Flux
+
+Let $\mathbf{F}(x, y) = (x^2 y,\; -xy^2)$ and let $D$ be the region bounded by the unit circle $C: x^2 + y^2 = 1$, traversed counterclockwise.
+
+**(a)** State Green's theorem in the circulation form and use it to compute $\displaystyle\oint_C \mathbf{F} \cdot d\mathbf{r}$.
+
+**(b)** State Green's theorem in the flux form and use it to compute $\displaystyle\oint_C \mathbf{F} \cdot \mathbf{n}\, ds$, where $\mathbf{n}$ is the outward-pointing unit normal.
+
+**(c)** Verify part (a) directly: parameterize $C$ as $\mathbf{r}(t) = (\cos t, \sin t)$ for $t \in [0, 2\pi]$ and evaluate $\oint_C \mathbf{F} \cdot d\mathbf{r}$ by computing $\int_0^{2\pi} \mathbf{F}(\mathbf{r}(t)) \cdot \mathbf{r}'(t)\, dt$.
+
+**(d)** If $f$ is harmonic ($\nabla^2 f = 0$) on $D$, explain why $\oint_C \nabla f \cdot \mathbf{n}\, ds = 0$ using the flux form of Green's theorem. This is a key property in electrostatics: a charge-free region has zero net electric flux through its boundary.
+
+---
+
+## Q5 (10 pts) --- Parametric Surfaces and Surface Area
+
+The surface $S$ is the portion of the paraboloid $z = 1 - x^2 - y^2$ that lies above the $xy$-plane (i.e., $z \geq 0$).
+
+**(a)** Parameterize $S$ using $\mathbf{r}(x, y) = (x,\; y,\; 1 - x^2 - y^2)$ for $(x,y)$ in the disk $D: x^2 + y^2 \leq 1$. Compute $\mathbf{r}_x$ and $\mathbf{r}_y$.
+
+**(b)** Compute the normal vector $\mathbf{r}_x \times \mathbf{r}_y$. At which points on $S$ is the normal vector purely vertical? What happens to the normal vector at the rim of the paraboloid ($x^2 + y^2 = 1$)?
+
+**(c)** Compute $|\mathbf{r}_x \times \mathbf{r}_y|$ and set up the surface area integral $\displaystyle\iint_D |\mathbf{r}_x \times \mathbf{r}_y|\, dA$. Convert to polar coordinates and evaluate the integral.
+
+**(d)** A thin shell in the shape of $S$ has temperature distribution $T(x, y, z) = z$. Compute $\displaystyle\iint_S T\, dS$ (the scalar surface integral). Physically, this represents the total thermal energy stored in the shell (up to a constant).
+
+---
+
+## Q6 (10 pts) --- Flux Integrals and Orientability
+
+Consider the vector field $\mathbf{F}(x, y, z) = (0,\; 0,\; z)$ and the hemisphere $S: x^2 + y^2 + z^2 = 4$, $z \geq 0$, oriented with the outward-pointing normal.
+
+**(a)** Parameterize the hemisphere using spherical coordinates: $\mathbf{r}(\theta, \phi) = (2\sin\phi\cos\theta,\; 2\sin\phi\sin\theta,\; 2\cos\phi)$ with $\theta \in [0, 2\pi]$ and $\phi \in [0, \pi/2]$. Compute $\mathbf{r}_\theta \times \mathbf{r}_\phi$.
+
+**(b)** Determine whether $\mathbf{r}_\theta \times \mathbf{r}_\phi$ points outward or inward. If inward, explain what adjustment to make.
+
+**(c)** Compute the flux integral $\displaystyle\iint_S \mathbf{F} \cdot d\mathbf{S}$ through the hemisphere.
+
+**(d)** Now compute the flux of $\mathbf{F}$ through the disk $D: x^2 + y^2 \leq 4$, $z = 0$, with the normal pointing downward (i.e., $\mathbf{n} = (0, 0, -1)$). Add this to your answer from (c) to find the total flux out of the closed upper hemisphere region. Verify using the divergence theorem: $\oint \mathbf{F} \cdot d\mathbf{S} = \iiint_E \nabla \cdot \mathbf{F}\, dV$.
+
+---
+
+## Q7 (10 pts) --- Stokes' Theorem and Curl in 3D
+
+Let $\mathbf{F}(x, y, z) = (y^2,\; xz,\; z^2)$ and let $S$ be the part of the plane $z = 4 - x - 2y$ that lies in the first octant ($x \geq 0$, $y \geq 0$, $z \geq 0$), oriented upward.
+
+**(a)** Find the boundary curve $\partial S$. This is a triangle in the first octant. Identify its three vertices.
+
+**(b)** Compute $\nabla \times \mathbf{F}$.
+
+**(c)** Use Stokes' theorem to convert $\oint_{\partial S} \mathbf{F} \cdot d\mathbf{r}$ into a surface integral $\iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}$ and evaluate it.
+
+**(d)** Verify by computing the line integral $\oint_{\partial S} \mathbf{F} \cdot d\mathbf{r}$ directly along the three edges of the triangle (counterclockwise as viewed from above).
+
+---
+
+## Q8 (10 pts) --- The Divergence Theorem and Physical Conservation
+
+Let $\mathbf{F}(x, y, z) = (x^3,\; y^3,\; z^3)$ and let $E$ be the solid ball $x^2 + y^2 + z^2 \leq 1$ with outward-oriented boundary $S$.
+
+**(a)** Compute $\nabla \cdot \mathbf{F}$.
+
+**(b)** Use the divergence theorem to compute $\displaystyle\oiint_S \mathbf{F} \cdot d\mathbf{S} = \iiint_E \nabla \cdot \mathbf{F}\, dV$. Convert to spherical coordinates: $x^2 + y^2 + z^2 = \rho^2$, $dV = \rho^2 \sin\phi\, d\rho\, d\phi\, d\theta$.
+
+**(c)** In fluid dynamics, $\nabla \cdot \mathbf{v} = 0$ characterizes an incompressible flow. The divergence theorem then says the net flux through any closed surface is zero --- fluid neither accumulates nor depletes inside any region. If $\mathbf{v}(x,y,z) = (az,\; bx,\; cy)$ for constants $a, b, c$, for what values of $a, b, c$ is $\mathbf{v}$ incompressible?
+
+**(d)** In electromagnetism, Gauss's law states $\oiint_S \mathbf{E} \cdot d\mathbf{S} = \frac{Q_{\text{enc}}}{\varepsilon_0}$, where $Q_{\text{enc}}$ is the enclosed charge. If the electric field is $\mathbf{E} = \frac{q}{4\pi\varepsilon_0}\frac{\hat{\mathbf{r}}}{r^2}$ (a point charge at the origin), explain why the divergence theorem cannot be applied directly to $E$ on any region containing the origin. What mathematical feature of $\mathbf{E}$ at $r = 0$ causes the problem?
+
+---
+
+## Q9 (10 pts) --- Connecting the Integral Theorems
+
+This question traces the hierarchy: FTC $\to$ FTLI $\to$ Green's $\to$ Stokes' $\to$ Divergence.
+
+**(a)** The Fundamental Theorem of Calculus states $\int_a^b f'(x)\, dx = f(b) - f(a)$. The FTLI states $\int_C \nabla \varphi \cdot d\mathbf{r} = \varphi(B) - \varphi(A)$. Explain in 2--3 sentences how the FTLI generalizes the FTC from 1D to curves in $\mathbb{R}^n$.
+
+**(b)** Green's theorem relates a line integral around a closed curve to a double integral over the enclosed region. Stokes' theorem relates a line integral around a closed curve to a surface integral over a spanning surface. Explain how Green's theorem is a special case of Stokes' theorem (specify which surface, which normal, and which curl components are involved).
+
+**(c)** The divergence theorem relates a surface integral over a closed surface to a volume integral. State the common pattern shared by all these theorems in one sentence. *(Hint: it involves integrating a "derivative" over a region and equating it to integrating the "original" over the boundary.)*
+
+**(d)** Let $\mathbf{F}(x, y) = (-y, x)$ and let $C$ be the boundary of the square $[0, 1] \times [0, 1]$, traversed counterclockwise. Compute $\oint_C \mathbf{F} \cdot d\mathbf{r}$ using Green's theorem. Then verify directly by computing the four line integrals along the edges of the square.
+
+---
+
+## Q10 (10 pts) --- Synthesis: Electromagnetic Verification
+
+An electromagnetic field in a region of space is described by:
+$$\mathbf{E}(x, y, z) = (yz,\; xz,\; xy), \qquad \mathbf{B}(x, y, z) = (0, 0, 0).$$
+
+**(a)** Show that $\nabla \cdot \mathbf{E} = 0$ (Gauss's law in a charge-free region). What does the divergence theorem then tell you about the electric flux through any closed surface in this region?
+
+**(b)** Compute $\nabla \times \mathbf{E}$. In electrostatics, $\nabla \times \mathbf{E} = \mathbf{0}$ (the electric field is conservative). Is this field electrostatic? Find a potential function $V(x, y, z)$ such that $\mathbf{E} = -\nabla V$ if one exists, or explain why none exists.
+
+**(c)** Let $S$ be the surface of the unit cube $[0,1]^3$, oriented outward. Use the divergence theorem to compute $\oiint_S \mathbf{E} \cdot d\mathbf{S}$ without evaluating six face integrals.
+
+**(d)** Let $C$ be the square path in the plane $z = 1$ with vertices $(0,0,1) \to (1,0,1) \to (1,1,1) \to (0,1,1) \to (0,0,1)$, traversed counterclockwise as viewed from above. Use Stokes' theorem to compute $\oint_C \mathbf{E} \cdot d\mathbf{r}$. Then verify by computing $\mathbf{E} = -\nabla V$ (using your potential from part (b)) and the FTLI. Explain why both methods give the same answer for a closed curve.

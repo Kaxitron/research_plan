@@ -1,0 +1,188 @@
+---
+title: "Exam 2E: ML-Applied Calculus"
+subtitle: "Lessons 34--36 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Gradient Computation and Steepest Ascent
+
+A two-parameter loss function is $L(w_1, w_2) = w_1^2 w_2 + e^{-w_2} \sin(w_1)$.
+
+**(a)** Compute both partial derivatives $\dfrac{\partial L}{\partial w_1}$ and $\dfrac{\partial L}{\partial w_2}$.
+
+**(b)** Evaluate the gradient $\nabla L$ at the point $(w_1, w_2) = (\pi/2,\; 0)$.
+
+**(c)** In what direction does $L$ increase most rapidly at this point? What is the magnitude of the steepest rate of increase?
+
+**(d)** Compute the directional derivative of $L$ at $(\pi/2, 0)$ in the direction $\mathbf{u} = \frac{1}{\sqrt{2}}(1, -1)$. Interpret: if you step in this direction, does $L$ increase or decrease?
+
+**(e)** In gradient descent we update $\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla L$. Explain in 2--3 sentences why moving in the direction $-\nabla L$ is the locally optimal choice for reducing $L$, and state one reason this strategy can fail globally.
+
+---
+
+## Q2 (10 pts) --- Jacobians and the Vector Chain Rule
+
+Define $\mathbf{f}: \mathbb{R}^2 \to \mathbb{R}^2$ by $\mathbf{f}(u, v) = \bigl(u^2 + v,\; uv\bigr)$ and $\mathbf{g}: \mathbb{R}^2 \to \mathbb{R}^2$ by $\mathbf{g}(x, y) = \bigl(x + y,\; x - y\bigr)$.
+
+**(a)** Compute the Jacobian matrices $J_{\mathbf{f}}(u, v)$ and $J_{\mathbf{g}}(x, y)$.
+
+**(b)** Using the chain rule $J_{\mathbf{f} \circ \mathbf{g}} = J_{\mathbf{f}}\bigl(\mathbf{g}(x,y)\bigr) \cdot J_{\mathbf{g}}(x,y)$, compute the Jacobian of the composition $\mathbf{f}\bigl(\mathbf{g}(x, y)\bigr)$ at $(x, y) = (2, 1)$.
+
+**(c)** Verify your answer by computing $\mathbf{f}\bigl(\mathbf{g}(x,y)\bigr)$ explicitly as a function of $(x, y)$, then differentiating directly.
+
+**(d)** If $\mathbf{f}$ maps $\mathbb{R}^n \to \mathbb{R}^m$ and $\mathbf{g}$ maps $\mathbb{R}^p \to \mathbb{R}^n$, the chain rule says $J_{\mathbf{f} \circ \mathbf{g}}$ is the product of an $m \times n$ matrix and an $n \times p$ matrix. In the context of a neural network with $L$ layers, explain why chaining $L$ Jacobians together produces a single Jacobian that maps input perturbations to output perturbations, and why the intermediate dimension $n$ must match at each layer boundary.
+
+---
+
+## Q3 (10 pts) --- Numerator vs.\ Denominator Layout and Element-wise Operations
+
+**(a)** Let $\mathbf{y} = \mathbf{f}(\mathbf{x})$ where $\mathbf{f}: \mathbb{R}^3 \to \mathbb{R}^2$. In **numerator layout**, the Jacobian has entry $(J)_{ij} = \dfrac{\partial y_i}{\partial x_j}$ and shape $2 \times 3$. In **denominator layout**, the convention transposes this to $3 \times 2$. Write both layouts explicitly for $\mathbf{f}(x_1, x_2, x_3) = (x_1 x_2 + x_3,\; x_2^2 - x_1)$.
+
+**(b)** Let $\sigma: \mathbb{R}^n \to \mathbb{R}^n$ be an element-wise function: $\sigma(\mathbf{z})_i = \sigma(z_i)$. Show that the Jacobian of $\sigma$ is the diagonal matrix $\operatorname{diag}\bigl(\sigma'(z_1), \ldots, \sigma'(z_n)\bigr)$.
+
+**(c)** For ReLU, $\sigma(z) = \max(0, z)$, compute $\sigma'(z)$ for $z > 0$, $z < 0$, and explain why the derivative is undefined at $z = 0$ (but is conventionally set to 0 in practice).
+
+**(d)** A hidden layer computes $\mathbf{a} = \sigma(W\mathbf{x} + \mathbf{b})$ where $W$ is $m \times n$. Using the chain rule and part (b), show that the Jacobian $\dfrac{\partial \mathbf{a}}{\partial \mathbf{x}}$ equals $\operatorname{diag}\bigl(\sigma'(\mathbf{z})\bigr) \cdot W$ where $\mathbf{z} = W\mathbf{x} + \mathbf{b}$. State the dimensions of each factor and the result.
+
+---
+
+## Q4 (10 pts) --- Single-Neuron Backpropagation
+
+A single neuron computes: $z = w_1 x_1 + w_2 x_2 + b$, then $a = \text{ReLU}(z)$, and the loss is $L = \frac{1}{2}(a - y)^2$ with target $y$.
+
+Use $w_1 = 2$, $w_2 = -1$, $b = 1$, $x_1 = 3$, $x_2 = 1$, $y = 4$.
+
+**(a)** Compute the forward pass: find $z$, $a$, and $L$.
+
+**(b)** Compute each local derivative in the backward pass: $\dfrac{\partial L}{\partial a}$, $\dfrac{\partial a}{\partial z}$, $\dfrac{\partial z}{\partial w_1}$, $\dfrac{\partial z}{\partial w_2}$, $\dfrac{\partial z}{\partial b}$.
+
+**(c)** Assemble the full gradients $\dfrac{\partial L}{\partial w_1}$, $\dfrac{\partial L}{\partial w_2}$, $\dfrac{\partial L}{\partial b}$ using the chain rule.
+
+**(d)** The ReLU derivative acts as a "gate": it either passes the upstream gradient through (multiplying by 1) or blocks it (multiplying by 0). If we change $x_2 = 1$ to $x_2 = 8$ (keeping all other values), recompute $z$ and explain what happens to all parameter gradients. What is the name for this problem when it happens across many layers?
+
+---
+
+## Q5 (10 pts) --- Computation Graphs and Forward vs.\ Reverse Mode
+
+Consider the computation graph for $L = (x \cdot w_1 + w_2)^2$:
+
+$$n_1 = x \cdot w_1, \qquad n_2 = n_1 + w_2, \qquad L = n_2^2$$
+
+Use $x = 2$, $w_1 = 3$, $w_2 = -1$.
+
+**(a)** Draw the computation graph with a node for each intermediate value. Compute the forward pass: find $n_1$, $n_2$, and $L$.
+
+**(b)** **Reverse mode:** Starting from $\dfrac{\partial L}{\partial L} = 1$, propagate backward. Compute $\dfrac{\partial L}{\partial n_2}$, $\dfrac{\partial L}{\partial n_1}$, $\dfrac{\partial L}{\partial w_1}$, and $\dfrac{\partial L}{\partial w_2}$ in a single backward pass.
+
+**(c)** **Forward mode:** To compute $\dfrac{\partial L}{\partial w_1}$ via forward mode, propagate the "tangent" $\dot{n}_1 = \dfrac{\partial n_1}{\partial w_1}$ forward through each node. Trace this computation. Then repeat for $\dfrac{\partial L}{\partial w_2}$ in a separate forward pass.
+
+**(d)** Suppose a network has $P$ parameters and one scalar loss. Forward mode requires $P$ passes (one per parameter); reverse mode requires 1 pass. Explain why backpropagation (reverse-mode autodiff) is the standard choice for training neural networks. If instead the network had 1 input and $K$ outputs, which mode would be more efficient for computing the full Jacobian?
+
+---
+
+## Q6 (10 pts) --- MSE Loss Gradient and Two-Layer Network
+
+A two-layer network maps input $x$ to prediction $\hat{y}$ via:
+$$h = \sigma(w_1 x + b_1), \qquad \hat{y} = w_2 h + b_2$$
+
+where $\sigma$ is ReLU, with MSE loss $L = \frac{1}{2}(\hat{y} - y)^2$.
+
+**(a)** Write out the chain rule expression for $\dfrac{\partial L}{\partial w_1}$, identifying each factor and its role:
+
+$$\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial h} \cdot \frac{\partial h}{\partial z_1} \cdot \frac{\partial z_1}{\partial w_1}$$
+
+where $z_1 = w_1 x + b_1$. Evaluate each factor symbolically.
+
+**(b)** Use $w_1 = 1$, $b_1 = 0$, $w_2 = 2$, $b_2 = -1$, $x = 3$, $y = 7$. Compute the full forward pass and then $\dfrac{\partial L}{\partial w_1}$ and $\dfrac{\partial L}{\partial w_2}$.
+
+**(c)** The gradient with respect to the first-layer weight $w_1$ passes through more multiplicative factors than the gradient for $w_2$. Explain in 2--3 sentences how this relates to the **vanishing gradient problem** when stacking many layers. What property of $\sigma'$ for ReLU partially mitigates this compared to sigmoid?
+
+**(d)** For a batch of $N$ training examples $\{(x_i, y_i)\}_{i=1}^N$, the MSE loss is $L = \frac{1}{2N}\sum_{i=1}^N (\hat{y}_i - y_i)^2$. Show that $\dfrac{\partial L}{\partial w_2} = \frac{1}{N}\sum_{i=1}^N (\hat{y}_i - y_i) h_i$. Why does SGD estimate this sum using a random mini-batch instead of the full dataset?
+
+---
+
+## Q7 (10 pts) --- SGD, Momentum, and Adam
+
+**(a)** Write the vanilla SGD update rule. A loss landscape has Hessian eigenvalues $\lambda_1 = 200$ and $\lambda_2 = 1$ (a narrow ravine). What is the maximum stable learning rate? Describe qualitatively what the SGD trajectory looks like.
+
+**(b)** Write the two-line SGD-with-momentum update ($\mathbf{v}_t$ and $\mathbf{w}_t$, with momentum coefficient $\beta$). Using the analogy of a ball rolling through the ravine, explain why momentum accelerates progress along the ravine floor while damping oscillations across it.
+
+**(c)** Write the Adam update rule, including bias-corrected first and second moment estimates $\hat{m}_t$ and $\hat{v}_t$. Adam adapts the learning rate per-parameter. Which parameters receive larger effective learning rates --- those with consistently large gradients, or those with sparse, intermittent gradients? Justify your answer from the update formula.
+
+**(d)** Starting at $w = 5$ with $L(w) = \frac{1}{2}w^2$, compute two steps of vanilla SGD with $\eta = 0.1$ and two steps of SGD with momentum ($\eta = 0.1$, $\beta = 0.9$, $v_0 = 0$). Which reaches a lower loss after two steps? Show your work.
+
+---
+
+## Q8 (10 pts) --- Loss Landscape Geometry
+
+**(a)** A critical point of $L(\mathbf{w})$ has Hessian eigenvalues $\{10, 3, 0.5, -0.2, -4\}$. Classify this critical point. Define the **index** of a saddle and compute it. What is the condition number $\kappa$ of the Hessian (using the absolute values of the extreme eigenvalues)?
+
+**(b)** In a random 100-dimensional landscape where each Hessian eigenvalue is independently equally likely to be positive or negative, what fraction of critical points are true local minima? Express as a power of 2. Explain in one sentence why saddle points dominate the high-dimensional landscape.
+
+**(c)** A function $L$ is **convex** if $L\bigl(\alpha \mathbf{w}_1 + (1-\alpha)\mathbf{w}_2\bigr) \leq \alpha L(\mathbf{w}_1) + (1-\alpha)L(\mathbf{w}_2)$ for all $\alpha \in [0,1]$. State the key consequence of convexity for optimization (in terms of local vs.\ global minima). Is the loss function of a multi-layer neural network with ReLU activations convex? Why or why not?
+
+**(d)** The condition number $\kappa = \lambda_{\max} / \lambda_{\min}$ of the Hessian at a minimum controls convergence speed. For gradient descent on a quadratic with condition number $\kappa$, the number of iterations to reduce the error by a factor of $\epsilon$ scales as $O(\kappa \ln(1/\epsilon))$. If $\lambda_{\max} = 100$ and $\lambda_{\min} = 0.01$, how many iterations are needed to reduce error by a factor of $10^{-6}$? Why does a large condition number make optimization difficult even when the learning rate is stable?
+
+---
+
+## Q9 (10 pts) --- Learning Rates, Initialization, and Gradient Clipping
+
+**(a)** **Learning rate warmup** starts with a tiny $\eta$ and linearly increases it over $T_{\text{warm}}$ steps. Explain why this helps at the start of training. *(Hint: think about gradient reliability at random initialization and the time Adam needs to estimate its running averages.)*
+
+**(b)** **Cosine annealing** sets $\eta_t = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})\bigl(1 + \cos(\pi t / T)\bigr)$. Compute $\eta_t$ at $t = 0$, $t = T/2$, and $t = T$. Explain why the slow decay near $t = T$ helps the optimizer settle into a minimum.
+
+**(c)** **Xavier initialization** sets weights $W_{ij} \sim \mathcal{N}\!\left(0,\; \frac{1}{n_{\text{in}}}\right)$ while **He initialization** uses $\mathcal{N}\!\left(0,\; \frac{2}{n_{\text{in}}}\right)$. The factor of 2 in He accounts for the fact that ReLU zeros out roughly half its inputs. Show that if $z = \sum_{j=1}^{n} w_j a_j$ with $w_j \sim \mathcal{N}(0, \sigma_w^2)$ and $a_j$ are i.i.d.\ with $\operatorname{Var}(a_j) = \sigma_a^2$, then $\operatorname{Var}(z) = n \sigma_w^2 \sigma_a^2$. Setting $\sigma_w^2 = 1/n$ preserves the variance. Why does He double this for ReLU?
+
+**(d)** **Gradient clipping** rescales the gradient when $\|\nabla L\| > \tau$: $\nabla L \leftarrow \tau \dfrac{\nabla L}{\|\nabla L\|}$. This preserves gradient direction but caps magnitude. Give a concrete scenario (in terms of the loss landscape or training dynamics) where gradient clipping prevents training failure. How does **gradient normalization** (always setting $\|\nabla L\| = \tau$) differ, and what is one potential downside?
+
+---
+
+## Q10 (10 pts) --- Synthesis: Backpropagation Through a Mini-Network
+
+A network has two inputs $(x_1, x_2)$, one hidden layer with two neurons using ReLU, and one linear output:
+
+$$z_1 = w_{11} x_1 + w_{12} x_2, \qquad a_1 = \text{ReLU}(z_1)$$
+$$z_2 = w_{21} x_1 + w_{22} x_2, \qquad a_2 = \text{ReLU}(z_2)$$
+$$\hat{y} = v_1 a_1 + v_2 a_2, \qquad L = \frac{1}{2}(\hat{y} - y)^2$$
+
+Use $W = \begin{pmatrix} 1 & -1 \\ 2 & 1 \end{pmatrix}$, $\mathbf{v} = (1, -1)$, $\mathbf{x} = (2, 1)$, $y = 3$.
+
+**(a)** Compute the full forward pass: $z_1, z_2, a_1, a_2, \hat{y}, L$.
+
+**(b)** Compute the full backward pass. Find $\dfrac{\partial L}{\partial v_1}$, $\dfrac{\partial L}{\partial v_2}$, $\dfrac{\partial L}{\partial w_{11}}$, $\dfrac{\partial L}{\partial w_{12}}$, $\dfrac{\partial L}{\partial w_{21}}$, $\dfrac{\partial L}{\partial w_{22}}$.
+
+**(c)** Write the Jacobian $\dfrac{\partial \mathbf{a}}{\partial \mathbf{x}}$ (where $\mathbf{a} = (a_1, a_2)$) as a product of the ReLU diagonal gate matrix and $W$. Evaluate numerically. This matrix tells you how the hidden representation changes when the input changes.
+
+**(d)** One of the two hidden neurons is "dead" (its ReLU output is zero). Identify which one. Explain why all weight gradients flowing through a dead neuron are zero, and describe one initialization strategy (from L36) that reduces the probability of dead neurons at the start of training.

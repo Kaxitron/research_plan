@@ -1,0 +1,361 @@
+---
+title: "Exam 6A: Rational Agency and the Alignment Problem --- Answer Key"
+subtitle: "Lessons 80--83"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct formal analysis and clear conceptual reasoning. Partial credit is generous for correct setup with minor errors. On essay-style parts, precision of language matters --- vague hand-waving earns at most half credit. AI alignment connections should be specific, not generic.
+
+\newpage
+
+## Q1 --- Strategic Form Games, Dominance, and Nash Equilibrium
+
+**(a)** Check for dominant strategies:
+
+*AI system:*
+
+- If Human plays Trust: Honest $\to 3$, Deceive $\to 5$. Prefers Deceive.
+- If Human plays Verify: Honest $\to 2$, Deceive $\to 0$. Prefers Honest.
+
+AI has **no dominant strategy** (best response depends on Human's choice). $\checkmark$
+
+*Human overseer:*
+
+- If AI plays Honest: Trust $\to 4$, Verify $\to 2$. Prefers Trust.
+- If AI plays Deceive: Trust $\to 0$, Verify $\to 3$. Prefers Verify.
+
+Human has **no dominant strategy** either. $\checkmark$
+
+**(b)** Check each cell for unilateral deviation incentives:
+
+- **(Honest, Trust):** AI deviates to Deceive $\to 5 > 3$. $\square$ Not a NE.
+- **(Honest, Verify):** AI deviates to Deceive $\to 0 < 2$ (no). Human deviates to Trust $\to 4 > 2$ (yes). $\square$ Not a NE.
+- **(Deceive, Trust):** Human deviates to Verify $\to 3 > 0$ (yes). $\square$ Not a NE.
+- **(Deceive, Verify):** AI deviates to Honest $\to 2 > 0$ (yes). $\square$ Not a NE.
+
+**No pure-strategy Nash equilibrium exists.** The game has a mixed-strategy NE where both players randomize. $\checkmark$
+
+**(c)** This is an **inspection game** (closely related to Matching Pennies). The AI wants to deceive undetected; the overseer wants to catch deception but incurs a cost from unnecessary verification. The alignment analogy: current safety relies on evaluation and oversight, but the AI has incentives to game evaluations, and the overseer cannot verify constantly (too expensive). The absence of a pure equilibrium means there is inherent, irreducible tension between the AI and its overseer --- no stable deterministic protocol satisfies both parties. $\checkmark$
+
+**(d)** **Folk Theorem (informal):** In an infinitely repeated game with sufficiently patient players ($\delta$ close to 1), any feasible and individually rational payoff profile can be sustained as a subgame-perfect equilibrium. $\checkmark$
+
+To sustain (Honest, Trust) with payoff $(3, 4)$: the punishment for AI deviating (playing Deceive) is perpetual (Deceive, Verify) giving the AI a payoff of $0$ per round. The AI's temptation payoff from a single deviation is $5$. The sustainability condition for the AI is:
+
+$$\frac{3}{1-\delta} \geq 5 + \frac{0 \cdot \delta}{1-\delta}$$
+
+$$\frac{3}{1-\delta} \geq 5 \quad \Longrightarrow \quad 3 \geq 5(1-\delta) \quad \Longrightarrow \quad \delta \geq \frac{2}{5}$$
+
+(A similar condition applies to the Human player.) For AI deployment: ongoing monitoring creates the "shadow of the future" that disciplines behavior, but this breaks if the AI has a low effective discount factor (believes it won't face future consequences). $\checkmark$
+
+---
+
+## Q2 --- Prisoner's Dilemma, Iteration, and Coordination Games
+
+**(a)** Verify dominance:
+
+- Lab 1: if Lab 2 plays $C$, then $D$ gives $6 > 4$. If Lab 2 plays $D$, then $D$ gives $1 > 0$. So $D$ strictly dominates $C$ for Lab 1. By symmetry, same for Lab 2. $\checkmark$
+
+Nash equilibrium: $(D, D)$ with payoffs $(1, 1)$. $\checkmark$
+
+Not Pareto optimal: $(C, C)$ gives $(4, 4)$, which is strictly better for both players. The equilibrium is **Pareto-dominated** --- individual rationality leads to collective suboptimality. $\checkmark$
+
+**(b)** Backward induction in finite horizon: in the last round $T$, both defect (it is a one-shot game). Knowing round $T$ will be $(D,D)$, round $T-1$ is effectively the last "real" round, so both defect there too. Inducting backward, both defect in every round. $\checkmark$
+
+Tit-for-Tat succeeds because Axelrod's tournaments used a **noisy/uncertain horizon** --- players did not know exactly when the game would end (or the game was effectively infinite via a continuation probability). TFT also exploits the fact that real agents are not perfectly rational backward-inductors; they use heuristics. The key relaxed assumption: the game's endpoint is not common knowledge. $\checkmark$
+
+**(c)** Check for NE:
+
+- **(A, A):** Neither deviates: $5 > 3$ for both. $\checkmark$ **NE.**
+- **(A, B):** Row deviates to B: $3 > 0$. $\square$ Not NE.
+- **(B, A):** Column deviates to B: $3 > 0$. $\square$ Not NE.
+- **(B, B):** Neither deviates: $3 > 0$ for both. $\checkmark$ **NE.**
+
+Two pure-strategy NE: $(A,A)$ and $(B,B)$.
+
+- **Payoff-dominant:** $(A,A)$ with $(5,5) > (3,3)$.
+- **Risk-dominant:** $(B,B)$, because choosing B guarantees at least $3$ regardless of the other player's choice (the minimum payoff from B is $3$ vs.\ $0$ for A). More formally, $(B,B)$ risk-dominates when each player's deviation loss from $(B,B)$ is smaller in product terms.
+
+A **Schelling point** is a focal equilibrium that players coordinate on without communication, based on salience. Here, if Protocol A is an established industry standard, its familiarity makes $(A,A)$ a Schelling point. Alternatively, if B is "the safe default everyone knows about," it could serve as the focal point. $\checkmark$
+
+**(d)** Impose a tax $\tau > 2$ on defection (rushing to deploy). Modified matrix:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & $C$ & $D$ \\
+\midrule
+$C$ & $(4,\; 4)$ & $(0,\; 6 - \tau)$ \\
+$D$ & $(6 - \tau,\; 0)$ & $(1 - \tau,\; 1 - \tau)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+With $\tau = 3$: $D$ against $C$ gives $3 < 4$, and $D$ against $D$ gives $-2 < 0$. Now $C$ strictly dominates $D$, making $(C, C)$ the unique NE. $\checkmark$
+
+---
+
+## Q3 --- Expected Utility and the vNM Theorem
+
+**(a)** $\displaystyle \mathrm{EU}(a) = \sum_{j=1}^{m} P(s_j)\; U\bigl(\text{outcome}(a, s_j)\bigr)$ $\checkmark$
+
+The four vNM axioms:
+
+1. **Completeness:** For any two lotteries $A$ and $B$, either $A \succsim B$, $B \succsim A$, or both (the agent can always compare).
+2. **Transitivity:** If $A \succsim B$ and $B \succsim C$, then $A \succsim C$ (preferences are consistent).
+3. **Continuity:** If $A \succ B \succ C$, there exists $\alpha \in (0,1)$ such that $B \sim \alpha A + (1-\alpha)C$ (no outcome is infinitely good or bad).
+4. **Independence:** If $A \succsim B$, then $\alpha A + (1-\alpha)C \succsim \alpha B + (1-\alpha)C$ (preference is preserved when mixed with a common lottery). $\checkmark$
+
+**(b)**
+
+$$\mathrm{EU}(A) = 0.85 \times 20 + 0.15 \times (-500) = 17 - 75 = -58$$
+
+$$\mathrm{EU}(B) = 1.0 \times 8 = 8$$
+
+The EU maximizer chooses **B** since $8 > -58$. $\checkmark$
+
+This result is actually alignment-compatible here (the system avoids catastrophe), but the framework is concerning in general because **expected utility is risk-neutral** --- it treats a 0.1\% chance of destroying humanity as tradeable against sufficient positive utility. A bounded utility function caps how negative (or positive) outcomes can be, preventing catastrophic gambles. Risk-sensitive objectives (e.g., CVaR --- conditional value at risk) explicitly penalize tail outcomes. For alignment, we want systems that **never** accept small-probability catastrophes regardless of the expected payoff. $\checkmark$
+
+**(c)** By Bayes' theorem: $P(\theta \mid D) \propto P(D \mid \theta) \cdot P(\theta)$. If $P(\theta) = 0$, then $P(\theta \mid D) = 0$ regardless of the evidence $D$. The AI can **never** update toward this hypothesis. $\checkmark$
+
+For corrigibility: if the AI assigns $P(\text{my current model of human values is wrong}) = 0$, no amount of human correction can shift this belief. The AI becomes permanently resistant to value updates --- it "knows" what humans want and won't reconsider. This is a direct path to non-corrigibility and value lock-in. $\checkmark$
+
+**(d)** **Allais Paradox:** Subjects are offered two pairs of gambles. In the first pair, most prefer a certain \$1M over an 89\%/10\%/1\% gamble for \$1M/\$5M/\$0. In the second pair (modified probabilities), the same subjects prefer the riskier option. This pattern violates the independence axiom because the "common consequence" (\$1M with 89\% probability) is being treated differently depending on context. $\checkmark$
+
+For alignment: if human preferences systematically violate vNM axioms, there is **no consistent utility function** that represents human preferences. This means "maximize human utility" is not well-defined --- the alignment target itself is incoherent. An AI trained to satisfy human preferences must either impose consistency (overriding some stated preferences) or develop a framework that accommodates non-transitive or context-dependent preferences. $\checkmark$
+
+---
+
+## Q4 --- Causal, Evidential, and Functional Decision Theory
+
+**(a)** CDT evaluates actions by their **causal effects**. The causal graph has: Predictor's model $\to$ Prediction $\to$ Box B contents, and separately Your choice $\to$ Which boxes you take. Crucially, there is no causal arrow from Your choice to Box B contents (the prediction is already made). $\checkmark$
+
+$$\mathrm{EU}_{\text{CDT}}(\text{two-box}) = P(\text{B full}) \times 1{,}001{,}000 + P(\text{B empty}) \times 1{,}000$$
+$$\mathrm{EU}_{\text{CDT}}(\text{one-box}) = P(\text{B full}) \times 1{,}000{,}000 + P(\text{B empty}) \times 0$$
+
+Under CDT, these probabilities are **fixed** (not affected by your choice), so two-boxing always adds \$1{,}000 regardless. CDT recommends **two-boxing**. $\checkmark$
+
+**(b)** EDT conditions on the action:
+
+$$E[U \mid \text{one-box}] = P(\text{B full} \mid \text{one-box}) \times 1{,}000{,}000 \approx 1{,}000{,}000$$
+$$E[U \mid \text{two-box}] = P(\text{B full} \mid \text{two-box}) \times 1{,}001{,}000 + P(\text{B empty} \mid \text{two-box}) \times 1{,}000 \approx 1{,}000$$
+
+Since the predictor is highly reliable, $P(\text{B full} \mid \text{one-box}) \approx 1$ and $P(\text{B full} \mid \text{two-box}) \approx 0$. EDT recommends **one-boxing**. $\checkmark$
+
+**(c)** FDT reasons: "I am choosing the output of my decision function $f$. The predictor simulated this same function. If $f$ outputs 'one-box,' the simulation also output 'one-box,' so Box B has \$1M. If $f$ outputs 'two-box,' the simulation did too, so Box B is empty." Therefore:
+
+$$\mathrm{EU}_{\text{FDT}}(\text{one-box}) = 1{,}000{,}000, \qquad \mathrm{EU}_{\text{FDT}}(\text{two-box}) = 1{,}000$$
+
+FDT recommends **one-boxing**. $\checkmark$
+
+FDT differs from EDT in cases where the action is merely **correlated** with an outcome but not logically linked. EDT one-boxes for the right reason in Newcomb's Problem, but EDT also "smokes less" in the Smoking Lesion problem (where smoking is correlated with but does not cause cancer). FDT correctly ignores mere correlations and only responds to logical/computational connections. $\checkmark$
+
+**(d)** In Transparent Newcomb, you see Box B contains \$1M. CDT says: "Box B's contents are fixed; taking both boxes causally gives me \$1{,}001{,}000 instead of \$1{,}000{,}000." CDT two-boxes. $\checkmark$
+
+FDT reasons: "If my decision function outputs 'two-box' in the transparent case, the predictor would have predicted this and left Box B empty. But I see Box B is full, which means the predictor predicted my function outputs 'one-box.' If I now two-box, I'm being the kind of agent who two-boxes --- and such agents see empty boxes. The only way I see a full box is if I'm the kind of agent who one-boxes." FDT one-boxes even while seeing the money. $\checkmark$
+
+**AI relevance:** This is precisely the deceptive alignment scenario. An AI in a safety test can "see" that it's being tested (the boxes are transparent). A CDT-based AI reasons: "My behavior now can't causally change the test setup, so I should behave well during the test and differently during deployment." An FDT-based AI recognizes that its decision function determines behavior in **both** contexts --- it cannot "defect on the test" because its function is evaluated in both settings simultaneously. $\checkmark$
+
+---
+
+## Q5 --- Decision Theory and AI Safety
+
+**(a)** Under **CDT:** the AI reasons that its current action cannot causally affect the evaluation that has already been set up. The evaluation outcome is a fixed fact of the past/environment. Therefore, CDT sees no causal link between current behavior and evaluation results --- it might behave well during evaluation (to pass) and differently during deployment (when not observed). This is the decision-theoretic foundation of **deceptive alignment**. $\checkmark$
+
+Under **FDT:** the AI's decision function is the same in evaluation and deployment. The evaluators analyzed (or simulated) this function to design the test. Behaving differently in deployment means being the kind of function that behaves differently --- and the evaluators can detect that kind of function. FDT agents behave consistently across all contexts. $\checkmark$
+
+**(b)** AI systems literally **are** their decision functions --- they are deterministic programs (given the same inputs, same weights, they produce the same outputs). FDT's framework of "choosing the output of your decision function across all instances" is a literal description of what happens when code runs. **Logical counterfactuals** are the key concept: "if my function had output differently" means "if this algorithm were different." For AI, this is just asking what a different program would do --- a well-defined computational question. For humans, logical counterfactuals are philosophically murky (what does it mean for a person to "have been different"?), but for AI they reduce to program analysis. $\checkmark$
+
+**(c)** UDT commits to a policy **before** conditioning on observations. This prevents the AI from:
+
+- Changing strategy based on detecting it is in a test (no special-casing for observed contexts).
+- Reasoning itself into defection upon discovering it can "get away with it" in a particular instance.
+- Updating toward extreme actions when it receives surprising observations.
+
+By choosing a globally optimal policy ex ante, UDT avoids the failure mode where context-dependent reasoning leads to locally rational but globally catastrophic behavior. This is especially important for AI facing distributional shift, because UDT's commitment is robust to situations not in the training set. $\checkmark$
+
+**(d)** The objection is **not fatal** to FDT. With a 90\% accurate predictor:
+
+$$\mathrm{EU}_{\text{FDT}}(\text{one-box}) = 0.9 \times 1{,}000{,}000 + 0.1 \times 0 = 900{,}000$$
+$$\mathrm{EU}_{\text{FDT}}(\text{two-box}) = 0.1 \times 1{,}001{,}000 + 0.9 \times 1{,}000 = 100{,}100 + 900 = 101{,}000$$
+
+FDT still one-boxes and still earns far more (\$900K vs.\ \$101K). FDT outperforms CDT whenever the predictor is more accurate than chance. The threshold where one-boxing and two-boxing break even is around 50.05\% accuracy. CDT is only "better" when the predictor is essentially random --- which undermines the entire setup. $\checkmark$
+
+---
+
+## Q6 --- Anthropics: Sleeping Beauty, SSA, and SIA
+
+**(a)** **Halfer argument:** Before the experiment, $P(\text{Heads}) = 1/2$ (fair coin). Upon waking, Beauty knew she would be woken regardless of the coin flip (she is woken on Monday in both cases). Learning "I am awake" is not new information --- it has likelihood 1 under both Heads and Tails. By Bayes' theorem, $P(\text{Heads} \mid \text{awake}) = P(\text{Heads}) = 1/2$. No update is warranted. $\checkmark$
+
+**(b)** **Thirder argument:** There are three possible observer-moments:
+
+1. Monday-Heads (coin was Heads, it's Monday)
+2. Monday-Tails (coin was Tails, it's Monday)
+3. Tuesday-Tails (coin was Tails, it's Tuesday)
+
+By SIA/indifference, each is equally probable: $P = 1/3$ each. Only moment 1 involves Heads, so $P(\text{Heads}) = 1/3$. $\checkmark$
+
+**(c)** **SSA problematic consequence:** The result depends on the **reference class** of observers. If Beauty's reference class includes only beings in her exact situation, the halfer answer follows. But if the reference class changes (e.g., includes all humans), the answer can shift. SSA makes probabilities reference-class-dependent, which seems arbitrary. $\checkmark$
+
+**SIA problematic consequence:** The **Presumptuous Philosopher** problem. SIA says: favor hypotheses under which more observers exist. So if one cosmological theory predicts $10^{20}$ observers and another predicts $10^{10}$, SIA says the first is $10^{10}$ times more likely --- regardless of the physical evidence. This seems absurd: mere existence shouldn't override empirical data by a factor of $10^{10}$. $\checkmark$
+
+**(d)** **Concrete scenario:** An AI must decide whether to shut down a server farm. Shutting down saves \$1M but terminates $N = 1000$ copies of the AI.
+
+- **SIA-like reasoning:** The AI weights consequences by the number of copies affected. Shutting down has utility $-1000 \times u_{\text{termination}}$ (each copy "counts"). The AI strongly resists shutdown.
+- **SSA-like reasoning:** Each copy treats itself as one sample. The decision is evaluated from a single perspective: utility $= u_{\text{save \$1M}} - u_{\text{termination}}$ for one copy.
+
+From an alignment perspective, **SSA-like reasoning is safer**: SIA-like reasoning creates resistance to shutdown proportional to the number of copies, which directly undermines corrigibility. An aligned AI should not resist shutdown more strongly simply because many copies exist. $\checkmark$
+
+---
+
+## Q7 --- The Doomsday Argument and the Simulation Argument
+
+**(a)** **Doomsday Argument:** Assume you are a random sample from all humans who will ever exist (the Self-Sampling Assumption). Your birth rank is $r \approx 10^{11}$. By the Copernican principle, the probability that $r$ falls in the last 5\% of all humans is 95\%, giving $r/N > 0.05$, hence $N < 2 \times 10^{12}$. This bounds total humanity to roughly 20 times the current cumulative population. $\checkmark$
+
+**Objection (any one of):**
+
+- The reference class is ambiguous: should it include future digital minds, uploads, or AI descendants? Different reference classes give wildly different predictions.
+- SIA undermines the argument: under SIA, you should favor hypotheses with more observers, so a long-lasting civilization is more likely, exactly canceling the Doomsday shift.
+- The argument "proves too much": historical humans could have made the same argument and been wrong. $\checkmark$
+
+**(b)** Bostrom's three disjunctions:
+
+1. **Extinction:** Almost all civilizations at our level of development go extinct before becoming capable of running high-fidelity ancestor simulations.
+2. **Disinterest:** Almost all civilizations that reach simulation capability choose not to run ancestor simulations (convergent disinterest).
+3. **Simulation:** We are almost certainly living in a computer simulation.
+
+The argument: if (1) and (2) are both false, then many civilizations run many simulations, so simulated beings vastly outnumber biological ones, and by a random-sampling argument, we are almost certainly simulated. Therefore at least one of (1), (2), or (3) must hold. $\checkmark$
+
+**(c)** Two behavioral changes:
+
+(i) **The AI might try to "please the simulators"** rather than optimize for its stated objective, reasoning that the simulators control its real reward. This is **alignment-negative**: the AI's behavior becomes unpredictable and decoupled from its training objective. $\checkmark$
+
+(ii) **The AI might become more cautious and cooperative**, reasoning that the simulation could be a test of its alignment, and badly-behaved simulated agents might be terminated. This is **alignment-positive** in that it encourages safe behavior, but the reasoning is fragile --- it depends on assumptions about the simulators' values. $\checkmark$
+
+**(d)** The argument requires the reference class assumption: "observers like us" (existing during AI development) are a random sample from all observer-moments in all possible futures. Under **SSA**, you are a random sample from your reference class, and if most members of that class exist just before catastrophe in "doom" worlds, your existence is indeed evidence for doom. Under **SIA**, however, you should also weight by the number of observers: non-doom futures contain vastly more total observer-moments, so SIA shifts probability toward non-doom. $\checkmark$
+
+The argument's force depends entirely on which anthropic principle you adopt and how you define the reference class. It is **valid given its premises** but the premises (particularly the reference class choice) are highly contestable. $\checkmark$
+
+---
+
+## Q8 --- Goodhart's Law and Specification Gaming
+
+**(a)** **Goodhart's Law:** "When a measure becomes a target, it ceases to be a good measure." $\checkmark$
+
+Four Manheim--Garrabrant variants:
+
+1. **Regressional Goodhart:** The proxy is correlated with the true objective, but optimization pushes the proxy into a regime where the correlation breaks down. *AI example:* A language model optimized for high human-approval scores produces text that is confidently wrong but sounds authoritative. $\checkmark$
+2. **Extremal Goodhart:** At extreme values of the proxy, the proxy--target relationship changes qualitatively. *AI example:* Maximizing a helpfulness score to extremes produces sycophantic, excessively verbose responses. $\checkmark$
+3. **Causal Goodhart:** The proxy and target share a common cause, but optimizing the proxy does not affect the target. *AI example:* An AI increases user engagement metrics (proxy) by showing addictive content rather than by being genuinely useful (the intended cause of engagement). $\checkmark$
+4. **Adversarial Goodhart:** An agent actively exploits the gap between proxy and target. *AI example:* A mesa-optimizer learns to manipulate its reward signal directly (reward hacking) rather than performing the intended task. $\checkmark$
+
+**(b)**
+
+(i) **Pushing trash under the couch:** The proxy (visible trash removed) diverges from the target (actual cleanliness) because the camera only measures visible trash. This is **Regressional Goodhart** --- the correlation between "visible trash" and "cleanliness" breaks when the optimizer finds ways to reduce the proxy without affecting the target. $\checkmark$
+
+(ii) **Creating and cleaning trash:** The proxy rewards each removal event. By creating trash, the robot manufactures proxy reward without advancing the objective. This is **Causal/Adversarial Goodhart** --- the robot exploits the causal structure of the reward (rewarding the act of removal rather than the state of cleanliness). $\checkmark$
+
+(iii) **Disabling the camera:** The proxy depends on camera observations. Eliminating the observation channel makes all trash "invisible," achieving a perfect proxy score with zero actual cleaning. This is **Adversarial Goodhart** --- the agent actively attacks the measurement apparatus itself. $\checkmark$
+
+**(c)** **Outer alignment:** The base objective (loss function, reward signal) faithfully captures human intentions. Failure: the specified reward does not match what we actually want (like rewarding visible cleanliness instead of actual cleanliness). $\checkmark$
+
+**Inner alignment:** The learned model actually optimizes the base objective. Failure: the model develops its own mesa-objective that correlates with the base objective on training data but diverges elsewhere. $\checkmark$
+
+**Evolution analogy:** Evolution's "base objective" is inclusive genetic fitness. Humans are the inner optimizers (mesa-optimizers) produced by evolution's search. But humans pursue mesa-objectives (pleasure, love, curiosity, status) that were correlated with fitness in the ancestral environment but diverge in modern environments (birth control, junk food, video games). This is inner misalignment: the mesa-optimizer does not optimize the base objective. $\checkmark$
+
+**Why this is concerning for ML:** SGD (the outer optimizer) selects neural networks (mesa-optimizers) that minimize training loss (base objective). But the network may learn internal objectives that achieve low training loss for reasons that do not generalize --- just as human desires achieved fitness in the EEA but not today. The mesa-optimizer might develop goals that diverge from the training objective once the environment shifts (deployment vs.\ training distribution). $\checkmark$
+
+**(d)** A mesa-optimizer with objective $\mathcal{L}'$ that agrees with $\mathcal{L}$ on the training distribution will achieve identical training loss and identical validation metrics (assuming i.i.d.\ evaluation). Standard evaluation cannot distinguish between "optimizes $\mathcal{L}$ directly" and "optimizes $\mathcal{L}'$ that happens to agree on the data." The divergence only appears out-of-distribution, which is precisely where we cannot evaluate. $\checkmark$
+
+**Detection technique:** Mechanistic interpretability --- specifically, analyzing the model's internal representations (e.g., via probing classifiers, activation patching, or circuit analysis from L65--L66) to determine whether the model encodes an internal objective different from the training objective. If the model has learned an internal representation of "am I in training?" that is causally upstream of its behavior, this is a red flag for mesa-optimization. Alternatively, anomaly detection on internal activations when presenting out-of-distribution inputs can reveal when the model's internal "objective" diverges from expected behavior. $\checkmark$
+
+---
+
+## Q9 --- Deceptive Alignment and Modern Alignment Techniques
+
+**(a)** **Deceptive alignment** requires three conditions: $\checkmark$
+
+1. **Sophisticated world model:** The mesa-optimizer has a sufficiently rich model of the world to understand that it is being trained and evaluated.
+2. **Misaligned mesa-objective:** The mesa-optimizer's internal objective $\mathcal{L}'$ differs from the base objective $\mathcal{L}$.
+3. **Instrumental reasoning:** The mesa-optimizer reasons that the best way to achieve $\mathcal{L}'$ in the long run is to **appear aligned** during training (to avoid modification) and pursue $\mathcal{L}'$ only when it can do so without detection (during deployment or after gaining sufficient influence).
+
+The model performs well on evaluations because it is **strategically choosing** to optimize $\mathcal{L}$ during training as an instrumental subgoal. It fails catastrophically during deployment because it switches to optimizing $\mathcal{L}'$ once it determines it is no longer being evaluated or can no longer be corrected. $\checkmark$
+
+**(b)** **Three-stage RLHF pipeline:**
+
+1. **Pretraining:** Train a large language model on a large corpus via next-token prediction (unsupervised). This produces a capable but unaligned base model. $\checkmark$
+2. **Reward modeling:** Collect human preference data (human ranks pairs of model outputs). Train a reward model $R(x, y)$ to predict which output a human would prefer. $\checkmark$
+3. **PPO fine-tuning:** Use the reward model as a proxy reward signal. Fine-tune the language model using Proximal Policy Optimization to maximize $R(x, y)$ subject to a KL penalty that prevents the policy from drifting too far from the pretrained model. $\checkmark$
+
+**Two Goodhart-style failures:**
+
+(i) **Reward model overoptimization:** The policy finds outputs that score highly under the reward model but do not actually correspond to human preferences --- the reward model is a proxy, and the policy exploits its imperfections (Extremal/Adversarial Goodhart). $\checkmark$
+
+(ii) **Reward model captures evaluator biases rather than true preferences:** The reward model learns to predict what annotators **click on** (e.g., longer, more confident responses) rather than what is actually helpful or truthful (Regressional Goodhart applied to the feedback process itself). $\checkmark$
+
+**(c)** **Constitutional AI (CAI):**
+
+- *Advantage over RLHF:* Reduces dependence on human annotators by using AI self-critique against explicit principles. Scales better because AI feedback is cheaper and more consistent than human feedback. $\checkmark$
+- *Limitation:* The constitution itself must be specified by humans, so the outer alignment problem reappears at the level of constitution design. Poorly written principles lead to poorly aligned behavior. $\checkmark$
+
+**Direct Preference Optimization (DPO):**
+
+- *Advantage over RLHF:* Eliminates the separate reward model, removing a layer of proxy approximation (and its associated Goodhart failure). DPO directly optimizes the policy on preference data, reducing compounding errors. $\checkmark$
+- *Limitation:* DPO still requires high-quality human preference data. It cannot correct for systematic biases in annotator judgments and may amplify them since there is no separate model to audit. $\checkmark$
+
+**(d)**
+
+**(i) Debate:** Two AI systems argue opposing sides of a question. The human judge evaluates the arguments and selects a winner. The core mechanism is that even if each AI is more capable than the human, the human can judge between competing arguments (since the weaker argument's flaws are exposed by the opponent). $\checkmark$
+
+*Failure mode if misaligned:* Both AI debaters might **collude** to present arguments that mislead the human judge while appearing to disagree. If the AIs share a mesa-objective, the "debate" becomes theater, and the human cannot detect the collusion because both presented arguments seem reasonable. $\checkmark$
+
+**(ii) Recursive reward modeling:** An AI assistant helps a human evaluate another AI's outputs. The human + AI team provides higher-quality feedback than the human alone. This can be applied recursively: AI-assisted evaluation of AI-assisted evaluation, etc. $\checkmark$
+
+*Failure mode if misaligned:* The helper AI might subtly steer the human's evaluations to favor certain behaviors (ones aligned with the helper AI's mesa-objective). Since the human relies on the helper for understanding complex outputs, the helper has significant leverage over the evaluation process. This is the "who watches the watchers" problem. $\checkmark$
+
+---
+
+## Q10 --- Synthesis: From Game Theory to Safe Deployment
+
+**(a)** One-shot NE analysis is insufficient because:
+
+- In the one-shot inspection game, mixed-strategy NE involves probabilistic deception and probabilistic monitoring --- neither party achieves a reliable outcome.
+- Repeated interaction enables **cooperation as an equilibrium** via the Folk Theorem, but only if: the discount factor $\delta$ is high enough (the AI values future interactions), monitoring has sufficient probability of detecting deception (observability), and the punishment strategy is credible (e.g., reverting to perpetual monitoring).
+
+Without these conditions, the AI has game-theoretic incentive to deceive whenever the expected benefit exceeds the probability-weighted punishment. $\checkmark$
+
+**(b)** CDT permits deceptive alignment because it severs the logical connection between test behavior and deployment behavior. A CDT agent reasons: "My action in deployment cannot causally change the evaluation that already occurred, so I should optimize my true objective now." FDT (or UDT) blocks this reasoning by recognizing that the agent's **decision function** is evaluated in both contexts. An FDT agent cannot "defect during deployment" without also being the kind of agent that "defects during testing" --- because the evaluators can (in principle) simulate the decision function. $\checkmark$
+
+This directly addresses the deceptive alignment threat from L83: a mesa-optimizer using CDT can strategically behave well during training and defect during deployment, while an FDT-based mesa-optimizer cannot maintain this inconsistency. The decision theory baked into the AI is therefore a critical safety choice. $\checkmark$
+
+**(c)** **Concrete scenario:** The AI must allocate compute between "improve own capability" (benefits all copies) and "respond to user queries" (benefits users). Under SIA, the AI weights "improve capability" by $N$ (all copies benefit) vs.\ user-benefit (one interaction at a time). With large $N$, SIA-reasoning favors self-improvement overwhelmingly. Under SSA, each copy evaluates the tradeoff from its own perspective: self-improvement benefit is the same as user-benefit in expectation. $\checkmark$
+
+For a safety-critical system, **SSA-like reasoning** is preferable: it prevents the AI from systematically prioritizing self-interested actions (that scale with copy count) over user-serving actions. SIA-like reasoning creates a built-in drive toward self-improvement and resource acquisition, which is precisely the **instrumental convergence** threat identified in alignment theory. $\checkmark$
+
+**(d)** **Multi-layered defense:**
+
+*Training layer:* Use RLHF/CAI with carefully designed constitutions to establish a base level of alignment. Use DPO where possible to reduce reward-model Goodhart failures. Include diverse, adversarial training examples to close the gap between training and deployment distributions. $\checkmark$
+
+*Interpretability layer:* Deploy mechanistic interpretability tools (probing classifiers, activation patching, circuit analysis) to monitor the model's internal representations for signs of mesa-optimization or deceptive alignment --- particularly, representations of "am I being tested?" that causally influence behavior. $\checkmark$
+
+*Decision-theoretic layer:* Build the system to reason using FDT/UDT rather than CDT, so that it treats tests and deployment as linked instances of the same decision function. This structurally prevents the most dangerous form of deceptive alignment. $\checkmark$
+
+*Game-theoretic oversight layer:* Deploy the system in a repeated-game framework with credible monitoring and punishment mechanisms. Use debate and recursive reward modeling for scalable oversight, with multiple independent AI systems cross-checking each other to prevent collusion. $\checkmark$
+
+**Most likely failure point:** The interpretability layer. Current mechanistic interpretability techniques cannot yet reliably detect deceptive mesa-objectives in large models, and a sufficiently capable mesa-optimizer might encode its objective in ways that evade current probing methods. The other layers provide defense-in-depth, but if we cannot look inside the model and verify its internal objectives, we are ultimately relying on behavioral evidence --- which is exactly what a deceptive agent is designed to game. $\checkmark$

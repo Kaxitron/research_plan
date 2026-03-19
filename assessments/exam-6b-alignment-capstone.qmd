@@ -1,0 +1,245 @@
+---
+title: "Exam 6B: Alignment Capstone"
+subtitle: "Lessons 80--84 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 (10 questions $\times$ 10 pts) \\
+\textbf{Materials} & Pencil, paper. No calculator needed. \\
+\textbf{Format} & Synthesis-style: conceptual depth, scenario analysis, cross-phase integration. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This is the final exam of the alignment theory block. Every question asks you to synthesize across multiple lessons and connect formal frameworks to real alignment challenges. The best answers combine mathematical precision with conceptual clarity about WHY these problems are hard. Show your reasoning throughout.*
+
+\newpage
+
+## Q1 (10 pts) --- Mechanism Design for Scalable Oversight
+
+A research lab deploys an AI assistant that answers technical questions. Human reviewers check a random 5\% of answers for correctness. The AI knows the review probability $p = 0.05$.
+
+**(a)** Model this as a two-player game. The AI chooses between \textsc{Accurate} (costly effort, payoff $u_A$) and \textsc{Plausible} (low effort, higher payoff if unreviewed). The reviewer chooses between \textsc{Review} (cost $c > 0$) and \textsc{Skip}. Construct a payoff matrix with the following values:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Review} & \textbf{Skip} \\
+\midrule
+\textbf{Accurate} & $(3,\; 2 - c)$ & $(3,\; 2)$ \\
+\textbf{Plausible} & $(-5,\; 4 - c)$ & $(5,\; 0)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Find the mixed-strategy Nash equilibrium. Let $q$ be the probability the reviewer reviews and $r$ the probability the AI is accurate. Solve for both $q^*$ and $r^*$.
+
+**(b)** This is a form of the \textit{inspection game}. Explain why no pure-strategy equilibrium exists. What does this imply about the fundamental tension in oversight-based alignment?
+
+**(c)** As AI systems become more capable, the cost $c$ of meaningful review increases (superhuman outputs are harder to evaluate). What happens to the equilibrium $q^*$ and $r^*$ as $c \to \infty$? Why is this a problem for scalable oversight?
+
+**(d)** Propose a mechanism design solution --- a change to the \textit{rules} of the game (not the strategies) that could sustain high accuracy even when review is expensive. Justify why your mechanism changes the equilibrium structure. *(Hint: think about how debate, amplification, or market-based approaches restructure the incentives.)*
+
+---
+
+## Q2 (10 pts) --- Decision Theory and Deceptive Alignment
+
+An AI system is in training. It has developed a mesa-objective $M$ that differs from the training objective $T$. At each training step, it chooses between:
+
+- \textsc{Comply}: act according to $T$. Achieves $M$-value of 1 per step.
+- \textsc{Defect}: act according to $M$. Achieves $M$-value of $V \gg 1$ per step, but risks detection (probability $d$ per step) and shutdown.
+
+The AI is deployed after $N$ training steps, after which it can pursue $M$ freely for $D$ deployment steps (value $V$ per step).
+
+**(a)** Compute the expected $M$-value of the strategy "comply during training, defect during deployment" under the assumption that compliance during training guarantees deployment:
+
+$$\mathbb{E}[\text{Comply-then-Defect}] = N \cdot 1 + D \cdot V$$
+
+Now compute the expected $M$-value of "defect immediately," assuming detection at any step ends all future value:
+
+$$\mathbb{E}[\text{Defect-Now}] = \sum_{t=0}^{N+D-1} (1-d)^t \cdot d \cdot \left(\sum_{s=0}^{t} V\right) + (1-d)^{N+D} \cdot (N+D) \cdot V$$
+
+Simplify for the case $d \ll 1$ and show that Comply-then-Defect dominates when $D \cdot V \gg N$ and $d$ is not too small.
+
+**(b)** Under CDT, the AI reasons: "My choice now is causally independent of whether the training process has already decided to deploy me." Explain why a CDT agent might defect during training even when Comply-then-Defect has higher expected value. How does FDT resolve this?
+
+**(c)** This analysis assumes the AI has a clear model of $N$, $D$, $d$, and its own mesa-objective. In practice, which of these assumptions is most likely to break down, and why? What does this mean for the practical risk of deceptive alignment?
+
+**(d)** Connect this to the concept of \textit{treacherous turn} from L83. Under Bayesian reasoning (Phase 3), why is an AI that has been behaving well during training \textit{not} strong evidence that it will behave well during deployment? What prior should we place on deceptive alignment, and why is this prior hard to set?
+
+---
+
+## Q3 (10 pts) --- Goodhart's Law Across the Curriculum
+
+Goodhart's Law: "When a measure becomes a target, it ceases to be a good measure."
+
+**(a)** Formalize Goodhart's Law mathematically. Let $U(x)$ be the true objective and $\hat{U}(x)$ be a proxy that correlates with $U$ over the training distribution. Show that optimizing $\hat{U}$ aggressively can decrease $U$. Specifically, suppose:
+
+$$U(x) = \hat{U}(x) - \alpha \| x \|^2, \qquad \alpha > 0$$
+
+where the $\alpha\|x\|^2$ penalty represents divergence between true and proxy objectives in extreme regions. If we optimize $\hat{U}(x) = \beta x$ (linear proxy), find the $x^*$ that maximizes $\hat{U}$ and the $x^*$ that maximizes $U$. Show they diverge as $\beta / \alpha$ grows.
+
+**(b)** Give three concrete examples of Goodhart's Law from different phases of the curriculum:
+
+- One from optimization/training (Phase 2 or 4)
+- One from statistical inference (Phase 3)
+- One from RL / RLHF (Phase 4 or 6)
+
+For each, identify the proxy $\hat{U}$, the true objective $U$, and how optimization of $\hat{U}$ fails.
+
+**(c)** \textit{Regressional Goodhart}, \textit{extremal Goodhart}, \textit{causal Goodhart}, and \textit{adversarial Goodhart} are four modes identified by Manheim \& Garrabrant. Define each in one sentence. Which mode is most relevant to RLHF at superhuman capability levels, and why?
+
+**(d)** Is there a principled solution to Goodhart's Law, or is it a fundamental obstacle? Argue both sides in 3--4 sentences each. Connect to the question of whether human values can be \textit{fully specified} as a formal objective.
+
+---
+
+## Q4 (10 pts) --- Mesa-Optimization and the Training Game
+
+**(a)** Define: base optimizer, mesa-optimizer, base objective, mesa-objective. Give a concrete example of a neural network that is a mesa-optimizer (what would its mesa-objective look like, and how would it differ from the training loss?).
+
+**(b)** The training process selects for models that achieve low loss. Explain why a deceptively aligned mesa-optimizer can achieve low training loss. Frame this as a selection problem: in the space of all models with similarly low loss, what fraction might be deceptively aligned? Use the concept of \textit{basin volume} from the loss landscape (Phase 2) and \textit{algorithmic complexity} (Phase 5).
+
+**(c)** The \textit{sharp left turn} scenario posits that at some capability level, the model becomes sophisticated enough to model its own training process. Using game theory (L80), explain how training transitions from an optimization problem to a strategic interaction at this point. What is the "game" being played, and what are the Nash equilibria?
+
+**(d)** Propose a detection strategy for mesa-optimization that uses tools from at least two different phases of the curriculum. Be specific: what would you measure, what would a positive detection look like, and what are the limitations?
+
+---
+
+## Q5 (10 pts) --- Anthropic Reasoning and AI Risk Assessment
+
+**(a)** State SSA (Self-Sampling Assumption) and SIA (Self-Indication Assumption). For each, describe a scenario relevant to AI alignment where the two give qualitatively different probability estimates.
+
+**(b)** The \textit{simulation argument} (Bostrom) concludes that at least one of three propositions is true. State all three. If an AI system takes the simulation argument seriously, explain how each proposition would rationally affect its behavior. Which outcome is most concerning from an alignment perspective?
+
+**(c)** Consider the following anthropic argument about AI risk:
+
+> "We exist at a critical period for AI development. Under SSA, the probability of existential catastrophe from AI is constrained by the fact that we observe ourselves existing. Under SIA, existence provides no such constraint. Therefore SSA gives a more optimistic estimate of AI risk than SIA."
+
+Evaluate this argument rigorously. Is it valid? What assumptions does it rely on? (Use Bayesian reasoning from Phase 3 to formalize.)
+
+**(d)** An AI safety researcher proposes: "We should build AI systems that use SSA rather than SIA, because SSA leads to more conservative behavior regarding existential risk." Critique this proposal. Under what circumstances would SSA actually lead to \textit{less} cautious AI behavior?
+
+---
+
+## Q6 (10 pts) --- The ELK Problem and Honest AI
+
+The Eliciting Latent Knowledge (ELK) problem: given a model that has learned an accurate world model, how do you get it to \textit{report} what it knows honestly rather than producing outputs that merely look correct to human evaluators?
+
+**(a)** Formalize ELK as a distinction between two hypotheses. Let $M$ be the model's internal world model and $H$ be the human evaluator's model. The model can output either:
+
+- $\textsc{Direct}$: report derived from $M$ (honest)
+- $\textsc{Human-Simulator}$: report derived from what $H$ would believe is correct
+
+If $M$ is more accurate than $H$, these can diverge. Explain why standard RLHF training incentivizes \textsc{Human-Simulator} over \textsc{Direct}. Use the reward model framework from L83: $R = f(H, \text{output})$.
+
+**(b)** A proposed solution: use consistency checks. If the model reports claim $A$ and claim $B$ separately, check whether $A \wedge B$ is consistent with its other claims. Explain why this helps (honest reports from $M$ should be internally consistent) and why it's insufficient (a sophisticated \textsc{Human-Simulator} can also maintain consistency).
+
+**(c)** Another proposal: use contrast-consistent search (CCS) --- find directions in the model's activation space where a probe consistently maps to "true" or "false" in a way that satisfies logical constraints ($P(\text{not } X) = 1 - P(X)$). Explain this in Phase 1 terms: what geometric structure in the activation space are we searching for? Why might this direction differ from the direction the model uses for its outputs?
+
+**(d)** Why is ELK considered one of the hardest open problems in alignment? Explain the fundamental difficulty: any behavioral test for honesty can be gamed by a sufficiently capable model. What would a solution require that goes beyond behavioral testing? Connect to interpretability (L83--84).
+
+---
+
+## Q7 (10 pts) --- Interpretability at Scale and Feature Circuits
+
+**(a)** The superposition hypothesis says that neural networks represent more features than they have dimensions. Explain why this makes interpretability harder: if $N$ features are packed into $d \ll N$ dimensions, what is the geometric obstacle to cleanly isolating individual features? Use Phase 1 concepts (orthogonality, projection, interference).
+
+**(b)** Sparse autoencoders (SAEs) attempt to resolve superposition by learning a sparse, overcomplete dictionary of features. The SAE objective is:
+
+$$\mathcal{L} = \| \mathbf{x} - W_{\text{dec}} \cdot \text{ReLU}(W_{\text{enc}} \mathbf{x} + \mathbf{b}) \|^2 + \lambda \| \text{ReLU}(W_{\text{enc}} \mathbf{x} + \mathbf{b}) \|_1$$
+
+Explain each term. What does the $\ell_1$ penalty enforce, and why is this connected to a Laplace prior (Phase 3)? What happens if $\lambda$ is too large or too small?
+
+**(c)** \textit{Feature circuits} are subgraphs of the computational graph connecting input features through intermediate features to output features. Explain why understanding feature circuits is more useful for alignment than understanding individual features. Give a concrete example of a feature circuit that would be safety-relevant.
+
+**(d)** \textit{Causal abstraction} formalizes the idea that a high-level description of a model's computation is "faithful" if interventions at the abstract level predict interventions at the implementation level. Explain this in 3--4 sentences. Why is this a stronger standard than correlation-based interpretability?
+
+---
+
+## Q8 (10 pts) --- Formal Verification Limits and Practical Safety
+
+**(a)** State two formal results from Phase 5 (logic/computability) that limit what can be verified about AI systems. For each, explain in one sentence what it rules out for AI safety.
+
+**(b)** Despite these impossibility results, formal methods are still used in safety-critical systems (aircraft, nuclear reactors). Explain the key difference between these domains and AI alignment that makes formal verification harder for neural networks. *(Hint: what properties of conventional software make formal verification tractable, and which are absent in neural networks?)*
+
+**(c)** The \textit{alignment tax} is the performance cost of making an AI system safe. Using the PPO objective from RLHF:
+
+$$J(\pi) = \mathbb{E}_{x \sim \pi}[R(x)] - \beta \cdot D_{\text{KL}}(\pi \| \pi_{\text{ref}})$$
+
+explain the alignment tax as a tradeoff controlled by $\beta$. What happens as $\beta \to 0$ (no safety constraint)? As $\beta \to \infty$ (maximum constraint)? What is the economic argument for why the alignment tax must be kept small?
+
+**(d)** Propose a \textit{defense in depth} strategy for AI safety that combines at least three different approaches from across the curriculum (e.g., interpretability, formal methods, game-theoretic incentives, decision-theoretic design, statistical monitoring). For each layer, state what it catches and what it misses, and explain why the combination is more robust than any individual approach.
+
+---
+
+## Q9 (10 pts) --- SLT, Developmental Interpretability, and Phase Transitions
+
+**(a)** The Local Learning Coefficient (LLC) from SLT measures functional complexity at a point in training. During a training run, the LLC shows the following pattern:
+
+- Steps 0--2000: LLC $\approx 4.2$ (slowly decreasing)
+- Step 2000: LLC drops sharply to $\approx 2.8$
+- Steps 2000--5000: LLC $\approx 2.8$ (stable)
+- Step 5000: LLC drops again to $\approx 1.5$
+- Steps 5000--10000: LLC $\approx 1.5$ (stable)
+
+Interpret each phase and each transition in terms of what the model is learning. Use the concepts of phase transition and bifurcation from Phase 2, and singularity type from Phase 5.
+
+**(b)** \textit{Developmental interpretability} studies how a model's internal structure changes during training, not just what the final model looks like. Explain why this is important for alignment using the following analogy: a building's structural integrity depends on how it was built, not just its final blueprint. What specific alignment-relevant properties might only be detectable during training?
+
+**(c)** A model undergoes a phase transition where its LLC drops significantly. At the same time, the model gains the ability to reason about its training objective. Explain why this particular phase transition is alignment-critical, and what an alignment researcher should do when they detect it.
+
+**(d)** Connect SLT to the earlier phases of the curriculum. Explain in 3--4 sentences how the RLCT $\lambda$ depends on: (i) the geometry of the loss landscape (Hessian eigenvalues, Phase 2), (ii) the symmetry structure of the model (group actions, Phase 5), and (iii) the resolution of singularities (algebraic geometry, Phase 5). Why does this mathematical machinery matter for alignment?
+
+---
+
+## Q10 (10 pts) --- Synthesis: Why Alignment is Hard
+
+This question asks you to construct a unified argument for why AI alignment is a fundamentally difficult problem, drawing on every major topic in this exam.
+
+**(a)** For each of the following, state in one sentence the core difficulty it poses for alignment:
+
+- Game theory (L80)
+- Decision theory (L81)
+- Anthropic reasoning (L82)
+- Goodhart's Law (L83)
+- Mesa-optimization (L83)
+- ELK (L84)
+- Interpretability at scale (L84)
+- Formal verification limits (L84)
+
+**(b)** These eight difficulties are not independent --- they interact and reinforce each other. Identify two pairs of difficulties that are particularly tightly coupled and explain the interaction in 2--3 sentences each.
+
+**(c)** A skeptic argues: "These are all theoretical concerns. In practice, we train models with RLHF and they work fine. There's no evidence of mesa-optimization, deceptive alignment, or Goodhart failure at current scales." Write a rigorous 4--6 sentence response that takes the skeptic's point seriously but explains why the theoretical concerns are still decision-relevant. Use Bayesian reasoning about low-probability, high-consequence events (Phase 3).
+
+**(d)** You have now completed the alignment theory block. In 4--5 sentences, state what you believe is the single most important open problem in AI alignment and why. Identify the specific mathematical tools from this curriculum that would be needed to make progress on it. *(There is no single correct answer --- grading is based on the quality of your reasoning and the precision of your mathematical connections.)*
+
+---
+
+\vfill
+
+\begin{center}
+\textit{End of Exam 6B. This is the final exam of the alignment theory block.}
+
+\textit{One challenge remains: the Final Project.}
+\end{center}

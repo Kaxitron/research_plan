@@ -1,0 +1,192 @@
+---
+title: "Exam 3A: Probability and Frequentist Statistics"
+subtitle: "Lessons 37--43 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesizes concepts across multiple lessons. Partial credit is generous for correct reasoning with arithmetic errors. The integrative thread: every ML training objective is rooted in probability and information theory.*
+
+\newpage
+
+## Q1 (10 pts) --- Probability Foundations and Bayes' Theorem
+
+A medical screening test for a rare disease has the following characteristics: the disease affects 1 in 500 people in the general population. The test has a **sensitivity** (true positive rate) of 98\% and a **specificity** (true negative rate) of 95\%.
+
+**(a)** Define the sample space and assign the prior probabilities $P(D)$ and $P(\neg D)$, where $D$ denotes having the disease. Verify the axiom $P(D) + P(\neg D) = 1$.
+
+**(b)** A person tests positive. Compute $P(D \mid +)$ using Bayes' theorem. Write out the full calculation, clearly identifying the likelihood, prior, and evidence terms.
+
+**(c)** The result from (b) is often shockingly low. In 2--3 sentences, explain why from both a mathematical and intuitive perspective. Name the specific cognitive bias that leads people to overestimate $P(D \mid +)$.
+
+**(d)** Suppose the person takes a second, independent test and also tests positive. Using your posterior from (b) as the new prior, compute the updated $P(D \mid {+}{+})$. How does sequential Bayesian updating change the picture?
+
+---
+
+## Q2 (10 pts) --- Expectation, Variance, and the Covariance Matrix
+
+Let $\mathbf{X} = (X_1, X_2)$ be a random vector with the following joint probability table:
+
+| $X_1 \backslash X_2$ | 0 | 1 | 2 |
+|---|---|---|---|
+| $-1$ | 0.10 | 0.15 | 0.05 |
+| $0$  | 0.05 | 0.20 | 0.10 |
+| $1$  | 0.05 | 0.10 | 0.20 |
+
+**(a)** Compute $E[X_1]$, $E[X_2]$, $\operatorname{Var}(X_1)$, and $\operatorname{Var}(X_2)$.
+
+**(b)** Compute $\operatorname{Cov}(X_1, X_2)$ using $\operatorname{Cov}(X_1, X_2) = E[X_1 X_2] - E[X_1]E[X_2]$. Then compute the Pearson correlation $\rho_{12}$.
+
+**(c)** Write the full $2 \times 2$ covariance matrix $\Sigma$. Find its eigenvalues and interpret: what directions do the eigenvectors of $\Sigma$ represent, and what do the eigenvalues tell you about the data?
+
+**(d)** If you perform PCA on data drawn from this distribution, what fraction of the total variance is captured by the first principal component? Connect this to the eigenvalues you computed.
+
+---
+
+## Q3 (10 pts) --- Maximum Likelihood Estimation
+
+You observe data $x_1 = 1, x_2 = 3, x_3 = 2, x_4 = 5, x_5 = 4$ assumed drawn i.i.d.\ from $\mathcal{N}(\mu, \sigma^2)$.
+
+**(a)** Write the likelihood function $L(\mu, \sigma^2 \mid \mathbf{x})$ as a product of Gaussian densities.
+
+**(b)** Take the log to obtain the log-likelihood $\ell(\mu, \sigma^2)$. State two reasons why working with the log-likelihood is preferable.
+
+**(c)** Derive the MLE $\hat{\mu}$ by solving $\dfrac{\partial \ell}{\partial \mu} = 0$. Compute the numerical answer.
+
+**(d)** State the MLE $\hat{\sigma}^2$ (no derivation required). Is this estimator biased or unbiased? What is the unbiased correction, and why does it matter for small $n$?
+
+**(e)** A Gaussian Mixture Model (GMM) has the likelihood $L(\theta) = \prod_{i=1}^n \sum_{k=1}^K \pi_k \,\mathcal{N}(x_i \mid \mu_k, \sigma_k^2)$. Explain in 2--3 sentences why you cannot simply take the log and differentiate as in (c). What algorithm resolves this, and what are its two alternating steps?
+
+---
+
+## Q4 (10 pts) --- Information Theory
+
+**(a)** Compute the entropy $H(X)$ in bits for the distribution $P = (0.5,\; 0.25,\; 0.125,\; 0.125)$. Interpret the result: on average, how many yes/no questions do you need to identify the outcome?
+
+**(b)** A model $Q$ approximates a true distribution $P$. Define the cross-entropy $H(P, Q)$ and the KL divergence $D_{\mathrm{KL}}(P \,\|\, Q)$. Prove the decomposition $H(P, Q) = H(P) + D_{\mathrm{KL}}(P \,\|\, Q)$.
+
+**(c)** Using the decomposition from (b), explain why minimizing the cross-entropy loss during training is equivalent to minimizing KL divergence. Why does this make cross-entropy the natural loss function for classification?
+
+**(d)** The **softmax with temperature** is defined as $\text{softmax}_\tau(z_i) = \dfrac{e^{z_i / \tau}}{\sum_j e^{z_j / \tau}}$. For logits $\mathbf{z} = (2, 1, 0)$, compute the softmax output for $\tau = 1$ and $\tau = 0.5$. What happens as $\tau \to 0^+$ and as $\tau \to \infty$? Explain in terms of entropy.
+
+---
+
+## Q5 (10 pts) --- Hypothesis Testing
+
+A researcher claims that a new data preprocessing method improves model accuracy on a benchmark. They train 25 models with the new method and 25 without. The mean accuracy with the method is $\bar{x}_1 = 0.83$ with $s_1 = 0.04$, and without is $\bar{x}_2 = 0.80$ with $s_2 = 0.05$.
+
+**(a)** State the null and alternative hypotheses. Is this a one-sided or two-sided test?
+
+**(b)** Compute the test statistic for the two-sample $z$-test:
+
+$$z = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}$$
+
+**(c)** The $p$-value for the $z$ you computed is approximately 0.0154 (one-sided). At significance level $\alpha = 0.05$, state your conclusion. Now state it at $\alpha = 0.01$.
+
+**(d)** State what a $p$-value **is** and two things it is **not**. Then: if the researcher had tested 20 different preprocessing methods and reported the best one, what problem arises? Name a correction and apply it.
+
+**(e)** Compute a 95\% confidence interval for the true difference $\mu_1 - \mu_2$. Explain why effect size (e.g., Cohen's $d$) provides information that the $p$-value alone does not.
+
+---
+
+## Q6 (10 pts) --- Experimental Design and Statistical Fallacies
+
+**(a)** Rank the following study designs from weakest to strongest evidence, and state one key advantage that each successive level provides over the previous one: (i) anecdotal report, (ii) observational study, (iii) randomized controlled trial (RCT), (iv) systematic review / meta-analysis.
+
+**(b)** A study finds that ice cream sales and drowning rates are positively correlated ($r = 0.85$). Someone concludes that ice cream causes drowning. Explain the fallacy, identify the likely confounder, and describe a study design that could isolate the causal effect (if one exists).
+
+**(c)** **Simpson's paradox:** Hospital A has a higher overall mortality rate than Hospital B. But for every individual disease category, Hospital A has a *lower* mortality rate. Construct a small numerical example (two disease categories, two hospitals) that demonstrates this paradox. Identify the lurking variable.
+
+**(d)** A venture capital firm reports that 80\% of their portfolio companies eventually became profitable. Explain why this statistic might be misleading by naming the specific bias at work and describing what data is being systematically ignored.
+
+---
+
+## Q7 (10 pts) --- Linear Regression
+
+Consider fitting $y = \beta_0 + \beta_1 x$ to the data points: $(1, 2)$, $(2, 3)$, $(3, 6)$, $(4, 8)$, $(5, 11)$.
+
+**(a)** Set up the matrix equation $\mathbf{y} = X\boldsymbol{\beta} + \boldsymbol{\varepsilon}$. Write out the design matrix $X$, the response vector $\mathbf{y}$, and the parameter vector $\boldsymbol{\beta}$ explicitly.
+
+**(b)** The OLS solution is $\hat{\boldsymbol{\beta}} = (X^\top X)^{-1} X^\top \mathbf{y}$. Compute $X^\top X$ and $X^\top \mathbf{y}$. Solve for $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+**(c)** Compute the residuals $\hat{\varepsilon}_i = y_i - \hat{y}_i$ and the residual sum of squares $\text{RSS} = \sum \hat{\varepsilon}_i^2$. Then compute $R^2 = 1 - \text{RSS}/\text{TSS}$ where $\text{TSS} = \sum (y_i - \bar{y})^2$.
+
+**(d)** Under the assumption $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$, prove that the OLS solution is identical to the MLE for $\boldsymbol{\beta}$. *(Hint: write the log-likelihood and show that maximizing it requires minimizing $\|\mathbf{y} - X\boldsymbol{\beta}\|^2$.)*
+
+---
+
+## Q8 (10 pts) --- Logistic Regression and Generalized Linear Models
+
+A binary classifier uses logistic regression: $P(Y = 1 \mid x) = \sigma(\beta_0 + \beta_1 x)$ where $\sigma(z) = \dfrac{1}{1 + e^{-z}}$ is the sigmoid function.
+
+**(a)** Show that the **log-odds** (logit) is a linear function of $x$:
+
+$$\ln \frac{P(Y=1 \mid x)}{P(Y=0 \mid x)} = \beta_0 + \beta_1 x$$
+
+**(b)** Write the likelihood function for $n$ independent observations $(x_i, y_i)$ where $y_i \in \{0, 1\}$. Then write the log-likelihood.
+
+**(c)** Take the derivative $\dfrac{\partial \ell}{\partial \beta_1}$ and show it equals $\sum_{i=1}^n (y_i - \hat{p}_i) x_i$ where $\hat{p}_i = \sigma(\beta_0 + \beta_1 x_i)$. Explain why there is no closed-form solution, unlike linear regression.
+
+**(d)** Generalized linear models (GLMs) unify linear and logistic regression. Name the three components of a GLM (random component, systematic component, link function) and specify each for: (i) ordinary linear regression and (ii) logistic regression.
+
+---
+
+## Q9 (10 pts) --- The MLE--Information Theory--Regression Bridge
+
+This question connects concepts across Lessons 37--43.
+
+**(a)** A neural network outputs a probability distribution $Q$ over $K$ classes via softmax. The training label is a one-hot vector $\mathbf{p}$. Write the cross-entropy loss for a single example and show it simplifies to $-\ln q_c$ where $c$ is the correct class. Then show that training with this loss is performing MLE.
+
+**(b)** Now connect to regression: under the assumption $y_i = \mathbf{x}_i^\top \boldsymbol{\beta} + \varepsilon_i$ with $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$, show that the MLE for $\boldsymbol{\beta}$ is the OLS estimator. This means: cross-entropy loss for classification and MSE loss for regression are both instances of MLE under different distributional assumptions.
+
+**(c)** Mutual information is defined as $I(X; Y) = H(X) - H(X \mid Y)$. Interpret this quantity: what does it tell you about the relationship between $X$ and $Y$? Show that $I(X; Y) = D_{\mathrm{KL}}\bigl(P(X, Y) \,\|\, P(X) P(Y)\bigr)$ and explain why $I(X; Y) = 0$ if and only if $X$ and $Y$ are independent.
+
+**(d)** A researcher computes $R^2 = 0.95$ on their training set. Give two distinct reasons why this does not guarantee the model will perform well on new data. One reason should involve a statistical concept from L41 and one from L42.
+
+---
+
+## Q10 (10 pts) --- Synthesis: From Data to Decisions
+
+A clinical trial tests whether a drug lowers blood pressure. The study enrolls 200 patients, randomized equally into treatment and control groups. The results are:
+
+| Group | $n$ | Mean reduction (mmHg) | Std.\ dev. |
+|---|---|---|---|
+| Treatment | 100 | 8.5 | 12.0 |
+| Control | 100 | 5.0 | 11.0 |
+
+**(a)** Compute the test statistic for the difference in means. Compute the 95\% confidence interval for $\mu_T - \mu_C$.
+
+**(b)** The $p$-value is approximately 0.026. Interpret this result at $\alpha = 0.05$. Now suppose the study used $\alpha = 0.01$ instead. Does your conclusion change? Discuss the tension between Type I and Type II errors in choosing $\alpha$.
+
+**(c)** Compute Cohen's $d$ for this study, using the pooled standard deviation $s_p = \sqrt{(s_T^2 + s_C^2)/2}$. Classify the effect size as small, medium, or large according to conventional benchmarks. Is the result practically meaningful?
+
+**(d)** A skeptic points out that the trial was conducted at a single hospital known for excellent patient compliance. Identify this as a potential threat to **external validity**. Name two other biases or fallacies from L42 that could affect the interpretation of clinical trial results, and explain each briefly.
+
+**(e)** If the drug company wants to run a follow-up meta-analysis combining this trial with 4 others, each of which used a different $\alpha$ level, explain why simply counting "how many trials were significant" is a flawed approach. What should the meta-analysis examine instead?

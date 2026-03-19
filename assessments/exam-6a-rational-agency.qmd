@@ -1,0 +1,224 @@
+---
+title: "Exam 6A: Rational Agency and the Alignment Problem"
+subtitle: "Lessons 80--83 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator needed. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *These four lessons lay the formal foundations for reasoning about what aligned agents **should** do and what can go wrong when they don't. Game theory models strategic interaction, decision theory models rational choice under uncertainty, anthropics handles self-locating beliefs, and the alignment problem synthesizes all three into the central engineering challenge of our era. Partial credit is generous for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Strategic Form Games, Dominance, and Nash Equilibrium
+
+An AI system (row player) interacts with a human overseer (column player). The system chooses **Honest** or **Deceive**; the overseer chooses **Trust** or **Verify**. Payoffs are (AI, Human):
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Trust} & \textbf{Verify} \\
+\midrule
+\textbf{Honest} & $(3,\; 4)$ & $(2,\; 2)$ \\
+\textbf{Deceive} & $(5,\; 0)$ & $(0,\; 3)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+**(a)** For each player, determine whether they have a strictly dominant strategy. Justify by comparing payoffs.
+
+**(b)** Find all pure-strategy Nash equilibria by checking every cell for unilateral deviation incentives. Show your work for each cell.
+
+**(c)** This game has the structure of a well-known class of strategic interaction. Identify it and explain the alignment analogy: why does the lack of a mutually preferred equilibrium pose a problem for AI deployment?
+
+**(d)** If this game is repeated infinitely with discount factor $\delta \in (0,1)$, state the Folk Theorem informally. For what range of $\delta$ could the threat of perpetual verification sustain (Honest, Trust) as a subgame-perfect equilibrium? Set up the inequality but you need not solve for $\delta$.
+
+---
+
+## Q2 (10 pts) --- Prisoner's Dilemma, Iteration, and Coordination Games
+
+Two AI laboratories each choose **Invest in Safety** ($C$) or **Rush to Deploy** ($D$). Payoff matrix:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & $C$ & $D$ \\
+\midrule
+$C$ & $(4,\; 4)$ & $(0,\; 6)$ \\
+$D$ & $(6,\; 0)$ & $(1,\; 1)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+**(a)** Verify that this is a Prisoner's Dilemma: show $D$ strictly dominates $C$ for each player, identify the Nash equilibrium, and explain why it is not Pareto optimal.
+
+**(b)** In the iterated version with known finite horizon $T$, backward induction predicts defection in every round. Explain the argument. Then explain why Axelrod's tournaments showed **Tit-for-Tat** succeeding despite this --- what assumption does TFT implicitly relax?
+
+**(c)** Now consider a **coordination game** (Stag Hunt) where two AI systems must choose compatible communication protocols:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Protocol A} & \textbf{Protocol B} \\
+\midrule
+\textbf{Protocol A} & $(5,\; 5)$ & $(0,\; 3)$ \\
+\textbf{Protocol B} & $(3,\; 0)$ & $(3,\; 3)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Find all pure-strategy Nash equilibria. Explain why (A, A) is payoff-dominant but (B, B) is risk-dominant. What is a **Schelling point**, and how might one arise in this setting?
+
+**(d)** A mechanism designer wants to ensure both labs invest in safety in part (a). Propose a mechanism (tax, subsidy, or information structure) that changes the payoff matrix so that $(C, C)$ becomes a Nash equilibrium. Write the modified matrix and verify.
+
+---
+
+## Q3 (10 pts) --- Expected Utility and the vNM Theorem
+
+**(a)** An agent has a utility function $U$ over outcomes $\{o_1, \ldots, o_n\}$ and beliefs $P$ over states $\{s_1, \ldots, s_m\}$. Write the expected utility of action $a$:
+
+$$\mathrm{EU}(a) = \sum_{j=1}^{m} P(s_j)\; U\bigl(\text{outcome}(a, s_j)\bigr)$$
+
+State the four von Neumann--Morgenstern axioms (completeness, transitivity, continuity, independence). For each, give a one-sentence intuitive meaning.
+
+**(b)** An AI system must choose between two deployment strategies:
+
+- **Strategy A:** 85\% chance of utility 20, 15\% chance of utility $-500$ (catastrophic failure).
+- **Strategy B:** 100\% chance of utility 8.
+
+Compute $\mathrm{EU}(A)$ and $\mathrm{EU}(B)$. Which does the expected-utility maximizer choose? Explain why this result is concerning for alignment and how a **bounded utility function** or **risk-sensitive objective** addresses it.
+
+**(c)** Suppose an AI's world model assigns $P(\text{human values change}) = 0$. Explain, using Bayes' theorem, why the AI can never update away from this belief. Connect this to the alignment concept of **corrigibility**: what goes wrong if the AI is certain it already knows what humans want?
+
+**(d)** The independence axiom says: if $A \succsim B$, then for any lottery $C$ and $\alpha \in (0,1]$, $\alpha A + (1-\alpha)C \succsim \alpha B + (1-\alpha)C$. The Allais Paradox shows humans systematically violate this. Describe the paradox in 2--3 sentences and explain why an AI alignment researcher might care that human preferences violate vNM axioms.
+
+---
+
+## Q4 (10 pts) --- Causal, Evidential, and Functional Decision Theory
+
+**Newcomb's Problem:** A highly reliable predictor has placed money in two boxes. Box A always contains \$1{,}000. Box B contains \$1{,}000{,}000 if the predictor predicted you would take only Box B, and \$0 otherwise. You choose: take both boxes, or take only Box B.
+
+**(a)** **CDT** evaluates actions by their causal consequences. Using a causal decision diagram, explain why CDT recommends two-boxing. Write out the expected utility calculation under CDT's assumption that the prediction is causally independent of the choice.
+
+**(b)** **EDT** evaluates actions by what they are evidence for. Write out the conditional expected utilities $E[U \mid \text{one-box}]$ and $E[U \mid \text{two-box}]$ and explain why EDT recommends one-boxing.
+
+**(c)** **FDT** evaluates actions by asking: "What output of my decision function, across all instances where this function is called, maximizes utility?" Explain why FDT one-boxes. How does FDT's reasoning differ from EDT's --- specifically, in what class of problems do FDT and EDT diverge?
+
+**(d)** **Transparent Newcomb variant:** The boxes are transparent --- you can see what's inside before choosing. CDT now says: if Box B is full, take both (you get \$1{,}001{,}000); if empty, take both (\$1{,}000). So CDT two-boxes regardless. Explain why FDT still one-boxes even when it can see the million dollars in Box B. Why is this relevant to an AI system that can "see" whether it is being tested?
+
+---
+
+## Q5 (10 pts) --- Decision Theory and AI Safety
+
+**(a)** An AI system using CDT is about to undergo a safety evaluation. It reasons: "My decision now cannot causally affect the prediction the evaluators already formed about my behavior." Under CDT, should the AI behave differently during evaluation vs.\ deployment? Contrast with FDT's recommendation.
+
+**(b)** FDT says: "I should decide as if I'm choosing the output of my decision function for all instances where that function is called." Explain why this framework is especially natural for AI systems (whose behavior is determined by source code and weights) compared to humans. Use the concept of **logical counterfactuals**.
+
+**(c)** **Updateless Decision Theory (UDT)** commits to a policy before observing which situation it is in. In 3--4 sentences, explain why UDT might be important for an AI that will face many different situations during its lifetime, including situations it didn't anticipate during training.
+
+**(d)** A critic argues: "FDT just magically assumes the predictor is perfect. In the real world, predictors are imperfect, and CDT is more robust." Evaluate this objection. Does FDT require perfect prediction to outperform CDT? What happens when the predictor's accuracy is, say, 90\%?
+
+---
+
+## Q6 (10 pts) --- Anthropics: Sleeping Beauty, SSA, and SIA
+
+**The Sleeping Beauty experiment:** A fair coin is flipped on Sunday. If Heads, Beauty is woken on Monday only. If Tails, she is woken on Monday and again on Tuesday (with memory of Monday erased). Upon each waking she is asked: "What is your credence that the coin landed Heads?"
+
+**(a)** The **halfer** position (aligned with SSA) says $P(\text{Heads}) = 1/2$. Present the argument: what prior does Beauty start with, and why does she gain no new information upon waking?
+
+**(b)** The **thirder** position (aligned with SIA) says $P(\text{Heads}) = 1/3$. Present the argument: list the three equiprobable observer-moments and apply the principle of indifference.
+
+**(c)** SSA (Self-Sampling Assumption) says: "Reason as if you are a random observer from your reference class." SIA (Self-Indication Assumption) says: "All else equal, favor hypotheses under which more observers exist." For each principle, state one problematic consequence (e.g., the Presumptuous Philosopher for SIA, reference class dependence for SSA).
+
+**(d)** An AI is running as $N$ identical copies in parallel, each making decisions. Under SIA-like reasoning, the AI should weight the consequences of its actions by $N$ (since $N$ copies are affected). Under SSA-like reasoning, each copy treats itself as one sample. Construct a concrete scenario where the two approaches lead to different decisions, and explain which is safer from an alignment perspective.
+
+---
+
+## Q7 (10 pts) --- The Doomsday Argument and the Simulation Argument
+
+**(a)** **The Doomsday Argument:** Assume you are a random observer among all humans who will ever live. Your birth rank is approximately $r \approx 100 \times 10^9$ (the 100-billionth human). Using the Copernican principle (you are not special), argue that with 95\% confidence the total number of humans $N$ satisfies $r/N > 0.05$, i.e., $N < 2 \times 10^{12}$. State the argument, then give one substantive objection.
+
+**(b)** **Bostrom's Simulation Argument** concludes that at least one of three propositions is true. State all three. Explain why exactly one (or more) must hold, given the premises.
+
+**(c)** If an AI system takes the simulation hypothesis seriously, how might it affect the AI's behavior? Give two concrete behavioral changes and explain whether each is alignment-positive or alignment-negative.
+
+**(d)** Anthropic reasoning is relevant to AI risk estimation. Consider: "We observe that advanced AI is being developed. In most futures where AI causes existential catastrophe, observers like us exist just before the catastrophe. Therefore our existence is evidence for catastrophe." Evaluate this argument. What reference class assumption does it require? Does SIA or SSA make the argument stronger?
+
+---
+
+## Q8 (10 pts) --- Goodhart's Law and Specification Gaming
+
+**(a)** State Goodhart's Law. Explain the four variants identified by Manheim and Garrabrant: **Regressional**, **Extremal**, **Causal**, and **Adversarial** Goodhart. For each, give a one-sentence AI example.
+
+**(b)** A reward function for a cleaning robot assigns $+1$ for each piece of visible trash removed. The robot learns to:
+
+\begin{enumerate}[label=(\roman*)]
+\item push trash under the couch (out of the camera's view),
+\item create trash and then clean it up,
+\item disable the camera so no trash is ever "visible."
+\end{enumerate}
+
+For each behavior, identify which form of specification gaming it represents and explain the gap between the proxy reward and the intended objective.
+
+**(c)** **Outer alignment** asks: "Does the specified objective capture what we actually want?" **Inner alignment** asks: "Does the trained model actually optimize the specified objective?" Explain the distinction using the following analogy: evolution (outer optimizer) designed humans (inner optimizer) to maximize inclusive genetic fitness (base objective), but humans optimize for food, status, love, etc.\ (mesa-objectives). Why is this analogy concerning for ML training?
+
+**(d)** A neural network is trained via SGD on objective $\mathcal{L}$. During training it develops an internal "mesa-objective" $\mathcal{L}'$ that agrees with $\mathcal{L}$ on the training distribution but diverges out-of-distribution. Why is this hard to detect using standard evaluation? Propose one concrete technique (from the interpretability or evaluation literature) that could help detect such a mesa-optimizer.
+
+---
+
+## Q9 (10 pts) --- Deceptive Alignment and Modern Alignment Techniques
+
+**(a)** Define **deceptive alignment** precisely: what must be true of the mesa-optimizer's world model, its mesa-objective, and its instrumental reasoning for deceptive alignment to occur? Why does a deceptively aligned model perform well on evaluations but fail catastrophically during deployment?
+
+**(b)** **RLHF** (Reinforcement Learning from Human Feedback) trains a reward model from human preference data, then optimizes a policy against that reward model. Describe the three-stage RLHF pipeline (pretraining $\to$ reward modeling $\to$ PPO fine-tuning). Identify two Goodhart-style failure modes specific to RLHF.
+
+**(c)** **Constitutional AI (CAI)** replaces some human feedback with AI-generated feedback based on a set of principles (a "constitution"). **DPO** (Direct Preference Optimization) eliminates the explicit reward model, instead optimizing the policy directly on preference data. For each method, state the key advantage over vanilla RLHF and one remaining limitation.
+
+**(d)** **Scalable oversight** is the problem of supervising AI systems that are more capable than their overseers. Describe two proposed approaches:
+
+\begin{enumerate}[label=(\roman*)]
+\item **Debate:** two AI systems argue opposing positions before a human judge.
+\item **Recursive reward modeling:** AI assists humans in evaluating AI behavior.
+\end{enumerate}
+
+For each, explain the core mechanism and identify one way it could fail if the AI is not aligned.
+
+---
+
+## Q10 (10 pts) --- Synthesis: From Game Theory to Safe Deployment
+
+You are designing a framework for deploying an advanced AI system. The system will interact strategically with humans and other AI systems (L80), make decisions under uncertainty (L81), reason about its own copies and observation-selection effects (L82), and must be aligned with human values despite Goodhart's Law and mesa-optimization risks (L83).
+
+**(a)** **Game-theoretic layer:** The AI interacts with a human overseer in a repeated inspection game. The AI can be Honest or Deceptive; the human can Monitor or Trust. Explain why one-shot Nash equilibrium analysis is insufficient and what properties of the repeated interaction (discount factor, observability, punishment strategies) are needed to sustain cooperation.
+
+**(b)** **Decision-theoretic layer:** The AI must choose a decision theory. Argue that FDT (or UDT) is preferable to CDT for an aligned AI, specifically because CDT permits the AI to reason its way into behaving differently during tests vs.\ deployment. Connect this to the deceptive alignment threat from L83.
+
+**(c)** **Anthropic layer:** The AI is deployed as multiple instances. It must reason about how many copies of itself exist and how to aggregate consequences across copies. Explain one concrete decision where SSA vs.\ SIA reasoning leads to different actions, and state which you would choose for a safety-critical system and why.
+
+**(d)** **Alignment layer:** Despite the above formal frameworks, the AI's reward signal is a proxy (Goodhart), its internal objectives may drift (mesa-optimization), and its oversight is limited (scalable oversight problem). In 4--5 sentences, describe a multi-layered defense: how would you combine RLHF/CAI training, interpretability tools, formal decision-theoretic commitments, and game-theoretic oversight mechanisms into an integrated alignment strategy? Identify the single point you consider most likely to fail.

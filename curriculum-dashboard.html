@@ -1362,12 +1362,12 @@
 const PHASES = [
   { id: 'p0cs', name: 'CS Foundations', color: '#64748b', hours: '73–93h' },
   { id: 'p0', name: 'ML Tools', color: '#94a3b8', hours: '11–15h' },
-  { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '98–120h' },
-  { id: 'p2', name: 'Calculus & Diff Eq', color: '#818cf8', hours: '235–280h' },
-  { id: 'p3', name: 'Probability & Statistics', color: '#f9a8d4', hours: '119–143h' },
-  { id: 'p4', name: 'Machine Learning & Interp', color: '#fbbf24', hours: '148–176h' },
-  { id: 'p5', name: 'Extended Math', color: '#e879f9', hours: '132–156h' },
-  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '52–62h' },
+  { id: 'p1', name: 'Linear Algebra', color: '#6ee7b7', hours: '105–127h' },
+  { id: 'p2', name: 'Calculus & Diff Eq', color: '#818cf8', hours: '270–315h' },
+  { id: 'p3', name: 'Probability & Statistics', color: '#f9a8d4', hours: '125–149h' },
+  { id: 'p4', name: 'Machine Learning & Interp', color: '#fbbf24', hours: '158–186h' },
+  { id: 'p5', name: 'Extended Math', color: '#e879f9', hours: '146–170h' },
+  { id: 'p6', name: 'Alignment Theory', color: '#c084fc', hours: '58–68h' },
   { id: 'p7', name: 'Research', color: '#fb923c', hours: '∞' },
 ];
 
@@ -1611,13 +1611,22 @@ const LESSONS = [
   },
   {
     id: 12, phase: 'p1', title: 'Linear Algebra Capstone',
-    status: 'not-started', hours: '9–11h', label: '12',
+    status: 'not-started', hours: '16–18h', label: '12',
     prereqs: [11], crossPhaseLinks: [],
     conceptChecks: ['Integrate all concepts', 'Apply to ML scenario', 'Identify what tool for what problem'],
     failureModes: ['Compartmentalized knowledge that doesn\'t connect across topics'],
     mvl: [{ type: 'Do', text: 'Full integration exercise connecting vectors through SVD to ML applications' }],
+    projects: [],
+  },
+  {
+    id: 85, phase: 'p1', title: 'Linear Algebra Coding Project — Visualization Suite',
+    status: 'not-started', hours: '3h', label: '85',
+    prereqs: [12], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Phase 1 Capstone — Linear Algebra Visualization Suite (~3h): (1) Transform unit circle by matrix, overlay eigenvectors showing they only stretch. (2) SVD pipeline: 4-panel figure showing V^T rotate → Σ scale → U rotate. (3) Verify rank-nullity, projection idempotency, det=product of eigenvalues numerically.' },
+      { label: 'PY', text: 'Linear Algebra Coding Project (~3h): (1) Transform unit circle by matrix, overlay eigenvectors showing they only stretch. (2) SVD pipeline: 4-panel figure showing V^T rotate, Sigma scale, U rotate. (3) Verify rank-nullity, projection idempotency, det=product of eigenvalues numerically.' },
     ],
   },
   // ─── Phase 2: Calculus — ODE, Multivariable, Vector Calc, PDE, ML Calc ───
@@ -1625,7 +1634,7 @@ const LESSONS = [
   {
     id: 13, phase: 'p2', title: 'Calculus Fundamentals',
     status: 'not-started', hours: '13–17h', label: '13',
-    prereqs: [12], crossPhaseLinks: [],
+    prereqs: [85], crossPhaseLinks: [],
     conceptChecks: ['Limits and continuity', 'Derivative as rate of change', 'Fundamental theorem of calculus'],
     failureModes: ['Rusty mechanics blocking conceptual understanding'],
     mvl: [{ type: 'Watch', text: '3Blue1Brown — Essence of Calculus series' }],
@@ -1669,20 +1678,29 @@ const LESSONS = [
   },
   {
     id: 18, phase: 'p2', title: 'Systems of ODEs and Phase Portraits',
-    status: 'not-started', hours: '11–13h', label: '18',
+    status: 'not-started', hours: '18–20h', label: '18',
     prereqs: [17, 8], crossPhaseLinks: [],
     conceptChecks: ['dx/dt = Ax', 'Eigenvalue method', 'Phase portrait classification', 'Matrix exponentials'],
     failureModes: ['Not connecting Hessian eigenvalues to training dynamics behavior'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — ODE Course' }],
+    projects: [],
+  },
+  {
+    id: 86, phase: 'p2', title: 'ODE Coding Project — System Solver & Training Dynamics',
+    status: 'not-started', hours: '4h', label: '86',
+    prereqs: [18], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'CPP', text: 'Block A Capstone — ODE System Solver & Training Dynamics (~4h): (1) Implement Euler and RK4 ODE solvers in C++. (2) Solve dx/dt = Ax for 2\u00d72 systems — classify phase portraits (node, spiral, saddle) by eigenvalue type. (3) Simulate gradient descent as Euler\'s method on the gradient flow ODE dx/dt = \u2212\u2207f(x). (4) Show SGD with momentum as a discretized damped oscillator (2nd-order ODE). (5) Output trajectories to CSV, provide a Python plotting script.' },
+      { label: 'CPP', text: 'ODE Coding Project (~4h): (1) Implement Euler and RK4 ODE solvers in C++. (2) Solve dx/dt = Ax for 2x2 systems — classify phase portraits (node, spiral, saddle) by eigenvalue type. (3) Simulate gradient descent as Euler's method on the gradient flow ODE dx/dt = -grad f(x). (4) Show SGD with momentum as a discretized damped oscillator (2nd-order ODE). (5) Output trajectories to CSV, provide a Python plotting script.' },
     ],
   },
-  // Block B: Multivariable Calculus (Trefor Bazett)
+    // Block B: Multivariable Calculus (Trefor Bazett)
   {
     id: 19, phase: 'p2', title: '3D Geometry, Curves, and Curvature',
     status: 'not-started', hours: '9–11h', label: '19',
-    prereqs: [18], crossPhaseLinks: [],
+    prereqs: [86], crossPhaseLinks: [],
     conceptChecks: ['Lines and planes in 3D', 'Parameterization and arc length', 'Curvature and osculating circle', 'TNB (Frenet-Serret) frame'],
     failureModes: ['Not connecting curvature to loss landscape geometry'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus' }],
@@ -1717,20 +1735,29 @@ const LESSONS = [
   },
   {
     id: 23, phase: 'p2', title: 'Multiple Integration and Change of Variables',
-    status: 'not-started', hours: '10–12h', label: '23',
+    status: 'not-started', hours: '17–19h', label: '23',
     prereqs: [22], crossPhaseLinks: [],
     conceptChecks: ['Double/triple integrals', 'Change of variables and Jacobian determinant', 'Gaussian integral', 'Monte Carlo integration'],
     failureModes: ['Not connecting Jacobian determinant to the determinant from Lesson 7'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Multivariable Calculus: Lagrange Multipliers and Optimization' }],
+    projects: [],
+  },
+  {
+    id: 87, phase: 'p2', title: 'Multivariable Calculus Coding Project — Optimization Lab',
+    status: 'not-started', hours: '4h', label: '87',
+    prereqs: [23], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Block B Capstone — Multivariable Optimization Lab (~4h): (1) Implement gradient descent on 2D loss surfaces with 3D visualization (matplotlib surface + contour plots). (2) Compute Jacobians and Hessians numerically; implement Newton\'s method using the Hessian. (3) Build a Lagrange multiplier solver for constrained optimization. (4) Demonstrate numerically that L2 regularization \u2194 constrained optimization (show equivalent solutions). (5) Implement Monte Carlo integration for a 10-dimensional integral and compare with analytical result.' },
+      { label: 'PY', text: 'Multivariable Calculus Coding Project (~4h): (1) Implement gradient descent on 2D loss surfaces with 3D visualization (matplotlib surface + contour plots). (2) Compute Jacobians and Hessians numerically; implement Newton's method using the Hessian. (3) Build a Lagrange multiplier solver for constrained optimization. (4) Demonstrate numerically that L2 regularization is equivalent to constrained optimization (show equivalent solutions). (5) Implement Monte Carlo integration for a 10-dimensional integral and compare with analytical result.' },
     ],
   },
-  // Block C: Vector Calculus (Trefor Bazett — 8 chapters)
+    // Block C: Vector Calculus (Trefor Bazett — 8 chapters)
   {
     id: 24, phase: 'p2', title: 'Line Integrals and Curves',
     status: 'not-started', hours: '9–11h', label: '24',
-    prereqs: [23], crossPhaseLinks: [],
+    prereqs: [87], crossPhaseLinks: [],
     conceptChecks: ['Parameterizations', 'Scalar line integrals', 'Arc length'],
     failureModes: ['Not connecting training trajectories to curves in parameter space'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Vector Calculus Ch.1' }],
@@ -1765,20 +1792,29 @@ const LESSONS = [
   },
   {
     id: 28, phase: 'p2', title: 'Stokes\', Divergence Theorem, Unified View',
-    status: 'not-started', hours: '10–12h', label: '28',
+    status: 'not-started', hours: '17–19h', label: '28',
     prereqs: [27], crossPhaseLinks: [],
     conceptChecks: ['Stokes\' theorem', 'Divergence theorem', 'Generalized Stokes\' ∫_∂Ω ω = ∫_Ω dω'],
     failureModes: ['Not seeing the unified hierarchy: FTC → FTLI → Green\'s → Stokes\' → Divergence'],
     mvl: [{ type: 'Watch', text: 'Trefor Bazett — Vector Calculus Ch.7–8' }],
+    projects: [],
+  },
+  {
+    id: 88, phase: 'p2', title: 'Vector Calculus Coding Project — Theorem Verifier',
+    status: 'not-started', hours: '3.5h', label: '88',
+    prereqs: [28], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Block C Capstone — Vector Calculus Theorem Verifier (~3.5h): (1) Numerically compute line integrals, surface integrals, and volume integrals. (2) Verify Green\'s theorem (both circulation and flux forms) on specific vector fields. (3) Verify Stokes\' theorem on a parameterized surface. (4) Verify the divergence theorem on a 3D region. (5) Visualize 2D/3D vector fields with matplotlib showing curl, divergence, and gradient fields. Demonstrate the unified hierarchy: FTC \u2192 FTLI \u2192 Green\'s \u2192 Stokes\' \u2192 Divergence.' },
+      { label: 'PY', text: 'Vector Calculus Coding Project (~3.5h): (1) Numerically compute line integrals, surface integrals, and volume integrals. (2) Verify Green's theorem (both circulation and flux forms) on specific vector fields. (3) Verify Stokes' theorem on a parameterized surface. (4) Verify the divergence theorem on a 3D region. (5) Visualize 2D/3D vector fields with matplotlib showing curl, divergence, and gradient fields. Demonstrate the unified hierarchy: FTC → FTLI → Green's → Stokes' → Divergence.' },
     ],
   },
-  // Block D: Partial Differential Equations (Jason Bramburger)
+    // Block D: Partial Differential Equations (Jason Bramburger)
   {
     id: 29, phase: 'p2', title: 'Heat Equation, Separation of Variables, and Laplace\'s Equation',
     status: 'not-started', hours: '10–12h', label: '29',
-    prereqs: [28], crossPhaseLinks: [],
+    prereqs: [88], crossPhaseLinks: [],
     conceptChecks: ['PDE classification (elliptic/parabolic/hyperbolic)', 'Heat equation', 'Boundary conditions'],
     failureModes: ['Not connecting heat equation to forward diffusion in generative models'],
     mvl: [{ type: 'Watch', text: 'Jason Bramburger — PDE Course + 3B1B "But what is a PDE?"' }],
@@ -1813,20 +1849,29 @@ const LESSONS = [
   },
   {
     id: 33, phase: 'p2', title: 'Method of Characteristics, Transport Equations, and PDEs in ML',
-    status: 'not-started', hours: '10–12h', label: '33',
+    status: 'not-started', hours: '17–19h', label: '33',
     prereqs: [32], crossPhaseLinks: [],
     conceptChecks: ['Forward diffusion = heat equation', 'Score function ∇_x log p(x)', 'Reverse SDE', 'Fokker-Planck'],
     failureModes: ['Not seeing that DALL-E/Stable Diffusion literally solve PDEs'],
     mvl: [{ type: 'Watch', text: 'Yang Song — "Score-Based Generative Modeling" tutorial lecture' }],
+    projects: [],
+  },
+  {
+    id: 89, phase: 'p2', title: 'PDE Coding Project — PDE Solver & Mini Diffusion Model',
+    status: 'not-started', hours: '4h', label: '89',
+    prereqs: [33], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Block D Capstone — PDE Solver & Mini Diffusion Model (~4h): (1) Build finite difference solvers for the heat equation (u_t = \u03b1 u_xx) and wave equation (u_tt = c\u00b2 u_xx). (2) Visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side. (3) Implement forward diffusion as progressive Gaussian noise on 2D data (\u2261 heat equation). (4) Train a small score network s_\u03b8(x,t) \u2248 \u2207_x log p_t(x). (5) Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Connect every step to PDE theory.' },
+      { label: 'PY', text: 'PDE Coding Project (~4h): (1) Build finite difference solvers for the heat equation and wave equation. (2) Visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side. (3) Implement forward diffusion as progressive Gaussian noise on 2D data (equivalent to the heat equation). (4) Train a small score network approximating the score function. (5) Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Connect every step to PDE theory.' },
     ],
   },
-  // Block E: Matrix Calculus for Deep Learning — Parr & Howard
+    // Block E: Matrix Calculus for Deep Learning — Parr & Howard
   {
     id: 34, phase: 'p2', title: 'Scalar Derivatives, Partial Derivatives, and the Gradient',
     status: 'not-started', hours: '6–8h', label: '34',
-    prereqs: [33], crossPhaseLinks: [],
+    prereqs: [89], crossPhaseLinks: [],
     conceptChecks: ['Partial derivatives', 'Gradient as vector of partials', 'Scalar derivative rules review'],
     failureModes: ['Not seeing the gradient as just a vector of partial derivatives'],
     mvl: [{ type: 'Read', text: 'Parr & Howard — "The Matrix Calculus You Need for Deep Learning" §1–3' }],
@@ -1843,20 +1888,29 @@ const LESSONS = [
   },
   {
     id: 36, phase: 'p2', title: 'Neural Network Gradients — Neurons to Backpropagation',
-    status: 'not-started', hours: '10–12h', label: '36',
+    status: 'not-started', hours: '17–19h', label: '36',
     prereqs: [35], crossPhaseLinks: [],
     conceptChecks: ['Neuron activation gradient', 'Loss gradient w.r.t. weights and bias', 'ReLU gating', 'Forward vs reverse mode autodiff'],
     failureModes: ['Not connecting the math to actual backpropagation code'],
     mvl: [{ type: 'Read', text: 'Parr & Howard — "The Matrix Calculus You Need for Deep Learning" §5–8' }],
+    projects: [],
+  },
+  {
+    id: 90, phase: 'p2', title: 'ML Calculus Coding Project — Autodiff Engine',
+    status: 'not-started', hours: '4h', label: '90',
+    prereqs: [36], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Block E Capstone — Autodiff Engine (~4h): (1) Build a reverse-mode autodiff engine in Python — Value class with computation graph, forward/backward for +, -, *, /, ReLU, tanh. (2) Train a 2-layer MLP on XOR. (3) Verify all gradients against finite differences.' },
+      { label: 'PY', text: 'ML Calculus Coding Project (~4h): (1) Build a reverse-mode autodiff engine in Python — Value class with computation graph, forward/backward for +, -, *, /, ReLU, tanh. (2) Train a 2-layer MLP on XOR. (3) Verify all gradients against finite differences.' },
     ],
   },
   // ─── Phase 3: Probability & Statistics ───
   {
     id: 37, phase: 'p3', title: 'Probability Distributions and Bayes\' Theorem',
     status: 'not-started', hours: '10–12h', label: '37',
-    prereqs: [36], crossPhaseLinks: [],
+    prereqs: [90], crossPhaseLinks: [],
     conceptChecks: ['Discrete vs continuous distributions', 'Joint, marginal, conditional', 'Bayes\' theorem as update rule'],
     failureModes: ['Treating Bayes\' theorem as just a formula rather than a reasoning framework'],
     mvl: [{ type: 'Watch', text: '3Blue1Brown — Bayes theorem' }],
@@ -1904,7 +1958,7 @@ const LESSONS = [
   },
   {
     id: 42, phase: 'p3', title: 'Experimental Design and Statistical Fallacies',
-    status: 'not-started', hours: '8–10h', label: '42',
+    status: 'not-started', hours: '11–13h', label: '42',
     prereqs: [41], crossPhaseLinks: [],
     conceptChecks: ['Simpson\'s paradox', 'Confounders', 'Power analysis', 'Common fallacies in ML papers'],
     failureModes: ['Accepting ML benchmark results without checking statistical methodology'],
@@ -2015,7 +2069,7 @@ const LESSONS = [
   },
   {
     id: 52, phase: 'p3', title: 'PAC Learning and Generalization Bounds',
-    status: 'not-started', hours: '5–7h', label: '52',
+    status: 'not-started', hours: '8–10h', label: '52',
     prereqs: [49, 40], crossPhaseLinks: [69],
     conceptChecks: ['PAC framework: probably approximately correct', 'VC dimension measures hypothesis complexity', 'Rademacher complexity: can the model fit random labels?', 'PAC-Bayes: priors tighten bounds', 'Sample complexity: how much data do you NEED?'],
     failureModes: ['Thinking generalization bounds are only theoretical — PAC-Bayes bounds are tight enough to be practical and directly inform alignment verification'],
@@ -2133,7 +2187,7 @@ const LESSONS = [
   },
   {
     id: 64, phase: 'p4', title: 'The LLM Training Pipeline',
-    status: 'not-started', hours: '10–12h', label: '64',
+    status: 'not-started', hours: '18–20h', label: '64',
     prereqs: [63], crossPhaseLinks: [40],
     conceptChecks: ['Tokenization (BPE)', 'Pre-training', 'SFT', 'RLHF', 'DPO', 'Constitutional AI', 'The bitter lesson'],
     failureModes: ['Not seeing RLHF as a Bayesian prior over behaviors'],
@@ -2155,7 +2209,7 @@ const LESSONS = [
   },
   {
     id: 66, phase: 'p4', title: 'Interpretability — Singular Learning Theory',
-    status: 'not-started', hours: '13–15h', label: '66',
+    status: 'not-started', hours: '20–22h', label: '66',
     prereqs: [65, 46], crossPhaseLinks: [],
     conceptChecks: ['RLCT as effective dimension', 'Free energy F ≈ λ·log n', 'Fisher info is singular', 'LLC for phase transitions'],
     failureModes: ['Treating SLT as inaccessible math — the core idea is intuitive'],
@@ -2163,8 +2217,17 @@ const LESSONS = [
       { type: 'Watch', text: 'Jesse Hoogland — SLT lectures' },
       { type: 'Read', text: 'Watanabe "Algebraic Geometry and SLT"' },
     ],
+    projects: [],
+  },
+  {
+    id: 91, phase: 'p4', title: 'ML & Interpretability Coding Project — From Neurons to Alignment',
+    status: 'not-started', hours: '10–14h', label: '91',
+    prereqs: [66], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'PY', text: 'Phase 4 Capstone — From Neurons to Alignment (10–14h): (1) Build a transformer from scratch in PyTorch. (2) Train on modular addition, observe grokking. (3) Reverse-engineer the learned circuit: attention patterns, Fourier features, ablation study. (4) Alignment investigation: detect memorization vs generalization mechanistically, surgical capability removal, reward hacking simulation.' },
+      { label: 'PY', text: 'ML & Interpretability Coding Project (10-14h): (1) Build a transformer from scratch in PyTorch. (2) Train on modular addition, observe grokking. (3) Reverse-engineer the learned circuit: attention patterns, Fourier features, ablation study. (4) Alignment investigation: detect memorization vs generalization mechanistically, surgical capability removal, reward hacking simulation.' },
     ],
   },
   // ─── Phase 5: Extended Mathematical Foundations ───
@@ -2172,7 +2235,7 @@ const LESSONS = [
   {
     id: 67, phase: 'p5', title: 'Turing Machines and the Halting Problem',
     status: 'not-started', hours: '9–11h', label: '67',
-    prereqs: [66], crossPhaseLinks: [],
+    prereqs: [91], crossPhaseLinks: [],
     conceptChecks: ['Church-Turing thesis', 'Halting problem undecidability', 'Rice\'s theorem', 'Implications for alignment verification'],
     failureModes: ['Thinking undecidability means "nobody has solved it yet" rather than "provably impossible in general"'],
     mvl: [{ type: 'Read', text: 'Sipser Ch.3–5' }],
@@ -2194,15 +2257,24 @@ const LESSONS = [
     conceptChecks: ['K(x) as true complexity', 'Incomputability of K', 'Solomonoff prior = Occam\'s razor', 'AIXI — optimal but uncomputable and misaligned'],
     failureModes: ['Not connecting compression ↔ generalization ↔ learning'],
     mvl: [{ type: 'Read', text: 'Li & Vitanyi Ch.1–2' }],
+    projects: [],
+  },
+  {
+    id: 92, phase: 'p5', title: 'Computability & Complexity Coding Project — Compression & Learning',
+    status: 'not-started', hours: '3.5h', label: '92',
+    prereqs: [69], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'CPP', text: 'Capstone — Complexity, Compression & Learning (~3.5h): (1) Build a Universal Turing Machine simulator in C++. (2) Estimate Kolmogorov complexity via gzip compression ratios. (3) Demonstrate compression↔generalization connection: models that compress better generalize better.' },
+      { label: 'CPP', text: 'Computability & Complexity Coding Project (~3.5h): (1) Build a Universal Turing Machine simulator in C++. (2) Estimate Kolmogorov complexity via gzip compression ratios on various data types. (3) Demonstrate the compression-generalization connection: train models of varying complexity on the same data, show that models achieving better compression also generalize better on held-out data.' },
     ],
   },
   // Abstract Algebra
   {
     id: 70, phase: 'p5', title: 'Groups — Symmetry as Mathematics',
     status: 'not-started', hours: '10–12h', label: '70',
-    prereqs: [69], crossPhaseLinks: [],
+    prereqs: [92], crossPhaseLinks: [],
     conceptChecks: ['Group axioms', 'Subgroups and Lagrange\'s theorem', 'Homomorphisms and isomorphisms', 'S_n (symmetric group)'],
     failureModes: ['Treating groups as abstract nonsense — they ARE the symmetries of neural networks'],
     mvl: [{ type: 'Read', text: 'Nathan Carter "Visual Group Theory" Ch.1–6' }],
@@ -2219,20 +2291,29 @@ const LESSONS = [
   },
   {
     id: 72, phase: 'p5', title: 'Group Actions, Representations, and NN Symmetry',
-    status: 'not-started', hours: '12–14h', label: '72',
+    status: 'not-started', hours: '19–21h', label: '72',
     prereqs: [71], crossPhaseLinks: [8, 66],
     conceptChecks: ['Group actions and orbits', 'Orbit-stabilizer theorem', 'Neural network permutation symmetry', 'Equivariant architectures', 'Representations as matrices'],
     failureModes: ['Not connecting the orbit-stabilizer theorem to SLT singularities'],
     mvl: [{ type: 'Read', text: 'Bronstein et al. — "Geometric Deep Learning" (symmetry sections)' }],
+    projects: [],
+  },
+  {
+    id: 93, phase: 'p5', title: 'Abstract Algebra Coding Project — Neural Network Symmetry Explorer',
+    status: 'not-started', hours: '3.5h', label: '93',
+    prereqs: [72], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'CPP', text: 'Capstone — Neural Network Symmetry Explorer (~3.5h): (1) Enumerate S₃ permutation symmetries of a small MLP in C++. (2) Verify orbit-stabilizer theorem numerically. (3) Test convolutional equivariance in PyTorch. (4) Visualize loss landscape along symmetry directions.' },
+      { label: 'CPP', text: 'Abstract Algebra Coding Project (~3.5h): (1) Enumerate S3 permutation symmetries of a small MLP in C++. (2) Verify orbit-stabilizer theorem numerically — count orbits and stabilizer sizes. (3) Test convolutional equivariance in PyTorch: apply a rotation to the input and to the output, verify they commute. (4) Visualize loss landscape along symmetry directions — show that permutation-equivalent weight configurations have identical loss.' },
     ],
   },
   // Topology & Geometry
   {
     id: 73, phase: 'p5', title: 'Point-Set Topology',
     status: 'not-started', hours: '12–14h', label: '73',
-    prereqs: [72], crossPhaseLinks: [],
+    prereqs: [93], crossPhaseLinks: [],
     conceptChecks: ['Open sets and topological spaces', 'Continuity (topological)', 'Compactness guarantees optima exist', 'Connectedness of loss landscape level sets'],
     failureModes: ['Thinking topology is too abstract to be useful — compactness is why optimization works'],
     mvl: [{ type: 'Read', text: 'Munkres "Topology" Ch.2–4' }],
@@ -2278,15 +2359,24 @@ const LESSONS = [
       { type: 'Watch', text: 'Jesse Hoogland & Murfet — SLT lectures' },
       { type: 'Read', text: 'Watanabe "Algebraic Geometry and SLT" Ch.1–4' },
     ],
+    projects: [],
+  },
+  {
+    id: 94, phase: 'p5', title: 'Topology & Geometry Coding Project',
+    status: 'not-started', hours: '3.5h', label: '94',
+    prereqs: [76], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'CPP', text: 'Capstone — Singularity Resolution & RLCT Calculator (~3.5h): (1) Implement blow-up resolution for plane curve singularities in C++. (2) Visualize algebraic varieties with singular points marked. (3) Estimate RLCT numerically for a 1-hidden-unit ReLU network (should get ~0.25 vs BIC prediction of 1.0).' },
+      { label: 'CPP', text: 'Topology & Geometry Coding Project (~3.5h): (1) Build a simplicial complex from point cloud data in C++ — compute Betti numbers (b0 = connected components, b1 = loops) via boundary matrices to detect topological features in data. (2) Manifold tangent space visualizer: sample points on a torus embedded in R3, estimate tangent planes via local PCA, visualize the tangent bundle. (3) Implement blow-up resolution for plane curve singularities and visualize singular vs smooth points on algebraic varieties. (4) Estimate RLCT numerically for a 1-hidden-unit ReLU network (should get lambda ~ 0.25 vs BIC prediction of 1.0) — connect the singularity structure to the permutation symmetry explored in the Algebra project.' },
     ],
   },
   // Formal Logic
   {
     id: 77, phase: 'p5', title: 'Propositional and Predicate Logic',
     status: 'not-started', hours: '8–10h', label: '77',
-    prereqs: [76], crossPhaseLinks: [],
+    prereqs: [94], crossPhaseLinks: [],
     conceptChecks: ['Propositional connectives', 'Quantifiers (∀, ∃)', 'Soundness vs completeness', 'Formal verification of AI properties'],
     failureModes: ['Not seeing logic as the language of formal safety specifications'],
     mvl: [{ type: 'Read', text: 'van Dalen "Logic and Structure" Ch.1–3' }],
@@ -2294,7 +2384,7 @@ const LESSONS = [
   },
   {
     id: 78, phase: 'p5', title: 'Gödel\'s Incompleteness and Löb\'s Theorem',
-    status: 'not-started', hours: '12–14h', label: '78',
+    status: 'not-started', hours: '19–21h', label: '78',
     prereqs: [77, 67], crossPhaseLinks: [],
     conceptChecks: ['First incompleteness theorem', 'Second incompleteness theorem', 'Löb\'s theorem constrains self-trust', 'Diagonal lemma and self-reference', 'Implications for recursive self-improvement'],
     failureModes: ['Not seeing Löb\'s theorem as directly constraining what AI systems can prove about themselves'],
@@ -2302,15 +2392,24 @@ const LESSONS = [
       { type: 'Watch', text: 'Veritasium — "Math Has a Fatal Flaw"' },
       { type: 'Read', text: 'Yudkowsky & Herreshoff — "Tiling Agents for Self-Modifying AI"' },
     ],
+    projects: [],
+  },
+  {
+    id: 95, phase: 'p5', title: 'Formal Logic Coding Project — SAT Solver & Self-Reference',
+    status: 'not-started', hours: '3.5h', label: '95',
+    prereqs: [78], crossPhaseLinks: [],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
     projects: [
-      { label: 'CPP', text: 'Capstone — SAT Solver & Self-Reference Engine (~3.5h): (1) Build a DPLL SAT solver in C++ with unit propagation. (2) Implement Gödel numbering to encode/decode logical formulas. (3) Build a toy trust checker demonstrating Löb\'s theorem. (4) Essay on impossibility results and alignment.' },
+      { label: 'CPP', text: 'Formal Logic Coding Project (~3.5h): (1) Build a DPLL SAT solver in C++ with unit propagation and clause learning. (2) Implement Godel numbering to encode/decode logical formulas as integers. (3) Build a toy trust checker demonstrating Lob\'s theorem — show a self-referential agent cannot prove its own soundness. (4) Write an essay connecting impossibility results (halting problem, Rice\'s theorem, Godel incompleteness, Lob\'s theorem) to concrete constraints on alignment verification.' },
     ],
   },
   // ─── Phase 6: Alignment Theory ───
   {
     id: 80, phase: 'p6', title: 'Game Theory Foundations',
     status: 'not-started', hours: '9–11h', label: '80',
-    prereqs: [78], crossPhaseLinks: [],
+    prereqs: [95], crossPhaseLinks: [],
     conceptChecks: ['Nash equilibrium', 'Prisoner\'s dilemma', 'Mechanism design', 'Multi-agent alignment'],
     failureModes: ['Not connecting game theory to multi-agent AI safety scenarios'],
     mvl: [{ type: 'Read', text: 'Osborne "Introduction to Game Theory" key chapters' }],
@@ -2336,7 +2435,7 @@ const LESSONS = [
   },
   {
     id: 83, phase: 'p6', title: 'The Alignment Problem — Technical Foundations',
-    status: 'not-started', hours: '12–14h', label: '83',
+    status: 'not-started', hours: '15–17h', label: '83',
     prereqs: [82], crossPhaseLinks: [64, 66],
     conceptChecks: ['Outer vs inner alignment', 'Mesa-optimization', 'Reward hacking', 'Deceptive alignment', 'Corrigibility'],
     failureModes: ['Thinking alignment is "just make the reward function right" — the problem is much deeper'],
@@ -2348,22 +2447,32 @@ const LESSONS = [
   },
   {
     id: 84, phase: 'p6', title: 'Open Problems and Research Frontiers',
-    status: 'not-started', hours: '11–13h', label: '84',
+    status: 'not-started', hours: '14–16h', label: '84',
     prereqs: [83], crossPhaseLinks: [],
     conceptChecks: ['Current alignment research landscape', 'Scalable oversight', 'Interpretability-based safety', 'Formal verification approaches', 'Your research direction'],
     failureModes: ['Analysis paralysis — at this point, start doing research, not just reading about it'],
     mvl: [
       { type: 'Read', text: 'Neel Nanda — "200 Concrete Open Problems in Mechanistic Interpretability"' },
-      { type: 'Do', text: 'Pick one open problem. Write a 1-page plan for how you\'d approach it.' },
     ],
     projects: [],
+  },
+  {
+    id: 96, phase: 'p6', title: 'Alignment Theory Capstone Project',
+    status: 'not-started', hours: '10h', label: '96',
+    prereqs: [84], crossPhaseLinks: [80, 81, 82, 83],
+    conceptChecks: [],
+    failureModes: [],
+    mvl: [],
+    projects: [
+      { label: 'PY', text: 'Alignment Theory Capstone (~10h): This is the culmination of the entire curriculum. (1) Game-Theoretic Oversight Simulator (~2h): Model AI deployment as a repeated inspection game. Implement payoff matrices, compute mixed-strategy Nash equilibria analytically and via simulation, find the critical discount factor for cooperative equilibrium via the Folk theorem. Simulate iterated play with tit-for-tat, grim trigger, and Pavlov strategies. Analyze how increasing AI capability (modifying payoffs) degrades oversight sustainability. (2) Decision-Theoretic Agent Framework (~2h): Implement CDT, EDT, and FDT decision procedures. Build a test suite of decision problems: Newcomb, Transparent Newcomb, iterated PD with predictor, counterfactual mugging. Demonstrate that FDT produces alignment-safe behavior where CDT fails — show CDT permits defection during evaluation (the deceptive alignment failure mode from L83). (3) Mesa-Optimization Detection Lab (~2.5h): Train a small CNN on a classification task with a planted spurious correlation. Use probing classifiers and activation patching to detect shortcut reliance vs. causal feature use. Implement a Bayesian hypothesis test (Phase 3) to quantify confidence the model is mesa-optimizing. Surgically remove the shortcut dependence and measure the alignment tax (performance cost of the fix). (4) Scalable Oversight via Debate (~1.5h): Implement a debate protocol where two models argue opposing sides of factual claims before an imperfect judge. Measure accuracy vs. judge information constraint. Analyze the game-theoretic incentive structure and derive conditions under which truth-telling dominates. (5) Alignment Research Proposal (~2h): Write a rigorous 2000-word proposal on an open alignment problem of your choice. Requirements: formalize the problem mathematically, cite results from at least 4 phases of the curriculum, analyze assumptions via decision theory and anthropic reasoning, identify Goodhart and mesa-optimization risks in the proposed approach. Submit as .qmd rendered to PDF.' },
+    ],
   },
 ];
 
 // Review checkpoints
 const CHECKPOINTS = [
   {
-    id: 'cp1', afterLesson: 12, phase: 'p1', title: 'Phase 1 Review: LA → ML Bridge',
+    id: 'cp1', afterLesson: 85, phase: 'p1', title: 'Phase 1 Review: LA → ML Bridge',
     exercises: [
       '<strong>Matrix decomposition relay:</strong> Take a 4×4 matrix. Compute rank, determinant, eigenvalues, SVD. For each, state one ML application.',
       '<strong>Attention from scratch:</strong> Using ONLY linear algebra, compute Q·Kᵀ for two 3-dimensional query and key vectors. Explain the resulting scalar geometrically.',
@@ -2371,7 +2480,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp2', afterLesson: 36, phase: 'p2', title: 'Phase 2 Review: Calculus → Training Bridge',
+    id: 'cp2', afterLesson: 90, phase: 'p2', title: 'Phase 2 Review: Calculus → Training Bridge',
     exercises: [
       '<strong>Full backprop trace:</strong> For a 2-layer MLP, compute the forward pass AND backward pass by hand. Verify gradients numerically.',
       '<strong>ODE → SGD:</strong> Show that gradient descent is Euler\'s method applied to the gradient flow ODE. Derive the stability condition η < 2/λ_max.',
@@ -2388,7 +2497,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp4', afterLesson: 66, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer + Interp Bridge',
+    id: 'cp4', afterLesson: 91, phase: 'p4', title: 'Phase 4 Review: Everything → Transformer + Interp Bridge',
     exercises: [
       '<strong>Mathematical audit:</strong> Open your GPT code. For every matrix, state: dimensions, rank, information bottleneck.',
       '<strong>End-to-end pipeline:</strong> Trace pre-training → SFT → RLHF. For each stage, name the math concepts and which lesson covers them.',
@@ -2397,7 +2506,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp5', afterLesson: 78, phase: 'p5', title: 'Phase 5 Review: Math → Alignment Bridge',
+    id: 'cp5', afterLesson: 95, phase: 'p5', title: 'Phase 5 Review: Math → Alignment Bridge',
     exercises: [
       '<strong>Impossibility landscape:</strong> Compare the halting problem, Rice\'s theorem, Gödel\'s incompleteness, and Löb\'s theorem. How do they collectively constrain alignment?',
       '<strong>Symmetry → Singularity:</strong> Show how permutation symmetry in a neural network creates singular points in weight space. Connect to the orbit-stabilizer theorem and RLCT.',
@@ -2405,7 +2514,7 @@ const CHECKPOINTS = [
     ],
   },
   {
-    id: 'cp6', afterLesson: 84, phase: 'p6', title: 'Phase 6 Review: Full Integration',
+    id: 'cp6', afterLesson: 96, phase: 'p6', title: 'Phase 6 Review: Full Integration',
     exercises: [
       '<strong>Alignment scenario analysis:</strong> A model shows unexpected behavior. Using game theory, decision theory, Bayesian reasoning, and interpretability — write a full analysis.',
       '<strong>Mathematical connections map:</strong> Create a concept map connecting at least 20 concepts from across all phases. Each connection must be a concrete mathematical statement.',
@@ -2415,7 +2524,7 @@ const CHECKPOINTS = [
 
 const LAYOUT = {
   width: 1580,
-  height: 1500,
+  height: 1600,
   nodes: {
     // ── Phase 0cs: CS Foundations (far left, two columns flowing down) ──
     'cs01': { x: 30,  y: 30 },
@@ -2534,6 +2643,20 @@ const LAYOUT = {
     82: { x: 1280, y: 390 },
     83: { x: 1280, y: 505 },
     84: { x: 1280, y: 620 },
+
+    // ── Coding Project Nodes ──
+    85: { x: 210,  y: 875 },   // P1 Linear Algebra project
+    86: { x: 415,  y: 480 },   // P2 Block A ODE project
+    87: { x: 415,  y: 930 },   // P2 Block B Multivariable project
+    88: { x: 540,  y: 400 },   // P2 Block C Vector Calc project
+    89: { x: 540,  y: 820 },   // P2 Block D PDE project
+    90: { x: 540,  y: 1110 },  // P2 Block E ML Calc project
+    91: { x: 880,  y: 1265 },  // P4 ML & Interp project
+    92: { x: 1080, y: 305 },   // P5 Computability project
+    93: { x: 1080, y: 585 },   // P5 Algebra project
+    94: { x: 1080, y: 950 },   // P5 Topology project
+    95: { x: 1080, y: 1145 },  // P5 Logic project
+    96: { x: 1280, y: 735 },   // P6 Alignment capstone
   },
 };
 

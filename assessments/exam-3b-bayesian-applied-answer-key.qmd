@@ -1,0 +1,406 @@
+---
+title: "Exam 3B: Bayesian and Advanced Statistics --- Answer Key"
+subtitle: "Lessons 44--52"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear reasoning. Partial credit is generous for correct setup with arithmetic errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- Bayesian Foundations and Sequential Updating
+
+**(a)** Bayes' theorem: $p(\theta \mid D) \propto p(D \mid \theta)\, p(\theta)$.
+
+- $p(\theta \mid D)$: **posterior** --- updated belief about $\theta$ after observing data.
+- $p(D \mid \theta)$: **likelihood** --- probability of the observed data given parameter value $\theta$.
+- $p(\theta)$: **prior** --- initial belief about $\theta$ before seeing data.
+
+The conjugate likelihood family for the Beta prior is the **Bernoulli / Binomial** family. Conjugacy means the posterior is in the same distributional family as the prior, so the update is a simple parameter update (no numerical integration needed).
+
+**(b)** Prior: $\text{Beta}(2, 8)$. Likelihood: $\text{Binomial}(n = 20, k = 6)$.
+
+By conjugacy, the posterior is $\text{Beta}(2 + 6,\; 8 + 14) = \text{Beta}(8, 22)$.
+
+$$\text{Posterior mean} = \frac{8}{8 + 22} = \frac{8}{30} = \mathbf{0.267}$$
+
+$$\text{MAP} = \frac{8 - 1}{8 + 22 - 2} = \frac{7}{28} = \mathbf{0.250}$$
+
+**(c)** Starting from the posterior $\text{Beta}(8, 22)$ as the new prior, with $n = 30$, $k = 3$:
+
+$$\text{Updated posterior} = \text{Beta}(8 + 3,\; 22 + 27) = \text{Beta}(11, 49)$$
+
+Processing all 50 observations at once from the original prior $\text{Beta}(2, 8)$: total defects $= 6 + 3 = 9$, total non-defects $= 14 + 27 = 41$.
+
+$$\text{Beta}(2 + 9,\; 8 + 41) = \text{Beta}(11, 49) \quad \checkmark$$
+
+**General principle:** Sequential Bayesian updating is order-independent. The posterior from processing data in any sequence is the same as processing all data at once. Today's posterior becomes tomorrow's prior.
+
+**(d)** MLE from 50 observations: $\hat{\theta}_{\text{MLE}} = 9/50 = 0.180$.
+
+Posterior mean: $11/60 \approx 0.183$.
+
+These are close because with $n = 50$ observations, the likelihood dominates the prior. The Bayesian and frequentist estimates diverge most when the sample size is small relative to the prior's strength (i.e., the prior's effective sample size $\alpha + \beta$ is comparable to $n$). As $n \to \infty$, the posterior concentrates around the MLE and the two approaches converge.
+
+---
+
+## Q2 --- MAP Estimation and Regularization
+
+**(a)** The log-likelihood is:
+
+$$\log p(\mathbf{y} \mid \mathbf{w}) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2$$
+
+The first term is a constant with respect to $\mathbf{w}$. Maximizing the log-likelihood is equivalent to minimizing
+
+$$\frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2,$$
+
+which, since $\sigma^2 > 0$ is a positive constant, is equivalent to minimizing $\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2$. $\square$
+
+**(b)** The log-prior is:
+
+$$\log p(\mathbf{w}) = -\frac{d}{2}\log(2\pi\tau^2) - \frac{1}{2\tau^2}\|\mathbf{w}\|^2$$
+
+The MAP objective is:
+
+$$\arg\max_{\mathbf{w}} \left[-\frac{1}{2\sigma^2}\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2 - \frac{1}{2\tau^2}\|\mathbf{w}\|^2\right]$$
+
+Equivalently, minimize:
+
+$$\sum_{i=1}^n (y_i - \mathbf{w}^\top \mathbf{x}_i)^2 + \frac{\sigma^2}{\tau^2}\|\mathbf{w}\|^2$$
+
+This is Ridge regression with $\lambda = \sigma^2 / \tau^2$. $\square$
+
+**(c)** A **Laplace prior** $p(w_j) \propto \exp(-\lambda |w_j|)$ yields L1 regularization under MAP.
+
+The Laplace distribution has a sharp peak at zero with heavy tails, concentrating substantial probability mass exactly at $w_j = 0$. This makes $w_j = 0$ a high-probability configuration, promoting sparsity. The Gaussian prior is smooth and dome-shaped --- it shrinks all parameters toward zero but never assigns extra mass at exactly zero, so parameters become small but rarely exactly zero.
+
+**(d)** Weight decay adds $\lambda \|\mathbf{w}\|^2$ to the loss, which is equivalent to MAP estimation under a Gaussian prior $\mathcal{N}(0, \tau^2 I)$ with $\tau^2 = \sigma^2 / \lambda$. A small weight-decay coefficient means large $\tau^2$ (a broad, weak prior --- we allow large weights), while a large weight-decay coefficient means small $\tau^2$ (a tight prior strongly preferring small weights). Using weight decay implicitly encodes the belief that good parameter configurations have small magnitudes --- that the model should implement a smooth, non-extreme function.
+
+---
+
+## Q3 --- MCMC and Approximate Inference
+
+**(a)** The acceptance ratio involves $p(\theta' \mid D) / p(\theta \mid D)$. By Bayes' theorem:
+
+$$\frac{p(\theta' \mid D)}{p(\theta \mid D)} = \frac{p(D \mid \theta')\, p(\theta') / p(D)}{p(D \mid \theta)\, p(\theta) / p(D)} = \frac{p(D \mid \theta')\, p(\theta')}{p(D \mid \theta)\, p(\theta)}$$
+
+The normalizing constant $p(D)$ cancels. $\checkmark$
+
+For a symmetric proposal $q(\theta' \mid \theta) = q(\theta \mid \theta')$, the proposal terms also cancel:
+
+$$\alpha = \min\!\left(1,\; \frac{p(D \mid \theta')\, p(\theta')}{p(D \mid \theta)\, p(\theta)}\right)$$
+
+**(b)** **Advantage of Gibbs:** No proposal distribution to tune; each step samples exactly from the full conditional, so the acceptance rate is always 1. This is especially convenient when the full conditionals have closed forms (e.g., conjugate hierarchical models).
+
+**Poor performance scenario:** When parameters are highly correlated, the full conditionals are narrow and oriented along the coordinate axes. Gibbs takes small steps because it can only move along one coordinate at a time, making it slow to explore the joint distribution. This is the "funnel" or "banana" problem.
+
+**(c)** HMC uses the gradient of the log-posterior to simulate a physical trajectory through parameter space, rather than taking random-walk steps. This allows it to make long, directed moves that follow the curvature of the distribution, suppressing the random-walk behavior that causes standard Metropolis to mix slowly in high dimensions. The key tuning parameter is the **leapfrog trajectory length** (number of leapfrog steps $L$ times step size $\varepsilon$), which controls how far the chain travels before proposing a new point.
+
+**(d)** We have $\log p(D) = \text{ELBO}(\phi) + \mathrm{KL}(q_\phi \| p(\theta \mid D))$.
+
+Proof:
+
+$$\text{ELBO}(\phi) = \mathbb{E}_{q_\phi}[\log p(D \mid \theta)] - \mathrm{KL}(q_\phi \| p(\theta))$$
+
+$$= \mathbb{E}_{q_\phi}\!\left[\log \frac{p(D, \theta)}{q_\phi(\theta)}\right] = \mathbb{E}_{q_\phi}\!\left[\log \frac{p(\theta \mid D)\, p(D)}{q_\phi(\theta)}\right]$$
+
+$$= \log p(D) + \mathbb{E}_{q_\phi}\!\left[\log \frac{p(\theta \mid D)}{q_\phi(\theta)}\right] = \log p(D) - \mathrm{KL}(q_\phi \| p(\theta \mid D))$$
+
+Since $\mathrm{KL} \geq 0$, we have $\text{ELBO}(\phi) \leq \log p(D)$, with the gap being exactly $\mathrm{KL}(q_\phi \| p(\theta \mid D))$. $\square$
+
+**Laplace approximation** is reasonable when the posterior is approximately unimodal and roughly Gaussian --- that is, when the log-posterior is well-approximated by a quadratic near its mode. This holds for large datasets (by the Bernstein--von Mises theorem) and for low-dimensional problems without strong multimodality or skew. It is fast (requires only finding the MAP and computing the Hessian) but fails for multimodal, skewed, or high-dimensional posteriors.
+
+---
+
+## Q4 --- Model Comparison and Occam's Razor
+
+**(a)** The marginal likelihood integral averages the likelihood $p(D \mid \theta)$ over the entire prior $p(\theta \mid M)$. A complex model spreads its prior probability over a large volume of parameter space, corresponding to many different data-generating patterns. For any specific observed dataset, most of that prior volume produces poor predictions, dragging down the average. A simpler model concentrates its prior on fewer patterns; if the data matches one of them, the average likelihood is high. Thus, a complex model that could explain *any* data explains *this particular* data less well on average --- the integral automatically penalizes unused flexibility.
+
+**(b)** $\mathrm{BF}_{12} = 150$ means the data are 150 times more probable under $M_1$ than under $M_2$. This is very strong evidence in favor of $M_1$.
+
+Posterior odds:
+
+$$\frac{p(M_1 \mid D)}{p(M_2 \mid D)} = \mathrm{BF}_{12} \times \frac{p(M_1)}{p(M_2)} = 150 \times \frac{1}{3} = \mathbf{50}$$
+
+The posterior odds are 50 : 1 in favor of $M_1$, so $M_1$ is strongly preferred despite the unfavorable prior.
+
+**(c)** Starting from the Laplace approximation: approximate $p(D \mid \theta, M)p(\theta \mid M)$ as a Gaussian around $\hat{\theta}$ (the MLE or MAP):
+
+$$p(D \mid M) \approx p(D \mid \hat{\theta})\, p(\hat{\theta} \mid M) \cdot (2\pi)^{k/2} |H|^{-1/2}$$
+
+where $H = -\nabla^2 \log p(D \mid \hat{\theta})$ is the observed information (Hessian of the negative log-likelihood). Taking $-2\log$:
+
+$$-2\log p(D \mid M) \approx -2\log p(D \mid \hat{\theta}) - 2\log p(\hat{\theta}) + \log|H| - k\log(2\pi)$$
+
+For large $n$, the Hessian scales as $H \approx n \hat{I}$ where $\hat{I}$ is the average Fisher information, so $\log|H| \approx k\log n + O(1)$. The prior term $-2\log p(\hat{\theta})$ is $O(1)$ and the $k\log(2\pi)$ term is absorbed into the $O(1)$ remainder. This yields:
+
+$$-2\log p(D \mid M) \approx -2\log p(D \mid \hat{\theta}) + k\log n + O(1)$$
+
+which is the BIC. $\square$
+
+**(d)** BIC prefers the **lower** value, so Model B (BIC $= 310$) is preferred over Model A (BIC $= 340$).
+
+Despite having 20 parameters versus 5, Model B's improvement in fit (the $-2\log p(D \mid \hat{\theta})$ term) more than compensates for the complexity penalty ($k \log n$). BIC implements a complexity--fit tradeoff: it accepts additional parameters only when they improve the log-likelihood by more than $(k_B - k_A) \log n / 2$. Here the 15 extra parameters are justified because the data strongly favor the richer model.
+
+---
+
+## Q5 --- Causal Inference and Graphical Models
+
+**(a)** The DAG has edges: $Z \to X$, $Z \to Y$, $X \to Y$, $X \to W$, $Y \to W$.
+
+Classifications with respect to $X \to Y$:
+
+- **(i)** $Z$ is a **confounder**: it is a common cause of $X$ and $Y$, creating the backdoor path $X \leftarrow Z \to Y$.
+- **(ii)** The direct path $X \to Y$ is the **causal pathway** of interest (neither confounder nor collider --- it is the direct causal effect).
+- **(iii)** $W$ is a **collider**: both $X$ and $Y$ point into $W$ (i.e., $X \to W \leftarrow Y$). Conditioning on $W$ would open a spurious path between $X$ and $Y$.
+
+**(b)** The ATE is $\mathbb{E}[Y(1) - Y(0)]$, where $Y(1)$ is the outcome under treatment and $Y(0)$ is the outcome under control. The **fundamental problem of causal inference** is that for any individual, we observe only one of $Y(1)$ or $Y(0)$ --- never both --- so the individual treatment effect $Y(1) - Y(0)$ is unobservable. Randomized experiments solve this by randomly assigning treatment, which makes the treatment group and control group exchangeable in expectation. This ensures that the difference in group means is an unbiased estimate of the ATE: $\mathbb{E}[\bar{Y}_{\text{treated}}] - \mathbb{E}[\bar{Y}_{\text{control}}] = \mathbb{E}[Y(1) - Y(0)]$.
+
+**(c)** The backdoor path from $X$ to $Y$ goes through $Z$: $X \leftarrow Z \to Y$. By the backdoor criterion, conditioning on $Z$ blocks this path and identifies the causal effect:
+
+$$p(Y \mid \operatorname{do}(X = x)) = \sum_z p(Y \mid X = x, Z = z)\, p(Z = z)$$
+
+This formula is valid under the assumption of **no unmeasured confounders** (also called ignorability or the backdoor criterion): there are no common causes of $X$ and $Y$ other than $Z$ that remain uncontrolled. If an unmeasured confounder exists, the adjustment formula gives a biased estimate.
+
+**(d)** For $I$ (geographic proximity to college) to be a valid instrument for the effect of $X$ (education) on $Y$ (income):
+
+1. **Relevance:** $I$ must be correlated with $X$ (living near a college affects educational attainment).
+2. **Exclusion restriction:** $I$ must affect $Y$ only through $X$ (proximity to college has no direct effect on income except via education).
+
+The DAG: $I \to X \to Y$ and $U \to X$, $U \to Y$ (ability $U$ is an unmeasured confounder). There is no arrow $I \to Y$ and no arrow $I \leftrightarrow U$.
+
+Direct regression of $Y$ on $X$ is biased because it cannot separate the causal path $X \to Y$ from the confounded path $X \leftarrow U \to Y$: more-able individuals get more education *and* earn more, inflating the naive estimate. The IV approach uses only the variation in $X$ that is driven by $I$, which is independent of $U$ by assumption. This isolates the causal component.
+
+---
+
+## Q6 --- Effect Sizes, Meta-Analysis, and Study Design
+
+**(a)** Cohen's $d = \text{(mean difference)} / s$:
+
+- Study 1: $d_1 = 4 / 15 \approx \mathbf{0.27}$ (small effect)
+- Study 2: $d_2 = 12 / 15 = \mathbf{0.80}$ (large effect)
+
+Study 2 provides stronger evidence for a **clinically meaningful** effect despite its non-significant $p$-value. Study 1's tiny effect ($d = 0.27$) achieves significance only because $n = 5000$ provides enormous statistical power to detect even trivial differences. Statistical significance (small $p$) reflects sample size and precision; practical significance (large $d$) reflects effect magnitude. The two can diverge when large samples detect negligible effects or small samples miss meaningful ones.
+
+**(b)** The fixed-effects estimator:
+
+$$\hat{\mu}_{\text{FE}} = \frac{\sum_{i=1}^K w_i \hat{\mu}_i}{\sum_{i=1}^K w_i}, \qquad w_i = \frac{1}{\text{SE}_i^2}$$
+
+Studies with smaller $\text{SE}_i$ (more precise estimates, typically from larger samples) receive larger weights $w_i = 1/\text{SE}_i^2$. This is the inverse-variance weighting that minimizes the variance of the combined estimate.
+
+**Assumption:** All studies estimate the **same true effect** $\mu$ (homogeneity). When this assumption is violated (between-study heterogeneity exists), the alternative is a **random-effects** meta-analysis.
+
+**(c)** When $\tau^2$ is very large, $w_i^* = 1/(\text{SE}_i^2 + \tau^2) \approx 1/\tau^2$ for all $i$ --- the weights become approximately **equal** regardless of individual study precision. The overall variance of $\hat{\mu}_{\text{RE}}$ increases because we are acknowledging additional uncertainty from between-study variability. In essence, the random-effects model says the studies are estimating *different* true effects drawn from a distribution, so even a very precise study only estimates its own local effect; the extra $\tau^2$ term inflates each study's effective variance, widening the confidence interval for the overall mean effect.
+
+**(d)** Three specific design flaws:
+
+1. **Small sample size ($n = 10$ per group):** Low statistical power means both high false-negative rates and, conditional on a "significant" finding, a high probability that the result is a false positive or a grossly overestimated effect (the winner's curse). The study cannot reliably detect moderate effects.
+
+2. **No pre-registration:** Without pre-specified hypotheses and analysis plans, the researcher has freedom to choose among outcomes, analysis methods, and subgroups *after* seeing the data. This researcher degrees of freedom inflates the effective number of tests beyond what is reported.
+
+3. **Five outcome measures without multiple-comparison correction:** Testing $m = 5$ outcomes at $\alpha = 0.05$ gives a family-wise error rate of $1 - (1 - 0.05)^5 \approx 0.23$ --- roughly a 23\% chance of at least one false positive, far above the nominal 5\%.
+
+**Redesign:** Pre-register a single primary outcome with a clear hypothesis. Conduct a power analysis to determine adequate sample size (e.g., $n \geq 50$ per group for a medium effect). If multiple outcomes are of interest, declare them secondary and apply a Bonferroni or Holm correction ($\alpha_{\text{adj}} = 0.05 / 5 = 0.01$ per test). Report all analyses, including null results.
+
+---
+
+## Q7 --- Concentration Inequalities and Sub-Gaussian Variables
+
+**(a)** **Markov:** For $X \geq 0$ and $t > 0$:
+
+$$\Pr(X \geq t) = \Pr(X \cdot \mathbf{1}_{X \geq t} \geq t \cdot \mathbf{1}_{X \geq t}) \leq \frac{\mathbb{E}[X]}{t}$$
+
+since $\mathbb{E}[X] \geq \mathbb{E}[X \cdot \mathbf{1}_{X \geq t}] \geq t \cdot \Pr(X \geq t)$.
+
+**Chebyshev:** Apply Markov to the nonnegative random variable $Y = (X - \mu)^2$:
+
+$$\Pr(|X - \mu| \geq t) = \Pr\!\bigl((X - \mu)^2 \geq t^2\bigr) \leq \frac{\mathbb{E}[(X - \mu)^2]}{t^2} = \frac{\sigma^2}{t^2} \quad \square$$
+
+**(b)** For i.i.d.\ Bernoulli($p$) variables, $X_i \in [0, 1]$, so $a_i = 0$, $b_i = 1$, $b_i - a_i = 1$:
+
+$$\Pr\!\left(|\bar{X}_n - p| \geq t\right) \leq 2\exp\!\left(-\frac{2n^2 t^2}{n}\right) = 2\exp(-2nt^2)$$
+
+For $t = 0.01$ and failure probability $\leq 0.05$:
+
+$$2\exp(-2n(0.01)^2) \leq 0.05 \implies \exp(-0.0002n) \leq 0.025$$
+
+$$0.0002n \geq \ln(40) \approx 3.689 \implies n \geq 18{,}445$$
+
+So approximately $n \geq \mathbf{18{,}445}$ coin flips are needed.
+
+**(c)** A bounded random variable $X \in [a, b]$ satisfies the **Hoeffding lemma**: for any $s \in \mathbb{R}$,
+
+$$\mathbb{E}\!\bigl[e^{s(X - \mu)}\bigr] \leq \exp\!\left(\frac{s^2(b - a)^2}{8}\right)$$
+
+This is exactly the sub-Gaussian condition with $\sigma^2 = (b-a)^2/4$, i.e., $\sigma = (b-a)/2$:
+
+$$\mathbb{E}\!\bigl[e^{s(X-\mu)}\bigr] \leq \exp\!\left(\frac{s^2 \sigma^2}{2}\right) \text{ with } \sigma = \frac{b-a}{2} \quad \square$$
+
+*(The Hoeffding lemma is proved via convexity of the exponential: since $X \in [a,b]$, $e^{sX}$ is bounded by the linear interpolation between $e^{sa}$ and $e^{sb}$, and optimizing over $s$ gives the stated bound.)*
+
+**(d)** For a single model $h$, by Hoeffding (assuming loss $\in [0, 1]$):
+
+$$\Pr(|\hat{R}_n(h) - R(h)| \geq \varepsilon) \leq 2\exp(-2n\varepsilon^2)$$
+
+For $m$ models, we need the bound to hold for all $m$ simultaneously. By the **union bound**:
+
+$$\Pr\!\left(\exists\, h_j : |\hat{R}_n(h_j) - R(h_j)| \geq \varepsilon\right) \leq 2m\exp(-2n\varepsilon^2)$$
+
+Setting this $\leq \delta$ and solving:
+
+$$n \geq \frac{1}{2\varepsilon^2}\log\!\left(\frac{2m}{\delta}\right) = O\!\left(\frac{\log m}{\varepsilon^2}\right) \quad \square$$
+
+The $\log m$ factor arises because the union bound sums failure probabilities across all $m$ models. Each individual model needs a failure probability of $\delta / m$ (by Bonferroni logic), and inverting the exponential tail gives the logarithmic dependence. The dependence is only logarithmic (rather than linear in $m$) because exponential concentration inequalities are very tight: reducing the per-model failure probability from $\delta$ to $\delta / m$ costs only an additive $\log m$ in the exponent, hence an additive $\log m$ in the sample size.
+
+---
+
+## Q8 --- Markov Chains, Stationarity, and Mixing
+
+**(a)** Each row of $P$ sums to 1: $(0.5 + 0.3 + 0.2) = 1$, $(0.2 + 0.6 + 0.2) = 1$, $(0.1 + 0.3 + 0.6) = 1$. All entries are nonneg. So $P$ is a valid stochastic matrix. $\checkmark$
+
+$\boldsymbol{\pi}_1 = \boldsymbol{\pi}_0 P = (1, 0, 0) \begin{pmatrix} 0.5 & 0.3 & 0.2 \\ 0.2 & 0.6 & 0.2 \\ 0.1 & 0.3 & 0.6 \end{pmatrix} = \mathbf{(0.5,\; 0.3,\; 0.2)}$
+
+$\boldsymbol{\pi}_2 = \boldsymbol{\pi}_1 P = (0.5, 0.3, 0.2)P$:
+
+- $\pi_2(1) = 0.5(0.5) + 0.3(0.2) + 0.2(0.1) = 0.25 + 0.06 + 0.02 = 0.33$
+- $\pi_2(2) = 0.5(0.3) + 0.3(0.6) + 0.2(0.3) = 0.15 + 0.18 + 0.06 = 0.39$
+- $\pi_2(3) = 0.5(0.2) + 0.3(0.2) + 0.2(0.6) = 0.10 + 0.06 + 0.12 = 0.28$
+
+$$\boldsymbol{\pi}_2 = \mathbf{(0.33,\; 0.39,\; 0.28)}$$
+
+**(b)** The system $\boldsymbol{\pi} P = \boldsymbol{\pi}$ with $\pi_1 + \pi_2 + \pi_3 = 1$ gives:
+
+$$\pi_1 = 0.5\pi_1 + 0.2\pi_2 + 0.1\pi_3$$
+$$\pi_2 = 0.3\pi_1 + 0.6\pi_2 + 0.3\pi_3$$
+$$\pi_3 = 0.2\pi_1 + 0.2\pi_2 + 0.6\pi_3$$
+
+From equation 1: $0.5\pi_1 = 0.2\pi_2 + 0.1\pi_3 \implies 5\pi_1 = 2\pi_2 + \pi_3$.
+
+From equation 3: $0.4\pi_3 = 0.2\pi_1 + 0.2\pi_2 \implies 2\pi_3 = \pi_1 + \pi_2$.
+
+Using $\pi_3 = 1 - \pi_1 - \pi_2$ in $2\pi_3 = \pi_1 + \pi_2$:
+
+$$2(1 - \pi_1 - \pi_2) = \pi_1 + \pi_2 \implies 2 = 3\pi_1 + 3\pi_2 \implies \pi_1 + \pi_2 = 2/3$$
+
+So $\pi_3 = 1/3$.
+
+From $5\pi_1 = 2\pi_2 + 1/3$ and $\pi_2 = 2/3 - \pi_1$:
+
+$$5\pi_1 = 2(2/3 - \pi_1) + 1/3 = 4/3 - 2\pi_1 + 1/3 = 5/3 - 2\pi_1$$
+
+$$7\pi_1 = 5/3 \implies \pi_1 = 5/21$$
+
+$$\pi_2 = 2/3 - 5/21 = 14/21 - 5/21 = 9/21 = 3/7$$
+
+$$\pi_3 = 1/3 = 7/21$$
+
+$$\boldsymbol{\pi} = \left(\frac{5}{21},\; \frac{9}{21},\; \frac{7}{21}\right) \approx \mathbf{(0.238,\; 0.429,\; 0.333)}$$
+
+Verification: $5/21 + 9/21 + 7/21 = 21/21 = 1$. $\checkmark$
+
+**(c)** A Markov chain is **ergodic** if it has a unique stationary distribution to which it converges from any initial state. Two sufficient conditions:
+
+1. **Irreducibility:** Every state can be reached from every other state (the chain is not decomposable into disjoint communicating classes).
+2. **Aperiodicity:** The chain does not cycle deterministically through states (the GCD of return times to any state is 1).
+
+The chain above is ergodic: it is irreducible (all entries of $P$ are strictly positive, so every state reaches every other in one step) and aperiodic (the diagonal entries are positive, so each state has a self-loop, guaranteeing period 1).
+
+**(d)** The spectral gap $\gamma = 1 - \lambda_2$, where $\lambda_2$ is the second-largest eigenvalue magnitude of $P$. A small spectral gap means $\lambda_2 \approx 1$, so $P^t$ converges slowly to the rank-1 matrix $\mathbf{1}\boldsymbol{\pi}^\top$ --- the non-stationary components decay as $\lambda_2^t$, which takes $O(1/\gamma)$ steps to shrink to $\varepsilon$.
+
+For multimodal distributions, the Markov chain (e.g., MCMC sampler) must transition between well-separated modes. If the modes are separated by regions of low probability, the transition probabilities between modes are tiny, making $\lambda_2$ very close to 1 and the spectral gap small. The chain gets "trapped" in one mode for a long time before transitioning to another, leading to slow mixing and unreliable posterior estimates.
+
+---
+
+## Q9 --- Score Function, Fisher Information, and the Cram\'{e}r--Rao Bound
+
+**(a)** The score function:
+
+$$s(\mu) = \frac{\partial \ell}{\partial \mu} = \frac{1}{\sigma^2}\sum_{i=1}^n (X_i - \mu) = \frac{n(\bar{X} - \mu)}{\sigma^2}$$
+
+At the true parameter $\mu_0$: $\mathbb{E}[s(\mu_0)] = \dfrac{n(\mathbb{E}[\bar{X}] - \mu_0)}{\sigma^2} = \dfrac{n(\mu_0 - \mu_0)}{\sigma^2} = 0$. $\checkmark$
+
+This holds in general because $\mathbb{E}[s(\theta)] = \int \frac{\partial}{\partial\theta} \log p(x \mid \theta)\, p(x \mid \theta)\, dx = \int \frac{\partial p(x \mid \theta)}{\partial \theta}\, dx = \frac{\partial}{\partial\theta} \int p(x \mid \theta)\, dx = \frac{\partial}{\partial \theta}(1) = 0$, where the interchange of derivative and integral holds under regularity conditions.
+
+**(b)** The second derivative of the log-likelihood:
+
+$$\frac{\partial^2 \ell}{\partial \mu^2} = -\frac{n}{\sigma^2}$$
+
+This is a constant (no randomness), so:
+
+$$I(\mu) = -\mathbb{E}\!\left[\frac{\partial^2 \ell}{\partial \mu^2}\right] = \frac{n}{\sigma^2}$$
+
+Alternatively, $I(\mu) = \mathbb{E}[s(\mu)^2] = \mathbb{E}\!\left[\frac{n^2(\bar{X} - \mu)^2}{\sigma^4}\right] = \frac{n^2}{\sigma^4} \cdot \frac{\sigma^2}{n} = \frac{n}{\sigma^2}$. $\checkmark$
+
+**(c)** The Cram\'{e}r--Rao bound gives:
+
+$$\operatorname{Var}(\hat{\mu}) \geq \frac{1}{I(\mu)} = \frac{\sigma^2}{n}$$
+
+For the sample mean $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$:
+
+$$\operatorname{Var}(\bar{X}) = \frac{1}{n^2}\sum_{i=1}^n \operatorname{Var}(X_i) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}$$
+
+This equals the Cram\'{e}r--Rao bound exactly, so $\bar{X}$ is **efficient** --- it achieves the minimum possible variance among all unbiased estimators. $\square$
+
+**(d)** The Fisher information matrix $I(\theta)$ defines how distinguishable nearby parameter values are: moving from $\theta$ to $\theta + d\theta$ changes the distribution by an amount measured by the KL divergence $\mathrm{KL}(p_\theta \| p_{\theta + d\theta}) \approx \frac{1}{2} d\theta^\top I(\theta)\, d\theta$. This makes $I(\theta)$ a Riemannian metric on the parameter manifold, where "distance" corresponds to statistical distinguishability rather than Euclidean distance in parameter space.
+
+The ordinary gradient $\nabla L$ points in the direction of steepest descent in Euclidean parameter space, but this direction depends on the arbitrary parameterization. The **natural gradient** $\tilde{\nabla}L = I(\theta)^{-1}\nabla L$ points in the direction of steepest descent in the statistical manifold --- it measures the change in the *distribution* rather than the change in the *parameters*. This makes it reparameterization-invariant and typically leads to faster convergence, especially for exponential families where the Fisher information captures the curvature of the log-partition function.
+
+---
+
+## Q10 --- PAC Learning, VC Dimension, and Generalization Bounds
+
+**(a)** A concept class $\mathcal{C}$ is PAC (Probably Approximately Correct) learnable if there exists a learning algorithm $A$ and a polynomial $p(1/\varepsilon, 1/\delta)$ such that for every target concept $c \in \mathcal{C}$, every distribution $\mathcal{D}$ over the input space, and every $\varepsilon, \delta > 0$: given at least $n \geq p(1/\varepsilon, 1/\delta)$ i.i.d.\ samples from $\mathcal{D}$ labeled by $c$, the algorithm $A$ outputs a hypothesis $h$ satisfying $\Pr[R(h) \leq \varepsilon] \geq 1 - \delta$.
+
+- $\varepsilon$ controls **accuracy**: the maximum allowed generalization error (the "approximately correct" part).
+- $\delta$ controls **confidence**: the probability that the algorithm fails to achieve accuracy $\varepsilon$ (the "probably" part --- with probability at least $1 - \delta$, the algorithm succeeds).
+
+**(b)** **VC dimension of lines in $\mathbb{R}^2$ is 3.**
+
+*(i) Shattering 3 points:* Place three points in general position (not collinear), e.g., $(0,0)$, $(1,0)$, $(0,1)$. There are $2^3 = 8$ labelings ($+/-$ for each point). For each labeling, a line can be drawn separating the $+$ points from the $-$ points:
+
+- All same label: line to one side of all three.
+- One point opposite: line separating that point from the other two. Since the points form a triangle, each vertex can be separated from the opposite edge.
+
+All 8 dichotomies are achievable, so these 3 points are shattered. $\checkmark$
+
+*(ii) Cannot shatter 4 points:* For any 4 points in general position in $\mathbb{R}^2$, consider their convex hull. If all 4 are in convex position (forming a quadrilateral), label the two diagonally opposite points $+$ and the other two $-$. No line can separate diagonally opposite vertices of a convex quadrilateral. If one point is inside the triangle formed by the other three, label the interior point $+$ and the three exterior points $-$; no line separates the interior from the surrounding triangle. In either case, at least one of the $2^4 = 16$ dichotomies is unrealizable.
+
+Therefore $d_{\mathrm{VC}} = 3$. $\square$
+
+**(c)** In the VC bound $R(h) \leq \hat{R}_n(h) + O\!\left(\sqrt{\frac{d_{\mathrm{VC}} \log(n/d_{\mathrm{VC}}) + \log(1/\delta)}{n}}\right)$:
+
+- $R(h)$: true (population) risk.
+- $\hat{R}_n(h)$: empirical risk on the training sample of size $n$.
+- The square root term is the **generalization gap** --- the worst-case difference between empirical and true risk.
+- $d_{\mathrm{VC}} \log(n/d_{\mathrm{VC}})$: complexity of the hypothesis class (more complex $\Rightarrow$ larger gap).
+- $\log(1/\delta)$: confidence term (higher confidence $\Rightarrow$ larger gap).
+- $n$ in the denominator: more data $\Rightarrow$ smaller gap.
+
+For the gap $\leq 0.05$ with $d_{\mathrm{VC}} = 50$:
+
+$$\sqrt{\frac{50 \cdot \log(n/50)}{n}} \lesssim 0.05 \implies \frac{50 \log(n/50)}{n} \lesssim 0.0025$$
+
+Trying $n = 200{,}000$: $50 \cdot \log(4000) / 200{,}000 \approx 50 \cdot 8.3 / 200{,}000 \approx 0.002$. This works.
+
+A rough order-of-magnitude estimate: $n \sim O(d_{\mathrm{VC}} / \varepsilon^2) \sim 50 / 0.0025 = 20{,}000$ ignoring the log factor, or approximately $n \approx \mathbf{10^5}$ to $\mathbf{10^6}$ including it. *(Any reasonable estimate in this range receives full credit.)*
+
+**(d)** The Rademacher complexity $\mathfrak{R}_n(\mathcal{H}) = \mathbb{E}\!\left[\sup_{h \in \mathcal{H}} \frac{1}{n}\sum_{i=1}^n \sigma_i h(x_i)\right]$ measures how well the best hypothesis in $\mathcal{H}$ can correlate with pure random noise (the Rademacher labels $\sigma_i = \pm 1$). If $\mathcal{H}$ is rich enough that some $h$ can achieve high correlation with *any* random labeling, then $\mathcal{H}$ has the capacity to fit noise rather than signal --- which is exactly what overfitting means. A high Rademacher complexity indicates that the hypothesis class can memorize random patterns, suggesting it may also memorize noise in real training data rather than learning the true underlying structure.
+
+**Advantage over VC dimension:** Rademacher complexity is **data-dependent** --- it is computed on the actual sample $\{x_1, \ldots, x_n\}$ and thus reflects the complexity of $\mathcal{H}$ restricted to the data distribution actually encountered, not worst-case over all possible inputs. This often yields tighter generalization bounds because it captures the effective complexity of the hypothesis class on the relevant data, whereas VC dimension is a single worst-case number that may be loose for benign distributions.

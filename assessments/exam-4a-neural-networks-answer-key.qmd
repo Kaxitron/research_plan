@@ -1,0 +1,508 @@
+---
+title: "Exam 4A: Neural Networks and Machine Learning --- Answer Key"
+subtitle: "Lessons 53--64"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear reasoning. Partial credit is generous for correct setup with arithmetic errors. Conceptual parts are graded on precision of language --- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- Perceptrons, Activation Functions, and Linear Separability
+
+**(a)** With $\mathbf{w} = (2, -1)$, $b = -1$, and step activation:
+
+| $(x_1, x_2)$ | $z = 2x_1 - x_2 - 1$ | $\hat{y} = \mathbf{1}[z \geq 0]$ |
+|:---:|:---:|:---:|
+| $(0, 0)$ | $-1$ | $0$ |
+| $(0, 1)$ | $-2$ | $0$ |
+| $(1, 0)$ | $1$ | $1$ |
+| $(1, 1)$ | $0$ | $1$ |
+
+This is the AND-NOT function (equivalently: $x_1 \wedge \neg x_2$): output is 1 only when $x_1 = 1$ and $x_2 = 0$. $\checkmark$
+
+**(b)** The XOR labels are: $(0,0) \to 0$, $(0,1) \to 1$, $(1,0) \to 1$, $(1,1) \to 0$.
+
+For a separating line $w_1 x_1 + w_2 x_2 + b = 0$, the class-0 points must satisfy $w_1 x_1 + w_2 x_2 + b < 0$ and class-1 points must satisfy $w_1 x_1 + w_2 x_2 + b \geq 0$ (or vice versa). Assume class 1 is on the positive side:
+
+- $(0,0) \to 0$: $b < 0$ \quad (i)
+- $(0,1) \to 1$: $w_2 + b \geq 0$ \quad (ii)
+- $(1,0) \to 1$: $w_1 + b \geq 0$ \quad (iii)
+- $(1,1) \to 0$: $w_1 + w_2 + b < 0$ \quad (iv)
+
+Adding (ii) and (iii): $w_1 + w_2 + 2b \geq 0$, so $w_1 + w_2 \geq -2b > 0$ (using (i): $b < 0$ implies $-2b > 0$). But (iv) says $w_1 + w_2 < -b$. Since $b < 0$, we get $-b > 0$. However, from (ii) + (iii): $w_1 + w_2 \geq -2b$, but (iv): $w_1 + w_2 < -b$. So $-2b \leq w_1 + w_2 < -b$, which gives $-2b < -b$, hence $-b < 0$, contradicting $b < 0$. $\square$
+
+**(c)** A two-layer XOR network:
+
+**Layer 1** (two hidden neurons, step activation):
+
+- $h_1 = \mathbf{1}[x_1 + x_2 - 0.5 \geq 0]$ (OR gate: $w = (1, 1)$, $b = -0.5$)
+- $h_2 = \mathbf{1}[x_1 + x_2 - 1.5 \geq 0]$ (AND gate: $w = (1, 1)$, $b = -1.5$)
+
+**Layer 2** (one output neuron):
+
+- $\hat{y} = \mathbf{1}[h_1 - h_2 - 0.5 \geq 0]$ (outputs 1 when $h_1 = 1$ and $h_2 = 0$)
+
+Verification:
+
+| $(x_1, x_2)$ | $h_1$ (OR) | $h_2$ (AND) | $h_1 - h_2 - 0.5$ | $\hat{y}$ | XOR |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| $(0,0)$ | 0 | 0 | $-0.5$ | 0 | 0 $\checkmark$ |
+| $(0,1)$ | 1 | 0 | $0.5$ | 1 | 1 $\checkmark$ |
+| $(1,0)$ | 1 | 0 | $0.5$ | 1 | 1 $\checkmark$ |
+| $(1,1)$ | 1 | 1 | $-0.5$ | 0 | 0 $\checkmark$ |
+
+**(d)**
+
+- **Step function:** Range $\{0, 1\}$. Not differentiable at $z = 0$ (discontinuity). Cannot compute gradients, so no gradient-based training.
+- **Sigmoid:** Range $(0, 1)$. Differentiable everywhere. $\sigma'(z) = \sigma(z)(1-\sigma(z))$, with maximum $\sigma'(0) = 0.25$.
+- **ReLU:** Range $[0, \infty)$. Not differentiable at $z = 0$ (corner), differentiable elsewhere. Conventionally $\sigma'(0) = 0$.
+
+Sigmoid replaced step functions because it provides a smooth, differentiable output that allows gradient-based learning. ReLU later supplanted sigmoid because sigmoid's gradient saturates (approaches 0) for large $|z|$, causing vanishing gradients in deep networks, while ReLU has a constant gradient of 1 for $z > 0$. Additionally, ReLU is computationally cheaper (no exponential) and introduces beneficial sparsity (exactly zero output for $z < 0$).
+
+---
+
+## Q2 --- Loss Functions and Gradient Descent Dynamics
+
+**(a)** Binary cross-entropy:
+
+$$\mathcal{L}_{\text{BCE}} = -\left[y\log\hat{y} + (1-y)\log(1-\hat{y})\right] = -\left[y\log\sigma(z) + (1-y)\log(1-\sigma(z))\right]$$
+
+MSE:
+
+$$\mathcal{L}_{\text{MSE}} = \frac{1}{2}(\hat{y} - y)^2 = \frac{1}{2}(\sigma(z) - y)^2$$
+
+Derivatives with respect to $z$:
+
+$$\frac{\partial \mathcal{L}_{\text{BCE}}}{\partial z} = \sigma(z) - y$$
+
+(This elegant simplification is a key property of cross-entropy with sigmoid.)
+
+$$\frac{\partial \mathcal{L}_{\text{MSE}}}{\partial z} = (\sigma(z) - y) \cdot \sigma'(z) = (\sigma(z) - y) \cdot \sigma(z)(1 - \sigma(z))$$
+
+**(b)** At $y = 1$, $z = -5$: $\sigma(-5) \approx 0.0067$, $\sigma'(-5) \approx 0.0067 \times 0.9933 \approx 0.00665$.
+
+$$\left|\frac{\partial \mathcal{L}_{\text{BCE}}}{\partial z}\right| = |0.0067 - 1| = 0.9933$$
+
+$$\left|\frac{\partial \mathcal{L}_{\text{MSE}}}{\partial z}\right| = |0.0067 - 1| \times 0.00665 \approx 0.9933 \times 0.00665 \approx 0.0066$$
+
+Cross-entropy produces a gradient roughly **150$\times$ larger**. When the model makes a confident wrong prediction, the sigmoid is in its saturated region where $\sigma'(z) \approx 0$. MSE's gradient includes this $\sigma'(z)$ factor, making learning extremely slow. Cross-entropy avoids this by canceling the sigmoid derivative, maintaining a strong gradient signal regardless of confidence level. This means cross-entropy can recover quickly from confident wrong predictions, while MSE gets "stuck."
+
+**(c)**
+
+| Strategy | Gradient computations per epoch | Properties |
+|---|---|---|
+| Full-batch ($B = N = 10{,}000$) | 10,000 (one update) | Exact gradient, no noise. Slow per-update; poor parallelism utilization for very large $N$. |
+| Mini-batch ($B = 64$) | 10,000 ($10{,}000/64 \approx 156$ updates) | Low-variance gradient estimate. Good GPU utilization. Standard choice. |
+| Pure SGD ($B = 1$) | 10,000 (10,000 updates) | Very noisy gradient (high variance). Many updates per epoch; implicit regularization from noise; poor hardware utilization (no parallelism within a step). |
+
+All three compute 10,000 individual sample gradients per epoch. The difference is how they batch and average them: larger batches give lower-variance gradient estimates but fewer parameter updates per epoch. Mini-batch SGD balances gradient quality with update frequency and exploits GPU parallelism.
+
+**(d)** SGD update: $w_{t+1} = w_t - \eta \nabla L(w_t)$.
+
+$L(w) = (w^2 - 4)^2$, so $L'(w) = 2(w^2 - 4)(2w) = 4w(w^2 - 4) = 4w^3 - 16w$.
+
+Step 1: $w_0 = 4$, $L'(4) = 4(64) - 16(4) = 256 - 64 = 192$.
+
+$$w_1 = 4 - 0.01(192) = 4 - 1.92 = 2.08$$
+
+Step 2: $L'(2.08) = 4(2.08)^3 - 16(2.08) = 4(8.999) - 33.28 = 35.994 - 33.28 = 2.714$.
+
+$$w_2 = 2.08 - 0.01(2.714) = 2.08 - 0.027 = 2.053$$
+
+Critical points: $L'(w) = 4w(w^2 - 4) = 0$ gives $w = 0, \pm 2$.
+
+$$L''(w) = 12w^2 - 16$$
+
+- $w = 0$: $L''(0) = -16 < 0$ --- **local maximum** ($L(0) = 16$)
+- $w = 2$: $L''(2) = 48 - 16 = 32 > 0$ --- **local minimum** ($L(2) = 0$, global)
+- $w = -2$: $L''(-2) = 48 - 16 = 32 > 0$ --- **local minimum** ($L(-2) = 0$, global)
+
+From $w_0 = 4$, the gradient is positive and pushes $w$ toward $w = 2$ (the nearest minimum). In this case gradient descent converges to a global minimum, but this is not guaranteed in general --- the outcome depends on initialization. From $w_0 = 0.01$ (near the local maximum), gradient descent would move toward $w = 2$ as well, but the symmetric loss means initialization determines which global minimum is found.
+
+---
+
+## Q3 --- Backpropagation, Vanishing Gradients, and Residual Connections
+
+**(a)** Forward pass with $x = 1$, $w_1 = w_2 = w_3 = 0.5$, $y = 1$:
+
+$$z_1 = 0.5 \times 1 = 0.5$$
+$$a_1 = \tanh(0.5) \approx 0.4621$$
+$$z_2 = 0.5 \times 0.4621 = 0.2311$$
+$$a_2 = \tanh(0.2311) \approx 0.2269$$
+$$z_3 = 0.5 \times 0.2269 = 0.1135$$
+$$L = \frac{1}{2}(0.1135 - 1)^2 = \frac{1}{2}(0.7866) = 0.3933$$
+
+**(b)** Backward pass. First compute $\tanh'$ values:
+
+$$\tanh'(z_1) = 1 - \tanh^2(0.5) = 1 - 0.4621^2 = 1 - 0.2135 = 0.7865$$
+$$\tanh'(z_2) = 1 - \tanh^2(0.2311) = 1 - 0.2269^2 = 1 - 0.0515 = 0.9485$$
+
+Starting from the loss:
+
+$$\frac{\partial L}{\partial z_3} = z_3 - y = 0.1135 - 1 = -0.8865$$
+
+**Gradient for $w_3$:**
+
+$$\frac{\partial L}{\partial w_3} = \frac{\partial L}{\partial z_3} \cdot a_2 = (-0.8865)(0.2269) = -0.2012$$
+
+**Gradient for $w_2$:**
+
+$$\frac{\partial L}{\partial a_2} = \frac{\partial L}{\partial z_3} \cdot w_3 = (-0.8865)(0.5) = -0.4433$$
+$$\frac{\partial L}{\partial z_2} = \frac{\partial L}{\partial a_2} \cdot \tanh'(z_2) = (-0.4433)(0.9485) = -0.4205$$
+$$\frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial z_2} \cdot a_1 = (-0.4205)(0.4621) = -0.1943$$
+
+**Gradient for $w_1$:**
+
+$$\frac{\partial L}{\partial a_1} = \frac{\partial L}{\partial z_2} \cdot w_2 = (-0.4205)(0.5) = -0.2102$$
+$$\frac{\partial L}{\partial z_1} = \frac{\partial L}{\partial a_1} \cdot \tanh'(z_1) = (-0.2102)(0.7865) = -0.1653$$
+$$\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial z_1} \cdot x = (-0.1653)(1) = -0.1653$$
+
+**(c)** Ratio:
+
+$$\frac{|\partial L / \partial w_1|}{|\partial L / \partial w_3|} = \frac{0.1653}{0.2012} \approx 0.822$$
+
+Already with just 3 layers, the gradient at layer 1 is about 82\% of the gradient at layer 3. In general, the gradient at layer 1 involves a product of factors:
+
+$$\frac{\partial L}{\partial w_1} \propto \prod_{\ell=1}^{D-1} \left|w_{\ell+1} \cdot \tanh'(z_\ell)\right|$$
+
+Since $|\tanh'(z)| \leq 1$ and here each factor $|w_\ell \tanh'(z_\ell)| < 1$, this product shrinks exponentially with depth: $\sim c^D$ for some $c < 1$. For $D = 50$, the ratio would be $\sim 0.82^{50/3} \approx 0.82^{17} \approx 0.04$ (rough estimate). This is the **vanishing gradient problem**: early layers receive exponentially smaller gradients and learn exponentially more slowly.
+
+**(d)** With the residual connection $a_\ell = \tanh(w_\ell a_{\ell-1}) + a_{\ell-1}$:
+
+$$\frac{\partial a_\ell}{\partial a_{\ell-1}} = w_\ell \cdot \tanh'(z_\ell) + 1$$
+
+The critical difference is the additive $+1$ term. Without residuals, the gradient flows through the product $\prod_\ell w_\ell \tanh'(z_\ell)$, which shrinks exponentially when each factor is less than 1. With residuals, each factor becomes $w_\ell \tanh'(z_\ell) + 1$, which is always at least approximately 1 (even if $w_\ell \tanh'(z_\ell) \approx 0$). The product of terms each close to 1 does not shrink exponentially. This creates a "gradient highway" that allows gradients to flow directly from the loss to early layers, enabling training of very deep networks (100+ layers).
+
+---
+
+## Q4 --- Universal Approximation, Depth, and Representation Learning
+
+**(a)** For $x \geq 0$: $\text{ReLU}(x) = x$ and $\text{ReLU}(-x) = 0$, so $\text{ReLU}(x) + \text{ReLU}(-x) = x = |x|$. $\checkmark$
+
+For $x < 0$: $\text{ReLU}(x) = 0$ and $\text{ReLU}(-x) = -x$, so $\text{ReLU}(x) + \text{ReLU}(-x) = -x = |x|$. $\checkmark$
+
+One-hidden-layer ReLU network computing $|x|$:
+
+$$W^{(1)} = \begin{pmatrix} 1 \\ -1 \end{pmatrix}, \quad \mathbf{b}^{(1)} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}, \quad \mathbf{w}^{(2)} = (1, 1), \quad b^{(2)} = 0$$
+
+Forward pass: $\mathbf{h} = \text{ReLU}(W^{(1)} x + \mathbf{b}^{(1)}) = (\text{ReLU}(x),\; \text{ReLU}(-x))$, then $\hat{y} = \mathbf{w}^{(2)} \mathbf{h} + b^{(2)} = \text{ReLU}(x) + \text{ReLU}(-x) = |x|$. $\square$
+
+**(b)** A single-layer network needs $O(10^6)$ neurons for $10^6$ linear regions.
+
+A 10-layer network with $n$ neurons per layer creates $O(n^{10})$ regions. Setting $n^{10} = 10^6$:
+
+$$n = 10^{6/10} = 10^{0.6} \approx 4$$
+
+So approximately **4 neurons per layer** (40 total) achieve the same expressiveness as **$10^6$ neurons** in a single layer. This exponential advantage of depth is one of the primary motivations for deep learning: depth provides exponentially more representational power per parameter.
+
+**(c)** Two benefits of BatchNorm:
+
+1. **Training dynamics (internal covariate shift):** During training, each layer's input distribution shifts as the parameters of preceding layers change. BatchNorm stabilizes these distributions by normalizing each mini-batch to zero mean and unit variance, allowing higher learning rates and reducing sensitivity to initialization.
+
+2. **Gradient flow:** By normalizing activations, BatchNorm prevents them from growing very large or collapsing to zero, which keeps the gradient magnitudes in a healthy range across layers. This mitigates both vanishing and exploding gradients.
+
+The parameters $\gamma$ (scale) and $\beta$ (shift) are learnable because fixed normalization to $\mathcal{N}(0,1)$ would restrict the network's representational power --- for example, it would force every layer to have zero-centered activations, which would prevent the network from learning that a particular layer should have non-zero mean or non-unit variance when that is optimal for the task.
+
+**(d)** CNN feature hierarchy for an image classifier:
+
+- **Layer 1:** Edge detectors --- horizontal, vertical, and diagonal edges; simple color contrasts (Gabor-like filters).
+- **Layer 3:** Texture and pattern detectors --- corners, T-junctions, simple textures like stripes or grids; combinations of edges.
+- **Layer 5:** Part and object detectors --- eyes, wheels, faces, object parts; semantically meaningful features.
+
+Transfer learning works because the lower-layer features (edges, textures, patterns) are universal across visual domains. A network trained on ImageNet has already learned an excellent "visual vocabulary" of low-level and mid-level features that apply equally well to X-rays or histology slides. Only the final layers, which combine these universal features into domain-specific classifications, need to be retrained. This reveals that deep networks learn a hierarchy of increasingly abstract, reusable representations --- the early layers function as a general-purpose visual feature extractor.
+
+---
+
+## Q5 --- Convolutions, Pooling, and CNN Architecture
+
+**(a)** The 1D convolution (valid, stride 1):
+
+$$y_j = \sum_{m=0}^{2} k_m \cdot x_{j+m}$$
+
+With $\mathbf{k} = (1, 0, -1)$ and $\mathbf{x} = (2, 5, 3, 8, 1)$:
+
+$$y_0 = 1(2) + 0(5) + (-1)(3) = 2 - 3 = -1$$
+$$y_1 = 1(5) + 0(3) + (-1)(8) = 5 - 8 = -3$$
+$$y_2 = 1(3) + 0(8) + (-1)(1) = 3 - 1 = 2$$
+
+Output: $\mathbf{y} = (-1, -3, 2)$.
+
+This kernel computes a **finite difference** (discrete derivative / edge detector): it measures $x_j - x_{j+2}$, detecting changes (edges) in the signal. Positive output indicates the signal is decreasing; negative output indicates it is increasing.
+
+**(b)**
+
+(i) Output spatial dimensions: With padding $p = 2$, kernel size $k = 5$, stride $s = 1$:
+
+$$H_{\text{out}} = \frac{H_{\text{in}} + 2p - k}{s} + 1 = \frac{32 + 4 - 5}{1} + 1 = 32$$
+
+So output spatial dimensions: $32 \times 32$.
+
+(ii) Parameters per filter: $5 \times 5 \times 3 + 1 = 76$ (kernel weights + bias). Total for 16 filters: $16 \times 76 = \mathbf{1{,}216}$.
+
+(iii) Output shape: $32 \times 32 \times 16$.
+
+**(c)** **Weight sharing** means that the same filter (set of weights) is applied at every spatial location in the input. Instead of learning separate weights for each position, a single set of kernel weights is "slid" across the entire image.
+
+A fully connected layer mapping the same input to the same number of outputs: input size = $32 \times 32 \times 3 = 3{,}072$; output size = $32 \times 32 \times 16 = 16{,}384$. Parameters: $3{,}072 \times 16{,}384 + 16{,}384 = \mathbf{50{,}347{,}008}$ (over 50 million).
+
+Compare with 1,216 parameters for the convolutional layer --- a reduction by a factor of about **41,000$\times$**. Weight sharing is essential because: (1) it makes the model tractable in terms of memory and computation, (2) it encodes the prior that the same feature (e.g., an edge) can appear anywhere in the image (translation equivariance), and (3) the massive reduction in parameters prevents overfitting.
+
+**(d)** After $2 \times 2$ max pooling with stride 2 on the $32 \times 32 \times 16$ output:
+
+$$\text{Output shape} = 16 \times 16 \times 16$$
+
+Max pooling contributes to translation invariance by taking the maximum activation in each local region: a small shift of a feature in the input (say, 1 pixel) still activates the same pooling output, because the maximum is taken over a $2 \times 2$ window. Modern architectures sometimes remove pooling because: (1) strided convolutions can achieve the same downsampling effect while being learnable, (2) pooling discards spatial information that may be valuable (e.g., for dense prediction tasks like segmentation), and (3) vision transformers use patch embeddings and self-attention, which handle spatial reasoning differently without requiring explicit pooling.
+
+---
+
+## Q6 --- Scaling Laws, Compute-Optimal Training, and Emergence
+
+**(a)** Computing the loss reduction from $10\times$ scaling:
+
+$$10^{-\alpha_N} = 10^{-0.076} \approx 0.839 \quad \text{(16.1\% loss reduction from 10$\times$ more parameters)}$$
+
+$$10^{-\alpha_D} = 10^{-0.095} \approx 0.803 \quad \text{(19.7\% loss reduction from 10$\times$ more data)}$$
+
+Increasing data by $10\times$ reduces loss more than increasing parameters by $10\times$ ($\alpha_D > \alpha_N$). However, under Kaplan's original analysis, increasing parameters was considered more efficient because they assumed a fixed number of training tokens, and larger models converge faster (require fewer passes over data). The key insight is that these two scaling dimensions are not independent --- both matter, and the Chinchilla result clarified their relative importance.
+
+**(b)** The Chinchilla finding says parameters and data should scale equally. The 70B/300B-token allocation (Kaplan-style) is **parameter-overscaled**: it has far more parameters than data to support them. The 10B/2T-token allocation (Chinchilla-style) achieves **lower loss** because it provides 200 tokens per parameter ($2 \times 10^{12} / 10^{10} = 200$), ensuring the model has enough training signal to fully utilize its capacity. The Kaplan allocation provides only $\sim 4.3$ tokens per parameter ($3 \times 10^{11} / 7 \times 10^{10} \approx 4.3$), meaning the 70B model is severely undertrained --- its parameters are not used efficiently because there is insufficient data to fit them properly.
+
+**(c)** Examples of emergent capabilities:
+
+1. **Multi-step arithmetic** (e.g., 3-digit addition): small models (<1B parameters) perform at near-chance, while large models (>100B) achieve near-perfect accuracy.
+2. **Chain-of-thought reasoning**: the ability to solve multi-step word problems by generating intermediate steps appears abruptly at scale.
+
+The "mirage" critique (Schaeffer et al., 2023) argues that emergence can be an artifact of the evaluation metric rather than a true discontinuity. If accuracy is measured with a sharp threshold (exact match: either the answer is perfectly right or scores 0), a smooth underlying improvement in log-likelihood can appear as a sudden jump when the model crosses the threshold. Using smoother metrics (e.g., token-level edit distance, partial credit, or log-likelihood itself) often reveals that performance improves continuously with scale, and the "emergent" appearance is created by the nonlinear mapping from continuous capability to discrete accuracy.
+
+**(d)** With $C = 6 \times 10^{23}$ FLOPs and the Chinchilla ratio of 20 tokens per parameter:
+
+The approximate relation is $C \approx 6ND$ (where the factor of 6 accounts for the forward and backward pass FLOPs). With $D = 20N$:
+
+$$C = 6N \cdot 20N = 120N^2$$
+
+$$N_{\text{opt}} = \sqrt{\frac{C}{120}} = \sqrt{\frac{6 \times 10^{23}}{120}} = \sqrt{5 \times 10^{21}} \approx 7.07 \times 10^{10} \approx \mathbf{70\text{B parameters}}$$
+
+$$D_{\text{opt}} = 20N \approx 20 \times 7 \times 10^{10} = \mathbf{1.4 \times 10^{12} \text{ tokens (1.4T)}}$$
+
+Number of training steps: each step processes $B = 2 \times 10^6$ tokens, so:
+
+$$\text{Steps} = \frac{D}{B} = \frac{1.4 \times 10^{12}}{2 \times 10^{6}} = 7 \times 10^{5} = \mathbf{700{,}000 \text{ steps}}$$
+
+Verification: total FLOPs $= 6NB \times \text{steps} = 6 \times 7 \times 10^{10} \times 2 \times 10^6 \times 7 \times 10^5 = 5.88 \times 10^{23} \approx 6 \times 10^{23}$. $\checkmark$
+
+---
+
+## Q7 --- Attention Mechanism and Multi-Head Attention
+
+**(a)** Computing $S = QK^\top / \sqrt{d_k}$ with $d_k = 2$, so $\sqrt{d_k} = \sqrt{2}$:
+
+$$QK^\top = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \end{pmatrix} = \begin{pmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 1 & 1 & 1 \end{pmatrix}$$
+
+$$S = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 0 & 0.5 \\ 0 & 1 & 0.5 \\ 1 & 1 & 1 \end{pmatrix} \approx \begin{pmatrix} 0.707 & 0 & 0.354 \\ 0 & 0.707 & 0.354 \\ 0.707 & 0.707 & 0.707 \end{pmatrix}$$
+
+Applying row-wise softmax $A_{ij} = \frac{e^{S_{ij}}}{\sum_k e^{S_{ik}}}$:
+
+**Row 1:** $e^{0.707} \approx 2.028$, $e^{0} = 1$, $e^{0.354} \approx 1.425$. Sum $= 4.453$.
+
+$$A_1 \approx (0.456,\; 0.225,\; 0.320)$$
+
+**Row 2:** $e^{0} = 1$, $e^{0.707} \approx 2.028$, $e^{0.354} \approx 1.425$. Sum $= 4.453$.
+
+$$A_2 \approx (0.225,\; 0.456,\; 0.320)$$
+
+**Row 3:** $e^{0.707} \approx 2.028$, $e^{0.707} \approx 2.028$, $e^{0.707} \approx 2.028$. Sum $= 6.084$.
+
+$$A_3 \approx (0.333,\; 0.333,\; 0.333)$$
+
+Token 1 attends most to itself, token 2 attends most to itself, and token 3 attends equally to all three (because its query has equal components in both dimensions).
+
+**(b)** If $q_i, k_j \in \mathbb{R}^{d_k}$ with entries i.i.d.\ $\mathcal{N}(0,1)$:
+
+$$q_i \cdot k_j = \sum_{m=1}^{d_k} q_{im} k_{jm}$$
+
+Since $q_{im}$ and $k_{jm}$ are independent zero-mean: $\mathbb{E}[q_{im}k_{jm}] = \mathbb{E}[q_{im}]\mathbb{E}[k_{jm}] = 0$. By linearity: $\mathbb{E}[q_i \cdot k_j] = 0$. $\checkmark$
+
+For variance: $\text{Var}(q_{im}k_{jm}) = \mathbb{E}[q_{im}^2]\mathbb{E}[k_{jm}^2] = 1 \cdot 1 = 1$ (using independence and the fact that for zero-mean variables, $\text{Var}(XY) = \text{Var}(X)\text{Var}(Y)$ when $X, Y$ are independent with zero mean). Since the $d_k$ terms are independent: $\text{Var}(q_i \cdot k_j) = d_k$. $\checkmark$
+
+When $d_k$ is large, the dot products have variance $d_k$, meaning some scores are $O(\sqrt{d_k})$ in magnitude. For the softmax $\text{softmax}(s)_i = e^{s_i}/\sum_j e^{s_j}$, large input magnitudes push the output toward a one-hot distribution (the exponential amplifies differences). In this saturated regime, the softmax gradients $\partial \text{softmax}_i / \partial s_j$ become nearly zero, causing vanishing gradients. Dividing by $\sqrt{d_k}$ normalizes the variance to 1, keeping the softmax in a well-conditioned regime with healthy gradient flow.
+
+**(c)** Masked score matrix (causal masking: position $i$ can only attend to $j \leq i$):
+
+$$S' = \begin{pmatrix} 0.707 & -\infty & -\infty \\ 0 & 0.707 & -\infty \\ 0.707 & 0.707 & 0.707 \end{pmatrix}$$
+
+After softmax:
+
+- Row 1: only one valid entry $\to$ $A_1 = (1, 0, 0)$
+- Row 2: $e^{0} = 1$, $e^{0.707} \approx 2.028$. Sum $= 3.028$. $A_2 \approx (0.330, 0.670, 0)$
+- Row 3: same as unmasked Row 3 $\to$ $A_3 \approx (0.333, 0.333, 0.333)$
+
+Causal masking is essential for language model training because the model learns to predict the next token: if position $i$ could attend to position $i+1$, the model would trivially see the answer it is trying to predict, making the training objective meaningless. In encoder-only models like BERT, the training objective is masked language modeling (predicting randomly masked tokens), where bidirectional context is beneficial --- each token should use information from both past and future positions to reconstruct the masked tokens.
+
+**(d)** With $d_{\text{model}} = 512$ and $h = 8$: $d_k = 512 / 8 = 64$.
+
+Parameters per head: $W_Q^{(i)}, W_K^{(i)}, W_V^{(i)}$ each of shape $512 \times 64$: $3 \times 512 \times 64 = 98{,}304$ per head.
+
+All 8 heads: $8 \times 98{,}304 = 786{,}432$.
+
+Output projection $W_O$ of shape $512 \times 512$ (concatenated heads back to $d_{\text{model}}$): $512 \times 512 = 262{,}144$.
+
+Total (excluding biases): $786{,}432 + 262{,}144 = \mathbf{1{,}048{,}576}$ (exactly $2^{20}$, or equivalently $4 \times 512^2$).
+
+Multiple heads are better than a single head because: (1) each head operates in a lower-dimensional subspace ($d_k = 64$ vs.\ $512$), allowing different heads to learn different types of relationships (e.g., one head learns syntactic dependencies, another learns positional patterns, another learns semantic similarity); (2) the independent projections allow the attention to jointly attend to information from different representation subspaces, which a single head cannot do since it computes a single weighted average.
+
+---
+
+## Q8 --- Transformer Architecture and Mechanistic Interpretability
+
+**(a)** Pre-norm transformer block equations:
+
+$$\mathbf{x}' = \mathbf{x} + \text{Attn}\bigl(\text{LN}(\mathbf{x})\bigr)$$
+$$\mathbf{x}'' = \mathbf{x}' + \text{MLP}\bigl(\text{LN}(\mathbf{x}')\bigr)$$
+
+In the residual stream view, each component reads from the stream (via layer norm) and writes an additive update back. With $L$ layers and $h$ heads per layer:
+
+- Attention heads writing: $L \times h$
+- MLPs writing: $L$
+- Total: $L(h + 1)$
+
+For example, GPT-2 small ($L = 12$, $h = 12$): $12(12 + 1) = 156$ components write to the residual stream.
+
+**(b)** Embedding matrix parameters: $V \times d_{\text{model}} = 50{,}000 \times 768 = \mathbf{38{,}400{,}000}$ (38.4M).
+
+Positional encodings for $d = 4$ (dimensions indexed $0, 1, 2, 3$):
+
+For dimension $2i$: $\text{PE}(pos, 2i) = \sin(pos / 10000^{2i/d})$
+For dimension $2i+1$: $\text{PE}(pos, 2i+1) = \cos(pos / 10000^{2i/d})$
+
+With $d = 4$: $i = 0$ gives dimensions 0, 1; $i = 1$ gives dimensions 2, 3.
+
+**Position 0:**
+
+$$\text{PE}(0, 0) = \sin(0 / 10000^{0/4}) = \sin(0) = 0$$
+$$\text{PE}(0, 1) = \cos(0 / 10000^{0/4}) = \cos(0) = 1$$
+$$\text{PE}(0, 2) = \sin(0 / 10000^{2/4}) = \sin(0) = 0$$
+$$\text{PE}(0, 3) = \cos(0 / 10000^{2/4}) = \cos(0) = 1$$
+
+$$\text{PE}(0, \cdot) = (0, 1, 0, 1)$$
+
+**Position 1:**
+
+$$\text{PE}(1, 0) = \sin(1 / 10000^{0}) = \sin(1) \approx 0.841$$
+$$\text{PE}(1, 1) = \cos(1 / 10000^{0}) = \cos(1) \approx 0.540$$
+$$\text{PE}(1, 2) = \sin(1 / 10000^{0.5}) = \sin(1/100) = \sin(0.01) \approx 0.010$$
+$$\text{PE}(1, 3) = \cos(1 / 10000^{0.5}) = \cos(0.01) \approx 1.000$$
+
+$$\text{PE}(1, \cdot) \approx (0.841, 0.540, 0.010, 1.000)$$
+
+The model can distinguish positions because each position gets a unique encoding vector. The different frequencies (high frequency for dimensions 0--1, low frequency for dimensions 2--3) create a pattern analogous to binary counting: nearby positions have similar encodings (useful for local relationships), while distant positions are distinguishable. Furthermore, for any fixed offset $k$, $\text{PE}(pos + k)$ can be expressed as a linear transformation of $\text{PE}(pos)$, enabling the model to learn relative position relationships.
+
+**(c)** The logit lens reveals how the transformer incrementally builds its prediction across layers. At early layers, the projected distribution is typically diffuse (high entropy) or reflects simple token-level associations. As information flows through successive layers, the distribution sharpens and converges toward the model's final prediction. By watching which candidate tokens "rise to the top" at each layer, researchers can identify where specific computations happen --- for example, a factual recall might crystallize at layer 15, suggesting that the relevant information retrieval occurs in layers 12--15. This supports the **iterative inference** view: the transformer does not compute its answer in a single step, but progressively refines its representation layer by layer, with each layer performing a partial step of the overall computation (analogous to iterative refinement in numerical methods).
+
+**(d)** If patching the clean activation at layer 8, position 5 restores 90\% of the clean output probability, this indicates that the information critical for the model's output **passes through** (or is computed at) that specific layer and position. The causal intervention demonstrates that this activation is on the "critical path" between input and output for this particular prediction.
+
+**Activation patching vs.\ probing:** Activation patching is a *causal* method --- it intervenes on the model's computation and measures the downstream effect, establishing that information at a location is *causally necessary* for the output. Probing is a *correlational* method --- it trains a classifier on frozen activations and shows that information is *linearly decodable* at a location, but this does not prove the model actually uses that information. A probe might achieve high accuracy on a feature that the model computes but never reads, or the probe's own parameters might be doing the computation. Activation patching avoids this "probe complexity" confound by directly measuring causal influence.
+
+---
+
+## Q9 --- Diffusion Models and Reinforcement Learning
+
+**(a)** Using $\alpha_t = 1 - \beta_t$ and $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$:
+
+$$q(\mathbf{x}_t \mid \mathbf{x}_0) = \mathcal{N}\!\left(\mathbf{x}_t;\; \sqrt{\bar{\alpha}_t}\,\mathbf{x}_0,\; (1 - \bar{\alpha}_t)\,\mathbf{I}\right)$$
+
+Equivalently: $\mathbf{x}_t = \sqrt{\bar{\alpha}_t}\,\mathbf{x}_0 + \sqrt{1 - \bar{\alpha}_t}\,\boldsymbol{\epsilon}$, where $\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$.
+
+This closed form is essential for training because it lets us sample a noisy version of $\mathbf{x}_0$ at any arbitrary time step $t$ in a single operation, without simulating the entire forward chain of $t$ noise-addition steps. During training, we uniformly sample $t \sim \text{Uniform}\{1, \ldots, T\}$ and directly compute $\mathbf{x}_t$ from $\mathbf{x}_0$, making training efficient and enabling stochastic sampling of time steps.
+
+**(b)** Training procedure:
+
+1. **Sample** a clean data point $\mathbf{x}_0 \sim q(\mathbf{x}_0)$ from the training data.
+2. **Sample** a random time step $t \sim \text{Uniform}\{1, \ldots, T\}$.
+3. **Sample** noise $\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ and compute the noised input: $\mathbf{x}_t = \sqrt{\bar{\alpha}_t}\,\mathbf{x}_0 + \sqrt{1 - \bar{\alpha}_t}\,\boldsymbol{\epsilon}$.
+4. **Train** the neural network to predict the noise: minimize $\|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\|^2$ via gradient descent.
+
+The model needs $t$ as input because the denoising task changes fundamentally at different noise levels. At high $t$ (heavy noise, $\bar{\alpha}_t \approx 0$), the input is nearly pure Gaussian noise and the model must generate coarse global structure. At low $t$ (light noise, $\bar{\alpha}_t \approx 1$), the input is nearly clean and the model must predict fine local details. A single network without time conditioning would not know which regime it is operating in and would produce a compromise that is wrong for all noise levels.
+
+**(c)** MDP components:
+
+- $S$: **State space** --- the set of all possible states the agent can be in.
+- $A$: **Action space** --- the set of all actions available to the agent.
+- $P$: **Transition function** $P(s' \mid s, a)$ --- the probability of transitioning to state $s'$ when taking action $a$ in state $s$.
+- $R$: **Reward function** $R(s, a, s')$ --- the immediate reward received after transitioning.
+- $\gamma$: **Discount factor** $\gamma \in [0, 1)$ --- weights the importance of future vs.\ immediate rewards.
+
+The RL objective: $J(\pi) = \mathbb{E}_\pi\!\left[\sum_{t=0}^\infty \gamma^t r_t\right]$ --- maximize the expected cumulative discounted reward under policy $\pi$.
+
+REINFORCE has high variance because the return $G_t^{(i)}$ is a single Monte Carlo sample of the expected future reward. Different trajectories can have vastly different returns due to stochastic transitions and actions, causing the gradient estimate to fluctuate wildly across episodes. Subtracting a baseline $b(s_t)$ (typically an estimate of the value function $V^\pi(s_t)$) reduces variance because it centers the returns: $G_t - b(s_t)$ measures "how much better than average" this action was, rather than the raw return. This preserves the expected gradient (unbiased) because $\mathbb{E}[\nabla_\theta \log \pi_\theta(a_t \mid s_t) \cdot b(s_t)] = b(s_t) \cdot \mathbb{E}[\nabla_\theta \log \pi_\theta(a_t \mid s_t)] = b(s_t) \cdot 0 = 0$ (the score function has zero expectation).
+
+**(d)** Unconstrained policy updates are dangerous because the policy gradient is a local, first-order approximation. A large update step can move the policy far from the region where the advantage estimate $\hat{A}_t$ was computed, invalidating the gradient signal and potentially collapsing the policy to a degenerate distribution (e.g., deterministic output of a single action). Once the policy degrades catastrophically, it collects poor trajectories, leading to worse gradient estimates and an unrecoverable spiral.
+
+PPO's clipping constrains the ratio $r_t(\theta)$ to $[1-\epsilon, 1+\epsilon]$, preventing any single update from changing the probability of an action by more than a factor of $\epsilon$ relative to the old policy.
+
+**Reward hacking in RLHF:** A language model optimized against a learned reward model may discover outputs that score highly on the reward model but are not genuinely helpful or truthful. For example, the model might learn to produce confident-sounding, verbose responses with authoritative language and hedge phrases that the reward model (trained on limited human preferences) rates highly, even when the content is fabricated or irrelevant. The model exploits regularities in the reward model's training data rather than satisfying the underlying human intent.
+
+This is Goodhart's Law in action: the reward model is a proxy for human satisfaction. When the policy optimizes the proxy aggressively, it finds inputs where the proxy diverges from the true objective --- the reward model "breaks" in regions of output space that were not well-covered by its training data. This is why RLHF uses a KL penalty against the reference policy: it prevents the model from straying too far into regions where the reward model's predictions are unreliable.
+
+---
+
+## Q10 --- The LLM Training Pipeline: From Tokens to Deployment
+
+**(a)** Starting corpus: \texttt{a b c a b d a b c a b c a b d}
+
+**Merge 1:** Count all adjacent pairs: \texttt{a b} appears 5 times, \texttt{b c} appears 3 times, \texttt{b d} appears 2 times, \texttt{c a} appears 2 times, \texttt{d a} appears 1 time. Most frequent: \texttt{a b} (5 times). Merge to create token \texttt{ab}.
+
+Updated corpus: \texttt{ab c ab d ab c ab c ab d}
+
+New vocabulary: $\{a, b, c, d, ab\}$
+
+**Merge 2:** Count pairs in updated corpus: \texttt{ab c} appears 3 times, \texttt{ab d} appears 2 times, \texttt{c ab} appears 2 times, \texttt{d ab} appears 1 time. Most frequent: \texttt{ab c} (3 times). Merge to create token \texttt{abc}.
+
+Updated corpus: \texttt{abc ab d abc abc ab d}
+
+New vocabulary: $\{a, b, c, d, ab, abc\}$
+
+BPE is preferred over character-level tokenization because characters carry too little semantic information (the model must learn spelling from scratch, and sequences become very long). It is preferred over word-level tokenization because a fixed word vocabulary cannot handle rare words, misspellings, or morphological variants, while BPE can represent any word as a sequence of subword pieces, providing a flexible middle ground between character and word granularity.
+
+**(b)**
+
+- **Pre-training:** Objective: next-token prediction (cross-entropy loss) on a large text corpus, $\mathcal{L} = -\sum_t \log P(x_t \mid x_{<t})$. The model learns the statistical structure of language: grammar, facts, reasoning patterns, and world knowledge, encoded in its parameters as a general-purpose text predictor.
+
+- **SFT (Supervised Fine-Tuning):** Objective: next-token prediction on curated instruction-response pairs (same cross-entropy loss, but on high-quality demonstrations). The model learns to follow instructions, adopt a helpful conversational format, and produce structured responses rather than raw text completions.
+
+- **RLHF (PPO):** Objective: maximize the learned reward model's score subject to a KL penalty against the SFT policy. The model learns to align its outputs with human preferences --- producing responses that humans judge as more helpful, honest, and harmless --- going beyond what supervised demonstrations alone can teach.
+
+- **DPO (Direct Preference Optimization):** Objective: $\mathcal{L}_{\text{DPO}} = -\log \sigma\bigl(\beta[\log \frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \log \frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}]\bigr)$, which directly optimizes the policy on preference pairs without training a separate reward model. DPO achieves the same goal as RLHF (aligning with human preferences) but simplifies the pipeline by casting the RL problem as a classification problem on preference data.
+
+**(c)** The Bradley-Terry loss $\mathcal{L}_{\text{RM}} = -\log \sigma(r_\phi(x, y_w) - r_\phi(x, y_l))$ encourages higher scores for preferred responses because minimizing this loss is equivalent to maximizing $\sigma(r_w - r_l)$, which is maximized when $r_w \gg r_l$. Since $\sigma$ is monotonically increasing, making the reward gap $r_w - r_l$ as large and positive as possible drives the loss toward zero. This directly encodes the preference structure: the model should assign higher reward to the response humans preferred.
+
+The KL penalty $\beta \, \text{KL}[\pi_\theta \| \pi_{\text{ref}}]$ serves as a regularizer that prevents the policy from diverging too far from the reference (SFT) policy. This is essential for two reasons: (1) the reward model is only reliable in the distribution of outputs it was trained on, so large deviations lead to reward hacking (the policy exploiting regions where the reward model is poorly calibrated); (2) without the KL penalty, the policy can collapse to a degenerate distribution that always outputs the single response that maximizes reward, losing the diversity and general capability of the base model.
+
+If $\beta$ is too small, the KL penalty is ineffective, and the policy is free to deviate arbitrarily from the reference. This leads to aggressive reward model exploitation: the model discovers adversarial outputs that achieve very high reward model scores but are low quality by human judgment (e.g., repetitive, sycophantic, or nonsensical text that "tricks" the reward model). The model essentially overfits to the reward model, degrading the actual user experience.
+
+**(d)** The two-phase CAI process:
+
+**Phase 1 --- Critique and Revision (supervised):** An AI model is prompted to generate responses, then asked to critique its own responses against a set of constitutional principles (e.g., "be helpful, harmless, and honest"). The AI generates revised responses based on its own critiques. These (prompt, revised-response) pairs become the supervised training data for SFT.
+
+**Phase 2 --- RL from AI Feedback (RLAIF):** Instead of collecting human preference data, an AI model evaluates pairs of responses according to the constitutional principles, generating preference labels. A reward model is trained on these AI-generated preferences, and the policy is then fine-tuned using RL (PPO) against this reward model.
+
+**Advantage:** CAI dramatically reduces the need for human annotators, making the alignment process more scalable and less expensive. It also provides more consistent feedback (the AI applies the same principles uniformly), avoids exposing human annotators to harmful content, and makes the alignment criteria explicit and auditable through the written constitution.
+
+**Risk:** The quality of alignment is bounded by the AI evaluator's own understanding and biases. If the constitutional principles are incomplete, ambiguous, or the AI interprets them incorrectly, the resulting model may be aligned to a subtly wrong objective. There is a circularity concern: using an AI system to align another AI system can propagate systematic blind spots that neither system can detect. Furthermore, the AI evaluator may not capture the full richness of human values --- particularly in culturally sensitive, novel, or edge-case scenarios where nuanced human judgment is essential. This connects to the broader alignment challenge: ensuring that deployed models serve diverse human values across contexts they were not explicitly trained on, which requires alignment methods that are robust to distributional shift and can gracefully handle value pluralism.

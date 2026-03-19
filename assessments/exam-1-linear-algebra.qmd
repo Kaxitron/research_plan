@@ -1,0 +1,258 @@
+---
+title: "Exam 1: Linear Algebra"
+subtitle: "Lessons 2--12 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & \~{}3 hours \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper, calculator (no CAS). No code. \\
+\textbf{Format} & 10 questions, 10 pts each. Show all work. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *Each question synthesises concepts from two or three lessons. Partial credit is generous for correct reasoning with minor arithmetic errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Vectors, Bases, and Linear Combinations
+
+*Topics: L2 (vectors, basis-dependent representation), L3 (linear combinations, span, independence).*
+
+A civil engineer records the displacement of a bridge sensor using two coordinate systems. In the standard basis $\mathcal{E} = \{\mathbf{e}_1, \mathbf{e}_2\}$, the displacement is $\mathbf{v} = \begin{pmatrix} 5 \\ 1 \end{pmatrix}$.
+
+A colleague prefers the basis $\mathcal{B} = \left\{ \mathbf{b}_1 = \begin{pmatrix} 2 \\ 1 \end{pmatrix},\; \mathbf{b}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix} \right\}$.
+
+**(a)** Show that $\mathcal{B}$ is a valid basis for $\mathbb{R}^2$ by proving $\mathbf{b}_1$ and $\mathbf{b}_2$ are linearly independent.
+
+**(b)** Express $\mathbf{v}$ as a linear combination $\mathbf{v} = c_1 \mathbf{b}_1 + c_2 \mathbf{b}_2$. Find $c_1$ and $c_2$.
+
+**(c)** A third vector $\mathbf{w} = \begin{pmatrix} 4 \\ 2 \end{pmatrix}$ is proposed. Determine whether $\{\mathbf{b}_1, \mathbf{b}_2, \mathbf{w}\}$ is linearly independent. Justify your answer.
+
+**(d)** What is $\text{span}\{\mathbf{b}_1, \mathbf{w}\}$? Is it all of $\mathbb{R}^2$, or something smaller? Explain.
+
+**(e)** The engineer adds a vertical measurement and now works in $\mathbb{R}^3$. What is the minimum number of vectors needed to form a basis for $\mathbb{R}^3$, and what property must they satisfy?
+
+---
+
+## Q2 (10 pts) --- Transformations, Basis Columns, and Matrix-Vector Products
+
+*Topics: L4 (matrices as transformations, columns = transformed basis vectors), L5 (matrix-vector and matrix-matrix multiplication).*
+
+A robotics engineer models a planar arm with two successive transformations. The first joint applies:
+
+$$A = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
+
+and the second joint applies:
+
+$$B = \begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}$$
+
+**(a)** Describe geometrically what $A$ does to every vector in $\mathbb{R}^2$. *(Hint: examine where $A$ sends $\mathbf{e}_1$ and $\mathbf{e}_2$.)*
+
+**(b)** Describe geometrically what $B$ does. What do the columns of $B$ tell you?
+
+**(c)** The arm applies $A$ first, then $B$. Write the single combined transformation matrix $C$ that accomplishes both steps. Compute $C$ explicitly.
+
+**(d)** Compute $C \begin{pmatrix} 3 \\ 2 \end{pmatrix}$. Verify by first applying $A$ to $(3, 2)^T$, then applying $B$ to the result.
+
+**(e)** Is $BA = AB$? Compute both products and explain what this says about the order of geometric transformations.
+
+---
+
+## Q3 (10 pts) --- Column Space, Null Space, and the Rank--Nullity Theorem
+
+*Topics: L6 (column space, null space, rank, rank-nullity), L4 (transformation interpretation).*
+
+An economist models three industries with input--output matrix:
+
+$$M = \begin{pmatrix} 1 & 2 & 5 \\ 2 & 1 & 4 \\ 3 & 3 & 9 \end{pmatrix}$$
+
+**(a)** Row-reduce $M$ to echelon form. What is $\text{rank}(M)$?
+
+**(b)** Find a basis for $\text{Col}(M)$, the column space of $M$.
+
+**(c)** Apply the rank--nullity theorem to determine $\dim(\text{Null}(M))$.
+
+**(d)** Solve $M\mathbf{x} = \mathbf{0}$ to find an explicit basis for $\text{Null}(M)$. Verify that your basis vector is indeed in the null space.
+
+**(e)** Interpret the null space economically: if $\mathbf{x}$ represents a production vector, what does a nonzero null-space vector mean about the relationship among the three industries' outputs?
+
+---
+
+## Q4 (10 pts) --- Determinants, Singularity, and Volume
+
+*Topics: L7 (determinant as volume scaling, det = 0 iff singular, product rule), L6 (rank).*
+
+A materials scientist stretches a crystal lattice using:
+
+$$T = \begin{pmatrix} 3 & 1 \\ 0 & 2 \end{pmatrix}$$
+
+**(a)** Compute $\det(T)$. If the unit square has area 1, what is the area of its image under $T$?
+
+**(b)** A second deformation is $S = \begin{pmatrix} 1 & -1 \\ 0 & 3 \end{pmatrix}$. Using the determinant product rule, find $\det(ST)$ without computing $ST$ explicitly.
+
+**(c)** Now consider the matrix $P = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & 5 \end{pmatrix}$. Compute $\det(P)$ and explain why this is easy for triangular matrices.
+
+**(d)** Let $Q = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 0 & 1 & 1 \end{pmatrix}$. Without row-reducing, explain why $\det(Q) = 0$. What does this say about the rank and null space of $Q$?
+
+**(e)** A $3 \times 3$ matrix $R$ satisfies $\det(R) = 7$. What is $\det(3R)$? What is $\det(R^{-1})$? Justify each.
+
+---
+
+## Q5 (10 pts) --- Eigenvalues, Diagonalisation, and Matrix Powers
+
+*Topics: L8 (eigenvalues, eigenvectors, characteristic equation, diagonalisation, matrix powers), L7 (determinant).*
+
+A population ecologist models two competing species with the transition matrix:
+
+$$A = \begin{pmatrix} 3 & 1 \\ 0 & 2 \end{pmatrix}$$
+
+**(a)** Find the eigenvalues of $A$ by solving $\det(A - \lambda I) = 0$.
+
+**(b)** For each eigenvalue, find an associated eigenvector.
+
+**(c)** Write $A = PDP^{-1}$ where $D$ is diagonal and $P$ is the matrix of eigenvectors. Verify that $AP = PD$ for at least one column.
+
+**(d)** The ecologist needs $A^{10}$. Using diagonalisation, express $A^{10}$ in terms of $P$, $D$, and $P^{-1}$, and compute $D^{10}$.
+
+**(e)** If the initial population vector is $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$, what is $A^{10}\mathbf{x}_0$? Which eigenvalue dominates in the long run, and what does its eigenvector tell you about the population's eventual direction?
+
+---
+
+## Q6 (10 pts) --- SVD, Low-Rank Approximation, and Condition Number
+
+*Topics: L9 (SVD, singular values, low-rank approximation, condition number), L6 (rank).*
+
+A geophysicist stores a $2 \times 2$ data matrix and is told its SVD is:
+
+$$A = U \Sigma V^T$$
+
+where
+
+$$U = \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ 1/\sqrt{2} & -1/\sqrt{2} \end{pmatrix}, \quad \Sigma = \begin{pmatrix} 6 & 0 \\ 0 & 1 \end{pmatrix}, \quad V = \begin{pmatrix} 1/\sqrt{2} & -1/\sqrt{2} \\ 1/\sqrt{2} & 1/\sqrt{2} \end{pmatrix}$$
+
+**(a)** Verify that $U$ and $V$ are orthogonal matrices (i.e., $U^T U = I$ and $V^T V = I$).
+
+**(b)** Compute $A = U \Sigma V^T$ explicitly.
+
+**(c)** What is the rank of $A$? What are the singular values?
+
+**(d)** Construct the best rank-1 approximation $A_1 = \sigma_1 \mathbf{u}_1 \mathbf{v}_1^T$. Compute $A_1$ explicitly.
+
+**(e)** Compute the condition number $\kappa(A) = \sigma_1 / \sigma_2$. If the input data has relative error $10^{-3}$, estimate the worst-case relative error in solving $A\mathbf{x} = \mathbf{b}$.
+
+---
+
+## Q7 (10 pts) --- Dot Products, Projection, and Gram--Schmidt
+
+*Topics: L10 (dot product, projection, Gram-Schmidt, orthogonal matrices), L3 (basis, independence).*
+
+A structural engineer resolves a force $\mathbf{f} = \begin{pmatrix} 6 \\ 3 \\ 2 \end{pmatrix}$ along two beams whose directions are $\mathbf{a}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$ and $\mathbf{a}_2 = \begin{pmatrix} 1 \\ -1 \\ 1 \end{pmatrix}$.
+
+**(a)** Compute $\mathbf{a}_1 \cdot \mathbf{a}_2$. Are the beams orthogonal?
+
+**(b)** Project $\mathbf{f}$ onto $\mathbf{a}_1$: compute $\text{proj}_{\mathbf{a}_1} \mathbf{f} = \dfrac{\mathbf{f} \cdot \mathbf{a}_1}{\mathbf{a}_1 \cdot \mathbf{a}_1} \mathbf{a}_1$.
+
+**(c)** Apply one step of Gram--Schmidt: let $\mathbf{u}_1 = \mathbf{a}_1$ and compute $\mathbf{u}_2 = \mathbf{a}_2 - \text{proj}_{\mathbf{u}_1} \mathbf{a}_2$. Verify $\mathbf{u}_1 \cdot \mathbf{u}_2 = 0$.
+
+**(d)** Normalise $\mathbf{u}_1$ and $\mathbf{u}_2$ to get orthonormal vectors $\hat{\mathbf{u}}_1$ and $\hat{\mathbf{u}}_2$. Form the matrix $Q = [\hat{\mathbf{u}}_1 \mid \hat{\mathbf{u}}_2]$. Verify $Q^T Q = I_2$.
+
+**(e)** The engineer wants the best approximation to $\mathbf{f}$ in $\text{span}\{\mathbf{a}_1, \mathbf{a}_2\}$. Using the normal equations $Q^T Q \hat{\mathbf{c}} = Q^T \mathbf{f}$, explain why this simplifies to $\hat{\mathbf{c}} = Q^T \mathbf{f}$ when the columns are orthonormal.
+
+---
+
+## Q8 (10 pts) --- Change of Basis, Norms, and Positive Definite Matrices
+
+*Topics: L11 (change of basis, norms, symmetric/positive definite matrices), L2 (basis-dependent representation).*
+
+A physicist measures stress in two coordinate frames. The standard-basis stress tensor is:
+
+$$S = \begin{pmatrix} 5 & 2 \\ 2 & 2 \end{pmatrix}$$
+
+and the change-of-basis matrix from a rotated frame $\mathcal{B}$ to the standard frame is:
+
+$$P = \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
+
+**(a)** Compute $P^{-1}$.
+
+**(b)** Express $S$ in the $\mathcal{B}$-frame: compute $S_{\mathcal{B}} = P^{-1} S P$.
+
+**(c)** Verify that $S$ is symmetric. Prove that $S$ is positive definite by showing $\mathbf{x}^T S \mathbf{x} > 0$ for all nonzero $\mathbf{x} \in \mathbb{R}^2$. *(Hint: compute the eigenvalues.)*
+
+**(d)** For the vector $\mathbf{v} = \begin{pmatrix} 3 \\ -4 \end{pmatrix}$, compute $\|\mathbf{v}\|_1$, $\|\mathbf{v}\|_2$, and $\|\mathbf{v}\|_\infty$. Rank them from smallest to largest.
+
+**(e)** Explain why positive definiteness is preserved under a change of basis: if $S$ is positive definite and $P$ is invertible, show that $S_{\mathcal{B}} = P^{-1} S P$ is also positive definite. *(Hint: let $\mathbf{y}$ be nonzero and consider $\mathbf{y}^T S_{\mathcal{B}} \mathbf{y}$.)*
+
+---
+
+## Q9 (10 pts) --- Least Squares, Projection, and the Normal Equations
+
+*Topics: L10 (least squares, projection), L5 (transpose, matrix multiplication), L6 (column space).*
+
+An oceanographer collects depth--temperature data at three points:
+
+| Depth $d$ | Temperature $T$ |
+|:---:|:---:|
+| 0 | 20 |
+| 1 | 17 |
+| 2 | 11 |
+
+She models the relationship as $T = \beta_0 + \beta_1 d$ (a line).
+
+**(a)** Write the system $A\boldsymbol{\beta} = \mathbf{T}$ in matrix form where $A$ is the $3 \times 2$ design matrix, $\boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \end{pmatrix}$, and $\mathbf{T} = \begin{pmatrix} 20 \\ 17 \\ 11 \end{pmatrix}$.
+
+**(b)** Explain why this system has no exact solution (i.e., $\mathbf{T} \notin \text{Col}(A)$). What is $\text{rank}(A)$?
+
+**(c)** Compute $A^T A$ and $A^T \mathbf{T}$.
+
+**(d)** Solve the normal equations $(A^T A)\hat{\boldsymbol{\beta}} = A^T \mathbf{T}$ to find $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+**(e)** Compute the residual vector $\mathbf{r} = \mathbf{T} - A\hat{\boldsymbol{\beta}}$. Verify that $\mathbf{r}$ is orthogonal to every column of $A$ (i.e., $A^T \mathbf{r} = \mathbf{0}$). Explain geometrically why this must be the case.
+
+---
+
+## Q10 (10 pts) --- The Unified SVD Picture
+
+*Topics: L12 (SVD = rotate, scale, rotate; connections between all concepts), L8 (eigenvalues), L9 (SVD), L7 (determinant).*
+
+Consider the matrix
+
+$$A = \begin{pmatrix} 4 & 0 \\ 0 & 3 \end{pmatrix}$$
+
+**(a)** Since $A$ is already diagonal, write down the SVD $A = U \Sigma V^T$ immediately. *(Hint: what are $U$, $\Sigma$, and $V$ for a diagonal matrix with positive entries?)*
+
+**(b)** Describe the action of $A$ on the unit circle in the "rotate $\to$ scale $\to$ rotate" framework. What shape does the unit circle become?
+
+**(c)** Compute the eigenvalues of $A^T A$. How are they related to the singular values?
+
+**(d)** Compute $\det(A)$ and relate it to the singular values. State the general relationship between the determinant and the singular values for any square matrix.
+
+**(e)** Now let $R = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}$ be a rotation matrix. Define $B = RA$. Without computing $B$ explicitly, determine the singular values of $B$, $\det(B)$, and $\text{rank}(B)$. Explain your reasoning using the SVD interpretation: rotation does not change the "scale" part. What are the eigenvalues of $B^T B$?
+
+---
+
+\vspace{1em}
+\begin{center}
+\textbf{--- End of Exam ---}
+\end{center}
