@@ -1,0 +1,327 @@
+---
+title: "Mathematical Notation & Operators"
+subtitle: "A reference for reading math fluently"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.75in
+    fontsize: 10pt
+    colorlinks: true
+    linkcolor: blue
+    toccolor: blue
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{stmaryrd}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.4}
+---
+
+\newpage
+
+# Arithmetic & Elementary Operations
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $+$ | Addition | Sum of two quantities | $3 + 5 = 8$ |
+| $-$ | Subtraction / Negation | Difference, or additive inverse | $7 - 2 = 5$, $-x$ |
+| $\times$ | Multiplication | Product (between scalars) | $3 \times 4 = 12$ |
+| $\cdot$ | Dot / Multiplication | Scalar product, or dot product of vectors | $\mathbf{a} \cdot \mathbf{b}$ |
+| $/$ or $\div$ | Division | Quotient | $12 / 3 = 4$ |
+| $\pm$ | Plus-minus | Both $+$ and $-$ apply | $x = \pm\sqrt{4}$ |
+| $\mp$ | Minus-plus | Opposite of $\pm$ | $\cos(\alpha \pm \beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta$ |
+| $!$ | Factorial | Product of all positive integers up to $n$ | $5! = 120$ |
+| $\binom{n}{k}$ | Binomial coefficient | "n choose k" — number of ways to pick $k$ from $n$ | $\binom{5}{2} = 10$ |
+| $|x|$ | Absolute value | Distance from zero | $|-3| = 3$ |
+| $\lfloor x \rfloor$ | Floor | Largest integer $\leq x$ | $\lfloor 3.7 \rfloor = 3$ |
+| $\lceil x \rceil$ | Ceiling | Smallest integer $\geq x$ | $\lceil 3.2 \rceil = 4$ |
+
+# Equality & Comparison
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $=$ | Equals | Two sides have the same value | $2 + 3 = 5$ |
+| $\neq$ | Not equal | Values differ | $3 \neq 4$ |
+| $\approx$ | Approximately equal | Close in value | $\pi \approx 3.14$ |
+| $\sim$ | Distributed as / Similar | Random variable follows a distribution; or proportional | $X \sim \mathcal{N}(0,1)$ |
+| $\propto$ | Proportional to | Differs only by a constant factor | $F \propto m$ |
+| $\equiv$ | Identically equal / Congruent | Equal by definition, or modular congruence | $e^{i\pi} + 1 \equiv 0$; $7 \equiv 1 \pmod{3}$ |
+| $:=$ or $\triangleq$ | Defined as | Left side is defined to be right side | $f(x) := x^2 + 1$ |
+| $<, >$ | Strict inequality | Less than, greater than | $2 < 5$ |
+| $\leq, \geq$ | Inequality | Less/greater than or equal | $x \leq 10$ |
+| $\ll, \gg$ | Much less/greater | Significantly smaller/larger | $\epsilon \ll 1$ |
+
+# Logic & Quantifiers
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\forall$ | For all | Universal quantifier — true for every element | $\forall x \in \mathbb{R},\; x^2 \geq 0$ |
+| $\exists$ | There exists | Existential quantifier — at least one element satisfies | $\exists x \in \mathbb{R} : x^2 = 4$ |
+| $\exists!$ | There exists exactly one | Unique existence | $\exists! x : 2x = 6$ |
+| $\nexists$ | There does not exist | No element satisfies | $\nexists\; x \in \mathbb{R} : x^2 < 0$ |
+| $\land$ | And (conjunction) | Both statements true | $p \land q$ |
+| $\lor$ | Or (disjunction) | At least one true | $p \lor q$ |
+| $\lnot$ or $\neg$ | Not (negation) | Opposite truth value | $\lnot p$ |
+| $\Rightarrow$ | Implies | If left then right | $x > 2 \Rightarrow x > 1$ |
+| $\Leftrightarrow$ | If and only if (iff) | Both directions hold | $x^2 = 4 \Leftrightarrow x = \pm 2$ |
+| $\therefore$ | Therefore | Conclusion follows | $x = 2 \therefore x^2 = 4$ |
+| $\because$ | Because | Reason/justification | |
+| $\mid$ or $:$ | Such that | Condition in set-builder | $\{x \in \mathbb{R} \mid x > 0\}$ |
+
+# Set Theory
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\{\ \}$ | Set braces | Define a set by listing elements | $\{1, 2, 3\}$ |
+| $\in$ | Element of | $x$ is a member of set $S$ | $3 \in \{1,2,3\}$ |
+| $\notin$ | Not element of | $x$ is not in $S$ | $4 \notin \{1,2,3\}$ |
+| $\subset$ | Proper subset | All elements in left are in right, but sets differ | $\{1\} \subset \{1,2\}$ |
+| $\subseteq$ | Subset | All elements in left are in right (may be equal) | $A \subseteq B$ |
+| $\supset, \supseteq$ | Superset | Reverse of subset | $\{1,2\} \supset \{1\}$ |
+| $\cup$ | Union | All elements in either set | $A \cup B$ |
+| $\cap$ | Intersection | Elements in both sets | $A \cap B$ |
+| $\setminus$ | Set difference | In $A$ but not in $B$ | $A \setminus B$ |
+| $\emptyset$ or $\varnothing$ | Empty set | Set with no elements | $A \cap B = \varnothing$ |
+| $A^c$ or $\bar{A}$ | Complement | Everything not in $A$ | $A^c = U \setminus A$ |
+| $\times$ | Cartesian product | Set of all ordered pairs | $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$ |
+| $|S|$ or $\#S$ | Cardinality | Number of elements | $|\{a,b,c\}| = 3$ |
+| $\mathcal{P}(S)$ | Power set | Set of all subsets | $\mathcal{P}(\{1,2\}) = \{\varnothing,\{1\},\{2\},\{1,2\}\}$ |
+
+# Number Sets
+
+| Symbol | Name | Description |
+|:------:|:-----|:------------|
+| $\mathbb{N}$ | Natural numbers | $\{0, 1, 2, 3, \ldots\}$ (sometimes starts at 1) |
+| $\mathbb{Z}$ | Integers | $\{\ldots, -2, -1, 0, 1, 2, \ldots\}$ |
+| $\mathbb{Q}$ | Rationals | Fractions $p/q$ where $p,q \in \mathbb{Z}$, $q \neq 0$ |
+| $\mathbb{R}$ | Real numbers | All points on the number line |
+| $\mathbb{R}^n$ | Real $n$-space | Vectors of $n$ real components |
+| $\mathbb{R}^+$ | Positive reals | $\{x \in \mathbb{R} \mid x > 0\}$ |
+| $\mathbb{C}$ | Complex numbers | $a + bi$ where $a,b \in \mathbb{R}$ |
+| $\mathbb{Z}_n$ | Integers mod $n$ | $\{0, 1, \ldots, n-1\}$ with modular arithmetic |
+
+# Intervals
+
+| Notation | Name | Meaning |
+|:--------:|:-----|:--------|
+| $(a, b)$ | Open interval | $\{x : a < x < b\}$ — endpoints excluded |
+| $[a, b]$ | Closed interval | $\{x : a \leq x \leq b\}$ — endpoints included |
+| $[a, b)$ | Half-open (left-closed) | $\{x : a \leq x < b\}$ |
+| $(a, b]$ | Half-open (right-closed) | $\{x : a < x \leq b\}$ |
+| $(-\infty, b]$ | Unbounded left | $\{x : x \leq b\}$ |
+| $[a, \infty)$ | Unbounded right | $\{x : x \geq a\}$ |
+| $(-\infty, \infty)$ | Entire real line | $\mathbb{R}$ |
+
+**Key point:** Parentheses $()$ mean the endpoint is *excluded*; brackets $[]$ mean it is *included*. Infinity always gets a parenthesis because you can never reach it.
+
+# Summation, Products & Big Operators
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\displaystyle\sum_{i=1}^{n}$ | Summation | Add up terms as $i$ goes from 1 to $n$ | $\sum_{i=1}^{3} i = 1+2+3 = 6$ |
+| $\displaystyle\prod_{i=1}^{n}$ | Product | Multiply terms | $\prod_{i=1}^{4} i = 4! = 24$ |
+| $\displaystyle\bigcup_{i=1}^{n}$ | Big union | Union of indexed sets | $\bigcup_{i=1}^{n} A_i$ |
+| $\displaystyle\bigcap_{i=1}^{n}$ | Big intersection | Intersection of indexed sets | $\bigcap_{i=1}^{n} A_i$ |
+
+# Functions & Mappings
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $f: A \to B$ | Function mapping | $f$ maps set $A$ to set $B$ | $f: \mathbb{R} \to \mathbb{R}$ |
+| $x \mapsto y$ | Maps to | Element $x$ is sent to $y$ | $x \mapsto x^2$ |
+| $f \circ g$ | Composition | Apply $g$ first, then $f$ | $(f \circ g)(x) = f(g(x))$ |
+| $f^{-1}$ | Inverse function | Undoes $f$ | $f(x)=2x \Rightarrow f^{-1}(x)=x/2$ |
+| $f|_A$ | Restriction | $f$ limited to domain $A$ | |
+| $\mathrm{dom}(f)$ | Domain | Set of valid inputs | |
+| $\mathrm{range}(f)$ or $\mathrm{im}(f)$ | Range / Image | Set of outputs | |
+| $\ker(f)$ | Kernel | Set of inputs mapped to zero | $\ker(T) = \{\mathbf{x} : T\mathbf{x} = \mathbf{0}\}$ |
+| $\mathrm{id}$ | Identity | $\mathrm{id}(x) = x$ | |
+
+# Calculus
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\displaystyle\lim_{x \to a}$ | Limit | Value $f(x)$ approaches as $x \to a$ | $\lim_{x \to 0} \frac{\sin x}{x} = 1$ |
+| $f'(x)$ or $\frac{df}{dx}$ | Derivative | Rate of change of $f$ with respect to $x$ | $f(x) = x^3 \Rightarrow f'(x) = 3x^2$ |
+| $\dot{x}$ | Time derivative (Newton) | $dx/dt$ — common in physics/ODEs | $\dot{x} = v$ |
+| $f''(x)$ or $\frac{d^2f}{dx^2}$ | Second derivative | Rate of change of the rate of change | |
+| $\frac{\partial f}{\partial x}$ | Partial derivative | Derivative holding other variables constant | $f(x,y) = xy \Rightarrow \frac{\partial f}{\partial x} = y$ |
+| $\int$ | Integral | Antiderivative or area under curve | $\int x\, dx = \frac{x^2}{2} + C$ |
+| $\int_a^b$ | Definite integral | Signed area from $a$ to $b$ | $\int_0^1 x\, dx = \frac{1}{2}$ |
+| $\oint$ | Contour/closed integral | Integral over a closed curve | $\oint_C \mathbf{F} \cdot d\mathbf{r}$ |
+| $\iint$, $\iiint$ | Double/triple integral | Integration over 2D/3D regions | |
+| $dx$ | Differential | Infinitesimally small change in $x$ | |
+| $\Delta x$ | Finite difference | Discrete change in $x$ | $\Delta x = x_2 - x_1$ |
+| $\delta$ | Variation / small perturbation | Virtual displacement or variation | $\delta f$ |
+
+# Vector Calculus
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\nabla f$ | Gradient | Vector of partial derivatives of $f$ | $\nabla f = \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right)$ |
+| $\nabla \cdot \mathbf{F}$ | Divergence | Scalar measure of "outward flux" | $\nabla \cdot \mathbf{F} = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y}$ |
+| $\nabla \times \mathbf{F}$ | Curl | Vector measure of rotation | |
+| $\nabla^2 f$ or $\Delta f$ | Laplacian | Divergence of gradient (sum of 2nd partials) | $\nabla^2 f = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}$ |
+| $D_\mathbf{u} f$ | Directional derivative | Rate of change in direction $\mathbf{u}$ | $D_\mathbf{u} f = \nabla f \cdot \mathbf{u}$ |
+| $J$ or $\mathbf{J}$ | Jacobian matrix | Matrix of all first partial derivatives | $J_{ij} = \frac{\partial f_i}{\partial x_j}$ |
+| $H$ or $\mathbf{H}$ | Hessian matrix | Matrix of all second partial derivatives | $H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$ |
+
+# Linear Algebra
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\mathbf{v}$ or $\vec{v}$ | Vector | Ordered list of numbers | $\mathbf{v} = (1, 2, 3)$ |
+| $\mathbf{A}$ | Matrix | Rectangular array of numbers | |
+| $A^T$ | Transpose | Flip rows and columns | $(A^T)_{ij} = A_{ji}$ |
+| $A^{-1}$ | Matrix inverse | $AA^{-1} = I$ | |
+| $A^\dagger$ or $A^*$ | Conjugate transpose | Transpose + complex conjugate | |
+| $\det(A)$ or $|A|$ | Determinant | Scalar encoding volume scaling | |
+| $\mathrm{tr}(A)$ | Trace | Sum of diagonal entries | $\mathrm{tr}(A) = \sum_i A_{ii}$ |
+| $\mathrm{rank}(A)$ | Rank | Dimension of column space | |
+| $\|{\mathbf{v}}\|$ | Norm | Length / magnitude of vector | $\|\mathbf{v}\| = \sqrt{v_1^2 + \cdots + v_n^2}$ |
+| $\langle \mathbf{u}, \mathbf{v} \rangle$ | Inner product | Generalized dot product | $\langle \mathbf{u}, \mathbf{v} \rangle = \mathbf{u}^T \mathbf{v}$ |
+| $\mathbf{u} \otimes \mathbf{v}$ | Outer product / Tensor product | Rank-1 matrix from two vectors; or tensor product | $(\mathbf{u}\otimes\mathbf{v})_{ij} = u_i v_j$ |
+| $\oplus$ | Direct sum | Combine spaces with no overlap | $\mathbb{R}^2 \oplus \mathbb{R}^3 \cong \mathbb{R}^5$ |
+| $A \otimes B$ | Kronecker product | Block matrix of all $a_{ij}B$ | |
+| $I$ or $I_n$ | Identity matrix | Diagonal of 1s, zeros elsewhere | $AI = A$ |
+| $\mathbf{0}$ | Zero vector/matrix | All entries zero | |
+| $\mathrm{diag}(\cdot)$ | Diagonal matrix | Off-diagonal entries are zero | $\mathrm{diag}(1,2,3)$ |
+| $\lambda$ | Eigenvalue | $A\mathbf{v} = \lambda\mathbf{v}$ | |
+| $\sigma_i$ | Singular value | From SVD: $A = U\Sigma V^T$ | |
+| $\perp$ | Orthogonal | Perpendicular / zero inner product | $\mathbf{u} \perp \mathbf{v} \Leftrightarrow \mathbf{u} \cdot \mathbf{v} = 0$ |
+
+# Convolution & Correlation
+
+| Symbol | Name | Meaning |
+|:------:|:-----|:--------|
+| $f * g$ | Convolution | $(f * g)(t) = \int_{-\infty}^{\infty} f(\tau)\, g(t - \tau)\, d\tau$ |
+| | | Slide one function over another, multiply, and integrate. Measures how the shape of one modifies the other. |
+| $f \star g$ | Cross-correlation | Like convolution but without flipping: $(f \star g)(t) = \int f(\tau)\, g(t + \tau)\, d\tau$ |
+| $[f * g][n]$ | Discrete convolution | $\sum_{k=-\infty}^{\infty} f[k]\, g[n-k]$ |
+
+**Convolution intuition:** Think of it as a "weighted moving average." For each point $t$, you flip $g$, slide it to position $t$, and integrate the overlap with $f$. In deep learning, convolution layers slide a filter (kernel) over input data to detect features.
+
+# Probability & Statistics
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $P(A)$ | Probability | Likelihood of event $A$ | $P(\text{heads}) = 0.5$ |
+| $P(A \mid B)$ | Conditional probability | Probability of $A$ given $B$ occurred | $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$ |
+| $\mathbb{E}[X]$ or $\mu$ | Expected value | Long-run average | $\mathbb{E}[X] = \sum x\, P(x)$ |
+| $\mathrm{Var}(X)$ or $\sigma^2$ | Variance | Spread around the mean | $\mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2]$ |
+| $\sigma$ | Standard deviation | $\sqrt{\mathrm{Var}(X)}$ | |
+| $\mathrm{Cov}(X,Y)$ | Covariance | Joint variability | |
+| $\rho$ or $r$ | Correlation coefficient | Normalized covariance $\in [-1, 1]$ | |
+| $X \sim \mathcal{N}(\mu, \sigma^2)$ | Normal distribution | Gaussian with mean $\mu$, variance $\sigma^2$ | |
+| $X \perp\!\!\!\perp Y$ | Independence | $X$ and $Y$ are independent | $P(X,Y) = P(X)P(Y)$ |
+| $\hat{\theta}$ | Estimator | Estimated value of parameter $\theta$ | $\hat{\mu} = \bar{x}$ |
+| $\bar{x}$ | Sample mean | Average of observed values | $\bar{x} = \frac{1}{n}\sum x_i$ |
+| $\arg\max$ | Argmax | Input that maximizes the function | $\arg\max_x f(x)$ |
+| $\arg\min$ | Argmin | Input that minimizes the function | |
+
+# Information Theory
+
+| Symbol | Name | Meaning |
+|:------:|:-----|:--------|
+| $H(X)$ | Entropy | $-\sum p(x) \log p(x)$ — average surprise |
+| $H(X \mid Y)$ | Conditional entropy | Remaining uncertainty in $X$ given $Y$ |
+| $D_{\mathrm{KL}}(P \| Q)$ | KL divergence | How much $P$ diverges from $Q$ — not symmetric |
+| $I(X; Y)$ | Mutual information | Shared information between $X$ and $Y$ |
+
+# Bitwise & Discrete Operations
+
+| Symbol | Name | Meaning | Example |
+|:------:|:-----|:--------|:--------|
+| $\oplus$ | XOR (exclusive or) | 1 if exactly one input is 1 | $1 \oplus 0 = 1$; $1 \oplus 1 = 0$ |
+| $\land$ | Bitwise AND | 1 if both inputs are 1 | $1011 \land 1101 = 1001$ |
+| $\lor$ | Bitwise OR | 1 if at least one is 1 | $1010 \lor 0110 = 1110$ |
+| $\lnot$ | Bitwise NOT | Flip all bits | $\lnot 1010 = 0101$ |
+| $\bmod$ | Modulo | Remainder after division | $17 \bmod 5 = 2$ |
+| $a \mid b$ | Divides | $a$ divides $b$ evenly | $3 \mid 12$ |
+| $\gcd$ | Greatest common divisor | Largest number dividing both | $\gcd(12, 8) = 4$ |
+| $\mathrm{lcm}$ | Least common multiple | Smallest common multiple | $\mathrm{lcm}(4,6) = 12$ |
+
+**Note on $\oplus$:** This symbol is overloaded — in algebra it means *direct sum*, in logic/CS it means *XOR*. Context tells you which.
+
+# Optimization & ML Notation
+
+| Symbol | Name | Meaning |
+|:------:|:-----|:--------|
+| $\min_x f(x)$ | Minimize | Find $x$ that gives smallest $f(x)$ |
+| $\max_x f(x)$ | Maximize | Find $x$ that gives largest $f(x)$ |
+| $\mathrm{s.t.}$ | Subject to | Constraint follows |
+| $\theta$ | Parameters | Model weights/parameters |
+| $\eta$ or $\alpha$ | Learning rate | Step size in gradient descent |
+| $\mathcal{L}$ | Loss function | Function being minimized |
+| $\nabla_\theta \mathcal{L}$ | Gradient of loss | Direction of steepest increase |
+| $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}$ | Gradient descent update | Move parameters against gradient |
+| $\odot$ | Hadamard (element-wise) product | Multiply matrices entry by entry |
+| $\mathrm{softmax}(\mathbf{z})_i$ | Softmax | $\frac{e^{z_i}}{\sum_j e^{z_j}}$ — normalize to probabilities |
+| $\sigma(x)$ | Sigmoid | $\frac{1}{1 + e^{-x}}$ — squash to $(0,1)$ |
+
+# Greek Alphabet Quick Reference
+
+| Lower | Upper | Name | Common uses |
+|:-----:|:-----:|:-----|:------------|
+| $\alpha$ | $A$ | Alpha | Learning rate, angles, significance level |
+| $\beta$ | $B$ | Beta | Coefficients, type II error rate |
+| $\gamma$ | $\Gamma$ | Gamma | Discount factor, gamma function |
+| $\delta$ | $\Delta$ | Delta | Small change, difference, Kronecker delta |
+| $\epsilon$ | $E$ | Epsilon | Small positive number, error |
+| $\zeta$ | $Z$ | Zeta | Riemann zeta function |
+| $\eta$ | $H$ | Eta | Learning rate, metric tensor |
+| $\theta$ | $\Theta$ | Theta | Angles, parameters, Big-Theta |
+| $\lambda$ | $\Lambda$ | Lambda | Eigenvalues, regularization, rate |
+| $\mu$ | $M$ | Mu | Mean, measure |
+| $\nu$ | $N$ | Nu | Degrees of freedom, frequency |
+| $\pi$ | $\Pi$ | Pi | Circle constant, product, policy |
+| $\rho$ | $P$ | Rho | Correlation, density |
+| $\sigma$ | $\Sigma$ | Sigma | Std deviation / summation |
+| $\tau$ | $T$ | Tau | Time constant, torsion |
+| $\phi, \varphi$ | $\Phi$ | Phi | Golden ratio, basis functions, CDF |
+| $\omega$ | $\Omega$ | Omega | Angular frequency, sample space, Big-Omega |
+
+# Common Notation Patterns
+
+## Subscripts and superscripts
+
+- $x_i$ — the $i$-th element of a sequence or vector
+- $x^{(k)}$ — the $k$-th iteration (parenthesized to avoid confusion with exponents)
+- $W^{[l]}$ — weight matrix of layer $l$ in a neural network
+- $a_i^{(j)}$ — activation of neuron $i$ in layer $j$
+
+## Dots and ellipses
+
+- $x_1, x_2, \ldots, x_n$ — a sequence of terms
+- $\cdots$ — continuation in the middle of an expression
+- $\vdots$ — vertical continuation
+- $\ddots$ — diagonal continuation (in matrices)
+
+## "Bar" and "hat" accents
+
+| Notation | Meaning |
+|:--------:|:--------|
+| $\bar{x}$ | Mean of $x$, or complement |
+| $\hat{x}$ | Estimate of $x$, or unit vector |
+| $\tilde{x}$ | Modified/approximate version of $x$ |
+| $\dot{x}$ | Time derivative $dx/dt$ |
+| $\ddot{x}$ | Second time derivative $d^2x/dt^2$ |
+| $x'$ | Derivative, or transformed variable |
+
+## Asymptotic notation (Big-O family)
+
+| Notation | Meaning |
+|:--------:|:--------|
+| $O(f(n))$ | Upper bound — grows no faster than $f(n)$ |
+| $\Omega(f(n))$ | Lower bound — grows at least as fast as $f(n)$ |
+| $\Theta(f(n))$ | Tight bound — grows at the same rate as $f(n)$ |
+| $o(f(n))$ | Strict upper bound — grows strictly slower |
+| $\omega(f(n))$ | Strict lower bound — grows strictly faster |
