@@ -1,0 +1,160 @@
+---
+title: "Block E Capstone Project"
+subtitle: "Autodiff Engine"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, positioning}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}4 hours \\
+\textbf{Language} & Python (no PyTorch/TensorFlow --- build it yourself) \\
+\textbf{Output} & Working autodiff library + gradient verification + XOR demo \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a reverse-mode automatic differentiation engine from scratch, then use it to train a neural network on XOR.
+
+# Part 1 --- The Value Class (\~1.5h)
+
+**Goal:** Implement a computation graph with automatic gradient propagation.
+
+## 1a. Core data structure
+
+Create a `Value` class that wraps a scalar and tracks the computation graph:
+
+```python
+class Value:
+    def __init__(self, data, children=(), op=''):
+        self.data = data       # the scalar value
+        self.grad = 0.0        # dL/d(self), accumulated during backward
+        self._children = children
+        self._backward = lambda: None  # closure for local gradient rule
+```
+
+## 1b. Implement forward operations
+
+Each operation creates a new `Value` and stores a `_backward` closure that applies the chain rule. Implement:
+
+| Operation | Forward | Local gradient |
+|:----------|:--------|:---------------|
+| `a + b` | $c = a + b$ | $\partial c/\partial a = 1$, $\;\partial c/\partial b = 1$ |
+| `a * b` | $c = a \cdot b$ | $\partial c/\partial a = b$, $\;\partial c/\partial b = a$ |
+| `a ** n` | $c = a^n$ | $\partial c/\partial a = n\,a^{n-1}$ |
+| `relu(a)` | $c = \max(0, a)$ | $\partial c/\partial a = \mathbf{1}_{a > 0}$ |
+| `tanh(a)` | $c = \tanh(a)$ | $\partial c/\partial a = 1 - c^2$ |
+
+Subtraction and division follow from addition, multiplication, and power.
+
+## 1c. Backward pass
+
+Implement `backward()` on the final loss node. It should:
+
+1. Build a topological ordering of the computation graph (so children come before parents)
+2. Set `self.grad = 1.0` (seed: $\partial L / \partial L = 1$)
+3. Walk the ordering in reverse, calling each node's `_backward`
+
+The key insight:
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=1.8cm, every node/.style={font=\small}]
+  \node[draw, circle, minimum size=0.8cm] (x) {$x$};
+  \node[draw, circle, minimum size=0.8cm, right=of x] (a) {$a$};
+  \node[draw, circle, minimum size=0.8cm, right=of a] (b) {$b$};
+  \node[draw, circle, minimum size=0.8cm, right=of b] (L) {$L$};
+
+  \draw[->] (x) -- (a) node[midway, above, font=\footnotesize] {$f$};
+  \draw[->] (a) -- (b) node[midway, above, font=\footnotesize] {$g$};
+  \draw[->] (b) -- (L) node[midway, above, font=\footnotesize] {$h$};
+
+  \draw[<-, red!70, thick] ([yshift=-4mm]x.east) -- ([yshift=-4mm]a.west)
+    node[midway, below, font=\footnotesize, red!70] {$\frac{\partial a}{\partial x}$};
+  \draw[<-, red!70, thick] ([yshift=-4mm]a.east) -- ([yshift=-4mm]b.west)
+    node[midway, below, font=\footnotesize, red!70] {$\frac{\partial b}{\partial a}$};
+  \draw[<-, red!70, thick] ([yshift=-4mm]b.east) -- ([yshift=-4mm]L.west)
+    node[midway, below, font=\footnotesize, red!70] {$\frac{\partial L}{\partial b}$};
+
+  \node[red!70, below=0.8cm of a, font=\footnotesize] {backward: multiply local gradients};
+\end{tikzpicture}
+\end{center}
+
+For nodes with multiple consumers, gradients \textbf{accumulate} (sum). This handles fan-out correctly.
+
+# Part 2 --- Neural Network (\~1.5h)
+
+## 2a. Neuron, Layer, MLP classes
+
+Build on top of your `Value` class:
+
+- `Neuron(n_in)`: weights $w_1, \ldots, w_n$ and bias $b$, output = activation($\sum w_i x_i + b$)
+- `Layer(n_in, n_out)`: list of `n_out` neurons
+- `MLP(n_in, layer_sizes)`: list of layers
+
+Each `Neuron`'s weights and bias should be `Value` objects initialized randomly in $[-1, 1]$.
+
+## 2b. Train on XOR
+
+The XOR dataset:
+
+| $x_1$ | $x_2$ | Target |
+|:------:|:------:|:------:|
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+Use a `MLP(2, [4, 4, 1])` with `tanh` activations (except the last neuron, which is linear). Train with MSE loss:
+$$\mathcal{L} = \sum_{i=1}^{4} (y_i - \hat{y}_i)^2$$
+
+Training loop:
+
+1. Forward pass: compute predictions and loss
+2. Zero all gradients
+3. Backward pass: `loss.backward()`
+4. Update: `p.data -= lr * p.grad` for each parameter
+5. Repeat for 200 epochs with $\text{lr} = 0.05$
+
+Print loss every 20 epochs. Final predictions should be close to the targets ($< 0.1$ error).
+
+# Part 3 --- Gradient Verification (\~1h)
+
+## 3a. Finite difference check
+
+For every parameter $p$ in the network, verify your autodiff gradient against the numerical gradient:
+
+$$\frac{\partial L}{\partial p} \approx \frac{L(p + h) - L(p - h)}{2h}, \quad h = 10^{-6}$$
+
+Print the maximum relative error across all parameters. It should be $< 10^{-4}$.
+
+This is the most important test --- if this passes, your engine is correct.
+
+## 3b. ReLU gating observation
+
+Switch the activations to ReLU and retrain. At each epoch, count how many neurons have zero gradient (inactive on all 4 inputs). Print the count. Observe: \emph{inactive neurons get no gradient signal and never learn.} This is the ``dying ReLU'' problem.
+
+# Deliverables
+
+\begin{enumerate}
+  \item Working \texttt{Value} class with forward ops and backward pass
+  \item XOR training converges to loss $< 0.01$
+  \item Finite difference verification passes ($< 10^{-4}$ relative error)
+  \item Printed observation of dying ReLU neurons
+\end{enumerate}

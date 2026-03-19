@@ -57,16 +57,9 @@ Monte Carlo approximation:
 
 $$\int f(x) p(x) \, dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i), \quad x_i \sim p$$
 
-## Block B Capstone Project — Multivariable Calculus Lab (3h)
+## Block B Capstone Project — Multivariable Calculus Optimization Lab (~4h)
 
-**C++ Component (~1h):**
-1. Implement gradient descent and Newton's method for arbitrary differentiable functions in C++
-2. Compute Jacobians and Hessians numerically using finite differences — output optimization trajectories to CSV
-
-**Python Component (~2h):**
-3. Visualize gradient descent on 2D loss surfaces with 3D matplotlib surface plots and contour plots — show how Newton's method takes fewer steps but each step is more expensive
-4. Build a Lagrange multiplier solver for constrained optimization using scipy. Demonstrate numerically that L2 regularization <-> constrained optimization (show equivalent solutions for matching lambda and C)
-5. Implement Monte Carlo integration for a 10-dimensional integral and compare with the analytical result — show convergence rate of 1/sqrt(N)
+See the full project spec with rendered math and diagrams: [capstone-multivariable-lab.pdf](capstone-multivariable-lab.pdf)
 
 ## ML and Alignment Connection
 

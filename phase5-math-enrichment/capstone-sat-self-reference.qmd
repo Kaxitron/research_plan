@@ -1,0 +1,146 @@
+---
+title: "Block Capstone Project"
+subtitle: "SAT Solver \\& Self-Reference Engine"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, positioning}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}3.5 hours \\
+\textbf{Languages} & C++ (SAT solver) + Python (G\"odel numbering \& trust checker) \\
+\textbf{Output} & Working SAT solver + self-referential demos + essay \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a SAT solver from scratch, then explore self-reference and its implications for AI alignment.
+
+# Part 1 --- DPLL SAT Solver (C++, \~1.5h)
+
+**Goal:** Implement the Davis--Putnam--Logemann--Loveland algorithm.
+
+## 1a. CNF representation
+
+A formula in conjunctive normal form (CNF) is a conjunction of clauses, where each clause is a disjunction of literals:
+$$(x_1 \lor \lnot x_3) \land (x_2 \lor x_3) \land (\lnot x_1 \lor \lnot x_2)$$
+
+Represent as a vector of vectors of signed integers: positive = variable, negative = negated.
+
+## 1b. DPLL algorithm
+
+```
+DPLL(formula, assignment):
+    formula = unit_propagate(formula, assignment)
+    formula = pure_literal_eliminate(formula, assignment)
+
+    if formula is empty: return SAT
+    if any clause is empty: return UNSAT
+
+    pick an unassigned variable x
+    if DPLL(formula with x=True, ...) == SAT: return SAT
+    if DPLL(formula with x=False, ...) == SAT: return SAT
+    return UNSAT
+```
+
+- **Unit propagation:** if a clause has one literal, that literal must be true. Assign it and simplify.
+- **Pure literal elimination:** if a variable appears only positive (or only negative) across all clauses, assign it to satisfy those clauses.
+
+## 1c. Test problems
+
+| Problem | Encoding | Expected |
+|:--------|:---------|:---------|
+| Simple 3-variable | $(x_1 \lor x_2) \land (\lnot x_1 \lor x_3) \land (\lnot x_2 \lor \lnot x_3)$ | SAT |
+| Contradiction | $(x_1) \land (\lnot x_1)$ | UNSAT |
+| Graph 3-coloring | Encode ``can the Petersen graph be 3-colored?'' | SAT |
+| Sudoku | Encode a 4$\times$4 Sudoku as SAT | SAT (print solution) |
+
+For the Sudoku encoding: each cell $(r,c)$ with digit $d$ gets a variable $x_{r,c,d}$. Clauses enforce: each cell has at least one digit, at most one digit, rows/columns/boxes have distinct digits.
+
+# Part 2 --- G\"odel Numbering \& Self-Reference (Python, \~1h)
+
+**Goal:** Encode logical formulas as numbers and construct self-referential sentences.
+
+## 2a. G\"odel numbering scheme
+
+Assign a code to each symbol:
+
+| Symbol | Code |
+|:-------|:-----|
+| $\lnot$ | 1 |
+| $\land$ | 2 |
+| $\lor$ | 3 |
+| $\Rightarrow$ | 4 |
+| ( | 5 |
+| ) | 6 |
+| $x_i$ | $10 + i$ |
+
+Encode a formula as the product of primes raised to the symbol codes:
+$$\ulcorner \lnot x_1 \urcorner = 2^1 \cdot 3^{11} = 2 \cdot 177147 = 354294$$
+
+Implement `encode(formula_string)` and `decode(number)`. Verify roundtrip for 5 formulas.
+
+## 2b. The diagonal lemma (demonstration)
+
+The diagonal lemma says: for any property $P$, there exists a sentence $G$ such that $G \leftrightarrow P(\ulcorner G \urcorner)$.
+
+Demonstrate this concretely:
+
+- Define a simple ``provability'' predicate (e.g., ``is the G\"odel number even?'')
+- Use self-application: construct a program that computes its own G\"odel number and checks the predicate on it
+- Print: ``This sentence's G\"odel number is [N]. The predicate evaluates to [True/False].''
+
+# Part 3 --- Trust Checker \& Impossibility (Python, \~1h)
+
+## 3a. Toy trust checker
+
+Build a simple proof verifier for propositional logic:
+
+- Represent proofs as sequences of formulas, each justified by an axiom or inference rule (modus ponens)
+- The checker accepts a proof if every step is valid
+
+## 3b. L\"ob's theorem demonstration
+
+L\"ob's theorem: if a system can prove ``if I can prove $P$, then $P$'', then the system can already prove $P$.
+
+Demonstrate the implication: write a trust checker that tries to verify its own soundness (``every formula I prove is true''). Show that this self-verification either:
+
+- Fails (the checker can't prove its own soundness --- G\"odel's second incompleteness theorem)
+- Or succeeds vacuously (it proves everything, making it unsound)
+
+Print a clear explanation of which case occurs and why.
+
+## 3c. Short essay (in comments, \~200 words)
+
+Compare these four impossibility results and explain how each constrains AI alignment:
+
+1. **Halting problem** --- can't decide if arbitrary programs terminate
+2. **Rice's theorem** --- can't decide any nontrivial property of programs
+3. **G\"odel's incompleteness** --- sufficiently powerful systems can't prove their own consistency
+4. **L\"ob's theorem** --- self-improving AI can't prove its successor maintains alignment
+
+# Deliverables
+
+\begin{enumerate}
+  \item C++ SAT solver passes all 4 test problems (including Sudoku solution)
+  \item G\"odel encoding/decoding roundtrip works for 5 formulas
+  \item Trust checker demonstrates the impossibility of self-verification
+  \item Essay on impossibility results and alignment (in code comments)
+\end{enumerate}

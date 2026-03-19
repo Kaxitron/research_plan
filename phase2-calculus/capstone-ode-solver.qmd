@@ -1,0 +1,231 @@
+---
+title: "Block A Capstone Project"
+subtitle: "ODE System Solver \\& Training Dynamics"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    linkcolor: blue
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \usepackage{tikz}
+      \usetikzlibrary{arrows.meta, decorations.markings}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\vspace{-0.5em}
+
+Build a C++ numerical solver that generates trajectory data, then use Python to classify, visualize, and connect the dynamics to gradient-based optimization.
+
+\vspace{0.3em}
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}4 hours \\
+\textbf{Languages} & C++ (solver) + Python (analysis \& plots) \\
+\textbf{Output} & CSV data files + 3 figures \\
+\bottomrule
+\end{tabular}
+
+\vspace{1.5em}
+
+# Part 1 --- C++ Numerical Solvers (\~1.5h)
+
+**Goal:** Implement an RK4 integrator from scratch and generate trajectory data for six $2\times 2$ systems.
+
+## 1a. Implement an RK4 solver
+
+Write a function that integrates any ODE system $\dot{\mathbf{x}} = f(t, \mathbf{x})$ of any dimension. It should accept a right-hand-side function, an initial condition, a time interval $[t_0, t_f]$, and a step size $h$, and return the full trajectory.
+
+The RK4 update for reference:
+
+\begin{align}
+\mathbf{k}_1 &= f(t_n,\; \mathbf{x}_n) \\[4pt]
+\mathbf{k}_2 &= f\!\left(t_n + \tfrac{h}{2},\; \mathbf{x}_n + \tfrac{h}{2}\,\mathbf{k}_1\right) \\[4pt]
+\mathbf{k}_3 &= f\!\left(t_n + \tfrac{h}{2},\; \mathbf{x}_n + \tfrac{h}{2}\,\mathbf{k}_2\right) \\[4pt]
+\mathbf{k}_4 &= f(t_n + h,\; \mathbf{x}_n + h\,\mathbf{k}_3) \\[6pt]
+\mathbf{x}_{n+1} &= \mathbf{x}_n + \frac{h}{6}\bigl(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\bigr)
+\end{align}
+
+## 1b. Solve six canonical systems
+
+For each of the matrices below, solve $\dfrac{d\mathbf{x}}{dt} = A\mathbf{x}$ from **6 initial conditions** evenly spaced on a circle of radius 2:
+$$\mathbf{x}_0^{(k)} = 2\bigl(\cos\theta_k,\;\sin\theta_k\bigr), \quad \theta_k = \frac{k\pi}{3}, \quad k = 0, 1, \ldots, 5$$
+
+Use $h = 0.01$, $\;t \in [0,\, 10]$. Write each trajectory to CSV with columns `t, x1, x2, ic_index`.
+
+\renewcommand{\arraystretch}{1.6}
+
+| Type | Matrix $A$ | What you should see |
+|:-----|:----------:|:--------------------|
+| Stable node | $\begin{pmatrix} -2 & 0 \\ 0 & -1 \end{pmatrix}$ | All paths $\to$ origin, faster along $x_1$ |
+| Unstable node | $\begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix}$ | All paths flee origin |
+| Saddle | $\begin{pmatrix} 1 & 0 \\ 0 & -2 \end{pmatrix}$ | Approach along $x_2$, flee along $x_1$ |
+| Stable spiral | $\begin{pmatrix} -0.2 & 1 \\ -1 & -0.2 \end{pmatrix}$ | Inward-spiraling orbits |
+| Unstable spiral | $\begin{pmatrix} 0.2 & 1 \\ -1 & 0.2 \end{pmatrix}$ | Outward-spiraling orbits |
+| Center | $\begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}$ | Closed elliptical orbits |
+
+\renewcommand{\arraystretch}{1.35}
+
+# Part 2 --- Phase Portrait Gallery (Python, \~1h)
+
+**Goal:** Read the C++ CSV output, auto-classify each system, and produce a $2\times 3$ gallery of phase portraits.
+
+## 2a. Trace-determinant classifier
+
+Write a function `classify(A)` that determines the portrait type from $\tau = \mathrm{tr}(A)$ and $\Delta = \det(A)$:
+
+\begin{center}
+\begin{tikzpicture}[
+    >=Stealth,
+    scale=0.85,
+    every node/.style={font=\small}
+]
+  % Axes
+  \draw[->] (-4.2,0) -- (4.2,0) node[right] {$\tau = \mathrm{tr}(A)$};
+  \draw[->] (0,-1.8) -- (0,4.2) node[above] {$\Delta = \det(A)$};
+
+  % Parabola
+  \draw[thick, dashed, blue!60] plot[domain=-4:4, samples=80] (\x, {\x*\x/4});
+  \node[blue!70, font=\footnotesize] at (3.6, 4.0) {$\tau^2 = 4\Delta$};
+
+  % Region labels
+  \node[align=center] at (-2.4, 3.2) {\textbf{Stable}\\\textbf{spiral}};
+  \node[align=center] at ( 2.4, 3.2) {\textbf{Unstable}\\\textbf{spiral}};
+  \node[align=center] at (-2.8, 0.7) {\textbf{Stable}\\\textbf{node}};
+  \node[align=center] at ( 2.8, 0.7) {\textbf{Unstable}\\\textbf{node}};
+  \node[align=center] at ( 0,   3.5) {\textbf{Centers}};
+  \node[align=center] at (-2.0,-1.0) {\textbf{Saddle}};
+  \node[align=center] at ( 2.0,-1.0) {\textbf{Saddle}};
+\end{tikzpicture}
+\end{center}
+
+The classification rules:
+
+| Condition | Type |
+|:----------|:-----|
+| $\Delta < 0$ | Saddle |
+| $\Delta > 0,\; \tau < 0,\; \tau^2 > 4\Delta$ | Stable node |
+| $\Delta > 0,\; \tau < 0,\; \tau^2 < 4\Delta$ | Stable spiral |
+| $\Delta > 0,\; \tau > 0,\; \tau^2 > 4\Delta$ | Unstable node |
+| $\Delta > 0,\; \tau > 0,\; \tau^2 < 4\Delta$ | Unstable spiral |
+| $\Delta > 0,\; \tau = 0$ | Center |
+
+Verify it correctly labels all six matrices from Part 1.
+
+## 2b. Phase portrait gallery
+
+For each system, plot all 6 trajectories on one subplot with:
+
+- Arrowheads along trajectories showing flow direction
+- Origin marked: filled dot = stable, open dot = unstable
+- Title with classification label and eigenvalues
+
+Arrange as a $2\times 3$ **grid** (top row: stable node, unstable node, saddle; bottom row: stable spiral, unstable spiral, center). Use consistent axis limits.
+
+\vspace{0.5em}
+\textit{This is your first deliverable figure --- save as} \texttt{phase\_portraits.png}\textit{.}
+
+# Part 3 --- Gradient Descent as a Dynamical System (Python, \~1.5h)
+
+**Goal:** Show that gradient descent is Euler's method on a continuous ODE.
+
+## 3a. Gradient flow vs.\ gradient descent
+
+Define a 2D quadratic loss with condition number $\kappa = 50$:
+$$\mathcal{L}(\mathbf{x}) = \frac{1}{2}\,\mathbf{x}^T\! H\,\mathbf{x}, \qquad H = \begin{pmatrix} 50 & 0 \\ 0 & 1 \end{pmatrix}$$
+
+The \textbf{continuous gradient flow} ODE is:
+$$\frac{d\mathbf{x}}{dt} = -\nabla\mathcal{L} = -H\mathbf{x}$$
+
+Solve this with RK4 (reimplement in NumPy --- a few lines) from $\mathbf{x}_0 = (8, 8)$.
+
+\textbf{Discrete gradient descent} is:
+$$\mathbf{x}_{k+1} = \mathbf{x}_k - \eta\, H\,\mathbf{x}_k$$
+
+This is literally Euler's method on the gradient flow with step size $\eta$. Run two learning rates from the same $\mathbf{x}_0$:
+
+| Learning rate | Behavior | Why |
+|:--------------|:---------|:----|
+| $\eta = 0.005$ | Slow, smooth convergence | Well within stability |
+| $\eta = 0.035$ | Zigzags along the steep direction | Near stability limit |
+
+**Produce one figure** with loss contour ellipses, the continuous flow path, and both discrete GD paths overlaid. This should make the Euler--GD connection click visually.
+
+\vspace{0.5em}
+
+\begin{center}
+\begin{tikzpicture}[
+    >=Stealth,
+    scale=0.65,
+    every node/.style={font=\footnotesize}
+]
+  % Contour ellipses
+  \foreach \r in {1.0, 2.0, 3.0, 4.0} {
+    \draw[gray!40] (0,0) ellipse ({\r*0.3} and {\r*1.5});
+  }
+
+  % Continuous flow
+  \draw[thick, green!60!black, -{Stealth[length=4pt]}]
+    (2.2, 5.5) .. controls (0.4, 4.5) and (0.15, 2.5) .. (0.05, 0.3);
+  \node[green!60!black, right] at (1.5, 5.2) {continuous flow};
+
+  % GD slow
+  \draw[thick, blue!70, -{Stealth[length=4pt]}]
+    (2.2, 5.5) -- (1.6, 5.2) -- (1.1, 4.8) -- (0.7, 4.3) -- (0.45, 3.7) -- (0.3, 3.0);
+  \node[blue!70, left] at (-0.1, 3.8) {$\eta = 0.005$};
+
+  % GD zigzag
+  \draw[thick, orange, -{Stealth[length=4pt]}]
+    (2.2, 5.5) -- (-1.5, 4.0) -- (1.0, 2.8) -- (-0.6, 1.8) -- (0.3, 1.0);
+  \node[orange, right] at (1.1, 2.8) {$\eta = 0.035$};
+
+  % Origin
+  \fill (0,0) circle (2.5pt);
+
+  % Start
+  \fill[red] (2.2, 5.5) circle (3pt);
+  \node[red, right] at (2.3, 5.7) {$\mathbf{x}_0$};
+
+  % Axes
+  \draw[->] (-2.5,0) -- (3,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,6.5) node[above] {$x_2$};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5em}
+\textit{Save as} \texttt{gradient\_flow\_vs\_gd.png}\textit{.}
+
+## 3b. Momentum comparison
+
+Run gradient descent with momentum ($\mu = 0.9$, $\eta = 0.035$):
+\begin{align}
+\mathbf{v}_{k+1} &= \mu\,\mathbf{v}_k - \eta\,H\,\mathbf{x}_k \\[3pt]
+\mathbf{x}_{k+1} &= \mathbf{x}_k + \mathbf{v}_{k+1}
+\end{align}
+
+Produce a **side-by-side figure**: left panel shows the $(x_1, x_2)$ trajectory for vanilla GD vs.\ momentum GD, right panel shows loss vs.\ iteration for both. Momentum should converge noticeably faster despite the ill-conditioning.
+
+\vspace{0.5em}
+\textit{Save as} \texttt{momentum\_comparison.png}\textit{.}
+
+\vspace{2em}
+
+# Deliverables
+
+\begin{enumerate}
+  \item C++ RK4 solver compiles and produces trajectory CSVs
+  \item \texttt{phase\_portraits.png} --- $2\times 3$ gallery with auto-classification labels
+  \item \texttt{gradient\_flow\_vs\_gd.png} --- continuous flow + 2 learning rates on contour plot
+  \item \texttt{momentum\_comparison.png} --- trajectory + loss curve, vanilla vs.\ momentum
+\end{enumerate}

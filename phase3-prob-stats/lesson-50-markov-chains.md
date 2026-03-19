@@ -91,32 +91,9 @@ $$\pi(i) P(i \to j) = \pi(j) P(j \to i) \quad \text{for all } i, j$$
 - **PageRank implementation:** build a small web graph (5–10 nodes). Construct the transition matrix with damping α=0.15. Find the stationary distribution using (a) eigendecomposition and (b) power iteration. Verify they match.
 - **Key exercise:** implement Metropolis-Hastings (from Lesson 36) as a Markov chain with a known target distribution (e.g., a mixture of Gaussians). Plot the trajectory, histogram of samples, and track convergence to the target. Compute the empirical autocorrelation to diagnose mixing speed.
 
-### 💻 Coding Mini-Project: Language Model as Markov Chain (~50 lines)
+### 💻 Coding Mini-Project: Language Model as Markov Chain (~1.5h)
 
-```python
-class CharacterMarkovModel:
-    def __init__(self, order=1):
-        """Build an n-gram character model (order=1 is classic Markov chain)."""
-        ...
-    
-    def fit(self, text):
-        """Count transitions and build probability matrix."""
-        ...
-    
-    def generate(self, length=200, seed=None):
-        """Generate text by sampling from the chain."""
-        ...
-    
-    def stationary_distribution(self):
-        """Compute via eigendecomposition. Return character frequencies."""
-        ...
-```
-
-**Your tasks:**
-1. Fit on a Shakespeare text. Generate 500 characters. Is it recognizably English?
-2. Compare order=1, 2, 3. How does increasing memory improve generation?
-3. Compute the transition matrix entropy for each character: H(next | current = 'e') vs H(next | current = 'q'). Which characters are most/least predictable?
-4. This IS a simple language model. Modern LLMs are the same idea but with neural network transition probabilities and much longer context.
+See the full project spec: [capstone-markov-language-model.pdf](capstone-markov-language-model.pdf)
 
 ## 🔗 ML & Alignment Connection
 

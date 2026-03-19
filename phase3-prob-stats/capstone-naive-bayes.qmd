@@ -1,0 +1,103 @@
+---
+title: "Coding Mini-Project"
+subtitle: "Naive Bayes Text Classifier from Scratch"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}1.5 hours \\
+\textbf{Language} & Python (no sklearn --- just dicts and math) \\
+\textbf{Output} & Working classifier + printed predictions \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a text classifier using Bayes' theorem. No libraries --- just dictionaries, string splitting, and logarithms.
+
+# The Math
+
+Given a document with words $w_1, w_2, \ldots, w_n$, we want $P(\text{class} \mid w_1, \ldots, w_n)$.
+
+Bayes' theorem:
+$$P(c \mid w_1, \ldots, w_n) = \frac{P(c) \prod_{i=1}^{n} P(w_i \mid c)}{P(w_1, \ldots, w_n)}$$
+
+The ``naive'' assumption: words are independent given the class. This is wrong but works surprisingly well.
+
+Since the denominator is the same for all classes, we only need:
+$$\text{score}(c) = \log P(c) + \sum_{i=1}^{n} \log P(w_i \mid c)$$
+
+We work in **log-space** because multiplying many small probabilities causes underflow ($10^{-6} \times 10^{-6} \times \cdots = 0$ in floating point).
+
+# Part 1 --- Build the Classifier (\~45min)
+
+## 1a. `fit(texts, labels)`
+
+- Count how many documents belong to each class $\to$ compute $P(c)$
+- For each class, count word frequencies across all documents in that class
+- Apply **Laplace smoothing**: add 1 to every word count (so unseen words get a small nonzero probability instead of zero)
+$$P(w \mid c) = \frac{\text{count}(w, c) + 1}{\text{total words in } c + |\text{vocabulary}|}$$
+
+## 1b. `predict(text)`
+
+- For each class, compute $\log P(c) + \sum \log P(w_i \mid c)$
+- Return the class with the highest score
+
+## 1c. `predict_proba(text)`
+
+- Compute the log-scores for all classes
+- Convert to probabilities using softmax:
+$$P(c_j) = \frac{e^{s_j}}{\sum_k e^{s_k}}$$
+- For numerical stability, subtract $\max(s)$ before exponentiating
+
+# Part 2 --- Train and Test (\~30min)
+
+## 2a. Create a dataset
+
+Write 20 short movie reviews by hand (10 positive, 10 negative). Examples:
+
+- \textit{``This film was absolutely brilliant and moving''} $\to$ positive
+- \textit{``Terrible acting and a boring plot''} $\to$ negative
+
+## 2b. Train and evaluate
+
+- Train on 16 reviews, test on 4
+- For each test review, print the prediction, the true label, and the confidence (probability from `predict\_proba`)
+- Print the accuracy
+
+## 2c. Inspect the model
+
+- Print the top 5 most ``positive'' words and top 5 most ``negative'' words (highest $\log P(w \mid \text{pos}) - \log P(w \mid \text{neg})$ and vice versa)
+- Try a review with a word not in the training set. Verify that Laplace smoothing handles it gracefully (small probability, not zero/crash)
+
+# Part 3 --- Reflect (\~15min)
+
+Answer in comments:
+
+1. Why do we use log probabilities instead of raw probabilities?
+2. What would happen without Laplace smoothing if a test document contains a word never seen in training?
+3. Modern LLMs use the same $\log P(w \mid \text{context})$ pattern but with neural networks instead of word counts. What's the analogy?
+
+# Deliverables
+
+\begin{enumerate}
+  \item Working \texttt{NaiveBayes} class with \texttt{fit}, \texttt{predict}, \texttt{predict\_proba}
+  \item Printed predictions with confidence scores on the 4 test reviews
+  \item Top 5 positive/negative words printed
+\end{enumerate}

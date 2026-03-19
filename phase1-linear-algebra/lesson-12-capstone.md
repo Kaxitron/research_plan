@@ -39,7 +39,7 @@ Any matrix transformation = align input with natural directions → scale each d
 ## 🔨 Do
 
 - **Integration exercise:** Take a 3×3 matrix. Compute its rank, determinant, eigenvalues, SVD, and condition number. For each, explain the geometric meaning.
-- **Capstone visualization:** Create a Python visualization showing a unit circle transformed by a matrix, with eigenvectors highlighted and SVD decomposition shown step by step (Vᵀ rotates, Σ scales, U rotates).
+- **Capstone visualization:** See the full project spec: [capstone-linalg-visualization.pdf](capstone-linalg-visualization.pdf)
 
 ## 📝 Phase 1 Final Exam + PCA Project
 

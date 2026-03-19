@@ -70,16 +70,9 @@
 
 - **"The Logic of Provability" by George Boolos** — the definitive reference on provability logic
 
-## Block Capstone Project — SAT Solver & Self-Reference Engine (3h)
+## Block Capstone Project — SAT Solver & Self-Reference Engine (~3.5h)
 
-**C++ Component (~1h):**
-1. Build a DPLL SAT solver from scratch in C++ with unit propagation and pure literal elimination
-2. Encode graph coloring (3-color a Petersen graph) and a 9×9 Sudoku as SAT instances — solve them with your solver
-
-**Python Component (~2h):**
-3. Implement Gödel numbering: encode and decode logical formulas as integers. Construct self-referential sentences using the diagonal lemma — build a sentence that says "I am not provable"
-4. Build a toy "trust checker" that tries to verify its own correctness. Demonstrate Löb's theorem implications: show that the checker necessarily fails to prove its own soundness, connecting to AI self-modification limits
-5. Essay component: Compare the halting problem, Rice's theorem, Gödel's incompleteness, and Löb's theorem. Explain how these four impossibility results collectively constrain the alignment research program
+See the full project spec: [capstone-sat-self-reference.pdf](capstone-sat-self-reference.pdf)
 
 ## 🔗 ML & Alignment Connection
 

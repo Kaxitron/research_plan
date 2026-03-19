@@ -1,0 +1,129 @@
+---
+title: "Block D Capstone Project"
+subtitle: "PDE Solver \\& Mini Diffusion Model"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}4 hours \\
+\textbf{Languages} & C++ (PDE solvers) + Python (diffusion model) \\
+\textbf{Output} & CSV snapshots + 3 figures \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build finite difference PDE solvers from scratch, then implement a miniature diffusion model to see how the heat equation powers modern generative AI.
+
+# Part 1 --- C++ Finite Difference Solvers (\~1.5h)
+
+**Goal:** Solve the heat equation and wave equation on a 1D domain using explicit finite differences.
+
+## 1a. Heat equation
+
+The 1D heat equation:
+$$\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}$$
+
+Discretize on a grid with $N_x = 100$ spatial points, $x \in [0, 1]$:
+$$u_i^{n+1} = u_i^n + \frac{\alpha\, \Delta t}{(\Delta x)^2}\left(u_{i+1}^n - 2u_i^n + u_{i-1}^n\right)$$
+
+Use $\alpha = 0.01$, boundary conditions $u(0,t) = u(1,t) = 0$, and initial condition:
+$$u(x, 0) = \sin(\pi x)$$
+
+The analytical solution is $u(x,t) = e^{-\alpha \pi^2 t}\sin(\pi x)$.
+
+**Stability requirement:** $\Delta t \leq \frac{(\Delta x)^2}{2\alpha}$. Choose $\Delta t$ accordingly.
+
+Output snapshots at $t = 0, 0.5, 1.0, 2.0, 5.0$ to CSV.
+
+## 1b. Wave equation
+
+$$\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}$$
+
+Discretize:
+$$u_i^{n+1} = 2u_i^n - u_i^{n-1} + \frac{c^2 \Delta t^2}{(\Delta x)^2}\left(u_{i+1}^n - 2u_i^n + u_{i-1}^n\right)$$
+
+Use $c = 1$, same boundary conditions, initial condition $u(x,0) = \sin(\pi x)$, $u_t(x,0) = 0$.
+
+Output snapshots at $t = 0, 0.25, 0.5, 0.75, 1.0$.
+
+## 1c. Key observation
+
+The heat equation \textbf{destroys information} --- the solution smooths out and decays to zero. The wave equation \textbf{preserves information} --- the wave bounces forever without losing amplitude.
+
+This distinction is exactly why diffusion models work: the forward process (heat equation) is easy to run but destroys structure. The reverse process (learned denoising) recovers structure --- and that's the hard part.
+
+# Part 2 --- PDE Visualization (Python, \~0.5h)
+
+## 2a. Side-by-side comparison
+
+Read the C++ CSV output and create a figure with two panels:
+
+- **Left:** Heat equation snapshots at all 5 time steps, overlaid on one plot. Color from dark (early) to light (late). The curves should flatten toward zero.
+- **Right:** Wave equation snapshots. The wave should oscillate without decaying.
+
+\textit{Save as} \texttt{heat\_vs\_wave.png}\textit{.}
+
+# Part 3 --- Mini Diffusion Model (Python, \~2h)
+
+**Goal:** Implement the forward and reverse diffusion process on simple 2D data.
+
+## 3a. Forward diffusion
+
+Create a 2D dataset: 500 points sampled from a mixture of 4 Gaussians (centered at $(\pm 2, \pm 2)$ with $\sigma = 0.3$).
+
+The forward process adds Gaussian noise progressively:
+$$\mathbf{x}_t = \sqrt{\bar{\alpha}_t}\, \mathbf{x}_0 + \sqrt{1 - \bar{\alpha}_t}\, \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, I)$$
+
+where $\bar{\alpha}_t = \prod_{s=1}^{t}(1 - \beta_s)$ and $\beta_t$ is a linear schedule from $0.0001$ to $0.02$ over $T = 200$ steps.
+
+Create a **5-panel** figure showing the data at $t = 0$, $T/4$, $T/2$, $3T/4$, $T$. The data should progressively blur into a standard Gaussian.
+
+\textit{Save as} \texttt{forward\_diffusion.png}\textit{.}
+
+## 3b. Train a score network
+
+The score function is $\nabla_{\mathbf{x}} \log p_t(\mathbf{x})$ --- a vector field pointing toward high-density regions.
+
+Train a small MLP (3 hidden layers, 128 units, ReLU) to predict the noise $\boldsymbol{\epsilon}$ given $(\mathbf{x}_t, t)$:
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{t,\, \mathbf{x}_0,\, \boldsymbol{\epsilon}}\!\left[\bigl\| \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t) - \boldsymbol{\epsilon}\bigr\|^2 \right]$$
+
+Train for 5000 steps with Adam ($\text{lr} = 10^{-3}$). Use PyTorch or JAX.
+
+## 3c. Reverse diffusion (sampling)
+
+Starting from $\mathbf{x}_T \sim \mathcal{N}(\mathbf{0}, I)$, run the reverse process:
+$$\mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\mathbf{x}_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}\, \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\right) + \sigma_t\, \mathbf{z}$$
+
+where $\mathbf{z} \sim \mathcal{N}(\mathbf{0}, I)$ and $\sigma_t = \sqrt{\beta_t}$.
+
+Generate 500 new samples and plot them alongside the original data. If training worked, the generated samples should cluster around the same 4 Gaussian centers.
+
+\textit{Save as} \texttt{generated\_samples.png}\textit{.}
+
+# Deliverables
+
+\begin{enumerate}
+  \item \texttt{heat\_vs\_wave.png} --- side-by-side PDE solution snapshots
+  \item \texttt{forward\_diffusion.png} --- 5-panel forward noising process
+  \item \texttt{generated\_samples.png} --- original data vs generated samples
+\end{enumerate}

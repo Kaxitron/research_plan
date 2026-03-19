@@ -137,16 +137,9 @@ $$\frac{dx}{dt} = f(x,t) - \frac{1}{2} g(t)^2\, \nabla_x \log p_t(x)$$
 **Denoising score matching objective:**
 $$\mathcal{L}(\theta) = \mathbb{E}_{t, x_0, \epsilon}\!\left[\big\| s_\theta(x_t, t) - \nabla_{x_t} \log p(x_t | x_0) \big\|^2\right]$$
 
-## Block D Capstone Project — PDE Solver & Mini Diffusion Model (4h)
+## Block D Capstone Project — PDE Solver & Mini Diffusion Model (~4h)
 
-**C++ Component (~1h):**
-1. Build finite difference solvers for the heat equation (u_t = alpha u_xx) and wave equation (u_tt = c^2 u_xx) in C++
-2. Output time-step snapshots to CSV — visualize heat diffusion (information-losing) vs wave propagation (information-preserving) side by side
-
-**Python Component (~3h):**
-3. Implement forward diffusion as progressive Gaussian noise on 2D data (mixture of Gaussians). Visualize the data distribution at t = 0, T/4, T/2, 3T/4, T — confirm convergence to standard Gaussian
-4. Train a small score network s_theta(x,t) ≈ nabla_x log p_t(x) using denoising score matching. Use a 3-layer MLP with time conditioning
-5. Reverse the diffusion via Euler-Maruyama SDE solver to generate new samples. Compare generated vs original distribution. Connect every step to PDE theory from this block
+See the full project spec with rendered math and diagrams: [capstone-pde-diffusion.pdf](capstone-pde-diffusion.pdf)
 
 ## ML and Alignment Connection
 

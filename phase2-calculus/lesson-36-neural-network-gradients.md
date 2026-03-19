@@ -80,17 +80,9 @@ $$\mathbf{w} \leftarrow \mathbf{w} - \alpha \frac{\partial C}{\partial \mathbf{w
 
 Start with $\partial L / \partial L = 1$. At each node, apply the chain rule: $\partial L / \partial x = (\partial L / \partial y)(\partial y / \partial x)$. For branching paths, sum contributions.
 
-## Block E Capstone Project --- Autodiff Engine (4h)
+## Block E Capstone Project — Autodiff Engine (~4h)
 
-**Part 1: Build a reverse-mode autodiff engine (~2h)**
-1. Define a `Value` class (Python) with `data`, `grad`, and a computation graph
-2. Implement `forward` and `backward` for: +, -, *, /, ReLU, tanh
-3. Build a 2-layer MLP on XOR using your engine
-4. Verify all gradients against finite differences: |autodiff - (f(x+h) - f(x-h))/2h| < 1e-5
-
-**Part 2: Apply the theory (~2h)**
-5. Train a small network on a toy dataset, printing the gradient of each layer at each step --- confirm that ReLU zeros out gradients for inactive neurons
-6. Compare forward-mode vs reverse-mode autodiff on your engine: time one forward pass per input dimension vs one backward pass for all parameters
+See the full project spec with rendered math and diagrams: [capstone-autodiff-engine.pdf](capstone-autodiff-engine.pdf)
 
 ## ML and Alignment Connection
 

@@ -1,0 +1,116 @@
+---
+title: "Coding Mini-Project"
+subtitle: "Huffman Encoder"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, positioning}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}1.5 hours \\
+\textbf{Language} & Python (\texttt{heapq} for the priority queue) \\
+\textbf{Output} & Working encoder/decoder + compression analysis \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a Huffman coder to see Shannon's source coding theorem in action: the minimum average code length equals the entropy.
+
+# The Idea
+
+Frequent characters get short codes, rare characters get long codes. This is optimal for symbol-by-symbol coding.
+
+\begin{center}
+\begin{tikzpicture}[
+  >=Stealth,
+  level distance=1.2cm,
+  level 1/.style={sibling distance=4cm},
+  level 2/.style={sibling distance=2cm},
+  every node/.style={font=\small, draw, circle, minimum size=6mm},
+  edge from parent/.style={draw, ->, thick},
+]
+  \node {14}
+    child { node {6}
+      child { node[rectangle] {a:3} edge from parent node[left, draw=none, font=\footnotesize] {0} }
+      child { node[rectangle] {b:3} edge from parent node[right, draw=none, font=\footnotesize] {1} }
+      edge from parent node[left, draw=none, font=\footnotesize] {0}
+    }
+    child { node {8}
+      child { node[rectangle] {c:3} edge from parent node[left, draw=none, font=\footnotesize] {0} }
+      child { node[rectangle] {d:5} edge from parent node[right, draw=none, font=\footnotesize] {1} }
+      edge from parent node[right, draw=none, font=\footnotesize] {1}
+    };
+\end{tikzpicture}
+\end{center}
+
+Codes: a $\to$ \texttt{00}, b $\to$ \texttt{01}, c $\to$ \texttt{10}, d $\to$ \texttt{11}. More skewed frequencies $\to$ more variable-length codes $\to$ better compression.
+
+# Part 1 --- Build the Coder (\~45min)
+
+## 1a. `build_tree(freq_dict)`
+
+- Start with each character as a leaf node, weighted by frequency
+- Use a min-heap (`heapq`): repeatedly pop the two lightest nodes, merge them into a parent with combined weight, push the parent back
+- Continue until one node remains --- that's the root
+
+## 1b. `build_codes()`
+
+Walk the tree recursively. Going left appends `'0'`, going right appends `'1'`. At each leaf, record the code.
+
+## 1c. `encode(text)` and `decode(bits)`
+
+- Encode: concatenate each character's code
+- Decode: walk the tree bit by bit, emit a character when you reach a leaf, restart from root
+
+# Part 2 --- Test and Verify (\~30min)
+
+## 2a. Basic test
+
+Encode `"hello world"`. Print each character's code. Verify:
+$$\texttt{decode(encode("hello world"))} = \texttt{"hello world"}$$
+
+## 2b. Shannon's theorem check
+
+Compute the **entropy** of the character distribution:
+$$H = -\sum_c p(c) \log_2 p(c)$$
+
+Compute the **average code length**:
+$$\bar{L} = \sum_c p(c) \cdot \text{len}(\text{code}(c))$$
+
+Shannon's source coding theorem guarantees:
+$$H \leq \bar{L} < H + 1$$
+
+Print $H$, $\bar{L}$, and verify this inequality holds.
+
+## 2c. Compression on real text
+
+Take a paragraph of English text (100+ characters). Compute:
+
+- Original size: $8 \times \text{len(text)}$ bits (ASCII)
+- Compressed size: len(encode(text)) bits
+- Compression ratio and comparison to entropy lower bound
+
+# Deliverables
+
+\begin{enumerate}
+  \item Working \texttt{HuffmanCoder} with \texttt{build\_tree}, \texttt{encode}, \texttt{decode}
+  \item Roundtrip verification passes
+  \item Printed entropy vs.\ average code length confirming Shannon's bound
+\end{enumerate}

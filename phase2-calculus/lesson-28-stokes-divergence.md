@@ -61,16 +61,9 @@ $$\int_{\partial \Omega} \omega = \int_{\Omega} d\omega$$
 
 $$\nabla \times \mathbf{F} = \left( \frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z} \right) \mathbf{i} + \left( \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x} \right) \mathbf{j} + \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) \mathbf{k}$$
 
-## Block C Capstone Project — Vector Calculus Theorem Verifier (3h)
+## Block C Capstone Project — Vector Calculus Theorem Verifier (~3.5h)
 
-**C++ Component (~1h):**
-1. Implement numerical line integral, surface integral, and volume integral routines in C++ using quadrature rules
-2. Output computed values to CSV for verification against Python implementations
-
-**Python Component (~2h):**
-3. Verify Green's theorem (both circulation and flux forms) on specific 2D vector fields — compute both sides independently and confirm equality
-4. Verify Stokes' theorem: compute the circulation around a curve and the flux of curl through the bounded surface. Verify the divergence theorem on the unit cube
-5. Visualize 2D and 3D vector fields with matplotlib showing curl, divergence, and gradient fields. Create a diagram showing the unified hierarchy: FTC → FTLI → Green's → Stokes' → Divergence theorem
+See the full project spec with rendered math and diagrams: [capstone-vector-calculus.pdf](capstone-vector-calculus.pdf)
 
 ## ML & Alignment Connection
 

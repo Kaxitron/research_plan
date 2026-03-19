@@ -55,16 +55,9 @@
 - **"Visual Group Theory" by Nathan Carter** — Chapters 10–12 (actions, representations)
 - **"Algebra" by Artin** — Chapters 5–6 (group actions, with excellent geometric examples)
 
-## Block Capstone Project — Neural Network Symmetry Explorer (3h)
+## Block Capstone Project — Neural Network Symmetry Explorer (~3.5h)
 
-**C++ Component (~1h):**
-1. Enumerate all permutation symmetries of a small MLP (2-input, 3-hidden, 1-output) in C++ by generating all permutation matrices for S₃
-2. For each permutation, apply it to a weight vector and verify the network output is identical — output results to CSV
-
-**Python Component (~2h):**
-3. Implement the orbit-stabilizer theorem numerically in PyTorch: for random weight vectors, compute orbit sizes and stabilizer sizes, verify they multiply to |G| = 6
-4. Show that a convolutional layer IS an equivariant layer: verify conv(shift(x)) = shift(conv(x)) numerically in PyTorch
-5. Visualize the loss landscape along symmetry directions — show the flat valleys created by permutation invariance. Compute the Hessian at symmetric points and demonstrate rank degeneracy. Connect the number of symmetries to SLT singularity structure
+See the full project spec: [capstone-symmetry-explorer.pdf](capstone-symmetry-explorer.pdf)
 
 ## 🔗 ML & Alignment Connection
 

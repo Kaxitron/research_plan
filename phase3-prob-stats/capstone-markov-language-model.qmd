@@ -1,0 +1,104 @@
+---
+title: "Coding Mini-Project"
+subtitle: "Language Model as Markov Chain"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}1.5 hours \\
+\textbf{Language} & Python (NumPy) \\
+\textbf{Output} & Working generator + transition analysis + 1 figure \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a character-level language model: a Markov chain that generates text by sampling one character at a time based on what came before.
+
+# The Math
+
+A Markov chain with states $s_1, \ldots, s_n$ and transition matrix $P$:
+$$P_{ij} = P(X_{t+1} = s_j \mid X_t = s_i), \qquad \sum_j P_{ij} = 1$$
+
+For a character-level model, each state is a character (or $n$-gram). The transition probabilities come from counting: how often does character $j$ follow character $i$ in the training text?
+
+The **stationary distribution** $\boldsymbol{\pi}$ satisfies $\boldsymbol{\pi} P = \boldsymbol{\pi}$ --- it's the eigenvector of $P^T$ with eigenvalue 1. This is the long-run character frequency the chain converges to.
+
+# Part 1 --- Build the Model (\~45min)
+
+## 1a. `fit(text)` with configurable order
+
+- **Order 1:** count single-character transitions (26$\times$26 matrix for letters)
+- **Order 2:** count 2-character prefix transitions (``th'' $\to$ ``e'' is common)
+- **Order 3:** count 3-character prefix transitions
+
+Store counts in a dictionary of dictionaries. Normalize rows to get probabilities.
+
+## 1b. `generate(length, seed)`
+
+Starting from a seed string, repeatedly:
+
+1. Look up the current context (last $n$ characters where $n$ = order)
+2. Sample the next character from the transition distribution
+3. Append and continue
+
+Use `numpy.random.choice` with the probability vector.
+
+## 1c. `stationary_distribution()`
+
+For order 1 only: build the full $26\times 26$ transition matrix (letters only, lowercased). Compute the stationary distribution via eigendecomposition of $P^T$.
+
+# Part 2 --- Experiments (\~30min)
+
+## 2a. Train on Shakespeare
+
+Use any Shakespeare text (e.g., from Project Gutenberg or `nltk`). Generate 500 characters at each order.
+
+- **Order 1:** mostly gibberish, but vowel/consonant patterns emerge
+- **Order 2:** recognizable syllable structures
+- **Order 3:** occasional real words appear
+
+## 2b. Transition entropy
+
+For each character $c$, compute the conditional entropy:
+$$H(\text{next} \mid \text{current} = c) = -\sum_j P_{cj} \log_2 P_{cj}$$
+
+Print the 5 most predictable characters (lowest entropy) and 5 least predictable (highest entropy). You should find that `q` is highly predictable (almost always followed by `u`) while vowels are less predictable.
+
+## 2c. Transition heatmap
+
+Create a heatmap of the $26\times 26$ transition matrix using `matplotlib.imshow`. Label axes with letters. The hot spots reveal English phonotactics.
+
+\textit{Save as} \texttt{transition\_heatmap.png}\textit{.}
+
+# Part 3 --- Connection to LLMs (\~15min)
+
+Answer in comments:
+
+1. A GPT-style model computes $P(\text{next token} \mid \text{all previous tokens})$. How is this different from your Markov chain? (Answer: unbounded context via attention, not fixed $n$-gram window)
+2. Temperature in LLM sampling divides the logits by $T$ before softmax. What happens to your generated text if you raise the transition probabilities to the power $1/T$ and renormalize? Try $T = 0.5$ (sharper) and $T = 2.0$ (flatter).
+
+# Deliverables
+
+\begin{enumerate}
+  \item Working \texttt{CharacterMarkovModel} with \texttt{fit}, \texttt{generate}, \texttt{stationary\_distribution}
+  \item Generated text samples at orders 1, 2, 3
+  \item Printed entropy analysis (most/least predictable characters)
+  \item \texttt{transition\_heatmap.png}
+\end{enumerate}

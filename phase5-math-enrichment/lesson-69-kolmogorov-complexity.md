@@ -49,13 +49,6 @@
 - **"An Introduction to Kolmogorov Complexity and Its Applications" by Li & Vitanyi** — Chapters 1–2
 - **"Universal Artificial Intelligence" by Hutter** — overview chapters
 
-## Block Capstone Project — Complexity, Compression & Learning (3h)
+## Block Capstone Project — Complexity, Compression & Learning (~3.5h)
 
-**C++ Component (~1h):**
-1. Build a Universal Turing Machine simulator for small programs in C++ — take a TM description and input string, simulate execution, output the result and number of steps
-2. Implement approximate Kolmogorov complexity estimation via compression ratio (interface with zlib)
-
-**Python Component (~2h):**
-3. For 10 different bit strings of length 100, estimate K(x) using gzip compression. Compare with the shortest Python program that generates each string. Show that random strings are incompressible while patterned strings compress well
-4. Build a Solomonoff-style predictor: enumerate all programs up to length 20 on a tiny language, weight by 2^(-length), and predict the next bit of "01010101...". Show it correctly predicts "0"
-5. Demonstrate the compression↔generalization connection: train small models on data, measure compression ratio of training data, and show that models achieving better compression generalize better to test data
+See the full project spec: [capstone-complexity-compression.pdf](capstone-complexity-compression.pdf)

@@ -1,0 +1,189 @@
+---
+title: "Phase 1 Capstone Project"
+subtitle: "Linear Algebra Visualization Suite"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, calc}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}3 hours \\
+\textbf{Language} & Python (NumPy + matplotlib) \\
+\textbf{Output} & 3 figures + numerical verification \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Build a visualization suite that makes every Phase 1 concept visible: see how matrices transform space, watch eigenvectors hold their direction, and decompose any transformation into the SVD pipeline.
+
+# Part 1 --- Matrix Transformation Visualizer (\~1h)
+
+**Goal:** Show what a matrix \emph{does} to a geometric object.
+
+## 1a. Unit circle transformation
+
+Pick the matrix:
+$$A = \begin{pmatrix} 2 & 1 \\ 0.5 & 1.5 \end{pmatrix}$$
+
+- Plot the unit circle ($100+$ points on $\cos\theta, \sin\theta$)
+- Apply $A$ to every point: $\mathbf{y} = A\mathbf{x}$
+- Plot the resulting ellipse on the same axes
+- Add the standard basis vectors $\mathbf{e}_1, \mathbf{e}_2$ and their images $A\mathbf{e}_1, A\mathbf{e}_2$ as arrows
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, scale=0.8]
+  % Unit circle
+  \draw[blue!60, thick] (0,0) circle (1.5);
+  \node[blue!60, font=\footnotesize] at (1.2, 1.2) {unit circle};
+
+  % Ellipse (transformed)
+  \draw[red!70, thick, rotate=20] (0,0) ellipse (2.5 and 1.0);
+  \node[red!70, font=\footnotesize] at (2.2, -0.8) {$A$ applied};
+
+  % Basis vectors
+  \draw[->, thick, blue!80] (0,0) -- (1.5, 0) node[below, font=\footnotesize] {$\mathbf{e}_1$};
+  \draw[->, thick, blue!80] (0,0) -- (0, 1.5) node[left, font=\footnotesize] {$\mathbf{e}_2$};
+
+  % Transformed basis
+  \draw[->, thick, red!80] (0,0) -- (2.2, 0.5) node[right, font=\footnotesize] {$A\mathbf{e}_1$};
+  \draw[->, thick, red!80] (0,0) -- (0.8, 1.8) node[above, font=\footnotesize] {$A\mathbf{e}_2$};
+
+  % Axes
+  \draw[gray!50, ->] (-2,0) -- (3,0);
+  \draw[gray!50, ->] (0,-1.5) -- (0,2.5);
+\end{tikzpicture}
+\end{center}
+
+## 1b. Eigenvector overlay
+
+Compute the eigenvalues $\lambda_1, \lambda_2$ and eigenvectors $\mathbf{v}_1, \mathbf{v}_2$ of $A$ using `numpy.linalg.eig`. On the same figure:
+
+- Draw $\mathbf{v}_1$ and $\mathbf{v}_2$ as dashed arrows from the origin
+- Draw $A\mathbf{v}_1 = \lambda_1 \mathbf{v}_1$ and $A\mathbf{v}_2 = \lambda_2 \mathbf{v}_2$ as solid arrows
+- Label each with its eigenvalue
+
+The eigenvectors should visually confirm: \emph{they don't rotate, they only stretch.}
+
+## 1c. Determinant and area
+
+Compute $\det(A)$. Draw a unit square (vertices at origin, $\mathbf{e}_1$, $\mathbf{e}_2$, $\mathbf{e}_1 + \mathbf{e}_2$) and its image under $A$. The area of the parallelogram should equal $|\det(A)|$.
+
+Print: ``det(A) = {:.3f}, parallelogram area = {:.3f}`` and verify they match.
+
+# Part 2 --- SVD Decomposition Walkthrough (\~1h)
+
+**Goal:** Decompose $A = U \Sigma V^T$ and show each step visually.
+
+## 2a. Compute and display SVD
+
+Use `numpy.linalg.svd` to get $U$, $\Sigma$, $V^T$. Print all three matrices. Verify $A = U \Sigma V^T$ numerically (should match to $< 10^{-14}$).
+
+## 2b. Step-by-step transformation figure
+
+Create a **4-panel** figure showing the SVD pipeline applied to the unit circle:
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, scale=0.55, every node/.style={font=\small}]
+  % Panel 1: unit circle
+  \draw[blue!60, thick] (0,0) circle (1);
+  \node[below] at (0, -1.4) {Original};
+  \node[below, font=\footnotesize] at (0, -1.9) {unit circle};
+
+  % Arrow
+  \draw[->, thick] (1.5, 0) -- (3, 0) node[midway, above, font=\footnotesize] {$V^T$};
+
+  % Panel 2: rotated circle
+  \begin{scope}[xshift=4.5cm]
+    \draw[green!60!black, thick] (0,0) circle (1);
+    \node[below] at (0, -1.4) {Step 1};
+    \node[below, font=\footnotesize] at (0, -1.9) {rotate by $V^T$};
+  \end{scope}
+
+  % Arrow
+  \draw[->, thick] (6, 0) -- (7.5, 0) node[midway, above, font=\footnotesize] {$\Sigma$};
+
+  % Panel 3: stretched ellipse
+  \begin{scope}[xshift=9cm]
+    \draw[orange, thick] (0,0) ellipse (1.8 and 0.6);
+    \node[below] at (0, -1.4) {Step 2};
+    \node[below, font=\footnotesize] at (0, -1.9) {scale by $\sigma_1, \sigma_2$};
+  \end{scope}
+
+  % Arrow
+  \draw[->, thick] (11.3, 0) -- (12.8, 0) node[midway, above, font=\footnotesize] {$U$};
+
+  % Panel 4: final ellipse
+  \begin{scope}[xshift=14.3cm]
+    \draw[red!70, thick, rotate=25] (0,0) ellipse (1.8 and 0.6);
+    \node[below] at (0, -1.4) {Step 3};
+    \node[below, font=\footnotesize] at (0, -1.9) {rotate by $U$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+For each panel, transform the unit circle points by the cumulative product of matrices up to that step. The final panel should match your ellipse from Part 1.
+
+## 2c. Singular values and condition number
+
+- The semi-axes of the final ellipse have lengths $\sigma_1$ and $\sigma_2$
+- Print the condition number $\kappa = \sigma_1 / \sigma_2$
+- Explain in a comment: what would $\kappa = 1$ look like? What about $\kappa = 1000$?
+
+# Part 3 --- Numerical Verification (\~1h)
+
+**Goal:** Confirm core identities computationally.
+
+## 3a. Rank, null space, and column space
+
+For the matrix:
+$$B = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix}$$
+
+- Compute rank via SVD (count nonzero singular values above a tolerance)
+- Find a basis for the null space (columns of $V$ corresponding to zero singular values)
+- Verify that $B \mathbf{n} = \mathbf{0}$ for each null space vector $\mathbf{n}$
+- Verify rank-nullity: $\mathrm{rank}(B) + \mathrm{nullity}(B) = 3$
+
+## 3b. Projection matrix
+
+Build the projection matrix onto the column space of $B$:
+$$P = B (B^T B)^+ B^T$$
+where $(B^T B)^+$ is the pseudoinverse. Verify:
+
+- $P^2 = P$ (idempotent)
+- $P^T = P$ (symmetric)
+- $P\mathbf{b}_i = \mathbf{b}_i$ for each column of $B$ (columns project to themselves)
+
+## 3c. Eigenvalue-determinant-trace relationships
+
+For the original matrix $A$:
+
+- Verify $\det(A) = \lambda_1 \cdot \lambda_2$
+- Verify $\mathrm{tr}(A) = \lambda_1 + \lambda_2$
+- Verify $\sigma_i^2 = \lambda_i(A^T A)$
+
+Print each pair of values and the relative error.
+
+# Deliverables
+
+\begin{enumerate}
+  \item \texttt{transform\_and\_eigen.png} --- unit circle + ellipse + eigenvectors + area
+  \item \texttt{svd\_pipeline.png} --- 4-panel SVD decomposition
+  \item Printed numerical verification of all identities (rank-nullity, projection, det/trace)
+\end{enumerate}

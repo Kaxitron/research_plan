@@ -1,0 +1,153 @@
+---
+title: "Block Capstone Project"
+subtitle: "Neural Network Symmetry Explorer"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, positioning}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}3.5 hours \\
+\textbf{Languages} & C++ (permutation enumeration) + Python/PyTorch (verification) \\
+\textbf{Output} & Permutation CSV + equivariance verification + 1 figure \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+Neural networks have hidden symmetries: you can permute hidden neurons without changing the function. Explore this structure using group theory.
+
+# The Key Insight
+
+A network with architecture 2-3-1 (2 inputs, 3 hidden, 1 output) has $3! = 6$ equivalent weight configurations. Permuting the 3 hidden neurons (and their incoming/outgoing weights) gives a different weight vector that computes the \textbf{exact same function}.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, scale=0.8, every node/.style={font=\small}]
+  % Input layer
+  \foreach \i in {1,2} {
+    \node[draw, circle, minimum size=7mm] (i\i) at (0, -\i*1.2+1.8) {$x_\i$};
+  }
+  % Hidden layer
+  \foreach \j in {1,2,3} {
+    \node[draw, circle, minimum size=7mm, fill=blue!10] (h\j) at (3, -\j*1.2+2.4) {$h_\j$};
+  }
+  % Output
+  \node[draw, circle, minimum size=7mm] (o) at (6, 0) {$y$};
+
+  % Connections
+  \foreach \i in {1,2} {
+    \foreach \j in {1,2,3} {
+      \draw[->] (i\i) -- (h\j);
+    }
+  }
+  \foreach \j in {1,2,3} {
+    \draw[->] (h\j) -- (o);
+  }
+
+  % Label
+  \node[below, font=\footnotesize] at (3, -2.2) {Permuting $h_1, h_2, h_3$ gives $3! = 6$ equivalent networks};
+\end{tikzpicture}
+\end{center}
+
+# Part 1 --- Permutation Enumeration (C++, \~1h)
+
+**Goal:** Generate all permutation matrices for $S_3$ and apply them to weight vectors.
+
+## 1a. Generate $S_3$
+
+The symmetric group $S_3$ has 6 elements. Represent each as a $3\times 3$ permutation matrix $P_\sigma$.
+
+For a network with weight matrix $W_1 \in \mathbb{R}^{3\times 2}$ (input $\to$ hidden) and $W_2 \in \mathbb{R}^{1\times 3}$ (hidden $\to$ output), the symmetry acts as:
+$$W_1 \mapsto P_\sigma W_1, \qquad W_2 \mapsto W_2 P_\sigma^T$$
+
+## 1b. Verify functional equivalence
+
+- Initialize random weights $W_1, \mathbf{b}_1, W_2, b_2$
+- For each of the 6 permutations, compute the permuted weights
+- Evaluate both networks on 10 random inputs
+- Verify outputs match to machine precision ($< 10^{-12}$)
+
+Output results to CSV: `permutation_id, input_id, original_output, permuted_output, difference`.
+
+# Part 2 --- Orbit-Stabilizer Theorem (Python, \~1h)
+
+**Goal:** Verify the orbit-stabilizer theorem numerically.
+
+## 2a. The theorem
+
+For a group $G$ acting on a set $X$, and any element $x \in X$:
+$$|G| = |\text{Orb}(x)| \times |\text{Stab}(x)|$$
+
+where:
+
+- $\text{Orb}(x) = \{g \cdot x : g \in G\}$ (all distinct images of $x$)
+- $\text{Stab}(x) = \{g \in G : g \cdot x = x\}$ (permutations that leave $x$ unchanged)
+
+## 2b. Numerical verification
+
+For 10 random weight vectors:
+
+1. Apply all 6 permutations, compute the orbit (group distinct results by closeness)
+2. Compute the stabilizer (permutations where $\|g \cdot w - w\| < 10^{-10}$)
+3. Verify $|\text{Orb}| \times |\text{Stab}| = 6$
+
+Most random weight vectors have trivial stabilizer ($|\text{Stab}| = 1$, $|\text{Orb}| = 6$). Can you construct a weight vector with a nontrivial stabilizer? (Hint: set two hidden neurons to have identical weights.)
+
+# Part 3 --- Convolutional Equivariance (Python, \~1h)
+
+**Goal:** Verify that convolutions are translation-equivariant.
+
+## 3a. The property
+
+A function $f$ is \textbf{equivariant} to a transformation $T$ if:
+$$f(T(x)) = T(f(x))$$
+
+For convolution and translation (shift):
+$$\text{conv}(\text{shift}(x)) = \text{shift}(\text{conv}(x))$$
+
+## 3b. Numerical test
+
+Using PyTorch:
+
+1. Create a random 1D signal of length 32
+2. Create a `Conv1d` layer with random weights
+3. Shift the input by 5 positions (circular shift)
+4. Verify: `conv(shift(x))` equals `shift(conv(x))` to machine precision
+
+Repeat for a 2D image with `Conv2d` and a 2D translation.
+
+## 3c. Loss landscape along symmetry directions
+
+Pick a trained weight vector $\mathbf{w}^*$. For each of the 6 permutations $\sigma$:
+
+- Interpolate: $\mathbf{w}(\alpha) = (1-\alpha)\mathbf{w}^* + \alpha\, P_\sigma \mathbf{w}^*$ for $\alpha \in [0, 1]$
+- Compute the loss at each $\alpha$
+
+Plot all 6 curves. For the identity permutation the loss is flat (trivially). For non-identity permutations, the loss should dip at both endpoints (both are global minima) with a barrier in between.
+
+\textit{Save as} \texttt{symmetry\_loss\_landscape.png}\textit{.}
+
+# Deliverables
+
+\begin{enumerate}
+  \item C++ permutation verification CSV (6 permutations $\times$ 10 inputs, all differences $< 10^{-12}$)
+  \item Orbit-stabilizer verification printed for 10 random weight vectors
+  \item Conv equivariance test passes
+  \item \texttt{symmetry\_loss\_landscape.png}
+\end{enumerate}

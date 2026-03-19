@@ -54,34 +54,9 @@
 - Implement Bayes' theorem for a spam filter: given word frequencies, compute P(spam | words)
 - Visualize 1D and 2D Gaussians (the 2D Gaussian is a contour map — connects to gradient work)
 
-### 💻 Coding Mini-Project: Naive Bayes Text Classifier from Scratch (~60 lines)
+### 💻 Coding Mini-Project: Naive Bayes Text Classifier (~1.5h)
 
-Build a working text classifier with no sklearn — just Python dictionaries and basic math:
-
-```python
-class NaiveBayes:
-    def fit(self, texts, labels):
-        """Learn word frequencies for each class."""
-        self.class_priors = {}     # P(class)
-        self.word_probs = {}       # P(word | class) with Laplace smoothing
-        ...
-
-    def predict(self, text):
-        """Return the most probable class for a new text."""
-        # Compute log P(class) + Σ log P(word | class) for each class
-        ...
-```
-
-**Your tasks:**
-1. Implement `fit()`: count word frequencies per class, apply Laplace smoothing (add 1 to all counts)
-2. Implement `predict()`: use **log probabilities** to avoid underflow (multiplying many small numbers → 0)
-3. Create a tiny dataset of 20 sentences (10 "positive", 10 "negative" movie reviews — make them up)
-4. Train on 16, test on 4. Print predictions with confidence scores
-5. Add a `predict_proba()` method that returns the actual posterior probabilities (hint: softmax of log-probs)
-
-**Why log probabilities?** This is your first encounter with a universal pattern in ML: we always work in log-space because computers can't multiply 1000 small probabilities without underflow. Cross-entropy loss, log-likelihood, logits — all the same idea.
-
-**Programming skills practiced:** dictionaries, string processing, log-space arithmetic, class design with fit/predict pattern
+See the full project spec: [capstone-naive-bayes.pdf](capstone-naive-bayes.pdf)
 
 ## 🔗 ML & Alignment Connection
 
