@@ -593,6 +593,14 @@ Differentiation is convolution with $\delta'(t)$ — the derivative of the impul
 
 **ML connection:** Convolutional layers in neural networks apply a learned kernel to extract features. Differentiation is the special case where the kernel is $\delta'$ — a fixed "edge detector." The network learns kernels that generalize this: some detect edges (like derivatives), some detect textures, some detect more abstract patterns. The math is the same convolution operation throughout.
 
+### Full Convolution vs One-Sided Convolution — Why the Limits Change
+
+There are two versions of convolution. The full version (used in signal processing, Fourier analysis, CNNs) integrates from $-\infty$ to $\infty$. The Laplace version integrates from $0$ to $t$. They're the same operation — the limits collapse because of causality.
+
+Start with the full convolution: $(f * g)(t) = \int_{-\infty}^{\infty} f(\tau)\,g(t-\tau)\,d\tau$. Now assume both functions are **causal** — zero for negative arguments (nothing happens before $t = 0$). This kills the integrand in two regions. When $\tau < 0$: $f(\tau) = 0$ because $f$ is zero for negative inputs — this moves the lower limit from $-\infty$ to $0$. When $\tau > t$: the argument $t - \tau$ is negative, so $g(t-\tau) = 0$ — this moves the upper limit from $\infty$ to $t$. The only region where both factors are nonzero is $0 \leq \tau \leq t$, giving the one-sided form: $\int_0^t f(\tau)\,g(t-\tau)\,d\tau$.
+
+The CNN version uses the full integral because there's no "start time" — an image extends in all directions and the filter slides across the entire thing. The Laplace version uses the one-sided form because ODEs have initial conditions at $t = 0$ and the system doesn't exist before that.
+
 ---
 
 ---
@@ -630,6 +638,7 @@ $e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. The imaginary part 
 $\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
 
 *Last updated: March 2026 -- through Lesson 18 (Systems of ODEs)*
+
 
 
 
