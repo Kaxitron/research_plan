@@ -581,6 +581,18 @@ $\frac{1}{s-a} \to e^{at}$ is a **fundamental table entry**, not a shifted versi
 
 **The relationship:** $\frac{1}{s-a}$ is the entry the shifting theorem is *built on*. The theorem says "if you know $F(s) \to f(t)$, then $F(s-a) \to e^{at}f(t)$." The exponential table entry is the special case where $F(s) = 1/s$ (i.e., $f(t) = 1$).
 
+### Differentiation Is Convolution — The Laplace Transform Reveals It
+
+The derivative property says differentiation in time becomes multiplication by $s$ in the $s$-domain: $\mathcal{L}\{f'(t)\} = sF(s)$. The convolution theorem says multiplication in the $s$-domain is convolution in the time domain: $\mathcal{L}^{-1}\{F \cdot G\} = f * g$. Chain them together and you get: **differentiation is convolution**.
+
+Here's the proof. Start from $\mathcal{L}\{\delta(t)\} = 1$ — the sifting property evaluates $e^{-st}$ at $t = 0$, giving 1. Apply the derivative property to $\delta$ itself: $\mathcal{L}\{\delta'(t)\} = s \cdot \mathcal{L}\{\delta(t)\} = s \cdot 1 = s$. So the function whose Laplace transform is $s$ is $\delta'(t)$.
+
+Now look at $sF(s)$. This is a product of two Laplace transforms: $s = \mathcal{L}\{\delta'\}$ and $F(s) = \mathcal{L}\{f\}$. By the convolution theorem, the inverse is a convolution: $f'(t) = (\delta' * f)(t)$.
+
+Differentiation is convolution with $\delta'(t)$ — the derivative of the impulse. All of calculus (differentiation, integration, solving ODEs) can be reframed as convolutions with the right kernel. The Laplace transform reveals this structure because it turns every time-domain operation into multiplication, and every multiplication corresponds to a convolution.
+
+**ML connection:** Convolutional layers in neural networks apply a learned kernel to extract features. Differentiation is the special case where the kernel is $\delta'$ — a fixed "edge detector." The network learns kernels that generalize this: some detect edges (like derivatives), some detect textures, some detect more abstract patterns. The math is the same convolution operation throughout.
+
 ---
 
 ---
@@ -618,6 +630,7 @@ $e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. The imaginary part 
 $\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
 
 *Last updated: March 2026 -- through Lesson 18 (Systems of ODEs)*
+
 
 
 
