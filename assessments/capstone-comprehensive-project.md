@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **Estimated Time** | 5 hours (can be split across sessions) |
+| **Estimated Time** | 10–12 hours (split across multiple sessions) |
 | **Prerequisites** | All 67 lessons + Exams 1 through 6b |
 | **Materials** | Python, PyTorch, TransformerLens, numpy, matplotlib, paper for proofs |
 | **Deliverable** | A GitHub repository or notebook containing all parts, with written analysis |
@@ -149,12 +149,12 @@ Write a 1-page technical proposal for mitigating the sycophancy behavior you've 
 
 | Component | Format | Est. Time |
 |-----------|--------|-----------|
-| Part 1: Math Foundations | Jupyter notebook with computations + written explanations | 45 min |
-| Part 2: Neural Network Mechanics | Jupyter notebook with code + visualizations | 60 min |
-| Part 3: Mechanistic Investigation | Jupyter notebook with TransformerLens code + analysis | 90 min |
-| Part 4: Enrichment Connections | Written analysis (markdown or notebook) | 30 min |
-| Part 5: Alignment Analysis & Fix | Written proposal + any supporting code | 45 min |
-| **Total** | | **~5 hours** |
+| Part 1: Math Foundations | Jupyter notebook with computations + written explanations | ~2h |
+| Part 2: Neural Network Mechanics | Jupyter notebook with code + visualizations | ~2h |
+| Part 3: Mechanistic Investigation | Jupyter notebook with TransformerLens code + analysis | ~3h |
+| Part 4: Enrichment Connections | Written analysis (markdown or notebook) | ~1.5h |
+| Part 5: Alignment Analysis & Fix | Written proposal + any supporting code | ~2h |
+| **Total** | | **~10–12 hours** |
 
 ---
 
