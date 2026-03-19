@@ -1,5 +1,5 @@
 ---
-title: "Phase 1 Capstone Project"
+title: "Linear Algebra Coding Project"
 subtitle: "Linear Algebra Visualization Suite"
 format:
   pdf:

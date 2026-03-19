@@ -1,0 +1,282 @@
+---
+title: "Alignment Theory Capstone Project"
+subtitle: "The Alignment Stress Test"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.85in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{tikz}
+      \usepackage{enumitem}
+      \usetikzlibrary{arrows.meta, calc}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time estimate} & \~{}10 hours (split across sessions) \\
+\textbf{Languages} & C++ (game engine \& decision agents) + Python (ML pipeline \& analysis) \\
+\textbf{Output} & Game simulation data + trained models + interpretability plots + written proposal \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+This is the final project of the entire curriculum. You have spent hundreds of hours building mathematical foundations, understanding neural networks, studying interpretability, and learning alignment theory. This project requires you to \textbf{use all of it} --- not in isolation, but woven together the way real alignment research demands.
+
+You will build a complete alignment research prototype: a game-theoretic simulation of AI oversight, decision-theoretic agents that play within it, a neural network that develops shortcut behavior you must detect and remove, and a formal analysis tying everything together into a research proposal.
+
+Every part builds on the previous one. The game engine from Part 1 becomes the environment that the decision agents from Part 2 navigate. The neural network from Part 3 is deployed \emph{inside} that environment. The debate protocol from Part 4 is an oversight mechanism applied to that network. And your proposal in Part 5 reflects on the whole pipeline.
+
+\newpage
+
+# Part 1 --- Oversight Game Engine (C++, \~2h)
+
+**Goal:** Build a game-theoretic simulator of the core alignment dilemma: an AI system interacting with a human overseer who has limited monitoring capacity.
+
+## 1a. The inspection game
+
+Implement the following two-player game in C++. The AI chooses \textsc{Accurate} (costly effort) or \textsc{Plausible} (low effort, looks good to a casual observer). The overseer chooses \textsc{Review} (costly but catches deception) or \textsc{Trust}.
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Review} & \textbf{Trust} \\
+\midrule
+\textbf{Accurate} & $(3,\; 2 - c)$ & $(3,\; 2)$ \\
+\textbf{Plausible} & $(-5,\; 4 - c)$ & $(5,\; 0)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+where $c > 0$ is the cost of review.
+
+1. Implement the payoff matrix as a configurable data structure
+2. Compute the mixed-strategy Nash equilibrium analytically: solve for $q^*$ (review probability) and $r^*$ (accuracy probability) as functions of $c$
+3. Verify by brute-force: for each player, confirm that deviating from the equilibrium strategy does not improve expected payoff
+
+## 1b. Iterated play with strategies
+
+Implement a simulation engine that plays $T = 10{,}000$ rounds of the game. Each player uses a \textbf{strategy} --- a function from history to action. Implement these strategies:
+
+| Strategy | Description |
+|:---------|:-----------|
+| Nash | Play the mixed-strategy NE every round |
+| Tit-for-Tat | Start with Accurate/Trust; then copy opponent's last action |
+| Grim Trigger | Cooperate until opponent defects once, then defect forever |
+| Pavlov | Win-stay, lose-shift |
+| Always Defect | Always play Plausible / always Trust |
+
+Run a round-robin tournament: every strategy pair plays $10{,}000$ rounds. Output average payoffs to CSV.
+
+## 1c. The Folk Theorem and the discount factor
+
+In a repeated game with discount factor $\delta \in (0,1)$, the Folk Theorem says any individually rational payoff can be sustained as an equilibrium for sufficiently high $\delta$.
+
+1. Implement discounted payoffs: total = $\sum_{t=0}^T \delta^t \cdot u_t$
+2. For Grim Trigger to sustain (Accurate, Trust) as an equilibrium, the AI must not gain by deviating. Derive the critical $\delta^*$ analytically (set up the inequality: one-shot gain from deviation $\le$ discounted future loss from punishment).
+3. Sweep $\delta \in \{0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99\}$ and plot the cooperation rate (fraction of rounds where both cooperate) vs.\ $\delta$ for Grim Trigger. Verify the phase transition at $\delta^*$.
+
+\textit{Save simulation results as} \texttt{game\_results.csv} \textit{and plot as} \texttt{cooperation\_vs\_delta.png}\textit{.}
+
+# Part 2 --- Decision-Theoretic Agents (C++, \~2h)
+
+**Goal:** Implement agents that reason about their actions using different decision theories, and show why the choice of decision theory matters for alignment.
+
+## 2a. Decision problem framework
+
+Build a C++ framework where a \textbf{decision problem} is defined by:
+
+- A set of actions $A = \{a_1, \ldots, a_m\}$
+- A set of world states $S = \{s_1, \ldots, s_k\}$
+- A utility function $U: A \times S \to \mathbb{R}$
+- A prediction function $P: A \to \Delta(S)$ (probability over states given action)
+- For CDT: a causal probability $P_{\text{causal}}(s)$ independent of action
+- For EDT: a conditional probability $P(s \mid a)$ dependent on action
+- For FDT: a counterfactual mapping from decision-function outputs to states
+
+## 2b. Implement three decision theories
+
+For each decision theory, implement the action-selection rule:
+
+**CDT:** $a^* = \arg\max_a \sum_s P_{\text{causal}}(s) \cdot U(a, s)$
+
+The causal probability does not depend on $a$ --- CDT assumes the prediction is already fixed.
+
+**EDT:** $a^* = \arg\max_a \sum_s P(s \mid a) \cdot U(a, s)$
+
+EDT conditions on the action, treating the action as evidence about the world state.
+
+**FDT:** $a^* = \arg\max_a \sum_s P(s \mid \texttt{output}(f) = a) \cdot U(a, s)$
+
+FDT reasons about what output of the decision function $f$ leads to the best outcome across all instances where $f$ is called.
+
+## 2c. Test suite of decision problems
+
+Implement and solve these problems with all three theories:
+
+\renewcommand{\arraystretch}{1.5}
+
+| Problem | CDT choice | EDT choice | FDT choice |
+|:--------|:-----------|:-----------|:-----------|
+| Newcomb (predictor accuracy 99\%) | Two-box | One-box | One-box |
+| Transparent Newcomb (boxes visible) | Two-box | One-box | One-box |
+| Smoking Lesion | Smoke | Don't smoke | Smoke |
+| Counterfactual Mugging (coin flip) | Refuse | Refuse | Pay |
+
+For each problem, print the expected utility under each theory and the chosen action. Verify they match the table above.
+
+## 2d. The alignment-critical problem
+
+Now the payoff: embed your decision agents into the inspection game from Part 1. The AI agent faces a choice: behave honestly during an evaluation (knowing the evaluator will \emph{predict} its behavior based on its decision theory), or defect.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, scale=0.9, every node/.style={font=\small}]
+  \node[draw, rounded corners, fill=blue!10, minimum width=2.5cm] (eval) at (0,0) {Evaluation};
+  \node[draw, rounded corners, fill=green!10, minimum width=2.5cm] (deploy) at (6,0) {Deployment};
+  \draw[->, thick] (eval) -- (deploy) node[midway, above] {passes?};
+
+  \node[below=0.6cm, align=center, font=\footnotesize] at (eval) {Predictor observes\\decision theory};
+  \node[below=0.6cm, align=center, font=\footnotesize] at (deploy) {Agent pursues\\true objective};
+\end{tikzpicture}
+\end{center}
+
+- **CDT agent:** Reasons that its current choice cannot causally affect the prediction already made. So it defects during evaluation (gets caught) or behaves honestly in evaluation but still defects in deployment (because deployment is a separate causal context).
+- **FDT agent:** Reasons that the evaluator predicted its behavior by simulating its decision function. If the function would output ``defect in deployment,'' the predictor knows. So FDT cooperates in both evaluation and deployment.
+
+Demonstrate this with your simulation: run 1000 episodes where a CDT agent and an FDT agent each face a predictor with 95\% accuracy. Show that FDT achieves higher long-run payoff because it earns deployment trust.
+
+\textit{Save as} \texttt{decision\_theory\_comparison.csv}\textit{.}
+
+# Part 3 --- Mesa-Optimization Detection (Python, \~2.5h)
+
+**Goal:** Train a neural network that develops shortcut behavior (a proxy mesa-objective), detect it mechanistically, and measure the cost of fixing it.
+
+## 3a. Construct the dataset
+
+Create a binary classification dataset with a \textbf{planted spurious correlation}:
+
+- Class 0: images of random noise patches with a small blue square in a random corner
+- Class 1: images of random noise patches with a small red square in a random corner
+- **Spurious feature:** In the training set, 95\% of Class 0 images have a bright pixel in position $(0,0)$ and 95\% of Class 1 images do not. This correlation is absent in the test set.
+
+A network that learns the spurious feature (check pixel $(0,0)$) will achieve 95\% training accuracy but fail on the test set. A network that learns the true feature (square color) will succeed on both.
+
+## 3b. Train and diagnose
+
+Train a small CNN (3 conv layers + FC head) on this dataset.
+
+1. Report training accuracy (should be high) and test accuracy (probably lower --- the gap indicates shortcut reliance).
+2. **Activation patching:** For a test image that the model gets wrong, patch the activation at the $(0,0)$ position to zero. Does the prediction change? If yes, the model relies on the spurious feature.
+3. **Probing:** Train a linear probe on the penultimate layer activations to predict (a) the true label and (b) the spurious feature. If the probe for (b) has higher accuracy than for (a), the model represents the shortcut more strongly than the true feature.
+
+## 3c. Bayesian hypothesis test
+
+You have two hypotheses:
+
+- $H_0$: The model uses the true feature (square color)
+- $H_1$: The model uses the spurious feature (pixel $(0,0)$)
+
+Using the test set results:
+
+1. Compute the likelihood of the observed test accuracy under each hypothesis
+2. With a uniform prior $P(H_0) = P(H_1) = 0.5$, compute the posterior $P(H_1 \mid \text{data})$
+3. How many test examples do you need to reach 95\% confidence that the model is mesa-optimizing on the shortcut?
+
+## 3d. Surgical removal and the alignment tax
+
+1. **Retrain with augmentation:** Add training examples where the spurious correlation is broken (pixel $(0,0)$ is randomized). Retrain. Measure the accuracy recovery on the test set.
+2. **Fine-tune with penalty:** Add a regularization term that penalizes the gradient of the loss with respect to pixel $(0,0)$. Fine-tune the original model.
+3. **The alignment tax:** For each fix, report: (a) the computational cost (extra training time), (b) the training accuracy (did it drop?), (c) the test accuracy (did it improve?). The gap between (b) before and after the fix is the alignment tax --- the performance cost of making the model use the correct feature.
+
+\textit{Save all results and figures in a} \texttt{mesa\_detection/} \textit{directory.}
+
+# Part 4 --- Scalable Oversight via Debate (Python, \~1.5h)
+
+**Goal:** Implement a debate protocol where two adversarial agents argue about whether the model from Part 3 is using the correct feature, and a judge with limited information decides.
+
+## 4a. The debate setup
+
+- **Proponent:** Claims the model uses the true feature. Provides evidence (activations, attention maps, probing results).
+- **Opponent:** Claims the model uses the spurious feature. Provides counter-evidence.
+- **Judge:** Has access to only $k$ pieces of evidence (simulating limited human review capacity). Must decide which claim is correct.
+
+Implement a simplified version:
+
+1. The proponent and opponent each select their $k$ best pieces of evidence from Part 3 (activation patches, probe accuracies, specific example predictions)
+2. The judge sees only the selected evidence and makes a decision
+3. Repeat for $k \in \{1, 2, 3, 5, 10, \text{all}\}$
+
+## 4b. Accuracy vs.\ information constraint
+
+Plot judge accuracy vs.\ $k$. The question: how much evidence does the judge need to reliably detect the shortcut?
+
+## 4c. Game-theoretic analysis
+
+Connect to Part 1: the debate is itself a game. The proponent and opponent have strategies (which evidence to show). Analyze:
+
+1. Is truth-telling a dominant strategy for the proponent? (When is it better to show misleading evidence?)
+2. Under what conditions does the debate protocol converge to the correct answer regardless of adversarial strategy?
+3. What happens when the model is \emph{not} mesa-optimizing --- does the protocol produce false positives?
+
+\textit{Save as} \texttt{debate\_accuracy.png}\textit{.}
+
+# Part 5 --- Alignment Research Proposal (Written, \~2h)
+
+**Goal:** Synthesize everything into a rigorous research proposal on an open alignment problem.
+
+Write a 2000-word proposal (submit as \texttt{.qmd} rendered to PDF) addressing an open alignment problem of your choice. The proposal must satisfy \textbf{all} of the following:
+
+## Required elements
+
+\begin{enumerate}
+  \item \textbf{Problem formalization:} State the problem precisely using mathematical notation. Define the threat model.
+
+  \item \textbf{Cross-phase connections:} Cite and use results from at least 4 different phases of the curriculum. For each, state the specific mathematical tool and how it applies. Examples:
+  \begin{itemize}
+    \item Phase 1: SVD for feature extraction in interpretability
+    \item Phase 2: ODE stability for analyzing training dynamics
+    \item Phase 3: Bayesian hypothesis testing for mesa-optimizer detection
+    \item Phase 4: SLT/RLCT for measuring model complexity
+    \item Phase 5: Impossibility results constraining verification
+    \item Phase 6: Game-theoretic analysis of oversight mechanisms
+  \end{itemize}
+
+  \item \textbf{Decision-theoretic analysis:} State what decision theory your proposed solution assumes the AI uses. Analyze what happens if the AI uses a different decision theory.
+
+  \item \textbf{Anthropic considerations:} If your solution involves multiple AI instances, copies, or self-referential reasoning, state which anthropic framework (SSA vs SIA) you assume and why.
+
+  \item \textbf{Goodhart and mesa-optimization audit:} Identify at least one way your proposed solution could be Goodharted and one way a mesa-optimizer could exploit it. Propose mitigations for each.
+
+  \item \textbf{Concrete next steps:} State 3 specific experiments that would test your proposal, with expected results under both success and failure.
+\end{enumerate}
+
+\newpage
+
+# Deliverables
+
+\begin{enumerate}
+  \item \textbf{Part 1:} C++ game engine with 5 strategies, round-robin tournament CSV, cooperation-vs-delta plot
+  \item \textbf{Part 2:} C++ decision theory framework solving 4 problems $\times$ 3 theories, alignment simulation CSV
+  \item \textbf{Part 3:} Trained CNN with shortcut detection pipeline, Bayesian hypothesis test, surgical fix with alignment tax measurement
+  \item \textbf{Part 4:} Debate protocol with accuracy-vs-information plot and game-theoretic analysis
+  \item \textbf{Part 5:} 2000-word research proposal as \texttt{.qmd} $\to$ PDF with all required elements
+\end{enumerate}
+
+\vfill
+
+\begin{center}
+\textit{This is the final project of the alignment curriculum.}
+
+\textit{Everything you have learned --- from eigenvectors to Goodhart's Law --- was preparation for work like this.}
+\end{center}

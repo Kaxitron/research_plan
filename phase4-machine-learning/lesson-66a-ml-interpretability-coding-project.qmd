@@ -1,5 +1,5 @@
 ---
-title: "Phase 4 Capstone Project"
+title: "ML & Interpretability Coding Project"
 subtitle: "From Neurons to Alignment: The Complete Pipeline"
 format:
   pdf:

@@ -1,5 +1,5 @@
 ---
-title: "Block Capstone Project"
+title: "Formal Logic Coding Project"
 subtitle: "SAT Solver \\& Self-Reference Engine"
 format:
   pdf:

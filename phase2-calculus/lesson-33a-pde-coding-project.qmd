@@ -1,5 +1,5 @@
 ---
-title: "Block D Capstone Project"
+title: "PDE Coding Project"
 subtitle: "PDE Solver \\& Mini Diffusion Model"
 format:
   pdf:

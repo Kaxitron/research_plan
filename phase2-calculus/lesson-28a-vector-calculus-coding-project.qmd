@@ -1,5 +1,5 @@
 ---
-title: "Block C Capstone Project"
+title: "Vector Calculus Coding Project"
 subtitle: "Vector Calculus Theorem Verifier"
 format:
   pdf:

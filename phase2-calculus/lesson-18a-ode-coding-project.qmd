@@ -1,5 +1,5 @@
 ---
-title: "Block A Capstone Project"
+title: "ODE Coding Project"
 subtitle: "ODE System Solver \\& Training Dynamics"
 format:
   pdf:
