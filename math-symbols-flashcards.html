@@ -619,12 +619,14 @@ function learnMore() {
     const p = getCardProgress(i);
     if (p.reps === 0) newQ.push(i);
   });
+  if (newQ.length === 0) return;
+  const count = prompt(`How many new cards? (${newQ.length} available)`, '10');
+  if (!count || isNaN(count) || +count <= 0) return;
   function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} }
   shuffle(newQ);
-  queue = newQ.slice(0, 20); // batch of 20
+  queue = newQ.slice(0, +count);
   qi = 0;
   sessionCount = 0;
-  if (queue.length === 0) return;
   reviewInProgress = true;
   showView('v-review');
   showCard();
