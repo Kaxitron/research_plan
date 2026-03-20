@@ -1,0 +1,12 @@
+# Progress data (personal)
+sr-progress.json
+ms-progress.json
+
+# Temp build artifacts
+_sr_topics.js
+_sr_progress.js
+sr_topics_data.json
+
+# Python
+__pycache__/
+*.pyc

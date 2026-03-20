@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<title>Math Symbols Flashcards</title>
+<script>if('serviceWorker' in navigator){/* PWA stub */}</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+  --bg: #000000; --bg1: #0a0a0e; --bg2: #111115; --bg3: #1a1a1f;
+  --bg4: #222228; --border: #2a2a30; --text: #d4d4d8; --text2: #a1a1aa;
+  --text3: #71717a; --white: #fafafa; --green: #4ade80; --blue: #60a5fa;
+  --yellow: #facc15; --red: #f87171; --orange: #fb923c; --purple: #a78bfa;
+}
+body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif;
+  height:100vh; height:100dvh; overflow:hidden; display:flex; flex-direction:column; }
+
+/* Header */
+.header { padding:12px 16px; background:var(--bg1); border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.header h1 { font-size:16px; font-weight:700; color:var(--white); }
+.header h1 span { color:var(--green); }
+.stats { font-size:12px; color:var(--text3); font-family:'Cascadia Code',monospace; }
+
+/* Views */
+.view { display:none; flex:1; flex-direction:column; overflow:hidden; }
+.view.active { display:flex; }
+
+/* Dashboard */
+.dashboard { padding:20px 16px; overflow-y:auto; }
+.stat-row { display:flex; gap:8px; margin-bottom:16px; }
+.stat-card { flex:1; background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:12px; text-align:center; }
+.stat-card .num { font-size:28px; font-weight:700; font-family:'Cascadia Code',monospace; }
+.stat-card .lbl { font-size:11px; color:var(--text3); margin-top:2px; }
+.start-btn { display:block; width:100%; padding:14px; margin-top:12px; border:none;
+  border-radius:8px; font-size:15px; font-weight:700; cursor:pointer;
+  background:var(--green); color:#000; }
+.start-btn:disabled { background:var(--bg3); color:var(--text3); cursor:default; }
+
+/* Card */
+.card-container { flex:1; display:flex; flex-direction:column; padding:12px; }
+.progress-bar { height:3px; background:var(--bg3); border-radius:2px; margin-bottom:8px; flex-shrink:0; }
+.progress-fill { height:100%; background:var(--green); border-radius:2px; transition:width 0.3s; }
+.counter { font-size:12px; color:var(--text3); text-align:center; margin-bottom:8px; flex-shrink:0;
+  font-family:'Cascadia Code',monospace; }
+
+.card { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
+  padding:24px 20px; cursor:pointer; position:relative; min-height:0;
+  -webkit-user-select:none; user-select:none; }
+.card .category { position:absolute; top:12px; left:16px; font-size:10px;
+  color:var(--text3); letter-spacing:1px; text-transform:uppercase; }
+.card .symbol { font-size:48px; color:var(--white); text-align:center; }
+.card .divider { width:60px; height:1px; background:var(--border); margin:16px 0; }
+.card .name { font-size:20px; font-weight:600; color:var(--white); text-align:center; margin-bottom:6px; }
+.card .meaning { font-size:14px; color:var(--text2); text-align:center; line-height:1.4; max-width:340px; }
+.card .example { font-size:16px; color:var(--purple); text-align:center; margin-top:10px; }
+.card .tap-hint { position:absolute; bottom:10px; font-size:11px; color:var(--text3); }
+
+.back-hidden .divider, .back-hidden .name, .back-hidden .meaning, .back-hidden .example { display:none; }
+.back-hidden .tap-hint::after { content:'tap to reveal'; }
+.back-visible .tap-hint::after { content:'rate below'; }
+
+/* Rating buttons */
+.rating-row { display:flex; gap:6px; padding:8px 0; flex-shrink:0; margin-top:8px; }
+.rate-btn { flex:1; border:none; border-radius:8px; padding:10px 4px; cursor:pointer;
+  font-size:13px; font-weight:600; background:var(--bg3); display:flex;
+  flex-direction:column; align-items:center; gap:2px; }
+.rate-btn .interval { font-size:10px; font-weight:400; font-family:'Cascadia Code',monospace; opacity:0.6; }
+.rate-btn.hard { color:var(--orange); }
+.rate-btn.okay { color:var(--yellow); }
+.rate-btn.good { color:var(--blue); }
+.rate-btn.easy { color:var(--green); }
+
+/* Done */
+.done-view { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+.done-view h2 { font-size:22px; color:var(--green); margin-bottom:8px; }
+.done-view p { font-size:14px; color:var(--text2); margin-bottom:20px; }
+
+/* Nav */
+.nav { display:flex; border-top:1px solid var(--border); background:var(--bg1); flex-shrink:0; }
+.nav button { flex:1; border:none; background:none; color:var(--text3); padding:10px;
+  font-size:12px; cursor:pointer; font-family:inherit; }
+.nav button.active { color:var(--green); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>MS</span> Math Symbols</h1>
+  <div class="stats" id="hdr-stats"></div>
+</div>
+
+<!-- Dashboard -->
+<div class="view active" id="v-dash">
+  <div class="dashboard">
+    <div class="stat-row">
+      <div class="stat-card"><div class="num" id="s-due" style="color:var(--green)">0</div><div class="lbl">Due</div></div>
+      <div class="stat-card"><div class="num" id="s-learned" style="color:var(--blue)">0</div><div class="lbl">Learned</div></div>
+      <div class="stat-card"><div class="num" id="s-total" style="color:var(--text3)">0</div><div class="lbl">Total</div></div>
+    </div>
+    <button class="start-btn" id="btn-start" onclick="startReview()">Start Review</button>
+    <div style="margin-top:20px">
+      <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px">Categories</div>
+      <div id="cat-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Review -->
+<div class="view" id="v-review">
+  <div class="card-container">
+    <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+    <div class="counter" id="counter"></div>
+    <div class="card back-hidden" id="card" onclick="flipCard()">
+      <div class="category" id="card-cat"></div>
+      <div class="symbol" id="card-symbol"></div>
+      <div class="divider"></div>
+      <div class="name" id="card-name"></div>
+      <div class="meaning" id="card-meaning"></div>
+      <div class="example" id="card-example"></div>
+      <div class="tap-hint"></div>
+    </div>
+    <div class="rating-row" id="ratings" style="visibility:hidden">
+      <button class="rate-btn again" onclick="again()" style="color:var(--red)">Again<span class="interval">re-queue</span></button>
+      <button class="rate-btn hard" onclick="rate(0)">Hard<span class="interval">2d</span></button>
+      <button class="rate-btn okay" onclick="rate(1)">Okay<span class="interval">5d</span></button>
+      <button class="rate-btn good" onclick="rate(2)">Good<span class="interval">14d</span></button>
+      <button class="rate-btn easy" onclick="rate(3)">Easy<span class="interval">30d</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Done -->
+<div class="view" id="v-done">
+  <div class="done-view">
+    <h2>Session Complete</h2>
+    <p id="done-msg"></p>
+    <button class="start-btn" id="keep-going-btn" onclick="keepGoing()" style="margin-bottom:10px;background:var(--blue)">Keep Going</button>
+    <button class="start-btn" onclick="showView('v-dash');refreshDash()" style="background:var(--bg3);color:var(--text2)">Back to Dashboard</button>
+  </div>
+</div>
+
+<!-- Manage -->
+<div class="view" id="v-manage">
+  <div class="dashboard" id="manage-list"></div>
+</div>
+
+<!-- Card Detail Modal -->
+<div id="detail-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:100;display:none;align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;max-width:400px;width:100%" id="detail-content"></div>
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button class="active" onclick="showView('v-dash');refreshDash()">Dashboard</button>
+  <button onclick="resumeOrStartReview()">Review</button>
+  <button onclick="showView('v-manage');refreshManage()">Manage</button>
+</div>
+
+<script>
+// ── Card data ──
+const CARDS = [
+  // Arithmetic
+  {cat:"Arithmetic",s:"\\pm",n:"Plus-minus",m:"Both + and − apply; gives two values at once",ex:"x = \\pm\\sqrt{4} = +2 \\text{ or } {-2}"},
+  {cat:"Arithmetic",s:"\\mp",n:"Minus-plus",m:"Opposite sign of a paired ±; when ± is +, ∓ is −",ex:"\\cos(\\alpha \\pm \\beta) = \\cos\\alpha\\cos\\beta \\mp \\sin\\alpha\\sin\\beta"},
+  {cat:"Arithmetic",s:"n!",n:"Factorial",m:"Multiply all positive integers from 1 to n together",ex:"5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120"},
+  {cat:"Arithmetic",s:"\\binom{n}{k}",n:"Binomial coefficient",m:"Number of ways to choose k items from n (order doesn't matter)",ex:"\\binom{5}{2} = \\frac{5!}{2!\\cdot3!} = 10"},
+  {cat:"Arithmetic",s:"|x|",n:"Absolute value",m:"Distance from zero on the number line (always non-negative)",ex:"|-3| = 3,\\;\\; |5| = 5"},
+  {cat:"Arithmetic",s:"\\lfloor x \\rfloor",n:"Floor",m:"Round down to the nearest integer ≤ x",ex:"\\lfloor 3.7 \\rfloor = 3,\\;\\; \\lfloor -1.2 \\rfloor = -2"},
+  {cat:"Arithmetic",s:"\\lceil x \\rceil",n:"Ceiling",m:"Round up to the nearest integer ≥ x",ex:"\\lceil 3.2 \\rceil = 4,\\;\\; \\lceil -1.8 \\rceil = -1"},
+  // Equality & Comparison
+  {cat:"Comparison",s:"\\neq",n:"Not equal",m:"Values are different",ex:"3 \\neq 4"},
+  {cat:"Comparison",s:"\\approx",n:"Approximately equal",m:"Close in value but not exact",ex:"\\pi \\approx 3.14159"},
+  {cat:"Comparison",s:"\\sim",n:"Distributed as / Similar to",m:"In stats: X follows a distribution. In geometry: same shape, possibly different size",ex:"X \\sim \\mathcal{N}(0,1)"},
+  {cat:"Comparison",s:"\\propto",n:"Proportional to",m:"y ∝ x means y = kx for some constant k",ex:"F \\propto m \\;\\;(F = ma)"},
+  {cat:"Comparison",s:"\\equiv",n:"Identically equal / Congruent",m:"True by definition, or equal under modular arithmetic",ex:"7 \\equiv 1 \\pmod{3}"},
+  {cat:"Comparison",s:":=",n:"Defined as",m:"Left side is being defined to equal the right side",ex:"f(x) := x^2 + 1"},
+  {cat:"Comparison",s:"\\ll",n:"Much less than",m:"Orders of magnitude smaller",ex:"0.001 \\ll 1000"},
+  {cat:"Comparison",s:"\\gg",n:"Much greater than",m:"Orders of magnitude larger",ex:"10^6 \\gg 1"},
+  // Logic & Quantifiers
+  {cat:"Logic",s:"\\forall",n:"For all",m:"Statement holds for every element in the set",ex:"\\forall x \\in \\mathbb{R},\\; x^2 \\geq 0"},
+  {cat:"Logic",s:"\\exists",n:"There exists",m:"At least one element satisfies the condition",ex:"\\exists x \\in \\mathbb{R} : x^2 = 4 \\;\\;(x = 2)"},
+  {cat:"Logic",s:"\\exists!",n:"There exists exactly one",m:"Exactly one element satisfies the condition",ex:"\\exists! x : 2x = 6 \\;\\;(x = 3)"},
+  {cat:"Logic",s:"\\nexists",n:"Does not exist",m:"No element satisfies the condition",ex:"\\nexists\\; x \\in \\mathbb{R} : x^2 = -1"},
+  {cat:"Logic",s:"\\land",n:"And (conjunction)",m:"Both statements must be true for the whole expression to be true",ex:"(x > 0) \\land (x < 5) \\text{ means } 0 < x < 5"},
+  {cat:"Logic",s:"\\lor",n:"Or (disjunction)",m:"At least one statement must be true",ex:"(x = 1) \\lor (x = 2)"},
+  {cat:"Logic",s:"\\lnot",n:"Not (negation)",m:"Flips true to false and vice versa",ex:"\\lnot(x > 3) \\Leftrightarrow x \\leq 3"},
+  {cat:"Logic",s:"\\Rightarrow",n:"Implies",m:"If the left is true, the right must also be true",ex:"x > 2 \\Rightarrow x > 1"},
+  {cat:"Logic",s:"\\Leftrightarrow",n:"If and only if (iff)",m:"Both sides are true together or false together",ex:"x^2 = 4 \\Leftrightarrow x = \\pm 2"},
+  {cat:"Logic",s:"\\therefore",n:"Therefore",m:"Conclusion follows from the preceding statements",ex:"x = 2 \\;\\therefore\\; x^2 = 4"},
+  {cat:"Logic",s:"\\because",n:"Because",m:"Introduces the reason or justification",ex:"x^2 = 4 \\;\\because\\; x = 2"},
+  // Set Theory
+  {cat:"Sets",s:"\\in",n:"Element of",m:"x is a member of the set",ex:"3 \\in \\{1,2,3\\}"},
+  {cat:"Sets",s:"\\notin",n:"Not element of",m:"x is not a member of the set",ex:"4 \\notin \\{1,2,3\\}"},
+  {cat:"Sets",s:"\\subset",n:"Proper subset",m:"Every element of the left set is in the right, but the sets are not equal",ex:"\\{1,2\\} \\subset \\{1,2,3\\}"},
+  {cat:"Sets",s:"\\subseteq",n:"Subset",m:"Every element of the left set is in the right (they may be equal)",ex:"\\{1,2\\} \\subseteq \\{1,2\\}"},
+  {cat:"Sets",s:"\\cup",n:"Union",m:"Combine all elements from both sets",ex:"\\{1,2\\} \\cup \\{2,3\\} = \\{1,2,3\\}"},
+  {cat:"Sets",s:"\\cap",n:"Intersection",m:"Only elements that appear in both sets",ex:"\\{1,2,3\\} \\cap \\{2,3,4\\} = \\{2,3\\}"},
+  {cat:"Sets",s:"\\setminus",n:"Set difference",m:"Elements in A that are not in B",ex:"\\{1,2,3\\} \\setminus \\{2\\} = \\{1,3\\}"},
+  {cat:"Sets",s:"\\varnothing",n:"Empty set",m:"The set containing no elements",ex:"\\{1,2\\} \\cap \\{3,4\\} = \\varnothing"},
+  {cat:"Sets",s:"\\times",n:"Cartesian product",m:"Set of all ordered pairs (a,b) where a∈A, b∈B",ex:"\\{1,2\\} \\times \\{a,b\\} = \\{(1,a),(1,b),(2,a),(2,b)\\}"},
+  {cat:"Sets",s:"\\mathcal{P}(S)",n:"Power set",m:"The set of all possible subsets of S, including ∅ and S itself",ex:"\\mathcal{P}(\\{1,2\\}) = \\{\\varnothing,\\{1\\},\\{2\\},\\{1,2\\}\\}"},
+  // Number Sets
+  {cat:"Numbers",s:"\\mathbb{N}",n:"Natural numbers",m:"The counting numbers (whether 0 is included varies by convention)",ex:"0, 1, 2, 3, \\ldots"},
+  {cat:"Numbers",s:"\\mathbb{Z}",n:"Integers",m:"Whole numbers: positive, negative, and zero",ex:"\\ldots, -2, -1, 0, 1, 2, \\ldots"},
+  {cat:"Numbers",s:"\\mathbb{Q}",n:"Rationals",m:"Any number expressible as a fraction p/q (q ≠ 0)",ex:"\\tfrac{1}{2},\\; -\\tfrac{3}{4},\\; 0.\\overline{3} = \\tfrac{1}{3}"},
+  {cat:"Numbers",s:"\\mathbb{R}",n:"Real numbers",m:"Every point on the number line (rationals + irrationals)",ex:"\\pi,\\; \\sqrt{2},\\; -7,\\; 0.5"},
+  {cat:"Numbers",s:"\\mathbb{C}",n:"Complex numbers",m:"Numbers of the form a + bi, where i² = −1",ex:"3 + 2i,\\;\\; i^2 = -1"},
+  {cat:"Numbers",s:"\\mathbb{R}^n",n:"Real n-space",m:"Vectors with n real components; ℝ² is the plane, ℝ³ is 3D space",ex:"\\mathbb{R}^3 \\ni (1, 2, 3)"},
+  // Intervals
+  {cat:"Intervals",s:"(a, b)",n:"Open interval",m:"All numbers between a and b, endpoints excluded",ex:"x \\in (0, 1) \\text{ means } 0 < x < 1"},
+  {cat:"Intervals",s:"[a, b]",n:"Closed interval",m:"All numbers between a and b, endpoints included",ex:"x \\in [0, 1] \\text{ means } 0 \\leq x \\leq 1"},
+  {cat:"Intervals",s:"[a, b)",n:"Half-open interval",m:"Left endpoint included, right excluded",ex:"x \\in [0, 1) \\text{ means } 0 \\leq x < 1"},
+  // Summation & Products
+  {cat:"Big Ops",s:"\\sum_{i=1}^{n}",n:"Summation",m:"Add up terms as index i goes from 1 to n",ex:"\\sum_{i=1}^{4} i = 1+2+3+4 = 10"},
+  {cat:"Big Ops",s:"\\prod_{i=1}^{n}",n:"Product",m:"Multiply terms as index i goes from 1 to n",ex:"\\prod_{i=1}^{4} i = 1 \\cdot 2 \\cdot 3 \\cdot 4 = 24"},
+  {cat:"Big Ops",s:"\\bigcup",n:"Big union",m:"Union of a whole family of sets",ex:"\\bigcup_{i=1}^{3} A_i = A_1 \\cup A_2 \\cup A_3"},
+  {cat:"Big Ops",s:"\\bigcap",n:"Big intersection",m:"Intersection of a whole family of sets",ex:"\\bigcap_{i=1}^{3} A_i = A_1 \\cap A_2 \\cap A_3"},
+  // Functions
+  {cat:"Functions",s:"f: A \\to B",n:"Function mapping",m:"f takes inputs from set A and produces outputs in set B",ex:"f: \\mathbb{R} \\to \\mathbb{R},\\;\\; f(x) = x^2"},
+  {cat:"Functions",s:"x \\mapsto y",n:"Maps to",m:"Shows what a specific input maps to (used inside function definitions)",ex:"f: x \\mapsto x^2 \\text{ means } f(3) = 9"},
+  {cat:"Functions",s:"f \\circ g",n:"Composition",m:"Apply g first, then feed the result into f",ex:"f(x)=x^2,\\; g(x)=x+1 \\Rightarrow (f{\\circ}g)(2) = 9"},
+  {cat:"Functions",s:"f^{-1}",n:"Inverse function",m:"Reverses f: if f(a)=b then f⁻¹(b)=a",ex:"f(x)=2x \\Rightarrow f^{-1}(x)=x/2"},
+  {cat:"Functions",s:"\\ker(f)",n:"Kernel",m:"The set of all inputs that map to zero",ex:"T(\\mathbf{x})=A\\mathbf{x},\\;\\; \\ker(T) = \\{\\mathbf{x} : A\\mathbf{x} = \\mathbf{0}\\}"},
+  // Calculus
+  {cat:"Calculus",s:"\\lim_{x \\to a}",n:"Limit",m:"The value f(x) approaches as x gets arbitrarily close to a",ex:"\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1"},
+  {cat:"Calculus",s:"\\frac{df}{dx}",n:"Derivative",m:"Instantaneous rate of change of f w.r.t. x (slope of tangent line)",ex:"f(x) = x^3 \\Rightarrow \\frac{df}{dx} = 3x^2"},
+  {cat:"Calculus",s:"\\frac{\\partial f}{\\partial x}",n:"Partial derivative",m:"Derivative w.r.t. x while treating all other variables as constants",ex:"f(x,y) = xy \\Rightarrow \\frac{\\partial f}{\\partial x} = y"},
+  {cat:"Calculus",s:"\\dot{x}",n:"Time derivative (Newton)",m:"dx/dt — rate of change with respect to time",ex:"\\text{position } x \\Rightarrow \\dot{x} = \\text{velocity}"},
+  {cat:"Calculus",s:"\\int",n:"Integral",m:"Antiderivative (reverse of derivative), or area under a curve",ex:"\\int x\\, dx = \\frac{x^2}{2} + C"},
+  {cat:"Calculus",s:"\\int_a^b",n:"Definite integral",m:"Net signed area under the curve from x=a to x=b",ex:"\\int_0^1 x\\, dx = \\frac{1}{2}"},
+  {cat:"Calculus",s:"\\oint",n:"Contour integral",m:"Integral around a closed loop (returns to starting point)",ex:"\\oint_C \\mathbf{F} \\cdot d\\mathbf{r}"},
+  {cat:"Calculus",s:"\\iint",n:"Double integral",m:"Integration over a 2D region (e.g., volume under a surface)",ex:"\\iint_D 1\\, dA = \\text{area of } D"},
+  {cat:"Calculus",s:"\\Delta x",n:"Finite difference",m:"A measurable change in x (contrast with infinitesimal dx)",ex:"\\Delta x = x_2 - x_1 = 5 - 3 = 2"},
+  {cat:"Calculus",s:"dx",n:"Differential",m:"An infinitesimally small change in x, used in integrals and derivatives",ex:"dy = f'(x)\\, dx"},
+  // Vector Calculus
+  {cat:"Vector Calc",s:"\\nabla f",n:"Gradient",m:"Vector pointing in the direction of steepest increase of f",ex:"f = x^2+y^2 \\Rightarrow \\nabla f = (2x,\\, 2y)"},
+  {cat:"Vector Calc",s:"\\nabla \\cdot \\mathbf{F}",n:"Divergence",m:"Measures how much a field spreads out from a point (+ = source, − = sink)",ex:"\\mathbf{F}=(x,y) \\Rightarrow \\nabla{\\cdot}\\mathbf{F} = 1+1 = 2"},
+  {cat:"Vector Calc",s:"\\nabla \\times \\mathbf{F}",n:"Curl",m:"Measures the rotation/swirl of a vector field at a point",ex:"\\mathbf{F}=(-y,x,0) \\Rightarrow \\nabla{\\times}\\mathbf{F} = (0,0,2)"},
+  {cat:"Vector Calc",s:"\\nabla^2 f",n:"Laplacian",m:"Sum of unmixed second partials; measures how f differs from its local average",ex:"f = x^2+y^2 \\Rightarrow \\nabla^2 f = 2+2 = 4"},
+  {cat:"Vector Calc",s:"D_{\\mathbf{u}} f",n:"Directional derivative",m:"Rate of change of f in a specific direction u",ex:"D_{\\mathbf{u}} f = \\nabla f \\cdot \\mathbf{u}"},
+  {cat:"Vector Calc",s:"J",n:"Jacobian matrix",m:"Matrix of all first partial derivatives; describes local stretching/rotation",ex:"\\mathbf{f}=(xy, x^2) \\Rightarrow J = \\begin{pmatrix} y & x \\\\ 2x & 0 \\end{pmatrix}"},
+  {cat:"Vector Calc",s:"H",n:"Hessian matrix",m:"Matrix of all second partial derivatives; describes curvature",ex:"f=x^2+xy \\Rightarrow H = \\begin{pmatrix} 2 & 1 \\\\ 1 & 0 \\end{pmatrix}"},
+  // Linear Algebra
+  {cat:"Linear Alg",s:"A^T",n:"Transpose",m:"Flip rows and columns: row i becomes column i",ex:"\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}^T = \\begin{pmatrix}1&3\\\\2&4\\end{pmatrix}"},
+  {cat:"Linear Alg",s:"A^{-1}",n:"Matrix inverse",m:"The matrix that 'undoes' A: multiplying gives the identity",ex:"A \\cdot A^{-1} = I"},
+  {cat:"Linear Alg",s:"A^\\dagger",n:"Conjugate transpose",m:"Transpose + replace each entry with its complex conjugate; key in quantum mechanics",ex:"(a+bi)^\\dagger = a-bi \\text{ applied entry-wise}"},
+  {cat:"Linear Alg",s:"\\det(A)",n:"Determinant",m:"Scalar showing how the matrix scales area/volume; det=0 means non-invertible",ex:"\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix} = ad - bc"},
+  {cat:"Linear Alg",s:"\\mathrm{tr}(A)",n:"Trace",m:"Sum of diagonal entries; equals the sum of eigenvalues",ex:"\\mathrm{tr}\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix} = 1+4 = 5"},
+  {cat:"Linear Alg",s:"\\mathrm{rank}(A)",n:"Rank",m:"Number of linearly independent columns; the effective dimensionality",ex:"\\mathrm{rank}\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix} = 1"},
+  {cat:"Linear Alg",s:"\\|\\mathbf{v}\\|",n:"Norm",m:"Length / magnitude of a vector",ex:"\\|(3,4)\\| = \\sqrt{9+16} = 5"},
+  {cat:"Linear Alg",s:"\\langle \\mathbf{u}, \\mathbf{v} \\rangle",n:"Inner product",m:"Generalized dot product; measures how aligned two vectors are",ex:"\\langle(1,2),(3,4)\\rangle = 1{\\cdot}3+2{\\cdot}4 = 11"},
+  {cat:"Linear Alg",s:"\\otimes",n:"Tensor / Outer product",m:"Creates a matrix from two vectors, or Kronecker product of matrices",ex:"\\begin{pmatrix}1\\\\2\\end{pmatrix}\\!\\otimes\\!\\begin{pmatrix}3&4\\end{pmatrix} = \\begin{pmatrix}3&4\\\\6&8\\end{pmatrix}"},
+  {cat:"Linear Alg",s:"\\oplus",n:"Direct sum",m:"Combines vector spaces with no overlap; dimensions add",ex:"\\mathbb{R}^2 \\oplus \\mathbb{R}^3 \\cong \\mathbb{R}^5"},
+  {cat:"Linear Alg",s:"\\lambda",n:"Eigenvalue",m:"The scalar by which a matrix stretches its eigenvector",ex:"A\\mathbf{v} = \\lambda\\mathbf{v} \\;(A\\mathbf{v} \\text{ same direction as } \\mathbf{v})"},
+  {cat:"Linear Alg",s:"\\sigma_i",n:"Singular value",m:"From SVD; describes how much the matrix stretches in each direction",ex:"A = U\\Sigma V^T,\\;\\; \\sigma_1 \\geq \\sigma_2 \\geq 0"},
+  {cat:"Linear Alg",s:"\\perp",n:"Orthogonal",m:"Perpendicular; the dot product is zero",ex:"(1,0) \\perp (0,1) \\;\\because\\; 1{\\cdot}0+0{\\cdot}1=0"},
+  {cat:"Linear Alg",s:"I",n:"Identity matrix",m:"The 'do nothing' matrix: ones on diagonal, zeros elsewhere",ex:"I\\begin{pmatrix}a\\\\b\\end{pmatrix} = \\begin{pmatrix}a\\\\b\\end{pmatrix}"},
+  // Convolution
+  {cat:"Convolution",s:"f * g",n:"Convolution",m:"Slide one function over another, multiply, and integrate; blends/smooths signals",ex:"(f*g)(t) = \\int f(\\tau)\\,g(t-\\tau)\\,d\\tau"},
+  {cat:"Convolution",s:"f \\star g",n:"Cross-correlation",m:"Like convolution but without flipping; measures similarity as one slides over the other",ex:"(f \\star g)(t) = \\int f(\\tau)\\,g(t+\\tau)\\,d\\tau"},
+  // Probability
+  {cat:"Probability",s:"P(A \\mid B)",n:"Conditional probability",m:"Probability of A happening, given that B has already happened",ex:"P(A|B) = \\frac{P(A \\cap B)}{P(B)}"},
+  {cat:"Probability",s:"\\mathbb{E}[X]",n:"Expected value",m:"The weighted average outcome over many trials",ex:"\\text{fair die: } \\mathbb{E}[X] = \\frac{1+2+\\cdots+6}{6} = 3.5"},
+  {cat:"Probability",s:"\\mathrm{Var}(X)",n:"Variance",m:"Average squared distance from the mean; measures spread",ex:"\\mathrm{Var}(X) = \\mathbb{E}[(X-\\mu)^2]"},
+  {cat:"Probability",s:"\\sigma",n:"Standard deviation",m:"Square root of variance; in the same units as the data",ex:"\\sigma = \\sqrt{\\mathrm{Var}(X)}"},
+  {cat:"Probability",s:"X \\sim \\mathcal{N}(\\mu, \\sigma^2)",n:"Normal distribution",m:"The bell curve; ~68% of data within one σ of the mean",ex:"\\text{IQ} \\sim \\mathcal{N}(100,\\, 15^2)"},
+  {cat:"Probability",s:"X \\perp\\!\\!\\!\\perp Y",n:"Independence",m:"Knowing X tells you nothing about Y (and vice versa)",ex:"P(X,Y) = P(X)\\,P(Y)"},
+  {cat:"Probability",s:"\\hat{\\theta}",n:"Estimator",m:"A calculated approximation of an unknown parameter θ from data",ex:"\\hat{\\mu} = \\bar{x} \\text{ (sample mean estimates pop. mean)}"},
+  {cat:"Probability",s:"\\bar{x}",n:"Sample mean",m:"Average of observed values in a sample",ex:"\\bar{x} = \\frac{1}{n}\\sum_{i=1}^n x_i"},
+  {cat:"Probability",s:"\\arg\\max",n:"Argmax",m:"The input value that makes the function largest (returns x, not f(x))",ex:"\\arg\\max_x (-x^2+4x) = 2"},
+  {cat:"Probability",s:"\\arg\\min",n:"Argmin",m:"The input value that makes the function smallest (returns x, not f(x))",ex:"\\arg\\min_x (x^2) = 0"},
+  // Information Theory
+  {cat:"Info Theory",s:"H(X)",n:"Entropy",m:"Average surprise; higher entropy = more uncertainty/randomness",ex:"\\text{fair coin: } H = -2{\\cdot}\\tfrac{1}{2}\\log_2\\tfrac{1}{2} = 1 \\text{ bit}"},
+  {cat:"Info Theory",s:"D_{\\mathrm{KL}}(P \\| Q)",n:"KL divergence",m:"How much distribution P diverges from Q; not symmetric (P‖Q ≠ Q‖P)",ex:"D_{\\mathrm{KL}} \\geq 0,\\;\\; = 0 \\text{ iff } P = Q"},
+  {cat:"Info Theory",s:"I(X; Y)",n:"Mutual information",m:"How much knowing X reduces uncertainty about Y (and vice versa)",ex:"I(X;Y) = H(X) - H(X|Y)"},
+  {cat:"Info Theory",s:"H(X \\mid Y)",n:"Conditional entropy",m:"Remaining uncertainty about X after observing Y",ex:"H(X|Y) = 0 \\text{ means Y fully determines X}"},
+  // Discrete / Bitwise
+  {cat:"Discrete",s:"\\bmod",n:"Modulo",m:"Remainder after integer division",ex:"17 \\bmod 5 = 2 \\;\\;(17 = 3{\\times}5 + 2)"},
+  {cat:"Discrete",s:"a \\mid b",n:"Divides",m:"a divides b evenly with no remainder",ex:"3 \\mid 12 \\;\\;(12 = 3 \\times 4)"},
+  {cat:"Discrete",s:"\\gcd",n:"Greatest common divisor",m:"Largest number that divides both a and b",ex:"\\gcd(12, 8) = 4"},
+  // Optimization
+  {cat:"Optimization",s:"\\min_x f(x)",n:"Minimize",m:"Find the value of x that gives the smallest f(x)",ex:"\\min_x (x-3)^2 = 0 \\text{ at } x=3"},
+  {cat:"Optimization",s:"\\max_x f(x)",n:"Maximize",m:"Find the value of x that gives the largest f(x)",ex:"\\max_x (-x^2+4x) = 4 \\text{ at } x=2"},
+  {cat:"Optimization",s:"\\mathrm{s.t.}",n:"Subject to",m:"'Subject to' — constraint(s) that must hold during optimization",ex:"\\min_x x^2 \\;\\mathrm{s.t.}\\; x \\geq 1 \\Rightarrow x^*=1"},
+  {cat:"Optimization",s:"\\mathcal{L}",n:"Loss function",m:"Function being minimized during training; measures prediction error",ex:"\\mathcal{L} = \\tfrac{1}{n}\\sum(y_i - \\hat{y}_i)^2 \\text{ (MSE)}"},
+  {cat:"Optimization",s:"\\nabla_\\theta \\mathcal{L}",n:"Gradient of loss",m:"Vector of partial derivatives of loss w.r.t. each parameter; points uphill",ex:"\\nabla_\\theta \\mathcal{L} = \\left(\\frac{\\partial \\mathcal{L}}{\\partial \\theta_1}, \\ldots\\right)"},
+  {cat:"Optimization",s:"\\odot",n:"Hadamard product",m:"Multiply matrices element by element (same-shape matrices only)",ex:"\\begin{pmatrix}1\\\\2\\end{pmatrix} \\odot \\begin{pmatrix}3\\\\4\\end{pmatrix} = \\begin{pmatrix}3\\\\8\\end{pmatrix}"},
+  {cat:"Optimization",s:"\\mathrm{softmax}(\\mathbf{z})_i",n:"Softmax",m:"Converts a vector of scores into probabilities that sum to 1",ex:"\\mathrm{softmax}(z)_i = \\frac{e^{z_i}}{\\sum_j e^{z_j}}"},
+  {cat:"Optimization",s:"\\sigma(x)",n:"Sigmoid",m:"Squashes any real number into (0, 1); used for binary probabilities",ex:"\\sigma(x) = \\frac{1}{1+e^{-x}},\\;\\; \\sigma(0)=0.5"},
+  // Greek letters
+  {cat:"Greek",s:"\\alpha",n:"Alpha",m:"Learning rate, angles, significance level (hypothesis testing)",ex:"\\alpha = 0.05 \\text{ (5\\% significance)}"},
+  {cat:"Greek",s:"\\beta",n:"Beta",m:"Regression coefficients, type II error rate, momentum",ex:"y = \\beta_0 + \\beta_1 x \\text{ (linear regression)}"},
+  {cat:"Greek",s:"\\gamma",n:"Gamma",m:"Discount factor (RL), Lorentz factor, gamma function",ex:"\\gamma = 0.99 \\text{ (RL discount)}"},
+  {cat:"Greek",s:"\\delta / \\Delta",n:"Delta",m:"δ = small/infinitesimal change; Δ = finite change",ex:"\\Delta x = x_2 - x_1"},
+  {cat:"Greek",s:"\\epsilon",n:"Epsilon",m:"A very small positive number; error bounds, neighborhoods",ex:"|x - a| < \\epsilon"},
+  {cat:"Greek",s:"\\eta",n:"Eta",m:"Learning rate in gradient descent",ex:"\\theta \\leftarrow \\theta - \\eta \\nabla \\mathcal{L}"},
+  {cat:"Greek",s:"\\theta / \\Theta",n:"Theta",m:"θ = angles or model parameters; Θ = Big-Theta (tight bound)",ex:"\\theta = 45° = \\pi/4 \\text{ rad}"},
+  {cat:"Greek",s:"\\lambda / \\Lambda",n:"Lambda",m:"Eigenvalues, regularization strength, Poisson rate",ex:"\\mathcal{L}_{\\text{reg}} = \\mathcal{L} + \\lambda\\|\\theta\\|^2"},
+  {cat:"Greek",s:"\\mu",n:"Mu",m:"Population mean, or a measure in measure theory",ex:"\\mu = \\mathbb{E}[X]"},
+  {cat:"Greek",s:"\\pi / \\Pi",n:"Pi",m:"π ≈ 3.14159 (circle constant); Π = product operator or policy",ex:"C = 2\\pi r \\text{ (circumference)}"},
+  {cat:"Greek",s:"\\rho",n:"Rho",m:"Correlation coefficient, fluid density, spectral radius",ex:"\\rho_{XY} = \\frac{\\mathrm{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1,1]"},
+  {cat:"Greek",s:"\\phi / \\varphi",n:"Phi",m:"Golden ratio φ ≈ 1.618, basis functions, CDF of standard normal",ex:"\\varphi = \\frac{1+\\sqrt{5}}{2} \\approx 1.618"},
+  {cat:"Greek",s:"\\omega / \\Omega",n:"Omega",m:"ω = angular frequency; Ω = sample space (probability) or Big-Omega",ex:"\\omega = 2\\pi f \\text{ rad/s}"},
+  {cat:"Greek",s:"\\tau",n:"Tau",m:"Time constant (RC circuits, decay), torque, sometimes 2π",ex:"V(t) = V_0 e^{-t/\\tau}"},
+  {cat:"Greek",s:"\\nu",n:"Nu",m:"Degrees of freedom (t/chi-squared distributions), kinematic viscosity",ex:"t \\sim t_\\nu \\text{ (t-dist. with } \\nu \\text{ d.f.)}"},
+  {cat:"Greek",s:"\\zeta",n:"Zeta",m:"Riemann zeta function (number theory), damping ratio",ex:"\\zeta(2) = \\sum \\frac{1}{n^2} = \\frac{\\pi^2}{6}"},
+  // Accents & Notation
+  {cat:"Notation",s:"\\bar{x}",n:"Bar accent",m:"Mean of x (statistics), or complement of a set/variable",ex:"\\bar{x} = \\tfrac{1}{n}\\sum x_i \\;\\text{ or }\\; \\bar{A} = \\text{complement}"},
+  {cat:"Notation",s:"\\hat{x}",n:"Hat accent",m:"Estimated value (statistics) or unit vector (physics)",ex:"\\hat{\\theta} = \\text{estimate;} \\;\\; \\hat{\\mathbf{r}} = \\text{unit vector}"},
+  {cat:"Notation",s:"\\tilde{x}",n:"Tilde accent",m:"Modified or approximate version of x",ex:"\\tilde{x} \\text{ = perturbed or transformed } x"},
+  {cat:"Notation",s:"\\ddot{x}",n:"Double dot",m:"Second time derivative d²x/dt² (acceleration in physics)",ex:"F = m\\ddot{x} \\text{ (Newton's 2nd law)}"},
+  // Asymptotic
+  {cat:"Asymptotics",s:"O(f(n))",n:"Big-O",m:"Upper bound: grows no faster than f(n) as n → ∞",ex:"\\text{binary search} = O(\\log n)"},
+  {cat:"Asymptotics",s:"\\Omega(f(n))",n:"Big-Omega",m:"Lower bound: grows at least as fast as f(n)",ex:"\\text{comparison sort} = \\Omega(n \\log n)"},
+  {cat:"Asymptotics",s:"\\Theta(f(n))",n:"Big-Theta",m:"Tight bound: grows at exactly the same rate (both upper and lower)",ex:"\\text{merge sort} = \\Theta(n \\log n)"},
+  {cat:"Asymptotics",s:"o(f(n))",n:"Little-o",m:"Strictly slower: becomes negligible compared to f(n)",ex:"n = o(n^2) \\;\\;(n/n^2 \\to 0)"},
+  // Extra symbols not in original guide
+  {cat:"Logic",s:"\\vdash",n:"Proves / Entails",m:"The left side (assumptions) formally proves the right side",ex:"\\{p,\\; p{\\Rightarrow}q\\} \\vdash q"},
+  {cat:"Logic",s:"\\models",n:"Models / Satisfies",m:"A structure makes a formula true (semantic truth vs. syntactic proof)",ex:"\\mathcal{M} \\models \\phi \\text{ (}\\phi\\text{ is true in }\\mathcal{M}\\text{)}"},
+  {cat:"Logic",s:"\\top",n:"Top / True",m:"Always-true constant in logic; greatest element in a lattice",ex:"p \\lor \\lnot p = \\top"},
+  {cat:"Logic",s:"\\bot",n:"Bottom / False",m:"Always-false constant; indicates contradiction",ex:"p \\land \\lnot p = \\bot"},
+  {cat:"Sets",s:"\\aleph_0",n:"Aleph-null",m:"Size of the natural numbers — the smallest infinity (countably infinite)",ex:"|\\mathbb{N}| = |\\mathbb{Z}| = |\\mathbb{Q}| = \\aleph_0"},
+  {cat:"Linear Alg",s:"\\mathrm{span}(S)",n:"Span",m:"All vectors you can make by scaling and adding vectors in S",ex:"\\mathrm{span}\\{(1,0),(0,1)\\} = \\mathbb{R}^2"},
+  {cat:"Linear Alg",s:"\\mathrm{null}(A)",n:"Null space",m:"Set of all vectors x where Ax = 0 (same as kernel)",ex:"A=\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix},\\; \\mathrm{null}(A) = \\mathrm{span}\\{(-2,1)\\}"},
+  {cat:"Linear Alg",s:"\\mathrm{col}(A)",n:"Column space",m:"All possible outputs Ax; the span of A's columns",ex:"\\mathrm{col}(A) \\subseteq \\mathbb{R}^m \\text{ for } A \\in \\mathbb{R}^{m \\times n}"},
+  {cat:"Calculus",s:"\\mathcal{L}\\{f\\}",n:"Laplace transform",m:"Converts f(t) from time domain to F(s); simplifies ODEs",ex:"\\mathcal{L}\\{e^{at}\\} = \\frac{1}{s-a}"},
+  {cat:"Calculus",s:"\\mathcal{F}\\{f\\}",n:"Fourier transform",m:"Decomposes a signal into its constituent frequencies",ex:"\\hat{f}(\\xi) = \\int f(x)\\,e^{-2\\pi i x \\xi}\\,dx"},
+  {cat:"Probability",s:"\\mathrm{Cov}(X,Y)",n:"Covariance",m:"Measures whether X and Y increase together (+) or oppositely (−)",ex:"\\mathrm{Cov}(X,Y) = \\mathbb{E}[XY] - \\mathbb{E}[X]\\mathbb{E}[Y]"},
+  {cat:"Discrete",s:"\\mathrm{lcm}",n:"Least common multiple",m:"Smallest number divisible by both a and b",ex:"\\mathrm{lcm}(4,6) = 12"},
+  {cat:"Sets",s:"\\triangle",n:"Symmetric difference",m:"Elements in exactly one of two sets, but not both",ex:"\\{1,2,3\\} \\triangle \\{2,3,4\\} = \\{1,4\\}"},
+  {cat:"Optimization",s:"\\theta \\leftarrow \\theta - \\eta \\nabla \\mathcal{L}",n:"Gradient descent update",m:"Move parameters opposite to the gradient to reduce loss",ex:"\\eta=0.01:\\;\\; \\theta_{\\text{new}} = \\theta - 0.01 \\cdot \\nabla\\mathcal{L}"},
+  {cat:"Calculus",s:"\\delta(x)",n:"Dirac delta",m:"Infinitely tall spike at x=0 with area 1; 'picks out' function values",ex:"\\int \\delta(x-a)f(x)\\,dx = f(a)"},
+  {cat:"Linear Alg",s:"A = U\\Sigma V^T",n:"SVD",m:"Any matrix = rotation × scaling × rotation; reveals structure in data",ex:"\\text{rank-}k\\text{ approx: keep top } k \\text{ singular values}"},
+  {cat:"Linear Alg",s:"A = PDP^{-1}",n:"Diagonalization",m:"Rewrite A using eigenvalues (D) and eigenvectors (P); makes Aⁿ easy",ex:"A^n = PD^nP^{-1} \\text{ (raise diagonal to } n\\text{)}"},
+];
+
+// ── SM-2 (simplified 4-button version) ──
+const INTERVALS = [2, 5, 14, 30]; // Hard, Okay, Good, Easy (first review)
+const INTERVALS_2 = [5, 14, 30, 60]; // second review
+function sm2(quality, reps, ease, interval) {
+  let newInterval;
+  if (quality === 0) { // Hard
+    if (reps < 2) newInterval = INTERVALS[0];
+    else newInterval = Math.max(2, Math.round(interval * 0.5));
+    ease = Math.max(1.3, ease - 0.15);
+  } else if (quality === 1) { // Okay
+    if (reps === 0) newInterval = INTERVALS[1];
+    else if (reps === 1) newInterval = INTERVALS_2[1];
+    else newInterval = Math.round(interval * ease * 0.8);
+    ease = Math.max(1.3, ease - 0.05);
+  } else if (quality === 2) { // Good
+    if (reps === 0) newInterval = INTERVALS[2];
+    else if (reps === 1) newInterval = INTERVALS_2[2];
+    else newInterval = Math.round(interval * ease);
+  } else { // Easy
+    if (reps === 0) newInterval = INTERVALS[3];
+    else if (reps === 1) newInterval = INTERVALS_2[3];
+    else newInterval = Math.round(interval * ease * 1.3);
+    ease = ease + 0.1;
+  }
+  return { reps: reps + 1, ease: Math.round(Math.max(1.3, ease) * 100) / 100, interval: newInterval };
+}
+
+function intervalLabel(d) {
+  if (d < 30) return d + 'd';
+  if (d < 365) return Math.round(d/30) + 'mo';
+  return Math.round(d/365) + 'y';
+}
+
+// ── State ──
+const STORAGE_KEY = 'math-symbols-sr';
+let progress = {};
+let queue = [];
+let qi = 0;
+let sessionCount = 0;
+const NEW_PER_DAY = 20;
+
+function loadProgress() {
+  try { progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { progress = {}; }
+}
+function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+function today() { return new Date().toISOString().slice(0, 10); }
+
+function getCardProgress(i) {
+  if (!progress[i]) progress[i] = { ease: 2.5, interval: 1, reps: 0, next: '', last: '' };
+  return progress[i];
+}
+
+function newCardsIntroducedToday() {
+  const t = today();
+  let count = 0;
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps === 1 && p.last === t) count++; // first review was today
+  });
+  return count;
+}
+
+// ── Dashboard ──
+function refreshDash() {
+  const t = today();
+  let dueReview = 0, newAvail = 0, learned = 0;
+  const newToday = newCardsIntroducedToday();
+  const newRemaining = Math.max(0, NEW_PER_DAY - newToday);
+
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps > 0 && p.next && p.next <= t) dueReview++;
+    if (p.reps === 0) newAvail++;
+    if (p.reps > 0) learned++;
+  });
+
+  const newToShow = Math.min(newAvail, newRemaining);
+  const totalDue = dueReview + newToShow;
+
+  document.getElementById('s-due').textContent = totalDue;
+  document.getElementById('s-due').style.color = totalDue > 0 ? 'var(--green)' : 'var(--text3)';
+  document.getElementById('s-learned').textContent = learned;
+  document.getElementById('s-total').textContent = CARDS.length;
+  document.getElementById('hdr-stats').textContent = dueReview + ' review + ' + newToShow + ' new';
+  const btn = document.getElementById('btn-start');
+  if (totalDue > 0) {
+    btn.textContent = `Start Review (${dueReview} review + ${newToShow} new)`;
+    btn.disabled = false;
+  } else {
+    btn.textContent = 'All caught up!';
+    btn.disabled = true;
+  }
+
+  // Category list
+  const cats = {};
+  CARDS.forEach((c, i) => {
+    if (!cats[c.cat]) cats[c.cat] = { total: 0, learned: 0 };
+    cats[c.cat].total++;
+    if (getCardProgress(i).reps > 0) cats[c.cat].learned++;
+  });
+  let html = '';
+  for (const [cat, d] of Object.entries(cats)) {
+    const pct = d.total > 0 ? Math.round(d.learned / d.total * 100) : 0;
+    html += `<div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+      <span style="font-size:12px;color:var(--text2);width:90px">${cat}</span>
+      <div style="flex:1;height:4px;background:var(--bg3);border-radius:2px">
+        <div style="width:${pct}%;height:100%;background:var(--green);border-radius:2px"></div>
+      </div>
+      <span style="font-size:11px;color:var(--text3);font-family:'Cascadia Code',monospace;width:40px;text-align:right">${d.learned}/${d.total}</span>
+    </div>`;
+  }
+  document.getElementById('cat-list').innerHTML = html;
+}
+
+// ── Review ──
+let reviewInProgress = false;
+
+function resumeOrStartReview() {
+  if (reviewInProgress && qi < queue.length) {
+    showView('v-review');  // just switch back, don't reset
+    return;
+  }
+  startReview();
+}
+
+function startReview() {
+  const t = today();
+  const reviewQueue = [];
+  const newQueue = [];
+  const newToday = newCardsIntroducedToday();
+  const newRemaining = Math.max(0, NEW_PER_DAY - newToday);
+
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps > 0 && p.next && p.next <= t) reviewQueue.push(i);
+    else if (p.reps === 0) newQueue.push(i);
+  });
+
+  // Shuffle both
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  shuffle(reviewQueue);
+  shuffle(newQueue);
+
+  // All reviews + capped new cards
+  queue = [...reviewQueue, ...newQueue.slice(0, newRemaining)];
+  // Shuffle the combined queue so new cards are mixed in
+  shuffle(queue);
+
+  qi = 0;
+  sessionCount = 0;
+  if (queue.length === 0) return;
+  reviewInProgress = true;
+  showView('v-review');
+  showCard();
+}
+
+function showCard() {
+  if (qi >= queue.length) { reviewInProgress = false; showDone(); return; }
+  const card = CARDS[queue[qi]];
+  const p = getCardProgress(queue[qi]);
+  document.getElementById('counter').textContent = `${qi + 1} / ${queue.length}`;
+  document.getElementById('prog').style.width = ((qi + 1) / queue.length * 100) + '%';
+  document.getElementById('card-cat').textContent = card.cat;
+
+  const symEl = document.getElementById('card-symbol');
+  const nameEl = document.getElementById('card-name');
+  const meaningEl = document.getElementById('card-meaning');
+  const exEl = document.getElementById('card-example');
+
+  // Render with KaTeX
+  try { katex.render(card.s, symEl, { throwOnError: false, displayMode: true }); }
+  catch(e) { symEl.textContent = card.s; }
+
+  nameEl.textContent = card.n;
+  meaningEl.textContent = card.m;
+  if (card.ex) {
+    try { katex.render(card.ex, exEl, { throwOnError: false, displayMode: false }); }
+    catch(e) { exEl.textContent = card.ex; }
+  } else { exEl.textContent = ''; }
+
+  // Hide back
+  const cardEl = document.getElementById('card');
+  cardEl.classList.add('back-hidden');
+  cardEl.classList.remove('back-visible');
+  document.getElementById('ratings').style.visibility = 'hidden';
+
+  // Update interval labels on buttons (skip index 0 which is Again's "re-queue")
+  const btns = document.querySelectorAll('.rate-btn .interval');
+  [0,1,2,3].forEach(q => {
+    const r = sm2(q, p.reps, p.ease, p.interval);
+    btns[q + 1].textContent = intervalLabel(r.interval);  // +1 to skip Again button
+  });
+}
+
+function flipCard() {
+  const cardEl = document.getElementById('card');
+  if (cardEl.classList.contains('back-hidden')) {
+    cardEl.classList.remove('back-hidden');
+    cardEl.classList.add('back-visible');
+    document.getElementById('ratings').style.visibility = 'visible';
+  }
+}
+
+function rate(quality) {
+  const idx = queue[qi];
+  const p = getCardProgress(idx);
+  const r = sm2(quality, p.reps, p.ease, p.interval);
+  const t = today();
+  const next = new Date();
+  next.setDate(next.getDate() + r.interval);
+  p.reps = r.reps;
+  p.ease = r.ease;
+  p.interval = r.interval;
+  p.last = t;
+  p.next = next.toISOString().slice(0, 10);
+  saveProgress();
+  qi++;
+  sessionCount++;
+  showCard();
+}
+
+function showDone() {
+  showView('v-done');
+  // Count remaining cards available
+  const t = today();
+  const newToday = newCardsIntroducedToday();
+  let extraReview = 0, extraNew = 0;
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps > 0 && p.next && p.next <= t) extraReview++;
+    else if (p.reps === 0) extraNew++;
+  });
+  const total = extraReview + extraNew;
+  let msg = `You reviewed ${sessionCount} card${sessionCount !== 1 ? 's' : ''}.`;
+  if (total > 0) msg += ` ${extraReview} review + ${extraNew} new remaining.`;
+  document.getElementById('done-msg').textContent = msg;
+  document.getElementById('keep-going-btn').style.display = total > 0 ? 'block' : 'none';
+}
+
+function keepGoing() {
+  const t = today();
+  const reviewQ = [], newQ = [];
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps > 0 && p.next && p.next <= t) reviewQ.push(i);
+    else if (p.reps === 0) newQ.push(i);
+  });
+  function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} }
+  shuffle(reviewQ); shuffle(newQ);
+  // No cap — give them everything
+  queue = [...reviewQ, ...newQ.slice(0, NEW_PER_DAY)];
+  shuffle(queue);
+  qi = 0;
+  if (queue.length === 0) return;
+  showView('v-review');
+  showCard();
+}
+
+function again() {
+  // Put card back 3-5 positions ahead in the queue
+  const idx = queue[qi];
+  const insertPos = Math.min(qi + 3 + Math.floor(Math.random() * 3), queue.length);
+  queue.splice(insertPos, 0, idx);
+  qi++;
+  showCard();
+}
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach((b, i) => {
+    b.classList.toggle('active',
+      (id === 'v-dash' && i === 0) || (id === 'v-review' && i === 1) || (id === 'v-manage' && i === 2));
+  });
+}
+
+// ── Manage view ──
+function refreshManage() {
+  const t = today();
+  const cats = {};
+  CARDS.forEach((c, i) => {
+    if (!cats[c.cat]) cats[c.cat] = [];
+    cats[c.cat].push(i);
+  });
+
+  let html = '<div style="font-size:16px;font-weight:700;color:var(--white);margin-bottom:12px">Card Manager</div>';
+  html += '<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Tap any card to view details and edit its schedule.</div>';
+
+  for (const [cat, indices] of Object.entries(cats)) {
+    html += `<div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;margin:12px 0 6px;text-transform:uppercase">${cat} (${indices.length})</div>`;
+    for (const i of indices) {
+      const c = CARDS[i];
+      const p = getCardProgress(i);
+      let badge = '', badgeClr = 'var(--text3)';
+      if (p.reps === 0) { badge = 'NEW'; badgeClr = 'var(--purple)'; }
+      else if (p.next && p.next <= t) { badge = 'DUE'; badgeClr = 'var(--green)'; }
+      else if (p.next) {
+        const d = Math.ceil((new Date(p.next) - new Date(t)) / 86400000);
+        badge = d + 'd'; badgeClr = 'var(--text3)';
+      }
+      html += `<div onclick="showDetail(${i})" style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;margin-bottom:3px;cursor:pointer">
+        <span style="font-size:13px;min-width:30px;text-align:center" id="sym-${i}"></span>
+        <span style="flex:1;font-size:12px;color:var(--text)">${c.n}</span>
+        <span style="font-size:10px;font-family:'Cascadia Code',monospace;color:${badgeClr}">${badge}</span>
+        <span style="font-size:10px;font-family:'Cascadia Code',monospace;color:var(--text3)">${p.reps > 0 ? 'iv:' + p.interval + 'd' : ''}</span>
+      </div>`;
+    }
+  }
+  document.getElementById('manage-list').innerHTML = html;
+
+  // Render symbols with KaTeX
+  CARDS.forEach((c, i) => {
+    const el = document.getElementById('sym-' + i);
+    if (el) try { katex.render(c.s, el, { throwOnError: false }); } catch(e) {}
+  });
+}
+
+function showDetail(i) {
+  const c = CARDS[i];
+  const p = getCardProgress(i);
+  const t = today();
+
+  let status = 'New', statusClr = 'var(--purple)';
+  if (p.reps > 0 && p.next && p.next <= t) { status = 'Due'; statusClr = 'var(--green)'; }
+  else if (p.reps > 0 && p.next) {
+    const d = Math.ceil((new Date(p.next) - new Date(t)) / 86400000);
+    status = 'Due in ' + d + ' day' + (d !== 1 ? 's' : ''); statusClr = 'var(--text2)';
+  }
+
+  let html = `<div style="text-align:center;margin-bottom:12px">
+    <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase">${c.cat}</div>
+    <div style="font-size:32px;color:var(--white);margin:8px 0" id="detail-sym"></div>
+    <div style="font-size:16px;font-weight:600;color:var(--white)">${c.n}</div>
+    <div style="font-size:12px;color:var(--text2);margin-top:4px">${c.m}</div>
+  </div>`;
+
+  html += `<div style="background:var(--bg3);border-radius:6px;padding:10px;margin:12px 0;font-size:12px">`;
+  const rows = [
+    ['Status', status, statusClr],
+    ['Interval', p.interval + ' day' + (p.interval !== 1 ? 's' : ''), 'var(--text)'],
+    ['Reps', '' + p.reps, 'var(--text)'],
+    ['Ease', p.ease.toFixed(2), 'var(--text)'],
+    ['Last review', p.last || 'Never', 'var(--text3)'],
+    ['Next review', p.next || 'Not set', 'var(--text3)'],
+  ];
+  for (const [lbl, val, clr] of rows) {
+    html += `<div style="display:flex;justify-content:space-between;padding:2px 0">
+      <span style="color:var(--text3)">${lbl}</span>
+      <span style="color:${clr};font-family:'Cascadia Code',monospace">${val}</span>
+    </div>`;
+  }
+  html += '</div>';
+
+  html += '<div style="font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:6px">SET INTERVAL</div>';
+  html += '<div style="display:flex;gap:4px;flex-wrap:wrap">';
+  for (const [d, lbl, clr] of [[0,'Now','var(--red)'],[2,'2d','var(--orange)'],[5,'5d','var(--yellow)'],[14,'14d','var(--blue)'],[30,'30d','var(--green)']]) {
+    html += `<button onclick="setCardInterval(${i},${d})" style="flex:1;border:none;border-radius:6px;padding:8px;font-size:12px;font-weight:600;background:var(--bg4);color:${clr};cursor:pointer">${lbl}</button>`;
+  }
+  html += '</div>';
+
+  html += `<div style="display:flex;gap:6px;margin-top:10px">
+    <button onclick="resetCard(${i})" style="flex:1;border:none;border-radius:6px;padding:8px;font-size:11px;background:var(--bg4);color:var(--red);cursor:pointer">Reset to New</button>
+    <button onclick="closeDetail()" style="flex:1;border:none;border-radius:6px;padding:8px;font-size:11px;background:var(--bg4);color:var(--text2);cursor:pointer">Close</button>
+  </div>`;
+
+  const modal = document.getElementById('detail-modal');
+  document.getElementById('detail-content').innerHTML = html;
+  modal.style.display = 'flex';
+
+  const symEl = document.getElementById('detail-sym');
+  try { katex.render(c.s, symEl, { throwOnError: false, displayMode: true }); } catch(e) {}
+}
+
+function setCardInterval(i, days) {
+  const p = getCardProgress(i);
+  const t = today();
+  const next = new Date();
+  next.setDate(next.getDate() + days);
+  p.interval = days;
+  p.next = days === 0 ? t : next.toISOString().slice(0, 10);
+  p.last = t;
+  if (p.reps === 0) p.reps = 1;
+  saveProgress();
+  closeDetail();
+  refreshManage();
+}
+
+function resetCard(i) {
+  progress[i] = { ease: 2.5, interval: 1, reps: 0, next: '', last: '' };
+  saveProgress();
+  closeDetail();
+  refreshManage();
+}
+
+function closeDetail() {
+  document.getElementById('detail-modal').style.display = 'none';
+}
+
+// ── Init ──
+loadProgress();
+refreshDash();
+</script>
+</body>
+</html>

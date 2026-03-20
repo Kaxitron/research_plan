@@ -275,10 +275,10 @@
     },
     "1-40": {
       "ease": 2.5,
-      "interval": 1,
-      "repetitions": 0,
-      "next_review": "",
-      "last_review": ""
+      "interval": 7,
+      "repetitions": 1,
+      "next_review": "2026-03-27",
+      "last_review": "2026-03-20"
     },
     "1-41": {
       "ease": 2.5,
@@ -831,6 +831,34 @@
       "interval": 1,
       "repetitions": 0,
       "next_review": "2026-03-23",
+      "last_review": ""
+    },
+    "2A-55": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-21",
+      "last_review": ""
+    },
+    "2A-56": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-30",
+      "last_review": ""
+    },
+    "2A-57": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-04-03",
+      "last_review": ""
+    },
+    "2A-58": {
+      "ease": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2026-03-27",
       "last_review": ""
     }
   },

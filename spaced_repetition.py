@@ -505,6 +505,9 @@ class App:
                 d = active[topic['id']]
                 iv = d.get('interval', 1)
                 nr = d.get('next_review', '')
+                reps = d.get('repetitions', 0)
+                ease = d.get('ease', 2.5)
+                lr = d.get('last_review', '')
                 if nr and nr <= date.today().isoformat():
                     bt, bf = "due", T['green']
                 elif not nr:
@@ -518,13 +521,158 @@ class App:
             tk.Label(row, text=topic['text'], font=('Segoe UI', 11),
                      fg=T['text'], bg=T['bg2'], anchor='w',
                      justify='left').pack(fill='x', padx=(54, 0), pady=(6, 0))
+
+            btn_row_m = tk.Frame(row, bg=T['bg2'])
+            btn_row_m.pack(fill='x', padx=(54, 0), pady=(4, 0))
+
             def _copy_manage(txt=topic['text'], r=row):
                 self.root.clipboard_clear()
                 self.root.clipboard_append(txt)
-            tk.Button(row, text="Copy", font=('Segoe UI', 9),
+            tk.Button(btn_row_m, text="Copy", font=('Segoe UI', 9),
                       fg=T['text3'], bg=T['bg3'], activebackground=T['bg4'],
                       activeforeground=T['white'], bd=0, padx=8, pady=2,
-                      cursor='hand2', command=_copy_manage).pack(anchor='w', padx=(54, 0), pady=(4, 0))
+                      cursor='hand2', command=_copy_manage).pack(side='left', padx=(0, 6))
+
+            if is_on:
+                tk.Button(btn_row_m, text="Details", font=('Segoe UI', 9),
+                          fg=T['blue'], bg=T['bg3'], activebackground=T['bg4'],
+                          activeforeground=T['white'], bd=0, padx=8, pady=2,
+                          cursor='hand2',
+                          command=lambda tid=topic['id'], t=topic: self._show_card_detail(tid, t)
+                          ).pack(side='left')
+
+    def _show_card_detail(self, tid, topic):
+        """Show a popup with full card state and edit controls."""
+        active = self.progress.get('active', {})
+        d = active.get(tid, {})
+        iv = d.get('interval', 1)
+        reps = d.get('repetitions', 0)
+        ease = d.get('ease', 2.5)
+        nr = d.get('next_review', '')
+        lr = d.get('last_review', '')
+
+        win = tk.Toplevel(self.root)
+        win.title(f"Card Details — {tid}")
+        win.configure(bg=T['bg'])
+        win.geometry("480x520")
+        win.resizable(False, False)
+        try:
+            win.update()
+            hwnd = ctypes.windll.user32.GetParent(win.winfo_id())
+            ctypes.windll.dwmapi.DwmSetWindowAttribute(
+                hwnd, 20, ctypes.byref(ctypes.c_int(1)), ctypes.sizeof(ctypes.c_int))
+        except Exception:
+            pass
+
+        pad = dict(padx=20)
+
+        tk.Label(win, text=tid, font=('Cascadia Code', 16, 'bold'),
+                 fg=T['green'], bg=T['bg']).pack(anchor='w', pady=(16, 4), **pad)
+        tk.Label(win, text=topic['text'], font=('Segoe UI', 11),
+                 fg=T['text'], bg=T['bg'], wraplength=420, justify='left'
+                 ).pack(anchor='w', pady=(0, 16), **pad)
+
+        # Stats display
+        stats_f = tk.Frame(win, bg=T['bg2'], padx=16, pady=12,
+                           highlightbackground=T['border'], highlightthickness=1)
+        stats_f.pack(fill='x', **pad, pady=(0, 12))
+
+        status = "New (never reviewed)"
+        status_clr = T['cyan']
+        if reps > 0:
+            if nr and nr <= date.today().isoformat():
+                status = f"Due (was due {nr})"
+                status_clr = T['green']
+            elif nr:
+                days_until = (date.fromisoformat(nr) - date.today()).days
+                status = f"Upcoming — due in {days_until} day{'s' if days_until != 1 else ''} ({nr})"
+                status_clr = T['text2']
+            else:
+                status = "Reviewed but no next date"
+                status_clr = T['yellow']
+
+        for label, val, clr in [
+            ("Status", status, status_clr),
+            ("Interval", f"{iv} day{'s' if iv != 1 else ''}", T['text']),
+            ("Repetitions", str(reps), T['text']),
+            ("Ease factor", f"{ease:.2f}", T['text']),
+            ("Last review", lr if lr else "Never", T['text3']),
+            ("Next review", nr if nr else "Not scheduled", T['text3']),
+        ]:
+            r = tk.Frame(stats_f, bg=T['bg2'])
+            r.pack(fill='x', pady=1)
+            tk.Label(r, text=label, font=('Segoe UI', 10), fg=T['text3'],
+                     bg=T['bg2'], width=14, anchor='w').pack(side='left')
+            tk.Label(r, text=val, font=('Cascadia Code', 10), fg=clr,
+                     bg=T['bg2'], anchor='w').pack(side='left')
+
+        # Edit controls
+        tk.Label(win, text="SET INTERVAL", font=('Cascadia Code', 9, 'bold'),
+                 fg=T['text3'], bg=T['bg'], anchor='w').pack(anchor='w', pady=(8, 4), **pad)
+
+        edit_f = tk.Frame(win, bg=T['bg'])
+        edit_f.pack(fill='x', **pad)
+
+        def _set_interval(days, tid=tid):
+            a = self.progress.get('active', {})
+            if tid in a:
+                today_s = date.today().isoformat()
+                nxt = (date.today() + timedelta(days=days)).isoformat()
+                a[tid]['interval'] = days
+                a[tid]['next_review'] = nxt
+                a[tid]['last_review'] = today_s
+                if a[tid]['repetitions'] == 0:
+                    a[tid]['repetitions'] = 1
+                save_progress(self.progress)
+            win.destroy()
+            if hasattr(self, 'cur_section'):
+                self._show_topics(self.cur_section)
+
+        for days, label, clr in [
+            (0, "Due now", T['red']),
+            (2, "2 days", T['orange']),
+            (5, "5 days", T['yellow']),
+            (14, "14 days", T['blue']),
+            (30, "30 days", T['green']),
+        ]:
+            tk.Button(edit_f, text=label, font=('Segoe UI', 10, 'bold'),
+                      fg=clr, bg=T['bg3'], activebackground=T['bg4'],
+                      activeforeground=clr, bd=0, padx=14, pady=6,
+                      cursor='hand2', command=lambda d=days: _set_interval(d)
+                      ).pack(side='left', padx=(0, 6))
+
+        # Custom interval
+        custom_f = tk.Frame(win, bg=T['bg'])
+        custom_f.pack(fill='x', **pad, pady=(8, 0))
+        tk.Label(custom_f, text="Custom days:", font=('Segoe UI', 10),
+                 fg=T['text3'], bg=T['bg']).pack(side='left', padx=(0, 8))
+        custom_entry = tk.Entry(custom_f, font=('Cascadia Code', 10), width=6,
+                                bg=T['bg3'], fg=T['text'], insertbackground=T['text'],
+                                bd=0, highlightthickness=1, highlightbackground=T['border'])
+        custom_entry.pack(side='left', padx=(0, 8))
+        tk.Button(custom_f, text="Set", font=('Segoe UI', 10),
+                  fg=T['blue'], bg=T['bg3'], activebackground=T['bg4'], bd=0,
+                  padx=10, pady=4, cursor='hand2',
+                  command=lambda: _set_interval(int(custom_entry.get())) if custom_entry.get().isdigit() else None
+                  ).pack(side='left')
+
+        # Reset button
+        tk.Button(win, text="Reset to New", font=('Segoe UI', 10),
+                  fg=T['red'], bg=T['red_d'], activebackground='#5f1515', bd=0,
+                  padx=14, pady=6, cursor='hand2',
+                  command=lambda: self._reset_card(tid, win)
+                  ).pack(anchor='w', **pad, pady=(16, 0))
+
+    def _reset_card(self, tid, win):
+        """Reset a card back to new state."""
+        active = self.progress.get('active', {})
+        if tid in active:
+            active[tid] = {'ease': 2.5, 'interval': 1,
+                           'repetitions': 0, 'next_review': '', 'last_review': ''}
+            save_progress(self.progress)
+        win.destroy()
+        if hasattr(self, 'cur_section'):
+            self._show_topics(self.cur_section)
 
     def _toggle(self, tid, on):
         active = self.progress.setdefault('active', {})
@@ -665,9 +813,12 @@ class App:
 
         # Copy button — includes prompt for Claude
         def _copy_topic(txt=topic['text'], sec=short_sec):
-            prompt = (f"Generate practice questions on the following topic that "
-                      f"would take about 5 minutes to complete. "
-                      f"Include a mix of conceptual and computational questions.\n\n"
+            prompt = (f"Give me exactly 4 practice questions on the following topic "
+                      f"that take about 5 minutes total to complete. "
+                      f"Mix conceptual and computational. Keep questions short and focused.\n\n"
+                      f"IMPORTANT: If the section is NOT 'Machine Learning' or 'Interpretability', "
+                      f"do NOT use neural networks, transformers, or ML concepts in the questions. "
+                      f"The student hasn't learned those yet. Use physics, engineering, or pure math applications instead.\n\n"
                       f"Section: {sec}\n"
                       f"Topic: {txt}")
             self.root.clipboard_clear()
@@ -687,21 +838,40 @@ class App:
         tk.Label(card, text="Rate your performance on this topic",
                  font=('Segoe UI', 11), fg=T['text3'], bg=T['bg2']).pack(pady=(0, 14))
 
-        # Rating buttons
+        # Rating buttons: Again (re-queue) + Hard/Okay/Good/Easy (schedule)
         btn_row = tk.Frame(card, bg=T['bg2'])
         btn_row.pack()
 
+        # Again button — puts card back in queue for this session
+        again_f = tk.Frame(btn_row, bg=T['bg2'])
+        again_f.pack(side='left', padx=5)
+        tk.Button(again_f, text="Again", font=('Segoe UI', 11, 'bold'),
+            fg=T['red'], bg=T['bg3'], activebackground=T['bg4'],
+            activeforeground=T['red'], bd=0, width=9, height=2,
+            cursor='hand2', command=self._again).pack()
+        tk.Label(again_f, text="re-queue", font=('Cascadia Code', 9),
+                 fg=T['text3'], bg=T['bg2']).pack(pady=(4, 0))
+
+        # Scheduling buttons
         ratings = [
-            (0, "Again", T['red']),
-            (1, "Wrong", '#e05555'),
-            (2, "Hard",  T['orange']),
-            (3, "Okay",  T['yellow']),
-            (4, "Good",  T['blue']),
-            (5, "Easy",  T['green']),
+            (3, "Hard",  T['orange']),
+            (4, "Okay",  T['yellow']),
+            (5, "Good",  T['blue']),
+            (6, "Easy",  T['green']),
         ]
 
+        # Map button quality to SM-2 quality and custom first intervals
+        FIRST_MAP = {3: 2, 4: 5, 5: 14, 6: 30}
+
         for q, label, color in ratings:
-            _, _, ni = sm2(q, reps, ease, iv)
+            # Preview the interval
+            if reps == 0:
+                ni = FIRST_MAP[q]
+            elif reps == 1:
+                ni = {3: 5, 4: 14, 5: 30, 6: 60}.get(q, 14)
+            else:
+                sm_q = {3: 3, 4: 3, 5: 4, 6: 5}[q]
+                _, _, ni = sm2(sm_q, reps, ease, iv)
             bf = tk.Frame(btn_row, bg=T['bg2'])
             bf.pack(side='left', padx=5)
             tk.Button(bf, text=label, font=('Segoe UI', 11, 'bold'),
@@ -720,15 +890,50 @@ class App:
     def _rate(self, quality):
         tid, _ = self.review_queue[self.ci]
         d = self.progress['active'][tid]
-        r, e, i = sm2(quality, d.get('repetitions', 0),
-                       d.get('ease', 2.5), d.get('interval', 1))
-        today = date.today()
-        d.update({'repetitions': r, 'ease': e, 'interval': i,
-                  'last_review': today.isoformat(),
-                  'next_review': (today + timedelta(days=i)).isoformat()})
+        reps = d.get('repetitions', 0)
+        ease = d.get('ease', 2.5)
+        iv = d.get('interval', 1)
+
+        # Map button quality to interval
+        FIRST_MAP = {3: 2, 4: 5, 5: 14, 6: 30}
+        SECOND_MAP = {3: 5, 4: 14, 5: 30, 6: 60}
+
+        if reps == 0:
+            new_iv = FIRST_MAP.get(quality, 5)
+        elif reps == 1:
+            new_iv = SECOND_MAP.get(quality, 14)
+        else:
+            sm_q = {3: 3, 4: 3, 5: 4, 6: 5}[quality]
+            _, ease, new_iv = sm2(sm_q, reps, ease, iv)
+
+        # Adjust ease based on rating
+        if quality == 3:  # Hard
+            ease = max(1.3, ease - 0.15)
+        elif quality == 4:  # Okay
+            ease = max(1.3, ease - 0.05)
+        elif quality == 6:  # Easy
+            ease = ease + 0.1
+
+        today_d = date.today()
+        d.update({
+            'repetitions': reps + 1,
+            'ease': round(ease, 2),
+            'interval': new_iv,
+            'last_review': today_d.isoformat(),
+            'next_review': (today_d + timedelta(days=new_iv)).isoformat()
+        })
         save_progress(self.progress)
         self.ci += 1
         self.session_total += 1
+        self._render_card()
+
+    def _again(self):
+        """Put the current card back into the queue further ahead."""
+        tid, topic = self.review_queue[self.ci]
+        # Insert 3-5 cards ahead (or at the end if queue is short)
+        insert_pos = min(self.ci + randint(3, 5), len(self.review_queue))
+        self.review_queue.insert(insert_pos, (tid, topic))
+        self.ci += 1
         self._render_card()
 
     def _skip(self):
