@@ -1,2 +1,3 @@
 @echo off
-pythonw "%~dp0SpacedRepetitionWeb.py"
+start "" pythonw "%~dp0SpacedRepetitionWeb.py"
+exit

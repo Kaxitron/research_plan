@@ -107,9 +107,16 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
       <div class="stat-card"><div class="num" id="s-total" style="color:var(--text3)">0</div><div class="lbl">Total</div></div>
     </div>
     <button class="start-btn" id="btn-start" onclick="startReview()">Start Review</button>
+    <button class="start-btn" id="btn-learn" onclick="learnMore()" style="margin-top:8px;background:var(--blue)">Learn More New Cards</button>
     <div style="margin-top:20px">
       <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px">Categories</div>
       <div id="cat-list"></div>
+      <div style="margin-top:20px;display:flex;gap:6px">
+        <button onclick="exportProgress()" style="flex:1;border:none;border-radius:6px;padding:8px;font-size:11px;background:var(--bg3);color:var(--text3);cursor:pointer">Export Progress</button>
+        <label style="flex:1;border:none;border-radius:6px;padding:8px;font-size:11px;background:var(--bg3);color:var(--text3);cursor:pointer;text-align:center">
+          Import Progress<input type="file" accept=".json" onchange="importProgress(event)" style="display:none">
+        </label>
+      </div>
     </div>
   </div>
 </div>
@@ -166,6 +173,9 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 </div>
 
 <script>
+// ── Initial progress (imported from server data) ──
+const MS_INITIAL_PROGRESS = {"0": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "1": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "2": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "3": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "4": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "5": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "6": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "7": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "8": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "9": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "10": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "11": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "12": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "13": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "14": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "15": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "16": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "17": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "18": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "19": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "20": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "21": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "22": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "23": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "24": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "25": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "26": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "27": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "28": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "29": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "30": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "31": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "32": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "33": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "34": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "35": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "36": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "37": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "38": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "39": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "40": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "41": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "42": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "43": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "44": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "45": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "46": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "47": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "48": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "49": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "50": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "51": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "52": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "53": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "54": {"ease": 2.6, "interval": 30, "reps": 1, "next": "2026-04-19", "last": "2026-03-20"}, "55": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "56": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "57": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "58": {"ease": 2.6, "interval": 30, "reps": 1, "next": "2026-04-19", "last": "2026-03-20"}, "59": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "60": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "61": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "62": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "63": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "64": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "65": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "66": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "67": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "68": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "69": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "70": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "71": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "72": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "73": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "74": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "75": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "76": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "77": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "78": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "79": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "80": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "81": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "82": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "83": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "84": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "85": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "86": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "87": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "88": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "89": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "90": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "91": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "92": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "93": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "94": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "95": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "96": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "97": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "98": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "99": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "100": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "101": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "102": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "103": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "104": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "105": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "106": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "107": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "108": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "109": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "110": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "111": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "112": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "113": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "114": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "115": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "116": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "117": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "118": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "119": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "120": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "121": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "122": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "123": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "124": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "125": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "126": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "127": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "128": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "129": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "130": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "131": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "132": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "133": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "134": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "135": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "136": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "137": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "138": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "139": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "140": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "141": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "142": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "143": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "144": {"ease": 2.5, "interval": 14, "reps": 1, "next": "2026-04-03", "last": "2026-03-20"}, "145": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "146": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "147": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "148": {"ease": 2.45, "interval": 5, "reps": 1, "next": "2026-03-25", "last": "2026-03-20"}, "149": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "150": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "151": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}, "152": {"ease": 2.5, "interval": 1, "reps": 0, "next": "", "last": ""}};
+
 // ── Card data ──
 const CARDS = [
   // Arithmetic
@@ -385,7 +395,15 @@ let sessionCount = 0;
 const NEW_PER_DAY = 20;
 
 function loadProgress() {
-  try { progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { progress = {}; }
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) { try { progress = JSON.parse(stored); return; } catch(e) {} }
+  // First load: import from embedded initial data
+  if (typeof MS_INITIAL_PROGRESS !== 'undefined' && Object.keys(MS_INITIAL_PROGRESS).length > 0) {
+    progress = { ...MS_INITIAL_PROGRESS };
+    saveProgress();
+    return;
+  }
+  progress = {};
 }
 function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
 function today() { return new Date().toISOString().slice(0, 10); }
@@ -434,6 +452,14 @@ function refreshDash() {
   } else {
     btn.textContent = 'All caught up!';
     btn.disabled = true;
+  }
+  // Show "Learn More" if there are unseen cards
+  const learnBtn = document.getElementById('btn-learn');
+  if (newAvail > 0) {
+    learnBtn.style.display = 'block';
+    learnBtn.textContent = `Learn More New Cards (${newAvail} unseen)`;
+  } else {
+    learnBtn.style.display = 'none';
   }
 
   // Category list
@@ -587,6 +613,23 @@ function showDone() {
   document.getElementById('keep-going-btn').style.display = total > 0 ? 'block' : 'none';
 }
 
+function learnMore() {
+  const newQ = [];
+  CARDS.forEach((_, i) => {
+    const p = getCardProgress(i);
+    if (p.reps === 0) newQ.push(i);
+  });
+  function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} }
+  shuffle(newQ);
+  queue = newQ.slice(0, 20); // batch of 20
+  qi = 0;
+  sessionCount = 0;
+  if (queue.length === 0) return;
+  reviewInProgress = true;
+  showView('v-review');
+  showCard();
+}
+
 function keepGoing() {
   const t = today();
   const reviewQ = [], newQ = [];
@@ -598,7 +641,7 @@ function keepGoing() {
   function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} }
   shuffle(reviewQ); shuffle(newQ);
   // No cap — give them everything
-  queue = [...reviewQ, ...newQ.slice(0, NEW_PER_DAY)];
+  queue = [...reviewQ, ...newQ];
   shuffle(queue);
   qi = 0;
   if (queue.length === 0) return;
@@ -747,6 +790,29 @@ function closeDetail() {
 }
 
 // ── Init ──
+function exportProgress() {
+  const blob = new Blob([JSON.stringify(progress, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ms-progress.json';
+  a.click();
+}
+
+function importProgress(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      progress = JSON.parse(e.target.result);
+      saveProgress();
+      refreshDash();
+      alert('Progress imported!');
+    } catch(err) { alert('Invalid JSON file'); }
+  };
+  reader.readAsText(file);
+}
+
 loadProgress();
 refreshDash();
 </script>

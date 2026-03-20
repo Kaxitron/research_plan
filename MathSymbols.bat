@@ -1,2 +1,3 @@
 @echo off
-pythonw "%~dp0MathSymbols.py"
+start "" pythonw "%~dp0MathSymbols.py"
+exit
