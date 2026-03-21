@@ -723,138 +723,137 @@
 
 ---
 
-## Phase 5: Mathematical Enrichment (Lessons 67–79)
+## Phase 5: Mathematical Enrichment (Lessons 67–94)
 
-### Lesson 67: Turing Machines and Decidability
-- **Turing machine:** tape + head + states + transition function — formal definition of computation
-- Church-Turing thesis: anything computable is Turing-computable
-- **Halting problem:** no algorithm can determine if arbitrary programs halt — **undecidable**
-- Proof by contradiction using diagonalization
-- **Rice's theorem:** every non-trivial semantic property of programs is undecidable
-- Decidability landscape: decidable, semi-decidable, undecidable
+### Block A: Discrete Mathematics (Lessons 67–71)
 
-### Lesson 68: Computational Complexity
-- **P:** problems solvable in polynomial time
-- **NP:** solutions verifiable in polynomial time
-- **NP-complete:** hardest problems in NP (via polynomial reductions)
-- **P vs NP** — open problem
-- Cook-Levin theorem (SAT is NP-complete)
-- NP-hardness in ML: training neural networks, feature selection
-- **Space complexity:** PSPACE
-- **Circuit complexity:** neural networks as Boolean circuits
+### Lesson 67: Logic/Propositions
+- Propositions, connectives, truth tables, logical equivalences
+- Quantifiers (forall, exists), predicates, nested quantifiers
 
-### Lesson 69: Kolmogorov Complexity and Algorithmic Information
-- **Kolmogorov complexity K(x):** length of shortest program generating x
-- Incompressible strings (random)
-- K(x) is **uncomputable** (related to halting problem)
-- Connection to Shannon entropy: E[K(x)] ≈ H(X)
-- **Solomonoff induction:** universal prior P(x) = 2^{-K(x)}, optimal prediction
-- **AIXI:** Solomonoff induction + expected utility maximization = theoretically optimal agent
-- Incomputable but provides theoretical ideal for agent design
-- Minimum Description Length (MDL) principle
+### Lesson 68: Sets/Functions
+- Sets, operations, power set, Cartesian product, cardinality
+- Functions: injective, surjective, bijective; composition, inverse; equivalence relations, partial orders
 
-### Lesson 70: Group Theory
-- **Group:** set + operation satisfying closure, associativity, identity, inverses
-- Examples: integers under addition, permutation groups S_n, cyclic groups Z_n, matrix groups GL(n), SO(n), dihedral groups
-- **Subgroups, cosets, quotient groups** G/N
-- **Lagrange's theorem:** |H| divides |G|
-- **Homomorphisms and isomorphisms**
-- **First isomorphism theorem**
-- Abelian vs non-abelian groups
-- **Normal subgroups**
+### Lesson 69: Combinatorics
+- Permutations, combinations, binomial theorem
+- Pigeonhole principle, inclusion-exclusion
 
-### Lesson 71: Rings, Fields, and Algebraic Structures
-- **Rings:** set with + and ×, additive group + multiplicative monoid
-- Examples: integers Z, polynomials R[x], matrix rings
-- **Fields:** rings where every nonzero element has multiplicative inverse (Q, R, C, F_p)
-- **Ideals and quotient rings**
-- **Modules and vector spaces** (vector space = module over a field)
-- **Noetherian rings, Hilbert Basis Theorem**
-- **Polynomial rings** — foundation for algebraic geometry
+### Lesson 70: Graph Theory
+- Paths, cycles, trees, Euler/Hamilton circuits, planarity
+- Graph coloring, matching, network flow basics
 
-### Lesson 72: Group Actions, Representations, and Neural Network Symmetry
-- **Group actions:** group acts on a set (orbits, stabilizers)
-- **Neural network symmetries:** neuron permutation symmetry in hidden layers
-- **Orbit-stabilizer theorem** and connection to SLT (parameter symmetries create singularities)
-- **Group representations:** encoding symmetries as matrices
-- Character theory basics
-- **Equivariant neural networks:** architectures preserving symmetries (CNNs = translation equivariance)
+### Lesson 71: Recurrences/Generating Functions
+- Solve linear recurrences, Master theorem
+- Ordinary and exponential generating functions for counting problems
 
-### Lesson 73: Point-Set Topology
-- **Topological spaces:** defined by open sets satisfying axioms
-- **Continuity:** topological definition (preimage of open is open)
-- **Compactness:** every open cover has finite subcover
-  - Heine-Borel: closed + bounded ⊂ ℝⁿ ↔ compact
-  - Extreme value theorem requires compactness
-- **Connectedness:** cannot be split into two disjoint open sets
-- **Path-connectedness** (stronger than connectedness)
-- **Hausdorff spaces:** points can be separated by open sets
-- Homeomorphisms (topological equivalence)
+### Block B: Theory of Computation (Lessons 72–76)
 
-### Lesson 74: Homotopy and Fundamental Groups
-- **Homotopy:** continuous deformation of one map into another
-- Homotopy equivalence of spaces
-- **Fundamental group π₁:** loops up to continuous deformation
-  - π₁(circle) = Z, π₁(sphere) = 0, π₁(torus) = Z×Z
-- **Higher homotopy groups πₙ**
-- **Covering spaces:** unwinding topology
-- Loss landscape topology: holes and non-contractible loops
+### Lesson 72: Finite Automata
+- DFA and NFA: construct, trace, convert NFA to DFA
+- Regular expressions and pumping lemma for regular languages
 
-### Lesson 75: Manifolds and Tangent Spaces
-- **Smooth manifolds:** locally Euclidean spaces with smooth transition maps
-- Examples: spheres, tori, weight space as manifold
-- **Tangent spaces and tangent bundles**
-- **Riemannian metrics:** inner product on tangent spaces (measuring on curved spaces)
-- **Manifold hypothesis:** real-world data lies on low-dimensional manifold in high-dimensional space
-- **Singularities:** where manifold structure breaks down (key for SLT)
+### Lesson 73: CFGs/PDAs
+- Context-free grammars: derivations, parse trees, ambiguity
+- Pushdown automata and pumping lemma for CFLs
 
-### Lesson 79: Differential Forms and Stokes' Theorem
-- **k-forms:** 0-forms = functions, 1-forms = integrable along curves, 2-forms = over surfaces, 3-forms = volumes
-- **Wedge product ∧:** antisymmetric (dx∧dy = −dy∧dx, dx∧dx = 0) — captures oriented area/volume
-- **Connection to determinants:** (dx∧dy)(u,v) = det[u|v] — wedge product IS the determinant
-- **Exterior derivative d:** unifies grad (d on 0-forms), curl (d on 1-forms), div (d on 2-forms)
-- **d² = 0:** curl(grad f) = 0 and div(curl F) = 0 are both consequences of this single fact
-- **Generalized Stokes' theorem:** ∫_∂M ω = ∫_M dω — unifies FTC, Green's, Stokes', Divergence theorems
-- **Pullbacks φ*:** how forms transform under maps — the change of variables formula IS a pullback
-- **De Rham cohomology:** Hᵏ(M) = {closed k-forms}/{exact k-forms} — detects topological holes via calculus
-- **ML connection:** normalizing flows (change of variables = pullback), Fisher metric as 2-tensor, SLT blow-up pullbacks
+### Lesson 74: Turing Machines
+- Turing machine definition, simulation, Church-Turing thesis
+- Halting problem (undecidable, diagonalization proof), Rice's theorem
 
-### Lesson 76: Algebraic Geometry Essentials
-- **Algebraic varieties:** solution sets of polynomial equations
-- Affine varieties, projective varieties
-- **Smooth vs singular points:** Jacobian rank condition
-- **Blow-ups:** resolution of singularities
-  - Replace a point with the space of directions through it
-- **The RLCT (Real Log Canonical Threshold):** computed via resolution of singularities
-  - Blow up the singularity → compute how the volume form transforms → extract λ
-- **Computing RLCTs for examples:** linear regression, reduced rank regression, neural networks
-- Direct connection to SLT: algebraic geometry provides the computational tools
+### Lesson 75: Kolmogorov Complexity
+- K(x): shortest program generating x, uncomputable
+- Solomonoff induction, AIXI: universal prior, optimal but incomputable agent
 
-### Lesson 77: Propositional and Predicate Logic
-- **Propositional logic:** connectives (∧, ∨, ¬, →, ↔), truth tables
-- Tautologies, contradictions, satisfiability
-- Normal forms (CNF, DNF)
-- **Predicate logic:** quantifiers (∀, ∃), predicates, terms
-- **Formal proofs:** natural deduction, sequent calculus
-- **Soundness** (provable → true) and **completeness** (true → provable)
-- **Models and interpretations** (semantic side)
-- **Formal verification** of software/AI systems
+### Lesson 76: Computational Complexity
+- P, NP, NP-complete; Cook-Levin theorem, polynomial reductions
+- Space complexity (PSPACE), circuit complexity
 
-### Lesson 78: Gödel's Incompleteness and Löb's Theorem
-- **Gödel's First Incompleteness Theorem:** any consistent formal system strong enough to express arithmetic contains true but unprovable statements
-- **Gödel numbering:** encoding statements as numbers (self-reference)
-- **Gödel's Second Incompleteness Theorem:** such a system cannot prove its own consistency
-- **Löb's Theorem:** if PA proves "if PA proves P then P," then PA proves P
-  - Prevents naive self-trust in formal systems
-- **Diagonal lemma:** construction of self-referential sentences
-- **Modal logic and provability logic (GL)**
-- **Implications for alignment:** self-referential agents, trust between AI systems, limitations on self-verification
+### Block C: Mathematical Logic (Lessons 77–79)
+
+### Lesson 77: Propositional/Predicate Logic
+- Propositional logic: connectives, truth tables, CNF, DNF, satisfiability
+- Predicate logic: quantifiers, models, interpretations; natural deduction
+
+### Lesson 78: Proof Systems
+- Soundness (provable implies true) and completeness (true implies provable)
+- Formal proofs via natural deduction and sequent calculus
+
+### Lesson 79: Godel's Incompleteness
+- First and Second Incompleteness Theorems; Godel numbering and self-reference
+- Lob's theorem, diagonal lemma, modal/provability logic (GL)
+
+### Block D: Abstract Algebra (Lessons 80–84)
+
+### Lesson 80: Groups
+- Group axioms: closure, associativity, identity, inverses
+- Key examples: Z_n, S_n, dihedral groups, GL(n), SO(n); subgroups, cyclic groups
+
+### Lesson 81: Cosets/Lagrange
+- Cosets and Lagrange's theorem: |H| divides |G|
+- Normal subgroups and quotient groups G/N
+
+### Lesson 82: Homomorphisms
+- Homomorphisms, isomorphisms, kernel
+- First isomorphism theorem: G/ker(phi) isomorphic to im(phi)
+
+### Lesson 83: Rings/Fields
+- Rings (two operations), ideals, quotient rings
+- Fields (every nonzero element invertible), polynomial rings and factorization
+
+### Lesson 84: Group Actions
+- Orbits, stabilizers, orbit-stabilizer theorem
+- Burnside's lemma, group representations as matrices
+
+### Block E: Differential Geometry (Lessons 85–89)
+
+### Lesson 85: Curves/Surfaces
+- Parametrization, curvature, Gauss map
+- First and second fundamental forms
+
+### Lesson 86: Tangent Spaces
+- Tangent spaces T_pM and tangent bundles TM
+- Riemannian metric: measuring lengths, angles, curvature on manifolds
+
+### Lesson 87: Manifolds
+- Smooth manifolds: charts, atlases, transition maps
+- Geodesics and the manifold hypothesis for data
+
+### Lesson 88: Differential Forms
+- k-forms, wedge product, exterior derivative d
+- Generalized Stokes' theorem and de Rham cohomology
+
+### Lesson 89: Algebraic Geometry/SLT
+- Algebraic varieties, smooth vs singular points, blow-ups
+- Resolution of singularities and RLCT computation; connection to SLT
+
+### Block F: Advanced Algorithms (Lessons 90–94)
+
+### Lesson 90: Analysis of Algorithms
+- Asymptotic notation, recurrence solving, Master theorem
+- Divide and conquer: merge sort, Strassen, closest pair
+
+### Lesson 91: Randomized Algorithms
+- Las Vegas vs Monte Carlo, randomized QuickSort
+- Universal hashing, Bloom filters, sketching
+
+### Lesson 92: Combinatorial Algorithms
+- Greedy algorithms, matroids, approximation algorithms
+- Network flow: Ford-Fulkerson, max-flow min-cut, bipartite matching
+
+### Lesson 93: Advanced Graph Algorithms
+- Shortest paths (Dijkstra, Bellman-Ford), MST, SCC
+- Advanced dynamic programming: knapsack variants, tree DP, bitmask DP
+
+### Lesson 94: Lower Bounds/Amortized Analysis
+- Comparison-based sorting lower bound Omega(n log n), adversary arguments
+- Amortized analysis: aggregate, accounting, potential methods
 
 ---
 
-## Phase 6: Alignment Theory (Lessons 80–84)
+## Phase 6: Alignment Theory (Lessons 95–99)
 
-### Lesson 80: Game Theory
+### Lesson 95: Game Theory
 - **Normal form games, extensive form games**
 - **Nash equilibrium:** no player can unilaterally improve
 - **Dominant strategies, mixed strategies**
@@ -864,7 +863,7 @@
 - **Common knowledge, signaling, information asymmetry**
 - **Auction theory** (Vickrey, etc.)
 
-### Lesson 81: Decision Theory
+### Lesson 96: Decision Theory
 - **Expected utility theory:** maximize E[u(outcome)]
 - **Von Neumann-Morgenstern axioms**
 - **Three decision theories:**
@@ -876,7 +875,7 @@
 - **Logical uncertainty**
 - Implications for AI agent design
 
-### Lesson 82: Anthropics and Self-Locating Beliefs
+### Lesson 97: Anthropics and Self-Locating Beliefs
 - **Observation selection effects**
 - **Sleeping Beauty Problem**
 - **Self-Sampling Assumption (SSA)** vs **Self-Indication Assumption (SIA)**
@@ -885,7 +884,7 @@
 - **Doomsday argument**
 - **Embedded agency:** agents reasoning about themselves as part of the environment
 
-### Lesson 83: The Alignment Problem
+### Lesson 98: The Alignment Problem
 - **Core problem:** ensuring AI systems pursue goals beneficial to humanity
 - **Outer alignment:** specifying the right objective
 - **Inner alignment:** ensuring the model optimizes for the specified objective
@@ -896,7 +895,7 @@
   - Scalable oversight, interpretability-based safety
 - **Goodhart's Law:** when a measure becomes a target, it ceases to be a good measure
 
-### Lesson 84: Open Problems and Research Frontiers
+### Lesson 99: Open Problems and Research Frontiers
 - **Technical open problems:** scalable oversight, interpretability gaps, robustness
 - **Emerging theoretical frameworks:** SLT for understanding learning, agent foundations
 - **Research frontiers in interpretability:** sparse autoencoders at scale, developmental interpretability, causal scrubbing

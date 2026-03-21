@@ -26,7 +26,7 @@ format:
 | | |
 |---|---|
 | **Estimated Time** | 15–20 hours (split across multiple sessions) |
-| **Prerequisites** | All lessons (0–84) and all exams completed |
+| **Prerequisites** | All lessons (0–99) and all exams completed |
 | **Materials** | Python, PyTorch, NumPy, Matplotlib. GPU recommended but not required. |
 | **Deliverable** | A GitHub repository with code, visualizations, and a written report |
 
@@ -65,7 +65,7 @@ Build a small transformer from scratch in PyTorch. No `nn.TransformerEncoder` �
 
 ### Analysis Questions
 1. Compute the rank of your embedding matrix at initialization (before training). What do you expect it to be? (Lesson 6)
-2. What is the computational complexity of attention as a function of sequence length n and dimension d? Where does the bottleneck come from? (Lesson 68: computational complexity)
+2. What is the computational complexity of attention as a function of sequence length n and dimension d? Where does the bottleneck come from? (Lesson 76: computational complexity)
 
 ***
 
@@ -156,7 +156,7 @@ Attempt to steer the model's behavior toward a specified goal.
   - Generate pairs of outputs for each prompt
   - Label which output is "preferred" according to your criterion
   - Fine-tune the model using the DPO loss: L_DPO = −log σ(β(log π_θ(y_w|x) − log π_ref(y_w|x) − log π_θ(y_l|x) + log π_ref(y_l|x)))
-  - (Lesson 64: LLM pipeline, Lesson 83: alignment problem)
+  - (Lesson 64: LLM pipeline, Lesson 98: alignment problem)
 - **Evaluate:** measure the alignment criterion before and after DPO. Compute a confidence interval on the improvement. (Lesson 41: hypothesis testing)
 - **Failure analysis:** find cases where the aligned model still fails. Categorize the failure modes.
 
@@ -169,7 +169,7 @@ Attempt to steer the model's behavior toward a specified goal.
 ### Analysis Questions
 1. The DPO loss contains a KL divergence penalty (via the reference model). What happens if you remove it (set β → ∞)? Why is the constraint necessary? (Lesson 23: constrained optimization, Lesson 40: information theory)
 2. Your reward model has finite accuracy. Using concepts from Lesson 42 (experimental design) and Lesson 41 (hypothesis testing), how confident are you that the observed improvement is real and not a reward model artifact?
-3. Could your model have learned to game the reward model rather than genuinely satisfy the criterion? Describe what this would look like and how you'd detect it. (Lesson 83: alignment problem — Goodhart's Law)
+3. Could your model have learned to game the reward model rather than genuinely satisfy the criterion? Describe what this would look like and how you'd detect it. (Lesson 98: alignment problem — Goodhart's Law)
 
 ***
 
@@ -179,10 +179,10 @@ Attempt to steer the model's behavior toward a specified goal.
 Apply the deeper mathematical frameworks to understand your model.
 
 ### Requirements
-- **Symmetry analysis:** your model has permutation symmetry in the hidden neurons. Compute the size of the symmetry group for your architecture. Show that permuted weight configurations produce identical outputs. (Lesson 70: groups, Lesson 72: group actions)
+- **Symmetry analysis:** your model has permutation symmetry in the hidden neurons. Compute the size of the symmetry group for your architecture. Show that permuted weight configurations produce identical outputs. (Lesson 80: groups, Lesson 84: group actions)
 - **SLT estimation (if feasible):** estimate the local learning coefficient (LLC) using the trace of the Hessian or a sampling-based method. How does the LLC compare to the naive parameter count? (Lesson 66: SLT)
-- **Topological analysis:** compute the persistent homology of the learned representations (activation vectors for a batch of inputs). Compare the topology before and after alignment training (Stage 5). Did alignment change the shape of the representation space? (Lesson 73: point-set topology, Lesson 74: homotopy)
-- **Logical limits reflection:** your alignment attempt in Stage 5 tried to verify a behavioral property. Using Rice's theorem (Lesson 67), explain why perfect verification is impossible. Using Löb's theorem (Lesson 78), explain why the model cannot self-certify its own alignment.
+- **Topological analysis:** compute the persistent homology of the learned representations (activation vectors for a batch of inputs). Compare the topology before and after alignment training (Stage 5). Did alignment change the shape of the representation space? (Lesson 85: point-set topology)
+- **Logical limits reflection:** your alignment attempt in Stage 5 tried to verify a behavioral property. Using Rice's theorem (Lesson 74), explain why perfect verification is impossible. Using Löb's theorem (Lesson 79), explain why the model cannot self-certify its own alignment.
 
 ### Deliverable
 - Symmetry group computation with numerical verification
@@ -236,9 +236,9 @@ Every lesson in the curriculum appears at least once in this project:
 | **Phase 3** | 44–52 | Stage 5 (Bayesian reward modeling, statistical evaluation) |
 | **Phase 4** | 53–60 | Stages 1–2 (build and train the model) |
 | **Phase 4** | 61–66 | Stage 4 (interpretability), Stage 6 (SLT) |
-| **Phase 5** | 67–72 | Stage 6 (symmetry, computability limits) |
-| **Phase 5** | 73–79 | Stage 6 (topology, logical limits) |
-| **Phase 6** | 80–84 | Stage 5 (alignment), Stage 6 (reflection) |
+| **Phase 5** | 74–84 | Stage 6 (symmetry, computability limits) |
+| **Phase 5** | 85–89 | Stage 6 (topology, logical limits) |
+| **Phase 6** | 95–99 | Stage 5 (alignment), Stage 6 (reflection) |
 
 ***
 

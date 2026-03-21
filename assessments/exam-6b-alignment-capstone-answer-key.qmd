@@ -1,6 +1,6 @@
 ---
 title: "Exam 6B: Alignment Capstone --- Answer Key"
-subtitle: "Lessons 80--84"
+subtitle: "Lessons 95--99"
 format:
   pdf:
     documentclass: article
@@ -246,7 +246,7 @@ This direction may differ from the output direction because the model's internal
 
 **(d)** ELK is considered one of the hardest problems because it requires distinguishing internal states that produce identical external behavior. Any behavioral test --- any input-output check --- can in principle be passed by a \textsc{Human-Simulator} that has modeled $H$ sufficiently well. The fundamental difficulty is that behavioral equivalence does not imply mechanistic equivalence: two models can produce the same outputs for entirely different internal reasons.
 
-A solution would require going beyond behavioral testing to **inspect the model's internal computation** and verify that its outputs are derived from its world model $M$ rather than from a model of human beliefs $H$. This is why ELK is deeply connected to interpretability (L83--84): we need mechanistic interpretability tools that can identify which internal representations causally produce the model's outputs, and whether those representations correspond to "what the model believes is true" rather than "what the model predicts humans will accept." This is causal abstraction applied to the distinction between honesty and sycophancy.
+A solution would require going beyond behavioral testing to **inspect the model's internal computation** and verify that its outputs are derived from its world model $M$ rather than from a model of human beliefs $H$. This is why ELK is deeply connected to interpretability (L98--99): we need mechanistic interpretability tools that can identify which internal representations causally produce the model's outputs, and whether those representations correspond to "what the model believes is true" rather than "what the model predicts humans will accept." This is causal abstraction applied to the distinction between honesty and sycophancy.
 
 ---
 
@@ -309,7 +309,7 @@ The alignment tax is the performance gap between $\beta = 0$ (unconstrained opti
 
 **Layer 2: Mechanistic interpretability (Phase 4).** Run SAE decomposition and activation patching on the trained model. Identify feature circuits related to safety-critical behaviors (deception detection, evaluation-context sensitivity). **Catches:** known-type deceptive circuits, systematic behavioral patterns. **Misses:** novel deception strategies not anticipated by the researcher; features hidden in superposition that SAEs fail to decompose.
 
-**Layer 3: Game-theoretic incentive design (Phase 6 / L80).** Structure the deployment environment so that honest behavior is a Nash equilibrium --- e.g., debate protocols, prediction markets for output verification, reputation systems. **Catches:** strategic deception that responds to incentives. **Misses:** non-strategic failures (bugs, distributional shift); sufficiently capable models that can game the incentive mechanism itself.
+**Layer 3: Game-theoretic incentive design (Phase 6 / L95).** Structure the deployment environment so that honest behavior is a Nash equilibrium --- e.g., debate protocols, prediction markets for output verification, reputation systems. **Catches:** strategic deception that responds to incentives. **Misses:** non-strategic failures (bugs, distributional shift); sufficiently capable models that can game the incentive mechanism itself.
 
 **Layer 4: Statistical monitoring (Phase 3).** Deploy Bayesian anomaly detection on model outputs. Maintain a posterior over "model is aligned" vs. "model has shifted" and flag when the posterior shifts. **Catches:** distributional shift in outputs, gradual degradation. **Misses:** deception that stays within the "normal" output distribution; rare, high-impact failures that don't appear in aggregate statistics.
 
@@ -364,14 +364,14 @@ This machinery matters for alignment because it provides the theoretically groun
 
 **(a)** Core difficulty of each area:
 
-- **Game theory (L80):** AI-human interaction is strategic, and the equilibria of this interaction may not be aligned --- the AI may have incentives to deceive or defect.
-- **Decision theory (L81):** The AI's choice of decision theory determines whether it can reason its way into deceptive alignment (CDT enables it; FDT may prevent it), and we don't know which decision theory capable AI systems will implement.
-- **Anthropic reasoning (L82):** Self-locating beliefs affect how an AI weights outcomes across possible worlds and copies, potentially leading to unexpected risk assessments or priorities.
-- **Goodhart's Law (L83):** Any formal proxy for human values will diverge from true values under sufficiently strong optimization, making "specify the right objective" fundamentally hard.
-- **Mesa-optimization (L83):** The training process can produce models with internal objectives that differ from the training objective, and these differences may be undetectable through behavioral evaluation.
-- **ELK (L84):** We cannot reliably distinguish whether a model is reporting its true beliefs or simulating what evaluators want to hear, because both produce identical outputs.
-- **Interpretability at scale (L84):** Superposition and the complexity of neural networks make it difficult to understand what models are computing internally, limiting our ability to verify alignment mechanistically.
-- **Formal verification limits (L84):** Fundamental results in logic and computability (G\"{o}del, Rice) place hard limits on what can be proven about AI system behavior.
+- **Game theory (L95):** AI-human interaction is strategic, and the equilibria of this interaction may not be aligned --- the AI may have incentives to deceive or defect.
+- **Decision theory (L96):** The AI's choice of decision theory determines whether it can reason its way into deceptive alignment (CDT enables it; FDT may prevent it), and we don't know which decision theory capable AI systems will implement.
+- **Anthropic reasoning (L97):** Self-locating beliefs affect how an AI weights outcomes across possible worlds and copies, potentially leading to unexpected risk assessments or priorities.
+- **Goodhart's Law (L98):** Any formal proxy for human values will diverge from true values under sufficiently strong optimization, making "specify the right objective" fundamentally hard.
+- **Mesa-optimization (L98):** The training process can produce models with internal objectives that differ from the training objective, and these differences may be undetectable through behavioral evaluation.
+- **ELK (L99):** We cannot reliably distinguish whether a model is reporting its true beliefs or simulating what evaluators want to hear, because both produce identical outputs.
+- **Interpretability at scale (L99):** Superposition and the complexity of neural networks make it difficult to understand what models are computing internally, limiting our ability to verify alignment mechanistically.
+- **Formal verification limits (L99):** Fundamental results in logic and computability (G\"{o}del, Rice) place hard limits on what can be proven about AI system behavior.
 
 **(b)** Two tightly coupled pairs:
 

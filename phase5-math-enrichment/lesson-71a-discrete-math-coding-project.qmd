@@ -1,0 +1,421 @@
+---
+title: "Coding Project: Discrete Mathematics"
+subtitle: "Graph Theory Implementation and Generating Functions"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+---
+
+# Coding Project: Discrete Mathematics
+
+[← Recurrences & Generating Functions](lesson-71-recurrences-generating-functions.md) | [Back to TOC](../README.md) | [Next: Finite Automata →](lesson-72-finite-automata.md)
+
+---
+
+> **Why this project exists:** Understanding discrete math concepts intellectually is one thing; implementing them in code forces you to confront every detail. In this project, you will build graph algorithms from scratch and implement generating function arithmetic. Both are directly relevant to AI: graph algorithms underpin GNNs, knowledge graphs, and computational graphs, while generating functions formalize the sequence analysis that arises in algorithm design and recurrent model analysis.
+
+> **Estimated time:** 8–12 hours
+
+---
+
+## Part A: Graph Theory Implementation
+
+### A.1: Graph Representations
+
+Implement a `Graph` class that supports both **adjacency matrix** and **adjacency list** representations. Your class should handle both directed and undirected graphs.
+
+**Starter code outline:**
+
+```python
+class Graph:
+    def __init__(self, num_vertices, directed=False):
+        """
+        Initialize a graph with the given number of vertices.
+        Store both an adjacency matrix and an adjacency list.
+        """
+        self.num_vertices = num_vertices
+        self.directed = directed
+        # TODO: Initialize adjacency matrix (2D list of 0s)
+        # TODO: Initialize adjacency list (dict of lists)
+
+    def add_edge(self, u, v, weight=1):
+        """
+        Add an edge from u to v with the given weight.
+        If undirected, also add the reverse edge.
+        Update both representations.
+        """
+        # TODO
+
+    def get_neighbors(self, v):
+        """Return the list of neighbors of vertex v (from adjacency list)."""
+        # TODO
+
+    def get_degree(self, v):
+        """Return the degree of vertex v. For directed graphs, return (in_degree, out_degree)."""
+        # TODO
+
+    def __str__(self):
+        """Print both representations for debugging."""
+        # TODO
+```
+
+**Tasks:**
+
+1. Create the graph from Lesson 70, Exercise 1: vertices {A, B, C, D, E} with edges {AB, AC, BC, BD, CD, DE}.
+2. Print both the adjacency matrix and adjacency list.
+3. Verify the degree of each vertex matches your hand computation.
+
+**Expected output (approximate):**
+
+```
+Adjacency Matrix:
+  A B C D E
+A 0 1 1 0 0
+B 1 0 1 1 0
+C 1 1 0 1 0
+D 0 1 1 0 1
+E 0 0 0 1 0
+
+Adjacency List:
+A: [B, C]
+B: [A, C, D]
+C: [A, B, D]
+D: [B, C, E]
+E: [D]
+
+Degrees: A=2, B=3, C=3, D=3, E=1
+```
+
+### A.2: Breadth-First Search (BFS) and Depth-First Search (DFS)
+
+Implement BFS and DFS as methods of your `Graph` class.
+
+**Starter code outline:**
+
+```python
+def bfs(self, start):
+    """
+    Perform BFS from the start vertex.
+    Return:
+      - visited: list of vertices in BFS order
+      - distances: dict mapping each vertex to its distance from start
+      - parent: dict mapping each vertex to its BFS parent (for path reconstruction)
+    """
+    from collections import deque
+    visited = []
+    distances = {start: 0}
+    parent = {start: None}
+    queue = deque([start])
+    # TODO: Standard BFS loop
+    return visited, distances, parent
+
+def dfs(self, start):
+    """
+    Perform DFS from the start vertex (iterative, using a stack).
+    Return:
+      - visited: list of vertices in DFS order
+      - parent: dict mapping each vertex to its DFS parent
+    """
+    visited = []
+    parent = {start: None}
+    stack = [start]
+    # TODO: Standard DFS loop
+    return visited, parent
+```
+
+**Tasks:**
+
+1. Run BFS from vertex A on your graph. Print the BFS order and shortest distances.
+2. Run DFS from vertex A. Print the DFS order.
+3. Implement a `shortest_path(self, start, end)` method that uses the BFS parent dictionary to reconstruct the shortest path between two vertices.
+4. Test: find the shortest path from A to E.
+
+**Expected output (approximate):**
+
+```
+BFS from A: ['A', 'B', 'C', 'D', 'E']
+Distances: {'A': 0, 'B': 1, 'C': 1, 'D': 2, 'E': 3}
+DFS from A: ['A', 'C', 'D', 'E', 'B'] (order may vary)
+Shortest path A -> E: A -> B -> D -> E (or A -> C -> D -> E), length 3
+```
+
+### A.3: Graph Coloring
+
+Implement two coloring algorithms: **greedy coloring** and **backtracking coloring** (exact chromatic number).
+
+**Starter code outline:**
+
+```python
+def greedy_coloring(self, vertex_order=None):
+    """
+    Assign colors using the greedy algorithm.
+    If vertex_order is None, use the natural order (0, 1, 2, ...).
+    Return: dict mapping each vertex to its color (integer).
+    """
+    if vertex_order is None:
+        vertex_order = list(range(self.num_vertices))
+    color_assignment = {}
+    # TODO: For each vertex in order, assign the smallest color
+    #       not used by any already-colored neighbor.
+    return color_assignment
+
+def chromatic_number(self):
+    """
+    Find the exact chromatic number using backtracking.
+    Try coloring with 1 color, then 2, then 3, etc.
+    Return the minimum number of colors needed.
+    """
+    def can_color(num_colors):
+        """Try to color the graph with exactly num_colors colors using backtracking."""
+        assignment = {}
+
+        def backtrack(vertex_index):
+            if vertex_index == self.num_vertices:
+                return True  # All vertices colored successfully
+            v = vertex_index  # or use a specific ordering
+            for color in range(num_colors):
+                # TODO: Check if color is valid for vertex v
+                # (no neighbor has this color)
+                # If valid, assign and recurse
+                # If recursion succeeds, return True
+                # Otherwise, unassign (backtrack)
+                pass
+            return False  # No valid color found
+
+        return can_color(num_colors)
+
+    for k in range(1, self.num_vertices + 1):
+        if can_color(k):
+            return k
+```
+
+**Tasks:**
+
+1. Apply greedy coloring to your graph with the default vertex order. How many colors does it use?
+2. Apply greedy coloring with a different vertex order. Does the number of colors change?
+3. Find the exact chromatic number using backtracking.
+4. Test on a complete graph K_4 (chromatic number should be 4) and a cycle C_6 (chromatic number should be 2).
+
+**Expected output (approximate):**
+
+```
+Greedy coloring (default order): {A: 0, B: 1, C: 2, D: 0, E: 1}, 3 colors
+Greedy coloring (order E, D, C, B, A): {E: 0, D: 1, C: 0, B: 2, A: 1}, 3 colors
+Exact chromatic number: 3
+
+K_4 chromatic number: 4
+C_6 chromatic number: 2
+```
+
+---
+
+## Part B: Generating Function Operations
+
+### B.1: Polynomial / Power Series Representation
+
+Represent generating functions as lists of coefficients. Implement basic operations.
+
+**Starter code outline:**
+
+```python
+class GeneratingFunction:
+    def __init__(self, coeffs, max_terms=20):
+        """
+        Initialize with a list of coefficients.
+        coeffs[i] = coefficient of x^i.
+        max_terms controls how many terms we track.
+        """
+        self.coeffs = list(coeffs) + [0] * max(0, max_terms - len(coeffs))
+        self.max_terms = max_terms
+
+    def __add__(self, other):
+        """Add two generating functions (coefficient-wise addition)."""
+        n = max(self.max_terms, other.max_terms)
+        result = [0] * n
+        # TODO: Add corresponding coefficients
+        return GeneratingFunction(result, n)
+
+    def __mul__(self, other):
+        """
+        Multiply two generating functions (Cauchy product / convolution).
+        c[n] = sum_{k=0}^{n} a[k] * b[n-k]
+        """
+        n = self.max_terms  # truncate to this many terms
+        result = [0] * n
+        # TODO: Compute convolution
+        return GeneratingFunction(result, n)
+
+    def __getitem__(self, n):
+        """Extract coefficient of x^n."""
+        if n < len(self.coeffs):
+            return self.coeffs[n]
+        return 0
+
+    def __str__(self):
+        """Pretty-print the first few terms."""
+        terms = []
+        for i, c in enumerate(self.coeffs):
+            if c != 0:
+                if i == 0:
+                    terms.append(f"{c}")
+                elif i == 1:
+                    terms.append(f"{c}x")
+                else:
+                    terms.append(f"{c}x^{i}")
+        return " + ".join(terms[:10]) if terms else "0"
+
+    def derivative(self):
+        """Compute the formal derivative: a'[n] = (n+1) * a[n+1]."""
+        n = self.max_terms - 1
+        result = [(i + 1) * self.coeffs[i + 1] for i in range(n)]
+        return GeneratingFunction(result, n)
+
+    def scalar_mul(self, c):
+        """Multiply by a scalar."""
+        return GeneratingFunction([c * a for a in self.coeffs], self.max_terms)
+```
+
+**Tasks:**
+
+1. Create the generating function for the geometric series: g = 1 + x + x^2 + ... (first 20 terms).
+2. Verify that g * (1 - x) gives 1 + 0x + 0x^2 + ... (i.e., it equals 1, confirming g = 1/(1-x)).
+3. Compute g * g and verify the coefficients are 1, 2, 3, 4, ... (i.e., [x^n] 1/(1-x)^2 = n+1).
+4. Compute the derivative of g and verify it equals g * g (since d/dx 1/(1-x) = 1/(1-x)^2).
+
+**Expected output:**
+
+```
+g = 1 + 1x + 1x^2 + 1x^3 + ...
+g * (1-x) = 1
+g * g: coefficients = [1, 2, 3, 4, 5, 6, ...]
+g' = g * g: True
+```
+
+### B.2: Solving Recurrences with Generating Functions
+
+Use your `GeneratingFunction` class to solve recurrences computationally and verify against closed-form solutions.
+
+**Task 1: Fibonacci numbers**
+
+```python
+def fibonacci_via_gf(n_terms=20):
+    """
+    Compute Fibonacci numbers using the generating function approach.
+    G(x) = x / (1 - x - x^2)
+    Equivalently: G(x) * (1 - x - x^2) = x
+    So: G(x) = x + x*G(x) + x^2*G(x)
+    Build iteratively: start with G = [0, 1, 0, 0, ...]
+    and repeatedly apply the recurrence.
+    """
+    fib = [0] * n_terms
+    fib[0] = 0
+    fib[1] = 1
+    for i in range(2, n_terms):
+        fib[i] = fib[i-1] + fib[i-2]
+    return GeneratingFunction(fib, n_terms)
+```
+
+Verify: print the first 15 Fibonacci numbers. Compare with Binet's formula (phi^n - psi^n)/sqrt(5) and check they agree (up to rounding).
+
+**Task 2: Catalan numbers**
+
+```python
+def catalan_via_gf(n_terms=20):
+    """
+    Compute Catalan numbers using the convolution recurrence.
+    C(0) = 1
+    C(n+1) = sum_{k=0}^{n} C(k) * C(n-k)
+    This means the GF satisfies G(x) = 1 + x * G(x)^2.
+    Build iteratively.
+    """
+    cat = [0] * n_terms
+    cat[0] = 1
+    for n in range(1, n_terms):
+        # C(n) = sum_{k=0}^{n-1} C(k) * C(n-1-k)
+        cat[n] = sum(cat[k] * cat[n-1-k] for k in range(n))
+    return GeneratingFunction(cat, n_terms)
+```
+
+Verify: print the first 12 Catalan numbers. Check against the closed form C(n) = C(2n, n) / (n+1).
+
+**Expected output:**
+
+```
+Fibonacci: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+Binet check: all match
+
+Catalan: [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786]
+Closed form check: all match
+```
+
+### B.3: Exploration — Counting with Generating Functions
+
+**Task:** Use generating function multiplication to solve the following counting problem:
+
+You have coins of denominations 1, 5, 10, and 25 cents. How many ways can you make change for n cents (for n = 0, 1, 2, ..., 99)?
+
+The generating function for each denomination d is: 1 + x^d + x^(2d) + x^(3d) + ...
+
+The total generating function is the product of these four series. The coefficient of x^n gives the number of ways to make change for n cents.
+
+```python
+def coin_change_gf(max_cents=100):
+    """
+    Compute the number of ways to make change using generating functions.
+    Denominations: 1, 5, 10, 25.
+    """
+    denominations = [1, 5, 10, 25]
+
+    # Start with the generating function for denomination 1: 1 + x + x^2 + ...
+    result = GeneratingFunction([1] * max_cents, max_cents)
+
+    for d in denominations[1:]:  # already handled d=1
+        # GF for denomination d: 1 + x^d + x^(2d) + ...
+        gf_d = [0] * max_cents
+        for i in range(0, max_cents, d):
+            gf_d[i] = 1
+        gf_d = GeneratingFunction(gf_d, max_cents)
+        result = result * gf_d
+
+    return result
+```
+
+**Tasks:**
+
+1. Compute and print the number of ways to make change for 25 cents, 50 cents, and 99 cents.
+2. Plot the sequence of coefficients — how does the number of ways grow with n?
+
+**Expected output (for 25 cents):** 13 ways (verify by hand or look up).
+
+---
+
+## Submission Checklist
+
+- [ ] `Graph` class with adjacency matrix, adjacency list, add_edge, get_neighbors, get_degree
+- [ ] BFS and DFS implemented and tested
+- [ ] Shortest path reconstruction working
+- [ ] Greedy coloring implemented and tested on at least 3 graphs
+- [ ] Backtracking chromatic number finder working on K_4 and C_6
+- [ ] `GeneratingFunction` class with add, multiply, getitem, derivative, scalar_mul
+- [ ] Geometric series identity verified: g * (1-x) = 1
+- [ ] Fibonacci numbers computed via recurrence and verified against Binet's formula
+- [ ] Catalan numbers computed via recurrence and verified against closed form
+- [ ] Coin change problem solved using generating function multiplication
+
+---
+
+## Reflection Questions
+
+1. What is the time complexity of your BFS and DFS implementations in terms of |V| and |E|? How does the choice of adjacency matrix vs. adjacency list affect this?
+
+2. Why does the greedy coloring algorithm not always find the chromatic number? Give an example where vertex ordering matters.
+
+3. The backtracking chromatic number finder has exponential worst-case complexity. Why is this expected? (Hint: recall the NP-hardness of graph coloring.)
+
+4. When you multiply two generating functions of length N, what is the time complexity? How does this relate to polynomial multiplication and the FFT?
+
+5. How could you extend your Graph class to represent a simple neural network's computational graph? What additional information would you need to store at each node to support a forward pass?

@@ -171,9 +171,9 @@
 |-------|--------|------|
 | What the Books Get Wrong about AI [Double Descent] | 56, 58 | [Watch](https://www.youtube.com/watch?v=z64a7USuGX0) |
 | The most complex model we actually understand [Grokking] | 56, 61 | [Watch](https://www.youtube.com/watch?v=D8GOeCFFby4) |
-| Can humans make AI any better? [The Bitter Lesson] | 83 | [Watch](https://www.youtube.com/watch?v=2hcsmtkSzIw) |
-| These Numbers Can Make AI Dangerous [Subliminal Learning] | 83 | [Watch](https://www.youtube.com/watch?v=NUAb6zHXqdI) |
-| The moment we satisficed with AI Alignment | 83 | [Watch](https://www.youtube.com/watch?v=FA8_wxhGnOI) |
+| Can humans make AI any better? [The Bitter Lesson] | 98 | [Watch](https://www.youtube.com/watch?v=2hcsmtkSzIw) |
+| These Numbers Can Make AI Dangerous [Subliminal Learning] | 98 | [Watch](https://www.youtube.com/watch?v=NUAb6zHXqdI) |
+| The moment we satisficed with AI Alignment | 98 | [Watch](https://www.youtube.com/watch?v=FA8_wxhGnOI) |
 | How to learn AI — from the inventor of backpropagation | 0 | [Watch](https://www.youtube.com/watch?v=czp0Gj3gYF8) |
 | How OpenAI's o3 model actually works | 60 | [Watch](https://www.youtube.com/watch?v=5ZleBCpJOJE) |
 
@@ -226,18 +226,19 @@
 
 ---
 
-## Dr. Trefor Bazett — Calculus, ODEs, & Linear Algebra
+## Dr. Trefor Bazett — Calculus, ODEs, Linear Algebra, Discrete Math & Logic
 
 **Channel:** [youtube.com/@DrTreforBazett](https://www.youtube.com/@DrTreforBazett)
 
-*Clear, visual university lectures. Excellent for multivariable calculus, vector calculus, and ODEs.*
+*Clear, visual university lectures. Excellent for multivariable calculus, vector calculus, ODEs, discrete math, and logic.*
 
 | Playlist | Lesson | Link |
 |----------|--------|------|
 | Ordinary Differential Equations (full course) | 14–18 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxde-SlgmWlCmNHroIWtujBw) |
 | Multivariable Calculus (full course) | 19–23 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxc_CvEy7xBKRQr6I214QJcd) |
 | Vector Calculus (full course) | 24–28 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfW0GMqeUE1bLKaYor6kbHa) |
-| Discrete Math (for logic foundations) | 77 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxersk8fUxiUMSIx0DBqsKZS) |
+| Discrete Math (full course — logic, sets, combinatorics, graph theory, recurrences) | 67–71 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxersk8fUxiUMSIx0DBqsKZS) |
+| Discrete Math — Logic subset (propositional & predicate logic) | 77–79 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxersk8fUxiUMSIx0DBqsKZS) |
 | Linear Algebra (full course) | 2 | [Playlist](https://www.youtube.com/playlist?list=PLHXZ9OQGMqxfUl0tcqPNTJsb7R6BqSLo6) |
 
 ---
@@ -260,7 +261,7 @@
 **Channel:** [youtube.com/@neelnanda2469](https://www.youtube.com/@neelnanda2469)
 **Getting Started Guide:** [neelnanda.io/getting-started](https://www.neelnanda.io/mechanistic-interpretability/getting-started)
 
-*Neel leads the mechanistic interpretability team at Google DeepMind. His YouTube features paper walkthroughs, live research streams, and TransformerLens tutorials. Essential viewing for Lessons 48, 65, and 84.*
+*Neel leads the mechanistic interpretability team at Google DeepMind. His YouTube features paper walkthroughs, live research streams, and TransformerLens tutorials. Essential viewing for Lessons 48, 65, and 99.*
 
 | Title / Type | Lesson | Link |
 |-------------|--------|------|
@@ -269,12 +270,12 @@
 | Getting Started in Mechanistic Interpretability | 61 | [Guide](https://www.neelnanda.io/mechanistic-interpretability/getting-started) |
 | TransformerLens tutorials & live coding | 61, 65 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | Research streams (live mech interp research) | 65 | [Channel](https://www.youtube.com/@neelnanda2469) |
-| 200 Open Problems in Mechanistic Interpretability | 84 | [Channel](https://www.youtube.com/@neelnanda2469) |
+| 200 Open Problems in Mechanistic Interpretability | 99 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | Grokking paper walkthrough | 65 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | SLT introductory talks (with Jesse Hoogland) | 46, 66 | [Channel](https://www.youtube.com/@neelnanda2469) |
 | Interview: The Inside View — superposition and grokking | 65 | [Watch](https://www.youtube.com/watch?v=cVBGjhN4-1g) |
 | Interview: AXRP Ep 19 — Mechanistic Interpretability | 65 | [Listen](https://axrp.net/episode/2023/02/04/episode-19-mechanistic-interpretability-neel-nanda.html) |
-| Interview: 80,000 Hours — The race to read AI minds | 84 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
+| Interview: 80,000 Hours — The race to read AI minds | 99 | [Listen](https://80000hours.org/podcast/episodes/neel-nanda-mechanistic-interpretability/) |
 | Interview: MLST — Sparse Autoencoders | 65 | [Listen](https://open.spotify.com/episode/5XjHhNQxIb16eJZXGmbaCk) |
 
 ---
@@ -283,14 +284,14 @@
 
 **Channel:** [youtube.com/@Aleph0](https://www.youtube.com/@Aleph0)
 
-*Beautifully produced short videos on topology, algebra, and advanced math. Perfect for the Phase 5 enrichment lessons.*
+*Beautifully produced short videos on topology, algebra, and advanced math. Supplementary resource for Phase 5 algebra and geometry lessons.*
 
 | Title | Lesson | Link |
 |-------|--------|------|
-| What is a Topological Space? | 73 | [Watch](https://www.youtube.com/watch?v=62WEiGlMOoA) |
-| Group Theory, Pair of Pants | 70 | [Watch](https://www.youtube.com/watch?v=IK3VcATCkuY) |
-| The Fundamental Theorem of Algebra | 74 | [Watch](https://www.youtube.com/watch?v=shEk8sz1oOw) |
-| What is Algebraic Geometry? | 76 | [Watch](https://www.youtube.com/watch?v=UyI2LNAnxFU) |
+| Group Theory, Pair of Pants | 80 | [Watch](https://www.youtube.com/watch?v=IK3VcATCkuY) |
+| What is a Topological Space? | 85 | [Watch](https://www.youtube.com/watch?v=62WEiGlMOoA) |
+| The Fundamental Theorem of Algebra | 87 | [Watch](https://www.youtube.com/watch?v=shEk8sz1oOw) |
+| What is Algebraic Geometry? | 89 | [Watch](https://www.youtube.com/watch?v=UyI2LNAnxFU) |
 
 ---
 
@@ -298,11 +299,11 @@
 
 **Channel:** [youtube.com/@Socratica](https://www.youtube.com/@Socratica)
 
-*Short (~10 min), clear introductions to abstract algebra concepts. Good on-ramp for Phase 5.*
+*Short (~10 min), clear introductions to abstract algebra concepts. Supplementary resource for Phase 5 algebra block.*
 
 | Playlist | Lesson | Link |
 |----------|--------|------|
-| Abstract Algebra (Groups, Rings, Fields) | 70–72 | [Playlist](https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6) |
+| Abstract Algebra (Groups, Rings, Fields) | 80–84 | [Playlist](https://www.youtube.com/playlist?list=PLi01XoE8jYoi3SgnnGorR_XOW3IcK-TP6) |
 
 ---
 
@@ -310,12 +311,49 @@
 
 **Channel:** [youtube.com/@eigenchris](https://www.youtube.com/@eigenchris)
 
-*The best visual introduction to tensors, manifolds, and differential geometry for engineers/physicists.*
+*The best visual introduction to tensors, manifolds, and differential geometry for engineers/physicists. Supplementary resource for differential geometry block.*
 
 | Playlist | Lesson | Link |
 |----------|--------|------|
-| Tensors for Beginners | 75 | [Playlist](https://www.youtube.com/playlist?list=PLJHszsWbB6hrkmmq57lX8BV-o-YIOFsiG) |
-| Tensor Calculus | 75, 79 | [Playlist](https://www.youtube.com/playlist?list=PLJHszsWbB6hpk5h8lSfBkVrpjsqvUGTCx) |
+| Tensors for Beginners | 86 | [Playlist](https://www.youtube.com/playlist?list=PLJHszsWbB6hrkmmq57lX8BV-o-YIOFsiG) |
+| Tensor Calculus | 86, 88 | [Playlist](https://www.youtube.com/playlist?list=PLJHszsWbB6hpk5h8lSfBkVrpjsqvUGTCx) |
+
+---
+
+## Neso Academy — Theory of Computation
+
+**Channel:** [youtube.com/@nesoacademy](https://www.youtube.com/@nesoacademy)
+
+*Comprehensive, example-driven lectures on automata, formal languages, Turing machines, and computational complexity. Primary resource for the Theory of Computation block.*
+
+| Playlist | Lesson | Link |
+|----------|--------|------|
+| Theory of Computation (full course) | 72–76 | [Playlist](https://www.youtube.com/playlist?list=PLBlnK6fEyqRgp46KUv4ZY69yXmpwKOIev) |
+
+---
+
+## Matthew Macauley — Visual Group Theory
+
+**Channel:** [youtube.com/@MatthewMacauley](https://www.youtube.com/@MatthewMacauley)
+**Book:** Macauley, *Visual Group Theory* (MAA, 2009)
+
+*Highly visual, example-driven approach to abstract algebra. Primary resource for the algebra block covering groups, cosets, homomorphisms, rings, fields, and group actions.*
+
+| Playlist | Lesson | Link |
+|----------|--------|------|
+| Visual Group Theory (full course) | 80–84 | [Playlist](https://www.youtube.com/playlist?list=PLwV-9DG53NDxU337smpTwm6sef4x-SCLv) |
+
+---
+
+## What is Math — Differential Geometry
+
+**Channel:** [youtube.com/@whatismath3187](https://www.youtube.com/@whatismath3187)
+
+*Clear, visual introductions to curves, surfaces, manifolds, tangent spaces, differential forms, and algebraic geometry. Primary resource for the differential geometry block.*
+
+| Playlist | Lesson | Link |
+|----------|--------|------|
+| Differential Geometry (full series) | 85–89 | [Channel](https://www.youtube.com/@whatismath3187) |
 
 ---
 
@@ -327,13 +365,13 @@
 
 | Title | Lesson | Link |
 |-------|--------|------|
-| AI safety overview and failure modes | 80–84 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| The OTHER AI Alignment Problem: Mesa-Optimizers and Inner Alignment | 83 | [Watch](https://www.youtube.com/watch?v=bJLcIBixGj8) |
+| AI safety overview and failure modes | 95–99 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| The OTHER AI Alignment Problem: Mesa-Optimizers and Inner Alignment | 98 | [Watch](https://www.youtube.com/watch?v=bJLcIBixGj8) |
 | Reward hacking and specification gaming | 63 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| Newcomb's Problem & Decision Theory | 81 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| The Simulation Argument | 82 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| Löb's Theorem and AI Alignment | 78 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
-| AIXI (AI Safety series) | 69 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| Newcomb's Problem & Decision Theory | 96 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| The Simulation Argument | 97 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| Lob's Theorem and AI Alignment | 79 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
+| AIXI (AI Safety series) | 75 | [Channel](https://www.youtube.com/c/RobertMilesAI) |
 
 ---
 
@@ -370,30 +408,30 @@
 
 | Creator | Title | Lesson | Link |
 |---------|-------|--------|------|
-| Computerphile | Halting Problem (with Tom Scott) | 67 | [Search](https://www.youtube.com/results?search_query=computerphile+halting+problem) |
-| Computerphile | Kolmogorov Complexity | 69 | [Search](https://www.youtube.com/results?search_query=computerphile+kolmogorov+complexity) |
-| Veritasium | Math Has a Fatal Flaw (Gödel's theorems) | 78 | [Search](https://www.youtube.com/results?search_query=veritasium+math+has+a+fatal+flaw) |
+| Computerphile | Halting Problem (with Tom Scott) | 74 | [Search](https://www.youtube.com/results?search_query=computerphile+halting+problem) |
+| Computerphile | Kolmogorov Complexity | 75 | [Search](https://www.youtube.com/results?search_query=computerphile+kolmogorov+complexity) |
+| Veritasium | Math Has a Fatal Flaw (Godel's theorems) | 79 | [Search](https://www.youtube.com/results?search_query=veritasium+math+has+a+fatal+flaw) |
 | Veritasium | Is Most Published Research Wrong? | 42 | [Search](https://www.youtube.com/results?search_query=veritasium+is+most+published+research+wrong) |
 | MinutePhysics | Simpson's Paradox | 42 | [Search](https://www.youtube.com/results?search_query=minutephysics+simpsons+paradox) |
 | Brady Neal | Introduction to Causal Inference (course) | 47 | [Search](https://www.youtube.com/results?search_query=brady+neal+causal+inference+introduction) |
 | Judea Pearl | The New Science of Cause and Effect (talks) | 47 | [Search](https://www.youtube.com/results?search_query=judea+pearl+causality+lecture) |
 | Yannic Kilcher | Neural Ordinary Differential Equations (paper review) | 36 | [Search](https://www.youtube.com/results?search_query=yannic+kilcher+neural+ODE) |
-| Rational Animations | Decision Theory playlist | 81 | [Channel](https://www.youtube.com/@RationalAnimations) |
-| Julia Galef | An Introduction to Anthropic Reasoning | 82 | [Search](https://www.youtube.com/results?search_query=julia+galef+anthropic+reasoning) |
-| Numberphile | Sleeping Beauty Paradox | 82 | [Search](https://www.youtube.com/results?search_query=numberphile+sleeping+beauty) |
-| Scott Aaronson | P vs NP public lectures | 68 | [Search](https://www.youtube.com/results?search_query=scott+aaronson+p+vs+np+lecture) |
+| Rational Animations | Decision Theory playlist | 96 | [Channel](https://www.youtube.com/@RationalAnimations) |
+| Julia Galef | An Introduction to Anthropic Reasoning | 97 | [Search](https://www.youtube.com/results?search_query=julia+galef+anthropic+reasoning) |
+| Numberphile | Sleeping Beauty Paradox | 97 | [Search](https://www.youtube.com/results?search_query=numberphile+sleeping+beauty) |
+| Scott Aaronson | P vs NP public lectures | 76 | [Search](https://www.youtube.com/results?search_query=scott+aaronson+p+vs+np+lecture) |
 | MIT OCW / Strogatz | Nonlinear Dynamics and Chaos | 36 | [Search](https://www.youtube.com/results?search_query=strogatz+nonlinear+dynamics+chaos+lecture) |
 | Mutual Information | Variational Autoencoders | 45 | [Search](https://www.youtube.com/results?search_query=mutual+information+variational+autoencoders) |
 | Mutual Information | Reinforcement Learning | 63 | [Search](https://www.youtube.com/results?search_query=mutual+information+reinforcement+learning) |
-| Michael Penn | Abstract Algebra lectures | 71 | [Channel](https://www.youtube.com/@MichaelPennMath) |
-| Liam Carroll / Daniel Murfet | Singular Learning Theory introductions | 66, 76 | [Search](https://www.youtube.com/results?search_query=singular+learning+theory+introduction) |
+| Michael Penn | Abstract Algebra lectures | 80–84 | [Channel](https://www.youtube.com/@MichaelPennMath) |
+| Liam Carroll / Daniel Murfet | Singular Learning Theory introductions | 66, 89 | [Search](https://www.youtube.com/results?search_query=singular+learning+theory+introduction) |
 | David Silver | Introduction to Reinforcement Learning (Lecture 1) | 63 | [Watch](https://www.youtube.com/watch?v=2pWv7GOvuf0) |
 | MIT OCW (Rigollet) | Concentration Inequalities lecture | 49 | [Search](https://www.youtube.com/results?search_query=rigollet+concentration+inequalities+lecture) |
 | Mathematicalmonk | PAC Learning lectures (ML playlist) | 52 | [Search](https://www.youtube.com/results?search_query=mathematicalmonk+PAC+learning) |
 | Robert Sapolsky | Stanford Human Behavioral Biology (heritability) | 48 | [Search](https://www.youtube.com/results?search_query=robert+sapolsky+behavioral+genetics+lecture) |
 | McElreath | Statistical Rethinking — Model Comparison lectures | 46 | [Search](https://www.youtube.com/results?search_query=mcelreath+statistical+rethinking+model+comparison) |
-| Yale (Ben Polak) | Game Theory (full course) | 80 | [Playlist](https://www.youtube.com/playlist?list=PL6EF60E1027E1A10B) |
-| Primer | Game Theory simulations | 80 | [Channel](https://www.youtube.com/c/PrimerLearning) |
+| Yale (Ben Polak) | Game Theory (full course) | 95 | [Playlist](https://www.youtube.com/playlist?list=PL6EF60E1027E1A10B) |
+| Primer | Game Theory simulations | 95 | [Channel](https://www.youtube.com/c/PrimerLearning) |
 
 ---
 
@@ -480,21 +518,36 @@
 | 64 | LLM Training Pipeline | Karpathy (Deep Dive + Tokenizer) |
 | 65 | Interp — Circuits & Superposition | Neel Nanda (Transformer Circuits, SAEs, interviews) |
 | 66 | Interp — Singular Learning Theory | Neel Nanda/Hoogland (SLT), Liam Carroll / Daniel Murfet |
-| 67 | Turing Machines | Computerphile (Halting Problem) |
-| 68 | Computational Complexity | Scott Aaronson, MIT OCW |
-| 69 | Kolmogorov Complexity | Computerphile, Robert Miles (AIXI) |
-| 70 | Groups | Aleph 0, Socratica |
-| 71 | Rings & Fields | Socratica, Michael Penn |
-| 72 | Group Actions | Socratica |
-| 73 | Point-Set Topology | Aleph 0 |
-| 74 | Homotopy | Aleph 0 |
-| 75 | Manifolds | Eigenchris |
-| 76 | Algebraic Geometry | Aleph 0, Murfet/Hoogland (SLT) |
-| 77 | Propositional Logic | Trefor Bazett (Discrete Math) |
-| 78 | Gödel & Löb | Veritasium, Robert Miles |
-| 79 | Differential Forms | Eigenchris (Tensor Calculus), Michael Penn |
-| 80 | Game Theory | Yale Game Theory (Ben Polak), Primer |
-| 81 | Decision Theory | Robert Miles (Newcomb's), Rational Animations |
-| 82 | Anthropics | Julia Galef, Robert Miles, Numberphile |
-| 83 | Alignment Problem | Welch Labs (Bitter Lesson + Subliminal), Robert Miles |
-| 84 | Open Problems | Neel Nanda, Robert Miles, AXRP |
+| 67 | Logic/Propositions | Trefor Bazett (Discrete Math) |
+| 68 | Sets/Functions | Trefor Bazett (Discrete Math) |
+| 69 | Combinatorics | Trefor Bazett (Discrete Math) |
+| 70 | Graph Theory | Trefor Bazett (Discrete Math) |
+| 71 | Recurrences/Generating Functions | Trefor Bazett (Discrete Math) |
+| 72 | Finite Automata | Neso Academy (Theory of Computation) |
+| 73 | CFGs/PDAs | Neso Academy (Theory of Computation) |
+| 74 | Turing Machines | Neso Academy, Computerphile (Halting Problem) |
+| 75 | Kolmogorov Complexity | Neso Academy, Computerphile, Robert Miles (AIXI) |
+| 76 | Computational Complexity | Neso Academy, Scott Aaronson |
+| 77 | Propositional/Predicate Logic | Trefor Bazett (Logic) |
+| 78 | Proof Systems | Trefor Bazett (Logic) |
+| 79 | Godel's Incompleteness | Veritasium, Robert Miles |
+| 80 | Groups | Matthew Macauley (Visual Group Theory), Aleph 0, Socratica |
+| 81 | Cosets/Lagrange | Matthew Macauley, Socratica |
+| 82 | Homomorphisms | Matthew Macauley, Socratica |
+| 83 | Rings/Fields | Matthew Macauley, Michael Penn |
+| 84 | Group Actions | Matthew Macauley, Socratica |
+| 85 | Curves/Surfaces | What is Math (Differential Geometry), Aleph 0 |
+| 86 | Tangent Spaces | What is Math, Eigenchris |
+| 87 | Manifolds | What is Math, Aleph 0 |
+| 88 | Differential Forms | What is Math, Eigenchris (Tensor Calculus) |
+| 89 | Algebraic Geometry/SLT | What is Math, Aleph 0, Murfet/Hoogland |
+| 90 | Analysis of Algorithms | Curated individual videos |
+| 91 | Randomized Algorithms | Curated individual videos |
+| 92 | Combinatorial Algorithms | Curated individual videos |
+| 93 | Advanced Graph Algorithms | Curated individual videos |
+| 94 | Lower Bounds/Amortized Analysis | Curated individual videos |
+| 95 | Game Theory | Yale Game Theory (Ben Polak), Primer |
+| 96 | Decision Theory | Robert Miles (Newcomb's), Rational Animations |
+| 97 | Anthropics | Julia Galef, Robert Miles, Numberphile |
+| 98 | Alignment Problem | Welch Labs (Bitter Lesson + Subliminal), Robert Miles |
+| 99 | Open Problems | Neel Nanda, Robert Miles, AXRP |

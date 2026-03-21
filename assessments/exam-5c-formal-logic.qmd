@@ -1,0 +1,160 @@
+---
+title: "Exam 5C: Formal Logic"
+subtitle: "Lessons 77--79 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & 60 minutes \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator. \\
+\textbf{Format} & 10 questions. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers propositional and predicate logic, proof systems, and Godel's incompleteness theorems. Partial credit is available for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Propositional Logic and Normal Forms
+
+**(a)** Convert the formula $\lnot(P \to Q) \lor (R \land \lnot P)$ to Conjunctive Normal Form (CNF). Show each step.
+
+**(b)** (Multiple Choice) A formula is satisfiable if and only if:
+
+- (A) It is true under every valuation
+- (B) Its negation is a tautology
+- (C) There exists at least one valuation making it true
+- (D) It is logically equivalent to its CNF
+
+**(c)** Given the CNF formula $(P \lor Q) \land (\lnot P \lor R) \land (\lnot Q \lor \lnot R)$, find a satisfying assignment or prove none exists.
+
+---
+
+## Q2 (10 pts) --- SAT Solving and Resolution
+
+**(a)** Explain the resolution rule for propositional logic: given clauses $(A \lor P)$ and $(B \lor \lnot P)$, what clause is derived?
+
+**(b)** Use resolution to show that the following set of clauses is unsatisfiable:
+$$\{P \lor Q\}, \quad \{\lnot P \lor Q\}, \quad \{P \lor \lnot Q\}, \quad \{\lnot P \lor \lnot Q\}$$
+
+Show each resolution step and the derivation of the empty clause.
+
+**(c)** Explain the role of unit propagation in the DPLL algorithm. Why does it dramatically improve performance over naive search?
+
+---
+
+## Q3 (10 pts) --- First-Order Logic: Structures and Satisfaction
+
+Consider the first-order language with a binary relation symbol $R$ and a constant symbol $c$.
+
+**(a)** Define a structure $\mathcal{A}$ with domain $\{1, 2, 3\}$ that satisfies the sentence $\forall x \exists y\, R(x, y)$ but does not satisfy $\exists x \forall y\, R(x, y)$.
+
+**(b)** Are the sentences $\forall x \exists y\, R(x, y)$ and $\exists y \forall x\, R(x, y)$ logically equivalent? Prove your answer with either a proof of equivalence or a counterexample structure.
+
+**(c)** (Multiple Choice) In first-order logic, which of the following is true?
+
+- (A) $\exists x \forall y\, \phi(x,y)$ logically implies $\forall y \exists x\, \phi(x,y)$
+- (B) $\forall y \exists x\, \phi(x,y)$ logically implies $\exists x \forall y\, \phi(x,y)$
+- (C) The two sentences are logically equivalent
+- (D) Neither implies the other
+
+---
+
+## Q4 (10 pts) --- Natural Deduction Proofs
+
+Using the rules of natural deduction (introduction and elimination rules for $\land$, $\lor$, $\to$, $\lnot$, $\forall$, $\exists$):
+
+**(a)** Derive $Q$ from the premises $P \to Q$ and $\lnot Q \to \lnot P$ and $P$. Show each step with the rule applied.
+
+**(b)** Derive $P \to (Q \to P)$ with no premises (it is a tautology). Hint: use nested conditional introduction.
+
+**(c)** Why can we not, in general, derive $P$ from $\lnot \lnot P$ in intuitionistic logic? What additional axiom or rule is needed?
+
+---
+
+## Q5 (10 pts) --- Soundness and Completeness
+
+**(a)** State the Soundness Theorem for first-order logic. What goes wrong if a proof system is not sound?
+
+**(b)** State Godel's Completeness Theorem for first-order logic. Explain why completeness is a desirable property of a proof system.
+
+**(c)** A common confusion: explain the difference between the Completeness Theorem and the Incompleteness Theorem. How can first-order logic be "complete" while arithmetic is "incomplete"?
+
+---
+
+## Q6 (10 pts) --- The Compactness Theorem
+
+**(a)** State the Compactness Theorem for first-order logic.
+
+**(b)** Use compactness to prove that if a first-order theory $T$ has arbitrarily large finite models, then $T$ has an infinite model. (Hint: add sentences $\exists x_1 \exists x_2 \ldots$ asserting "there are at least $n$ elements" for each $n$.)
+
+**(c)** (Multiple Choice) Which of the following is a consequence of compactness?
+
+- (A) "Being a finite set" is expressible in first-order logic
+- (B) "Being well-ordered" is expressible in first-order logic
+- (C) The set of natural numbers cannot be characterized up to isomorphism by a first-order theory
+- (D) Every first-order theory has a finite model
+
+---
+
+## Q7 (10 pts) --- Godel Numbering and the Diagonal Lemma
+
+**(a)** Explain the purpose of Godel numbering. Why is it necessary to encode formulas as numbers when proving the incompleteness theorems?
+
+**(b)** State the Diagonal Lemma (Fixed-Point Lemma): for any formula $\phi(x)$ with one free variable in a sufficiently strong theory $T$, there exists a sentence $G$ such that...
+
+**(c)** Using the Diagonal Lemma, construct the Godel sentence for a theory $T$. Explain in plain language what the Godel sentence asserts.
+
+---
+
+## Q8 (10 pts) --- Godel's First Incompleteness Theorem
+
+**(a)** State Godel's First Incompleteness Theorem precisely, including all hypotheses on the formal system.
+
+**(b)** Prove that the Godel sentence $G$ is true (in the standard model $\mathbb{N}$) but unprovable in $T$. Your proof should address both directions: why $G$ is not provable, and why $\lnot G$ is not provable (assuming consistency).
+
+**(c)** A student claims: "Godel's theorem means mathematics is unreliable because there are true things we can never prove." Identify what is correct and what is misleading in this claim.
+
+---
+
+## Q9 (10 pts) --- Godel's Second Incompleteness Theorem and Lob's Theorem
+
+**(a)** State Godel's Second Incompleteness Theorem. What sentence is it that the system cannot prove?
+
+**(b)** State Lob's Theorem. How does it strengthen or relate to the Second Incompleteness Theorem?
+
+**(c)** (Multiple Choice) Godel's Second Incompleteness Theorem implies:
+
+- (A) No formal system can be consistent
+- (B) A consistent sufficiently strong system cannot prove its own consistency
+- (C) Arithmetic has no models
+- (D) First-order logic is not complete
+
+---
+
+## Q10 (10 pts) --- Synthesis: Formal Logic and AI Alignment
+
+Write a short essay (8--12 sentences) addressing:
+
+Godel's incompleteness theorems and the limitations of formal verification have direct implications for AI safety. Discuss: (1) Why an AI system cannot prove its own safety from within its own formal framework (connect to the Second Incompleteness Theorem). (2) How formal verification tools (Coq, Lean, Isabelle) can still be useful for alignment despite these theoretical limits. (3) The tension between wanting provable safety guarantees and the fundamental impossibility of complete self-verification.

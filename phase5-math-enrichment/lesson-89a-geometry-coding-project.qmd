@@ -1,0 +1,824 @@
+---
+title: "Coding Project: Geometry for Alignment"
+subtitle: "Manifold Visualization and Singularity Resolution for SLT"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+---
+
+# Coding Project: Geometry for Alignment
+
+This project bridges the differential geometry and algebraic geometry lessons (85--89) with computational practice. You will visualize surfaces and their curvature, implement parallel transport on manifolds, and perform singularity resolution relevant to Singular Learning Theory.
+
+**Prerequisites:** Python with NumPy, SciPy, Matplotlib. Optional: SymPy for symbolic computation, Plotly for interactive 3D plots.
+
+**Estimated time:** 10--15 hours
+
+---
+
+## Part A: Surface Visualization and Gaussian Curvature
+
+### A.1: Parametric Surface Plotting
+
+Write a function `plot_surface(X, u_range, v_range)` that takes a parametric surface function X(u, v) -> (x, y, z) and plots it using Matplotlib's `plot_surface`.
+
+**Task:** Plot the following surfaces:
+
+1. **Sphere:** X(u, v) = (sin(v)*cos(u), sin(v)*sin(u), cos(v)) for u in [0, 2*pi], v in [0, pi]
+2. **Torus:** X(u, v) = ((2 + cos(v))*cos(u), (2 + cos(v))*sin(u), sin(v)) for u, v in [0, 2*pi]
+3. **Monkey saddle:** X(u, v) = (u, v, u^3 - 3*u*v^2) for u, v in [-1, 1]
+4. **Enneper surface:** X(u, v) = (u - u^3/3 + u*v^2, v - v^3/3 + v*u^2, u^2 - v^2) for u, v in [-1.5, 1.5]
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+def plot_parametric_surface(X_func, u_range, v_range, N=100, title="Surface"):
+    """
+    Plot a parametric surface X(u, v) -> (x, y, z).
+
+    Parameters
+    ----------
+    X_func : callable
+        Function taking (u, v) arrays and returning (x, y, z) arrays.
+    u_range : tuple
+        (u_min, u_max) for the u parameter.
+    v_range : tuple
+        (v_min, v_max) for the v parameter.
+    N : int
+        Grid resolution.
+    title : str
+        Plot title.
+    """
+    u = np.linspace(u_range[0], u_range[1], N)
+    v = np.linspace(v_range[0], v_range[1], N)
+    U, V = np.meshgrid(u, v)
+    X, Y, Z = X_func(U, V)
+
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8,
+                    rstride=2, cstride=2, edgecolor='none')
+    ax.set_title(title)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    plt.tight_layout()
+    plt.show()
+
+# Example: Sphere
+def sphere(u, v):
+    return (np.sin(v)*np.cos(u), np.sin(v)*np.sin(u), np.cos(v))
+
+plot_parametric_surface(sphere, (0, 2*np.pi), (0, np.pi), title="Sphere")
+```
+
+### A.2: Computing Gaussian Curvature Numerically
+
+Implement numerical computation of Gaussian curvature for a parametric surface X(u, v).
+
+**Algorithm:**
+
+1. Compute partial derivatives X_u, X_v numerically (finite differences or automatic differentiation)
+2. Compute the first fundamental form coefficients: E = X_u . X_u, F = X_u . X_v, G = X_v . X_v
+3. Compute the unit normal: N = (X_u cross X_v) / ||X_u cross X_v||
+4. Compute second derivatives X_uu, X_uv, X_vv
+5. Compute second fundamental form coefficients: e = X_uu . N, f = X_uv . N, g = X_vv . N
+6. Compute K = (e*g - f^2) / (E*G - F^2)
+
+```python
+def compute_gaussian_curvature(X_func, u_range, v_range, N=100, eps=1e-5):
+    """
+    Compute Gaussian curvature K(u, v) for a parametric surface.
+
+    Uses finite differences for partial derivatives.
+
+    Returns
+    -------
+    U, V : ndarray
+        Parameter grid.
+    K : ndarray
+        Gaussian curvature at each grid point.
+    """
+    u = np.linspace(u_range[0], u_range[1], N)
+    v = np.linspace(v_range[0], v_range[1], N)
+    U, V = np.meshgrid(u, v)
+
+    # Evaluate surface at grid and shifted points
+    X0 = np.array(X_func(U, V))                 # shape (3, N, N)
+    Xu_plus = np.array(X_func(U + eps, V))
+    Xu_minus = np.array(X_func(U - eps, V))
+    Xv_plus = np.array(X_func(U, V + eps))
+    Xv_minus = np.array(X_func(U, V - eps))
+
+    # First derivatives (central differences)
+    X_u = (Xu_plus - Xu_minus) / (2 * eps)       # shape (3, N, N)
+    X_v = (Xv_plus - Xv_minus) / (2 * eps)
+
+    # Second derivatives
+    X_uu = (Xu_plus - 2*X0 + Xu_minus) / (eps**2)
+    X_vv = (Xv_plus - 2*X0 + Xv_minus) / (eps**2)
+
+    Xuv_pp = np.array(X_func(U + eps, V + eps))
+    Xuv_pm = np.array(X_func(U + eps, V - eps))
+    Xuv_mp = np.array(X_func(U - eps, V + eps))
+    Xuv_mm = np.array(X_func(U - eps, V - eps))
+    X_uv = (Xuv_pp - Xuv_pm - Xuv_mp + Xuv_mm) / (4 * eps**2)
+
+    # First fundamental form
+    E = np.sum(X_u * X_u, axis=0)
+    F = np.sum(X_u * X_v, axis=0)
+    G = np.sum(X_v * X_v, axis=0)
+
+    # Unit normal
+    normal = np.cross(X_u, X_v, axis=0)
+    normal_norm = np.sqrt(np.sum(normal**2, axis=0))
+    normal_norm = np.maximum(normal_norm, 1e-12)  # avoid division by zero
+    N_hat = normal / normal_norm
+
+    # Second fundamental form
+    e_coeff = np.sum(X_uu * N_hat, axis=0)
+    f_coeff = np.sum(X_uv * N_hat, axis=0)
+    g_coeff = np.sum(X_vv * N_hat, axis=0)
+
+    # Gaussian curvature
+    K = (e_coeff * g_coeff - f_coeff**2) / (E * G - F**2 + 1e-12)
+
+    return U, V, K
+```
+
+### A.3: Curvature Heatmaps
+
+**Task:** For each surface in A.1, compute and visualize the Gaussian curvature as a color-coded heatmap on the surface.
+
+```python
+def plot_curvature_heatmap(X_func, u_range, v_range, N=100, title="Gaussian Curvature",
+                           clamp=None):
+    """
+    Plot a surface colored by its Gaussian curvature.
+
+    Parameters
+    ----------
+    clamp : float or None
+        If given, clamp K to [-clamp, clamp] for visualization.
+    """
+    u = np.linspace(u_range[0], u_range[1], N)
+    v = np.linspace(v_range[0], v_range[1], N)
+    U, V = np.meshgrid(u, v)
+    X, Y, Z = X_func(U, V)
+
+    _, _, K = compute_gaussian_curvature(X_func, u_range, v_range, N)
+
+    if clamp is not None:
+        K = np.clip(K, -clamp, clamp)
+
+    fig = plt.figure(figsize=(12, 9))
+    ax = fig.add_subplot(111, projection='3d')
+    norm = plt.Normalize(vmin=K.min(), vmax=K.max())
+    colors = plt.cm.RdBu_r(norm(K))
+
+    ax.plot_surface(X, Y, Z, facecolors=colors, rstride=1, cstride=1,
+                    shade=False, alpha=0.9)
+    ax.set_title(title)
+
+    mappable = plt.cm.ScalarMappable(cmap='RdBu_r', norm=norm)
+    mappable.set_array(K)
+    fig.colorbar(mappable, ax=ax, shrink=0.5, label='K (Gaussian curvature)')
+
+    plt.tight_layout()
+    plt.show()
+```
+
+**Expected results:**
+- Sphere: K = 1 everywhere (constant positive curvature)
+- Torus: K > 0 on the outer rim, K < 0 on the inner rim, K = 0 on the top and bottom circles
+- Monkey saddle: K < 0 near the origin (three saddle directions)
+- Enneper surface: interesting curvature pattern -- verify it is a minimal surface (H = 0)
+
+### A.4: Geodesics on Simple Surfaces
+
+Compute geodesics by solving the geodesic equations numerically.
+
+**Task:** On the sphere and torus, compute geodesics starting from various initial conditions.
+
+```python
+from scipy.integrate import solve_ivp
+
+def geodesic_solver_sphere(u0, v0, du0, dv0, t_span=(0, 10), n_points=1000):
+    """
+    Solve geodesic equations on the unit sphere.
+
+    Metric: ds^2 = d(theta)^2 + sin^2(theta) * d(phi)^2
+    where theta = v (polar angle), phi = u (azimuthal angle).
+
+    Christoffel symbols:
+        Gamma^theta_{phi,phi} = -sin(theta)*cos(theta)
+        Gamma^phi_{theta,phi} = Gamma^phi_{phi,theta} = cos(theta)/sin(theta)
+        All others = 0.
+
+    Geodesic equations:
+        theta'' = sin(theta)*cos(theta) * (phi')^2
+        phi'' = -2 * cos(theta)/sin(theta) * theta' * phi'
+    """
+    def equations(t, y):
+        theta, phi, dtheta, dphi = y
+        sin_th = np.sin(theta)
+        cos_th = np.cos(theta)
+        # Avoid division by zero at poles
+        cot_th = cos_th / (sin_th + 1e-12)
+
+        ddtheta = sin_th * cos_th * dphi**2
+        ddphi = -2 * cot_th * dtheta * dphi
+        return [dtheta, dphi, ddtheta, ddphi]
+
+    t_eval = np.linspace(t_span[0], t_span[1], n_points)
+    sol = solve_ivp(equations, t_span, [v0, u0, dv0, du0],
+                    t_eval=t_eval, method='RK45', rtol=1e-10, atol=1e-12)
+
+    theta = sol.y[0]
+    phi = sol.y[1]
+
+    # Convert to Cartesian for plotting
+    x = np.sin(theta) * np.cos(phi)
+    y = np.sin(theta) * np.sin(phi)
+    z = np.cos(theta)
+
+    return x, y, z, sol.t
+
+# Example: geodesic starting at (theta, phi) = (pi/4, 0) heading in the phi direction
+x, y, z, t = geodesic_solver_sphere(
+    u0=0, v0=np.pi/4, du0=1.0, dv0=0.3, t_span=(0, 2*np.pi)
+)
+
+# Plot geodesic on sphere
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot sphere wireframe
+u_s = np.linspace(0, 2*np.pi, 50)
+v_s = np.linspace(0, np.pi, 50)
+U_s, V_s = np.meshgrid(u_s, v_s)
+ax.plot_surface(np.sin(V_s)*np.cos(U_s), np.sin(V_s)*np.sin(U_s), np.cos(V_s),
+                alpha=0.2, color='lightblue')
+
+# Plot geodesic
+ax.plot(x, y, z, 'r-', linewidth=2, label='Geodesic')
+ax.set_title('Geodesic on the Sphere')
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+**Verify:** Geodesics on the sphere are great circles. Start with various initial velocities and confirm that all resulting curves lie on great circles.
+
+---
+
+## Part B: Manifold Exploration -- Parallel Transport and Holonomy
+
+### B.1: Parallel Transport on the Sphere
+
+Implement parallel transport of a tangent vector along a curve on S^2.
+
+The parallel transport equations on the sphere are:
+
+dV^theta/dt + Gamma^theta_{ij} * (dx^i/dt) * V^j = 0
+dV^phi/dt + Gamma^phi_{ij} * (dx^i/dt) * V^j = 0
+
+```python
+def parallel_transport_sphere(curve_theta, curve_phi, V0_theta, V0_phi,
+                               t_span, n_points=1000):
+    """
+    Parallel transport a vector (V0_theta, V0_phi) along a curve on S^2.
+
+    Parameters
+    ----------
+    curve_theta : callable
+        theta(t) -- polar angle as function of parameter t.
+    curve_phi : callable
+        phi(t) -- azimuthal angle as function of parameter t.
+    V0_theta, V0_phi : float
+        Initial tangent vector components.
+
+    Returns
+    -------
+    V_theta, V_phi : ndarray
+        Components of the parallel-transported vector at each time step.
+    """
+    # Numerical derivatives of the curve
+    eps = 1e-7
+
+    def equations(t, y):
+        V_th, V_ph = y
+        theta = curve_theta(t)
+        sin_th = np.sin(theta)
+        cos_th = np.cos(theta)
+
+        dtheta_dt = (curve_theta(t + eps) - curve_theta(t - eps)) / (2 * eps)
+        dphi_dt = (curve_phi(t + eps) - curve_phi(t - eps)) / (2 * eps)
+
+        # Parallel transport equations:
+        # dV^theta/dt = sin(theta)*cos(theta) * dphi/dt * V^phi
+        #             (only non-zero Christoffel: Gamma^theta_{phi,phi} = -sin*cos)
+        #             => dV^theta/dt = -Gamma^theta_{phi,phi} * dphi/dt * V^phi
+        #                ... but parallel transport eq has NEGATIVE Christoffel terms
+        # dV^theta/dt = sin(theta)*cos(theta) * dphi/dt * V^phi
+        # dV^phi/dt = -cos(theta)/sin(theta) * (dtheta/dt * V^phi + dphi/dt * V^theta)
+
+        cot_th = cos_th / (sin_th + 1e-12)
+
+        dV_th = sin_th * cos_th * dphi_dt * V_ph
+        dV_ph = -cot_th * (dtheta_dt * V_ph + dphi_dt * V_th)
+
+        return [dV_th, dV_ph]
+
+    t_eval = np.linspace(t_span[0], t_span[1], n_points)
+    sol = solve_ivp(equations, t_span, [V0_theta, V0_phi],
+                    t_eval=t_eval, method='RK45', rtol=1e-10, atol=1e-12)
+
+    return sol.y[0], sol.y[1], t_eval
+```
+
+### B.2: Holonomy Visualization
+
+**Task:** Demonstrate holonomy by parallel-transporting a vector around a closed triangle on S^2.
+
+The triangle:
+- Vertex A: north pole (theta = 0)
+- Vertex B: (theta = pi/2, phi = 0) -- on the equator at the prime meridian
+- Vertex C: (theta = pi/2, phi = alpha) -- on the equator at longitude alpha
+
+The holonomy angle should equal the solid angle subtended by the triangle, which equals alpha (the spherical excess).
+
+```python
+def holonomy_demo(alpha=np.pi/2):
+    """
+    Parallel transport a vector around a spherical triangle and measure holonomy.
+
+    The triangle has vertices at:
+    - A: north pole
+    - B: equator, phi=0
+    - C: equator, phi=alpha
+
+    The expected holonomy angle is alpha.
+    """
+    n_pts = 500
+
+    # Leg 1: A -> B (along the meridian phi=0, theta goes from eps to pi/2)
+    # Use eps > 0 to avoid the pole singularity
+    eps_pole = 0.01
+    def leg1_theta(t): return eps_pole + t * (np.pi/2 - eps_pole)
+    def leg1_phi(t): return 0.0 * t
+
+    # Leg 2: B -> C (along the equator, phi goes from 0 to alpha)
+    def leg2_theta(t): return np.pi/2 + 0.0 * t
+    def leg2_phi(t): return t * alpha
+
+    # Leg 3: C -> A (along the meridian phi=alpha, theta goes from pi/2 to eps)
+    def leg3_theta(t): return np.pi/2 - t * (np.pi/2 - eps_pole)
+    def leg3_phi(t): return alpha + 0.0 * t
+
+    # Initial vector: pointing in the phi direction at the "near-pole"
+    V_theta, V_phi = 0.0, 1.0
+
+    # Transport along each leg
+    Vth1, Vph1, _ = parallel_transport_sphere(leg1_theta, leg1_phi, V_theta, V_phi, (0, 1), n_pts)
+    Vth2, Vph2, _ = parallel_transport_sphere(leg2_theta, leg2_phi, Vth1[-1], Vph1[-1], (0, 1), n_pts)
+    Vth3, Vph3, _ = parallel_transport_sphere(leg3_theta, leg3_phi, Vth2[-1], Vph2[-1], (0, 1), n_pts)
+
+    # Compare final vector to initial
+    V_final_theta = Vth3[-1]
+    V_final_phi = Vph3[-1]
+
+    # At the near-pole, the angle of the vector in the tangent plane
+    # is approximately atan2(V_theta, V_phi * sin(theta))
+    theta_final = eps_pole
+    angle_initial = np.arctan2(V_theta, V_phi * np.sin(eps_pole))
+    angle_final = np.arctan2(V_final_theta, V_final_phi * np.sin(theta_final))
+    holonomy_angle = angle_final - angle_initial
+
+    print(f"Spherical triangle with alpha = {alpha:.4f} radians ({np.degrees(alpha):.1f} degrees)")
+    print(f"Initial vector: (V_theta, V_phi) = ({V_theta:.4f}, {V_phi:.4f})")
+    print(f"Final vector:   (V_theta, V_phi) = ({V_final_theta:.4f}, {V_final_phi:.4f})")
+    print(f"Measured holonomy angle: {holonomy_angle:.4f} radians")
+    print(f"Expected holonomy angle (= alpha): {alpha:.4f} radians")
+    print(f"Error: {abs(holonomy_angle - alpha):.6f} radians")
+
+    return holonomy_angle
+
+# Run for several triangle sizes
+for alpha_deg in [30, 45, 60, 90, 120]:
+    holonomy_demo(np.radians(alpha_deg))
+    print("---")
+```
+
+### B.3: Visualizing Holonomy
+
+**Task:** Create a 3D plot showing:
+1. The sphere with the triangle drawn on it
+2. The tangent vector at several points along the transport path
+3. The initial and final vectors at the starting point, showing the rotation
+
+```python
+def visualize_holonomy(alpha=np.pi/2, n_arrows=15):
+    """
+    Create a 3D visualization of parallel transport around a spherical triangle.
+    Shows the transported vector as arrows at sampled points along the path.
+    """
+    fig = plt.figure(figsize=(12, 10))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Draw sphere
+    u_s = np.linspace(0, 2*np.pi, 40)
+    v_s = np.linspace(0, np.pi, 40)
+    U_s, V_s = np.meshgrid(u_s, v_s)
+    ax.plot_surface(np.sin(V_s)*np.cos(U_s), np.sin(V_s)*np.sin(U_s), np.cos(V_s),
+                    alpha=0.15, color='lightblue')
+
+    # Draw triangle edges as great circle arcs
+    # Edge A->B: theta from 0 to pi/2, phi = 0
+    t_ab = np.linspace(0.01, np.pi/2, 100)
+    ax.plot(np.sin(t_ab)*np.cos(0), np.sin(t_ab)*np.sin(0), np.cos(t_ab),
+            'k-', linewidth=2)
+
+    # Edge B->C: theta = pi/2, phi from 0 to alpha
+    t_bc = np.linspace(0, alpha, 100)
+    ax.plot(np.cos(t_bc), np.sin(t_bc), np.zeros_like(t_bc), 'k-', linewidth=2)
+
+    # Edge C->A: theta from pi/2 to 0, phi = alpha
+    t_ca = np.linspace(np.pi/2, 0.01, 100)
+    ax.plot(np.sin(t_ca)*np.cos(alpha), np.sin(t_ca)*np.sin(alpha), np.cos(t_ca),
+            'k-', linewidth=2)
+
+    ax.set_title(f'Parallel Transport and Holonomy (alpha = {np.degrees(alpha):.0f} deg)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    plt.tight_layout()
+    plt.show()
+
+visualize_holonomy(np.pi/2)
+```
+
+**Exploration tasks:**
+1. Run the holonomy computation for alpha = pi/6, pi/4, pi/3, pi/2, 2*pi/3 and plot the holonomy angle vs. alpha. Verify the linear relationship.
+2. The holonomy angle equals the area of the spherical triangle. Verify this by computing the area using the spherical excess formula: Area = alpha (for this particular triangle).
+3. Explain why holonomy = 0 on a flat surface and holonomy != 0 implies nonzero Gaussian curvature. This is the Ambrose-Singer theorem in action.
+
+---
+
+## Part C: Singularity Resolution for SLT
+
+### C.1: Visualizing Singularities
+
+**Task:** Plot the zero sets of several polynomials, highlighting singular points.
+
+```python
+def plot_variety_2d(f, x_range=(-2, 2), y_range=(-2, 2), N=500, title="Variety"):
+    """
+    Plot the zero set of f(x, y) = 0 using contour plots.
+    Highlight singular points where the gradient also vanishes.
+    """
+    x = np.linspace(x_range[0], x_range[1], N)
+    y = np.linspace(y_range[0], y_range[1], N)
+    X, Y = np.meshgrid(x, y)
+    Z = f(X, Y)
+
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.contour(X, Y, Z, levels=[0], colors='blue', linewidths=2)
+    ax.set_title(title)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_aspect('equal')
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+# Cusp: y^2 - x^3 = 0
+plot_variety_2d(lambda x, y: y**2 - x**3, title="Cusp: $y^2 = x^3$")
+
+# Node: y^2 - x^2(x+1) = 0
+plot_variety_2d(lambda x, y: y**2 - x**2*(x+1), title="Node: $y^2 = x^2(x+1)$")
+
+# Cross: x*y = 0
+plot_variety_2d(lambda x, y: x*y, title="Normal crossing: $xy = 0$")
+
+# Whitney umbrella cross-section: x^2 - y^2*z for fixed z values
+# (Plot x^2 = y^2 * z for z = -1, 0, 1)
+```
+
+### C.2: Implementing Blowup
+
+**Task:** Implement the blowup of R^2 at the origin and visualize how it resolves singularities.
+
+```python
+import sympy as sp
+
+def symbolic_blowup_chart1(f_expr, x, y):
+    """
+    Perform blowup in chart 1: y = t*x.
+
+    Substitutes y -> t*x in f(x, y) and factors out powers of x.
+
+    Parameters
+    ----------
+    f_expr : sympy expression
+        The polynomial f(x, y).
+    x, y : sympy symbols
+        The coordinate variables.
+
+    Returns
+    -------
+    strict_transform : sympy expression
+        f after removing the exceptional divisor factor.
+    exceptional_multiplicity : int
+        Power of x factored out.
+    """
+    t = sp.Symbol('t')
+    # Substitute y = t * x
+    blown_up = f_expr.subs(y, t * x)
+    blown_up = sp.expand(blown_up)
+
+    # Factor out powers of x
+    blown_up_poly = sp.Poly(blown_up, x)
+    # Find minimum power of x
+    min_power = min(blown_up_poly.as_dict().keys(), key=lambda k: k[0])[0]
+
+    strict_transform = sp.simplify(blown_up / x**min_power)
+    return strict_transform, min_power, t
+
+# Example: Cusp y^2 - x^3
+x, y = sp.symbols('x y')
+f_cusp = y**2 - x**3
+
+st, mult, t = symbolic_blowup_chart1(f_cusp, x, y)
+print(f"Original: {f_cusp}")
+print(f"After substitution y = t*x: {sp.expand(f_cusp.subs(y, t*x))}")
+print(f"Exceptional divisor multiplicity: {mult}")
+print(f"Strict transform: {st}")
+print(f"Is strict transform smooth at x=0? Check gradient...")
+st_dx = sp.diff(st, x)
+st_dt = sp.diff(st, t)
+print(f"  d(ST)/dx = {st_dx}")
+print(f"  d(ST)/dt = {st_dt}")
+print(f"  At x=0: gradient = ({st_dx.subs(x, 0)}, {st_dt.subs(x, 0)})")
+```
+
+**Tasks:**
+1. Blow up the cusp y^2 - x^3 = 0. Verify the strict transform t^2 - x = 0 is smooth.
+2. Blow up the node y^2 - x^2*(x+1) = 0. Verify the two branches are separated.
+3. Blow up y^2 - x^4 = 0. Show that one blowup is not enough (the strict transform is still singular). Perform a second blowup.
+4. Blow up x*y = 0 (normal crossing). Show this is already in "resolved" form.
+
+### C.3: Visualizing the Blowup
+
+**Task:** Create side-by-side plots showing a singular curve and its resolution.
+
+```python
+def visualize_blowup(f_original, f_strict, x_range=(-1.5, 1.5),
+                     y_range=(-1.5, 1.5), t_range=(-2, 2), N=500):
+    """
+    Side-by-side visualization of a curve before and after blowup.
+
+    Left: original curve f(x, y) = 0
+    Right: strict transform f_strict(x, t) = 0 in the blowup chart y = t*x
+    """
+    x = np.linspace(x_range[0], x_range[1], N)
+    y = np.linspace(y_range[0], y_range[1], N)
+    X, Y = np.meshgrid(x, y)
+
+    t = np.linspace(t_range[0], t_range[1], N)
+    XT, T = np.meshgrid(x, t)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Original curve
+    Z1 = f_original(X, Y)
+    ax1.contour(X, Y, Z1, levels=[0], colors='blue', linewidths=2)
+    ax1.plot(0, 0, 'ro', markersize=10, label='Singularity')
+    ax1.set_title('Original Curve')
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    ax1.set_aspect('equal')
+    ax1.legend()
+    ax1.grid(True, alpha=0.3)
+
+    # Strict transform in blowup chart
+    Z2 = f_strict(XT, T)
+    ax2.contour(XT, T, Z2, levels=[0], colors='red', linewidths=2)
+    # Also show exceptional divisor x = 0
+    ax2.axvline(x=0, color='green', linestyle='--', alpha=0.5, label='Exceptional divisor')
+    ax2.set_title('Strict Transform (blowup chart: y = t*x)')
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('t')
+    ax2.set_aspect('equal')
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.show()
+
+# Cusp resolution
+visualize_blowup(
+    f_original=lambda x, y: y**2 - x**3,
+    f_strict=lambda x, t: t**2 - x   # strict transform after blowup
+)
+
+# Node resolution
+visualize_blowup(
+    f_original=lambda x, y: y**2 - x**2*(x+1),
+    f_strict=lambda x, t: t**2 - x - 1
+)
+```
+
+### C.4: Estimating the RLCT Numerically
+
+**Task:** For a simple singular model, estimate the RLCT by numerical integration and compare with the exact value.
+
+The idea: the RLCT lambda governs the asymptotic behavior of the integral:
+
+Z(n) = integral of exp(-n * K(w)) * phi(w) dw ~ C * n^{-lambda} * (log n)^{m-1}
+
+So log(Z(n)) ~ -lambda * log(n) + const for large n.
+
+```python
+from scipy.integrate import dblquad
+
+def estimate_rlct(K_func, w_range=(-1, 1), d=2, n_values=None):
+    """
+    Estimate the RLCT by computing Z(n) for various n and fitting the slope.
+
+    Parameters
+    ----------
+    K_func : callable
+        The KL divergence K(w1, w2) >= 0 with K = 0 at the singularity.
+    w_range : tuple
+        Integration range for each parameter.
+    d : int
+        Number of parameters.
+    n_values : array-like or None
+        Sample sizes to use. If None, uses logspace.
+
+    Returns
+    -------
+    lambda_est : float
+        Estimated RLCT.
+    """
+    if n_values is None:
+        n_values = np.logspace(1, 4, 20)
+
+    log_Z = []
+
+    for n in n_values:
+        if d == 1:
+            from scipy.integrate import quad
+            Z, _ = quad(lambda w: np.exp(-n * K_func(w)),
+                        w_range[0], w_range[1])
+        elif d == 2:
+            Z, _ = dblquad(lambda w2, w1: np.exp(-n * K_func(w1, w2)),
+                           w_range[0], w_range[1],
+                           w_range[0], w_range[1])
+        else:
+            raise NotImplementedError("Use Monte Carlo for d > 2")
+
+        log_Z.append(np.log(Z + 1e-300))
+
+    log_n = np.log(n_values)
+    log_Z = np.array(log_Z)
+
+    # Fit: log(Z) ~ -lambda * log(n) + const
+    # Use the last half of points (large n regime)
+    half = len(n_values) // 2
+    coeffs = np.polyfit(log_n[half:], log_Z[half:], 1)
+    lambda_est = -coeffs[0]
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(log_n, log_Z, 'bo-', label='Computed log Z(n)')
+    ax.plot(log_n, np.polyval(coeffs, log_n), 'r--',
+            label=f'Fit: slope = {coeffs[0]:.4f} (lambda = {lambda_est:.4f})')
+    ax.set_xlabel('log(n)')
+    ax.set_ylabel('log(Z(n))')
+    ax.set_title(f'RLCT Estimation: lambda = {lambda_est:.4f}')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+    return lambda_est
+
+# Example 1: Regular model K(w1, w2) = w1^2 + w2^2
+# Expected RLCT: lambda = d/2 = 1
+print("=== Regular model: K = w1^2 + w2^2 ===")
+lambda_regular = estimate_rlct(lambda w1, w2: w1**2 + w2**2)
+print(f"Estimated lambda = {lambda_regular:.4f}, expected = 1.0")
+
+# Example 2: Singular model K(w1, w2) = (w1 * w2)^2
+# Expected RLCT: lambda = 1/2
+print("\n=== Singular model: K = (w1 * w2)^2 ===")
+lambda_singular = estimate_rlct(lambda w1, w2: (w1 * w2)**2)
+print(f"Estimated lambda = {lambda_singular:.4f}, expected = 0.5")
+
+# Example 3: K(w) = w^4 (1D)
+# Expected RLCT: lambda = 1/4
+print("\n=== 1D singular: K = w^4 ===")
+lambda_1d = estimate_rlct(lambda w: w**4, d=1)
+print(f"Estimated lambda = {lambda_1d:.4f}, expected = 0.25")
+
+# Example 4: K(w1, w2) = w1^2 + w2^4
+# Expected RLCT: lambda = 1/2 + 1/4 = 3/4
+print("\n=== Mixed: K = w1^2 + w2^4 ===")
+lambda_mixed = estimate_rlct(lambda w1, w2: w1**2 + w2**4)
+print(f"Estimated lambda = {lambda_mixed:.4f}, expected = 0.75")
+```
+
+### C.5: The Full Pipeline -- From Singular Model to RLCT
+
+**Task:** For the model y = a*x (a simple linear model with no bias), where the true function is y = 0:
+
+1. The parameter space is W = R (just the slope a)
+2. K(a) = E[(a*x)^2] / 2 = a^2 * E[x^2] / 2 = a^2 * sigma_x^2 / 2
+3. This is a regular model (K is non-degenerate quadratic), so lambda = 1/2
+
+Now consider the model y = a*b*x (a rank-1 factored model):
+
+1. The parameter space is W = R^2 (parameters a, b)
+2. K(a, b) = (a*b)^2 * sigma_x^2 / 2
+3. The zero set is {a = 0} union {b = 0} -- a normal crossing singularity
+4. lambda = 1/2 (computed via blowup in C.4 above)
+
+The key insight: both models represent the same family of functions, but the factored model has lambda = 1/2 < d/2 = 1. The RLCT "knows" that the two-parameter model is really one-dimensional.
+
+```python
+def full_slt_pipeline():
+    """
+    Demonstrate the full SLT pipeline:
+    1. Define a singular model
+    2. Compute KL divergence
+    3. Identify singularities
+    4. Perform blowup (symbolically)
+    5. Estimate RLCT (numerically)
+    """
+    print("=" * 60)
+    print("SLT Pipeline: Factored Linear Model y = a * b * x")
+    print("True function: y = 0")
+    print("=" * 60)
+
+    # Step 1: The KL divergence (assuming E[x^2] = 1 for simplicity)
+    print("\nStep 1: KL divergence")
+    print("  K(a, b) = (a*b)^2 / 2")
+    print("  Zero set: {a=0} union {b=0} (two lines crossing at origin)")
+
+    # Step 2: Identify singularity
+    print("\nStep 2: Singularity analysis")
+    print("  Gradient of K: (a*b^2, a^2*b)")
+    print("  Gradient vanishes on: {a=0} union {b=0}")
+    print("  Jacobian criterion: singular at the origin (both partial derivatives vanish)")
+
+    # Step 3: Symbolic blowup
+    print("\nStep 3: Resolution of singularities")
+    a, b = sp.symbols('a b')
+    K_expr = (a * b)**2 / 2
+    st, mult, t = symbolic_blowup_chart1(K_expr, a, b)
+    print(f"  Blowup chart b = t*a:")
+    print(f"  K = (a * t*a)^2 / 2 = a^4 * t^2 / 2")
+    print(f"  Exceptional divisor: a^{mult}")
+    print(f"  Strict transform: {st}")
+    print(f"  The function a^4 * t^2 / 2 in normal crossing form")
+    print(f"  Jacobian of blowup: |det| = |a| (multiplicity h=1)")
+    print(f"  RLCT = (h+1)/(2k) = (1+1)/(2*2) = 1/2")
+
+    # Step 4: Numerical verification
+    print("\nStep 4: Numerical RLCT estimation")
+    lambda_est = estimate_rlct(lambda a, b: (a * b)**2 / 2)
+    print(f"  Numerical estimate: lambda = {lambda_est:.4f}")
+    print(f"  Exact value: lambda = 0.5")
+    print(f"  Parameter count d/2 = 1.0")
+    print(f"  Effective complexity reduction: {1.0 - 0.5:.1f}")
+
+    print("\nConclusion: The RLCT (0.5) is half the naive parameter count (1.0).")
+    print("The singularity at the origin 'knows' that the model is really")
+    print("one-dimensional, even though it has two parameters.")
+
+full_slt_pipeline()
+```
+
+---
+
+## Reflection Questions
+
+After completing this project, answer the following:
+
+1. How does the Gaussian curvature of a loss surface relate to the difficulty of optimization at that point? What does it mean for optimization when the curvature is very small in some directions?
+
+2. The holonomy angle on the sphere equals the enclosed area times the Gaussian curvature. If you were to parallel-transport a gradient vector around a loop in parameter space, what would the holonomy tell you about the geometry of the parameter space?
+
+3. In the RLCT estimation, you observed that singular models have lambda < d/2. Explain in your own words why this means singular models generalize better than the parameter count suggests. How does this connect to the observation that large neural networks can generalize well despite having far more parameters than training samples?
+
+4. The blowup procedure replaces a singular point with a projective space, "separating" the branches that meet at the singularity. In the context of the model y = a*b*x, what are the "branches" that meet at (a,b) = (0,0), and what does the blowup do to them geometrically?
+
+5. How would you extend the numerical RLCT estimation to a real neural network? What challenges would you face, and what approximations might be necessary?

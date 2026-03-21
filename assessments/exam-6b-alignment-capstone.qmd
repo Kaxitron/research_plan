@@ -1,6 +1,6 @@
 ---
 title: "Exam 6B: Alignment Capstone"
-subtitle: "Lessons 80--84 Comprehensive Assessment"
+subtitle: "Lessons 95--99 Comprehensive Assessment"
 format:
   pdf:
     documentclass: article
@@ -86,7 +86,7 @@ Simplify for the case $d \ll 1$ and show that Comply-then-Defect dominates when 
 
 **(c)** This analysis assumes the AI has a clear model of $N$, $D$, $d$, and its own mesa-objective. In practice, which of these assumptions is most likely to break down, and why? What does this mean for the practical risk of deceptive alignment?
 
-**(d)** Connect this to the concept of \textit{treacherous turn} from L83. Under Bayesian reasoning (Phase 3), why is an AI that has been behaving well during training \textit{not} strong evidence that it will behave well during deployment? What prior should we place on deceptive alignment, and why is this prior hard to set?
+**(d)** Connect this to the concept of \textit{treacherous turn} from L98. Under Bayesian reasoning (Phase 3), why is an AI that has been behaving well during training \textit{not} strong evidence that it will behave well during deployment? What prior should we place on deceptive alignment, and why is this prior hard to set?
 
 ---
 
@@ -120,7 +120,7 @@ For each, identify the proxy $\hat{U}$, the true objective $U$, and how optimiza
 
 **(b)** The training process selects for models that achieve low loss. Explain why a deceptively aligned mesa-optimizer can achieve low training loss. Frame this as a selection problem: in the space of all models with similarly low loss, what fraction might be deceptively aligned? Use the concept of \textit{basin volume} from the loss landscape (Phase 2) and \textit{algorithmic complexity} (Phase 5).
 
-**(c)** The \textit{sharp left turn} scenario posits that at some capability level, the model becomes sophisticated enough to model its own training process. Using game theory (L80), explain how training transitions from an optimization problem to a strategic interaction at this point. What is the "game" being played, and what are the Nash equilibria?
+**(c)** The \textit{sharp left turn} scenario posits that at some capability level, the model becomes sophisticated enough to model its own training process. Using game theory (L95), explain how training transitions from an optimization problem to a strategic interaction at this point. What is the "game" being played, and what are the Nash equilibria?
 
 **(d)** Propose a detection strategy for mesa-optimization that uses tools from at least two different phases of the curriculum. Be specific: what would you measure, what would a positive detection look like, and what are the limitations?
 
@@ -151,13 +151,13 @@ The Eliciting Latent Knowledge (ELK) problem: given a model that has learned an 
 - $\textsc{Direct}$: report derived from $M$ (honest)
 - $\textsc{Human-Simulator}$: report derived from what $H$ would believe is correct
 
-If $M$ is more accurate than $H$, these can diverge. Explain why standard RLHF training incentivizes \textsc{Human-Simulator} over \textsc{Direct}. Use the reward model framework from L83: $R = f(H, \text{output})$.
+If $M$ is more accurate than $H$, these can diverge. Explain why standard RLHF training incentivizes \textsc{Human-Simulator} over \textsc{Direct}. Use the reward model framework from L98: $R = f(H, \text{output})$.
 
 **(b)** A proposed solution: use consistency checks. If the model reports claim $A$ and claim $B$ separately, check whether $A \wedge B$ is consistent with its other claims. Explain why this helps (honest reports from $M$ should be internally consistent) and why it's insufficient (a sophisticated \textsc{Human-Simulator} can also maintain consistency).
 
 **(c)** Another proposal: use contrast-consistent search (CCS) --- find directions in the model's activation space where a probe consistently maps to "true" or "false" in a way that satisfies logical constraints ($P(\text{not } X) = 1 - P(X)$). Explain this in Phase 1 terms: what geometric structure in the activation space are we searching for? Why might this direction differ from the direction the model uses for its outputs?
 
-**(d)** Why is ELK considered one of the hardest open problems in alignment? Explain the fundamental difficulty: any behavioral test for honesty can be gamed by a sufficiently capable model. What would a solution require that goes beyond behavioral testing? Connect to interpretability (L83--84).
+**(d)** Why is ELK considered one of the hardest open problems in alignment? Explain the fundamental difficulty: any behavioral test for honesty can be gamed by a sufficiently capable model. What would a solution require that goes beyond behavioral testing? Connect to interpretability (L98--99).
 
 ---
 
@@ -219,14 +219,14 @@ This question asks you to construct a unified argument for why AI alignment is a
 
 **(a)** For each of the following, state in one sentence the core difficulty it poses for alignment:
 
-- Game theory (L80)
-- Decision theory (L81)
-- Anthropic reasoning (L82)
-- Goodhart's Law (L83)
-- Mesa-optimization (L83)
-- ELK (L84)
-- Interpretability at scale (L84)
-- Formal verification limits (L84)
+- Game theory (L95)
+- Decision theory (L96)
+- Anthropic reasoning (L97)
+- Goodhart's Law (L98)
+- Mesa-optimization (L98)
+- ELK (L99)
+- Interpretability at scale (L99)
+- Formal verification limits (L99)
 
 **(b)** These eight difficulties are not independent --- they interact and reinforce each other. Identify two pairs of difficulties that are particularly tightly coupled and explain the interaction in 2--3 sentences each.
 

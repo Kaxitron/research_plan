@@ -1,10 +1,10 @@
 # Phase 6 Overview: Alignment Theory — Every Concept and Method
 
-> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 6 (Lessons 80–84). This is where everything converges: the mathematics, the ML, the interpretability, and the philosophy meet the central question of making AI systems safe and beneficial.
+> **Purpose:** Exhaustive reference of every concept, technique, and method covered in Phase 6 (Lessons 95–99). This is where everything converges: the mathematics, the ML, the interpretability, and the philosophy meet the central question of making AI systems safe and beneficial.
 
 ---
 
-## Lesson 80: Game Theory Foundations
+## Lesson 95: Game Theory Foundations
 
 **Basic Framework:**
 - **Normal form (strategic form) games:** players, strategies, payoff matrix — simultaneous moves
@@ -41,7 +41,7 @@
 
 ---
 
-## Lesson 81: Decision Theory — CDT, EDT, and FDT
+## Lesson 96: Decision Theory — CDT, EDT, and FDT
 
 **Expected Utility Theory:**
 - **Utility function u:** maps outcomes to real numbers representing preference
@@ -78,7 +78,7 @@
 
 ---
 
-## Lesson 82: Anthropics and Self-Locating Beliefs
+## Lesson 97: Anthropics and Self-Locating Beliefs
 
 - **Observation selection effects:** your existence as an observer biases what you can observe
 - **Self-locating beliefs:** "which observer am I?" — probability over your identity/location in the multiverse or population
@@ -105,7 +105,7 @@
 
 ---
 
-## Lesson 83: The Alignment Problem — Technical Foundations
+## Lesson 98: The Alignment Problem — Technical Foundations
 
 **The Core Problem:**
 - Ensuring AI systems pursue goals that are beneficial to humanity
@@ -147,7 +147,7 @@
 
 ---
 
-## Lesson 84: Open Problems and Research Frontiers
+## Lesson 99: Open Problems and Research Frontiers
 
 **Technical Open Problems:**
 - **Scalable oversight:** supervising AI on superhuman tasks

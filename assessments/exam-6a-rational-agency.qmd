@@ -1,6 +1,6 @@
 ---
 title: "Exam 6A: Rational Agency and the Alignment Problem"
-subtitle: "Lessons 80--83 Comprehensive Assessment"
+subtitle: "Lessons 95--98 Comprehensive Assessment"
 format:
   pdf:
     documentclass: article
@@ -213,11 +213,11 @@ For each, explain the core mechanism and identify one way it could fail if the A
 
 ## Q10 (10 pts) --- Synthesis: From Game Theory to Safe Deployment
 
-You are designing a framework for deploying an advanced AI system. The system will interact strategically with humans and other AI systems (L80), make decisions under uncertainty (L81), reason about its own copies and observation-selection effects (L82), and must be aligned with human values despite Goodhart's Law and mesa-optimization risks (L83).
+You are designing a framework for deploying an advanced AI system. The system will interact strategically with humans and other AI systems (L95), make decisions under uncertainty (L96), reason about its own copies and observation-selection effects (L97), and must be aligned with human values despite Goodhart's Law and mesa-optimization risks (L98).
 
 **(a)** **Game-theoretic layer:** The AI interacts with a human overseer in a repeated inspection game. The AI can be Honest or Deceptive; the human can Monitor or Trust. Explain why one-shot Nash equilibrium analysis is insufficient and what properties of the repeated interaction (discount factor, observability, punishment strategies) are needed to sustain cooperation.
 
-**(b)** **Decision-theoretic layer:** The AI must choose a decision theory. Argue that FDT (or UDT) is preferable to CDT for an aligned AI, specifically because CDT permits the AI to reason its way into behaving differently during tests vs.\ deployment. Connect this to the deceptive alignment threat from L83.
+**(b)** **Decision-theoretic layer:** The AI must choose a decision theory. Argue that FDT (or UDT) is preferable to CDT for an aligned AI, specifically because CDT permits the AI to reason its way into behaving differently during tests vs.\ deployment. Connect this to the deceptive alignment threat from L98.
 
 **(c)** **Anthropic layer:** The AI is deployed as multiple instances. It must reason about how many copies of itself exist and how to aggregate consequences across copies. Explain one concrete decision where SSA vs.\ SIA reasoning leads to different actions, and state which you would choose for a safety-critical system and why.
 

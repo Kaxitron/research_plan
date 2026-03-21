@@ -1,0 +1,185 @@
+---
+title: "Exam 5F: Advanced Algorithms --- Answer Key"
+subtitle: "Lessons 90--94"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct analysis and clear reasoning. For algorithm questions, stating the algorithm is not enough -- you must justify correctness and complexity. On the essay question, specific examples and concrete connections earn more credit than vague generalities.
+
+\newpage
+
+## Q1 --- The Master Theorem
+
+**(a)** **Master Theorem:** For $T(n) = aT(n/b) + f(n)$ with $a \geq 1$, $b > 1$:
+
+Let $c_{\text{crit}} = \log_b a$.
+
+- **Case 1:** If $f(n) = O(n^{c_{\text{crit}} - \varepsilon})$ for some $\varepsilon > 0$, then $T(n) = \Theta(n^{c_{\text{crit}}})$.
+- **Case 2:** If $f(n) = \Theta(n^{c_{\text{crit}}} \log^k n)$ for some $k \geq 0$, then $T(n) = \Theta(n^{c_{\text{crit}}} \log^{k+1} n)$.
+- **Case 3:** If $f(n) = \Omega(n^{c_{\text{crit}} + \varepsilon})$ for some $\varepsilon > 0$ (and the regularity condition $af(n/b) \leq cf(n)$ for some $c < 1$), then $T(n) = \Theta(f(n))$.
+
+$\checkmark$
+
+**(b)**
+
+**(i)** $T(n) = 4T(n/2) + n$. Here $a = 4$, $b = 2$, $c_{\text{crit}} = \log_2 4 = 2$. $f(n) = n = O(n^{2-1})$. Case 1: $T(n) = \Theta(n^2)$. $\checkmark$
+
+**(ii)** $T(n) = 2T(n/2) + n\log n$. Here $a = 2$, $b = 2$, $c_{\text{crit}} = 1$. $f(n) = n\log n = \Theta(n^1 \log^1 n)$. Case 2 with $k = 1$: $T(n) = \Theta(n \log^2 n)$. $\checkmark$
+
+**(iii)** $T(n) = 3T(n/4) + n$. Here $a = 3$, $b = 4$, $c_{\text{crit}} = \log_4 3 \approx 0.792$. $f(n) = n = \Omega(n^{0.792 + \varepsilon})$ for $\varepsilon \approx 0.2$. Check regularity: $3 \cdot (n/4) = 3n/4 \leq cn$ for $c = 3/4 < 1$. Case 3: $T(n) = \Theta(n)$. $\checkmark$
+
+---
+
+## Q2 --- Amortized Analysis
+
+**(a)** Worst-case cost of a single insertion: $O(n)$, when the array is full and must be doubled. At that point, all existing elements are copied to the new array. This occurs when the number of elements equals a power of 2 (i.e., after 1, 2, 4, 8, ... insertions). $\checkmark$
+
+**(b)** Aggregate method: the total cost of $n$ insertions is the sum of all copy operations plus the $n$ insertions themselves. The copies occur at sizes 1, 2, 4, 8, ..., up to the largest power of 2 at most $n$. Total copy cost: $1 + 2 + 4 + \ldots + 2^{\lfloor \log_2 n \rfloor} \leq 2n - 1$.
+
+Total cost $= n \text{ (insertions)} + (2n - 1) \text{ (copies)} \leq 3n$.
+
+Amortized cost per insertion: $3n / n = 3 = O(1)$. $\checkmark$
+
+**(c)** **(B)** Amortized cost = actual cost + change in potential: $\hat{c}_i = c_i + \Phi_i - \Phi_{i-1}$. $\checkmark$
+
+---
+
+## Q3 --- Randomized Quicksort
+
+**(a)** With a random pivot, each element is equally likely to be the pivot. The expected depth of recursion is $O(\log n)$ because a random pivot is "good" (within the middle half of the sorted order) with probability $1/2$, giving an expected $O(\log n)$ levels before the subproblem shrinks by a constant factor. At each level, the total work is $O(n)$ (each element is compared to at most one pivot per level). So the expected total is $O(n \log n)$. $\checkmark$
+
+**(b)** Let $z_1, \ldots, z_n$ be the elements in sorted order. Elements $z_i$ and $z_j$ ($i < j$) are compared iff one of them is chosen as pivot before any element in $\{z_i, z_{i+1}, \ldots, z_j\}$. The probability of this is $\frac{2}{j - i + 1}$ (either $z_i$ or $z_j$ is picked first among the $j - i + 1$ elements).
+
+Expected comparisons:
+
+$$\sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \frac{2}{j - i + 1} = \sum_{i=1}^{n-1} \sum_{k=2}^{n-i+1} \frac{2}{k} \leq \sum_{i=1}^{n} 2H_n = 2nH_n = 2n\ln n + O(n). \checkmark$$
+
+**(c)** The worst case is $\Theta(n^2)$, occurring when the pivot is always the minimum or maximum element. With random pivots, the probability of the exact worst case (choosing the min or max every time) is astronomically small: $(2/n) \cdot (2/(n-1)) \cdots = O(2^n / n!)$, which is negligible. More practically, the probability of exceeding $O(n \log n)$ by a constant factor decreases exponentially (by concentration inequalities). $\checkmark$
+
+---
+
+## Q4 --- Hashing and Probability
+
+**(a)** A **universal hash family** $\mathcal{H}$ is a collection of hash functions $h : U \to \{0, \ldots, m-1\}$ such that for any two distinct keys $x \neq y$, $\Pr_{h \in \mathcal{H}}[h(x) = h(y)] \leq 1/m$. That is, the collision probability for any pair of keys is at most $1/m$ when $h$ is chosen uniformly at random from $\mathcal{H}$. $\checkmark$
+
+**(b)** For a given slot, the expected number of keys mapping to it is $n/m$ (by linearity of expectation, each key lands in the slot with probability $1/m$). The expected number of collisions in a slot is at most $\binom{n/m}{2} \approx (n/m)^2 / 2$. For a lookup, the expected time is $O(1 + n/m)$. With $m = \Theta(n)$, this is $O(1)$. $\checkmark$
+
+**(c)** **(B)** $n > \sqrt{m}$. The Birthday Paradox shows that with $n$ items in $m$ slots, the expected number of collisions becomes $\Theta(1)$ when $n = \Theta(\sqrt{m})$. $\checkmark$
+
+---
+
+## Q5 --- Dynamic Programming
+
+**(a)** Recurrence:
+
+$$V[i, c] = \begin{cases} 0 & \text{if } i = 0 \text{ or } c = 0 \\ V[i-1, c] & \text{if } w_i > c \\ \max(V[i-1, c],\; V[i-1, c - w_i] + v_i) & \text{otherwise} \end{cases}$$
+
+$\checkmark$
+
+**(b)** Time: $O(nW)$. Space: $O(nW)$ (can be reduced to $O(W)$ using a rolling array). This is **not** a polynomial-time algorithm: $W$ is an integer and its size in the input is $\log W$ bits. The running time $O(nW)$ is exponential in $\log W$. This is called a *pseudo-polynomial* time algorithm. $\checkmark$
+
+**(c)** The FPTAS works by rounding (scaling down) the values: replace each $v_i$ with $\lfloor v_i / K \rfloor$ where $K = \varepsilon \cdot v_{\max} / n$. This reduces the range of values to $O(n/\varepsilon)$, so the DP runs in $O(n^2 / \varepsilon)$ time (polynomial in $n$ and $1/\varepsilon$). The rounding error per item is at most $K$, so the total error is at most $nK = \varepsilon \cdot v_{\max} \leq \varepsilon \cdot OPT$. Therefore the solution has value at least $(1 - \varepsilon) \cdot OPT$. $\checkmark$
+
+---
+
+## Q6 --- Graph Algorithms: Shortest Paths
+
+**(a)** Dijkstra's algorithm greedily locks in the shortest distance to each vertex once extracted from the priority queue. With negative edges, a locked-in vertex might later be reachable via a shorter path through a negative edge. Counterexample:
+
+Vertices: $\{s, a, b, t\}$. Edges: $s \to a$ (weight 1), $s \to b$ (weight 3), $a \to b$ (weight $-4$), $b \to t$ (weight 1).
+
+Dijkstra processes $a$ first (distance 1) then $b$ (distance 3 via $s \to b$). But $s \to a \to b$ has weight $1 + (-4) = -3 < 3$. Dijkstra misses this because $b$ is already finalized with distance 3. The correct shortest path $s \to a \to b \to t$ has total weight $-2$. $\checkmark$
+
+**(b)** **Bellman-Ford invariant:** After the $k$-th iteration of relaxing all edges, for every vertex $v$, the distance estimate $d[v]$ is at most the length of the shortest path from $s$ to $v$ using at most $k$ edges. Since any shortest path (without negative cycles) has at most $V - 1$ edges, $V - 1$ iterations suffice. $\checkmark$
+
+**(c)** After $V - 1$ iterations, all shortest paths are found (if no negative cycles exist). Run one more (the $V$-th) relaxation pass over all edges. If any distance estimate decreases, a negative weight cycle is reachable from the source. This works because in a negative cycle, we can always find a shorter path by going around the cycle one more time, so the distances never stabilize. $\checkmark$
+
+---
+
+## Q7 --- Network Flow
+
+**(a)** Ford-Fulkerson on the given network:
+
+**Iteration 1:** Augmenting path $s \to a \to t$ with bottleneck $\min(10, 8) = 8$. Flow: 8. Residual: $s \to a$ has 2 remaining, $a \to t$ has 0.
+
+**Iteration 2:** Augmenting path $s \to b \to t$ with bottleneck $\min(5, 7) = 5$. Flow: 8 + 5 = 13. Residual: $s \to b$ has 0, $b \to t$ has 2 remaining.
+
+**Iteration 3:** Augmenting path $s \to a \to b \to t$ with bottleneck $\min(2, 4, 2) = 2$. Flow: 13 + 2 = 15. Residual: $s \to a$ has 0, $a \to b$ has 2, $b \to t$ has 0.
+
+No more augmenting paths exist. **Maximum flow = 15.** $\checkmark$
+
+**(b)** Minimum cut: $S = \{s\}$, $T = \{a, b, t\}$. Edges crossing the cut: $s \to a$ (capacity 10) and $s \to b$ (capacity 5). Cut capacity = $10 + 5 = 15$ = max flow. $\checkmark$
+
+(By the Max-Flow Min-Cut Theorem, the maximum flow equals the minimum cut capacity.)
+
+**(c)** **(B)** $O(VE^2)$. The Edmonds-Karp algorithm uses BFS to find the shortest augmenting path, guaranteeing that the number of augmentations is at most $O(VE)$, with each BFS taking $O(E)$ time. $\checkmark$
+
+---
+
+## Q8 --- Linear Programming Duality
+
+**(a)** Primal: maximize $3x_1 + 5x_2$ subject to $x_1 + 2x_2 \leq 12$, $2x_1 + x_2 \leq 10$, $x_1, x_2 \geq 0$.
+
+Dual: minimize $12y_1 + 10y_2$ subject to $y_1 + 2y_2 \geq 3$, $2y_1 + y_2 \geq 5$, $y_1, y_2 \geq 0$. $\checkmark$
+
+**(b)** Corner points of the feasible region:
+
+- $(0, 0)$: objective = 0.
+- $(5, 0)$: objective = 15.
+- $(0, 6)$: objective = 30.
+- Intersection of $x_1 + 2x_2 = 12$ and $2x_1 + x_2 = 10$: solving, $x_1 = \frac{8}{3}$, $x_2 = \frac{14}{3}$. Objective: $3(8/3) + 5(14/3) = 8 + 70/3 = 94/3 \approx 31.33$.
+
+Check feasibility of $(0, 6)$: $0 + 12 = 12 \leq 12$ (yes), $0 + 6 = 6 \leq 10$ (yes). Feasible.
+
+Check $(8/3, 14/3)$: both constraints are tight. Feasible.
+
+Optimal solution: $(x_1^*, x_2^*) = (8/3, 14/3)$ with optimal value $94/3$. $\checkmark$
+
+**(c)** Dual optimal: by complementary slackness, both primal constraints are tight, so both dual variables are positive. From the dual constraints (at equality by complementary slackness since $x_1^*, x_2^* > 0$):
+
+$y_1 + 2y_2 = 3$ and $2y_1 + y_2 = 5$.
+
+Solving: subtract first from second: $y_1 - y_2 = 2$, so $y_1 = y_2 + 2$. Substituting: $(y_2 + 2) + 2y_2 = 3$, so $3y_2 = 1$, $y_2 = 1/3$, $y_1 = 7/3$.
+
+Dual optimal value: $12(7/3) + 10(1/3) = 28 + 10/3 = 94/3$.
+
+Primal optimal = dual optimal = $94/3$. Strong duality verified. $\checkmark$
+
+---
+
+## Q9 --- Lower Bounds and Hardness
+
+**(a)** A comparison-based sorting algorithm can be modeled as a binary decision tree where each internal node is a comparison $a_i \leq a_j$. There are $n!$ possible orderings of $n$ elements, and each must correspond to a distinct leaf (otherwise two different inputs would produce the same output, which is wrong). A binary tree with $L$ leaves has height at least $\log_2 L$. So the height (worst-case comparisons) is at least $\log_2(n!) = \Theta(n \log n)$ (by Stirling's approximation: $\log_2(n!) = n \log_2 n - n \log_2 e + O(\log n)$). $\checkmark$
+
+**(b)** Counting sort and radix sort are not comparison-based: they exploit the fact that keys are integers in a bounded range $[0, k]$. They use array indexing (direct access by key value) rather than pairwise comparisons. The $\Omega(n \log n)$ lower bound only applies to comparison-based algorithms. Counting sort runs in $O(n + k)$ time, and radix sort in $O(d(n + k))$ where $d$ is the number of digits. For bounded-range integers, these are $O(n)$, beating the comparison-based lower bound by exploiting structure the comparison model cannot use. $\checkmark$
+
+**(c)** **(B)** Comparison-based model. Ben-Or's theorem gives an $\Omega(n \log n)$ lower bound for element distinctness in the algebraic decision tree model, which generalizes the comparison model. $\checkmark$
+
+---
+
+## Q10 --- Synthesis: Algorithms and Alignment
+
+**Model answer (key points expected):**
+
+Many alignment problems reduce to constrained optimization: find a policy/reward/mechanism that satisfies safety constraints while maximizing performance. In general, such problems are NP-hard (e.g., integer programming for discrete constraints, or combinatorial optimization over exponentially many possible policies). This means we cannot expect to find provably optimal alignment solutions in polynomial time for realistic problem sizes.
+
+Approximation algorithms offer a principled middle ground. Instead of demanding optimality, we accept a solution that is within a provable factor of optimal. For alignment, this translates to designing systems that are "good enough" with formal guarantees: for example, a reward function that approximates the true objective within a $(1-\varepsilon)$ factor, where $\varepsilon$ can be made arbitrarily small at the cost of more computation. The FPTAS for knapsack is a paradigm: we cannot solve the problem exactly in polynomial time, but we can get arbitrarily close. Similarly, alignment solutions might aim for bounded suboptimality rather than perfection.
+
+Computational lower bounds constrain oversight mechanisms. If verifying a complex behavioral property of a neural network is NP-hard (or worse, undecidable), then no amount of compute will allow exhaustive checking. Practically, this means oversight must be selective: checking a polynomial number of properties or inputs, using sampling and statistical testing rather than exhaustive verification. The gap between what we would like to verify (full behavioral specification) and what we can tractably verify (bounded checks) is a fundamental source of alignment risk, and understanding the computational complexity of verification tasks helps us allocate oversight resources where they matter most. $\checkmark$

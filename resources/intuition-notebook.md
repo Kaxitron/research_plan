@@ -425,7 +425,7 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ## Interpretability
 
-*(To be filled as you progress through Phase 5)*
+*(To be filled as you progress through Phase 5, Lessons 67–94)*
 
 ---
 

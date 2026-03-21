@@ -1,0 +1,153 @@
+---
+title: "Exam 5B: Computability and Complexity"
+subtitle: "Lessons 72--76 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & 60 minutes \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator. \\
+\textbf{Format} & 10 questions. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers finite automata, context-free grammars, Turing machines, Kolmogorov complexity, and computational complexity. Partial credit is available for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- DFA Construction
+
+**(a)** Construct a DFA over the alphabet $\{0, 1\}$ that accepts exactly the set of binary strings whose value, interpreted as a binary number, is divisible by 3. Specify the states, transitions, start state, and accept states.
+
+**(b)** How many states does your DFA have? Argue briefly that this is the minimum number of states required, by identifying that many distinguishable strings.
+
+---
+
+## Q2 (10 pts) --- Regular Languages and the Pumping Lemma
+
+**(a)** (Multiple Choice) Which of the following languages over $\{a, b\}$ is regular?
+
+- (A) $\{a^n b^n : n \geq 0\}$
+- (B) $\{w : w \text{ has equal numbers of } a \text{ and } b\}$
+- (C) $\{w : |w| \text{ is even}\}$
+- (D) $\{a^{n^2} : n \geq 0\}$
+
+**(b)** Use the Pumping Lemma to prove that $L = \{a^n b^n : n \geq 0\}$ is not regular. State the Pumping Lemma precisely before applying it.
+
+---
+
+## Q3 (10 pts) --- NFAs and Subset Construction
+
+Consider the NFA $N$ over $\{a, b\}$ with states $\{q_0, q_1, q_2\}$, start state $q_0$, accept state $q_2$, and transitions:
+
+- $\delta(q_0, a) = \{q_0, q_1\}$, $\delta(q_0, b) = \{q_0\}$
+- $\delta(q_1, a) = \emptyset$, $\delta(q_1, b) = \{q_2\}$
+- $\delta(q_2, a) = \emptyset$, $\delta(q_2, b) = \emptyset$
+
+**(a)** What language does this NFA accept? Describe it in words and as a regular expression.
+
+**(b)** Apply the subset construction to convert $N$ to a DFA. Show all reachable states and transitions. Which states are accepting?
+
+---
+
+## Q4 (10 pts) --- Context-Free Grammars and the CYK Algorithm
+
+Consider the grammar $G$ with start symbol $S$ and productions:
+
+$$S \to AB \mid BC, \quad A \to BA \mid a, \quad B \to CC \mid b, \quad C \to AB \mid a$$
+
+**(a)** Verify that this grammar is in Chomsky Normal Form.
+
+**(b)** Use the CYK algorithm to determine whether the string $w = baba$ is in $L(G)$. Show the complete CYK table.
+
+---
+
+## Q5 (10 pts) --- Turing Machines and the Halting Problem
+
+**(a)** (Multiple Choice) Which of the following problems is decidable?
+
+- (A) Given a DFA $D$ and a string $w$, does $D$ accept $w$?
+- (B) Given a TM $M$ and a string $w$, does $M$ halt on $w$?
+- (C) Given a TM $M$, is $L(M) = \Sigma^*$?
+- (D) Given a TM $M$, is $L(M)$ finite?
+
+**(b)** State the Halting Problem and prove it is undecidable using diagonalization. Be precise about the construction of the contradiction.
+
+---
+
+## Q6 (10 pts) --- Rice's Theorem and Reductions
+
+**(a)** State Rice's theorem precisely.
+
+**(b)** Use Rice's theorem to argue that the following problem is undecidable: "Given a Turing machine $M$, does $M$ accept at least one palindrome?"
+
+**(c)** Explain why the question "Does TM $M$ have at least 5 states?" is NOT covered by Rice's theorem, even though it is a question about Turing machines.
+
+---
+
+## Q7 (10 pts) --- Kolmogorov Complexity
+
+**(a)** Define the Kolmogorov complexity $K(x)$ of a string $x$. What is the invariance theorem and why is it important?
+
+**(b)** Prove that $K(x)$ is not computable. (Hint: consider what would happen if a program could compute $K$ and then searched for a high-complexity string.)
+
+**(c)** (Multiple Choice) For a string $x$ of length $n$, which of the following is always true?
+
+- (A) $K(x) \leq n + c$ for some constant $c$ independent of $x$
+- (B) $K(x) \geq n$ for all $x$
+- (C) $K(x) = n$ for most strings of length $n$
+- (D) $K(x)$ can be computed in $O(2^n)$ time
+
+---
+
+## Q8 (10 pts) --- P, NP, and NP-Completeness
+
+**(a)** Define the classes P and NP. What does it mean for a language to be NP-complete?
+
+**(b)** Explain the distinction between a problem being "in NP" and being "NP-hard." Give one example of a problem that is NP-hard but not known to be in NP.
+
+**(c)** Describe how a polynomial-time reduction from 3-SAT to Independent Set works at a high level: what is the gadget for each clause, and how does the reduction encode the constraint that a variable and its negation cannot both be true?
+
+---
+
+## Q9 (10 pts) --- Space Complexity
+
+**(a)** (Multiple Choice) Which inclusion is known to be strict?
+
+- (A) $\text{L} \subseteq \text{NL}$
+- (B) $\text{NL} \subseteq \text{P}$
+- (C) $\text{P} \subseteq \text{PSPACE}$
+- (D) $\text{PSPACE} \subsetneq \text{EXPTIME}$ (this is known to be strict)
+
+**(b)** State Savitch's theorem. What is its most important consequence for the relationship between nondeterministic and deterministic space?
+
+**(c)** Explain why TQBF (True Quantified Boolean Formulas) is PSPACE-complete and why this matters for game-playing AI.
+
+---
+
+## Q10 (10 pts) --- Synthesis: Computability, Complexity, and AI Alignment
+
+Write a short essay (8--12 sentences) addressing the following:
+
+The Church-Turing thesis, the halting problem, and NP-completeness each impose fundamental limits on computation. Discuss how these limits are relevant to AI alignment. Consider: Can we build a program that verifies whether an arbitrary AI system is safe? What role does computational intractability play in the difficulty of alignment? How does Kolmogorov complexity relate to the challenge of specifying human values?

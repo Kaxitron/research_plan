@@ -95,11 +95,11 @@
 ### Phase 4 — Machine Learning & Interpretability
 *Section not yet started — items will be added during lessons 53–66.*
 
-### Phase 5 — Extended Mathematical Foundations
-*Section not yet started — items will be added during lessons 67–79.*
+### Phase 5 — Mathematical Enrichment
+*Section not yet started — items will be added during lessons 67–94.*
 
 ### Phase 6 — Alignment Theory
-*Section not yet started — items will be added during lessons 80–84.*
+*Section not yet started — items will be added during lessons 95–99.*
 
 ### [Key Identities Quick Reference](#-key-identities-quick-reference)
 

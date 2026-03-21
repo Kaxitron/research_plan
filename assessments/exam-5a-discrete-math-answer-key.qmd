@@ -1,0 +1,172 @@
+---
+title: "Exam 5A: Discrete Mathematics --- Answer Key"
+subtitle: "Lessons 67--71"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct formal work and clear reasoning. Partial credit is generous for correct setup with minor computational errors. On proof questions, logical structure matters -- a correct idea with sloppy presentation earns at most 70%.
+
+\newpage
+
+## Q1 --- Logical Equivalences and Proof Techniques
+
+**(a)** We show $P \to (Q \to R) \equiv (P \land Q) \to R$:
+
+$$P \to (Q \to R) \equiv P \to (\lnot Q \lor R) \equiv \lnot P \lor \lnot Q \lor R$$
+$$(P \land Q) \to R \equiv \lnot(P \land Q) \lor R \equiv \lnot P \lor \lnot Q \lor R$$
+
+Both reduce to $\lnot P \lor \lnot Q \lor R$, so they are logically equivalent. $\checkmark$
+
+**(b)** Assume for contradiction that $n^2$ is even and $n$ is odd. Then $n = 2k + 1$ for some integer $k$. So $n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, which is odd. This contradicts the assumption that $n^2$ is even. Therefore $n$ must be even. $\checkmark$
+
+**(c)** The statement "if $P$ then $Q$" is false only when $P$ is true and $Q$ is false. A proof by contradiction assumes the negation of the statement, which is $P \land \lnot Q$, and derives a contradiction from that assumption. $\checkmark$
+
+---
+
+## Q2 --- Quantifiers and Negation
+
+**(a)** $\forall \varepsilon > 0,\; \exists \delta > 0,\; \forall x,\; (|x - a| < \delta \implies |f(x) - L| < \varepsilon)$. $\checkmark$
+
+**(b)** The negation is:
+
+$$\exists \varepsilon > 0,\; \forall \delta > 0,\; \exists x,\; (|x - a| < \delta \;\land\; |f(x) - L| \geq \varepsilon)$$
+
+Note: the implication $A \implies B$ negates to $A \land \lnot B$. $\checkmark$
+
+**(c)** The negation says: there is some positive tolerance $\varepsilon$ such that no matter how small we make $\delta$, we can always find some $x$ within distance $\delta$ of $a$ whose function value $f(x)$ is at least $\varepsilon$ away from $L$. In other words, we cannot force $f(x)$ to stay close to $L$ by restricting $x$ near $a$. $\checkmark$
+
+---
+
+## Q3 --- Sets and Cardinality
+
+**(a)** **(C)** The set of all functions $f : \mathbb{N} \to \{0, 1\}$. $\checkmark$
+
+**(b)** The set of functions $\mathbb{N} \to \{0,1\}$ is in bijection with the power set $\mathcal{P}(\mathbb{N})$ (each function is the characteristic function of a subset). By Cantor's theorem, $|\mathcal{P}(\mathbb{N})| > |\mathbb{N}|$, so it is uncountable. Alternatively, Cantor's diagonal argument applies directly: given any list $f_1, f_2, \ldots$, define $g(n) = 1 - f_n(n)$, and $g$ differs from every $f_n$.
+
+For a countable example: (B) The rationals in $(0,1)$ are countable because $\mathbb{Q}$ is countable (list $p/q$ by increasing $p + q$). $\checkmark$
+
+---
+
+## Q4 --- Functions: Injectivity, Surjectivity, and Composition
+
+**(a)** Suppose $g \circ f$ is injective. We want to show $f$ is injective. Take $a_1, a_2 \in A$ with $f(a_1) = f(a_2)$. Then $g(f(a_1)) = g(f(a_2))$, i.e., $(g \circ f)(a_1) = (g \circ f)(a_2)$. Since $g \circ f$ is injective, $a_1 = a_2$. Therefore $f$ is injective. $\checkmark$
+
+**(b)** Let $A = \{1\}$, $B = \{1, 2\}$, $C = \{1\}$. Define $f(1) = 1$ and $g(1) = g(2) = 1$. Then $g \circ f(1) = 1$ is trivially injective (domain has one element), but $g$ is not injective since $g(1) = g(2) = 1$ with $1 \neq 2$. $\checkmark$
+
+**(c)** **(B)** Always surjective. If $f$ is surjective and $g$ is surjective, then for any $c \in C$, there exists $b \in B$ with $g(b) = c$ (since $g$ is surjective), and there exists $a \in A$ with $f(a) = b$ (since $f$ is surjective). So $g(f(a)) = c$, and $g \circ f$ is surjective. $\checkmark$
+
+---
+
+## Q5 --- Combinatorics and Counting
+
+**(a)** Total people: $8 + 6 = 14$. Committees of 5: $\binom{14}{5} = \frac{14!}{5! \cdot 9!} = 2002$. $\checkmark$
+
+**(b)** Choose 3 from 8 mathematicians and 2 from 6 computer scientists: $\binom{8}{3} \binom{6}{2} = 56 \cdot 15 = 840$. $\checkmark$
+
+**(c)** Committees with no computer scientists: choose all 5 from 8 mathematicians: $\binom{8}{5} = 56$. At least one CS: $2002 - 56 = 1946$. $\checkmark$
+
+**(d)** First form the committee (2002 ways), then choose chair from 5 members and secretary from the remaining 4: $2002 \times 5 \times 4 = 2002 \times 20 = 40{,}040$. $\checkmark$
+
+---
+
+## Q6 --- Inclusion-Exclusion and the Pigeonhole Principle
+
+**(a)** By inclusion-exclusion:
+
+$$|F \cup G \cup S| = |F| + |G| + |S| - |F \cap G| - |F \cap S| - |G \cap S| + |F \cap G \cap S|$$
+
+$$120 = 65 + 45 + 42 - 20 - 25 - 15 + |F \cap G \cap S|$$
+
+$$120 = 92 + |F \cap G \cap S|$$
+
+$$|F \cap G \cap S| = 28. \checkmark$$
+
+**(b)** Consider the 12 possible remainders when dividing by 12: $\{0, 1, 2, \ldots, 11\}$. These are the 12 pigeonholes. Given 13 integers, by the Pigeonhole Principle (13 objects into 12 holes), at least two integers share the same remainder modulo 12. Their difference is therefore divisible by 12. $\checkmark$
+
+---
+
+## Q7 --- Graph Theory Fundamentals
+
+**(a)** $K_{3,4}$ has $3 + 4 = 7$ vertices and $3 \times 4 = 12$ edges. $\checkmark$
+
+**(b)** $K_{3,4}$ is planar. For a bipartite graph, planarity requires $E \leq 2V - 4$. We check: $12 \leq 2(7) - 4 = 10$. Since $12 > 10$, $K_{3,4}$ is **not planar**. $\checkmark$
+
+**(c)** $K_{3,4}$ is bipartite, so it is 2-colorable: color one part with color 1, the other with color 2. Since it has at least one edge, we need at least 2 colors. Therefore the chromatic number is $\chi(K_{3,4}) = 2$. $\checkmark$
+
+**(d)** **(C)** $K_5$. A graph has an Euler circuit iff it is connected and every vertex has even degree. In $K_5$, every vertex has degree 4 (even). In $K_4$, every vertex has degree 3 (odd). In $K_{3,3}$, every vertex has degree 3 (odd). In $K_{2,3}$, the vertices in the part of size 2 have degree 3 (odd). $\checkmark$
+
+---
+
+## Q8 --- Trees and Spanning Trees
+
+**(a)** Let $T$ be a tree on $n \geq 2$ vertices. Then $T$ has $n - 1$ edges, so the sum of all degrees is $2(n-1)$. If $T$ had at most one leaf, then at least $n - 1$ vertices have degree $\geq 2$, so the degree sum would be at least $2(n-1) + 1 = 2n - 1 > 2(n-1)$ (accounting for the remaining vertex having degree $\geq 1$ since the tree is connected). This is a contradiction. Therefore $T$ has at least two leaves.
+
+More precisely: if at most one vertex has degree 1, then the degree sum is $\geq 1 + 2(n-1) = 2n - 1 > 2n - 2$, contradiction. $\checkmark$
+
+**(b)** Cayley's formula: the number of labeled spanning trees of $K_n$ is $n^{n-2}$. For $K_4$: $4^{4-2} = 4^2 = 16$. $\checkmark$
+
+Direct enumeration: label vertices $1, 2, 3, 4$. Each spanning tree has 3 edges on 4 vertices. We can enumerate by structure: either a path of length 3 (which vertex is the center is determined by the degree sequence $1,2,2,1$, giving $4!/2 = 12$ labeled paths... but more carefully, paths on 4 vertices: choose the sequence, there are $4! / 2 = 12$ since reversing gives the same tree) or a star with one center of degree 3 (choose the center: 4 ways). Total: $12 + 4 = 16$. $\checkmark$
+
+---
+
+## Q9 --- Generating Functions
+
+**(a)** A coin of value $k$ contributes a factor $\frac{1}{1 - x^k}$ (choosing 0, 1, 2, ... of that coin). So:
+
+$$\sum_{n=0}^{\infty} a_n x^n = \frac{1}{1-x} \cdot \frac{1}{1-x^5} \cdot \frac{1}{1-x^{10}}. \checkmark$$
+
+**(b)** Let $F(x) = \sum_{n=0}^{\infty} a_n x^n$. From $a_n = a_{n-1} + a_{n-2}$:
+
+$$F(x) - a_0 - a_1 x = x(F(x) - a_0) + x^2 F(x)$$
+$$F(x) - 1 - x = xF(x) - x + x^2 F(x)$$
+$$F(x)(1 - x - x^2) = 1$$
+$$F(x) = \frac{1}{1 - x - x^2}$$
+
+Factor the denominator: $1 - x - x^2 = -(x^2 + x - 1) = -(x - r_1)(x - r_2)$ where $r_1 = \frac{-1+\sqrt{5}}{2}$, $r_2 = \frac{-1-\sqrt{5}}{2}$.
+
+Equivalently, $1 - x - x^2 = (1 - \phi x)(1 - \hat\phi x)$ where $\phi = \frac{1+\sqrt{5}}{2}$ and $\hat\phi = \frac{1-\sqrt{5}}{2}$.
+
+Partial fractions: $\frac{1}{(1-\phi x)(1-\hat\phi x)} = \frac{A}{1-\phi x} + \frac{B}{1-\hat\phi x}$.
+
+Setting $x = 1/\phi$: $A = \frac{1}{1 - \hat\phi/\phi} = \frac{\phi}{\phi - \hat\phi} = \frac{\phi}{\sqrt{5}}$.
+
+Similarly $B = \frac{-\hat\phi}{\sqrt{5}}$.
+
+Therefore $a_n = \frac{\phi^{n+1} - \hat\phi^{n+1}}{\sqrt{5}} = \frac{1}{\sqrt{5}}\left(\phi^{n+1} - \hat\phi^{n+1}\right)$.
+
+(Note: with $a_0 = a_1 = 1$, the formula gives $a_n = F_{n+1}$ in the standard Fibonacci indexing where $F_1 = F_2 = 1$.) $\checkmark$
+
+---
+
+## Q10 --- Mathematical Induction and Synthesis
+
+**(a)** **Base case:** $n = 2$ is itself prime, so it is a product of primes (a product with one factor). $\checkmark$
+
+**Inductive step (strong induction):** Assume every integer $k$ with $2 \leq k < n$ can be written as a product of primes. Consider $n$. If $n$ is prime, we are done. If $n$ is composite, then $n = ab$ where $2 \leq a, b < n$. By the induction hypothesis, both $a$ and $b$ can be written as products of primes. Therefore $n = ab$ is a product of primes (the concatenation of the prime factorizations of $a$ and $b$). $\checkmark$
+
+**(b)** **Base case:** $T(1) = 1 = 2^1 - 1$. $\checkmark$
+
+**Inductive step:** Assume $T(k) = 2^k - 1$ for some $k \geq 1$. Then:
+
+$$T(k+1) = 2T(k) + 1 = 2(2^k - 1) + 1 = 2^{k+1} - 2 + 1 = 2^{k+1} - 1. \checkmark$$
+
+By induction, $T(n) = 2^n - 1$ for all $n \geq 1$. $\checkmark$
+
+**(c)** **(C)** Proof by contradiction. The classic proof assumes $\sqrt{2} = p/q$ in lowest terms, then derives that both $p$ and $q$ must be even, contradicting the lowest-terms assumption. $\checkmark$

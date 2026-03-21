@@ -1,6 +1,6 @@
 # Lesson 66: Interpretability -- Singular Learning Theory
 
-[< Circuits and Features](lesson-65-interp-circuits.md) | [Back to TOC](../README.md) | [Next: Phase 5 -- Turing Machines >](../phase5-math-enrichment/lesson-67-turing-machines.md)
+[< Circuits and Features](lesson-65-interp-circuits.md) | [Back to TOC](../README.md) | [Next: Phase 5 -- Discrete Math >](../phase5-math-enrichment/lesson-67-logic-propositions.md)
 
 ---
 

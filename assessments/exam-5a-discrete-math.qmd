@@ -1,0 +1,161 @@
+---
+title: "Exam 5A: Discrete Mathematics"
+subtitle: "Lessons 67--71 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & 60 minutes \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator. \\
+\textbf{Format} & 10 questions. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers logic and proof techniques, sets and functions, combinatorics, graph theory, and generating functions. Partial credit is available for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Logical Equivalences and Proof Techniques
+
+**(a)** Using truth tables or logical equivalences, prove that $P \to (Q \to R)$ is logically equivalent to $(P \land Q) \to R$.
+
+**(b)** Prove by contradiction: if $n^2$ is even, then $n$ is even.
+
+**(c)** Why does a proof by contradiction of the statement "if $P$ then $Q$" begin by assuming $P \land \lnot Q$? Explain the logical structure in one or two sentences.
+
+---
+
+## Q2 (10 pts) --- Quantifiers and Negation
+
+Consider the statement: "For every $\varepsilon > 0$, there exists a $\delta > 0$ such that for all $x$, if $|x - a| < \delta$ then $|f(x) - L| < \varepsilon$."
+
+**(a)** Write this statement in formal logical notation using quantifiers.
+
+**(b)** Write the formal negation of this statement (push the negation through all quantifiers and connectives).
+
+**(c)** Explain in plain language what the negation asserts -- that is, what it means for a function to *not* have limit $L$ at point $a$.
+
+---
+
+## Q3 (10 pts) --- Sets and Cardinality (Multiple Choice + Short Answer)
+
+**(a)** (Multiple Choice) Which of the following sets is uncountable?
+
+- (A) The set of all finite subsets of $\mathbb{N}$
+- (B) The set of all rational numbers in $(0,1)$
+- (C) The set of all functions $f : \mathbb{N} \to \{0, 1\}$
+- (D) The set $\mathbb{Z} \times \mathbb{Z}$
+
+**(b)** Prove your answer to (a) by giving a brief argument for why the correct choice is uncountable and one of the others is countable.
+
+---
+
+## Q4 (10 pts) --- Functions: Injectivity, Surjectivity, and Composition
+
+Let $f : A \to B$ and $g : B \to C$.
+
+**(a)** Prove that if $g \circ f$ is injective, then $f$ is injective.
+
+**(b)** Give a concrete example where $g \circ f$ is injective but $g$ is not injective. Specify the sets and functions explicitly.
+
+**(c)** (Multiple Choice) If $f$ is surjective and $g$ is surjective, then $g \circ f$ is:
+
+- (A) Always injective
+- (B) Always surjective
+- (C) Always bijective
+- (D) None of the above necessarily
+
+---
+
+## Q5 (10 pts) --- Combinatorics and Counting
+
+A committee of 5 people is to be chosen from a group of 8 mathematicians and 6 computer scientists.
+
+**(a)** How many committees can be formed with no restrictions?
+
+**(b)** How many committees have exactly 3 mathematicians and 2 computer scientists?
+
+**(c)** How many committees have at least one computer scientist? Use complementary counting.
+
+**(d)** Now the 5-person committee must choose a chair and a secretary from among its members (chair $\neq$ secretary). In how many ways can the committee be formed *and* these two roles assigned?
+
+---
+
+## Q6 (10 pts) --- Inclusion-Exclusion and the Pigeonhole Principle
+
+**(a)** At a university, 120 students study at least one of French (F), German (G), or Spanish (S). We know $|F| = 65$, $|G| = 45$, $|S| = 42$, $|F \cap G| = 20$, $|F \cap S| = 25$, $|G \cap S| = 15$. Use inclusion-exclusion to find $|F \cap G \cap S|$.
+
+**(b)** Prove that among any 13 integers, there exist two whose difference is divisible by 12. State clearly which form of the pigeonhole principle you are using.
+
+---
+
+## Q7 (10 pts) --- Graph Theory Fundamentals
+
+Consider the complete bipartite graph $K_{3,4}$.
+
+**(a)** How many vertices and edges does $K_{3,4}$ have?
+
+**(b)** Is $K_{3,4}$ planar? Justify your answer using Euler's formula or a known planarity criterion.
+
+**(c)** What is the chromatic number of $K_{3,4}$? Prove your answer by exhibiting a valid coloring and arguing that fewer colors are insufficient.
+
+**(d)** (Multiple Choice) Which of the following graphs has an Euler circuit?
+
+- (A) $K_4$ (complete graph on 4 vertices)
+- (B) $K_{3,3}$ (complete bipartite graph)
+- (C) $K_5$ (complete graph on 5 vertices)
+- (D) $K_{2,3}$ (complete bipartite graph)
+
+---
+
+## Q8 (10 pts) --- Trees and Spanning Trees
+
+**(a)** Prove that every tree on $n \geq 2$ vertices has at least two leaves (vertices of degree 1). You may use the fact that a tree on $n$ vertices has exactly $n - 1$ edges.
+
+**(b)** How many labeled spanning trees does $K_4$ (the complete graph on 4 labeled vertices) have? Verify using Cayley's formula and by direct enumeration.
+
+---
+
+## Q9 (10 pts) --- Generating Functions
+
+Let $a_n$ denote the number of ways to make change for $n$ cents using coins of value 1, 5, and 10.
+
+**(a)** Write the ordinary generating function for the sequence $\{a_n\}$ as a product of three geometric series.
+
+**(b)** The recurrence $a_n = a_{n-1} + a_{n-2}$ with $a_0 = 1$, $a_1 = 1$ defines the Fibonacci sequence (with this indexing). Set up the generating function $F(x) = \sum_{n=0}^{\infty} a_n x^n$, derive the closed form $F(x) = \frac{1}{1 - x - x^2}$, and use partial fractions to express $a_n$ in terms of the golden ratio $\phi = \frac{1+\sqrt{5}}{2}$.
+
+---
+
+## Q10 (10 pts) --- Mathematical Induction and Synthesis
+
+**(a)** Use strong induction to prove that every integer $n \geq 2$ can be written as a product of primes.
+
+**(b)** The Towers of Hanoi puzzle with $n$ disks satisfies $T(n) = 2T(n-1) + 1$ with $T(1) = 1$. Prove by induction that $T(n) = 2^n - 1$.
+
+**(c)** (Multiple Choice) Which proof technique is most directly used to show that $\sqrt{2}$ is irrational?
+
+- (A) Direct proof
+- (B) Proof by contrapositive
+- (C) Proof by contradiction
+- (D) Mathematical induction

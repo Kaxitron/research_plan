@@ -1,0 +1,745 @@
+---
+title: "Coding Project: Advanced Algorithms"
+subtitle: "Probabilistic Algorithm Analysis and Combinatorial Generation"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+---
+
+# Coding Project: Advanced Algorithms
+
+This project brings together three threads from the advanced algorithms block: empirical analysis of randomized algorithms, systematic generation of combinatorial objects, and network flow. Each part asks you to implement, experiment, and connect your observations to the theoretical results from Lessons 90--94.
+
+**Language:** Python (with NumPy and Matplotlib). You may use standard library modules (collections, itertools for *checking* your work, not for the implementations themselves).
+
+**Deliverables:** For each part, submit your code and a brief writeup (1--2 paragraphs per sub-task) interpreting your results in light of the theory.
+
+---
+
+## Part A: Empirical Algorithm Analysis -- Randomized Quicksort
+
+### A.1 Implement Randomized Quicksort
+
+Implement randomized quicksort with the following specifications:
+
+- The pivot is chosen uniformly at random from the current subarray.
+- Use in-place partitioning (Lomuto or Hoare scheme).
+- Instrument the code to count the exact number of comparisons performed.
+
+```python
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+def randomized_quicksort(arr, lo, hi, counter):
+    """
+    Sort arr[lo..hi] in place using randomized quicksort.
+
+    Parameters
+    ----------
+    arr : list
+        The array to sort.
+    lo : int
+        Lower index (inclusive).
+    hi : int
+        Upper index (inclusive).
+    counter : list
+        A single-element list [count] tracking the number of comparisons.
+
+    Returns
+    -------
+    None (sorts in place, updates counter).
+    """
+    if lo >= hi:
+        return
+
+    # Choose random pivot and move to end
+    pivot_idx = random.randint(lo, hi)
+    arr[pivot_idx], arr[hi] = arr[hi], arr[pivot_idx]
+    pivot = arr[hi]
+
+    # Lomuto partition
+    i = lo
+    for j in range(lo, hi):
+        counter[0] += 1  # each comparison counted
+        if arr[j] <= pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    arr[i], arr[hi] = arr[hi], arr[i]
+
+    randomized_quicksort(arr, lo, i - 1, counter)
+    randomized_quicksort(arr, i + 1, hi, counter)
+```
+
+### A.2 Measure the Runtime Distribution
+
+For each value of n in {100, 500, 1000, 5000, 10000}:
+
+1. Generate a random permutation of {1, 2, ..., n}.
+2. Run randomized quicksort on a copy of this permutation.
+3. Record the number of comparisons.
+4. Repeat steps 1--3 for at least 1000 trials per n.
+5. Compute the mean, standard deviation, minimum, and maximum number of comparisons.
+
+```python
+def run_experiment(n_values, num_trials=1000):
+    """
+    Run randomized quicksort experiments and collect comparison counts.
+
+    Returns a dictionary mapping n -> list of comparison counts.
+    """
+    results = {}
+    for n in n_values:
+        counts = []
+        for _ in range(num_trials):
+            arr = list(range(1, n + 1))
+            random.shuffle(arr)
+            counter = [0]
+            randomized_quicksort(arr, 0, n - 1, counter)
+            counts.append(counter[0])
+        results[n] = counts
+        mean_c = np.mean(counts)
+        std_c = np.std(counts)
+        theoretical = 2 * n * np.log(n)  # 2n ln n
+        print(f"n={n:>6d}: mean={mean_c:.1f}, std={std_c:.1f}, "
+              f"theoretical 2n*ln(n)={theoretical:.1f}, "
+              f"ratio={mean_c/theoretical:.4f}")
+    return results
+```
+
+### A.3 Compare to Theoretical Prediction
+
+The theoretical expected number of comparisons is 2n * ln(n) + O(n), which equals approximately 1.386 * n * log_2(n).
+
+Tasks:
+
+1. **Plot mean comparisons vs n.** Overlay the theoretical curve 2n * ln(n). Do they converge?
+
+2. **Plot the ratio** (mean comparisons) / (2n ln n) as a function of n. This should approach 1 as n grows.
+
+3. **Plot the distribution** of comparison counts for n = 10000 as a histogram. Is it approximately Gaussian? The theory predicts that the standard deviation is O(n), so the coefficient of variation (std/mean) should decrease as O(1/log n).
+
+4. **Worst-case input?** Run the same experiment but with a *sorted* array as input (instead of a random permutation). Does the distribution change? It should not -- that is the point of randomized quicksort.
+
+```python
+def plot_convergence(results, n_values):
+    """Plot empirical vs theoretical comparison counts."""
+    means = [np.mean(results[n]) for n in n_values]
+    theoretical = [2 * n * np.log(n) for n in n_values]
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Plot 1: Absolute comparison
+    axes[0].plot(n_values, means, 'o-', label='Empirical mean')
+    axes[0].plot(n_values, theoretical, 's--', label='2n ln(n)')
+    axes[0].set_xlabel('n')
+    axes[0].set_ylabel('Comparisons')
+    axes[0].set_title('Mean Comparisons vs Theoretical')
+    axes[0].legend()
+
+    # Plot 2: Ratio
+    ratios = [m / t for m, t in zip(means, theoretical)]
+    axes[1].plot(n_values, ratios, 'o-')
+    axes[1].axhline(y=1.0, color='r', linestyle='--', label='Ratio = 1')
+    axes[1].set_xlabel('n')
+    axes[1].set_ylabel('Empirical / Theoretical')
+    axes[1].set_title('Convergence of Ratio')
+    axes[1].legend()
+
+    # Plot 3: Distribution for largest n
+    largest_n = max(n_values)
+    axes[2].hist(results[largest_n], bins=50, density=True, alpha=0.7)
+    axes[2].set_xlabel('Comparisons')
+    axes[2].set_ylabel('Density')
+    axes[2].set_title(f'Distribution of Comparisons (n={largest_n})')
+
+    plt.tight_layout()
+    plt.savefig('quicksort_analysis.pdf')
+    plt.show()
+```
+
+### A.4 Reflection Questions
+
+Answer in your writeup:
+
+- Why does the ratio empirical/theoretical converge to a value slightly different from 1.0? (Hint: the O(n) lower-order terms.)
+- The variance of comparison count is Theta(n^2). Verify this empirically by plotting std(comparisons) vs n on a log-log scale. What slope do you observe?
+- How many trials are needed for the empirical mean to be within 1% of the true mean with 95% confidence? Use the central limit theorem.
+
+---
+
+## Part B: Combinatorial Generation
+
+### B.1 Knuth's Algorithm L -- Lexicographic Permutations
+
+Implement Algorithm L exactly as described by Knuth:
+
+```python
+def algorithm_L(n):
+    """
+    Generate all permutations of [0, 1, ..., n-1] in lexicographic order
+    using Knuth's Algorithm L.
+
+    Yields each permutation as a tuple.
+    """
+    a = list(range(n))
+    yield tuple(a)
+
+    while True:
+        # L1: Find rightmost ascent
+        j = n - 2
+        while j >= 0 and a[j] >= a[j + 1]:
+            j -= 1
+        if j < 0:
+            return  # Last permutation reached
+
+        # L2: Find rightmost element greater than a[j]
+        l = n - 1
+        while a[l] <= a[j]:
+            l -= 1
+
+        # L3: Swap
+        a[j], a[l] = a[l], a[j]
+
+        # L4: Reverse suffix
+        a[j + 1:] = a[j + 1:][::-1]
+
+        yield tuple(a)
+```
+
+**Verification tasks:**
+
+1. Generate all permutations of {0, 1, 2, 3} and verify there are 24 = 4!.
+2. Verify lexicographic ordering: each permutation, interpreted as a number, is strictly greater than the previous.
+3. Count the average number of array assignments per call to the next-permutation step. Compare to the theoretical prediction of e - 1.
+
+```python
+def verify_algorithm_L(n):
+    """Verify correctness and measure efficiency of Algorithm L."""
+    perms = list(algorithm_L(n))
+
+    # Check count
+    import math
+    assert len(perms) == math.factorial(n), \
+        f"Expected {math.factorial(n)} permutations, got {len(perms)}"
+
+    # Check lexicographic order
+    for i in range(len(perms) - 1):
+        assert perms[i] < perms[i + 1], \
+            f"Not in lex order: {perms[i]} >= {perms[i+1]}"
+
+    # Check completeness (all permutations present)
+    assert len(set(perms)) == len(perms), "Duplicate permutations found"
+
+    print(f"Algorithm L verified for n={n}: "
+          f"{len(perms)} permutations in lexicographic order.")
+```
+
+### B.2 Integer Partition Generator
+
+Implement a generator for all integer partitions of n in reverse lexicographic order:
+
+```python
+def partitions(n):
+    """
+    Generate all partitions of integer n in reverse lexicographic order.
+
+    Each partition is yielded as a tuple of parts in non-increasing order.
+
+    Example: partitions(5) yields:
+    (5,), (4, 1), (3, 2), (3, 1, 1), (2, 2, 1), (2, 1, 1, 1), (1, 1, 1, 1, 1)
+    """
+    if n == 0:
+        yield ()
+        return
+
+    # Start with the single-part partition [n]
+    a = [n]
+    yield tuple(a)
+
+    while a != [1] * n:
+        # Find the rightmost part greater than 1
+        # Remove 1 from it and redistribute
+        # the freed amount into parts no larger than the decreased part
+
+        # Collect trailing 1s
+        trailing_ones = 0
+        while a[-1] == 1:
+            trailing_ones += 1
+            a.pop()
+
+        # Decrease the last non-one part
+        a[-1] -= 1
+        remainder = trailing_ones + 1  # the 1 we removed plus the trailing 1s
+
+        # Fill with copies of a[-1], then a leftover if needed
+        last_part = a[-1]
+        while remainder > 0:
+            part = min(last_part, remainder)
+            a.append(part)
+            remainder -= part
+
+        yield tuple(a)
+
+
+def verify_partitions(n):
+    """Verify the partition generator against known values."""
+    # Known partition counts: p(1)=1, p(2)=2, ..., p(10)=42
+    known = {0: 1, 1: 1, 2: 2, 3: 3, 4: 5, 5: 7, 6: 11,
+             7: 15, 8: 22, 9: 30, 10: 42}
+
+    parts = list(partitions(n))
+
+    # Verify each partition sums to n
+    for p in parts:
+        assert sum(p) == n, f"Partition {p} does not sum to {n}"
+        # Verify non-increasing order
+        for i in range(len(p) - 1):
+            assert p[i] >= p[i + 1], f"Partition {p} not in non-increasing order"
+
+    # Verify count
+    if n in known:
+        assert len(parts) == known[n], \
+            f"Expected p({n})={known[n]}, got {len(parts)}"
+
+    # Verify reverse lexicographic order
+    for i in range(len(parts) - 1):
+        assert parts[i] > parts[i + 1], \
+            f"Not in reverse lex order: {parts[i]} vs {parts[i+1]}"
+
+    print(f"Partition generator verified for n={n}: "
+          f"{len(parts)} partitions in reverse lexicographic order.")
+```
+
+### B.3 Gray Code Generator
+
+Implement the reflected binary Gray code:
+
+```python
+def gray_code(n):
+    """
+    Generate all 2^n Gray codes of n bits.
+
+    Yields integers whose binary representations form the Gray code sequence.
+    Consecutive values differ in exactly one bit.
+    """
+    for i in range(2 ** n):
+        yield i ^ (i >> 1)
+
+
+def gray_code_bits(n):
+    """
+    Generate Gray codes as n-bit strings, also reporting which bit changed.
+    """
+    prev = None
+    for code in gray_code(n):
+        bits = format(code, f'0{n}b')
+        if prev is not None:
+            # Find the changed bit
+            diff = code ^ prev
+            changed_bit = diff.bit_length() - 1
+            yield bits, changed_bit
+        else:
+            yield bits, None
+        prev = code
+
+
+def verify_gray_code(n):
+    """Verify Gray code properties."""
+    codes = list(gray_code(n))
+
+    # Check count
+    assert len(codes) == 2 ** n, \
+        f"Expected {2**n} codes, got {len(codes)}"
+
+    # Check all distinct
+    assert len(set(codes)) == 2 ** n, "Duplicate Gray codes"
+
+    # Check single-bit difference between consecutive codes
+    for i in range(len(codes) - 1):
+        diff = codes[i] ^ codes[i + 1]
+        assert diff != 0 and (diff & (diff - 1)) == 0, \
+            f"Codes {codes[i]} and {codes[i+1]} differ in more than one bit"
+
+    # Verify the changed-bit pattern matches the ruler function
+    for i in range(1, len(codes)):
+        diff = codes[i - 1] ^ codes[i]
+        changed_bit = diff.bit_length() - 1
+        # The ruler function: position of lowest set bit of i
+        ruler = (i & -i).bit_length() - 1
+        assert changed_bit == ruler, \
+            f"At step {i}: changed bit {changed_bit} != ruler {ruler}"
+
+    print(f"Gray code verified for n={n}: "
+          f"{len(codes)} codes, all single-bit transitions, "
+          f"ruler function confirmed.")
+```
+
+**Analysis tasks:**
+
+1. For n = 4, print the full Gray code sequence alongside the standard binary counting sequence. Observe the single-bit-change property visually.
+
+2. Verify that the bit that changes at step i (from code i-1 to code i) is the position of the lowest set bit of i (the ruler function / 2-adic valuation).
+
+3. Use your Gray code generator to enumerate all subsets of {1, ..., 8} in Gray code order. For each consecutive pair, verify that exactly one element is added or removed.
+
+---
+
+## Part C: Network Flow -- Edmonds-Karp Implementation
+
+### C.1 Implement Edmonds-Karp (Ford-Fulkerson with BFS)
+
+```python
+from collections import deque
+
+class FlowNetwork:
+    """
+    A directed flow network supporting the Edmonds-Karp algorithm.
+
+    Vertices are integers 0, 1, ..., n-1.
+    """
+
+    def __init__(self, n):
+        """Initialize a flow network with n vertices."""
+        self.n = n
+        self.capacity = [[0] * n for _ in range(n)]
+        self.flow = [[0] * n for _ in range(n)]
+        self.adj = [[] for _ in range(n)]  # adjacency list
+
+    def add_edge(self, u, v, cap):
+        """Add a directed edge from u to v with the given capacity."""
+        self.capacity[u][v] += cap
+        if v not in self.adj[u]:
+            self.adj[u].append(v)
+        if u not in self.adj[v]:
+            self.adj[v].append(u)  # for residual backward edge
+
+    def bfs(self, source, sink):
+        """
+        BFS to find a shortest augmenting path in the residual graph.
+
+        Returns the parent array if an augmenting path exists,
+        or None if no path exists.
+        """
+        parent = [-1] * self.n
+        visited = [False] * self.n
+        visited[source] = True
+        queue = deque([source])
+
+        while queue:
+            u = queue.popleft()
+            for v in self.adj[u]:
+                residual = self.capacity[u][v] - self.flow[u][v]
+                if not visited[v] and residual > 0:
+                    visited[v] = True
+                    parent[v] = u
+                    if v == sink:
+                        return parent
+                    queue.append(v)
+
+        return None
+
+    def edmonds_karp(self, source, sink):
+        """
+        Compute maximum flow from source to sink using Edmonds-Karp.
+
+        Returns the maximum flow value.
+        Also populates self.flow with the actual flow on each edge.
+        """
+        max_flow = 0
+        augmentation_count = 0
+
+        while True:
+            parent = self.bfs(source, sink)
+            if parent is None:
+                break  # No augmenting path exists
+
+            # Find bottleneck capacity along the path
+            path_flow = float('inf')
+            v = sink
+            while v != source:
+                u = parent[v]
+                residual = self.capacity[u][v] - self.flow[u][v]
+                path_flow = min(path_flow, residual)
+                v = u
+
+            # Update flow along the path
+            v = sink
+            path = []
+            while v != source:
+                u = parent[v]
+                self.flow[u][v] += path_flow
+                self.flow[v][u] -= path_flow
+                path.append(v)
+                v = u
+            path.append(source)
+            path.reverse()
+
+            max_flow += path_flow
+            augmentation_count += 1
+            print(f"  Augmentation {augmentation_count}: "
+                  f"path {' -> '.join(map(str, path))}, "
+                  f"flow += {path_flow}")
+
+        return max_flow
+
+    def min_cut(self, source):
+        """
+        After running edmonds_karp, find the min-cut.
+
+        Returns (S, T) where S is the set of vertices reachable from
+        source in the residual graph, and T = V - S.
+        """
+        visited = [False] * self.n
+        visited[source] = True
+        queue = deque([source])
+
+        while queue:
+            u = queue.popleft()
+            for v in self.adj[u]:
+                residual = self.capacity[u][v] - self.flow[u][v]
+                if not visited[v] and residual > 0:
+                    visited[v] = True
+                    queue.append(v)
+
+        S = {i for i in range(self.n) if visited[i]}
+        T = {i for i in range(self.n) if not visited[i]}
+        return S, T
+
+    def get_cut_edges(self, S, T):
+        """Return the edges crossing from S to T with their capacities."""
+        cut_edges = []
+        for u in S:
+            for v in T:
+                if self.capacity[u][v] > 0:
+                    cut_edges.append((u, v, self.capacity[u][v]))
+        return cut_edges
+```
+
+### C.2 Solve a Max-Flow Problem
+
+Apply your implementation to a concrete network:
+
+```python
+def example_network():
+    """
+    Construct and solve the following network:
+
+    Vertices: 0 (source), 1, 2, 3, 4, 5 (sink)
+
+    Edges and capacities:
+      0 -> 1 : 16
+      0 -> 2 : 13
+      1 -> 2 : 10
+      1 -> 3 : 12
+      2 -> 1 :  4
+      2 -> 4 : 14
+      3 -> 2 :  9
+      3 -> 5 : 20
+      4 -> 3 :  7
+      4 -> 5 :  4
+
+    This is the classic CLRS example (Figure 26.6).
+    """
+    net = FlowNetwork(6)
+    edges = [
+        (0, 1, 16), (0, 2, 13), (1, 2, 10), (1, 3, 12),
+        (2, 1, 4), (2, 4, 14), (3, 2, 9), (3, 5, 20),
+        (4, 3, 7), (4, 5, 4)
+    ]
+    for u, v, cap in edges:
+        net.add_edge(u, v, cap)
+
+    print("=== Solving Max Flow (CLRS Example) ===")
+    print(f"Network: {len(edges)} edges, 6 vertices")
+    print()
+
+    max_flow = net.edmonds_karp(0, 5)
+    print(f"\nMaximum flow: {max_flow}")
+
+    return net, max_flow
+```
+
+### C.3 Demonstrate Max-Flow Min-Cut Theorem
+
+```python
+def demonstrate_max_flow_min_cut(net, source, sink, max_flow):
+    """
+    Demonstrate the max-flow min-cut theorem on the solved network.
+
+    Shows that:
+    1. The max flow value equals the min cut capacity.
+    2. Identifies the specific cut edges.
+    3. Verifies flow conservation at every non-source/sink vertex.
+    """
+    print("\n=== Max-Flow Min-Cut Demonstration ===")
+
+    # Find the min cut
+    S, T = net.min_cut(source)
+    print(f"Source side S = {sorted(S)}")
+    print(f"Sink side   T = {sorted(T)}")
+
+    # Compute cut capacity
+    cut_edges = net.get_cut_edges(S, T)
+    cut_capacity = sum(cap for _, _, cap in cut_edges)
+
+    print(f"\nCut edges (S -> T):")
+    for u, v, cap in cut_edges:
+        print(f"  {u} -> {v}, capacity = {cap}, flow = {net.flow[u][v]}")
+
+    print(f"\nMin-cut capacity: {cut_capacity}")
+    print(f"Max flow value:   {max_flow}")
+
+    assert cut_capacity == max_flow, \
+        f"Max-flow ({max_flow}) != Min-cut ({cut_capacity})!"
+    print("VERIFIED: Max-flow = Min-cut (theorem confirmed)")
+
+    # Verify flow conservation
+    print("\nFlow conservation check:")
+    for v in range(net.n):
+        if v == source or v == sink:
+            continue
+        flow_in = sum(max(0, net.flow[u][v]) for u in range(net.n))
+        flow_out = sum(max(0, net.flow[v][u]) for u in range(net.n))
+        print(f"  Vertex {v}: flow_in = {flow_in}, flow_out = {flow_out}")
+        assert flow_in == flow_out, \
+            f"Conservation violated at vertex {v}!"
+    print("VERIFIED: Flow conservation holds at all internal vertices")
+
+
+def second_example():
+    """
+    A more complex example to further test the implementation.
+
+    This network has multiple possible augmenting path orderings and
+    demonstrates how BFS (Edmonds-Karp) avoids the exponential
+    worst case of arbitrary augmenting paths.
+
+    Vertices: 0 (source), 1, 2, 3, 4, 5, 6, 7 (sink)
+    """
+    net = FlowNetwork(8)
+    edges = [
+        (0, 1, 10), (0, 2, 10), (0, 3, 10),
+        (1, 4, 5),  (1, 5, 8),
+        (2, 4, 8),  (2, 5, 5),  (2, 6, 3),
+        (3, 5, 4),  (3, 6, 10),
+        (4, 7, 10), (5, 7, 15), (6, 7, 10)
+    ]
+    for u, v, cap in edges:
+        net.add_edge(u, v, cap)
+
+    print("\n=== Second Example (8 vertices) ===")
+    max_flow = net.edmonds_karp(0, 7)
+    print(f"\nMaximum flow: {max_flow}")
+    demonstrate_max_flow_min_cut(net, 0, 7, max_flow)
+
+    return net, max_flow
+```
+
+### C.4 Analysis and Reflection
+
+After running both examples, answer the following:
+
+1. **Augmentation count.** How many augmenting paths did Edmonds-Karp find for each example? Compare to the theoretical worst case of O(VE) augmentations.
+
+2. **Path lengths.** Record the length (number of edges) of each augmenting path. Verify that path lengths are non-decreasing, as guaranteed by Edmonds-Karp.
+
+3. **Residual graph structure.** After termination, examine the residual graph. Verify that no s-t path exists (the BFS returns None).
+
+4. **Comparison to Ford-Fulkerson with DFS.** Implement a variant that uses DFS instead of BFS to find augmenting paths. Construct a network where DFS-based Ford-Fulkerson takes many more augmentations than Edmonds-Karp. (Hint: the classic counterexample uses two parallel paths with a cross-edge of capacity 1.)
+
+5. **Bipartite matching.** Use your flow network to solve a bipartite matching problem: given 5 workers and 5 jobs with a compatibility matrix, find a maximum matching. Construct the appropriate flow network (add source and sink, all capacities 1) and verify the result.
+
+```python
+def bipartite_matching_via_flow():
+    """
+    Solve a bipartite matching problem using max flow.
+
+    Workers: {w0, w1, w2, w3, w4}
+    Jobs:    {j0, j1, j2, j3, j4}
+
+    Compatibility (1 = worker can do job):
+        j0  j1  j2  j3  j4
+    w0:  1   1   0   0   0
+    w1:  0   1   1   0   0
+    w2:  1   0   0   1   0
+    w3:  0   0   1   1   1
+    w4:  0   0   0   0   1
+
+    Vertices: 0 = source, 1-5 = workers, 6-10 = jobs, 11 = sink
+    """
+    compatibility = [
+        [1, 1, 0, 0, 0],
+        [0, 1, 1, 0, 0],
+        [1, 0, 0, 1, 0],
+        [0, 0, 1, 1, 1],
+        [0, 0, 0, 0, 1],
+    ]
+
+    n_workers = 5
+    n_jobs = 5
+    source = 0
+    sink = n_workers + n_jobs + 1  # vertex 11
+    total_vertices = sink + 1
+
+    net = FlowNetwork(total_vertices)
+
+    # Source to workers (capacity 1 each)
+    for w in range(n_workers):
+        net.add_edge(source, w + 1, 1)
+
+    # Jobs to sink (capacity 1 each)
+    for j in range(n_jobs):
+        net.add_edge(n_workers + 1 + j, sink, 1)
+
+    # Worker-job edges (capacity 1 where compatible)
+    for w in range(n_workers):
+        for j in range(n_jobs):
+            if compatibility[w][j]:
+                net.add_edge(w + 1, n_workers + 1 + j, 1)
+
+    print("\n=== Bipartite Matching via Max Flow ===")
+    max_matching = net.edmonds_karp(source, sink)
+    print(f"\nMaximum matching size: {max_matching}")
+
+    # Extract the matching
+    print("Matching:")
+    for w in range(n_workers):
+        for j in range(n_jobs):
+            if net.flow[w + 1][n_workers + 1 + j] > 0:
+                print(f"  Worker {w} -> Job {j}")
+
+
+if __name__ == "__main__":
+    # Part A
+    print("=" * 60)
+    print("PART A: Randomized Quicksort Analysis")
+    print("=" * 60)
+    n_values = [100, 500, 1000, 5000, 10000]
+    results = run_experiment(n_values, num_trials=1000)
+    plot_convergence(results, n_values)
+
+    # Part B
+    print("\n" + "=" * 60)
+    print("PART B: Combinatorial Generation")
+    print("=" * 60)
+    for n in range(1, 7):
+        verify_algorithm_L(n)
+    for n in range(11):
+        verify_partitions(n)
+    for n in range(1, 6):
+        verify_gray_code(n)
+
+    # Part C
+    print("\n" + "=" * 60)
+    print("PART C: Network Flow (Edmonds-Karp)")
+    print("=" * 60)
+    net, mf = example_network()
+    demonstrate_max_flow_min_cut(net, 0, 5, mf)
+    second_example()
+    bipartite_matching_via_flow()
+```

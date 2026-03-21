@@ -1,0 +1,226 @@
+---
+title: "Exam 5D: Abstract Algebra --- Answer Key"
+subtitle: "Lessons 80--84"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct formal work and clear reasoning. Partial credit is generous for correct setup with minor errors. Proofs must be logically complete; stating the result without justification earns at most 30%.
+
+\newpage
+
+## Q1 --- Group Axioms and Basic Properties
+
+**(a)** $\mathbb{Z}_6$ under addition mod 6:
+
+- *Closure:* For any $a, b \in \{0,\ldots,5\}$, $(a + b) \bmod 6 \in \{0,\ldots,5\}$. $\checkmark$
+- *Associativity:* Inherited from integer addition: $(a+b)+c \equiv a+(b+c) \pmod{6}$. $\checkmark$
+- *Identity:* $0$ is the identity since $a + 0 \equiv a \pmod{6}$. $\checkmark$
+- *Inverses:* The inverse of $a$ is $6 - a \pmod{6}$: $0 \leftrightarrow 0$, $1 \leftrightarrow 5$, $2 \leftrightarrow 4$, $3 \leftrightarrow 3$. $\checkmark$
+
+**(b)** An element $g$ generates $\mathbb{Z}_6$ iff $\gcd(g, 6) = 1$. The generators are $1$ and $5$.
+
+- $\langle 1 \rangle = \{0,1,2,3,4,5\}$. $\checkmark$
+- $\langle 5 \rangle = \{0,5,4,3,2,1\}$. $\checkmark$
+- $\langle 2 \rangle = \{0,2,4\}$, $\langle 3 \rangle = \{0,3\}$, $\langle 4 \rangle = \{0,4,2\}$ -- none generate the full group.
+
+**(c)** **(C)** $\mathbb{Z}$ under multiplication. The element 2 has no multiplicative inverse in $\mathbb{Z}$ (there is no integer $n$ with $2n = 1$). $\checkmark$
+
+---
+
+## Q2 --- Subgroups and Order
+
+**(a)** Subgroups of $\mathbb{Z}_{12}$ correspond to divisors of 12. Divisors: 1, 2, 3, 4, 6, 12.
+
+| Order | Subgroup | Generator |
+|-------|----------|-----------|
+| 1 | $\{0\}$ | $0$ |
+| 2 | $\{0, 6\}$ | $6$ |
+| 3 | $\{0, 4, 8\}$ | $4$ |
+| 4 | $\{0, 3, 6, 9\}$ | $3$ |
+| 6 | $\{0, 2, 4, 6, 8, 10\}$ | $2$ |
+| 12 | $\mathbb{Z}_{12}$ | $1$ |
+
+$\checkmark$
+
+**(b)** ($\Rightarrow$) If $g^k = e$, write $k = qn + r$ with $0 \leq r < n$ by the division algorithm. Then $e = g^k = g^{qn+r} = (g^n)^q g^r = e^q g^r = g^r$. Since $0 \leq r < n$ and $n$ is the smallest positive integer with $g^n = e$, we must have $r = 0$, so $n \mid k$. $\checkmark$
+
+($\Leftarrow$) If $n \mid k$, then $k = qn$ and $g^k = g^{qn} = (g^n)^q = e^q = e$. $\checkmark$
+
+**(c)** $S_3 = \{e, (12), (13), (23), (123), (132)\}$, $|S_3| = 6$.
+
+- Order 2: $(12)$, since $(12)^2 = e$ and $(12) \neq e$. $\checkmark$
+- Order 3: $(123)$, since $(123)^2 = (132)$, $(123)^3 = e$. $\checkmark$
+
+---
+
+## Q3 --- Cosets and Lagrange's Theorem
+
+**(a)** $H = \{0, 4, 8\}$. The cosets $a + H$ for $a = 0, 1, 2, 3$:
+
+- $0 + H = \{0, 4, 8\}$
+- $1 + H = \{1, 5, 9\}$
+- $2 + H = \{2, 6, 10\}$
+- $3 + H = \{3, 7, 11\}$
+
+These are all distinct and partition $\mathbb{Z}_{12}$. $\checkmark$
+
+**(b)** $|G| = 12$, $|H| = 3$, $[G:H] = 4$ (four cosets). Check: $12 = 3 \times 4$. $\checkmark$
+
+**(c)** Let $G$ be a group of prime order $p$ and let $g \in G$, $g \neq e$. The subgroup $\langle g \rangle$ has order $|\langle g \rangle|$ which divides $|G| = p$ by Lagrange's theorem. Since $p$ is prime, the only divisors are 1 and $p$. Since $g \neq e$, $|\langle g \rangle| \neq 1$, so $|\langle g \rangle| = p = |G|$. Therefore $\langle g \rangle = G$ and $G$ is cyclic. $\checkmark$
+
+---
+
+## Q4 --- Normal Subgroups and Quotient Groups
+
+**(a)** **(B)** $\langle (123) \rangle$ in $S_3$. $\checkmark$
+
+**(b)** $|\langle (123) \rangle| = 3$, so $[S_3 : \langle (123) \rangle] = 6/3 = 2$. A subgroup of index 2 is always normal: for any $g \in G$, either $g \in H$ (in which case $gH = H = Hg$) or $g \notin H$ (in which case $gH$ is the unique coset other than $H$, and $Hg$ is also the unique other coset, so $gH = Hg$). Therefore $\langle (123) \rangle$ is normal in $S_3$. $\checkmark$
+
+**(c)** Let $N = \langle (123) \rangle = \{e, (123), (132)\}$. The two cosets are:
+
+- $N = \{e, (123), (132)\}$
+- $(12)N = \{(12), (12)(123), (12)(132)\} = \{(12), (23), (13)\}$
+
+(Note: $(12)(123) = (23)$ and $(12)(132) = (13)$.)
+
+The quotient $S_3/N$ has two elements: $\{N, (12)N\}$. Group table:
+
+| $\cdot$ | $N$ | $(12)N$ |
+|---------|-----|---------|
+| $N$ | $N$ | $(12)N$ |
+| $(12)N$ | $(12)N$ | $N$ |
+
+This is isomorphic to $\mathbb{Z}_2$. $\checkmark$
+
+---
+
+## Q5 --- Homomorphisms and the First Isomorphism Theorem
+
+**(a)** $\phi(n + m) = (n + m) \bmod 10 = (n \bmod 10 + m \bmod 10) \bmod 10 = \phi(n) +_{10} \phi(m)$. The operation is preserved, so $\phi$ is a homomorphism. $\checkmark$
+
+**(b)** $\ker(\phi) = \{n \in \mathbb{Z} : n \bmod 10 = 0\} = 10\mathbb{Z} = \{\ldots, -20, -10, 0, 10, 20, \ldots\}$. $\checkmark$
+
+$\text{im}(\phi) = \mathbb{Z}_{10}$ (every element of $\mathbb{Z}_{10}$ is hit, since $\phi(k) = k$ for $k = 0, \ldots, 9$). $\checkmark$
+
+**(c)** **First Isomorphism Theorem:** If $\phi: G \to H$ is a group homomorphism, then $G / \ker(\phi) \cong \text{im}(\phi)$.
+
+Applying to our example: $\mathbb{Z} / \ker(\phi) = \mathbb{Z} / 10\mathbb{Z} \cong \text{im}(\phi) = \mathbb{Z}_{10}$. $\checkmark$
+
+---
+
+## Q6 --- Rings and Ideals
+
+**(a)** $\mathbb{Z}[x]$ is a ring:
+
+- Addition of polynomials is commutative and associative with identity $0$ (the zero polynomial) and inverses ($-f(x)$). $\checkmark$
+- Multiplication is associative and distributes over addition. $\checkmark$
+- Multiplicative identity: $1$ (the constant polynomial 1). $\checkmark$
+
+**(b)** $(x)$ is indeed $\{f(x) \in \mathbb{Z}[x] : f(0) = 0\}$ (polynomials with zero constant term). The quotient $\mathbb{Z}[x]/(x)$ is isomorphic to $\mathbb{Z}$ (evaluation at 0). Since $\mathbb{Z}$ is an integral domain (no zero divisors), $(x)$ is a prime ideal. $\checkmark$
+
+**(c)** **(C)** 4, because $4 \cdot 3 = 12 \equiv 0 \pmod{12}$, with $4 \neq 0$ and $3 \neq 0$. $\checkmark$
+
+1 is a unit, and 5 and 7 are units in $\mathbb{Z}_{12}$ since $5 \cdot 5 = 25 \equiv 1$ and $7 \cdot 7 = 49 \equiv 1$. Units are never zero divisors.
+
+---
+
+## Q7 --- Fields and Polynomial Factorization
+
+**(a)** Multiplicative inverses in $\mathbb{Z}_5$:
+
+- $1^{-1} = 1$ (since $1 \cdot 1 = 1$)
+- $2^{-1} = 3$ (since $2 \cdot 3 = 6 \equiv 1$)
+- $3^{-1} = 2$ (since $3 \cdot 2 = 6 \equiv 1$)
+- $4^{-1} = 4$ (since $4 \cdot 4 = 16 \equiv 1$)
+
+Every nonzero element has an inverse, confirming $\mathbb{Z}_5$ is a field. $\checkmark$
+
+**(b)** Test roots of $x^2 + 1$ in $\mathbb{Z}_5$:
+
+- $0^2 + 1 = 1 \neq 0$
+- $1^2 + 1 = 2 \neq 0$
+- $2^2 + 1 = 5 \equiv 0$. Root found: $x = 2$. $\checkmark$
+- $3^2 + 1 = 10 \equiv 0$. Root found: $x = 3$. $\checkmark$
+
+So $x^2 + 1 = (x - 2)(x - 3) = (x + 3)(x + 2)$ over $\mathbb{Z}_5$. (Verify: $(x-2)(x-3) = x^2 - 5x + 6 = x^2 + 0x + 1 = x^2 + 1$ in $\mathbb{Z}_5$.) $\checkmark$
+
+**(c)** Test all elements of $\mathbb{Z}_3$ in $x^2 + 1$:
+
+- $0^2 + 1 = 1 \neq 0$
+- $1^2 + 1 = 2 \neq 0$
+- $2^2 + 1 = 5 \equiv 2 \neq 0$
+
+No roots, and since $x^2 + 1$ is degree 2, having no roots means it is irreducible over $\mathbb{Z}_3$. $\checkmark$
+
+The quotient $\mathbb{Z}_3[x]/(x^2 + 1)$ is therefore a field with $3^2 = 9$ elements. It is (isomorphic to) the finite field $\mathbb{F}_9$. Elements have the form $a + b\alpha$ where $\alpha^2 = -1 \equiv 2$ and $a, b \in \mathbb{Z}_3$. $\checkmark$
+
+---
+
+## Q8 --- Group Actions and Orbits
+
+**(a)** The action is $k \cdot j = ((j-1+k) \bmod 4) + 1$. This is cyclic rotation of $\{1,2,3,4\}$.
+
+For any $j \in X$: the orbit is $\{0 \cdot j, 1 \cdot j, 2 \cdot j, 3 \cdot j\} = \{1, 2, 3, 4\} = X$. Every element has orbit equal to all of $X$. $\checkmark$
+
+Stabilizer of $j$: $\text{Stab}(j) = \{k : k \cdot j = j\} = \{k : ((j-1+k) \bmod 4) + 1 = j\} = \{k : k \equiv 0 \pmod 4\} = \{0\}$. $\checkmark$
+
+**(b)** For each $x$: $|\text{Orb}(x)| = 4$, $|\text{Stab}(x)| = 1$, and $|G| = 4$. Check: $4 \cdot 1 = 4$. $\checkmark$
+
+**(c)** There is exactly 1 orbit (the entire set $X$).
+
+**Burnside's Lemma:** Number of orbits $= \frac{1}{|G|} \sum_{g \in G} |\text{Fix}(g)|$ where $\text{Fix}(g) = \{x \in X : g \cdot x = x\}$.
+
+- $g = 0$: $\text{Fix}(0) = X$, $|\text{Fix}(0)| = 4$.
+- $g = 1$: rotation by 1. No element maps to itself. $|\text{Fix}(1)| = 0$.
+- $g = 2$: rotation by 2. No fixed points. $|\text{Fix}(2)| = 0$.
+- $g = 3$: rotation by 3. No fixed points. $|\text{Fix}(3)| = 0$.
+
+Number of orbits $= \frac{1}{4}(4 + 0 + 0 + 0) = 1$. $\checkmark$
+
+---
+
+## Q9 --- Burnside's Lemma Application
+
+**(a)** The cyclic group $\mathbb{Z}_4 = \{r^0, r^1, r^2, r^3\}$ (rotations by $0, 90, 180, 270$ degrees) acts on the $2^4 = 16$ possible colorings. $|G| = 4$. $\checkmark$
+
+**(b)** Count fixed colorings for each rotation:
+
+- $r^0$ (identity): all 16 colorings are fixed. $|\text{Fix}(r^0)| = 16$. $\checkmark$
+- $r^1$ (rotate 90 degrees): a coloring is fixed iff all 4 beads are the same color. $|\text{Fix}(r^1)| = 2$ (all red or all blue). $\checkmark$
+- $r^2$ (rotate 180 degrees): a coloring is fixed iff bead 1 = bead 3 and bead 2 = bead 4. $|\text{Fix}(r^2)| = 2 \times 2 = 4$. $\checkmark$
+- $r^3$ (rotate 270 degrees): same constraint as $r^1$. $|\text{Fix}(r^3)| = 2$. $\checkmark$
+
+**(c)** Burnside's lemma: number of distinct necklaces $= \frac{1}{4}(16 + 2 + 4 + 2) = \frac{24}{4} = 6$. $\checkmark$
+
+The 6 distinct necklaces are: RRRR, BRRR, BRBR, BBRR, BBBR, BBBB (where we list one representative from each orbit).
+
+---
+
+## Q10 --- Synthesis: Algebra and Machine Learning
+
+**Model answer (key points expected):**
+
+In a feedforward neural network with one hidden layer of $n$ neurons, permuting the neurons reorders the weight vectors but leaves the computed function unchanged. This symmetry is formalized as a group action: the symmetric group $S_n$ (all permutations of $n$ elements) acts on the weight space $W$ (the set of all possible weight configurations). For a permutation $\sigma \in S_n$, the action $\sigma \cdot w$ rearranges the rows and columns of the weight matrices according to $\sigma$.
+
+The set being acted upon is the weight space $W \subseteq \mathbb{R}^d$ (where $d$ is the total number of parameters). Two weight vectors $w_1$ and $w_2$ are in the same orbit if and only if they compute the same function, meaning $w_2 = \sigma \cdot w_1$ for some permutation $\sigma$.
+
+The Orbit-Stabilizer Theorem tells us $|\text{Orb}(w)| \cdot |\text{Stab}(w)| = |S_n| = n!$. A generic weight configuration has a trivial stabilizer ($|\text{Stab}(w)| = 1$), giving an orbit of size $n!$ -- meaning $n!$ weight vectors in the loss landscape all achieve exactly the same loss. This creates a highly non-convex loss surface with many equivalent minima, which are not distinct solutions but merely permuted copies of each other.
+
+Understanding these symmetries matters for optimization (gradient descent may waste time navigating between equivalent minima) and for interpretability (identifying which neurons correspond across different training runs requires accounting for permutation symmetry). Methods like weight matching and activation matching attempt to align networks by finding the right permutation, effectively identifying the orbit rather than individual representatives. $\checkmark$

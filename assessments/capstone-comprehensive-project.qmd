@@ -26,7 +26,7 @@ format:
 | | |
 |---|---|
 | **Estimated Time** | 10–12 hours (split across multiple sessions) |
-| **Prerequisites** | All 67 lessons + Exams 1 through 6b |
+| **Prerequisites** | All lessons + Exams 1 through 6b |
 | **Materials** | Python, PyTorch, TransformerLens, numpy, matplotlib, paper for proofs |
 | **Deliverable** | A GitHub repository or notebook containing all parts, with written analysis |
 

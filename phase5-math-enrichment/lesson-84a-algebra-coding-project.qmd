@@ -1,0 +1,1090 @@
+---
+title: "Coding Project: Abstract Algebra"
+subtitle: "Group Symmetry Explorer and Neural Network Weight Symmetry"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+---
+
+# Coding Project: Abstract Algebra
+
+[<-- Group Actions](lesson-84-group-actions.md) | [Back to TOC](../README.md) | [Next: Curves & Surfaces -->](lesson-85-curves-surfaces.md)
+
+---
+
+> **Why this project exists:** Abstract algebra becomes deeply understood only through computation and experimentation. This project bridges the gap between textbook definitions and working intuition by implementing group operations, verifying axioms programmatically, and directly demonstrating the weight space symmetries in neural networks that are central to Singular Learning Theory. By building these tools from scratch, you will internalize the algebraic structures that underpin the analysis of learning machines in AI alignment research.
+
+> **Estimated time:** 10--15 hours
+
+---
+
+## Part A: Implementing Group Operations
+
+### A.1 Building Cayley Tables
+
+Implement a system for constructing and displaying Cayley tables for finite groups. Start with the following groups and build general infrastructure that can handle any finite group defined by its operation.
+
+**Task A.1.1: Integers modulo n (Z_n)**
+
+```python
+import numpy as np
+from itertools import product as iter_product
+
+def cayley_table_Zn(n: int) -> np.ndarray:
+    """
+    Construct the Cayley table for Z_n under addition modulo n.
+
+    Parameters
+    ----------
+    n : int
+        The modulus defining the cyclic group Z_n.
+
+    Returns
+    -------
+    table : np.ndarray of shape (n, n)
+        table[i][j] = (i + j) mod n
+    """
+    table = np.zeros((n, n), dtype=int)
+    for i in range(n):
+        for j in range(n):
+            table[i][j] = (i + j) % n
+    return table
+
+
+def display_cayley_table(table: np.ndarray, elements: list[str] = None) -> None:
+    """
+    Print a formatted Cayley table with row/column headers.
+
+    Parameters
+    ----------
+    table : np.ndarray
+        The Cayley table (square matrix).
+    elements : list of str, optional
+        Labels for the group elements. If None, use integer indices.
+    """
+    n = table.shape[0]
+    if elements is None:
+        elements = [str(i) for i in range(n)]
+
+    header_width = max(len(e) for e in elements) + 2
+    header = " " * header_width + " | " + " ".join(
+        f"{e:>{header_width}}" for e in elements
+    )
+    print(header)
+    print("-" * len(header))
+    for i in range(n):
+        row_label = f"{elements[i]:>{header_width}}"
+        row_values = " ".join(
+            f"{elements[table[i][j]]:>{header_width}}" for j in range(n)
+        )
+        print(f"{row_label} | {row_values}")
+```
+
+Construct and display Cayley tables for Z_3, Z_4, Z_5, and Z_6. For each, verify visually that the table exhibits the Latin square property (every row and column is a permutation of the elements).
+
+**Task A.1.2: Symmetric group S_3**
+
+Represent permutations as tuples where `perm[i]` gives the image of `i`. Implement composition and inversion.
+
+```python
+from itertools import permutations
+
+def compose_permutations(p: tuple, q: tuple) -> tuple:
+    """
+    Compose two permutations: (p * q)(i) = p(q(i)).
+
+    Parameters
+    ----------
+    p, q : tuple of int
+        Permutations represented as tuples, where p[i] is the image of i.
+
+    Returns
+    -------
+    tuple : the composition p(q(.))
+    """
+    return tuple(p[q[i]] for i in range(len(p)))
+
+
+def invert_permutation(p: tuple) -> tuple:
+    """
+    Compute the inverse of a permutation.
+
+    Parameters
+    ----------
+    p : tuple of int
+
+    Returns
+    -------
+    tuple : the inverse permutation p^{-1}
+    """
+    inv = [0] * len(p)
+    for i, v in enumerate(p):
+        inv[v] = i
+    return tuple(inv)
+
+
+def symmetric_group(n: int) -> list[tuple]:
+    """
+    Generate all elements of S_n as tuples.
+
+    Parameters
+    ----------
+    n : int
+
+    Returns
+    -------
+    list of tuples : all permutations of (0, 1, ..., n-1)
+    """
+    return list(permutations(range(n)))
+
+
+def cayley_table_Sn(n: int) -> tuple[np.ndarray, list[tuple]]:
+    """
+    Construct the Cayley table for S_n.
+
+    Returns the table (indexed by position in the element list)
+    and the element list.
+    """
+    elements = symmetric_group(n)
+    elem_to_idx = {e: i for i, e in enumerate(elements)}
+    size = len(elements)
+    table = np.zeros((size, size), dtype=int)
+    for i, p in enumerate(elements):
+        for j, q in enumerate(elements):
+            product = compose_permutations(p, q)
+            table[i][j] = elem_to_idx[product]
+    return table, elements
+```
+
+Build and display the Cayley table for S_3. Verify it is NOT symmetric (S_3 is non-abelian) by finding specific elements where p * q differs from q * p.
+
+**Task A.1.3: Dihedral group D_4**
+
+Represent elements of D_4 as pairs (rotation_index, is_reflection). The group has 8 elements: rotations r^k for k = 0, 1, 2, 3 and reflections s * r^k.
+
+```python
+def dihedral_multiply(a: tuple, b: tuple, n: int) -> tuple:
+    """
+    Multiply two elements of D_n.
+
+    Elements are represented as (k, is_ref) where:
+      - k is the rotation index (0 to n-1)
+      - is_ref is a boolean indicating if reflection s is applied
+
+    The group relations are: r^n = e, s^2 = e, s*r = r^{-1}*s.
+
+    Multiplication rule:
+      (k1, False) * (k2, False) = ((k1 + k2) % n, False)
+      (k1, False) * (k2, True)  = ((k1 + k2) % n, True)
+      (k1, True)  * (k2, False) = ((k1 - k2) % n, True)
+      (k1, True)  * (k2, True)  = ((k1 - k2) % n, False)
+
+    Parameters
+    ----------
+    a, b : tuple of (int, bool)
+    n : int
+        The n in D_n.
+
+    Returns
+    -------
+    tuple of (int, bool)
+    """
+    k1, s1 = a
+    k2, s2 = b
+    if not s1:
+        return ((k1 + k2) % n, s2)
+    else:
+        return ((k1 - k2) % n, not s2)
+
+
+def dihedral_group(n: int) -> list[tuple]:
+    """Generate all elements of D_n."""
+    elements = []
+    for k in range(n):
+        elements.append((k, False))  # rotation r^k
+    for k in range(n):
+        elements.append((k, True))   # reflection s*r^k
+    return elements
+
+
+def dihedral_element_name(elem: tuple, n: int) -> str:
+    """Human-readable name for a dihedral group element."""
+    k, is_ref = elem
+    if not is_ref:
+        return "e" if k == 0 else f"r^{k}" if k > 1 else "r"
+    else:
+        return "s" if k == 0 else f"sr^{k}" if k > 1 else "sr"
+```
+
+Build the Cayley table for D_4. Identify the center Z(D_4) by finding elements that commute with everything.
+
+### A.2 Verifying Group Axioms Programmatically
+
+Implement a general-purpose group axiom verifier that takes a set of elements and a binary operation and checks all four axioms.
+
+```python
+def verify_group_axioms(
+    elements: list,
+    operation,
+    identity_candidate=None,
+    inverse_fn=None,
+    verbose: bool = True,
+) -> dict:
+    """
+    Verify the four group axioms for a finite set with a binary operation.
+
+    Parameters
+    ----------
+    elements : list
+        The elements of the candidate group.
+    operation : callable
+        A function (a, b) -> c implementing the group operation.
+    identity_candidate : optional
+        If provided, verify this is the identity. Otherwise, search for one.
+    inverse_fn : callable, optional
+        A function a -> a^{-1}. If None, search by brute force.
+    verbose : bool
+        If True, print diagnostic information.
+
+    Returns
+    -------
+    dict with keys:
+        'closure': bool
+        'associativity': bool
+        'identity': the identity element or None
+        'inverses': bool
+        'is_group': bool (all axioms satisfied)
+        'is_abelian': bool
+    """
+    elem_set = set(elements) if all(
+        isinstance(e, (int, str, tuple)) for e in elements
+    ) else None
+
+    results = {}
+
+    # --- Closure ---
+    closure_ok = True
+    for a in elements:
+        for b in elements:
+            product = operation(a, b)
+            in_set = product in elements if elem_set is None else product in elem_set
+            if not in_set:
+                closure_ok = False
+                if verbose:
+                    print(f"  Closure FAILED: {a} * {b} = {product} not in set")
+                break
+        if not closure_ok:
+            break
+    results['closure'] = closure_ok
+
+    # --- Associativity ---
+    assoc_ok = True
+    for a in elements:
+        for b in elements:
+            for c in elements:
+                lhs = operation(operation(a, b), c)
+                rhs = operation(a, operation(b, c))
+                if lhs != rhs:
+                    assoc_ok = False
+                    if verbose:
+                        print(
+                            f"  Associativity FAILED: "
+                            f"({a}*{b})*{c} = {lhs} != {a}*({b}*{c}) = {rhs}"
+                        )
+                    break
+            if not assoc_ok:
+                break
+        if not assoc_ok:
+            break
+    results['associativity'] = assoc_ok
+
+    # --- Identity ---
+    identity = None
+    if identity_candidate is not None:
+        e = identity_candidate
+        is_id = all(
+            operation(e, a) == a and operation(a, e) == a for a in elements
+        )
+        if is_id:
+            identity = e
+    else:
+        for e in elements:
+            is_id = all(
+                operation(e, a) == a and operation(a, e) == a for a in elements
+            )
+            if is_id:
+                identity = e
+                break
+    results['identity'] = identity
+
+    # --- Inverses ---
+    inverses_ok = True
+    if identity is not None:
+        for a in elements:
+            found_inverse = False
+            for b in elements:
+                if operation(a, b) == identity and operation(b, a) == identity:
+                    found_inverse = True
+                    break
+            if not found_inverse:
+                inverses_ok = False
+                if verbose:
+                    print(f"  Inverse FAILED: no inverse found for {a}")
+                break
+    else:
+        inverses_ok = False
+    results['inverses'] = inverses_ok
+
+    results['is_group'] = all([
+        results['closure'],
+        results['associativity'],
+        results['identity'] is not None,
+        results['inverses'],
+    ])
+
+    # --- Abelian check ---
+    abelian = True
+    for a in elements:
+        for b in elements:
+            if operation(a, b) != operation(b, a):
+                abelian = False
+                break
+        if not abelian:
+            break
+    results['is_abelian'] = abelian
+
+    if verbose:
+        print(f"  Closure:       {'PASS' if results['closure'] else 'FAIL'}")
+        print(f"  Associativity: {'PASS' if results['associativity'] else 'FAIL'}")
+        print(f"  Identity:      {results['identity']}")
+        print(f"  Inverses:      {'PASS' if results['inverses'] else 'FAIL'}")
+        print(f"  IS A GROUP:    {'YES' if results['is_group'] else 'NO'}")
+        print(f"  Abelian:       {'YES' if results['is_abelian'] else 'NO'}")
+
+    return results
+```
+
+Run this verifier on:
+
+1. Z_5 under addition mod 5 (should pass, abelian).
+2. S_3 under composition (should pass, non-abelian).
+3. D_4 under dihedral multiplication (should pass, non-abelian).
+4. Z_4 under multiplication mod 4 (should FAIL -- 0 and 2 have no multiplicative inverse).
+5. The set {1, 3, 5, 7} under multiplication mod 8 (should pass -- this is the group of units).
+
+### A.3 Subgroup Lattice Generation
+
+Implement a function that finds all subgroups of a finite group and constructs the subgroup lattice (as a directed graph of containment relations).
+
+```python
+from itertools import combinations
+
+def find_all_subgroups(elements: list, operation, identity) -> list[frozenset]:
+    """
+    Find all subgroups of a finite group by brute force.
+
+    Strategy: for every subset of elements, check if it forms a subgroup.
+    Optimization: only check subsets whose size divides |G| (Lagrange).
+
+    Parameters
+    ----------
+    elements : list
+    operation : callable
+    identity : the identity element
+
+    Returns
+    -------
+    list of frozenset : each frozenset is a subgroup
+    """
+    n = len(elements)
+    divisors = [d for d in range(1, n + 1) if n % d == 0]
+    subgroups = []
+
+    for d in divisors:
+        for subset in combinations(elements, d):
+            subset_set = set(subset)
+            if identity not in subset_set:
+                continue
+            # Check closure
+            is_subgroup = True
+            for a in subset:
+                for b in subset:
+                    if operation(a, b) not in subset_set:
+                        is_subgroup = False
+                        break
+                if not is_subgroup:
+                    break
+            # Check inverses (closure + finite implies inverses exist
+            # IF we have the identity; but let us verify)
+            if is_subgroup:
+                for a in subset:
+                    has_inv = any(
+                        operation(a, b) == identity for b in subset
+                    )
+                    if not has_inv:
+                        is_subgroup = False
+                        break
+            if is_subgroup:
+                subgroups.append(frozenset(subset))
+
+    return subgroups
+
+
+def subgroup_lattice(subgroups: list[frozenset]) -> dict[int, list[int]]:
+    """
+    Compute the Hasse diagram of the subgroup lattice.
+
+    Returns a dict mapping each subgroup index to the list of indices
+    of its immediate supergroups (covers in the partial order).
+    """
+    n = len(subgroups)
+    # Sort by size for convenience
+    sorted_sgs = sorted(subgroups, key=len)
+    covers = {i: [] for i in range(n)}
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if sorted_sgs[i].issubset(sorted_sgs[j]):
+                # Check that there is no subgroup strictly between them
+                is_cover = True
+                for k in range(i + 1, j):
+                    if (sorted_sgs[i].issubset(sorted_sgs[k]) and
+                            sorted_sgs[k].issubset(sorted_sgs[j])):
+                        is_cover = False
+                        break
+                if is_cover:
+                    covers[i].append(j)
+
+    return covers, sorted_sgs
+
+
+def display_subgroup_lattice(subgroups: list[frozenset], covers: dict) -> None:
+    """Print the subgroup lattice in text form."""
+    sorted_sgs = sorted(subgroups, key=len)
+    print("Subgroup Lattice:")
+    print("=" * 50)
+    for i, sg in enumerate(sorted_sgs):
+        sg_str = "{" + ", ".join(str(x) for x in sorted(sg)) + "}"
+        cover_str = ""
+        if covers[i]:
+            cover_strs = []
+            for j in covers[i]:
+                cover_sg = sorted_sgs[j]
+                cover_strs.append(
+                    "{" + ", ".join(str(x) for x in sorted(cover_sg)) + "}"
+                )
+            cover_str = " --> " + ", ".join(cover_strs)
+        print(f"  |{sg_str}| = {len(sg)}: {sg_str}{cover_str}")
+```
+
+Generate the subgroup lattice for:
+
+1. Z_12 -- verify that subgroups correspond to divisors of 12.
+2. S_3 -- find all 6 subgroups and draw the lattice.
+3. D_4 -- find all subgroups and identify which are normal.
+
+---
+
+## Part B: Group Actions and Burnside's Lemma
+
+### B.1 Implementing Group Actions
+
+Build a framework for applying Burnside's lemma to counting problems.
+
+```python
+from collections import Counter
+
+def count_fixed_points(
+    group_elements: list,
+    objects: list,
+    action,
+) -> dict:
+    """
+    For each group element g, count the number of objects fixed by g.
+
+    Parameters
+    ----------
+    group_elements : list
+        Elements of the group G.
+    objects : list
+        Elements of the set X that G acts on.
+    action : callable
+        A function (g, x) -> g.x implementing the group action.
+
+    Returns
+    -------
+    dict mapping each group element to its number of fixed points
+    """
+    fixed_counts = {}
+    for g in group_elements:
+        count = sum(1 for x in objects if action(g, x) == x)
+        fixed_counts[g] = count
+    return fixed_counts
+
+
+def burnside_count(fixed_counts: dict, group_size: int) -> float:
+    """
+    Apply Burnside's lemma to compute the number of distinct orbits.
+
+    Parameters
+    ----------
+    fixed_counts : dict
+        Mapping from group elements to fixed-point counts.
+    group_size : int
+
+    Returns
+    -------
+    float : the number of orbits (should be an integer if inputs are correct)
+    """
+    total_fixed = sum(fixed_counts.values())
+    return total_fixed / group_size
+```
+
+### B.2 Counting Necklaces
+
+Use the Burnside framework to solve the classic necklace counting problem.
+
+**Task B.2.1: Necklaces under rotation only (cyclic group Z_n).**
+
+```python
+from itertools import product as iter_product
+
+def generate_colorings(n_beads: int, n_colors: int) -> list[tuple]:
+    """Generate all possible colorings of n beads with n_colors colors."""
+    return list(iter_product(range(n_colors), repeat=n_beads))
+
+
+def rotation_action(rotation: int, coloring: tuple) -> tuple:
+    """
+    Apply a rotation to a necklace coloring.
+
+    Parameters
+    ----------
+    rotation : int
+        Number of positions to rotate (0 = identity).
+    coloring : tuple
+        The bead coloring.
+
+    Returns
+    -------
+    tuple : the rotated coloring
+    """
+    n = len(coloring)
+    return tuple(coloring[(i - rotation) % n] for i in range(n))
+
+
+def count_necklaces_rotation(n_beads: int, n_colors: int) -> int:
+    """
+    Count distinct necklaces under rotation using Burnside's lemma.
+
+    Parameters
+    ----------
+    n_beads : int
+    n_colors : int
+
+    Returns
+    -------
+    int : number of distinct necklaces
+    """
+    colorings = generate_colorings(n_beads, n_colors)
+    rotations = list(range(n_beads))  # Z_n = {0, 1, ..., n-1}
+
+    fixed_counts = count_fixed_points(rotations, colorings, rotation_action)
+
+    n_orbits = burnside_count(fixed_counts, n_beads)
+
+    print(f"Necklaces with {n_beads} beads, {n_colors} colors (rotations only):")
+    print(f"  Total colorings: {len(colorings)}")
+    for r in rotations:
+        print(f"  Rotation by {r}: {fixed_counts[r]} fixed points")
+    print(f"  Distinct necklaces: {int(n_orbits)}")
+
+    return int(n_orbits)
+```
+
+Compute necklace counts for:
+
+- 4 beads, 2 colors (expected: 6)
+- 5 beads, 2 colors (expected: 8)
+- 6 beads, 3 colors (expected: 130)
+- 4 beads, 3 colors (expected: 24)
+
+**Task B.2.2: Necklaces under rotation and reflection (dihedral group D_n).**
+
+Extend the action to include reflections. For a necklace of n beads:
+
+- Rotations: as above.
+- Reflections: for even n, there are reflections through opposite beads and through opposite edges. For odd n, all reflections pass through a bead and the midpoint of the opposite edge.
+
+```python
+def reflection_action(axis: int, coloring: tuple, n_beads: int) -> tuple:
+    """
+    Apply a reflection to a necklace coloring.
+
+    For a necklace with beads at positions 0, 1, ..., n-1 arranged in a circle,
+    reflection through axis 'axis' maps bead i to bead (2*axis - i) mod n.
+
+    Parameters
+    ----------
+    axis : int
+        The reflection axis index (0 to n-1 for n reflection axes in D_n).
+    coloring : tuple
+    n_beads : int
+
+    Returns
+    -------
+    tuple : the reflected coloring
+    """
+    # Reflection formula: position i maps to (2 * axis - i) mod n
+    # For half-integer axes (between beads), use 2*axis + 1
+    return tuple(
+        coloring[(2 * axis - i) % n_beads] for i in range(n_beads)
+    )
+
+
+def count_necklaces_dihedral(n_beads: int, n_colors: int) -> int:
+    """
+    Count distinct necklaces under the full dihedral group D_n.
+
+    This accounts for both rotations and reflections.
+    """
+    colorings = generate_colorings(n_beads, n_colors)
+
+    total_fixed = 0
+
+    # Rotations
+    for r in range(n_beads):
+        count = sum(1 for c in colorings if rotation_action(r, c) == c)
+        total_fixed += count
+
+    # Reflections
+    for axis in range(n_beads):
+        count = sum(
+            1 for c in colorings if reflection_action(axis, c, n_beads) == c
+        )
+        total_fixed += count
+
+    n_orbits = total_fixed / (2 * n_beads)
+
+    print(f"Necklaces with {n_beads} beads, {n_colors} colors (full dihedral):")
+    print(f"  Distinct necklaces: {int(n_orbits)}")
+
+    return int(n_orbits)
+```
+
+Compare results with rotation-only counts to see the effect of adding reflections.
+
+### B.3 Coloring Problems
+
+**Task B.3.1:** Count the number of distinct ways to color the faces of a cube with k colors, where two colorings are the same if one can be rotated into the other. The rotation group of the cube has 24 elements.
+
+Implement the cube rotation group and apply Burnside's lemma. You will need to:
+
+1. Represent the 6 faces of a cube and their colorings.
+2. Enumerate all 24 rotations (identity, face rotations, edge rotations, vertex rotations).
+3. For each rotation, determine which face is sent to which face.
+4. Count fixed colorings for each rotation.
+5. Apply Burnside's lemma.
+
+For k = 2 colors, the expected answer is 10 distinct colorings.
+
+---
+
+## Part C: Neural Network Weight Symmetry
+
+### C.1 Demonstrating Permutation Equivalence
+
+Build a simple multi-layer perceptron (MLP) and demonstrate that permuting hidden neurons yields the same function.
+
+```python
+import numpy as np
+
+def relu(x: np.ndarray) -> np.ndarray:
+    """ReLU activation function."""
+    return np.maximum(0, x)
+
+
+class SimpleMLP:
+    """
+    A simple MLP with one hidden layer: input -> hidden -> output.
+
+    Architecture: R^{d_in} -> R^{d_hidden} -> R^{d_out}
+    Activation: ReLU on hidden layer, identity on output.
+    """
+
+    def __init__(
+        self,
+        d_in: int,
+        d_hidden: int,
+        d_out: int,
+        seed: int = 42,
+    ):
+        rng = np.random.default_rng(seed)
+        self.W1 = rng.standard_normal((d_hidden, d_in))   # shape (h, d_in)
+        self.b1 = rng.standard_normal(d_hidden)            # shape (h,)
+        self.W2 = rng.standard_normal((d_out, d_hidden))   # shape (d_out, h)
+        self.b2 = rng.standard_normal(d_out)               # shape (d_out,)
+        self.d_hidden = d_hidden
+
+    def forward(self, x: np.ndarray) -> np.ndarray:
+        """
+        Forward pass.
+
+        Parameters
+        ----------
+        x : np.ndarray of shape (d_in,) or (batch, d_in)
+
+        Returns
+        -------
+        np.ndarray : output of shape (d_out,) or (batch, d_out)
+        """
+        h = relu(self.W1 @ x.T + self.b1[:, None]).T  # (batch, h)
+        out = (self.W2 @ h.T + self.b2[:, None]).T     # (batch, d_out)
+        return out
+
+    def get_weights(self) -> tuple:
+        """Return a tuple of all weight arrays."""
+        return (self.W1.copy(), self.b1.copy(), self.W2.copy(), self.b2.copy())
+
+    def set_weights(self, weights: tuple) -> None:
+        """Set weights from a tuple."""
+        self.W1, self.b1, self.W2, self.b2 = [w.copy() for w in weights]
+
+    def permute_hidden(self, perm: tuple) -> tuple:
+        """
+        Apply a permutation of hidden neurons and return new weights.
+
+        Parameters
+        ----------
+        perm : tuple of int
+            A permutation of (0, 1, ..., d_hidden - 1).
+
+        Returns
+        -------
+        tuple : (W1_new, b1_new, W2_new, b2_new)
+        """
+        perm = list(perm)
+        W1_new = self.W1[perm, :]      # permute rows of W1
+        b1_new = self.b1[perm]          # permute bias
+        W2_new = self.W2[:, perm]       # permute columns of W2
+        b2_new = self.b2.copy()         # output bias unchanged
+        return (W1_new, b1_new, W2_new, b2_new)
+
+
+def demonstrate_permutation_equivalence():
+    """
+    Show that permuting hidden neurons produces identical outputs.
+    """
+    np.set_printoptions(precision=8)
+
+    # Create network: 2 inputs, 3 hidden, 1 output
+    net = SimpleMLP(d_in=2, d_hidden=3, d_out=1, seed=42)
+
+    # Generate test inputs
+    rng = np.random.default_rng(123)
+    test_inputs = rng.standard_normal((10, 2))
+
+    # Original output
+    original_output = net.forward(test_inputs)
+    original_weights = net.get_weights()
+
+    print("Demonstrating Permutation Equivalence")
+    print("=" * 60)
+    print(f"Network architecture: 2 -> 3 -> 1")
+    print(f"Number of test inputs: {len(test_inputs)}")
+    print(f"Original output (first 5):\n  {original_output[:5].flatten()}")
+    print()
+
+    # Try all 3! = 6 permutations
+    all_perms = list(permutations(range(3)))
+    print(f"Testing all {len(all_perms)} permutations of 3 hidden neurons:")
+    print("-" * 60)
+
+    for perm in all_perms:
+        new_weights = net.permute_hidden(perm)
+        net.set_weights(new_weights)
+        new_output = net.forward(test_inputs)
+
+        max_diff = np.max(np.abs(original_output - new_output))
+        print(f"  Permutation {perm}: max difference = {max_diff:.2e}")
+
+        # Restore original weights
+        net.set_weights(original_weights)
+
+    print()
+    print("All permutations produce identical outputs (up to floating point).")
+```
+
+Run `demonstrate_permutation_equivalence()` and verify that all 6 permutations produce outputs differing by at most floating-point rounding error.
+
+### C.2 Enumerating the Symmetry Group
+
+**Task C.2.1:** For a network with architecture d_in -> n_1 -> n_2 -> d_out, compute the size of the symmetry group (considering only permutation symmetries, not sign flips).
+
+```python
+from math import factorial
+
+def symmetry_group_size(hidden_layer_sizes: list[int]) -> int:
+    """
+    Compute |G| for the permutation symmetry group of an MLP.
+
+    G = S_{n_1} x S_{n_2} x ... x S_{n_k}
+
+    Parameters
+    ----------
+    hidden_layer_sizes : list of int
+        Sizes of hidden layers.
+
+    Returns
+    -------
+    int : |G| = n_1! * n_2! * ... * n_k!
+    """
+    size = 1
+    for n in hidden_layer_sizes:
+        size *= factorial(n)
+    return size
+
+
+def report_symmetry_group(architecture: list[int]) -> None:
+    """
+    Report the symmetry group for a given network architecture.
+
+    Parameters
+    ----------
+    architecture : list of int
+        Full architecture including input and output layers.
+        E.g., [2, 3, 4, 1] means 2 inputs, hidden layers of 3 and 4, 1 output.
+    """
+    hidden = architecture[1:-1]
+    group_size = symmetry_group_size(hidden)
+    total_params = sum(
+        architecture[i] * architecture[i + 1] + architecture[i + 1]
+        for i in range(len(architecture) - 1)
+    )
+
+    print(f"Architecture: {' -> '.join(str(n) for n in architecture)}")
+    print(f"  Hidden layers: {hidden}")
+    print(f"  Symmetry group: {'  x  '.join(f'S_{n}' for n in hidden)}")
+    print(f"  |G| = {'  *  '.join(f'{n}!' for n in hidden)} = {group_size}")
+    print(f"  Total parameters: {total_params}")
+    print(f"  Distinct functions (generic): ~{total_params}-dim / {group_size}")
+    print()
+```
+
+Run for these architectures and discuss the scale of redundancy:
+
+- [2, 3, 1] -- small toy network
+- [784, 256, 128, 10] -- MNIST classifier
+- [768, 3072, 768] -- transformer-scale hidden layer
+
+### C.3 Counting Distinct Weight Configurations
+
+**Task C.3.1:** For a small discrete weight space, enumerate all weight configurations and count how many are truly distinct (different orbits under the symmetry group).
+
+```python
+def count_distinct_configurations(
+    d_in: int,
+    d_hidden: int,
+    d_out: int,
+    weight_values: list,
+) -> dict:
+    """
+    For a 1-hidden-layer MLP with weights restricted to a discrete set,
+    enumerate all configurations and count distinct orbits.
+
+    This is computationally feasible only for very small networks.
+
+    Parameters
+    ----------
+    d_in : int
+    d_hidden : int
+    d_out : int
+    weight_values : list
+        Allowed weight values (e.g., [-1, 0, 1]).
+
+    Returns
+    -------
+    dict with keys:
+        'total_configs': int
+        'distinct_configs': int
+        'symmetry_group_size': int
+        'orbit_sizes': Counter
+    """
+    from itertools import product as iter_product
+
+    # Total number of weight parameters (excluding biases for simplicity)
+    n_w1 = d_in * d_hidden
+    n_w2 = d_hidden * d_out
+    n_params = n_w1 + n_w2
+
+    # This is only feasible for tiny networks
+    total_configs = len(weight_values) ** n_params
+    if total_configs > 1_000_000:
+        print(f"WARNING: {total_configs} total configs -- too many to enumerate.")
+        print("  Reduce network size or weight values.")
+        return None
+
+    perms = list(permutations(range(d_hidden)))
+
+    # Represent each configuration as a tuple of weight values
+    # Layout: (W1 flattened row-major, W2 flattened row-major)
+    all_configs = set()
+    orbit_counter = Counter()
+    seen = set()
+
+    for config in iter_product(weight_values, repeat=n_params):
+        if config in seen:
+            continue
+
+        # Parse into W1, W2
+        w1_flat = config[:n_w1]
+        w2_flat = config[n_w1:]
+
+        # Find canonical form: minimum over all permutations
+        orbit = set()
+        for perm in perms:
+            # Permute W1 rows
+            w1_rows = [w1_flat[i * d_in:(i + 1) * d_in] for i in range(d_hidden)]
+            w1_perm = tuple(
+                val for i in perm for val in w1_rows[i]
+            )
+
+            # Permute W2 columns
+            w2_rows = [w2_flat[i * d_hidden:(i + 1) * d_hidden] for i in range(d_out)]
+            w2_perm = tuple(
+                val
+                for row_idx in range(d_out)
+                for j in range(d_hidden)
+                for val in [w2_rows[row_idx][perm[j]]]
+            )
+
+            perm_config = w1_perm + w2_perm
+            orbit.add(perm_config)
+
+        orbit_size = len(orbit)
+        orbit_counter[orbit_size] += 1
+        seen.update(orbit)
+        canonical = min(orbit)
+        all_configs.add(canonical)
+
+    g_size = symmetry_group_size([d_hidden])
+
+    result = {
+        'total_configs': total_configs,
+        'distinct_configs': len(all_configs),
+        'symmetry_group_size': g_size,
+        'orbit_sizes': orbit_counter,
+    }
+
+    print(f"Network: {d_in} -> {d_hidden} -> {d_out}")
+    print(f"Weight values: {weight_values}")
+    print(f"Total configurations: {result['total_configs']}")
+    print(f"Distinct configurations: {result['distinct_configs']}")
+    print(f"|G| = {d_hidden}! = {g_size}")
+    print(f"Orbit size distribution:")
+    for size in sorted(orbit_counter.keys()):
+        count = orbit_counter[size]
+        print(f"  Orbit size {size}: {count} orbits")
+    print(f"Ratio total/distinct: {result['total_configs']/result['distinct_configs']:.2f}")
+    print(f"(Compare to |G| = {g_size})")
+
+    return result
+```
+
+Run for:
+
+1. Architecture 1 -> 2 -> 1, weights in {-1, 0, 1}: enumerate all 3^4 = 81 configurations.
+2. Architecture 1 -> 3 -> 1, weights in {0, 1}: enumerate all 2^6 = 64 configurations.
+
+Observe that:
+
+- Generic configurations have orbit size equal to |G| (full symmetry group).
+- Non-generic configurations (where hidden neurons have equal weights) have smaller orbits.
+- The ratio total/distinct approaches |G| for large weight spaces with few coincidences.
+
+### C.4 Visualizing Weight Space Orbits
+
+**Task C.4.1:** For the simplest non-trivial case (architecture 1 -> 2 -> 1 with scalar weights w_1, w_2 for the first layer and v_1, v_2 for the second), visualize the weight space and its orbits.
+
+```python
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+
+def visualize_weight_orbits():
+    """
+    Visualize orbits in a 2D slice of weight space.
+
+    For a 1 -> 2 -> 1 network with fixed second-layer weights,
+    plot the first-layer weight space and color points by orbit.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Left panel: weight space (w1, w2) with orbit structure
+    ax = axes[0]
+    n_points = 50
+    w_range = np.linspace(-2, 2, n_points)
+    w1_grid, w2_grid = np.meshgrid(w_range, w_range)
+
+    # The S_2 symmetry swaps (w1, w2) -> (w2, w1)
+    # Points on the line w1 = w2 are fixed by this swap
+    ax.plot([-2, 2], [-2, 2], 'r-', linewidth=2, label='w1 = w2 (fixed by swap)')
+
+    # Sample some orbits
+    rng = np.random.default_rng(42)
+    for _ in range(15):
+        w1, w2 = rng.uniform(-1.8, 1.8, 2)
+        ax.plot([w1, w2], [w2, w1], 'bo-', markersize=4, alpha=0.5)
+
+    ax.set_xlabel('w1')
+    ax.set_ylabel('w2')
+    ax.set_title('Weight Space Orbits under S_2')
+    ax.set_aspect('equal')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    # Right panel: function space
+    ax = axes[1]
+    x_test = np.linspace(-3, 3, 200)
+
+    # Show that permuted weights give same function
+    np.random.seed(42)
+    w1, w2 = 1.5, -0.8
+    v1, v2 = 0.7, -1.2
+
+    # Original
+    y_orig = v1 * relu(w1 * x_test) + v2 * relu(w2 * x_test)
+    # Permuted
+    y_perm = v2 * relu(w2 * x_test) + v1 * relu(w1 * x_test)
+
+    ax.plot(x_test, y_orig, 'b-', linewidth=2, label='Original (w1,w2,v1,v2)')
+    ax.plot(x_test, y_perm, 'r--', linewidth=2, label='Permuted (w2,w1,v2,v1)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('f(x)')
+    ax.set_title('Same Function, Different Weights')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('weight_space_orbits.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("Saved: weight_space_orbits.png")
+```
+
+### C.5 Discussion Questions
+
+After completing all coding tasks, write brief responses (3--5 sentences each) to the following:
+
+1. **Scaling.** For a network with hidden layers of sizes [256, 512, 256], compute |G|. What fraction of weight space consists of "redundant copies" of the same function? What implications does this have for optimization algorithms like SGD?
+
+2. **Singularities.** In your enumeration of discrete weight configurations (Task C.3), you found configurations with orbit sizes smaller than |G|. These correspond to singular points. Describe one such configuration and explain in plain language why it has extra symmetry.
+
+3. **RLCT connection.** The RLCT (real log canonical threshold) in SLT is influenced by the singularity structure of the parameter-to-function map. Based on your exploration, why might networks with larger hidden layers (and therefore larger symmetry groups) have different generalization behavior than networks with smaller hidden layers?
+
+4. **Beyond permutations.** We only considered permutation symmetries. What other symmetries might a neural network have? (Hint: think about activation functions, scaling, and the relationship between adjacent layers.)
+
+5. **Practical impact.** Some optimization methods (like natural gradient descent) attempt to account for the geometry of the loss landscape, including symmetries. Based on what you have learned, explain why ignoring weight space symmetry might lead to inefficient optimization.

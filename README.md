@@ -1,6 +1,6 @@
 # AI Alignment Research Curriculum
 
-A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 85 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
+A structured self-study curriculum building from mathematical foundations through machine learning and interpretability to alignment theory and independent research. 99 lessons across 8 phases, designed for deep understanding with geometric intuition before algebraic mechanics.
 
 **Start date:** February 21, 2026 · **Estimated total:** 860–1040 hours · **Dashboard:** [Interactive Curriculum Map](https://kaxitron.github.io/research_plan/curriculum-dashboard.html)
 
@@ -22,7 +22,6 @@ A structured self-study curriculum building from mathematical foundations throug
 | cs06 | [Trees and Graphs](phase0-cs-foundations/lesson-cs06-trees-graphs.md) | ⬜ Not Started |
 | cs07 | [Sorting and Searching — Complexity in Action](phase0-cs-foundations/lesson-cs07-sorting-searching.md) | ⬜ Not Started |
 | cs08 | [Recursion and Dynamic Programming](phase0-cs-foundations/lesson-cs08-recursion-dp.md) | 🔄 In Progress |
-| cs09 | [Discrete Math Essentials — Logic, Counting, and Graphs](phase0-cs-foundations/lesson-cs09-discrete-math.md) | ⬜ Not Started |
 | cs10 | [Computer Organization — How Code Actually Runs](phase0-cs-foundations/lesson-cs10-computer-organization.md) | ⬜ Not Started |
 
 ### ML Tools (11–15h)
@@ -185,40 +184,65 @@ A structured self-study curriculum building from mathematical foundations throug
 
 ---
 
-## Phase 5: Extended Mathematical Foundations (132–156h)
+## Phase 5: Mathematical Enrichment (400–560h)
 
-### Computability & Complexity (67–69)
-
-| # | Lesson | Status |
-|---|--------|--------|
-| 67 | [Turing Machines, Decidability, and the Halting Problem](phase5-math-enrichment/lesson-67-turing-machines.md) | ⬜ Not Started |
-| 68 | [Computational Complexity — P, NP, and Feasibility](phase5-math-enrichment/lesson-68-computational-complexity.md) | ⬜ Not Started |
-| 69 | [Kolmogorov Complexity, Algorithmic Information, and Solomonoff Induction](phase5-math-enrichment/lesson-69-kolmogorov-complexity.md) | ⬜ Not Started |
-
-### Abstract Algebra (70–72)
+### Block A: Discrete Mathematics (67–71) — Trefor Bazzett
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 70 | [Groups — Symmetry as Mathematics](phase5-math-enrichment/lesson-70-groups.md) | ⬜ Not Started |
-| 71 | [Rings, Fields, and Algebraic Structures](phase5-math-enrichment/lesson-71-rings-fields.md) | ⬜ Not Started |
-| 72 | [Group Actions, Representations, and Neural Network Symmetry](phase5-math-enrichment/lesson-72-group-actions.md) | ⬜ Not Started |
+| 67 | [Logic, Propositions, and Proof Techniques](phase5-math-enrichment/lesson-67-logic-propositions.md) | ⬜ Not Started |
+| 68 | [Sets, Functions, and Relations](phase5-math-enrichment/lesson-68-sets-functions-relations.md) | ⬜ Not Started |
+| 69 | [Combinatorics — Counting, Permutations, and the Binomial Theorem](phase5-math-enrichment/lesson-69-combinatorics.md) | ⬜ Not Started |
+| 70 | [Graph Theory — Paths, Trees, and Coloring](phase5-math-enrichment/lesson-70-graph-theory.md) | ⬜ Not Started |
+| 71 | [Recurrence Relations and Generating Functions](phase5-math-enrichment/lesson-71-recurrences-generating-functions.md) | ⬜ Not Started |
 
-### Topology & Geometry (73–76, 79)
-
-| # | Lesson | Status |
-|---|--------|--------|
-| 73 | [Point-Set Topology — Open Sets, Continuity, Compactness](phase5-math-enrichment/lesson-73-point-set-topology.md) | ⬜ Not Started |
-| 74 | [Homotopy and Fundamental Groups](phase5-math-enrichment/lesson-74-homotopy.md) | ⬜ Not Started |
-| 75 | [Manifolds and Tangent Spaces](phase5-math-enrichment/lesson-75-manifolds.md) | ⬜ Not Started |
-| 79 | [Differential Forms and Stokes' Theorem](phase5-math-enrichment/lesson-79-differential-forms.md) | ⬜ Not Started |
-| 76 | [Algebraic Geometry — Singularities and Resolution for SLT](phase5-math-enrichment/lesson-76-algebraic-geometry.md) | ⬜ Not Started |
-
-### Formal Logic (77–78)
+### Block B: Computability & Complexity (72–76) — Neso Academy
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 77 | [Propositional and Predicate Logic](phase5-math-enrichment/lesson-77-propositional-logic.md) | ⬜ Not Started |
-| 78 | [Gödel's Incompleteness, Löb's Theorem, and Self-Reference](phase5-math-enrichment/lesson-78-godel-lob.md) | ⬜ Not Started |
+| 72 | [Finite Automata, Regular Languages, and Regular Expressions](phase5-math-enrichment/lesson-72-finite-automata.md) | ⬜ Not Started |
+| 73 | [Context-Free Grammars and Pushdown Automata](phase5-math-enrichment/lesson-73-context-free-grammars.md) | ⬜ Not Started |
+| 74 | [Turing Machines, Decidability, and the Halting Problem](phase5-math-enrichment/lesson-74-turing-machines.md) | ⬜ Not Started |
+| 75 | [Kolmogorov Complexity, Algorithmic Information, and Solomonoff Induction](phase5-math-enrichment/lesson-75-kolmogorov-complexity.md) | ⬜ Not Started |
+| 76 | [Computational Complexity — P, NP, NP-Completeness, and Reductions](phase5-math-enrichment/lesson-76-computational-complexity.md) | ⬜ Not Started |
+
+### Block C: Formal Logic (77–79) — Trefor Bazzett
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 77 | [Propositional and Predicate Logic](phase5-math-enrichment/lesson-77-propositional-predicate-logic.md) | ⬜ Not Started |
+| 78 | [Proof Systems, Natural Deduction, and Soundness/Completeness](phase5-math-enrichment/lesson-78-proof-systems.md) | ⬜ Not Started |
+| 79 | [Godel's Incompleteness, Lob's Theorem, and Self-Reference](phase5-math-enrichment/lesson-79-godel-incompleteness.md) | ⬜ Not Started |
+
+### Block D: Abstract Algebra (80–84) — Macauley (Visual Group Theory)
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 80 | [Groups — Symmetry, Cayley Diagrams, and Subgroups](phase5-math-enrichment/lesson-80-groups.md) | ⬜ Not Started |
+| 81 | [Cosets, Lagrange's Theorem, and Normal Subgroups](phase5-math-enrichment/lesson-81-cosets-lagrange.md) | ⬜ Not Started |
+| 82 | [Homomorphisms, Isomorphisms, and Quotient Groups](phase5-math-enrichment/lesson-82-homomorphisms.md) | ⬜ Not Started |
+| 83 | [Rings, Fields, and Algebraic Structures](phase5-math-enrichment/lesson-83-rings-fields.md) | ⬜ Not Started |
+| 84 | [Group Actions, Representations, and Neural Network Symmetry](phase5-math-enrichment/lesson-84-group-actions.md) | ⬜ Not Started |
+
+### Block E: Geometry for Alignment (85–89) — What is Math
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 85 | [Curves, Surfaces, and the Language of Differential Geometry](phase5-math-enrichment/lesson-85-curves-surfaces.md) | ⬜ Not Started |
+| 86 | [Tangent Spaces, Metrics, and Curvature](phase5-math-enrichment/lesson-86-tangent-spaces.md) | ⬜ Not Started |
+| 87 | [Manifolds and Geodesics](phase5-math-enrichment/lesson-87-manifolds.md) | ⬜ Not Started |
+| 88 | [Differential Forms and Stokes' Theorem](phase5-math-enrichment/lesson-88-differential-forms.md) | ⬜ Not Started |
+| 89 | [Algebraic Geometry — Singularities, Resolution, and SLT](phase5-math-enrichment/lesson-89-algebraic-geometry.md) | ⬜ Not Started |
+
+### Block F: Advanced Algorithms (90–94) — Curated Videos
+
+| # | Lesson | Status |
+|---|--------|--------|
+| 90 | [Analysis of Algorithms — Asymptotic Methods, Recurrences, and Generating Functions](phase5-math-enrichment/lesson-90-analysis-of-algorithms.md) | ⬜ Not Started |
+| 91 | [Randomized Algorithms — Probabilistic Analysis, Random Structures, and Hashing Theory](phase5-math-enrichment/lesson-91-randomized-algorithms.md) | ⬜ Not Started |
+| 92 | [Combinatorial Algorithms — Enumeration, Backtracking, and Combinatorial Generation](phase5-math-enrichment/lesson-92-combinatorial-algorithms.md) | ⬜ Not Started |
+| 93 | [Advanced Graph Algorithms — Matching, Planarity, and Network Optimization](phase5-math-enrichment/lesson-93-advanced-graph-algorithms.md) | ⬜ Not Started |
+| 94 | [Information-Theoretic Lower Bounds, Amortized Analysis, and Computational Complexity Connections](phase5-math-enrichment/lesson-94-lower-bounds-amortized.md) | ⬜ Not Started |
 
 ---
 
@@ -226,11 +250,11 @@ A structured self-study curriculum building from mathematical foundations throug
 
 | # | Lesson | Status |
 |---|--------|--------|
-| 80 | [Game Theory Foundations](phase6-alignment/lesson-80-game-theory.md) | ⬜ Not Started |
-| 81 | [Decision Theory — CDT, EDT, and FDT](phase6-alignment/lesson-81-decision-theory.md) | ⬜ Not Started |
-| 82 | [Anthropics and Self-Locating Beliefs](phase6-alignment/lesson-82-anthropics.md) | ⬜ Not Started |
-| 83 | [The Alignment Problem — Technical Foundations](phase6-alignment/lesson-83-alignment-problem.md) | ⬜ Not Started |
-| 84 | [Open Problems and Research Frontiers](phase6-alignment/lesson-84-open-problems.md) | ⬜ Not Started |
+| 95 | [Game Theory Foundations](phase6-alignment/lesson-95-game-theory.md) | ⬜ Not Started |
+| 96 | [Decision Theory — CDT, EDT, and FDT](phase6-alignment/lesson-96-decision-theory.md) | ⬜ Not Started |
+| 97 | [Anthropics and Self-Locating Beliefs](phase6-alignment/lesson-97-anthropics.md) | ⬜ Not Started |
+| 98 | [The Alignment Problem — Technical Foundations](phase6-alignment/lesson-98-alignment-problem.md) | ⬜ Not Started |
+| 99 | [Open Problems and Research Frontiers](phase6-alignment/lesson-99-open-problems.md) | ⬜ Not Started |
 
 ---
 
@@ -256,10 +280,14 @@ A structured self-study curriculum building from mathematical foundations throug
 | Exam 3B: Bayesian & Applied Stats | Lessons 44–52 | 60 min | [Exam](assessments/exam-3b-bayesian-applied.md) · [Key](assessments/exam-3b-bayesian-applied-answer-key.md) |
 | Exam 4A: Neural Networks & ML | Lessons 53–64 | 30 min + 5 hr project | [Exam](assessments/exam-4a-neural-networks.md) |
 | Exam 4B: Mechanistic Interpretability | Lessons 61, 65–66 | 30 min + 3-4 hr project | [Exam](assessments/exam-4b-mechanistic-interpretability.md) |
-| Exam 5A: Computability & Algebra | Lessons 67–72 | 60 min | [Exam](assessments/exam-5a-computability-algebra.md) · [Key](assessments/exam-5a-computability-algebra-answer-key.md) |
-| Exam 5B: Topology & Logic | Lessons 73–79 | 60 min | [Exam](assessments/exam-5b-topology-logic.md) · [Key](assessments/exam-5b-topology-logic-answer-key.md) |
-| Exam 6A: Rational Agency | Lessons 80–82 | 60 min | [Exam](assessments/exam-6a-rational-agency.md) · [Key](assessments/exam-6a-rational-agency-answer-key.md) |
-| Exam 6B: Alignment Capstone | Lessons 83–84 + All | 90 min | [Exam](assessments/exam-6b-alignment-capstone.md) · [Key](assessments/exam-6b-alignment-capstone-answer-key.md) |
+| Exam 5A: Discrete Mathematics | Lessons 67–71 | 60 min | [Exam](assessments/exam-5a-discrete-math.qmd) · [Key](assessments/exam-5a-discrete-math-answer-key.qmd) |
+| Exam 5B: Computability & Complexity | Lessons 72–76 | 60 min | [Exam](assessments/exam-5b-computability-complexity.qmd) · [Key](assessments/exam-5b-computability-complexity-answer-key.qmd) |
+| Exam 5C: Formal Logic | Lessons 77–79 | 60 min | [Exam](assessments/exam-5c-formal-logic.qmd) · [Key](assessments/exam-5c-formal-logic-answer-key.qmd) |
+| Exam 5D: Abstract Algebra | Lessons 80–84 | 60 min | [Exam](assessments/exam-5d-abstract-algebra.qmd) · [Key](assessments/exam-5d-abstract-algebra-answer-key.qmd) |
+| Exam 5E: Geometry for Alignment | Lessons 85–89 | 60 min | [Exam](assessments/exam-5e-geometry-alignment.qmd) · [Key](assessments/exam-5e-geometry-alignment-answer-key.qmd) |
+| Exam 5F: Advanced Algorithms | Lessons 90–94 | 60 min | [Exam](assessments/exam-5f-advanced-algorithms.qmd) · [Key](assessments/exam-5f-advanced-algorithms-answer-key.qmd) |
+| Exam 6A: Rational Agency | Lessons 95–98 | 60 min | [Exam](assessments/exam-6a-rational-agency.qmd) · [Key](assessments/exam-6a-rational-agency-answer-key.qmd) |
+| Exam 6B: Alignment Capstone | Lessons 95–99 + All | 90 min | [Exam](assessments/exam-6b-alignment-capstone.qmd) · [Key](assessments/exam-6b-alignment-capstone-answer-key.qmd) |
 | 🏔 The Alignment Observatory | All Phases | ~5 hrs | [Project](assessments/final-project-alignment-observatory.md) |
 | 🏔 The Researcher's Gauntlet | All Phases | ~5 hrs | [Project](assessments/capstone-comprehensive-project.md) |
 

@@ -1,0 +1,560 @@
+---
+title: "Coding Project: Computability and Complexity"
+subtitle: "Turing Machine Simulator and Decidability Demonstrations"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+---
+
+# Coding Project: Computability and Complexity
+
+[<- Computational Complexity](lesson-76-computational-complexity.md) | [Back to TOC](../README.md) | [Next: Propositional Logic ->](lesson-77-propositional-predicate-logic.md)
+
+---
+
+> **Why this project exists:** The theoretical concepts of Turing machines, undecidability, and NP-completeness can feel abstract until you build them. Implementing a Turing machine simulator makes the model concrete and builds intuition for how simple state machines can perform complex computation. Demonstrating the diagonalization argument computationally reinforces why certain problems are fundamentally unsolvable. Building a SAT solver and encoding graph problems as SAT instances connects complexity theory to practical problem-solving. These skills are directly relevant to AI alignment work, where formal verification tools (many based on SAT/SMT solvers) are used to check properties of neural networks.
+
+> **Estimated time:** 12--18 hours
+
+---
+
+## Part A: Turing Machine Simulator
+
+### A.1 Core Implementation
+
+Build a Turing machine simulator from scratch. Your implementation should include the following components:
+
+**The Tape:**
+Implement an unbounded tape data structure. In practice, use a dictionary (hash map) mapping integer positions to symbols, with a default blank symbol. This avoids the need to pre-allocate an infinite array while still allowing the tape to grow in either direction as needed.
+
+The tape should support three operations:
+
+- `read(position)`: return the symbol at the given position (or blank if unvisited)
+- `write(position, symbol)`: write a symbol at the given position
+- `__str__()`: return a string representation showing the non-blank portion of the tape
+
+**The Head:**
+Track the current position of the read/write head as an integer. The head starts at position 0. Moving left decrements the position; moving right increments it.
+
+**The Transition Function:**
+Represent the transition function as a dictionary mapping (state, symbol) pairs to (new_state, write_symbol, direction) triples. For example:
+
+```python
+# Transition: in state 'q0', reading '0', write '1', move right, go to 'q1'
+transitions = {
+    ('q0', '0'): ('q1', '1', 'R'),
+    ('q0', '1'): ('q0', '1', 'R'),
+    # ...
+}
+```
+
+**The Simulator:**
+The main simulation loop should:
+
+1. Read the current symbol under the head
+2. Look up (current_state, current_symbol) in the transition function
+3. If no transition exists, halt and reject (or handle as an error)
+4. Write the new symbol, move the head, and update the state
+5. If the new state is the accept state, halt and accept
+6. If the new state is the reject state, halt and reject
+7. Otherwise, repeat
+
+Include a step counter and optionally a maximum step limit to prevent infinite loops during testing.
+
+**Trace Mode:**
+Implement a verbose mode that prints the configuration at each step: the tape contents, head position (marked with brackets or a caret), and current state. This is invaluable for debugging.
+
+```
+Step 0: State=q0  Tape: [0] 0 1 1 _
+Step 1: State=q1  Tape:  1 [0] 1 1 _
+Step 2: State=q1  Tape:  1 0 [1] 1 _
+...
+```
+
+### A.2 Example: Binary Increment
+
+Implement a Turing machine that adds 1 to a binary number. The input is a binary string on the tape, with the head starting at the leftmost digit.
+
+Strategy:
+
+1. Move right to the end of the number (past the last non-blank symbol)
+2. Move one step left (now on the last digit)
+3. If the digit is 0, change it to 1 and halt (no carry needed)
+4. If the digit is 1, change it to 0 (carry) and move left
+5. If you reach a blank (carry out of the most significant bit), write 1 and halt
+
+Test cases:
+
+- Input "0" -> Output "1"
+- Input "1" -> Output "10"
+- Input "101" -> Output "110"
+- Input "111" -> Output "1000"
+- Input "1011" -> Output "1100"
+
+### A.3 Example: Palindrome Checker
+
+Implement a Turing machine that accepts palindromes over the alphabet {0, 1}. This is a more complex machine that demonstrates the power of the TM model.
+
+Strategy (mark-and-compare):
+
+1. Read and remember the first symbol, then replace it with a blank (or a marker like 'X')
+2. Move right to the end of the string
+3. Check that the last symbol matches the remembered first symbol. If yes, replace it with a blank and move left to the start. If no, reject.
+4. Repeat: read the new first symbol, compare with the new last symbol
+5. Accept when the string is empty or has one symbol left
+
+This machine requires multiple states to "remember" which symbol was read (separate states for "remembered 0" and "remembered 1").
+
+Test cases:
+
+- "" (empty) -> Accept
+- "0" -> Accept
+- "010" -> Accept
+- "1001" -> Accept
+- "10110" -> Reject
+- "1010" -> Reject
+
+### A.4 Example: Unary Addition
+
+Implement a TM that performs addition on unary numbers. The input is of the form 1^a 0 1^b (a ones, a zero separator, b ones), and the output should be 1^{a+b} (the sum in unary).
+
+Strategy: replace the 0 separator with a 1, then erase the last 1. This converts "111011" (3+2) into "11111" (5).
+
+### A.5 Testing Framework
+
+Build a testing harness that:
+
+- Runs a TM on a given input and returns the result (accept/reject/timeout) and final tape contents
+- Supports batch testing with expected results
+- Reports the number of steps taken
+
+```python
+def test_tm(tm, test_cases):
+    """
+    test_cases: list of (input_string, expected_result, expected_output)
+    """
+    for input_str, expected_result, expected_output in test_cases:
+        result, tape_output, steps = tm.run(input_str, max_steps=10000)
+        status = "PASS" if result == expected_result else "FAIL"
+        print(f"{status}: Input='{input_str}' Result={result} "
+              f"Expected={expected_result} Steps={steps}")
+```
+
+---
+
+## Part B: Demonstrating Undecidability
+
+### B.1 The Diagonalization Argument
+
+The halting problem cannot be decided by any program. We cannot directly implement a proof of this (since it is a proof by contradiction about the non-existence of a program), but we can implement the key components and demonstrate why the construction fails.
+
+**Step 1: Implement a simple "program" representation.**
+
+Use Python functions or string-encoded programs as your "Turing machines." For simplicity, represent programs as Python source code strings that can be evaluated.
+
+```python
+# A simple "program" is a Python function that takes a string input
+# and either returns a result (halts) or loops forever
+
+program_A = """
+def run(input_str):
+    return len(input_str)  # Always halts
+"""
+
+program_B = """
+def run(input_str):
+    while True:
+        pass  # Never halts
+"""
+```
+
+**Step 2: Implement a timeout-based halting "oracle" (the best we can do).**
+
+Since we cannot solve the halting problem, implement an approximate oracle that runs a program for a limited number of steps (or with a timeout) and reports whether it halted within the limit.
+
+```python
+import signal
+
+def approximate_halts(program_str, input_str, timeout_seconds=2):
+    """
+    Approximately determine if program halts on input.
+    Returns: 'halts', 'timeout' (unknown), or 'error'
+    """
+    # Use timeout mechanism to limit execution
+    ...
+```
+
+**Step 3: Implement the diagonal construction.**
+
+Construct the "paradoxical" program D that does the opposite of what the oracle predicts:
+
+```python
+def diagonal_program(oracle, program_str):
+    """
+    The diagonalization argument:
+    If oracle says program_str halts on itself, then loop forever.
+    If oracle says program_str does not halt on itself, then halt.
+    """
+    prediction = oracle(program_str, program_str)
+    if prediction == 'halts':
+        while True:  # Loop forever -- opposite of prediction
+            pass
+    else:
+        return "halted"  # Halt -- opposite of prediction
+```
+
+**Step 4: Demonstrate the contradiction.**
+
+Show that when you run the diagonal program on its own source code, the approximate oracle gives an incorrect prediction. The oracle either:
+
+- Says "halts" -> the program loops (oracle was wrong)
+- Says "does not halt" -> the program halts (oracle was wrong)
+- Says "timeout/unknown" -> the oracle admits defeat
+
+Discuss in comments: this is exactly why no true halting oracle can exist. Any oracle we build will either give wrong answers or admit ignorance on some inputs.
+
+### B.2 Rice's Theorem Demonstrations
+
+Demonstrate several instances of Rice's theorem by showing that seemingly simple questions about programs are undecidable (or at least, our approximate methods fail).
+
+**Example 1: "Does this program always return a positive number?"**
+
+Write several programs:
+- One that always returns a positive number
+- One that sometimes returns a negative number
+- One where the answer depends on undecidable properties (e.g., it returns -1 if the Collatz conjecture is false for some specific input)
+
+Show that a static analyzer (pattern matching on source code) cannot reliably answer this question, and that a testing-based approach can miss edge cases.
+
+**Example 2: "Does this program produce the same output as that program?"**
+
+Implement two programs that appear different but compute the same function, and two programs that appear similar but compute different functions. Show that comparing programs by their behavior is fundamentally harder than comparing them syntactically.
+
+**Example 3: "Does this program ever access the network?"**
+
+Write programs where the network access depends on complex conditions. Show that static analysis can be fooled by obfuscation and that dynamic testing can miss rarely triggered code paths.
+
+### B.3 The Limits of Verification
+
+Implement a simple "program verifier" that attempts to check safety properties of programs using a combination of:
+
+- Static analysis (pattern matching on source code)
+- Dynamic testing (running the program on sample inputs)
+- Bounded model checking (exploring all executions up to a fixed depth)
+
+Demonstrate cases where each approach fails:
+
+- Static analysis fails on obfuscated code
+- Dynamic testing fails on rare edge cases
+- Bounded model checking fails when the bug requires many steps to trigger
+
+This concretely illustrates why AI safety verification is fundamentally difficult: Rice's theorem guarantees that no single verification method can be complete.
+
+---
+
+## Part C: SAT Solver and NP-Completeness
+
+### C.1 SAT Representation
+
+Implement a representation for boolean formulas in conjunctive normal form (CNF). A CNF formula is a conjunction (AND) of clauses, where each clause is a disjunction (OR) of literals, and each literal is a variable or its negation.
+
+Standard representation: a clause is a list of integers, where positive integers represent variables and negative integers represent negated variables. A formula is a list of clauses.
+
+```python
+# (x1 OR NOT x2 OR x3) AND (NOT x1 OR x2) AND (x2 OR x3)
+formula = [
+    [1, -2, 3],
+    [-1, 2],
+    [2, 3]
+]
+```
+
+Implement a function to evaluate a formula given an assignment:
+
+```python
+def evaluate(formula, assignment):
+    """
+    assignment: dict mapping variable (int) to True/False
+    Returns True if formula is satisfied, False otherwise.
+    """
+    for clause in formula:
+        clause_satisfied = False
+        for literal in clause:
+            var = abs(literal)
+            value = assignment[var]
+            if literal > 0 and value:
+                clause_satisfied = True
+                break
+            if literal < 0 and not value:
+                clause_satisfied = True
+                break
+        if not clause_satisfied:
+            return False
+    return True
+```
+
+### C.2 Brute Force SAT Solver
+
+Implement a brute force solver that tries all 2^n possible assignments:
+
+```python
+def brute_force_sat(formula, num_vars):
+    """Try all assignments. Return satisfying assignment or None."""
+    for assignment_bits in range(2 ** num_vars):
+        assignment = {}
+        for var in range(1, num_vars + 1):
+            assignment[var] = bool((assignment_bits >> (var - 1)) & 1)
+        if evaluate(formula, assignment):
+            return assignment
+    return None
+```
+
+This is obviously exponential, but it serves as a baseline and a correctness check for the DPLL solver.
+
+### C.3 DPLL SAT Solver
+
+Implement the Davis-Putnam-Logemann-Loveland (DPLL) algorithm, the foundation of modern SAT solvers. DPLL improves on brute force with three key techniques:
+
+**Unit Propagation:** If a clause contains a single literal (a "unit clause"), that literal must be true. Set it accordingly and simplify the formula. This can trigger cascading unit propagations.
+
+```python
+def unit_propagate(formula, assignment):
+    """
+    Find unit clauses and propagate.
+    Returns simplified formula and updated assignment.
+    """
+    changed = True
+    while changed:
+        changed = False
+        for clause in formula:
+            unset_literals = [lit for lit in clause
+                            if abs(lit) not in assignment]
+            false_literals = [lit for lit in clause
+                            if abs(lit) in assignment and
+                            (assignment[abs(lit)] != (lit > 0))]
+            if len(unset_literals) == 0 and len(false_literals) == len(clause):
+                return None, assignment  # Conflict: clause is unsatisfied
+            if len(unset_literals) == 1 and \
+               len(false_literals) == len(clause) - 1:
+                # Unit clause: force the remaining literal
+                lit = unset_literals[0]
+                assignment[abs(lit)] = (lit > 0)
+                changed = True
+    return formula, assignment
+```
+
+**Pure Literal Elimination:** If a variable appears only positively (or only negatively) in the remaining formula, set it to satisfy all its occurrences.
+
+**Branching:** Choose an unset variable, try setting it to True, and recursively solve. If that fails (leads to a contradiction), backtrack and try False.
+
+```python
+def dpll(formula, num_vars, assignment=None):
+    if assignment is None:
+        assignment = {}
+
+    # Unit propagation
+    formula, assignment = unit_propagate(formula, assignment.copy())
+    if formula is None:
+        return None  # Conflict
+
+    # Check if all clauses are satisfied
+    if all_satisfied(formula, assignment):
+        return assignment
+
+    # Pure literal elimination
+    assignment = pure_literal_eliminate(formula, assignment)
+
+    # Choose an unset variable to branch on
+    var = choose_variable(formula, assignment, num_vars)
+    if var is None:
+        return None  # No variable to branch on but not all satisfied
+
+    # Try True
+    new_assignment = assignment.copy()
+    new_assignment[var] = True
+    result = dpll(formula, num_vars, new_assignment)
+    if result is not None:
+        return result
+
+    # Try False
+    new_assignment = assignment.copy()
+    new_assignment[var] = False
+    result = dpll(formula, num_vars, new_assignment)
+    return result
+```
+
+### C.4 Testing the SAT Solvers
+
+Test both solvers on:
+
+1. **Small hand-crafted formulas** where you know the answer
+2. **Random 3-SAT instances** near the phase transition (clause-to-variable ratio around 4.27)
+3. **Structured instances** from the graph coloring reduction (Part C.5)
+
+Compare the brute force and DPLL solvers on runtime. For random 3-SAT, generate instances of increasing size and plot the time taken by each solver. You should see DPLL dramatically outperform brute force, especially on satisfiable instances where unit propagation prunes the search space.
+
+```python
+import random
+import time
+
+def random_3sat(num_vars, num_clauses):
+    """Generate a random 3-SAT instance."""
+    formula = []
+    for _ in range(num_clauses):
+        clause = []
+        vars_chosen = random.sample(range(1, num_vars + 1), 3)
+        for v in vars_chosen:
+            clause.append(v if random.random() > 0.5 else -v)
+        formula.append(clause)
+    return formula
+
+# Benchmark
+for n in [10, 15, 20, 25, 30]:
+    ratio = 4.27
+    m = int(n * ratio)
+    formula = random_3sat(n, m)
+
+    start = time.time()
+    result_bf = brute_force_sat(formula, n)
+    time_bf = time.time() - start
+
+    start = time.time()
+    result_dpll = dpll(formula, n)
+    time_dpll = time.time() - start
+
+    print(f"n={n}: BF={time_bf:.4f}s, DPLL={time_dpll:.4f}s, "
+          f"SAT={result_bf is not None}")
+```
+
+### C.5 Reducing Graph Coloring to SAT
+
+Demonstrate NP-completeness in action by reducing the graph coloring problem to SAT.
+
+**Graph k-coloring:** Given an undirected graph G = (V, E) and k colors, assign a color to each vertex such that no two adjacent vertices share a color.
+
+**Encoding as SAT:**
+
+Variables: For each vertex v and color c, create a boolean variable x_{v,c} meaning "vertex v is assigned color c." If there are n vertices and k colors, we need n * k variables.
+
+Clauses:
+
+1. **At least one color per vertex:** For each vertex v, add the clause (x_{v,1} OR x_{v,2} OR ... OR x_{v,k}).
+
+2. **At most one color per vertex:** For each vertex v and each pair of colors c1 != c2, add the clause (NOT x_{v,c1} OR NOT x_{v,c2}).
+
+3. **Adjacent vertices have different colors:** For each edge (u, v) and each color c, add the clause (NOT x_{u,c} OR NOT x_{v,c}).
+
+```python
+def graph_coloring_to_sat(num_vertices, edges, num_colors):
+    """
+    Reduce graph k-coloring to SAT.
+    Returns (formula, num_vars, var_mapping).
+    """
+    # Variable numbering: var(v, c) = v * num_colors + c + 1
+    def var(v, c):
+        return v * num_colors + c + 1
+
+    num_vars = num_vertices * num_colors
+    formula = []
+
+    # At least one color per vertex
+    for v in range(num_vertices):
+        clause = [var(v, c) for c in range(num_colors)]
+        formula.append(clause)
+
+    # At most one color per vertex
+    for v in range(num_vertices):
+        for c1 in range(num_colors):
+            for c2 in range(c1 + 1, num_colors):
+                formula.append([-var(v, c1), -var(v, c2)])
+
+    # Adjacent vertices differ
+    for (u, v) in edges:
+        for c in range(num_colors):
+            formula.append([-var(u, c), -var(v, c)])
+
+    return formula, num_vars, var
+```
+
+**Testing:**
+
+1. Create a small graph (e.g., the Petersen graph, a cycle, a complete graph)
+2. Encode 3-coloring as SAT
+3. Solve with your DPLL solver
+4. Decode the SAT solution back into a coloring
+5. Verify the coloring is valid
+
+```python
+# Example: cycle graph C5 (5 vertices in a cycle)
+edges = [(0,1), (1,2), (2,3), (3,4), (4,0)]
+formula, num_vars, var_fn = graph_coloring_to_sat(5, edges, 3)
+
+result = dpll(formula, num_vars)
+if result:
+    print("3-colorable! Coloring:")
+    for v in range(5):
+        for c in range(3):
+            if result.get(var_fn(v, c), False):
+                print(f"  Vertex {v}: Color {c}")
+else:
+    print("Not 3-colorable")
+```
+
+Test with a complete graph K4 (3-colorable: no) and K3 (3-colorable: yes) to verify correctness.
+
+### C.6 Performance Analysis
+
+**Phase Transition Experiment:**
+
+Generate random 3-SAT instances with a fixed number of variables (e.g., n = 50) and varying clause-to-variable ratios from 1.0 to 7.0. For each ratio, generate multiple instances and measure:
+
+1. The fraction of satisfiable instances
+2. The average time taken by the DPLL solver
+
+Plot both metrics against the ratio. You should observe:
+
+- A sharp phase transition around ratio 4.27: below this, almost all instances are satisfiable; above, almost all are unsatisfiable
+- The hardest instances cluster around the phase transition
+- This is a hallmark of NP-complete problems: the difficulty is concentrated at a critical threshold
+
+**Scaling Experiment:**
+
+Fix the clause-to-variable ratio at 4.27 and increase n from 10 to 100. Plot the median solving time on a log scale. For brute force, you should see exponential growth (a straight line on a log-linear plot). For DPLL, the growth is still exponential but with a much smaller base.
+
+### C.7 Extensions (Optional)
+
+If you want to go further:
+
+1. **Clause Learning (CDCL):** Implement conflict-driven clause learning, the technique that makes modern SAT solvers so effective. When DPLL encounters a contradiction, CDCL analyzes the conflict to learn a new clause that prevents the same contradiction from recurring.
+
+2. **Watched Literals:** Implement the two-watched-literal scheme for efficient unit propagation. Instead of scanning all clauses at each step, maintain watches that trigger only when relevant assignments are made.
+
+3. **DIMACS Format:** Read and write formulas in the standard DIMACS CNF format, allowing you to test your solver on benchmark instances from SAT competitions.
+
+4. **Encode Other Problems:** Reduce other NP-complete problems to SAT:
+   - Sudoku as SAT
+   - Hamiltonian path as SAT
+   - Subset sum as SAT
+
+---
+
+## Deliverables Checklist
+
+- [ ] Turing machine simulator with tape, head, state management, and trace mode
+- [ ] Binary increment TM, fully tested
+- [ ] Palindrome checker TM, fully tested
+- [ ] Unary addition TM, fully tested
+- [ ] Diagonalization demonstration with approximate halting oracle
+- [ ] Rice's theorem examples (at least 2 undecidable property demonstrations)
+- [ ] Verification limits demonstration
+- [ ] CNF formula representation and evaluator
+- [ ] Brute force SAT solver
+- [ ] DPLL SAT solver with unit propagation
+- [ ] Graph coloring to SAT reduction
+- [ ] Phase transition experiment with plots
+- [ ] Scaling comparison (brute force vs DPLL) with plots
+- [ ] Written analysis (1-2 pages) reflecting on what these implementations reveal about the limits and possibilities of computational verification for AI safety

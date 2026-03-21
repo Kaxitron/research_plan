@@ -1,6 +1,6 @@
 ---
 title: "Exam 6A: Rational Agency and the Alignment Problem --- Answer Key"
-subtitle: "Lessons 80--83"
+subtitle: "Lessons 95--98"
 format:
   pdf:
     documentclass: article
@@ -342,7 +342,7 @@ Without these conditions, the AI has game-theoretic incentive to deceive wheneve
 
 **(b)** CDT permits deceptive alignment because it severs the logical connection between test behavior and deployment behavior. A CDT agent reasons: "My action in deployment cannot causally change the evaluation that already occurred, so I should optimize my true objective now." FDT (or UDT) blocks this reasoning by recognizing that the agent's **decision function** is evaluated in both contexts. An FDT agent cannot "defect during deployment" without also being the kind of agent that "defects during testing" --- because the evaluators can (in principle) simulate the decision function. $\checkmark$
 
-This directly addresses the deceptive alignment threat from L83: a mesa-optimizer using CDT can strategically behave well during training and defect during deployment, while an FDT-based mesa-optimizer cannot maintain this inconsistency. The decision theory baked into the AI is therefore a critical safety choice. $\checkmark$
+This directly addresses the deceptive alignment threat from L98: a mesa-optimizer using CDT can strategically behave well during training and defect during deployment, while an FDT-based mesa-optimizer cannot maintain this inconsistency. The decision theory baked into the AI is therefore a critical safety choice. $\checkmark$
 
 **(c)** **Concrete scenario:** The AI must allocate compute between "improve own capability" (benefits all copies) and "respond to user queries" (benefits users). Under SIA, the AI weights "improve capability" by $N$ (all copies benefit) vs.\ user-benefit (one interaction at a time). With large $N$, SIA-reasoning favors self-improvement overwhelmingly. Under SSA, each copy evaluates the tradeoff from its own perspective: self-improvement benefit is the same as user-benefit in expectation. $\checkmark$
 

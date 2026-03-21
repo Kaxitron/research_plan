@@ -554,67 +554,67 @@ You patch the residual stream activations from Prompt B's induction head into Pr
 ***
 ***
 
-# Phase 5 Quiz — Extended Mathematical Foundations
+# Phase 5 Quiz — Discrete Math, Computability, Logic, Algebra & Geometry
 
 ***
 
-## Q1 — Turing Machines, Decidability, and Alignment Limits
+## Q1 — Discrete Mathematics and Computability
 
-**(a)** State the Halting Problem precisely: what input does the supposed decider H take, and what does it output? Give a 3–4 sentence proof by contradiction that no such H can exist. *(The diagonalization argument.)*
+**(a)** Define a graph formally as $G = (V, E)$. A directed acyclic graph (DAG) is used to represent a neural network's computation graph. If a transformer block has $L$ layers and each layer has an attention sub-layer and an MLP sub-layer with residual connections, sketch the DAG for $L = 2$. How many nodes and edges does it have?
 
-**(b)** Rice's Theorem states that any non-trivial semantic property of programs is undecidable. A "semantic property" is one that depends on the *behavior* of the program, not its syntax. Give two examples of properties that Rice's Theorem shows are undecidable.
+**(b)** State the Halting Problem precisely: what input does the supposed decider $H$ take, and what does it output? Give a 3--4 sentence proof by contradiction that no such $H$ can exist. *(The diagonalization argument.)*
 
-**(c)** An alignment researcher proposes: "We'll verify that our AI never outputs harmful content by running it on all possible inputs and checking each output." Why does Rice's Theorem immediately doom this approach? What does this imply about the limits of formal verification for AI safety?
+**(c)** Rice's Theorem states that any non-trivial semantic property of programs is undecidable. An alignment researcher proposes: "We'll verify that our AI never outputs harmful content by running it on all possible inputs and checking each output." Why does Rice's Theorem immediately doom this approach? What does this imply about the limits of formal verification for AI safety?
 
-**(d)** Despite undecidability of the *general* problem, we can sometimes verify specific programs. Explain the difference between "undecidable in general" and "undecidable for this specific instance." What is one practical approach to AI safety that works around undecidability by not attempting full formal verification?
+**(d)** Kolmogorov complexity $K(x)$ is the length of the shortest program that outputs $x$. It is uncomputable. Yet we care about it because: "A model that has truly learned a concept should have a short description of it." Explain in 2--3 sentences how this connects to generalization --- why should a model with low $K(\theta)$ (simple weights) generalize better than one with high $K(\theta)$?
 
 ***
 
-## Q2 — Computational Complexity and the Hardness of Alignment
+## Q2 — Computational Complexity and Algorithms
 
 **(a)** Define P and NP precisely. Give one example of a problem known to be in P and one known to be NP-complete.
 
-**(b)** 3-SAT is NP-complete. The problem of finding the optimal neural network weights to minimize training loss exactly is NP-hard (it contains 3-SAT as a special case). What does this mean in practice — does it mean we can never train neural networks? Explain the distinction between worst-case and average-case complexity.
+**(b)** 3-SAT is NP-complete. The problem of finding the optimal neural network weights to minimize training loss exactly is NP-hard (it contains 3-SAT as a special case). What does this mean in practice --- does it mean we can never train neural networks? Explain the distinction between worst-case and average-case complexity.
 
 **(c)** The problem of finding the *globally optimal* policy in a Markov Decision Process (MDP) with an exponentially large state space is PSPACE-complete. Why is this relevant to RL-based alignment approaches?
 
-**(d)** Kolmogorov complexity K(x) is the length of the shortest program that outputs x. It is uncomputable. Yet we care about it because: "A model that has truly learned a concept should have a short description of it." Explain in 2–3 sentences how this connects to generalization — why should a model with low K(θ) (simple weights) generalize better than one with high K(θ)?
+**(d)** Gradient descent can be viewed as a greedy algorithm on a continuous optimization landscape. Compare it to a discrete greedy algorithm (e.g., greedy set cover): what structural property of the problem guarantees a greedy approach finds a good solution in the discrete case (submodularity), and what is the analogous property in the continuous case (convexity)? Why do neural network loss landscapes satisfy neither perfectly, yet SGD still works well in practice?
 
 ***
 
-## Q3 — Groups, Symmetry, and Neural Networks
+## Q3 — Propositional Logic, Gödel, and Löb's Theorem
 
-**(a)** A group (G, ∗) satisfies four axioms. State them. Then verify that (ℤ, +) is a group.
+**(a)** Write the following statement in propositional logic: "If the model is deceptive and passes evaluation, then either the evaluation is flawed or the model is strategically compliant." Identify the atomic propositions and logical connectives.
 
-**(b)** The symmetric group S₃ contains all permutations of {1, 2, 3}. List all 6 elements and their orders. Verify that the subset of even permutations forms a subgroup — what is this subgroup called?
+**(b)** State Gödel's First Incompleteness Theorem. What does it mean that a statement can be "true but unprovable"? Give the informal construction of the Gödel sentence $G$: "This statement is not provable in system $S$."
 
-**(c)** A 2-layer MLP with weight matrices W₁ and W₂ has a **permutation symmetry**: if you permute the hidden neurons by a permutation matrix P (applying P to columns of W₁ and rows of W₂), you get an identical function. The set of all such permutations of n hidden units forms a group. What group is this isomorphic to? What is its order?
+**(c)** Löb's Theorem states: if a formal system $S$ can prove "if $S$ proves $P$, then $P$ is true," then $S$ already proves $P$. Consider an AI agent that reasons: "If I, as a formal system, can prove that action $A$ is safe, then action $A$ is safe. Therefore, I will take action $A$." Show why Löb's Theorem implies this reasoning is problematic --- what does it imply the agent must already believe about action $A$ for this to go through?
 
-**(d)** This symmetry creates a massive manifold of equivalent weights in loss space. For a network with 10 hidden layers each of width 512, how many equivalent weight configurations exist due to permutation symmetry alone? (Express as a product.) Why does this create challenges for comparing two trained networks — or for interpreting which "neuron" does what?
-
-***
-
-## Q4 — Topology: Continuity, Compactness, and Loss Landscapes
-
-**(a)** Define an open set in ℝⁿ. What makes a function f: ℝⁿ → ℝ continuous in terms of open sets? Why is this definition superior to the ε-δ definition for generalizing to abstract spaces?
-
-**(b)** A compact set in ℝⁿ is closed and bounded. The **extreme value theorem** says: a continuous function on a compact set attains its minimum. Why can't we directly apply this to neural network loss functions over all of weight space ℝᵈ? What do practitioners do instead?
-
-**(c)** The loss landscape of a neural network is a smooth manifold in weight space (generically). Critical points (where ∇L = 0) come in three types: local minima, saddle points, and local maxima. For a network with d parameters, what does the Morse theory result suggest about the relative abundance of each type as d → ∞? Why does this imply that SGD rarely gets "stuck" in local minima?
-
-**(d)** In SLT, the key object is a **singular point** of the loss landscape — a point where the loss function cannot be written as a sum of squares in any local coordinate system. Explain geometrically why a singular point has a lower RLCT (lower effective dimension) than a non-singular critical point, and why this matters for model selection.
+**(d)** The "tiling agents" problem in alignment: can an AI agent safely create a successor agent that it trusts to carry out its goals? Explain in 3--4 sentences how Löb's Theorem creates a fundamental obstacle to naive self-trust in this scenario, and what this implies about the difficulty of building reliably self-improving AI systems.
 
 ***
 
-## Q5 — Gödel, Löb's Theorem, and Self-Referential AI
+## Q4 — Groups, Rings, and Symmetry in Neural Networks
 
-**(a)** State Gödel's First Incompleteness Theorem. What does it mean that a statement can be "true but unprovable"? Give the informal construction of the Gödel sentence G: "This statement is not provable in system S."
+**(a)** A group $(G, *)$ satisfies four axioms. State them. Then verify that $(\mathbb{Z}, +)$ is a group.
 
-**(b)** Löb's Theorem states: if a formal system S can prove "if S proves P, then P is true," then S already proves P. Why is this surprising — naively, shouldn't a system be able to trust its own proofs?
+**(b)** The symmetric group $S_3$ contains all permutations of $\{1, 2, 3\}$. List all 6 elements and their orders. Verify that the subset of even permutations forms a subgroup --- what is this subgroup called?
 
-**(c)** Consider an AI agent that reasons: "If I, as a formal system, can prove that action A is safe, then action A is safe. Therefore, I will take action A." Show why Löb's Theorem implies this reasoning is problematic — what does it imply the agent must already believe about action A for this to go through?
+**(c)** A 2-layer MLP with weight matrices $W_1$ and $W_2$ has a **permutation symmetry**: if you permute the hidden neurons by a permutation matrix $P$ (applying $P$ to columns of $W_1$ and rows of $W_2$), you get an identical function. The set of all such permutations of $n$ hidden units forms a group. What group is this isomorphic to? What is its order? For a network with 10 hidden layers each of width 512, how many equivalent weight configurations exist due to permutation symmetry alone? (Express as a product.)
 
-**(d)** The "tiling agents" problem in alignment: can an AI agent safely create a successor agent that it trusts to carry out its goals? Explain in 3–4 sentences how Löb's Theorem creates a fundamental obstacle to naive self-trust in this scenario, and what this implies about the difficulty of building reliably self-improving AI systems.
+**(d)** A **ring** $(R, +, \cdot)$ extends a group by adding a second operation. The set of $n \times n$ matrices with real entries forms a ring under matrix addition and multiplication. Verify the ring axioms for $2 \times 2$ matrices. Why is this ring *not* commutative under multiplication? Give a concrete example showing $AB \neq BA$. Why does non-commutativity matter for understanding the order of operations in a transformer's residual stream (where contributions from attention and MLP blocks are added)?
+
+***
+
+## Q5 — Topology, Geometry, and Loss Landscapes
+
+**(a)** Define an open set in $\mathbb{R}^n$. What makes a function $f\colon \mathbb{R}^n \to \mathbb{R}$ continuous in terms of open sets? A compact set in $\mathbb{R}^n$ is closed and bounded. The **extreme value theorem** says: a continuous function on a compact set attains its minimum. Why can't we directly apply this to neural network loss functions over all of weight space $\mathbb{R}^d$? What do practitioners do instead?
+
+**(b)** The loss landscape of a neural network is a smooth manifold in weight space (generically). Critical points (where $\nabla L = 0$) come in three types: local minima, saddle points, and local maxima. For a network with $d$ parameters, what does the Morse theory result suggest about the relative abundance of each type as $d \to \infty$? Why does this imply that SGD rarely gets "stuck" in local minima?
+
+**(c)** In SLT, the key object is a **singular point** of the loss landscape --- a point where the loss function cannot be written as a sum of squares in any local coordinate system. The permutation symmetry from Q4(c) creates singularities because many weight configurations map to the same function. Explain geometrically why a singular point has a lower RLCT (lower effective dimension) than a non-singular critical point, and why this matters for model selection.
+
+**(d)** **Algebraic geometry connection:** the set of weight configurations achieving zero loss forms an algebraic variety (the zero set of a system of polynomial-like equations). Resolution of singularities transforms this variety into a smooth space where integrals (like the marginal likelihood) can be computed. In 3--4 sentences, explain why understanding the geometry of this singular set is important for alignment: how does the structure of the loss landscape's singularities determine which solutions SGD finds, and what does this imply about whether trained models are "simple" or "complex"?
 
 ***
 ***

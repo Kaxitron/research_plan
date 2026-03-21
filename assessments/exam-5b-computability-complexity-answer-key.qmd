@@ -1,0 +1,180 @@
+---
+title: "Exam 5B: Computability and Complexity --- Answer Key"
+subtitle: "Lessons 72--76"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct formal work and clear reasoning. Partial credit is generous for correct setup with minor errors. On essay questions, precision matters -- vague hand-waving earns at most half credit.
+
+\newpage
+
+## Q1 --- DFA Construction
+
+**(a)** The DFA tracks the remainder when dividing by 3. States: $\{q_0, q_1, q_2\}$ representing remainders 0, 1, 2. Start state: $q_0$. Accept state: $q_0$.
+
+Transitions (reading binary left to right, the value transforms as $v \to 2v + \text{bit}$, so the remainder transforms as $r \to (2r + \text{bit}) \mod 3$):
+
+| State | Input 0 | Input 1 |
+|-------|---------|---------|
+| $q_0$ (rem 0) | $q_0$ | $q_1$ |
+| $q_1$ (rem 1) | $q_2$ | $q_0$ |
+| $q_2$ (rem 2) | $q_1$ | $q_2$ |
+
+$\checkmark$
+
+**(b)** The DFA has 3 states. This is minimal because the strings $\varepsilon$ (value 0, remainder 0), $1$ (value 1, remainder 1), and $10$ (value 2, remainder 2) are pairwise distinguishable by the Myhill-Nerode theorem. For instance, $\varepsilon$ is accepted (append nothing), $1$ is not (value 1), and they behave differently. Similarly $1$ and $10$ are distinguished by appending $1$: $11 = 3$ (accepted) vs $101 = 5$ (not accepted). Three equivalence classes means 3 states is minimal. $\checkmark$
+
+---
+
+## Q2 --- Regular Languages and the Pumping Lemma
+
+**(a)** **(C)** $\{w : |w| \text{ is even}\}$. This is recognized by a 2-state DFA that toggles between accepting and rejecting on each symbol. $\checkmark$
+
+**(b)** **Pumping Lemma:** For every regular language $L$, there exists a pumping length $p$ such that every string $s \in L$ with $|s| \geq p$ can be written as $s = xyz$ where (1) $|y| > 0$, (2) $|xy| \leq p$, and (3) $xy^i z \in L$ for all $i \geq 0$.
+
+**Proof that $L = \{a^n b^n\}$ is not regular:** Suppose $L$ is regular with pumping length $p$. Choose $s = a^p b^p \in L$. Then $s = xyz$ with $|xy| \leq p$ and $|y| > 0$. Since $|xy| \leq p$, both $x$ and $y$ consist entirely of $a$'s. Let $y = a^k$ for some $k \geq 1$. Then $xy^0 z = xz = a^{p-k} b^p$. Since $k \geq 1$, we have $p - k < p$, so $a^{p-k} b^p \notin L$. Contradiction. Therefore $L$ is not regular. $\checkmark$
+
+---
+
+## Q3 --- NFAs and Subset Construction
+
+**(a)** The NFA accepts any string over $\{a, b\}$ that contains the substring $ab$. In the NFA, from $q_0$ we can stay at $q_0$ reading anything, then nondeterministically transition to $q_1$ on reading $a$, then must immediately read $b$ to reach accepting state $q_2$. Regular expression: $(a|b)^* ab (a|b)^*$... but wait, $q_2$ has no transitions, so nothing can follow $ab$. The language is: strings that end with $ab$. Regular expression: $(a \mid b)^* ab$. $\checkmark$
+
+**(b)** Subset construction. Reachable DFA states are subsets of $\{q_0, q_1, q_2\}$:
+
+- Start: $\{q_0\}$.
+- $\{q_0\}$ on $a$: $\delta(q_0, a) = \{q_0, q_1\} \Rightarrow \{q_0, q_1\}$.
+- $\{q_0\}$ on $b$: $\delta(q_0, b) = \{q_0\} \Rightarrow \{q_0\}$.
+- $\{q_0, q_1\}$ on $a$: $\delta(q_0, a) \cup \delta(q_1, a) = \{q_0, q_1\} \cup \emptyset = \{q_0, q_1\}$.
+- $\{q_0, q_1\}$ on $b$: $\delta(q_0, b) \cup \delta(q_1, b) = \{q_0\} \cup \{q_2\} = \{q_0, q_2\}$.
+- $\{q_0, q_2\}$ on $a$: $\delta(q_0, a) \cup \delta(q_2, a) = \{q_0, q_1\} \cup \emptyset = \{q_0, q_1\}$.
+- $\{q_0, q_2\}$ on $b$: $\delta(q_0, b) \cup \delta(q_2, b) = \{q_0\} \cup \emptyset = \{q_0\}$.
+
+Reachable states: $\{q_0\}$, $\{q_0, q_1\}$, $\{q_0, q_2\}$. Accepting states (contain $q_2$): $\{q_0, q_2\}$. $\checkmark$
+
+---
+
+## Q4 --- Context-Free Grammars and the CYK Algorithm
+
+**(a)** CNF requires every production to be either $X \to YZ$ (two nonterminals) or $X \to a$ (single terminal). Check:
+
+- $S \to AB$ (two nonterminals), $S \to BC$ (two nonterminals). $\checkmark$
+- $A \to BA$ (two nonterminals), $A \to a$ (terminal). $\checkmark$
+- $B \to CC$ (two nonterminals), $B \to b$ (terminal). $\checkmark$
+- $C \to AB$ (two nonterminals), $C \to a$ (terminal). $\checkmark$
+
+All productions are in CNF. $\checkmark$
+
+**(b)** CYK table for $w = b\, a\, b\, a$ (positions 1--4):
+
+**Length 1 (diagonal):**
+
+- $T[1,1]$ ($b$): $\{B\}$ (from $B \to b$)
+- $T[2,2]$ ($a$): $\{A, C\}$ (from $A \to a$, $C \to a$)
+- $T[3,3]$ ($b$): $\{B\}$
+- $T[4,4]$ ($a$): $\{A, C\}$
+
+**Length 2:**
+
+- $T[1,2]$ (split at 1): $T[1,1] \times T[2,2] = \{B\} \times \{A,C\}$. $BA \to A$, $BC \to S$. So $T[1,2] = \{A, S\}$.
+- $T[2,3]$ (split at 2): $T[2,2] \times T[3,3] = \{A,C\} \times \{B\}$. $AB \to S, C$. $CB \to$ nothing. So $T[2,3] = \{S, C\}$.
+- $T[3,4]$ (split at 3): $T[3,3] \times T[4,4] = \{B\} \times \{A,C\}$. $BA \to A$, $BC \to S$. So $T[3,4] = \{A, S\}$.
+
+**Length 3:**
+
+- $T[1,3]$: split at 1: $\{B\} \times \{S,C\}$. $BS \to$ nothing, $BC \to S$. Split at 2: $\{A,S\} \times \{B\}$. $AB \to S, C$. $SB \to$ nothing. So $T[1,3] = \{S, C\}$.
+- $T[2,4]$: split at 2: $\{A,C\} \times \{A,S\}$. $AA \to$ nothing, $AS \to$ nothing, $CA \to$ nothing, $CS \to$ nothing. Split at 3: $\{S,C\} \times \{A,C\}$. $SA \to$ nothing, $SC \to$ nothing, $CA \to$ nothing, $CC \to B$. So $T[2,4] = \{B\}$.
+
+**Length 4:**
+
+- $T[1,4]$: split at 1: $\{B\} \times \{B\}$. $BB \to$ nothing. Split at 2: $\{A,S\} \times \{B\}$. $AB \to S, C$. $SB \to$ nothing. Split at 3: $\{S,C\} \times \{A,C\}$. $SA, SC, CA, CC$. $CC \to B$. So $T[1,4] = \{S, C, B\}$.
+
+Since $S \in T[1,4]$, the string $baba$ **is** in $L(G)$. $\checkmark$
+
+---
+
+## Q5 --- Turing Machines and the Halting Problem
+
+**(a)** **(A)** Given a DFA $D$ and a string $w$, does $D$ accept $w$? This is decidable: simply simulate $D$ on $w$ (always terminates in $|w|$ steps). $\checkmark$
+
+**(b)** **The Halting Problem:** Given a Turing machine $M$ and input $w$, does $M$ halt on $w$?
+
+**Proof of undecidability:** Suppose for contradiction that a TM $H$ decides the halting problem: $H(\langle M, w \rangle)$ accepts if $M$ halts on $w$ and rejects otherwise. Construct TM $D$: on input $\langle M \rangle$, run $H(\langle M, \langle M \rangle \rangle)$. If $H$ accepts (meaning $M$ halts on $\langle M \rangle$), then $D$ enters an infinite loop. If $H$ rejects, then $D$ halts and accepts.
+
+Now consider $D$ on input $\langle D \rangle$:
+
+- If $D$ halts on $\langle D \rangle$, then $H$ accepts, so $D$ loops. Contradiction.
+- If $D$ does not halt on $\langle D \rangle$, then $H$ rejects, so $D$ halts. Contradiction.
+
+Either way we get a contradiction, so $H$ cannot exist. $\checkmark$
+
+---
+
+## Q6 --- Rice's Theorem and Reductions
+
+**(a)** **Rice's Theorem:** Let $P$ be any nontrivial property of recognizable languages (i.e., there exist TMs $M_1, M_2$ such that $L(M_1)$ has property $P$ and $L(M_2)$ does not). Then the language $\{\langle M \rangle : L(M) \text{ has property } P\}$ is undecidable. $\checkmark$
+
+**(b)** The property "the language contains at least one palindrome" is a property of the language $L(M)$, not of the machine description. It is nontrivial: a TM accepting $\{a\}$ has this property (since $a$ is a palindrome), while a TM accepting $\emptyset$ does not. By Rice's theorem, the problem is undecidable. $\checkmark$
+
+**(c)** "Does TM $M$ have at least 5 states?" is a property of the *description* (syntactic structure) of the Turing machine, not a property of the *language* it recognizes. Many different TMs with different numbers of states recognize the same language. Rice's theorem only applies to semantic properties -- properties of $L(M)$. The number of states can be determined by simply inspecting the machine description, so this property is in fact decidable. $\checkmark$
+
+---
+
+## Q7 --- Kolmogorov Complexity
+
+**(a)** $K(x)$ is the length of the shortest program $p$ (on a fixed universal Turing machine $U$) such that $U(p) = x$. The **invariance theorem** states that for any two universal TMs $U_1$ and $U_2$, $|K_{U_1}(x) - K_{U_2}(x)| \leq c$ for a constant $c$ independent of $x$. This is important because it means Kolmogorov complexity is well-defined up to an additive constant, regardless of the choice of programming language or universal machine. $\checkmark$
+
+**(b)** Suppose $K$ is computable. Then we can write a program $P$ of fixed length $|P|$ that does the following: enumerate all strings in order, compute $K(x)$ for each, and output the first $x$ with $K(x) > |P| + c$ (where $c$ accounts for overhead). Such an $x$ exists since most long strings are incompressible. But then $P$ is a program of length $|P| + c$ that outputs $x$, so $K(x) \leq |P| + c$. This contradicts $K(x) > |P| + c$. Therefore $K$ is not computable. $\checkmark$
+
+**(c)** **(A)** $K(x) \leq n + c$. A program can always just "print $x$" by hardcoding the string, which takes $n$ bits plus a constant-length instruction prefix. $K(x) \geq n$ is false for highly structured strings (e.g., $0^n$ has $K \approx \log n$). $K(x) = n$ for "most" strings is close but not exactly true (most satisfy $K(x) \geq n - c$). $K(x)$ cannot be computed at all, ruling out (D). $\checkmark$
+
+---
+
+## Q8 --- P, NP, and NP-Completeness
+
+**(a)** **P** is the class of languages decidable by a deterministic TM in polynomial time. **NP** is the class of languages for which a "yes" answer can be verified in polynomial time given a polynomial-length certificate (equivalently, decidable by a nondeterministic TM in polynomial time). A language $L$ is **NP-complete** if: (1) $L \in$ NP, and (2) every language in NP is polynomial-time reducible to $L$ (i.e., $L$ is NP-hard). $\checkmark$
+
+**(b)** A problem is **in NP** if it has efficient verification. A problem is **NP-hard** if every NP problem reduces to it, but it need not itself be in NP. Example of NP-hard but not known to be in NP: the Halting Problem (it is undecidable, hence not even in NP, but every NP problem trivially reduces to it). A more standard example: the problem of computing an optimal traveling salesman tour (the optimization version, not the decision version). $\checkmark$
+
+**(c)** For each clause $(x_i \lor x_j \lor x_k)$, create a triangle (3 vertices connected to each other), one vertex per literal. Edges between different clause-triangles connect contradictory literals ($x_i$ in one clause to $\lnot x_i$ in another). An independent set cannot contain two connected vertices, so it cannot select both $x_i$ and $\lnot x_i$ (enforcing consistency). Within each triangle, an independent set can select at most one vertex (ensuring each clause contributes at most one satisfied literal). A 3-SAT formula with $m$ clauses is satisfiable iff the graph has an independent set of size $m$ (one satisfied literal per clause). $\checkmark$
+
+---
+
+## Q9 --- Space Complexity
+
+**(a)** **(D)** $\text{PSPACE} \subsetneq \text{EXPTIME}$ is known to be strict (by the time hierarchy theorem and the fact that $\text{PSPACE} \subseteq \text{EXPTIME}$; specifically, $\text{PSPACE} \subseteq \bigcup_k \text{DTIME}(2^{n^k})$ by simulation, and the time hierarchy theorem gives a strict separation). The other inclusions are not known to be strict (though widely believed to be). $\checkmark$
+
+**(b)** **Savitch's Theorem:** $\text{NSPACE}(f(n)) \subseteq \text{DSPACE}(f(n)^2)$ for any $f(n) \geq \log n$. The most important consequence: $\text{NL} \subseteq \text{DSPACE}(\log^2 n)$, and more dramatically, $\text{NPSPACE} = \text{PSPACE}$ (nondeterministic polynomial space equals deterministic polynomial space). Unlike the time hierarchy, where nondeterminism might give exponential speedups (P vs NP), for space the gap is at most quadratic. $\checkmark$
+
+**(c)** TQBF is the problem of determining the truth value of a fully quantified Boolean formula ($\forall x_1 \exists x_2 \ldots \phi$). It is in PSPACE (evaluate recursively: for $\forall x$, check both $x = 0$ and $x = 1$, reusing space). It is PSPACE-hard because any PSPACE computation can be encoded as a TQBF. For game-playing AI: two-player perfect-information games (like chess on an $n \times n$ board) reduce to TQBF (alternating moves correspond to alternating quantifiers), so determining the winner is PSPACE-hard. This means no polynomial-time algorithm is expected to solve general game positions perfectly. $\checkmark$
+
+---
+
+## Q10 --- Synthesis: Computability, Complexity, and AI Alignment
+
+**Model answer (key points expected):**
+
+The halting problem shows that no algorithm can determine, for an arbitrary program, whether it terminates. By analogy, the question "Is this AI system safe?" -- where "safe" is defined in terms of the system's behavior on all possible inputs -- is at least as hard as the halting problem, and therefore undecidable in full generality. We cannot build a universal AI safety verifier. Rice's theorem strengthens this: any nontrivial behavioral property of a program is undecidable.
+
+NP-completeness adds a practical barrier even for decidable safety properties. Even if we restrict attention to finite-horizon behavior (making the problem decidable in principle), verification problems may be NP-hard or worse. Checking whether a neural network satisfies a safety specification across its input space is computationally intractable for large networks, which is why formal verification of neural networks currently scales poorly.
+
+Kolmogorov complexity relates to value specification: human values are complex and context-dependent. If the "true" specification of human values has high Kolmogorov complexity, then any short formal specification will necessarily be an imperfect approximation. This connects to Goodhart's law: optimizing a simple proxy (low complexity) for a complex target (high complexity) will diverge from the true objective. Solomonoff induction provides a theoretical ideal (weight hypotheses by simplicity), but is itself uncomputable.
+
+Together, these results suggest that alignment cannot be solved purely by formal verification or specification, and practical approaches must rely on empirical testing, interpretability, and iterative oversight rather than guaranteed-correct proofs of safety. $\checkmark$

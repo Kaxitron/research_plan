@@ -1,0 +1,180 @@
+---
+title: "Exam 5C: Formal Logic --- Answer Key"
+subtitle: "Lessons 77--79"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct formal work and clear reasoning. On the incompleteness theorem questions, precision of statement matters -- vague or inaccurate formulations earn at most half credit. The essay question rewards specific connections over generic commentary.
+
+\newpage
+
+## Q1 --- Propositional Logic and Normal Forms
+
+**(a)** Convert $\lnot(P \to Q) \lor (R \land \lnot P)$:
+
+Step 1: Rewrite implication: $\lnot(\lnot P \lor Q) \lor (R \land \lnot P)$.
+
+Step 2: Apply De Morgan's: $(P \land \lnot Q) \lor (R \land \lnot P)$.
+
+Step 3: Distribute $\lor$ over $\land$ to get CNF. We need to distribute:
+
+$(P \land \lnot Q) \lor (R \land \lnot P) = (P \lor R) \land (P \lor \lnot P) \land (\lnot Q \lor R) \land (\lnot Q \lor \lnot P)$
+
+Step 4: Simplify: $P \lor \lnot P$ is a tautology (always true), so the CNF is:
+
+$$(P \lor R) \land (\lnot Q \lor R) \land (\lnot Q \lor \lnot P). \checkmark$$
+
+**(b)** **(C)** There exists at least one valuation making it true. $\checkmark$
+
+**(c)** Try $P = T$, $Q = T$, $R = T$: $(T \lor T) \land (F \lor T) \land (F \lor F) = T \land T \land F = F$. No.
+
+Try $P = T$, $Q = F$, $R = T$: $(T \lor F) \land (F \lor T) \land (T \lor F) = T \land T \land T = T$. $\checkmark$
+
+Satisfying assignment: $P = T$, $Q = F$, $R = T$. $\checkmark$
+
+---
+
+## Q2 --- SAT Solving and Resolution
+
+**(a)** The resolution rule: from clauses $(A \lor P)$ and $(B \lor \lnot P)$, derive the resolvent $(A \lor B)$. The variable $P$ is eliminated. If both clauses are unit clauses $\{P\}$ and $\{\lnot P\}$, the resolvent is the empty clause (contradiction). $\checkmark$
+
+**(b)** Clauses: (1) $P \lor Q$, (2) $\lnot P \lor Q$, (3) $P \lor \lnot Q$, (4) $\lnot P \lor \lnot Q$.
+
+- Resolve (1) and (2) on $P$: yields $Q \lor Q = Q$. Call this (5).
+- Resolve (3) and (4) on $P$: yields $\lnot Q \lor \lnot Q = \lnot Q$. Call this (6).
+- Resolve (5) and (6) on $Q$: yields the empty clause $\square$. $\checkmark$
+
+The empty clause is derived, so the set is unsatisfiable. $\checkmark$
+
+**(c)** Unit propagation: when a clause becomes a unit clause (single literal), that literal must be true. Setting it to true may simplify other clauses (removing the literal's negation from them), potentially creating new unit clauses. This cascading effect prunes huge portions of the search tree without branching. It is the main reason DPLL (and CDCL) vastly outperform naive enumeration of all $2^n$ valuations. $\checkmark$
+
+---
+
+## Q3 --- First-Order Logic: Structures and Satisfaction
+
+**(a)** Domain $\{1, 2, 3\}$. Define $R = \{(1,2), (2,3), (3,1)\}$ (a cycle).
+
+- $\forall x \exists y\, R(x,y)$: for $x=1$, $y=2$ works; for $x=2$, $y=3$; for $x=3$, $y=1$. Satisfied. $\checkmark$
+- $\exists x \forall y\, R(x,y)$: we need some $x$ related to all $y$. But each element is related to only one other. Not satisfied. $\checkmark$
+
+**(b)** They are **not** logically equivalent. The structure above serves as a counterexample: $\forall x \exists y\, R(x,y)$ is true but $\exists y \forall x\, R(x,y)$ is false (no single $y$ works for all $x$; e.g., $y=2$ fails for $x=2$ since $(2,2) \notin R$). $\checkmark$
+
+Note: the question asked about $\exists x \forall y$ vs $\forall x \exists y$, and likewise for the swapped version. The point is the same: the universal-existential order matters, and $\exists\forall$ implies $\forall\exists$ but not conversely.
+
+**(c)** **(A)** $\exists x \forall y\, \phi(x,y)$ logically implies $\forall y \exists x\, \phi(x,y)$. If there is a single witness $x_0$ that works for all $y$, then for each $y$ we can use $x_0$. The converse fails (different $y$'s might need different witnesses). $\checkmark$
+
+---
+
+## Q4 --- Natural Deduction Proofs
+
+**(a)**
+
+1. $P \to Q$ (premise)
+2. $\lnot Q \to \lnot P$ (premise)
+3. $P$ (premise)
+4. $Q$ (modus ponens on 1, 3) $\checkmark$
+
+(The second premise is not needed; it is the contrapositive of premise 1.)
+
+**(b)**
+
+1. Assume $P$ (for conditional introduction).
+2. \ \ Assume $Q$ (for nested conditional introduction).
+3. \ \ $P$ (reiteration of 1).
+4. \ \ $Q \to P$ (conditional introduction, discharging assumption 2).
+5. $P \to (Q \to P)$ (conditional introduction, discharging assumption 1). $\checkmark$
+
+**(c)** In intuitionistic logic, $\lnot \lnot P \to P$ (double negation elimination) is not a theorem. Intuitionistic logic lacks the law of excluded middle ($P \lor \lnot P$). To derive $P$ from $\lnot\lnot P$, one needs either the law of excluded middle or an explicit double negation elimination rule (equivalently, proof by contradiction for positive statements). Classical logic adds this; intuitionistic logic does not, because it requires constructive evidence for $P$, not merely the impossibility of $\lnot P$. $\checkmark$
+
+---
+
+## Q5 --- Soundness and Completeness
+
+**(a)** **Soundness Theorem:** If $\Gamma \vdash \phi$ (there is a proof of $\phi$ from $\Gamma$), then $\Gamma \models \phi$ (every model of $\Gamma$ is a model of $\phi$). If a system is not sound, it can derive false conclusions from true premises -- the proof system is unreliable and useless for establishing truth. $\checkmark$
+
+**(b)** **Godel's Completeness Theorem:** If $\Gamma \models \phi$ (every model of $\Gamma$ satisfies $\phi$), then $\Gamma \vdash \phi$ (there is a formal proof of $\phi$ from $\Gamma$). Completeness means the proof system is powerful enough to derive everything that is semantically valid. Nothing true "escapes" the reach of the proof system. $\checkmark$
+
+**(c)** The Completeness Theorem says: in first-order logic as a deductive system, every valid formula (true in all structures) is provable. This is about the logic itself. The Incompleteness Theorem says: in any particular sufficiently strong formal theory (like Peano arithmetic), there are sentences true in the intended model ($\mathbb{N}$) that are not provable from the theory's axioms. The key difference: completeness is about logical validity (truth in ALL models), while incompleteness is about truth in a SPECIFIC model. Peano arithmetic cannot prove all truths about $\mathbb{N}$, but every first-order sentence that is true in every structure is provable in the logic. $\checkmark$
+
+---
+
+## Q6 --- The Compactness Theorem
+
+**(a)** **Compactness Theorem:** A set of first-order sentences $\Gamma$ has a model if and only if every finite subset of $\Gamma$ has a model. $\checkmark$
+
+**(b)** For each $n \geq 1$, let $\sigma_n$ be the sentence asserting "there exist at least $n$ distinct elements":
+
+$$\sigma_n = \exists x_1 \exists x_2 \ldots \exists x_n \bigwedge_{i \neq j} x_i \neq x_j$$
+
+Let $\Gamma' = T \cup \{\sigma_n : n \geq 1\}$. Any finite subset of $\Gamma'$ uses only finitely many $\sigma_n$'s, say up to $\sigma_N$. By hypothesis, $T$ has a model of size $\geq N$, and this model satisfies all of $T$ and $\sigma_1, \ldots, \sigma_N$. So every finite subset of $\Gamma'$ has a model. By compactness, $\Gamma'$ has a model. This model satisfies all $\sigma_n$, so it is infinite, and it satisfies $T$. $\checkmark$
+
+**(c)** **(C)** The set of natural numbers cannot be characterized up to isomorphism by a first-order theory. By compactness and the argument above, any first-order theory with an infinite model also has models of every larger cardinality (Lowenheim-Skolem). So no first-order theory pins down the natural numbers uniquely. In particular, "being finite" and "being well-ordered" are not first-order expressible, ruling out (A) and (B). Not every theory has a finite model (e.g., the theory of infinite sets), ruling out (D). $\checkmark$
+
+---
+
+## Q7 --- Godel Numbering and the Diagonal Lemma
+
+**(a)** Godel numbering assigns a unique natural number (Godel number) to each symbol, formula, and proof in a formal system. This is necessary because the incompleteness theorems concern a theory's ability to reason about its own provability. By encoding syntax as numbers, statements about provability become arithmetic statements that the theory can express. Without this encoding, the theory has no way to "talk about" its own formulas and proofs. $\checkmark$
+
+**(b)** **Diagonal Lemma:** For any formula $\phi(x)$ with one free variable in a sufficiently strong theory $T$ (one that can represent all computable functions), there exists a sentence $G$ such that $T \vdash G \leftrightarrow \phi(\ulcorner G \urcorner)$, where $\ulcorner G \urcorner$ is the Godel number of $G$. $\checkmark$
+
+**(c)** Let $\text{Prov}_T(x)$ be the formula asserting "$x$ is the Godel number of a sentence provable in $T$." Apply the Diagonal Lemma to $\phi(x) = \lnot \text{Prov}_T(x)$. This yields a sentence $G$ such that $T \vdash G \leftrightarrow \lnot \text{Prov}_T(\ulcorner G \urcorner)$. In plain language, $G$ asserts: "I am not provable in $T$." $\checkmark$
+
+---
+
+## Q8 --- Godel's First Incompleteness Theorem
+
+**(a)** **First Incompleteness Theorem:** For any formal system $T$ that is (1) consistent, (2) recursively axiomatizable (the set of axioms is decidable), and (3) sufficiently strong to represent all computable functions (e.g., contains Robinson arithmetic $Q$), there exists a sentence $G$ in the language of $T$ such that neither $G$ nor $\lnot G$ is provable in $T$. $\checkmark$
+
+**(b)** The Godel sentence $G$ satisfies $T \vdash G \leftrightarrow \lnot \text{Prov}_T(\ulcorner G \urcorner)$.
+
+*$G$ is not provable:* Suppose $T \vdash G$. Then $\ulcorner G \urcorner$ has a proof in $T$, so $T \vdash \text{Prov}_T(\ulcorner G \urcorner)$. But since $T \vdash G$ and $T \vdash G \leftrightarrow \lnot \text{Prov}_T(\ulcorner G \urcorner)$, we get $T \vdash \lnot \text{Prov}_T(\ulcorner G \urcorner)$. So $T$ proves both $\text{Prov}_T(\ulcorner G \urcorner)$ and $\lnot \text{Prov}_T(\ulcorner G \urcorner)$, contradicting consistency. Therefore $T \nvdash G$. $\checkmark$
+
+*$\lnot G$ is not provable (assuming $\omega$-consistency or just consistency for the strengthened version):* Since $T \nvdash G$, there is no proof of $G$ in $T$. So $\text{Prov}_T(\ulcorner G \urcorner)$ is false (in $\mathbb{N}$). Since $G \leftrightarrow \lnot \text{Prov}_T(\ulcorner G \urcorner)$, $G$ is true in $\mathbb{N}$, so $\lnot G$ is false in $\mathbb{N}$. If $T$ is $\omega$-consistent (or if we use Rosser's strengthening with just plain consistency), then $T \nvdash \lnot G$. $\checkmark$
+
+*$G$ is true:* $G$ says "I am not provable in $T$." We just showed $G$ is indeed not provable in $T$. So $G$ is true (in $\mathbb{N}$). $\checkmark$
+
+**(c)** What is correct: there are indeed true arithmetic sentences that cannot be proved within any particular sufficiently strong consistent formal system. What is misleading: (1) "never prove" is too strong -- the sentence can be proved in a stronger system (just add $G$ as an axiom, or move to a stronger theory). (2) The theorem applies to specific formal systems, not to human mathematical knowledge in general. We can recognize $G$ as true by reasoning outside the system. (3) Mathematics is not "unreliable" -- the system is consistent and everything it proves is true; there are just truths it cannot reach. $\checkmark$
+
+---
+
+## Q9 --- Godel's Second Incompleteness Theorem and Lob's Theorem
+
+**(a)** **Second Incompleteness Theorem:** If $T$ is a consistent, recursively axiomatizable theory that is sufficiently strong (contains enough arithmetic), then $T$ cannot prove $\text{Con}(T)$, where $\text{Con}(T)$ is the formalized statement "T is consistent" (i.e., $\lnot \text{Prov}_T(\ulcorner 0 = 1 \urcorner)$). $\checkmark$
+
+**(b)** **Lob's Theorem:** For any sentence $P$, if $T \vdash \text{Prov}_T(\ulcorner P \urcorner) \to P$, then $T \vdash P$. Equivalently (contrapositive): if $T \nvdash P$, then $T \nvdash \text{Prov}_T(\ulcorner P \urcorner) \to P$.
+
+Connection to the Second Incompleteness Theorem: take $P$ to be $0 = 1$ (falsum). Then Lob's theorem says: if $T \vdash \text{Prov}_T(\ulcorner 0=1 \urcorner) \to 0 = 1$, then $T \vdash 0 = 1$. If $T$ is consistent ($T \nvdash 0 = 1$), then $T \nvdash \text{Prov}_T(\ulcorner 0=1 \urcorner) \to 0 = 1$. But $\text{Prov}_T(\ulcorner 0=1 \urcorner) \to 0 = 1$ is equivalent to $\lnot \text{Prov}_T(\ulcorner 0=1 \urcorner) \lor 0=1$, which (since $0=1$ is false) is essentially $\text{Con}(T)$. So $T \nvdash \text{Con}(T)$, recovering the Second Incompleteness Theorem. $\checkmark$
+
+**(c)** **(B)** A consistent sufficiently strong system cannot prove its own consistency. $\checkmark$
+
+(A) is wrong: consistent systems exist. (C) is wrong: arithmetic has plenty of models. (D) is wrong: first-order logic is complete (Godel's Completeness Theorem).
+
+---
+
+## Q10 --- Synthesis: Formal Logic and AI Alignment
+
+**Model answer (key points expected):**
+
+Godel's Second Incompleteness Theorem shows that a sufficiently powerful consistent formal system cannot prove its own consistency. By analogy, an AI system whose reasoning is formalized within such a system cannot prove, from within that formalization, that it is safe (where "safe" includes "consistent" or "will not produce contradictory/harmful outputs"). This is a fundamental limit on self-verification: the system needs external auditing or a stronger metatheory.
+
+However, formal verification tools like Coq, Lean, and Isabelle remain valuable for alignment. The incompleteness theorems do not say we cannot prove anything -- they say we cannot prove everything. In practice, we can formally verify specific, bounded properties: that a reward function satisfies certain monotonicity constraints, that a decision procedure terminates, that a neural network's output stays within specified bounds on a given input domain. These are meaningful partial safety guarantees even if they fall short of total assurance.
+
+The tension is real but manageable. We should not expect a single proof of "this AI is safe in all circumstances" -- that goal is provably unattainable in full generality. Instead, the strategy should be defense in depth: use formal methods to verify what can be verified, use empirical testing and interpretability for properties that resist formalization, and use institutional oversight as an external "metatheory" that can reason about the system from outside. Lob's theorem further cautions against naive trust bootstrapping: an AI system that "trusts itself because it can prove it should trust itself" is engaged in exactly the kind of circular reasoning that Lob's theorem warns about. External grounding is essential. $\checkmark$

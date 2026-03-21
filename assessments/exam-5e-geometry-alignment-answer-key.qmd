@@ -1,0 +1,158 @@
+---
+title: "Exam 5E: Geometry for Alignment --- Answer Key"
+subtitle: "Lessons 85--89"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+> **Grading philosophy:** Full credit requires both correct computation and clear geometric reasoning. On SLT questions, demonstrate that you understand what the RLCT measures and how it connects to neural network behavior -- do not merely recite formulas.
+
+\newpage
+
+## Q1 --- Curves and the Frenet-Serret Frame
+
+**(a)** $\mathbf{r}'(t) = (-\sin t, \cos t, 1)$.
+
+Speed: $|\mathbf{r}'(t)| = \sqrt{\sin^2 t + \cos^2 t + 1} = \sqrt{2}$. $\checkmark$
+
+**(b)** $\mathbf{r}''(t) = (-\cos t, -\sin t, 0)$.
+
+$\mathbf{r}' \times \mathbf{r}'' = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ -\sin t & \cos t & 1 \\ -\cos t & -\sin t & 0 \end{vmatrix} = (\sin t, -\cos t, \sin^2 t + \cos^2 t) = (\sin t, -\cos t, 1)$.
+
+$|\mathbf{r}' \times \mathbf{r}''| = \sqrt{\sin^2 t + \cos^2 t + 1} = \sqrt{2}$.
+
+$\kappa = \frac{\sqrt{2}}{(\sqrt{2})^3} = \frac{\sqrt{2}}{2\sqrt{2}} = \frac{1}{2}$. $\checkmark$
+
+**(c)** **(A)** A curve with zero torsion lies in a plane. Torsion measures how the curve deviates from planarity; $\tau = 0$ means the osculating plane does not rotate, so the curve stays in a fixed plane. $\checkmark$
+
+---
+
+## Q2 --- Surfaces and Curvature
+
+**(a)** $\mathbf{r}(u,v) = (u, v, u^2 + v^2)$.
+
+$\mathbf{r}_u = (1, 0, 2u)$, $\mathbf{r}_v = (0, 1, 2v)$. $\checkmark$
+
+**(b)** At the origin $(u,v) = (0,0)$: $\mathbf{r}_u = (1, 0, 0)$, $\mathbf{r}_v = (0, 1, 0)$.
+
+$\mathbf{r}_u \times \mathbf{r}_v = (0, 0, 1)$. This already has unit length, so $\mathbf{n} = (0, 0, 1)$. $\checkmark$
+
+**(c)** At the origin, the paraboloid $z = x^2 + y^2$ curves upward in every direction. The principal curvatures are both positive (the surface is bowl-shaped). Since $K = \kappa_1 \kappa_2$ and both principal curvatures are positive, $K > 0$. The origin is an **elliptic** point. $\checkmark$
+
+More precisely: the Hessian of $z = x^2 + y^2$ at the origin is $\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$, which is positive definite. The principal curvatures are both $2$ (after accounting for the surface geometry), giving $K = 4 > 0$.
+
+---
+
+## Q3 --- The Theorema Egregium
+
+**(a)** **Gauss's Theorema Egregium:** The Gaussian curvature $K$ of a surface is an intrinsic invariant -- it depends only on the first fundamental form (the metric), not on how the surface is embedded in ambient space. "Intrinsic" means it can be determined by measurements made entirely within the surface (distances, angles) without reference to the surrounding space. $\checkmark$
+
+**(b)** Bending paper into a cylinder is an *isometric* deformation: distances on the surface are preserved. By the Theorema Egregium, $K$ is preserved under isometries, so $K$ remains 0. A cylinder has $K = 0$ (one principal curvature is zero). Crumpling into a ball requires $K > 0$ at many points, but since the original paper has $K = 0$, this cannot be achieved isometrically. The paper must stretch, tear, or compress (changing the metric) to achieve nonzero Gaussian curvature. $\checkmark$
+
+**(c)** **(B)** A sphere of radius $1/\sqrt{K}$. A surface of constant positive Gaussian curvature $K$ is locally isometric to a sphere of radius $R = 1/\sqrt{K}$. (Constant $K = 0$ gives a plane; constant $K < 0$ gives a pseudosphere/hyperbolic surface.) $\checkmark$
+
+---
+
+## Q4 --- Tangent Spaces and Vector Fields
+
+**(a)** The tangent space $T_p M$ at a point $p$ on a smooth $n$-dimensional manifold $M$ is the vector space of all tangent vectors to $M$ at $p$. Formally, it is the space of derivations on smooth functions at $p$, or equivalently, the space of equivalence classes of curves through $p$ (two curves are equivalent if they have the same velocity at $p$ in any chart). Its dimension equals $\dim M = n$. $\checkmark$
+
+**(b)** At the north pole $p = (0,0,1)$, $T_p S^2$ is the plane tangent to the sphere at that point: $T_p S^2 = \{(v_1, v_2, 0) : v_1, v_2 \in \mathbb{R}\}$. Geometrically, it is the horizontal plane touching the sphere at its topmost point. $\checkmark$
+
+**(c)** The Hairy Ball Theorem says you cannot "comb a hairy ball flat": there is no way to smoothly assign a nonzero tangent direction to every point of a sphere without at least one point where the vector field vanishes (a "cowlick"). On a practical level, this means any continuous wind pattern on Earth must have at least one point of zero wind (a cyclone center). The theorem is a consequence of the Euler characteristic of $S^2$ being 2 (nonzero), by the Poincare-Hopf index theorem. $\checkmark$
+
+---
+
+## Q5 --- Lie Groups and Lie Algebras
+
+**(a)** A Lie group is a group that is also a smooth manifold, with the group operations (multiplication $G \times G \to G$ and inversion $G \to G$) being smooth maps. $GL(n, \mathbb{R})$ is a Lie group because: (1) it is an open subset of $\mathbb{R}^{n \times n}$ (the set where $\det \neq 0$), hence a smooth manifold of dimension $n^2$; (2) matrix multiplication and inversion (via the adjugate formula) are smooth functions of the entries. $\checkmark$
+
+**(b)** A $3 \times 3$ skew-symmetric matrix satisfies $a_{ij} = -a_{ji}$ with $a_{ii} = 0$. The independent entries are $a_{12}, a_{13}, a_{23}$, so $\dim \mathfrak{so}(3) = 3$. $\checkmark$
+
+A basis:
+
+$$L_1 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{pmatrix}, \quad L_2 = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ -1 & 0 & 0 \end{pmatrix}, \quad L_3 = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}$$
+
+$\checkmark$
+
+**(c)** A skew-symmetric matrix $A$ can be written as $A = \theta \hat{n}$ where $\hat{n}$ is a unit skew-symmetric matrix corresponding to an axis vector and $\theta = \|A\|$. Then $e^A$ is the rotation by angle $\theta$ about the axis determined by $\hat{n}$. This is the content of Rodrigues' rotation formula. The exponential map sends the Lie algebra element (an infinitesimal rotation / angular velocity) to the corresponding finite rotation. $\checkmark$
+
+---
+
+## Q6 --- Riemannian Geometry and Geodesics
+
+**(a)** A Riemannian metric on a smooth manifold $M$ assigns to each point $p \in M$ an inner product $g_p : T_p M \times T_p M \to \mathbb{R}$ on the tangent space, varying smoothly with $p$. In $\mathbb{R}^n$, the standard Riemannian metric is the Euclidean dot product $g_p(u,v) = u \cdot v$ at every point. A general Riemannian metric allows this inner product to vary from point to point, enabling the measurement of lengths, angles, and volumes on curved spaces. $\checkmark$
+
+**(b)** Great circles are geodesics because they have zero geodesic curvature: they curve only as much as the sphere itself requires, not "sideways" on the surface. Latitude lines (except the equator) are not geodesics because they curve toward the nearer pole on the surface. To see this concretely: the shortest path between two points on a sphere lies along the great circle connecting them. A latitude line connecting two points at the same latitude is longer than the great circle arc (which dips toward the equator for points in the northern hemisphere). $\checkmark$
+
+**(c)** **(B)** The Fisher information metric makes natural gradient steps correspond to equal-size steps in the space of probability distributions (KL divergence), rather than in the raw parameter space. This corrects for the fact that a small parameter change might cause a large distribution change in some regions and a small change in others. $\checkmark$
+
+---
+
+## Q7 --- Differential Forms
+
+**(a)** $\omega = x\, dy - y\, dx$.
+
+$d\omega = dx \wedge dy - dy \wedge dx = dx \wedge dy + dx \wedge dy = 2\, dx \wedge dy$. $\checkmark$
+
+(Using $d(x\, dy) = dx \wedge dy$ and $d(-y\, dx) = -dy \wedge dx = dx \wedge dy$.)
+
+**(b)** **Stokes' Theorem:** For a compact oriented $n$-manifold $M$ with boundary $\partial M$ and an $(n-1)$-form $\omega$:
+
+$$\int_M d\omega = \int_{\partial M} \omega. \checkmark$$
+
+**(c)** Let $D$ be the unit disk with boundary $C$ (the unit circle). By Stokes' theorem:
+
+$$\int_C \omega = \int_D d\omega = \int_D 2\, dx \wedge dy = 2 \int_D dx\, dy = 2 \cdot \text{Area}(D) = 2\pi. \checkmark$$
+
+So $\int_C \omega = 2 \times (\text{area of the disk}) = 2\pi$.
+
+---
+
+## Q8 --- De Rham Cohomology
+
+**(a)** A $k$-form $\omega$ is *closed* if $d\omega = 0$. It is *exact* if $\omega = d\eta$ for some $(k-1)$-form $\eta$. Every exact form is closed because $d^2 = 0$: if $\omega = d\eta$, then $d\omega = d(d\eta) = 0$. The converse is not true in general: on domains with nontrivial topology, there exist closed forms that are not exact. $\checkmark$
+
+**(b)** $H^1_{dR}(\mathbb{R}^2) = 0$. By the Poincare lemma, every closed form on $\mathbb{R}^2$ (which is contractible) is exact. $\checkmark$
+
+$H^1_{dR}(\mathbb{R}^2 \setminus \{0\}) \cong \mathbb{R}$. The "angle form" $\frac{-y\, dx + x\, dy}{x^2 + y^2}$ is closed but not exact on $\mathbb{R}^2 \setminus \{0\}$ (its integral around the origin is $2\pi \neq 0$, but exact forms integrate to 0 on closed curves). The puncture creates a "hole" that the cohomology detects. $\checkmark$
+
+**(c)** **(C)** $b_1(T^2) = 2$. The torus has two independent non-contractible loops (one around the "hole" and one around the "tube"), giving two independent closed-but-not-exact 1-forms. $\checkmark$
+
+---
+
+## Q9 --- Singular Learning Theory
+
+**(a)** A statistical model $p(x | w)$ is *singular* if the Fisher information matrix is degenerate (not full rank) at the true parameter value, or more generally, if the set of optimal parameters $W_0 = \{w : K(w) = 0\}$ (where $K$ is the KL divergence from the true distribution) is not a smooth manifold. Neural networks are singular because multiple parameter configurations yield the same function: for instance, setting a neuron's weights to zero makes all downstream weights for that neuron irrelevant, creating a degenerate subspace. More fundamentally, the parameter-to-function map is not injective and the preimage of the optimal function is a singular variety, not a smooth manifold. $\checkmark$
+
+**(b)** The RLCT $\lambda$ is the real log canonical threshold of the KL divergence function $K(w)$ near its zero set. Formally, it is the largest $\lambda$ such that $\int K(w)^{-\lambda} p(w)\, dw < \infty$ (where $p(w)$ is the prior). In Watanabe's formula $F = \lambda \ln n - (m-1) \ln \ln n + O(1)$, $\lambda$ plays the role that $d/2$ plays in BIC for regular models. The RLCT controls the leading term of the Bayesian free energy and thus determines the effective model complexity: smaller $\lambda$ means the model is "effectively simpler" than its parameter count suggests. $\checkmark$
+
+**(c)** In regular models, every parameter direction matters independently near the optimum, giving $\lambda = d/2$. In singular models, the zero set of $K(w)$ has singularities where many parameter directions become redundant or degenerate. Near a singularity, the volume of the parameter region with small $K(w)$ is larger than in the regular case (the singular set "concentrates" probability), which translates to $\lambda < d/2$. This means the Bayesian model complexity (measured by $\lambda$) is less than the naive parameter count, explaining why overparameterized neural networks can generalize well: they have many parameters ($d$ large) but their effective complexity ($\lambda$) is much smaller, so they are not "using" all their parameters in the way that BIC assumes. $\checkmark$
+
+---
+
+## Q10 --- Synthesis: Geometry, SLT, and Alignment
+
+**Model answer (key points expected):**
+
+During training, a neural network's parameter vector traces a path through the loss landscape. At different stages of training, the optimizer may be near different singular points, each with a different local RLCT. Developmental interpretability studies how the local RLCT (and the associated singularity type) changes as training progresses. When the optimizer transitions from one basin of attraction to another, the effective $\lambda$ can change discontinuously, corresponding to a phase transition in learning.
+
+Phase transitions manifest as sudden jumps in model capability: the network rapidly acquires a new skill (e.g., induction heads in transformers, or grokking in modular arithmetic). Geometrically, this corresponds to the optimizer crossing from one singular region to another with a different singularity structure. The RLCT in the new region may be smaller (meaning the model has found a more efficient representation), or the new region may support qualitatively different computational structures.
+
+For alignment, this geometric perspective offers a monitoring tool. If we can track the RLCT or related geometric invariants during training, we might detect when a model undergoes a phase transition that corresponds to acquiring a potentially dangerous capability (such as deceptive reasoning or situational awareness). The key insight is that capability acquisition is not gradual but punctuated, and the geometric signatures (changes in $\lambda$, changes in the Hessian eigenspectrum, changes in the local dimensionality of the loss landscape) may provide early warning. This is an active research direction: developing efficient estimators for the local learning coefficient and using them as a real-time diagnostic during training. $\checkmark$

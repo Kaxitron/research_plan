@@ -1,0 +1,157 @@
+---
+title: "Exam 5E: Geometry for Alignment"
+subtitle: "Lessons 85--89 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & 60 minutes \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator. \\
+\textbf{Format} & 10 questions. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers curves and surfaces, tangent spaces, manifolds, differential forms, and algebraic geometry / singular learning theory. Partial credit is available for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- Curves and the Frenet-Serret Frame
+
+Consider the helix $\mathbf{r}(t) = (\cos t, \sin t, t)$ for $t \in [0, 2\pi]$.
+
+**(a)** Compute the tangent vector $\mathbf{r}'(t)$ and the speed $|\mathbf{r}'(t)|$.
+
+**(b)** Compute the curvature $\kappa$ of this helix. (Recall: $\kappa = \frac{|\mathbf{r}' \times \mathbf{r}''|}{|\mathbf{r}'|^3}$.)
+
+**(c)** (Multiple Choice) Which of the following is true about a curve with zero torsion?
+
+- (A) It lies in a plane
+- (B) It is a straight line
+- (C) It is a circle
+- (D) It has constant curvature
+
+---
+
+## Q2 (10 pts) --- Surfaces and Curvature
+
+Consider the paraboloid $z = x^2 + y^2$.
+
+**(a)** Parametrize this surface as $\mathbf{r}(u, v) = (u, v, u^2 + v^2)$. Compute the tangent vectors $\mathbf{r}_u$ and $\mathbf{r}_v$.
+
+**(b)** Compute the unit normal vector $\mathbf{n}$ at the origin $(0, 0, 0)$.
+
+**(c)** Without computing the full second fundamental form, argue whether the Gaussian curvature at the origin is positive, negative, or zero. What type of point is the origin (elliptic, hyperbolic, or parabolic)?
+
+---
+
+## Q3 (10 pts) --- The Theorema Egregium
+
+**(a)** State Gauss's Theorema Egregium. Define what "intrinsic" means in this context.
+
+**(b)** A sheet of paper has Gaussian curvature $K = 0$ everywhere (it is flat). Explain why bending the paper into a cylinder does not change $K$, but crumpling it into a ball would require stretching (changing $K$).
+
+**(c)** (Multiple Choice) A surface with constant Gaussian curvature $K > 0$ is locally isometric to:
+
+- (A) A plane
+- (B) A sphere of radius $1/\sqrt{K}$
+- (C) A pseudosphere
+- (D) A cylinder
+
+---
+
+## Q4 (10 pts) --- Tangent Spaces and Vector Fields
+
+**(a)** Define the tangent space $T_p M$ at a point $p$ on a smooth manifold $M$. What is its dimension?
+
+**(b)** The 2-sphere $S^2 = \{(x,y,z) \in \mathbb{R}^3 : x^2 + y^2 + z^2 = 1\}$ is a 2-dimensional manifold. Describe $T_p S^2$ at the north pole $p = (0, 0, 1)$ geometrically.
+
+**(c)** The Hairy Ball Theorem states that there is no continuous nonvanishing tangent vector field on $S^2$. Explain this in plain language and give its significance: why does it mean we cannot smoothly assign a "direction" at every point of a sphere?
+
+---
+
+## Q5 (10 pts) --- Lie Groups and Lie Algebras
+
+**(a)** Give the definition of a Lie group. Why is $GL(n, \mathbb{R})$ (the group of invertible $n \times n$ real matrices) a Lie group?
+
+**(b)** The Lie algebra $\mathfrak{so}(3)$ of the rotation group $SO(3)$ consists of $3 \times 3$ skew-symmetric matrices ($A^T = -A$). What is the dimension of $\mathfrak{so}(3)$? Give a basis.
+
+**(c)** The exponential map $\exp : \mathfrak{so}(3) \to SO(3)$ sends $A \mapsto e^A$. Explain what $e^A$ represents geometrically: given a skew-symmetric $A$, what rotation does $e^A$ perform?
+
+---
+
+## Q6 (10 pts) --- Riemannian Geometry and Geodesics
+
+**(a)** Define a Riemannian metric on a smooth manifold. How does it generalize the usual dot product in $\mathbb{R}^n$?
+
+**(b)** On a sphere of radius $R$, the geodesics are great circles. Explain why shortest paths on a sphere follow great circles rather than, say, latitude lines (except at the equator).
+
+**(c)** (Multiple Choice) The Fisher information matrix defines a Riemannian metric on the space of probability distributions. Natural gradient descent uses this metric to:
+
+- (A) Increase the learning rate
+- (B) Account for the curvature of the parameter space so that steps are of equal size in distribution space
+- (C) Guarantee global convergence
+- (D) Eliminate all local minima
+
+---
+
+## Q7 (10 pts) --- Differential Forms
+
+**(a)** Let $\omega = x\, dy - y\, dx$ be a 1-form on $\mathbb{R}^2$. Compute $d\omega$ (the exterior derivative).
+
+**(b)** State Stokes' theorem for a compact oriented manifold $M$ with boundary $\partial M$. Write the formula.
+
+**(c)** Use Stokes' theorem to explain why $\int_C \omega$ for the 1-form $\omega$ from part (a), where $C$ is the unit circle traversed counterclockwise, equals $2 \times (\text{area enclosed by } C)$.
+
+---
+
+## Q8 (10 pts) --- De Rham Cohomology
+
+**(a)** Define a *closed* form and an *exact* form. State the relationship: every exact form is closed. Is the converse true?
+
+**(b)** The first de Rham cohomology group $H^1_{dR}(M) = \{\text{closed 1-forms}\} / \{\text{exact 1-forms}\}$ is a topological invariant. What is $H^1_{dR}(\mathbb{R}^2)$? What is $H^1_{dR}(\mathbb{R}^2 \setminus \{0\})$? Explain the difference.
+
+**(c)** (Multiple Choice) The first Betti number $b_1$ of the torus $T^2$ is:
+
+- (A) 0
+- (B) 1
+- (C) 2
+- (D) 3
+
+---
+
+## Q9 (10 pts) --- Singular Learning Theory
+
+**(a)** What is a singular statistical model? Give an example of why neural networks are singular (not regular) models.
+
+**(b)** Define the real log canonical threshold (RLCT) $\lambda$. How does the RLCT relate to the effective model complexity in Watanabe's formula for the Bayesian free energy: $F = \lambda \ln n - (m-1) \ln \ln n + O(1)$?
+
+**(c)** In a regular (nonsingular) model with $d$ parameters, the RLCT equals $d/2$ and the Bayesian free energy reduces to the BIC. Explain why $\lambda < d/2$ in singular models, and why this helps explain the generalization ability of overparameterized neural networks.
+
+---
+
+## Q10 (10 pts) --- Synthesis: Geometry, SLT, and Alignment
+
+Write a short essay (8--12 sentences) addressing:
+
+Singular learning theory provides a geometric framework for understanding neural network behavior. Discuss: (1) How the RLCT and the local geometry of the loss landscape change during training (developmental interpretability). (2) Why phase transitions in learning -- sudden jumps in capability -- correspond to changes in the singularity structure. (3) How this geometric perspective could help alignment researchers detect when a model acquires potentially dangerous capabilities during training.

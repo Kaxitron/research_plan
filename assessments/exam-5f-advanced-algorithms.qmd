@@ -1,0 +1,169 @@
+---
+title: "Exam 5F: Advanced Algorithms"
+subtitle: "Lessons 90--94 Comprehensive Assessment"
+format:
+  pdf:
+    documentclass: article
+    papersize: letter
+    geometry:
+      - margin=0.8in
+    fontsize: 11pt
+    colorlinks: true
+    number-sections: false
+    header-includes: |
+      \usepackage{booktabs}
+      \usepackage{amssymb}
+      \usepackage{amsmath}
+      \usepackage{mathtools}
+      \usepackage{float}
+      \usepackage{enumitem}
+      \setlist{nosep, leftmargin=1.5em}
+      \renewcommand{\arraystretch}{1.35}
+---
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Time Allowed} & 60 minutes \\
+\textbf{Total Points} & 100 \\
+\textbf{Materials} & Pencil, paper. No calculator. \\
+\textbf{Format} & 10 questions. Show all reasoning. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+
+> *This exam covers algorithm analysis, randomized algorithms, combinatorial optimization, graph algorithms, and lower bounds. Partial credit is available for correct reasoning with minor errors.*
+
+\newpage
+
+## Q1 (10 pts) --- The Master Theorem
+
+**(a)** State the Master Theorem for recurrences of the form $T(n) = aT(n/b) + f(n)$, including all three cases.
+
+**(b)** Solve the following recurrences using the Master Theorem. State which case applies.
+
+- (i) $T(n) = 4T(n/2) + n$
+- (ii) $T(n) = 2T(n/2) + n \log n$
+- (iii) $T(n) = 3T(n/4) + n$
+
+---
+
+## Q2 (10 pts) --- Amortized Analysis
+
+Consider a dynamic array that doubles in capacity when full. Starting with capacity 1, we perform $n$ insertions.
+
+**(a)** What is the worst-case cost of a single insertion? When does this worst case occur?
+
+**(b)** Use the aggregate method to show that the amortized cost per insertion is $O(1)$. Compute the total cost of $n$ insertions.
+
+**(c)** (Multiple Choice) In the potential method for amortized analysis, the amortized cost of an operation is defined as:
+
+- (A) Actual cost minus potential change
+- (B) Actual cost plus change in potential ($c_i + \Phi_i - \Phi_{i-1}$)
+- (C) The maximum cost over all operations
+- (D) The expected cost under a random sequence of operations
+
+---
+
+## Q3 (10 pts) --- Randomized Quicksort
+
+**(a)** In randomized quicksort, the pivot is chosen uniformly at random from the current subarray. Explain why the expected number of comparisons is $O(n \log n)$.
+
+**(b)** Specifically, show that the expected number of comparisons is $2n \ln n + O(n)$ by computing the probability that elements $z_i$ and $z_j$ (the $i$-th and $j$-th smallest) are compared, and summing over all pairs.
+
+**(c)** What is the worst-case running time of randomized quicksort, and with what probability does it occur?
+
+---
+
+## Q4 (10 pts) --- Hashing and Probability
+
+**(a)** Define a universal hash family. State the key property that bounds collision probability.
+
+**(b)** In a hash table with $n$ keys and $m$ slots using a universal hash family, what is the expected number of collisions in a single slot? What does this imply about the expected time for a lookup?
+
+**(c)** (Multiple Choice) The Birthday Paradox implies that with $n$ items hashed to $m$ slots, collisions become likely when:
+
+- (A) $n > m$
+- (B) $n > \sqrt{m}$
+- (C) $n > \log m$
+- (D) $n > m / 2$
+
+---
+
+## Q5 (10 pts) --- Dynamic Programming
+
+Consider the 0/1 Knapsack Problem: given $n$ items with weights $w_1, \ldots, w_n$ and values $v_1, \ldots, v_n$, and a capacity $W$, maximize the total value subject to total weight at most $W$.
+
+**(a)** Write the recurrence relation for the optimal value $V[i, c]$ considering items $1, \ldots, i$ with remaining capacity $c$.
+
+**(b)** What is the time and space complexity of the dynamic programming solution? Is this a polynomial-time algorithm? Explain.
+
+**(c)** The knapsack problem has a fully polynomial-time approximation scheme (FPTAS). Briefly describe the rounding strategy: what do we round, and why does this give a $(1 - \varepsilon)$-approximation in polynomial time?
+
+---
+
+## Q6 (10 pts) --- Graph Algorithms: Shortest Paths
+
+**(a)** Explain why Dijkstra's algorithm fails on graphs with negative edge weights. Give a small counterexample (4--5 vertices).
+
+**(b)** Bellman-Ford runs in $O(VE)$ time and handles negative weights. State the key invariant: after $k$ iterations, Bellman-Ford has found the shortest path using at most $k$ edges.
+
+**(c)** How does Bellman-Ford detect negative weight cycles? What happens if you run one more relaxation pass after $V - 1$ iterations?
+
+---
+
+## Q7 (10 pts) --- Network Flow
+
+Consider the following flow network with source $s$ and sink $t$:
+
+- $s \to a$: capacity 10
+- $s \to b$: capacity 5
+- $a \to b$: capacity 4
+- $a \to t$: capacity 8
+- $b \to t$: capacity 7
+
+**(a)** Find the maximum flow from $s$ to $t$ using the Ford-Fulkerson method. Show the augmenting paths and residual capacities at each step.
+
+**(b)** Find a minimum cut and verify that its capacity equals the maximum flow (Max-Flow Min-Cut Theorem).
+
+**(c)** (Multiple Choice) The Edmonds-Karp algorithm (Ford-Fulkerson with BFS) runs in:
+
+- (A) $O(V^2 E)$
+- (B) $O(VE^2)$
+- (C) $O(V^3)$
+- (D) $O(E \log V)$
+
+---
+
+## Q8 (10 pts) --- Linear Programming Duality
+
+Consider the LP: maximize $3x_1 + 5x_2$ subject to $x_1 + 2x_2 \leq 12$, $2x_1 + x_2 \leq 10$, $x_1, x_2 \geq 0$.
+
+**(a)** Write the dual of this LP.
+
+**(b)** Solve the primal LP graphically or by inspection: find the optimal solution and optimal value.
+
+**(c)** Verify the strong duality theorem: show that the optimal value of the dual equals the optimal value of the primal.
+
+---
+
+## Q9 (10 pts) --- Lower Bounds and Hardness
+
+**(a)** Prove that any comparison-based sorting algorithm requires $\Omega(n \log n)$ comparisons in the worst case. Use the decision tree argument.
+
+**(b)** Explain why the $\Omega(n \log n)$ lower bound does not apply to counting sort or radix sort. What assumption are these algorithms exploiting?
+
+**(c)** (Multiple Choice) The element distinctness problem (given $n$ real numbers, are they all distinct?) has a lower bound of $\Omega(n \log n)$ in the:
+
+- (A) RAM model with arbitrary operations
+- (B) Comparison-based model
+- (C) Boolean circuit model
+- (D) Quantum computation model
+
+---
+
+## Q10 (10 pts) --- Synthesis: Algorithms and Alignment
+
+Write a short essay (8--12 sentences) addressing:
+
+Many alignment problems can be framed as optimization or verification problems. Discuss: (1) How the NP-hardness of integer programming and combinatorial optimization limits our ability to find provably optimal alignment solutions. (2) Why approximation algorithms and their guarantees are relevant to alignment (e.g., a "good enough" solution with formal bounds vs an optimal solution that is intractable to find). (3) How computational lower bounds (e.g., the impossibility of verifying certain properties in polynomial time) constrain what oversight mechanisms can realistically check about AI systems.
