@@ -66,6 +66,10 @@
 
 **[Alignment](#alignment)**
 
+**[CS Foundations — Dynamic Programming](#dynamic-programming--best-up-to-vs-best-ending-at)**
+- ["Best Up To" vs "Best Ending At"](#dynamic-programming--best-up-to-vs-best-ending-at)
+- [Forward vs Backward Fill](#dynamic-programming--forward-vs-backward-fill)
+
 **[Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)**
 
 ---
@@ -462,6 +466,14 @@ The p-value gives you the first thing. What you actually want is the second thin
 **DP subproblem definition — the key distinction:** If your decision at index $i$ depends only on position — like "skip the neighbor" in House Robber or "subtract a coin" in Coin Change — then "best up to $i$" works, because nearby dp values contain everything you need. But if your decision depends on the **actual value** of the last element you chose — like "is this number bigger than the previous one" in LIS, or "does this number divide the previous one" — then "best up to $i$" is useless because it hides which element you committed to. You need "best ending at $i$" so the subproblem exposes the last chosen value, letting you check whether the current element is compatible.
 
 **The test:** Can I make my decision knowing only position and nearby dp values? → "up to." Does the constraint compare the current element's value against the previous chosen element's value? → "ending at."
+
+## Dynamic Programming — Forward vs Backward Fill
+
+**When to reverse-fill a DP:** The signal is that **you're optimizing a starting condition, not an accumulated result.** If the answer to the problem is "what do I need to start with to survive?" rather than "what do I earn along the way?", forward DP will struggle because the past alone can't tell you if a path is good — the future matters.
+
+**The diagnostic:** If a forward DP cell needs two or more values to stay correct (e.g., current HP *and* worst minimum-so-far in Dungeon Game), and neither alone resolves which path is better, that's a strong sign you're fighting the wrong direction. Flip it backward and see if the subproblem collapses to one value per cell.
+
+**The intuition:** "What do I need to bring into this situation to survive?" → backward. "What have I earned by the time I get here?" → forward. In Minimum Path Sum, you accumulate cost — forward works. In Dungeon Game, you need minimum starting HP to survive the whole path — backward works because the future is already solved when you fill each cell.
 
 ---
 
