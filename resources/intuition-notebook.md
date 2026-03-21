@@ -66,6 +66,10 @@
 
 **[Alignment](#alignment)**
 
+**[CS Foundations — Dynamic Programming](#dynamic-programming--best-up-to-vs-best-ending-at)**
+- ["Best Up To" vs "Best Ending At"](#dynamic-programming--best-up-to-vs-best-ending-at)
+- [Forward vs Backward Fill](#dynamic-programming--forward-vs-backward-fill)
+
 **[Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)**
 
 ---
