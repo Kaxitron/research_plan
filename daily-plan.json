@@ -8,6 +8,10 @@
     "hours": 1
   },
   {
+    "name": "Spaced Repetition",
+    "hours": 0.33
+  },
+  {
     "name": "Book Writing",
     "hours": 3
   }

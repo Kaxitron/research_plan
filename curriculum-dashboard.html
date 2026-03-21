@@ -811,34 +811,6 @@
   .cal-chip.drag-over-below { border-bottom: 2px solid var(--accent-5); margin-bottom: -1px; }
   .cal-day.drag-over { border-color: var(--accent-5) !important; background: rgba(56,189,248,0.1) !important; }
 
-  /* SR circle button on calendar days */
-  .cal-sr-circle {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1.5px solid #a78bfa;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.15s;
-    flex-shrink: 0;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-  }
-  .cal-sr-circle:hover { background: rgba(167,139,250,0.25); transform: scale(1.15); }
-  .cal-sr-circle.filled { background: #a78bfa; border-color: #a78bfa; }
-  .cal-sr-circle.filled:hover { background: #8b5cf6; border-color: #8b5cf6; }
-  .cal-sr-hrs {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 8px;
-    font-weight: 600;
-    color: #a78bfa;
-    margin-left: 2px;
-    vertical-align: middle;
-  }
-
   /* Picker in detail panel */
   .picker-lesson {
     padding: 6px 8px;
@@ -1373,17 +1345,11 @@ const PHASES = [
 
 // ─── Repeatable Review Activities (infinite placement on calendar) ───
 const REVIEW_ITEMS = [
-  { id: 'spaced-repetition', title: 'Spaced Repetition', label: '🔄', color: '#a78bfa', repeatable: true, phase: '_review' },
   { id: 'project-euler', title: 'Project Euler', label: '🧮', color: '#38bdf8', repeatable: true, phase: '_review' },
 ];
 
 function getReviewItem(id) {
-  if (id === 'spaced-repetition') return REVIEW_ITEMS[0];
-  if (id === 'project-euler') return REVIEW_ITEMS[1];
-  // Legacy support for old review items
-  if (id === 'review-intuition') return REVIEW_ITEMS[0];
-  const match = id.match(/^review-problems-(.+)$/);
-  if (match) return REVIEW_ITEMS[0]; // Map old per-phase reviews to unified SR
+  if (id === 'project-euler') return REVIEW_ITEMS[0];
   return null;
 }
 
@@ -1392,7 +1358,7 @@ function findItem(id) {
 }
 
 function isReviewItem(id) {
-  return id === 'spaced-repetition' || id === 'project-euler' || id === 'review-intuition' || (typeof id === 'string' && id.startsWith('review-problems-'));
+  return id === 'project-euler';
 }
 
 const LESSONS = [
@@ -2613,23 +2579,6 @@ function getLoggedHoursForDate(dateStr) {
   return log.filter(e => e.date === dateStr).reduce((sum, e) => sum + e.hours, 0);
 }
 
-function getSrHoursForDate(dateStr) {
-  const log = loadHoursLog();
-  return log.filter(e => e.date === dateStr && (e.lessonId === 'spaced-repetition' || e.lessonId === 'review-intuition' || (typeof e.lessonId === 'string' && e.lessonId.startsWith('review-problems-')))).reduce((sum, e) => sum + e.hours, 0);
-}
-
-function promptSrHours(dk) {
-  const existing = getSrHoursForDate(dk);
-  const input = prompt(`Spaced Repetition — ${dk}\n${existing > 0 ? 'Already logged: ' + Math.round(existing*10)/10 + 'h\n' : ''}Enter hours to add (e.g. 0.5, 1, 1.5):`, '');
-  if (input === null || input.trim() === '') return;
-  let hours = parseFloat(input);
-  if (isNaN(hours) || hours <= 0) return;
-  hours = Math.round(hours * 2) / 2;
-  addLogEntry('spaced-repetition', hours, dk);
-  renderCalendar();
-  if (calSelectedDate === dk) showDayPicker(dk);
-}
-
 function getLogEntriesForDate(dateStr) {
   return loadHoursLog().filter(e => e.date === dateStr);
 }
@@ -3844,10 +3793,8 @@ function renderCalendar() {
     if (isSelected) classes += ' selected';
 
     const dayHrs = getLoggedHoursForDate(dk);
-    const srHrs = getSrHoursForDate(dk);
-    const lessonHrs = Math.round((dayHrs - srHrs) * 10) / 10;
     html += `<div class="${classes}" onclick="calSelectDay('${dk}')" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="if(!this.contains(event.relatedTarget))this.classList.remove('drag-over')" ondrop="calDrop(event,'${dk}')">`;
-    html += `<div class="cal-day-num"><button class="cal-sr-circle${srHrs > 0 ? ' filled' : ''}" onclick="event.stopPropagation();promptSrHours('${dk}')" title="Spaced Repetition${srHrs > 0 ? ': ' + Math.round(srHrs*10)/10 + 'h logged' : ': click to log review time'}"></button>${srHrs > 0 ? `<span class="cal-sr-hrs">${Math.round(srHrs*10)/10}</span>` : ''}<span style="flex:1;text-align:right">${d}${lessonHrs > 0 ? `<span style="margin-left:4px;font-size:9px;font-weight:600;color:var(--accent-1)">${lessonHrs}h</span>` : ''}${srHrs > 0 ? `<span style="margin-left:2px;font-size:9px;font-weight:600;color:#a78bfa">${Math.round(srHrs*10)/10}h</span>` : ''}</span></div>`;
+    html += `<div class="cal-day-num"><span style="flex:1;text-align:right">${d}${dayHrs > 0 ? `<span style="margin-left:4px;font-size:9px;font-weight:600;color:var(--accent-1)">${dayHrs}h</span>` : ''}</span></div>`;
 
     const dayCalIds = cal[dk] || [];
     dayLessons.forEach((lesson, idx) => {
@@ -3897,13 +3844,6 @@ function renderCalendar() {
   html += `<div class="cal-unscheduled" style="margin-top:0;border-top:1px solid var(--border)">`;
   html += `<div class="cal-unscheduled-label">REVIEW ACTIVITIES — place as many times as you want</div>`;
   html += `<div style="display:flex;flex-wrap:wrap;gap:0">`;
-
-  // Spaced Repetition (unified)
-  const srColor = '#a78bfa';
-  html += `<div class="cal-pool-chip" style="background:${srColor}15;color:${srColor}" draggable="true" ondragstart="calDragStart(event,'spaced-repetition')" onclick="calPoolClick('spaced-repetition')" title="Spaced Repetition review — also trackable via the ○ circle on each day">`;
-  html += `<span style="font-size:11px">🔄</span>`;
-  html += `<span style="font-family:'DM Sans',sans-serif;font-size:11px">Spaced Repetition</span>`;
-  html += `</div>`;
 
   // Project Euler
   const peColor = '#38bdf8';
@@ -4043,15 +3983,6 @@ function showDayPicker(dk) {
 
   // Review activities section in day picker
   html += `<div class="detail-section"><div class="detail-section-title"><span class="icon">🔁</span> Review Activities</div>`;
-
-  // Spaced Repetition
-  if (!dayLessonIds.includes('spaced-repetition')) {
-    html += `<div class="picker-lesson" onclick="calAddLesson('spaced-repetition','${dk}')">
-      <span class="picker-lesson-num" style="color:#a78bfa">🔄</span>
-      <span>Spaced Repetition</span>
-      <span class="picker-hours"></span>
-    </div>`;
-  }
 
   // Project Euler
   if (!dayLessonIds.includes('project-euler')) {
@@ -4542,6 +4473,7 @@ function loadDailyPlan() {
   try { return JSON.parse(localStorage.getItem(DAILY_PLAN_KEY)) || [
     { name: 'Math', hours: 4 },
     { name: 'CS Foundations', hours: 1 },
+    { name: 'Spaced Repetition', hours: 0.33 },
     { name: 'Book Writing', hours: 3 },
   ]; } catch(e) { return []; }
 }
