@@ -92,14 +92,18 @@
 ### Phase 3 — Probability & Statistics
 *Section not yet started — items will be added during lessons 37–52.*
 
+### CS Foundations — Dynamic Programming
+- [Memoization Direction and Subproblem Type](#memoization-direction-and-subproblem-type)
+- [Forward vs Backward Subproblem Definitions](#forward-vs-backward-subproblem-definitions)
+
 ### Phase 4 — Machine Learning & Interpretability
 *Section not yet started — items will be added during lessons 53–66.*
 
-### Phase 5 — Mathematical Enrichment
-*Section not yet started — items will be added during lessons 67–94.*
+### Phase 5 — Extended Mathematical Foundations
+*Section not yet started — items will be added during lessons 67–79.*
 
 ### Phase 6 — Alignment Theory
-*Section not yet started — items will be added during lessons 95–99.*
+*Section not yet started — items will be added during lessons 80–84.*
 
 ### [Key Identities Quick Reference](#-key-identities-quick-reference)
 
@@ -1705,6 +1709,34 @@ If $A = PDP^{-1}$ (diagonalizable), then $e^{At} = P\, e^{Dt}\, P^{-1}$, where $
 # Matrix Calculus & Optimization
 
 *Section not yet started — items will be added during lessons 34–36.*
+
+---
+
+# CS Foundations — Dynamic Programming
+
+## Memoization Direction and Subproblem Type
+
+In memoized (top-down) DP, the direction of recursion is tied to the subproblem meaning:
+
+| Subproblem type | Entry call | Recurses toward | Base case | Answer |
+|---|---|---|---|---|
+| "Best up to $i$" | $dp(n-1)$ | $0$ (backward) | $dp(0)$ or $dp(1)$ | $dp(n-1)$ |
+| "Best ending at $i$" | $dp(i)$ for all $i$ | $0$ (backward) | no valid predecessor → 1 | $\max(dp[0], \ldots, dp[n-1])$ |
+| "Best from $i$ to end" | $dp(0)$ | $n$ (forward) | $dp(n)$ | $dp(0)$ |
+
+**"Up to" and "ending at" both recurse backward** (toward index 0) — they're both "from start to here" subproblems. The difference:
+- **"Up to $i$":** answer lives in one cell ($dp[n-1]$). Works when the decision depends only on position (House Robber, Coin Change).
+- **"Ending at $i$":** answer requires scanning all cells. Works when the decision depends on the value of the last chosen element (LIS, Largest Divisible Subset).
+
+**"From here to end" recurses forward** (toward $n$) — the future is the base case, and you ask "starting here, what's optimal?" (Stock Cooldown, Dungeon Game).
+
+## Forward vs Backward Subproblem Definitions
+
+**When to use "from here to end" (backward-looking subproblem):** The signal is that you're optimizing a **starting condition**, not an accumulated result. If a forward subproblem needs two or more values per cell (e.g., current HP and worst minimum-so-far), and neither alone resolves which path is better, flip the subproblem direction. The backward definition often collapses to one value per cell because the future is already solved.
+
+**Quick test:**
+- "What have I earned by the time I get here?" → forward subproblem (recurse backward toward 0)
+- "What do I need to bring into this situation to survive?" → backward subproblem (recurse forward toward $n$)
 
 ---
 
