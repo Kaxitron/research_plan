@@ -529,10 +529,14 @@ function keepGoing() {
     else if (!nr && (d.repetitions || 0) === 0) newQ.push(tid);
   }
   function shuffle(a) { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} }
+  const total = dueQ.length + newQ.length;
+  if (total === 0) return;
+  const count = prompt(`How many more cards? (${dueQ.length} review + ${newQ.length} new available)`, String(Math.min(total, DAILY_CAP)));
+  if (!count || isNaN(count) || +count <= 0) return;
   shuffle(dueQ); shuffle(newQ);
-  queue = [...dueQ, ...newQ];  // no cap
+  queue = [...dueQ, ...newQ];
   shuffle(queue);
-  queue = queue.slice(0, DAILY_CAP);
+  queue = queue.slice(0, +count);
   qi = 0;
   if (queue.length === 0) return;
   reviewInProgress = true;
