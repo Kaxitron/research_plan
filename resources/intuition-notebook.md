@@ -637,7 +637,31 @@ $e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. The imaginary part 
 
 $\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
 
-*Last updated: March 2026 -- through Lesson 18 (Systems of ODEs)*
+### A Unit Vector's Derivative Is Always Perpendicular To Itself
+
+If $\hat{u}$ is any unit vector that varies (with $t$, $s$, whatever), then $\frac{d\hat{u}}{dt} \perp \hat{u}$. Proof: $\hat{u} \cdot \hat{u} = 1$, differentiate both sides, get $2\hat{u} \cdot \frac{d\hat{u}}{dt} = 0$. This is the reason $\hat{N}$ exists — $d\hat{T}/ds$ must be perpendicular to $\hat{T}$ because $\hat{T}$ is unit length. The constraint "constant magnitude" forces all change to be directional. Same principle applies to normalized weight vectors in ML: updates must be tangent to the unit sphere, never radial.
+
+### Dotting With a Unit Vector Extracts the Scalar Coefficient
+
+If you know $\mathbf{v} = \lambda\hat{N}$ (some scalar times a unit vector), dot both sides with $\hat{N}$: $\mathbf{v} \cdot \hat{N} = \lambda(\hat{N} \cdot \hat{N}) = \lambda$. This is how the torsion formula $\tau = -\frac{d\hat{B}}{ds} \cdot \hat{N}$ works — you prove $d\hat{B}/ds$ must be parallel to $\hat{N}$, then dot with $\hat{N}$ to extract the scalar. Same principle as projecting onto any orthonormal basis vector: the dot product "picks out" the component.
+
+### Curvature = Bending, Torsion = Twisting — Two Independent Measurements
+
+$\kappa = |d\hat{T}/ds|$ measures how fast the direction of travel rotates — bending within the osculating plane. $\tau = -\frac{d\hat{B}}{ds} \cdot \hat{N}$ measures how fast the osculating plane itself rotates — twisting out of that plane. A circle has $\kappa > 0$, $\tau = 0$ (bends but doesn't twist). A helix has both $\kappa > 0$ and $\tau \neq 0$ (bends AND twists). A straight line has $\kappa = 0$ (no bending at all). These are genuinely independent — you can have any combination.
+
+### Constant Speed ≠ Zero Acceleration
+
+Uniform circular motion: constant speed but $\mathbf{r}'' = \kappa v^2 \hat{N} \neq 0$. What's zero is $a_T = \frac{d|\mathbf{r}'|}{dt}$ (rate of change of speed), not $\mathbf{r}''$ (rate of change of velocity). Speed is a scalar, velocity is a vector. Speed can be constant while direction changes, and changing direction requires acceleration. Only a straight line at constant speed gives $\mathbf{r}'' = 0$.
+
+### Arc Length Parameterization Strips Out Speed, Leaving Pure Geometry
+
+The parameter $t$ mixes geometry with kinematics — "the curve turns sharply here" looks the same as "I'm moving slowly here" when you look at how fast the parameter changes. Reparameterizing by arc length $s$ forces unit speed ($|d\mathbf{r}/ds| = 1$), so everything that remains is purely geometric. That's why curvature is defined as $|d\hat{T}/ds|$ not $|d\hat{T}/dt|$ — per unit distance, not per unit time. In practice you never actually reparameterize; you use the chain rule ($dt/ds = 1/|\mathbf{r}'|$) to convert, or use the cross product formula $\kappa = |\mathbf{r}' \times \mathbf{r}''|/|\mathbf{r}'|^3$ which handles non-unit-speed parameterization automatically.
+
+### Curvature Is a Property of the Path, Not the Traversal
+
+Two particles moving along the same geometric curve at different speeds have the same curvature at each point. Curvature describes the shape of the road, not how fast you're driving. What differs is the normal acceleration $a_N = \kappa v^2$ — the faster you go around the same bend, the harder you're pulled sideways. This is the centripetal acceleration formula $v^2/R$ from physics, since $R = 1/\kappa$.
+
+*Last updated: March 2026 -- through Lesson 19 (3D Geometry, Curves, and Curvature)*
 
 
 
