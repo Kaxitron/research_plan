@@ -1788,7 +1788,94 @@ If $A = PDP^{-1}$ (diagonalizable), then $e^{At} = P\, e^{Dt}\, P^{-1}$, where $
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs, through Lesson 18)*
+## 21. 3D Geometry, Curves, and Curvature
+
+### Lines and Planes
+
+**Parametric line** through point $\mathbf{P}$ in direction $\mathbf{v}$:
+
+$$\mathbf{r}(t) = \mathbf{P} + t\mathbf{v}$$
+
+**Plane** with normal $\mathbf{n}$ through point $\mathbf{P}$:
+
+$$\mathbf{n} \cdot (\mathbf{r} - \mathbf{P}) = 0 \quad \Longleftrightarrow \quad ax + by + cz = d$$
+
+where $\mathbf{n} = (a, b, c)$ and $d = \mathbf{n} \cdot \mathbf{P}$. The coefficients of $x, y, z$ are the normal vector components.
+
+**Distance from point $\mathbf{Q}$ to plane:**
+
+$$D = \frac{|\mathbf{n} \cdot (\mathbf{Q} - \mathbf{P})|}{|\mathbf{n}|}$$
+
+This is the projection of $(\mathbf{Q} - \mathbf{P})$ onto $\mathbf{n}$ — same formula as vector projection magnitude from Phase 1.
+
+**Project point $\mathbf{Q}$ onto plane:** subtract the normal component:
+
+$$\mathbf{Q}_{\text{proj}} = \mathbf{Q} - \frac{\mathbf{n} \cdot (\mathbf{Q} - \mathbf{P})}{\mathbf{n} \cdot \mathbf{n}}\,\mathbf{n}$$
+
+### Vector-Valued Functions
+
+$$\mathbf{r}(t) = \langle x(t), y(t), z(t) \rangle$$
+
+| Quantity | Formula | What it measures |
+|----------|---------|-----------------|
+| Velocity | $\mathbf{v} = \mathbf{r}'(t)$ | Direction + speed (tangent to curve) |
+| Speed | $\|\mathbf{v}\| = \|\mathbf{r}'(t)\|$ | How fast (scalar) |
+| Acceleration | $\mathbf{a} = \mathbf{r}''(t)$ | Rate of change of velocity |
+| Arc length | $L = \int_a^b \|\mathbf{r}'(t)\|\, dt$ | Distance traveled along curve |
+| Arc length rate | $\frac{ds}{dt} = \|\mathbf{r}'(t)\|$ | Speed = rate distance accumulates |
+
+### TNB Frame
+
+$$\hat{T} = \frac{\mathbf{r}'}{|\mathbf{r}'|} = \frac{d\mathbf{r}}{ds}, \quad \hat{N} = \frac{d\hat{T}/dt}{|d\hat{T}/dt|}, \quad \hat{B} = \hat{T} \times \hat{N}$$
+
+- $\hat{T}$: forward (direction of travel)
+- $\hat{N}$: toward center of curvature (direction of turning)
+- $\hat{B}$: perpendicular to osculating plane
+
+### Curvature and Torsion
+
+**Curvature** (how sharply the curve bends):
+
+$$\kappa = \left|\frac{d\hat{T}}{ds}\right| = \frac{|\mathbf{r}' \times \mathbf{r}''|}{|\mathbf{r}'|^3}$$
+
+**Torsion** (how much the curve twists out of its osculating plane):
+
+$$\tau = -\frac{d\hat{B}}{ds} \cdot \hat{N} = \frac{(\mathbf{r}' \times \mathbf{r}'') \cdot \mathbf{r}'''}{|\mathbf{r}' \times \mathbf{r}''|^2}$$
+
+**Osculating circle:** radius $R = 1/\kappa$. The best-fitting circle to the curve at that point.
+
+$\kappa = 0$: straight line. $\tau = 0$: planar curve.
+
+### Acceleration Decomposition
+
+$$\mathbf{r}'' = a_T\,\hat{T} + a_N\,\hat{N}$$
+
+$$a_T = \frac{\mathbf{r}' \cdot \mathbf{r}''}{|\mathbf{r}'|} \quad \text{(speeding up/slowing down)}$$
+
+$$a_N = \frac{|\mathbf{r}' \times \mathbf{r}''|}{|\mathbf{r}'|} = \kappa|\mathbf{r}'|^2 \quad \text{(turning, = centripetal } v^2/R\text{)}$$
+
+$a_T$ uses dot product (component along velocity). $a_N$ uses cross product (component perpendicular to velocity).
+
+### Frenet-Serret Formulas
+
+$$\frac{d\hat{T}}{ds} = \kappa\hat{N}, \qquad \frac{d\hat{N}}{ds} = -\kappa\hat{T} + \tau\hat{B}, \qquad \frac{d\hat{B}}{ds} = -\tau\hat{N}$$
+
+### Quick Reference
+
+| Formula | Name |
+|---------|------|
+| $\mathbf{r}(t) = \mathbf{P} + t\mathbf{v}$ | Parametric line |
+| $\mathbf{n} \cdot (\mathbf{r} - \mathbf{P}) = 0$ | Plane equation |
+| $D = \|\mathbf{n} \cdot (\mathbf{Q} - \mathbf{P})\| / \|\mathbf{n}\|$ | Point-to-plane distance |
+| $L = \int_a^b \|\mathbf{r}'\|\, dt$ | Arc length |
+| $\kappa = \|\mathbf{r}' \times \mathbf{r}''\| / \|\mathbf{r}'\|^3$ | Curvature (any parameter) |
+| $\tau = (\mathbf{r}' \times \mathbf{r}'') \cdot \mathbf{r}''' / \|\mathbf{r}' \times \mathbf{r}''\|^2$ | Torsion (any parameter) |
+| $a_T = \mathbf{r}' \cdot \mathbf{r}'' / \|\mathbf{r}'\|$ | Tangential acceleration |
+| $a_N = \|\mathbf{r}' \times \mathbf{r}''\| / \|\mathbf{r}'\| = \kappa v^2$ | Normal acceleration |
+
+---
+
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19)*
 
 
 
