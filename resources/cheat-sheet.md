@@ -96,7 +96,7 @@
 
 ### CS Foundations — Dynamic Programming
 - [Memoization Direction and Subproblem Type](#memoization-direction-and-subproblem-type)
-- [Forward vs Backward Subproblem Definitions](#forward-vs-backward-subproblem-definitions)
+- ["From Start to Here" vs "From Here to End" Subproblems](#from-start-to-here-vs-from-here-to-end-subproblems)
 
 ### Phase 4 — Machine Learning & Interpretability
 *Section not yet started — items will be added during lessons 53–66.*
@@ -1830,13 +1830,20 @@ In memoized (top-down) DP, the direction of recursion is tied to the subproblem 
 
 **"From here to end" recurses forward** (toward $n$) — the future is the base case, and you ask "starting here, what's optimal?" (Stock Cooldown, Dungeon Game).
 
-## Forward vs Backward Subproblem Definitions
+## "From Start to Here" vs "From Here to End" Subproblems
 
-**When to use "from here to end" (backward-looking subproblem):** The signal is that you're optimizing a **starting condition**, not an accumulated result. If a forward subproblem needs two or more values per cell (e.g., current HP and worst minimum-so-far), and neither alone resolves which path is better, flip the subproblem direction. The backward definition often collapses to one value per cell because the future is already solved.
+Two subproblem definitions, each with a natural memoization direction:
+
+| Subproblem type | What $dp(i,j)$ means | Recurses toward | Base case at | Answer at |
+|---|---|---|---|---|
+| "From start to here" | Best result arriving at $(i,j)$ | $(0,0)$ | start | $dp(m-1, n-1)$ |
+| "From here to end" | Best result going from $(i,j)$ to finish | $(m-1, n-1)$ | end | $dp(0,0)$ |
+
+**When to switch:** If a "from start to here" subproblem needs two values per cell and neither alone resolves which path is better, the past can't tell you if a path is good — switch to "from here to end." The future is already solved when each cell is computed, so one value per cell suffices.
 
 **Quick test:**
-- "What have I earned by the time I get here?" → forward subproblem (recurse backward toward 0)
-- "What do I need to bring into this situation to survive?" → backward subproblem (recurse forward toward $n$)
+- "What have I earned by the time I get here?" → from start to here
+- "What do I need to bring into this situation to survive?" → from here to end
 
 ---
 
