@@ -78,7 +78,7 @@
 
 **[CS Foundations — Dynamic Programming](#dynamic-programming--best-up-to-vs-best-ending-at)**
 - ["Best Up To" vs "Best Ending At"](#dynamic-programming--best-up-to-vs-best-ending-at)
-- [Forward vs Backward Fill](#dynamic-programming--forward-vs-backward-fill)
+- ["From Start to Here" vs "From Here to End" Subproblems](#dynamic-programming--from-start-to-here-vs-from-here-to-end-subproblems)
 - [When to Loop Inside the Recursion, and Other Tricks](#dynamic-programming--when-to-loop-inside-the-recursion-and-other-tricks)
 - [Watch for State Explosion From Unbounded Parameters](#dynamic-programming--watch-for-state-explosion-from-unbounded-parameters)
 
@@ -572,13 +572,17 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 **The test:** Can I make my decision knowing only position and nearby dp values? → "up to." Does the constraint compare the current element's value against the previous chosen element's value? → "ending at."
 
-## Dynamic Programming — Forward vs Backward Fill
+## Dynamic Programming — "From Start to Here" vs "From Here to End" Subproblems
 
-**When to reverse-fill a DP:** The signal is that **you're optimizing a starting condition, not an accumulated result.** If the answer to the problem is "what do I need to start with to survive?" rather than "what do I earn along the way?", forward DP will struggle because the past alone can't tell you if a path is good — the future matters.
+Two subproblem definitions, each with a natural memoization direction:
 
-**The diagnostic:** If a forward DP cell needs two or more values to stay correct (e.g., current HP *and* worst minimum-so-far in Dungeon Game), and neither alone resolves which path is better, that's a strong sign you're fighting the wrong direction. Flip it backward and see if the subproblem collapses to one value per cell.
+**"From start to here":** $dp(i,j)$ = best result arriving at $(i,j)$ from the start. Recurses toward $(0,0)$. Base case at the start. Answer at $dp(m-1, n-1)$. Use when you're accumulating a result along the way (Minimum Path Sum, House Robber).
 
-**The intuition:** "What do I need to bring into this situation to survive?" → backward. "What have I earned by the time I get here?" → forward. In Minimum Path Sum, you accumulate cost — forward works. In Dungeon Game, you need minimum starting HP to survive the whole path — backward works because the future is already solved when you fill each cell.
+**"From here to end":** $dp(i,j)$ = best result going from $(i,j)$ to the finish. Recurses toward $(m-1, n-1)$. Base case at the end. Answer at $dp(0,0)$. Use when you're optimizing a starting condition (Dungeon Game, Stock Cooldown).
+
+**When to switch from the first to the second:** If a "from start to here" subproblem needs two values per cell (e.g., current HP *and* worst minimum-so-far in Dungeon Game) and neither alone resolves which path is better, the past can't tell you if a path is good — the future matters. Switching to "from here to end" collapses it to one value per cell because the future is already solved when each cell is computed.
+
+**Quick test:** "What have I earned by the time I get here?" → from start to here. "What do I need to bring into this situation to survive?" → from here to end.
 
 ## Dynamic Programming — When to Loop Inside the Recursion, and Other Tricks
 
