@@ -80,6 +80,7 @@
 - ["Best Up To" vs "Best Ending At"](#dynamic-programming--best-up-to-vs-best-ending-at)
 - [Forward vs Backward Fill](#dynamic-programming--forward-vs-backward-fill)
 - [When to Loop Inside the Recursion, and Other Tricks](#dynamic-programming--when-to-loop-inside-the-recursion-and-other-tricks)
+- [Watch for State Explosion From Unbounded Parameters](#dynamic-programming--watch-for-state-explosion-from-unbounded-parameters)
 
 **[Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)**
 
@@ -592,6 +593,14 @@ The p-value gives you the first thing. What you actually want is the second thin
 - **Problem reframing:** Changing *what the subproblem asks* to eliminate the inner loop entirely. Super Egg Drop flips from "min moves given floors" to "max floors given moves," turning a min-over-max with a loop into a single additive recurrence.
 - **State machine formulation:** Defining states as modes with legal transitions instead of tracking accumulated values. Stock Cooldown: hold/free/cooldown with five arrows between them — each recurrence reads off the incoming edges.
 - **Bitmask as state:** When you have a small set of items (≤20) and need to track which items have been used, encode the subset as an integer bitmask. Common in traveling salesman and assignment problems.
+
+## Dynamic Programming — Watch for State Explosion From Unbounded Parameters
+
+**The trap:** If a DP state parameter can take on a huge range of values (e.g., "current fuel" where fuel values can be up to $10^9$), your cache becomes intractable even if the other dimensions are small. The state space is the *product* of all parameter ranges — one unbounded dimension blows up everything.
+
+**The fix:** Ask whether the problematic parameter can be moved from *input* (part of the state) to *output* (the thing being computed). Instead of "given this fuel, what's the min stops?" → "given $t$ stops, what's the farthest I can reach?" Now fuel is computed, not cached. Same trick as Super Egg Drop: "given $k$ eggs and $n$ floors, min moves?" → "given $k$ eggs and $t$ moves, max floors?" The bounded parameter ($t$) replaces the unbounded one ($n$ or fuel) in the state.
+
+**The diagnostic:** Before writing code, check each state parameter's range. If any dimension can be $10^6$+ and isn't inherently bounded by the problem structure, you probably need to reframe.
 
 ---
 
