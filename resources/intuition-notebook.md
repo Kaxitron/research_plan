@@ -137,6 +137,11 @@ The old coordinates are whatever basis your data was originally measured in (e.g
 ### Null space lives in the INPUT space, not the output space
 The null space of an m×n matrix is a subspace of ℝⁿ (the column count = input dimension). Rank-nullity counts input dimensions: rank + nullity = n (columns). Think of it as a conservation law: every input dimension either **survives** (counted by rank) or gets **destroyed** (counted by nullity). For a 10×3 matrix with rank 2, the null space is 1-dimensional (one line in 3D input space gets crushed to zero), NOT 8-dimensional. The output lives on a 2D plane inside ℝ¹⁰ — but that plane can be tilted arbitrarily, with all 10 components nonzero. Rank tells you the dimension of the output subspace, not which coordinates are used.
 
+### Column space = the span of the columns = all possible outputs
+The column space of A is the set of all vectors you can produce as Ax — equivalently, the span of A's columns. When you compute Ax, you're taking a linear combination of the columns of A weighted by the entries of x. So the column space answers: "what outputs can this matrix reach?" The *dimension* of the column space is the rank — the number of linearly independent columns, NOT the number of columns. A 2×3 matrix with three identical columns has rank 1, not 3.
+
+**Why this matters for AB = 0:** If AB = 0, then A(Bx) = 0 for every x. That means every output of B (the column space of B) gets sent to zero by A (lands in the null space of A). In set language: Col(B) ⊆ Null(A). Neither matrix needs to be zero — B produces, A destroys exactly what B produced.
+
 ### Miscellaneous Thoughts
 1. v*v is the same thing as vᵀv. This is the insight from 3B1B that the dot product of two vectors is the same as a linear transformation.  
 2. The diagonal entries of XᵀX are the variance of the features, whereas the off-diagonal values are the correlation of the features.  
