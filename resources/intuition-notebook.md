@@ -45,11 +45,21 @@
 - [Poles Tell the Whole Story — Stability From the s-Domain](#poles-tell-the-whole-story--stability-from-the-s-domain)
 - [F(s) Blowing Up vs y(t) Blowing Up — Two Different Things](#fs-blowing-up-vs-yt-blowing-up--two-different-things)
 - [The Derivative Property — Why Laplace Turns Calculus Into Algebra](#the-derivative-property--why-laplace-turns-calculus-into-algebra)
+- [When to Use Laplace vs Power Series — The Decision Tree](#when-to-use-laplace-vs-power-series--the-decision-tree)
+- [Eigenvectors Decouple Systems](#eigenvectors-decouple-systems--the-chain-that-connects-everything)
+- [Phase Portraits: Time Is Not An Axis](#phase-portraits-time-is-not-an-axis)
+- [Which Eigenvector Dominates — Fast vs Slow](#which-eigenvector-dominates--fast-vs-slow)
+- [Complex Eigenvalues = Rotation + Scaling](#complex-eigenvalues--rotation--scaling)
+- [The Matrix Exponential Is the Scalar Exponential Generalized](#the-matrix-exponential-is-the-scalar-exponential-generalized)
 
 **[Calculus — Multivariable](#calculus--multivariable)**
 - [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
 
 **[Calculus — Vector Calculus](#calculus--vector-calculus)**
+- [A Unit Vector's Derivative Is Always Perpendicular To Itself](#a-unit-vectors-derivative-is-always-perpendicular-to-itself)
+- [Curvature = Bending, Torsion = Twisting](#curvature--bending-torsion--twisting--two-independent-measurements)
+- [Arc Length Parameterization Strips Out Speed](#arc-length-parameterization-strips-out-speed-leaving-pure-geometry)
+- [Curvature Is a Property of the Path, Not the Traversal](#curvature-is-a-property-of-the-path-not-the-traversal)
 
 **[Calculus — Partial Differential Equations](#calculus--partial-differential-equations)**
 
@@ -372,6 +382,70 @@ Why it's independent: the Wronskian of e^(rx) and xe^(rx) is e^(2rx), which is n
 
 **ML connection:** The repeated root case corresponds to critical damping in optimizer dynamics — the system decays as fast as possible without oscillating. For SGD with momentum, this is the ideal tuning point.
 
+**Wronskian = determinant test for functions:** Same Phase 1 determinant test, applied to function-and-derivative pairs (y, y')ᵀ as columns. Abel's theorem: W satisfies W' = −p(x)W, so W = W(x₀)·exp(−∫p dx). Since the exponential is never zero, W is either always zero or never zero — check one point, conclude everywhere.
+
+**Spring-mass-damper = SGD with momentum:** Underdamped = β too high (oscillates). Overdamped = β too low (sluggish). Critically damped = optimal β. Different Hessian eigenvalues want different damping, but momentum gives one global β — why Adam exists.
+
+**Resonance = learning rate instability:** The learning rate ceiling η < 2/λ\_max is a resonance condition.
+
+**Undetermined coefficients — self-reproducing families:** Polynomials, exponentials, and trig functions form closed families under differentiation, so a finite guess template suffices. Functions like tan(x), ln(x) break this. Overlap rule: when the guess is already a homogeneous solution, multiply by x.
+
+**Variation of parameters:** The Wronskian matrix is the coefficient matrix of the system for u₁' and u₂'. The cancellation trick: substituting y\_p into the ODE, the terms without u-primes reconstruct the homogeneous equation (= 0), so only u' terms survive.
+
+**Power series:** Assume y = Σ aₙxⁿ, let the ODE force a recurrence. ICs supply a₀, a₁ (seeds); the recurrence generates the rest. Multiplying by x shifts the index (aₙ → aₙ₋₁), creating gaps. Orphan terms: when sums start at different indices, unmatched terms are forced to zero independently.
+
+### The Laplace Transform Is Eigendecomposition for Calculus
+
+Exponentials $e^{st}$ are eigenfunctions of d/dt with eigenvalue s. Computing $F(s) = \int_0^\infty e^{-st} f(t)\,dt$ asks "how much of each eigenfunction is in f(t)?" — decomposing into eigenvector components. This is why Laplace turns ODEs into algebra: differentiation becomes multiplication by s in the eigenbasis. At the poles ($F(s) \to \infty$), probe and signal resonate perfectly — the pole reveals a natural exponential rate of the system.
+
+### Poles Tell the Whole Story — Stability From the s-Domain
+
+With $s = \sigma + i\omega$: real part controls growth/decay, imaginary part controls oscillation. Left half-plane → decays (stable). Imaginary axis → oscillates forever (marginally stable). Right half-plane → grows (unstable). Glance at the poles and you know the solution's behavior before inverting.
+
+### F(s) Blowing Up vs y(t) Blowing Up — Two Different Things
+
+$F(s)$ blows up at poles — that's what a pole is. But y(t) blowing up depends on the real part of the poles. Purely imaginary poles make $F(s)$ blow up but y(t) just oscillates with constant amplitude.
+
+### The Derivative Property — Why Laplace Turns Calculus Into Algebra
+
+$\mathcal{L}\{f'(t)\} = sF(s) - f(0)$. Differentiation becomes multiplication by s, and the IC is absorbed automatically. Every other ODE method handles ICs after finding the general solution; Laplace bakes them in during the solve.
+
+### When to Use Laplace vs Power Series — The Decision Tree
+
+Constant coefficients + IVP → Laplace. Variable coefficients → power series. Piecewise/impulsive forcing → Laplace. Variable coefficients break the eigenstructure that makes Laplace work.
+
+### Direct Table Entry vs the Shifting Theorem
+
+$1/(s-a) \to e^{at}$ is a fundamental table entry. The first shifting theorem extends it: "if $F(s) \to f(t)$, then $F(s-a) \to e^{at}f(t)$." Use it when you see a known s-domain pattern displaced (complete the square to reveal the shift).
+
+### Differentiation Is Convolution
+
+$\mathcal{L}\{\delta'(t)\} = s$, so $sF(s)$ is a product in the s-domain. By the convolution theorem: $f'(t) = (\delta' * f)(t)$. All of calculus can be reframed as convolutions with the right kernel.
+
+### Full vs One-Sided Convolution
+
+Full convolution integrates $-\infty$ to $\infty$ (signal processing, CNNs). Laplace convolution integrates 0 to t. Same operation — causality (both functions zero for t < 0) collapses the limits automatically.
+
+### Eigenvectors Decouple Systems — The Chain That Connects Everything
+
+Coupled system → diagonalize with eigenvectors → decoupled scalar ODEs → exponentials → transform back. The formula $\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$ is the inevitable result of diagonalizing. The shortcut (write solution directly, solve for $c_1, c_2$) skips intermediate coordinates; the full diagonalization route explains why it works.
+
+### Phase Portraits: Time Is Not An Axis
+
+Both axes are state variables ($x_1$, $x_2$). Time is invisible — it's the parameter moving you along a trajectory. Every trajectory is the same system with different initial conditions (different $c_1, c_2$).
+
+### Which Eigenvector Dominates — Fast vs Slow
+
+Stable node: fast mode dies first → trajectories approach along the **slow** eigenvector. Unstable node: fast growing mode dominates → trajectories escape along the **fast** eigenvector. Saddle: decaying mode pulls toward origin, then growing mode takes over.
+
+### Complex Eigenvalues = Rotation + Scaling
+
+$e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. β controls rotation, α controls spiral: negative → stable spiral, positive → unstable spiral, zero → center.
+
+### The Matrix Exponential Is the Scalar Exponential Generalized
+
+$\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
+
 ---
 
 ## Calculus — Multivariable
@@ -383,7 +457,31 @@ If you're standing on a hillside, the gradient tells you the steepest uphill dir
 
 ## Calculus — Vector Calculus
 
-*(To be filled during Block C)*
+
+### A Unit Vector's Derivative Is Always Perpendicular To Itself
+
+$\hat{u} \cdot \hat{u} = 1$, differentiate: $2\hat{u} \cdot d\hat{u}/dt = 0$. Constant magnitude forces all change to be directional. This is why $\hat{N}$ exists — $d\hat{T}/ds \perp \hat{T}$ because $\hat{T}$ is unit length.
+
+### Dotting With a Unit Vector Extracts the Scalar Coefficient
+
+If $\mathbf{v} = \lambda\hat{N}$, then $\mathbf{v} \cdot \hat{N} = \lambda$. This is how the torsion formula works — prove $d\hat{B}/ds$ is parallel to $\hat{N}$, then dot to extract the scalar. Same as projecting onto any orthonormal basis vector.
+
+### Curvature = Bending, Torsion = Twisting — Two Independent Measurements
+
+$\kappa = |d\hat{T}/ds|$ measures bending within the osculating plane. $\tau = -d\hat{B}/ds \cdot \hat{N}$ measures twisting out of that plane. Circle: κ > 0, τ = 0. Helix: both nonzero. Line: κ = 0. These are independent.
+
+### Constant Speed ≠ Zero Acceleration
+
+Uniform circular motion: constant speed but $\mathbf{r}'' = \kappa v^2 \hat{N} \neq 0$. Changing direction requires acceleration even at constant speed. Only a straight line at constant speed gives $\mathbf{r}'' = 0$.
+
+### Arc Length Parameterization Strips Out Speed, Leaving Pure Geometry
+
+Reparameterizing by arc length s forces unit speed, so curvature $|d\hat{T}/ds|$ measures bending per unit distance, not per unit time. In practice, use the cross product formula $\kappa = |\mathbf{r}' \times \mathbf{r}''|/|\mathbf{r}'|^3$ which handles non-unit-speed automatically.
+
+### Curvature Is a Property of the Path, Not the Traversal
+
+Two particles on the same curve at different speeds have the same curvature. What differs is normal acceleration $a_N = \kappa v^2$ — the centripetal formula $v^2/R$ from physics, since $R = 1/\kappa$.
+
 
 ---
 
@@ -492,209 +590,5 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 ---
 
-## Lesson 16 — Higher-Order ODEs, Vibrations, and Power Series
 
-**Wronskian = determinant test for functions:** The Wronskian asks "at this point x, do the state vectors (y, y')^T form linearly independent columns?" Same Phase 1 tool, applied to function-and-derivative pairs instead of plain vectors.
-
-**Abel's theorem — all-or-nothing independence:** The Wronskian satisfies its own separable ODE: W' = -p(x)W, so W(x) = W(x_0) * exp(-∫p dx). Since the exponential is never zero, W is either always zero or never zero. Check one point, conclude everywhere. The key detail: it's p(x) (the y' coefficient), not q(x).
-
-**Spring-mass-damper = SGD with momentum:** The continuous limit of SGD with momentum is exactly the damped oscillator ODE. Mass = inertia, damping = momentum decay (1-β), spring constant = Hessian eigenvalue. Underdamped = β too high (oscillates around minimum). Overdamped = β too low (sluggish convergence). Critically damped = optimal β. The problem: different Hessian eigenvalues want different damping, but momentum gives one global β. This is why Adam exists — per-parameter adaptive damping.
-
-**Resonance = learning rate instability:** When the optimizer's effective frequency matches a Hessian eigenvalue direction, you get resonance — the loss explodes. The learning rate ceiling η < 2/λ_max is literally a resonance condition. Same math as a bridge shaking apart in wind.
-
-**Undetermined coefficients — self-reproducing families:** The method works because polynomials, exponentials, and trig functions form closed families under differentiation. Differentiating never leaves the family, so a finite guess template suffices. Functions like tan(x), ln(x), 1/x break this — their derivatives generate infinitely many new forms.
-
-**Overlap rule (multiply by x):** When your particular solution guess is already a homogeneous solution, it will produce zero on the left side. Multiplying by x bumps you out of the homogeneous solution space. For repeated roots, you may need to multiply by x twice.
-
-**Variation of parameters — the Wronskian's practical role:** The Wronskian matrix appears as the coefficient matrix of the 2x2 system for u_1' and u_2'. Its nonzero determinant (guaranteed by independence of solutions) means the system always has a unique solution via Cramer's rule.
-
-**Why the cancellation works in variation of parameters:** When you substitute y_p = u_1*y_1 + u_2*y_2 into the ODE, the terms without u-primes reconstruct the homogeneous equation for y_1 and y_2, which equals zero by definition. Only the u' terms survive. This is why we can use homogeneous solutions as building blocks for the particular solution.
-
-**Power series = solving for an infinite sequence:** Instead of finding a formula, assume y = Σ a_n x^n and let the ODE force relationships between coefficients. The function is defined by its series, not by a closed-form name. Same philosophy as neural networks: represent functions through computed parameters, not symbolic formulas.
-
-**Orphan terms in power series:** When variable coefficients like xy shift the power of x, the re-indexed sums start at different indices. Terms with no partner from the other sum are forced to zero independently of initial conditions. When sums line up (no shift), no orphans, and all coefficients depend on the free parameters a_0 and a_1.
-
----
-
----
-
-## Lesson 17 — The Laplace Transform
-
-### The Laplace Transform Is Eigendecomposition for Calculus
-
-The eigenvectors of a matrix are the directions where the matrix acts by simple scaling: $Av = \lambda v$. The Laplace transform does the same thing for the operator $d/dt$. The eigenfunctions of differentiation are exponentials: $(d/dt) e^{st} = s \cdot e^{st}$. The eigenvalue is $s$.
-
-When you compute $F(s) = \int_0^\infty e^{-st} f(t)\,dt$, you're asking "how much of each eigenfunction $e^{st}$ is present in $f(t)$?" — the exact analog of decomposing a vector into eigenvector components. This is why the Laplace transform turns differential equations into algebraic equations: you've changed to a basis where the hard operator (differentiation) is diagonal — it just multiplies by $s$.
-
-**The gamma function connection:** The gamma function $\Gamma(n+1) = \int_0^\infty e^{-t} t^n\,dt$ is the Laplace transform of $t^n$ evaluated at $s = 1$. The $n!$ in the transform table entry $\mathcal{L}\\{t^n\\} = n!/s^{n+1}$ is literally the gamma function.
-
-**The resonance probe interpretation:** Each value of $s$ is a probe asking "how much do you resonate with $e^{st}$?" For most $s$, the answer is finite. At the **poles** (where $F(s) \to \infty$), the probe and signal are in perfect sync — their product neither grows nor decays, so the integral accumulates without bound. The pole reveals a natural exponential rate of the system.
-
-**Concrete example:** For $f(t) = e^{2t}$, the integrand is $e^{(2-s)t}$. When $s > 2$, the probe wins and the integral converges. When $s = 2$, perfect cancellation: the integrand is $e^0 = 1$ forever, and the integral of 1 over $[0, \infty)$ is infinite. That's the pole at $s = 2$.
-
-### Poles Tell the Whole Story — Stability From the s-Domain
-
-The parameter $s$ can be complex: $s = \sigma + i\omega$. The real part $\sigma$ controls growth/decay rate, the imaginary part $\omega$ controls oscillation frequency. Each basis function $e^{st}$ is a decaying or growing oscillation: $e^{st} = e^{\sigma t} \cdot e^{i\omega t}$.
-
-The Fourier transform is the special case where $\sigma = 0$ — only pure oscillations, no growth or decay. The Laplace transform maps out the entire complex plane, which is why it can handle signals like $e^{3t}$ that the Fourier transform chokes on.
-
-**Pole location determines solution behavior:**
-- **Negative real part** (left half-plane): mode decays → stable. Example: pole at $s = -2$ gives $e^{-2t}$.
-- **Zero real part** (imaginary axis): mode oscillates forever → marginally stable. Example: poles at $s = \pm 2i$ give $\sin(2t)$ and $\cos(2t)$.
-- **Positive real part** (right half-plane): mode grows → unstable. Example: pole at $s = 1 + 3i$ gives $e^t \cdot e^{3it}$ — a growing oscillation.
-
-Glance at the poles of $Y(s)$ and you immediately know whether the solution oscillates, grows, decays, or some combination — before you even invert back to the time domain.
-
-**ML connection:** "Will training converge?" is asking "do the eigenvalues of the system have negative real parts?" The learning rate ceiling $\eta < 2/\lambda_{\max}$ is a pole-placement condition — too large and you push poles into the right half-plane, causing training to diverge. Transfer function thinking (input → black box → output) is exactly how we think about neural network layers.
-
-### F(s) Blowing Up vs y(t) Blowing Up — Two Different Things
-
-$F(s)$ blows up at the poles — that's what a pole *is*. But this does NOT mean $y(t)$ blows up over time. The two are different questions:
-
-- $F(s)$ blowing up at $s = s_0$ means the transform integral diverges when probed at that specific frequency — the signal resonates perfectly with $e^{s_0 t}$.
-- $y(t)$ blowing up means the time-domain solution grows without bound as $t \to \infty$.
-
-Whether $y(t)$ blows up depends on the **real part** of the poles. Purely imaginary poles (e.g., $s = \pm 2i$) make $F(s)$ blow up at those points, but $y(t)$ just oscillates forever with constant amplitude — because $e^{2it}$ has no growth factor.
-
-### The Derivative Property — Why Laplace Turns Calculus Into Algebra
-
-$\mathcal{L}\\{f'(t)\\} = s\,F(s) - f(0)$. Taking a derivative in the time domain becomes multiplication by $s$, minus the initial condition.
-
-**Why this works:** Integration by parts with $u = e^{-st}$, $dv = f'(t)\,dt$. The exponential eigenfunction interacts cleanly with differentiation — pulling down a factor of $s$ — while the boundary term at $t = 0$ captures the initial condition automatically.
-
-**Why this is profound:** Every other ODE method handles initial conditions *after* finding the general solution. The Laplace transform absorbs them *during* the solve — they're part of the algebra from the start. The second derivative version $\mathcal{L}\\{f''(t)\\} = s^2 F(s) - s\,f(0) - f'(0)$ bakes in both $y(0)$ and $y'(0)$.
-
-**The eigenbasis perspective:** In the eigenbasis of differentiation, the derivative operator is diagonal — it just multiplies by $s$. This is exactly what diagonalizing a matrix does: $P^{-1}AP = D$ turns the operator into multiplication by eigenvalues. The Laplace transform is the infinite-dimensional version of that diagonalization.
-
-### When to Use Laplace vs Power Series — The Decision Tree
-
-The Laplace transform works by decomposing into exponentials $e^{st}$, which are eigenfunctions of $d/dt$. But they're only eigenfunctions when the coefficients of the ODE are **constant**. If you have $t \cdot y''$, the Laplace transform of that product becomes a derivative of $Y(s)$ in the $s$-domain — you've traded one ODE for another, defeating the purpose.
-
-Variable coefficients like the $x$ in $y'' + xy = 0$ break the eigenstructure. No amount of algebraic cleverness will fix this — you need a fundamentally different approach (power series), building the solution coefficient by coefficient.
-
-**Decision rule:** Constant coefficients + IVP → Laplace (or characteristic equation). Variable coefficients → power series. Piecewise/impulsive forcing → Laplace is uniquely powerful.
-
-**ML connection:** This mirrors a recurring theme in ML — choosing the right representation for the problem. Fourier/spectral methods work beautifully when the problem has translation symmetry (constant coefficients), but you need local methods (like finite elements, or in this analogy power series) when the structure varies across the domain.
-
-### Power Series: Initial Conditions Are the Seeds, Recurrence Is the Growth Rule
-
-The recurrence relation generates $a_2, a_3, a_4, \ldots$ but it cannot generate $a_0$ or $a_1$. Those **always** come from the initial conditions: $y(0) = a_0$, $y'(0) = a_1$. The recurrence propagates from those seeds — it's a machine that takes the starting values and builds every subsequent coefficient from them.
-
-This is why power series solutions naturally have two free parameters ($a_0$ and $a_1$) when no initial conditions are given — exactly matching the two-parameter family of solutions for a second-order ODE.
-
-### Multiplying by $x$ Shifts the Recurrence Index Backward
-
-When $xy$ appears in an ODE, the multiplication by $x$ bumps every $x^n$ to $x^{n+1}$. Re-indexing to match powers of $x^n$ means substituting $n \to n-1$, so the coefficient of $x^n$ in the $xy$ term is $a_{n-1}$, not $a_n$.
-
-This "reach-back" is what creates the gap in the recurrence. For the Airy equation $y'' + xy = 0$, the recurrence connects $a_{n+2}$ to $a_{n-1}$ — a gap of **three** indices. Since $a_1 = 0$ and $a_2 = 0$ (from initial conditions and the orphan term), those zeros propagate through the $a_1$-chain and $a_2$-chain forever, leaving only every third coefficient nonzero.
-
-**Diagnostic:** If you got $a_n$ instead of $a_{n-1}$, you're solving $y'' + y = 0$ (no variable coefficient), which has the closed-form solution $\cos x$ — a completely different equation.
-
-### Orphan Terms Exist Because Sums Have Different Starting Indices
-
-When combining $y'' = \sum_{n=0}^{\infty} (n+2)(n+1) a_{n+2} x^n$ with $xy = \sum_{n=1}^{\infty} a_{n-1} x^n$, the first sum starts at $n = 0$ but the second starts at $n = 1$. At $n = 0$, only the $y''$ sum contributes — the $xy$ sum simply hasn't started yet. That lone $n = 0$ term is the **orphan**.
-
-The orphan produces a separate equation ($2a_2 = 0$) that is not part of the recurrence — it lives at a different value of $n$. The recurrence only governs $n \geq 1$, where both sums overlap and can be combined.
-
-**General principle:** Whenever you combine sums with different starting indices, check which terms have a partner and which are alone. The orphans give you extra equations; the overlap gives you the recurrence.
-
-### Direct Table Entry vs the Shifting Theorem
-
-$\frac{1}{s-a} \to e^{at}$ is a **fundamental table entry**, not a shifted version of something else. The first shifting theorem *extends* this base entry to handle products like $e^{at}\sin(\omega t)$ — cases where you recognize a known $s$-domain pattern that's been displaced from its usual position.
-
-**When to use the shifting theorem:** You see something like $\frac{s+1}{(s+3)^2 + 16}$ and recognize it as the $\frac{s}{s^2+16}$ pattern (which gives $\cos(4t)$) shifted by $a = -3$. The machinery of "complete the square, rewrite numerator in terms of $(s-a)$" is the shifting theorem in action.
-
-**When NOT to use it:** $\frac{1}{s+3}$ is already directly in the table as $e^{-3t}$. No shifting needed — you're reading the answer straight off.
-
-**The relationship:** $\frac{1}{s-a}$ is the entry the shifting theorem is *built on*. The theorem says "if you know $F(s) \to f(t)$, then $F(s-a) \to e^{at}f(t)$." The exponential table entry is the special case where $F(s) = 1/s$ (i.e., $f(t) = 1$).
-
-### Differentiation Is Convolution — The Laplace Transform Reveals It
-
-The derivative property says differentiation in time becomes multiplication by $s$ in the $s$-domain: $\mathcal{L}\{f'(t)\} = sF(s)$. The convolution theorem says multiplication in the $s$-domain is convolution in the time domain: $\mathcal{L}^{-1}\{F \cdot G\} = f * g$. Chain them together and you get: **differentiation is convolution**.
-
-Here's the proof. Start from $\mathcal{L}\{\delta(t)\} = 1$ — the sifting property evaluates $e^{-st}$ at $t = 0$, giving 1. Apply the derivative property to $\delta$ itself: $\mathcal{L}\{\delta'(t)\} = s \cdot \mathcal{L}\{\delta(t)\} = s \cdot 1 = s$. So the function whose Laplace transform is $s$ is $\delta'(t)$.
-
-Now look at $sF(s)$. This is a product of two Laplace transforms: $s = \mathcal{L}\{\delta'\}$ and $F(s) = \mathcal{L}\{f\}$. By the convolution theorem, the inverse is a convolution: $f'(t) = (\delta' * f)(t)$.
-
-Differentiation is convolution with $\delta'(t)$ — the derivative of the impulse. All of calculus (differentiation, integration, solving ODEs) can be reframed as convolutions with the right kernel. The Laplace transform reveals this structure because it turns every time-domain operation into multiplication, and every multiplication corresponds to a convolution.
-
-**ML connection:** Convolutional layers in neural networks apply a learned kernel to extract features. Differentiation is the special case where the kernel is $\delta'$ — a fixed "edge detector." The network learns kernels that generalize this: some detect edges (like derivatives), some detect textures, some detect more abstract patterns. The math is the same convolution operation throughout.
-
-### Full Convolution vs One-Sided Convolution — Why the Limits Change
-
-There are two versions of convolution. The full version (used in signal processing, Fourier analysis, CNNs) integrates from $-\infty$ to $\infty$. The Laplace version integrates from $0$ to $t$. They're the same operation — the limits collapse because of causality.
-
-Start with the full convolution: $(f * g)(t) = \int_{-\infty}^{\infty} f(\tau)\,g(t-\tau)\,d\tau$. Now assume both functions are **causal** — zero for negative arguments (nothing happens before $t = 0$). This kills the integrand in two regions. When $\tau < 0$: $f(\tau) = 0$ because $f$ is zero for negative inputs — this moves the lower limit from $-\infty$ to $0$. When $\tau > t$: the argument $t - \tau$ is negative, so $g(t-\tau) = 0$ — this moves the upper limit from $\infty$ to $t$. The only region where both factors are nonzero is $0 \leq \tau \leq t$, giving the one-sided form: $\int_0^t f(\tau)\,g(t-\tau)\,d\tau$.
-
-The CNN version uses the full integral because there's no "start time" — an image extends in all directions and the filter slides across the entire thing. The Laplace version uses the one-sided form because ODEs have initial conditions at $t = 0$ and the system doesn't exist before that.
-
----
-
----
-
-## Lesson 18 — Systems of ODEs and Phase Portraits
-
-### Eigenvectors Decouple Systems — The Chain That Connects Everything
-
-The entire method for solving $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ is one chain: **Coupled system** → diagonalize with eigenvectors → **decoupled system** → separate variables → **exponentials** → transform back.
-
-Each link uses something you already know: eigenvectors from Phase 1 decouple the directions, separation of variables from Lesson 15 solves each one, and superposition (linearity) from Lesson 16 lets you add them back together. The formula $\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$ isn't a guess — it's the inevitable result of diagonalizing. Each term is one independent mode: motion along eigenvector direction $\mathbf{v}$, at the exponential rate set by eigenvalue $\lambda$.
-
-The shortcut (write the solution directly, solve for $c_1, c_2$ from initial conditions) works because it skips the intermediate $\mathbf{z}$ coordinates and jumps to the end result. The full diagonalization route explains *why* it works; the shortcut just uses the fact.
-
-### Phase Portraits: Time Is Not An Axis
-
-The most common confusion with phase portraits: both axes are state variables ($x_1$ and $x_2$). Time is invisible — it's the parameter that moves you along a trajectory. Each curve is a path through state space, and the arrows show which direction $t$ is increasing. The portrait doesn't show *when* you're at each point, just *where* you go.
-
-Every trajectory in a phase portrait is the same system (same $A$, same eigenvalues) with different initial conditions (different $c_1, c_2$). The portrait is the complete picture: "for this system, here's what happens from every starting point."
-
-### Which Eigenvector Dominates — Fast vs Slow
-
-In a stable node ($\lambda_1 = -1$, $\lambda_2 = -4$): as $t \to \infty$, the fast mode $e^{-4t}$ dies first, leaving only the slow mode $e^{-t}$. So trajectories **approach** along the slow eigenvector. The fast mode is gone by the time you're near the origin.
-
-In an unstable node: the fast growing mode $e^{4t}$ dominates at large $t$, so trajectories **escape** along the fast eigenvector.
-
-In a saddle ($\lambda_1 = 1$, $\lambda_2 = -3$): the decaying mode pulls you toward the origin along the stable eigenvector, but eventually the growing mode takes over and you escape along the unstable eigenvector. The sign of $c_1$ determines which direction you escape — positive $c_1$ means $+\mathbf{v}_1$, negative means $-\mathbf{v}_1$.
-
-### Complex Eigenvalues = Rotation + Scaling
-
-$e^{(\alpha + \beta i)t} = e^{\alpha t} \cdot e^{i\beta t}$. The imaginary part $\beta$ controls rotation speed. The real part $\alpha$ controls whether the radius shrinks ($\alpha < 0$, stable spiral), grows ($\alpha > 0$, unstable spiral), or stays constant ($\alpha = 0$, center). This is the same damped oscillator from Lesson 16 — complex roots there gave $e^{\alpha t}(c_1\cos\beta t + c_2\sin\beta t)$, which is exactly a spiral in disguise.
-
-### The Matrix Exponential Is the Scalar Exponential Generalized
-
-$\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x} = e^{At}\mathbf{x}(0)$. Same formula, but $e^{At}$ is defined by the Taylor series of the exponential applied to a matrix. Diagonalization makes it computable: $e^{At} = Pe^{Dt}P^{-1}$, which just exponentiates each eigenvalue separately. The eigenvalue method and the matrix exponential are the same thing in different notation.
-
-### A Unit Vector's Derivative Is Always Perpendicular To Itself
-
-If $\hat{u}$ is any unit vector that varies (with $t$, $s$, whatever), then $\frac{d\hat{u}}{dt} \perp \hat{u}$. Proof: $\hat{u} \cdot \hat{u} = 1$, differentiate both sides, get $2\hat{u} \cdot \frac{d\hat{u}}{dt} = 0$. This is the reason $\hat{N}$ exists — $d\hat{T}/ds$ must be perpendicular to $\hat{T}$ because $\hat{T}$ is unit length. The constraint "constant magnitude" forces all change to be directional. Same principle applies to normalized weight vectors in ML: updates must be tangent to the unit sphere, never radial.
-
-### Dotting With a Unit Vector Extracts the Scalar Coefficient
-
-If you know $\mathbf{v} = \lambda\hat{N}$ (some scalar times a unit vector), dot both sides with $\hat{N}$: $\mathbf{v} \cdot \hat{N} = \lambda(\hat{N} \cdot \hat{N}) = \lambda$. This is how the torsion formula $\tau = -\frac{d\hat{B}}{ds} \cdot \hat{N}$ works — you prove $d\hat{B}/ds$ must be parallel to $\hat{N}$, then dot with $\hat{N}$ to extract the scalar. Same principle as projecting onto any orthonormal basis vector: the dot product "picks out" the component.
-
-### Curvature = Bending, Torsion = Twisting — Two Independent Measurements
-
-$\kappa = |d\hat{T}/ds|$ measures how fast the direction of travel rotates — bending within the osculating plane. $\tau = -\frac{d\hat{B}}{ds} \cdot \hat{N}$ measures how fast the osculating plane itself rotates — twisting out of that plane. A circle has $\kappa > 0$, $\tau = 0$ (bends but doesn't twist). A helix has both $\kappa > 0$ and $\tau \neq 0$ (bends AND twists). A straight line has $\kappa = 0$ (no bending at all). These are genuinely independent — you can have any combination.
-
-### Constant Speed ≠ Zero Acceleration
-
-Uniform circular motion: constant speed but $\mathbf{r}'' = \kappa v^2 \hat{N} \neq 0$. What's zero is $a_T = \frac{d|\mathbf{r}'|}{dt}$ (rate of change of speed), not $\mathbf{r}''$ (rate of change of velocity). Speed is a scalar, velocity is a vector. Speed can be constant while direction changes, and changing direction requires acceleration. Only a straight line at constant speed gives $\mathbf{r}'' = 0$.
-
-### Arc Length Parameterization Strips Out Speed, Leaving Pure Geometry
-
-The parameter $t$ mixes geometry with kinematics — "the curve turns sharply here" looks the same as "I'm moving slowly here" when you look at how fast the parameter changes. Reparameterizing by arc length $s$ forces unit speed ($|d\mathbf{r}/ds| = 1$), so everything that remains is purely geometric. That's why curvature is defined as $|d\hat{T}/ds|$ not $|d\hat{T}/dt|$ — per unit distance, not per unit time. In practice you never actually reparameterize; you use the chain rule ($dt/ds = 1/|\mathbf{r}'|$) to convert, or use the cross product formula $\kappa = |\mathbf{r}' \times \mathbf{r}''|/|\mathbf{r}'|^3$ which handles non-unit-speed parameterization automatically.
-
-### Curvature Is a Property of the Path, Not the Traversal
-
-Two particles moving along the same geometric curve at different speeds have the same curvature at each point. Curvature describes the shape of the road, not how fast you're driving. What differs is the normal acceleration $a_N = \kappa v^2$ — the faster you go around the same bend, the harder you're pulled sideways. This is the centripetal acceleration formula $v^2/R$ from physics, since $R = 1/\kappa$.
-
-*Last updated: March 2026 -- through Lesson 19 (3D Geometry, Curves, and Curvature)*
-
-
-
-
-
-
-
-
-
+*Last updated: March 2026 — through Lesson 19 (3D Geometry, Curves, and Curvature)*
