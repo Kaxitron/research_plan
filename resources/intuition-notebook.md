@@ -69,6 +69,7 @@
 **[CS Foundations — Dynamic Programming](#dynamic-programming--best-up-to-vs-best-ending-at)**
 - ["Best Up To" vs "Best Ending At"](#dynamic-programming--best-up-to-vs-best-ending-at)
 - [Forward vs Backward Fill](#dynamic-programming--forward-vs-backward-fill)
+- [When to Loop Inside the Recursion, and Other Tricks](#dynamic-programming--when-to-loop-inside-the-recursion-and-other-tricks)
 
 **[Vocabulary: Commonly Confused Terms](#vocabulary-commonly-confused-terms)**
 
@@ -474,6 +475,20 @@ The p-value gives you the first thing. What you actually want is the second thin
 **The diagnostic:** If a forward DP cell needs two or more values to stay correct (e.g., current HP *and* worst minimum-so-far in Dungeon Game), and neither alone resolves which path is better, that's a strong sign you're fighting the wrong direction. Flip it backward and see if the subproblem collapses to one value per cell.
 
 **The intuition:** "What do I need to bring into this situation to survive?" → backward. "What have I earned by the time I get here?" → forward. In Minimum Path Sum, you accumulate cost — forward works. In Dungeon Game, you need minimum starting HP to survive the whole path — backward works because the future is already solved when you fill each cell.
+
+## Dynamic Programming — When to Loop Inside the Recursion, and Other Tricks
+
+**Loop vs no loop inside the recursion:** The signal is whether your choices at each step are fixed or scale with the input. If you always have the same small number of options (rob or skip, go right or down, hold/free/cooldown), write them out explicitly — no loop. If the number of options depends on the input ("which floor to drop from?", "where to split the string?", "which color to paint?", "which coin to use?"), that's a for loop over all candidates. The general skeleton: `for each choice: result = combine(recursion(left), recursion(right)); update best`.
+
+**Problems with this pattern:** Burst Balloons (which balloon to burst last), Super Egg Drop (which floor to drop from), Scramble String (where to split), Coin Change (which coin to use), Painting Houses (which color to assign). The loop is always "try all valid choices, keep the best."
+
+**Other tricks beyond pure recursion:**
+
+- **Binary search inside recursion:** When the inner loop can be replaced by a targeted lookup. Maximum Profit in Job Scheduling uses binary search to find the next compatible job instead of scanning all of them.
+- **Sorting as preprocessing:** Many DP problems need the input sorted first (LIS variants, job scheduling, interval problems). The DP exploits the sorted order but doesn't create it.
+- **Problem reframing:** Changing *what the subproblem asks* to eliminate the inner loop entirely. Super Egg Drop flips from "min moves given floors" to "max floors given moves," turning a min-over-max with a loop into a single additive recurrence.
+- **State machine formulation:** Defining states as modes with legal transitions instead of tracking accumulated values. Stock Cooldown: hold/free/cooldown with five arrows between them — each recurrence reads off the incoming edges.
+- **Bitmask as state:** When you have a small set of items (≤20) and need to track which items have been used, encode the subset as an integer bitmask. Common in traveling salesman and assignment problems.
 
 ---
 
