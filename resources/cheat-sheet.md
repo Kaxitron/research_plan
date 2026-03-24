@@ -78,7 +78,9 @@
 - [49. Systems of ODEs and Phase Portraits](#49-systems-of-odes-and-phase-portraits)
 
 #### [Multivariable Calculus](#multivariable-calculus)
-*Section not yet started — items will be added during lessons 19–23.*
+- [50. Multivariable Functions and Contour Plots](#50-multivariable-functions-and-contour-plots)
+- [51. Multivariable Limits](#51-multivariable-limits)
+- [52. Partial Derivatives](#52-partial-derivatives)
 
 #### [Vector Calculus](#vector-calculus)
 *Section not yet started — items will be added during lessons 24–28.*
@@ -1690,7 +1692,105 @@ If $A = PDP^{-1}$ (diagonalizable), then $e^{At} = P\, e^{Dt}\, P^{-1}$, where $
 
 # Multivariable Calculus
 
-*Section not yet started — items will be added during lessons 19–23.*
+---
+
+## 50. Multivariable Functions and Contour Plots
+
+**Functions of several variables:** $f: \mathbb{R}^n \to \mathbb{R}$ takes multiple inputs, produces a scalar output. For $f(x,y)$, the graph is a surface in 3D.
+
+**Level curves (contour lines):** The set of all points where $f(x,y) = c$ (constant). The contour plot is the "topographic map" of the surface.
+
+**Reading contour plots:**
+- Closely spaced contours = steep terrain (rapid change)
+- Widely spaced contours = gentle slope (slow change)
+- The gradient is perpendicular to contour lines (Lesson 21)
+
+**Contour shapes reveal optimization geometry:**
+
+| Contour shape | What it means | Optimization behavior |
+|---|---|---|
+| Circular | All directions equally scaled | Well-conditioned, smooth convergence |
+| Elliptical | Some directions scaled more than others | Ill-conditioned, gradient descent zigzags |
+| Hyperbolic | Saddle point nearby | Neither max nor min — gradient descent can stall |
+
+**Completing the square reveals geometry:** $f(x,y) = x^2 + y^2 - 2x = (x-1)^2 + y^2 - 1$ shows the bowl is centered at $(1, 0)$ with minimum $-1$.
+
+---
+
+## 51. Multivariable Limits
+
+**The fundamental difficulty:** $(x,y) \to (a,b)$ means approaching from every possible path — infinitely many directions, straight lines and curves. For the limit to exist, ALL paths must agree.
+
+### Path Test (for showing a limit DNE)
+
+Substitute different paths. If two give different values, the limit does not exist.
+
+**Common paths to try:** $y = 0$ (x-axis), $x = 0$ (y-axis), $y = x$ (diagonal), $y = mx$ (general line), $y = x^2$ (parabola).
+
+**Critical warning:** All straight lines agreeing does NOT prove the limit exists. Try curved paths (e.g. $y = x^2$). The function $\frac{x^2 y}{x^4 + y^2}$ gives 0 along every straight line but $\frac{1}{2}$ along $y = x^2$.
+
+### Squeeze Theorem (for proving a limit exists)
+
+To show $\lim_{(x,y) \to (0,0)} f(x,y) = 0$, find a bound:
+
+$$0 \leq |f(x,y)| \leq h(x,y) \to 0$$
+
+**The recipe:**
+1. Take absolute value of the expression
+2. Factor into **bounded piece** $\times$ **vanishing piece**
+3. Bounded piece $\leq$ some constant (often 1)
+4. Vanishing piece $\to 0$ as $(x,y) \to (0,0)$
+
+**Swiss army knife inequalities:**
+
+$$\frac{x^2}{x^2 + y^2} \leq 1 \qquad \text{and} \qquad \frac{y^2}{x^2 + y^2} \leq 1$$
+
+Use these to "absorb" matching terms from the numerator.
+
+### Power Counting Heuristic
+
+Compare total degree of numerator vs denominator:
+- Numerator degree > denominator degree → limit is likely 0 (squeeze works)
+- Degrees equal → limit likely DNE (path-dependent)
+- Numerator degree < denominator degree → limit likely DNE or $\pm\infty$
+
+**Example:** $\frac{x^2 y^2}{x^2 + y^2}$: numerator degree 4 vs denominator degree 2 → limit is 0.
+
+---
+
+## 52. Partial Derivatives
+
+**Definition:** Differentiate with respect to one variable, treating all others as constants.
+
+$$\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h, y) - f(x, y)}{h}$$
+
+**Geometric meaning:** $\frac{\partial f}{\partial x}$ is the slope of the cross-section obtained by fixing $y$ and varying $x$. Each partial derivative is an ordinary single-variable derivative — all differentiation rules (power, chain, product, quotient) apply directly.
+
+### Higher-Order Partials
+
+Four second-order partials for $f(x,y)$:
+
+$$f_{xx} = \frac{\partial^2 f}{\partial x^2}, \quad f_{yy} = \frac{\partial^2 f}{\partial y^2}, \quad f_{xy} = \frac{\partial^2 f}{\partial y \partial x}, \quad f_{yx} = \frac{\partial^2 f}{\partial x \partial y}$$
+
+**Clairaut's theorem:** $f_{xy} = f_{yx}$ whenever both mixed partials are continuous. This guarantees the Hessian matrix is symmetric.
+
+### The Differentiability Hierarchy
+
+$$\text{continuous partials} \implies \text{differentiable} \implies \text{continuous} \implies \text{limits exist}$$
+
+$$\text{partials exist} \;\not\!\!\!\implies \text{continuous}$$
+
+**Why:** Partial derivatives only probe the function along coordinate axes. Continuity and differentiability require good behavior from every direction. A function can be well-behaved along both axes but discontinuous along diagonal paths.
+
+**The theorem:** If $\frac{\partial f}{\partial x}$ and $\frac{\partial f}{\partial y}$ are **continuous** on an open region, then $f$ is differentiable there. The key word is continuous, not merely "exist."
+
+### Total Differential
+
+$$df = \frac{\partial f}{\partial x}\,dx + \frac{\partial f}{\partial y}\,dy$$
+
+The total change in $f$ is the sum of contributions from each direction, weighted by the partial derivative in that direction. This is the linear approximation that differentiability guarantees — and exactly what gradient descent uses.
+
+**ML connection:** Every element of $\nabla L(\theta)$ is a partial derivative $\partial L / \partial \theta_i$. Backpropagation computes all partial derivatives in one backward pass. The Hessian (matrix of second partials) controls optimization geometry; Clairaut's theorem guarantees it is symmetric.
 
 ---
 
@@ -1817,6 +1917,10 @@ In memoized (top-down) DP, the direction of recursion is tied to the subproblem 
 | $\frac{d\mathbf{x}}{dt} = A\mathbf{x}$ → $\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2$ | Eigenvalue method for systems |
 | $e^{At} = Pe^{Dt}P^{-1}$ | Matrix exponential via diagonalization |
 | $\tau = \text{tr}(A)$, $\Delta = \det(A)$ → phase portrait type | Trace-determinant classification |
+| $\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h,y)-f(x,y)}{h}$ | Partial derivative definition |
+| $f_{xy} = f_{yx}$ (when both continuous) | Clairaut's theorem |
+| $df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy$ | Total differential |
+| $\frac{x^2}{x^2+y^2} \leq 1$ | Squeeze theorem bound for multivariable limits |
 
 ---
 
@@ -1907,7 +2011,7 @@ $$\frac{d\hat{T}}{ds} = \kappa\hat{N}, \qquad \frac{d\hat{N}}{ds} = -\kappa\hat{
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 20)*
 
 
 
