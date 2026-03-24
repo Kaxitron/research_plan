@@ -602,6 +602,8 @@ The p-value gives you the first thing. What you actually want is the second thin
 
 **The diagnostic:** Before writing code, check each state parameter's range. If any dimension can be $10^6$+ and isn't inherently bounded by the problem structure, you probably need to reframe.
 
+**The workflow:** After defining your state, immediately ask "what's the range of each parameter?" Don't start coding until you've verified every dimension is manageable. The reframing trick applies specifically when one parameter has a huge range (fuel, floors, total cost) but another natural quantity has a small range (number of stops, number of moves, number of eggs). Flip the question so the small one becomes the state and the large one becomes the output. Most DP problems don't need this — but a large parameter range is the signal to pause and check before committing.
+
 ---
 
 
