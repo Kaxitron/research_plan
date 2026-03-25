@@ -492,6 +492,8 @@ Is it DFS on a grid/graph with repeated work? → Pattern 12 (DFS + Memo)
 
 **Strategy:** start with House Robber — it makes the DP pattern click. Then Coin Change. Once 1D DP feels natural, move to 2D. Backtracking and Greedy are included here because they build on the same recursive thinking.
 
+IMPORTANT: LEARN HOW TO TRANSLATE MEMOIZED SOLUTIONS INTO TABULATION FOR COMPLETE UNDERSTANDING
+
 ### Backtracking
 
 | # | Problem | Pattern | Difficulty |
