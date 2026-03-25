@@ -81,6 +81,9 @@
 - [50. Multivariable Functions and Contour Plots](#50-multivariable-functions-and-contour-plots)
 - [51. Multivariable Limits](#51-multivariable-limits)
 - [52. Partial Derivatives](#52-partial-derivatives)
+- [53. Multivariable Chain Rule](#53-multivariable-chain-rule)
+- [54. Gradient Vector and Directional Derivatives](#54-gradient-vector-and-directional-derivatives)
+- [55. The Jacobian Matrix](#55-the-jacobian-matrix)
 
 #### [Vector Calculus](#vector-calculus)
 *Section not yet started — items will be added during lessons 24–28.*
@@ -1794,6 +1797,82 @@ The total change in $f$ is the sum of contributions from each direction, weighte
 
 ---
 
+## 53. Multivariable Chain Rule
+
+**Tree diagram rule:** To find $\frac{\partial f}{\partial t}$, trace every path from $f$ down to $t$ in the dependency tree, multiply derivatives along each path, sum all paths.
+
+$$\frac{\partial z}{\partial s} = \frac{\partial z}{\partial x}\frac{\partial x}{\partial s} + \frac{\partial z}{\partial y}\frac{\partial y}{\partial s}$$
+
+**General form:**
+
+$$\frac{\partial f}{\partial t_j} = \sum_i \frac{\partial f}{\partial x_i}\frac{\partial x_i}{\partial t_j}$$
+
+**Notation: $d$ vs $\partial$ on each edge:**
+- $d$ (ordinary derivative) when the bottom of the tree has **one** independent variable
+- $\partial$ (partial derivative) when the bottom has **two or more** independent variables
+- Top edges (from $f$ to intermediate variables) are always $\partial$
+- Each edge is determined independently by how many variables that specific function depends on
+
+---
+
+## 54. Gradient Vector and Directional Derivatives
+
+**The gradient** collects all partial derivatives into a vector:
+
+$$\nabla f = \left\langle \frac{\partial f}{\partial x_1}, \ldots, \frac{\partial f}{\partial x_n} \right\rangle$$
+
+**Directional derivative** in direction $\hat{u}$ (unit vector):
+
+$$D_{\hat{u}} f = \nabla f \cdot \hat{u} = |\nabla f| \cos\theta$$
+
+**Three key facts:**
+- Direction of steepest ascent = $\nabla f / |\nabla f|$
+- Maximum rate of change = $|\nabla f|$
+- $\nabla f$ is perpendicular to level curves (because $D_{\hat{u}} f = 0$ along a contour, so $\nabla f \cdot \hat{u}_{\text{tangent}} = 0$)
+
+**Proof of perpendicularity:** If $\vec{r}(t)$ traces a level curve $f(\vec{r}(t)) = C$, differentiate: $\frac{d}{dt}f = 0$. By chain rule: $\nabla f \cdot \frac{d\vec{r}}{dt} = 0$. The gradient is perpendicular to the tangent vector.
+
+**Tangent plane** to $z = f(x,y)$ at $(a, b)$:
+
+$$z = f(a,b) + f_x(a,b)(x - a) + f_y(a,b)(y - b)$$
+
+**General tangent plane** (for implicit surfaces $F(x,y,z) = c$): compute $\nabla F = (F_x, F_y, F_z)$ as the normal vector, then:
+
+$$F_x(x - x_0) + F_y(y - y_0) + F_z(z - z_0) = 0$$
+
+For $z = f(x,y)$, rewrite as $F = f(x,y) - z = 0$ giving $\nabla F = (f_x, f_y, -1)$. The $-1$ always appears in the $z$-component.
+
+**Linear approximation:**
+
+$$f(\mathbf{x}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a}) \cdot (\mathbf{x} - \mathbf{a})$$
+
+---
+
+## 55. The Jacobian Matrix
+
+For $\mathbf{F}: \mathbb{R}^n \to \mathbb{R}^m$, the Jacobian is the $m \times n$ matrix of all partial derivatives:
+
+$$J = \begin{bmatrix} \partial F_1/\partial x_1 & \cdots & \partial F_1/\partial x_n \\ \vdots & \ddots & \vdots \\ \partial F_m/\partial x_1 & \cdots & \partial F_m/\partial x_n \end{bmatrix}$$
+
+Each row is the gradient of one output. Each column shows how all outputs respond to one input.
+
+**Special cases:**
+- $f: \mathbb{R} \to \mathbb{R}$: Jacobian is $1 \times 1$ — the ordinary derivative $f'(x)$
+- $f: \mathbb{R}^n \to \mathbb{R}$: Jacobian is $1 \times n$ — the gradient $\nabla f$
+- $\mathbf{F}: \mathbb{R}^n \to \mathbb{R}^n$: square Jacobian — its determinant is the volume scaling factor (the $r$ in polar coordinates)
+
+**Chain rule as matrix multiplication:**
+
+$$J_{g \circ f} = J_g \cdot J_f$$
+
+The Jacobian of a composition is the product of the Jacobians. This single equation contains every version of the chain rule. Each entry in the product is the "sum over all paths" from the tree diagram.
+
+**Backpropagation:** A neural network is a chain $f_1 \to f_2 \to \cdots \to f_L$. The full Jacobian is $J_{f_L} \cdots J_{f_2} \cdot J_{f_1}$. Multiplying right to left (from the loss backward) gives all parameter gradients in one pass. This is backpropagation — the chain rule evaluated in reverse order.
+
+**Dimension tracking:** For $\mathbf{F}: \mathbb{R}^3 \to \mathbb{R}^3$ composed with $\mathbf{g}: \mathbb{R}^2 \to \mathbb{R}^3$: $(3 \times 3)(3 \times 2) = (3 \times 2)$. The inner dimension (intermediate variables) cancels, just like any matrix product.
+
+---
+
 # Vector Calculus
 
 *Section not yet started — items will be added during lessons 24–28.*
@@ -1928,6 +2007,10 @@ Two subproblem definitions, each with a natural memoization direction:
 | $f_{xy} = f_{yx}$ (when both continuous) | Clairaut's theorem |
 | $df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy$ | Total differential |
 | $\frac{x^2}{x^2+y^2} \leq 1$ | Squeeze theorem bound for multivariable limits |
+| $\frac{\partial f}{\partial t_j} = \sum_i \frac{\partial f}{\partial x_i}\frac{\partial x_i}{\partial t_j}$ | Multivariable chain rule (sum over paths) |
+| $D_{\hat{u}} f = \nabla f \cdot \hat{u}$ | Directional derivative |
+| $\nabla f \cdot \frac{d\vec{r}}{dt} = 0$ on level curves | Gradient perpendicular to contours |
+| $J_{g \circ f} = J_g \cdot J_f$ | Chain rule as Jacobian multiplication (backpropagation) |
 
 ---
 
@@ -2018,7 +2101,7 @@ $$\frac{d\hat{T}}{ds} = \kappa\hat{N}, \qquad \frac{d\hat{N}}{ds} = -\kappa\hat{
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 20)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 21)*
 
 
 
