@@ -84,6 +84,10 @@
 - [53. Multivariable Chain Rule](#53-multivariable-chain-rule)
 - [54. Gradient Vector and Directional Derivatives](#54-gradient-vector-and-directional-derivatives)
 - [55. The Jacobian Matrix](#55-the-jacobian-matrix)
+- [56. Critical Points and the Hessian](#56-critical-points-and-the-hessian)
+- [57. Lagrange Multipliers](#57-lagrange-multipliers)
+- [58. Multivariate Taylor Expansion](#58-multivariate-taylor-expansion)
+- [59. Implicit Function Theorem](#59-implicit-function-theorem)
 
 #### [Vector Calculus](#vector-calculus)
 *Section not yet started — items will be added during lessons 24–28.*
@@ -1873,6 +1877,64 @@ The Jacobian of a composition is the product of the Jacobians. This single equat
 
 ---
 
+## 56. Critical Points and the Hessian
+
+**Critical points:** $\nabla f = \mathbf{0}$. The Hessian classifies them:
+
+$$H = \begin{bmatrix} f_{xx} & f_{xy} \\ f_{xy} & f_{yy} \end{bmatrix}$$
+
+$H$ is always symmetric (Clairaut), so eigenvalues are real. Classification by eigenvalues: all positive → min, all negative → max, mixed → saddle.
+
+**2D shortcut:** $D = f_{xx}f_{yy} - f_{xy}^2 = \det(H)$. $D > 0, f_{xx} > 0$ → min. $D > 0, f_{xx} < 0$ → max. $D < 0$ → saddle.
+
+**Condition number** $\lambda_{\max}/\lambda_{\min}$ controls contour elongation and gradient descent zigzag severity.
+
+**High dimensions:** Saddle points exponentially outnumber local minima — probability of all $n$ eigenvalues positive $\sim (1/2)^n$.
+
+---
+
+## 57. Lagrange Multipliers
+
+**Problem:** Optimize $f(\mathbf{x})$ subject to $g(\mathbf{x}) = 0$.
+
+**Condition:** At the optimum, contours of $f$ are tangent to the constraint, so gradients are parallel:
+
+$$\nabla f = \lambda \nabla g$$
+
+Solve this system plus $g(\mathbf{x}) = 0$ ($n + 1$ equations, $n + 1$ unknowns).
+
+**Lagrangian:** $\mathcal{L}(\mathbf{x}, \lambda) = f(\mathbf{x}) - \lambda\, g(\mathbf{x})$. Setting all partials to zero recovers the same system.
+
+**Regularization–constraint equivalence:**
+
+$$\min L(\mathbf{w}) + \lambda\|\mathbf{w}\|^2 \quad \Longleftrightarrow \quad \min L(\mathbf{w}) \text{ s.t. } \|\mathbf{w}\|^2 \leq C$$
+
+The regularization parameter $\lambda$ IS the Lagrange multiplier.
+
+---
+
+## 58. Multivariate Taylor Expansion
+
+**Second-order expansion around $\mathbf{a}$:**
+
+$$f(\mathbf{a} + \mathbf{h}) \approx f(\mathbf{a}) + \nabla f(\mathbf{a})^T \mathbf{h} + \frac{1}{2}\mathbf{h}^T H(\mathbf{a})\,\mathbf{h}$$
+
+At a critical point ($\nabla f = 0$), the linear term vanishes and the local shape IS the quadratic form $\frac{1}{2}\mathbf{h}^T H\,\mathbf{h}$. In the eigenbasis: $\frac{1}{2}(\lambda_1 \tilde{h}_1^2 + \lambda_2 \tilde{h}_2^2)$ — two independent parabolas blended by direction.
+
+---
+
+## 59. Implicit Function Theorem
+
+Given $F(x, y) = 0$ at a point $(x_0, y_0)$: if $F_y(x_0, y_0) \neq 0$, then $y = g(x)$ exists locally as a smooth function, with:
+
+$$\frac{dy}{dx} = -\frac{F_x}{F_y}$$
+
+Derived by differentiating $F(x, y(x)) = 0$ via the chain rule (sum over both paths from $F$ to $x$).
+
+**IFT fails** when $F_y = 0$ — the curve turns vertical (branches, folds, or cusps). These singularities are where SLT becomes necessary: neural network parameter maps have abundant singularities where the Jacobian degenerates.
+
+---
+
 # Vector Calculus
 
 *Section not yet started — items will be added during lessons 24–28.*
@@ -2011,6 +2073,10 @@ Two subproblem definitions, each with a natural memoization direction:
 | $D_{\hat{u}} f = \nabla f \cdot \hat{u}$ | Directional derivative |
 | $\nabla f \cdot \frac{d\vec{r}}{dt} = 0$ on level curves | Gradient perpendicular to contours |
 | $J_{g \circ f} = J_g \cdot J_f$ | Chain rule as Jacobian multiplication (backpropagation) |
+| $\nabla f = \mathbf{0}$ at critical points; $H$ eigenvalues classify | Multivariable second derivative test |
+| $\nabla f = \lambda \nabla g$ | Lagrange multiplier condition |
+| $f(\mathbf{a}+\mathbf{h}) \approx f(\mathbf{a}) + \nabla f^T \mathbf{h} + \frac{1}{2}\mathbf{h}^T H\,\mathbf{h}$ | Multivariate Taylor (2nd order) |
+| $dy/dx = -F_x/F_y$ | Implicit function derivative |
 
 ---
 
@@ -2101,7 +2167,7 @@ $$\frac{d\hat{T}}{ds} = \kappa\hat{N}, \qquad \frac{d\hat{N}}{ds} = -\kappa\hat{
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 21)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 22)*
 
 
 
