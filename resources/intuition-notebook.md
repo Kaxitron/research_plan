@@ -611,4 +611,25 @@ Two subproblem definitions, each with a natural memoization direction:
 ---
 
 
-*Last updated: March 2026 — through Lesson 19 (3D Geometry, Curves, and Curvature)*
+## The Gradient Lives in the Input Space, Not on the Surface
+
+**The confusion:** For a surface like a squat tire (flat on top, steep walls), it feels like the direction of steepest change should point "upward" in 3D at the flat top — after all, the surface is high there. But the gradient is nearly zero on the flat top. Why?
+
+**The resolution:** The gradient $\nabla f = \langle f_x, f_y \rangle$ is a 2D vector living in the $xy$-plane (the input space). It's an arrow drawn flat on the map, like a topographic hiking map — it tells you "walk this direction on the map to gain elevation fastest." It never points "up" because "up" ($z$-direction) isn't a direction you can walk in the input space — $z$ is the output.
+
+On the flat top of the tire, no horizontal step changes $f$ much, so $|\nabla f| \approx 0$. On the steep walls, a tiny horizontal step changes $f$ a lot, so $|\nabla f|$ is large. The gradient measures *slope*, not *altitude*.
+
+**The magnitude matters too:** The gradient is a vector, not a unit vector. Its direction tells you which way is steepest. Its magnitude $|\nabla f|$ tells you how steep that steepest direction actually is. The pure direction of steepest ascent is the normalized version $\nabla f / |\nabla f|$.
+
+**The general principle:** The gradient always has one component per input variable. For $f(x,y)$ it's 2D, for $f(x,y,z)$ it's 3D, for a loss function $L(\theta_1, \ldots, \theta_n)$ it's $n$-dimensional. It always lives in the input space, never in the output direction.
+
+**The two different normal vectors:**
+- $\nabla f = \langle f_x, f_y \rangle$ — 2D, lives in the input plane, perpendicular to level curves
+- $\nabla F = \langle f_x, f_y, -1 \rangle$ — 3D, perpendicular to the surface itself (from the $F = f(x,y) - z$ trick)
+
+These are different objects in different spaces. The first is the "map arrow." The second is a true surface normal that you needed the $F = f - z$ promotion to construct.
+
+---
+
+
+*Last updated: March 2026 — through Lesson 21 (Chain Rule, Gradients, Jacobians)*
