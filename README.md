@@ -70,8 +70,8 @@ A structured self-study curriculum building from mathematical foundations throug
 |---|--------|--------|
 | 19 | [3D Geometry, Curves, and Curvature](phase2-calculus/lesson-19-3d-geometry.md) | ✅ Complete |
 | 20 | [Multivariable Functions, Limits, and Partial Derivatives](phase2-calculus/lesson-20-multivariable-functions.md) | ✅ Complete |
-| 21 | [The Chain Rule, Directional Derivatives, and Gradients](phase2-calculus/lesson-21-chain-rule-gradients.md) | 🔄 In Progress |
-| 22 | [Optimization, Taylor Expansions, and the Implicit Function Theorem](phase2-calculus/lesson-22-taylor-expansions.md) | ⬜ Not Started |
+| 21 | [The Chain Rule, Directional Derivatives, and Gradients](phase2-calculus/lesson-21-chain-rule-gradients.md) | ✅ Complete |
+| 22 | [Optimization, Taylor Expansions, and the Implicit Function Theorem](phase2-calculus/lesson-22-taylor-expansions.md) | 🔄 In Progress |
 | 23 | [Multiple Integration and Change of Variables](phase2-calculus/lesson-23-multiple-integration.md) | ⬜ Not Started |
 
 ### Block C: Vector Calculus (24–28) — Trefor Bazett
