@@ -632,4 +632,24 @@ These are different objects in different spaces. The first is the "map arrow." T
 ---
 
 
-*Last updated: March 2026 — through Lesson 21 (Chain Rule, Gradients, Jacobians)*
+## The Jacobian Determinant Is the Local Area Scaling Factor
+
+**The question:** When changing coordinates in a double integral (e.g., Cartesian to polar), why is the correction factor $|\det(J)|$ and not something else? Why can't you just use the coordinate transformation itself?
+
+**The key insight:** The determinant is an operation on *matrices*, not on functions. The transformation $x = r\cos\theta$, $y = r\sin\theta$ maps points to points — you can't take its determinant. But you *can* take the determinant of the Jacobian matrix, because that matrix describes how *tiny displacements* get transformed:
+
+$$\begin{pmatrix} dx \\ dy \end{pmatrix} \approx \underbrace{\begin{bmatrix} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{bmatrix}}_{J} \begin{pmatrix} dr \\ d\theta \end{pmatrix}$$
+
+A tiny rectangle $dr \times d\theta$ in polar space gets mapped to a tiny parallelogram in $xy$-space. The Jacobian is the linear map that does this transformation locally. Its determinant gives the area of that parallelogram — which is the local area scaling factor.
+
+**Why local/linear and not global:** A nonlinear transformation stretches space differently at different points. Near the origin, polar coordinates barely stretch anything; far out, they stretch a lot. The Jacobian captures the stretching *at each specific point* by linearizing the transformation there. This is the same idea as "the derivative is the best local linear approximation" — applied to a vector-valued function.
+
+**The chain of connections:**
+- Phase 1: $|\det(A)|$ = area scaling factor for a linear transformation $A$
+- Lesson 21: The Jacobian matrix is the derivative of a vector-valued function — the best local linear approximation
+- Lesson 23: At each point, the coordinate transformation is locally linear (approximated by $J$), so $|\det(J)|$ is the local area scaling factor. This varies point to point — for polar coordinates it equals $r$, small near the origin, large far out.
+
+---
+
+
+*Last updated: March 2026 — through Lesson 23 (Multiple Integration, Change of Variables)*
