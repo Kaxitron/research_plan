@@ -88,6 +88,8 @@
 - [57. Lagrange Multipliers](#57-lagrange-multipliers)
 - [58. Multivariate Taylor Expansion](#58-multivariate-taylor-expansion)
 - [59. Implicit Function Theorem](#59-implicit-function-theorem)
+- [60. Multiple Integrals](#60-multiple-integrals)
+- [61. Change of Variables and Coordinate Systems](#61-change-of-variables-and-coordinate-systems)
 
 #### [Vector Calculus](#vector-calculus)
 *Section not yet started — items will be added during lessons 24–28.*
@@ -1935,6 +1937,46 @@ Derived by differentiating $F(x, y(x)) = 0$ via the chain rule (sum over both pa
 
 ---
 
+## 60. Multiple Integrals
+
+**Fubini's theorem:** Evaluate by integrating one variable at a time (iterated integrals). Order can be swapped when $f$ is continuous — sometimes one order is much easier.
+
+$$\iint_R f\,dA = \int_a^b \int_{c(x)}^{d(x)} f(x,y)\,dy\,dx$$
+
+**Setting up bounds:** Sketch the region. Draw a line in the inner variable's direction — where it enters and exits the region gives the inner bounds (functions of the outer variable). The outer bounds are constants.
+
+**Switching order of integration:** Re-sketch the region and read bounds in the new direction. Essential when the integrand has no antiderivative in the original inner variable (e.g., $e^{y^2}$, $\sin(x^3)$).
+
+**What integrals compute:** Always "height $\times$ base = next-dimension volume." $\int f\,dx$: 2D area. $\iint f\,dA$: 3D volume. $\iiint f\,dV$: 4D hypervolume. Setting $f = 1$ drops one dimension (slab of height 1).
+
+---
+
+## 61. Change of Variables and Coordinate Systems
+
+**General formula:**
+
+$$\iint f(x,y)\,dA = \iint f(T(u,v))\;|\det(J_T)|\,du\,dv$$
+
+$|\det(J_T)|$ is the local area/volume scaling factor — the Jacobian matrix is the local linear approximation to the transformation, and its determinant measures how much area gets stretched at each point.
+
+**Polar:** $x = r\cos\theta$, $y = r\sin\theta$. $\quad dA = r\,dr\,d\theta$.
+
+**Cylindrical:** $x = r\cos\theta$, $y = r\sin\theta$, $z = z$. $\quad dV = r\,dr\,d\theta\,dz$.
+
+**Spherical:** $x = \rho\sin\phi\cos\theta$, $y = \rho\sin\phi\sin\theta$, $z = \rho\cos\phi$. $\quad dV = \rho^2\sin\phi\,d\rho\,d\phi\,d\theta$.
+
+Match coordinates to symmetry: circles/disks → polar, cylinders → cylindrical, spheres → spherical.
+
+**The Gaussian integral** (proved via squaring + polar coordinates):
+
+$$\int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}$$
+
+The Jacobian factor $r$ in polar coordinates is exactly what makes $re^{-r^2}$ integrable via $u = r^2$.
+
+**Monte Carlo integration:** $\mathbb{E}[f(x)] \approx \frac{1}{N}\sum_{i=1}^N f(x_i)$, $x_i \sim p$. Accuracy scales as $1/\sqrt{N}$, independent of dimension.
+
+---
+
 # Vector Calculus
 
 *Section not yet started — items will be added during lessons 24–28.*
@@ -2077,6 +2119,10 @@ Two subproblem definitions, each with a natural memoization direction:
 | $\nabla f = \lambda \nabla g$ | Lagrange multiplier condition |
 | $f(\mathbf{a}+\mathbf{h}) \approx f(\mathbf{a}) + \nabla f^T \mathbf{h} + \frac{1}{2}\mathbf{h}^T H\,\mathbf{h}$ | Multivariate Taylor (2nd order) |
 | $dy/dx = -F_x/F_y$ | Implicit function derivative |
+| $dA = r\,dr\,d\theta$ | Polar area element |
+| $dV = \rho^2\sin\phi\,d\rho\,d\phi\,d\theta$ | Spherical volume element |
+| $\iint f(T(u,v))\,|\det(J_T)|\,du\,dv$ | Change of variables formula |
+| $\mathbb{E}[f] \approx \frac{1}{N}\sum f(x_i)$ | Monte Carlo integration |
 
 ---
 
@@ -2167,7 +2213,7 @@ $$\frac{d\hat{T}}{ds} = \kappa\hat{N}, \qquad \frac{d\hat{N}}{ds} = -\kappa\hat{
 
 ---
 
-*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 22)*
+*Last updated: March 2026 — Phase 1 (Linear Algebra) + statistics preview + Phase 2 (Calculus Fundamentals & ODEs through Lesson 18, 3D Geometry through Lesson 19, Multivariable Calculus through Lesson 23 — Block B complete)*
 
 
 
