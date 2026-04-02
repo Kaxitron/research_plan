@@ -54,6 +54,7 @@
 
 **[Calculus — Multivariable](#calculus--multivariable)**
 - [The gradient is perpendicular to contour lines and points uphill](#the-gradient-is-perpendicular-to-contour-lines-and-points-uphill)
+- [Two equations for the tangent plane — slope form vs normal form](#two-equations-for-the-tangent-plane--slope-form-vs-normal-form)
 
 **[Calculus — Vector Calculus](#calculus--vector-calculus)**
 - [A Unit Vector's Derivative Is Always Perpendicular To Itself](#a-unit-vectors-derivative-is-always-perpendicular-to-itself)
@@ -459,6 +460,31 @@ $\frac{dy}{dt} = ky$ → $y = e^{kt}y(0)$. $\frac{d\mathbf{x}}{dt} = A\mathbf{x}
 ### The gradient is perpendicular to contour lines and points uphill
 If you're standing on a hillside, the gradient tells you the steepest uphill direction. Gradient descent goes opposite — steepest downhill. The shape of the contour lines (elongated vs. circular) determines how hard optimization is. Circular = easy (condition number ≈ 1). Elongated = hard (high condition number). This is why preconditioning and Adam optimizer help.
 
+
+### Two equations for the tangent plane — slope form vs normal form
+
+**The confusion:** The gradient "gives you the tangent plane" but also "is normal to the tangent plane." How can it do both?
+
+**The resolution:** These are two different gradients of two different functions describing the same surface.
+
+**Version 1 — Slope form (2D gradient of $f$):**
+
+For $z = f(x,y)$, the gradient $\nabla f = (f_x, f_y)$ has two components. It gives you the slopes that tilt the tangent plane:
+
+$$z = f(\mathbf{a}) + \nabla f(\mathbf{a}) \cdot (\mathbf{x} - \mathbf{a})$$
+
+This IS the tangent plane. The dot product computes "slope times step, added up for each direction" — the total height correction from the known point. This is what linear approximation uses directly.
+
+**Version 2 — Normal form (3D gradient of $F$):**
+
+Rewrite the surface as $F(x,y,z) = f(x,y) - z = 0$. Now $F$ has three inputs, so $\nabla F = (f_x, f_y, -1)$ has three components. This vector is perpendicular to the tangent plane:
+
+$$\nabla F(\mathbf{A}) \cdot (\mathbf{X} - \mathbf{A}) = 0$$
+
+**Why Version 2 is more general:** Some surfaces like $x^2 + y^2 + z^2 = 1$ (a sphere) can't be cleanly written as $z = f(x,y)$. The implicit form $F(x,y,z) = 0$ handles everything, and $\nabla F$ always gives the normal.
+
+**They're the same equation:** Expand Version 2 for $F = f(x,y) - z$ and isolate $z$ — you get Version 1. Version 1 is just Version 2 with the algebra pre-done. Version 2 is the parent; Version 1 is the special case when you can solve for $z$.
+
 ---
 
 ## Calculus — Vector Calculus
@@ -652,4 +678,4 @@ A tiny rectangle $dr \times d\theta$ in polar space gets mapped to a tiny parall
 ---
 
 
-*Last updated: March 2026 — through Lesson 23 (Multiple Integration, Change of Variables)*
+*Last updated: April 2026 — through Lesson 23 (Multiple Integration, Change of Variables)*
